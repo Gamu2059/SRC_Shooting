@@ -49,7 +49,7 @@ public class CircleMoveEnemy : EnemyController
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			ShotBullet();
+			ShotBullet( 0, 0 );
 		}
 		else
 		{
@@ -57,12 +57,12 @@ public class CircleMoveEnemy : EnemyController
 		}
 	}
 
-	public override void ShotBullet( int bulletIndex = 0 )
-	{
-		Bullet bullet = GetPoolBullet( 0 );
-		bullet.transform.position = transform.position;
-		bullet.transform.eulerAngles = Vector3.up * m_NowRad * Mathf.Rad2Deg;
-		bullet.transform.Translate( m_ShotPosOffset * Mathf.Cos( m_NowRad ), 0, m_ShotPosOffset * Mathf.Sin( m_NowRad ) );
-		bullet.ShotBullet();
-	}
+	//public override void ShotBullet( int bulletIndex, int bulletParamIndex)
+	//{
+	//	Bullet bullet = GetPoolBullet( 0 );
+	//	bullet.transform.position = transform.position;
+	//	bullet.transform.eulerAngles = Vector3.up * m_NowRad * Mathf.Rad2Deg;
+	//	bullet.transform.Translate( m_ShotPosOffset * Mathf.Cos( m_NowRad ), 0, m_ShotPosOffset * Mathf.Sin( m_NowRad ) );
+	//	//bullet.ShotBullet();
+	//}
 }

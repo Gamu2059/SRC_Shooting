@@ -148,6 +148,8 @@ MonoBehaviour:
   m_BulletPrefabs:
   - {fileID: 2380427692720716458, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
   m_BombPrefabs: []
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
   m_Protectors: []
   m_ProtectorRadius: 0
   m_ProtectorSpeed: 0
@@ -610,6 +612,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2455306305075876736, guid: d247464a9787d8a418094c891be90fb9,
+        type: 3}
+      propertyPath: m_BulletPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455306305075876736, guid: d247464a9787d8a418094c891be90fb9,
+        type: 3}
+      propertyPath: m_BulletParams.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455306305075876736, guid: d247464a9787d8a418094c891be90fb9,
+        type: 3}
+      propertyPath: m_BulletPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 2380427692720716458, guid: 7d19cc69dba08894284fc298422b2349,
+        type: 3}
+    - target: {fileID: 2455306305075876736, guid: d247464a9787d8a418094c891be90fb9,
+        type: 3}
+      propertyPath: m_BulletParams.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d247464a9787d8a418094c891be90fb9, type: 3}
 --- !u!1001 &1926405810755916688

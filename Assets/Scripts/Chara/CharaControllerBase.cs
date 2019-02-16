@@ -21,6 +21,9 @@ public class CharaControllerBase : BehaviorBase
 	[SerializeField]
 	private BehaviorBase[] m_BombPrefabs;
 
+	[SerializeField]
+	private BulletParam[] m_BulletParams;
+
 	[Header( "プロテクタのパラメータ" )]
 
 	[SerializeField]
@@ -80,8 +83,81 @@ public class CharaControllerBase : BehaviorBase
 	/// <summary>
 	/// 通常弾を発射する。
 	/// </summary>
-	public virtual void ShotBullet( int bulletIndex = 0 )
+	/// <param name="bulletIndex">発射したい弾のindex</param>
+	/// <param name="bulletParamIndex">弾の軌道を定めるパラメータのindex</param>
+	public virtual void ShotBullet( int bulletIndex, int bulletParamIndex )
 	{
+		if( bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length )
+		{
+			return;
+		}
+
+		if( bulletParamIndex < 0 || bulletParamIndex >= m_BulletParams.Length )
+		{
+			return;
+		}
+
+		BulletParam bulletParam = m_BulletParams[bulletParamIndex];
+
+		if( bulletParam == null )
+		{
+			return;
+		}
+
+		GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
+		BulletOrbitalParam initParam = bulletParam.OrbitalParam;
+		BulletSpreadParam initSpreadParam = initParam.SpreadParam;
+
+		int bulletNum = initSpreadParam.BulletNum;
+
+		for( int i = 0; i < bulletNum; i++ )
+		{
+			Vector3 bulletPos = transform.position;
+
+			if( initParam.PositionRelative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
+			{
+				bulletPos += initParam.Position;
+			}
+			else
+			{
+				bulletPos = initParam.Position;
+			}
+
+			Vector3 bulletRot = transform.eulerAngles;
+
+			if( initParam.RotationRelative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
+			{
+				bulletRot += initParam.Rotation;
+			}
+			else
+			{
+				bulletRot = initParam.Rotation;
+			}
+
+			Vector3 bulletScale = bulletPrefab.transform.lossyScale;
+
+			if( initParam.ScaleRelative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
+			{
+				bulletScale += initParam.Scale;
+			}
+			else
+			{
+				bulletScale = initParam.Scale;
+			}
+
+			float angle = bulletRot.y;
+			angle += initSpreadParam.DeltaAngle * ( i - ( bulletNum - 1 ) / 2f );
+			bulletRot.y = angle;
+
+			Vector3 offsetPos = new Vector3( Mathf.Cos( angle * Mathf.Deg2Rad ), 0, Mathf.Sin( angle * Mathf.Deg2Rad ) ) * initSpreadParam.Radius;
+			bulletPos += offsetPos;
+
+			Bullet bullet = GetPoolBullet( bulletIndex );
+			bullet.transform.position = bulletPos;
+			bullet.transform.eulerAngles = bulletRot;
+			bullet.transform.localScale = bulletScale;
+			bullet.ShotBullet( bulletParam );
+		}
 
 	}
 

@@ -138,7 +138,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		// 通常弾
 		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
-			m_CurrentController.ShotBullet();
+			m_CurrentController.ShotBullet( 0, 0 );
 		}
 
 		// ボム
