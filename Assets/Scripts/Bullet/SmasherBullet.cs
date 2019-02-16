@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmasherBullet : MonoBehaviour
+public class SmasherBullet : Bullet
 {
     [SerializeField]
-    private float speed;
+    private float m_Speed;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,16 @@ public class SmasherBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+        
+    }
+
+    public override void OnUpdate()
+    {
+        transform.Translate(Vector3.forward * m_Speed * Time.deltaTime, Space.World);
+    }
+
+    private void OnBecameInvisible()
+    {
+        DestroyBullet();
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7385959050771993376}
   - component: {fileID: 7385959050771993377}
   - component: {fileID: 7385959050771993382}
-  - component: {fileID: 7385959050771993378}
+  - component: {fileID: 7076031899561738867}
   m_Layer: 0
   m_Name: SmasherBullet
   m_TagString: Untagged
@@ -93,7 +93,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.0051606894, z: 1.7826669e-17}
---- !u!114 &7385959050771993378
+--- !u!114 &7076031899561738867
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,4 +105,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cd02e145dd23f4b9a9871db9710e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  IsStarted: 0
+  m_Speed: 50
