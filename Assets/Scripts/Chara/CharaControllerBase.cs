@@ -16,7 +16,7 @@ public class CharaControllerBase : BehaviorBase
 	[Header( "弾のパラメータ" )]
 
 	[SerializeField]
-	private BehaviorBase[] m_BulletPrefabs;
+	private Bullet[] m_BulletPrefabs;
 
 	[SerializeField]
 	private BehaviorBase[] m_BombPrefabs;
@@ -35,6 +35,8 @@ public class CharaControllerBase : BehaviorBase
 
 
 	private float m_Rad;
+
+	private List<Bullet>[] m_PoolBullets;
 
 
 	public float GetMoveSpeed()
@@ -78,7 +80,7 @@ public class CharaControllerBase : BehaviorBase
 	/// <summary>
 	/// 通常弾を発射する。
 	/// </summary>
-	public virtual void ShotBullet()
+	public virtual void ShotBullet( int bulletIndex = 0 )
 	{
 
 	}
@@ -89,6 +91,47 @@ public class CharaControllerBase : BehaviorBase
 	public virtual void ShotBomb( int bombIndex = 0 )
 	{
 
+	}
+
+	/// <summary>
+	/// プールから弾を取得する。
+	/// 足りなければ生成する。
+	/// </summary>
+	public Bullet GetPoolBullet( int bulletIndex = 0 )
+	{
+		if( m_PoolBullets == null )
+		{
+			m_PoolBullets = new List<Bullet>[m_BulletPrefabs.Length];
+		}
+
+		if( m_PoolBullets[bulletIndex] == null )
+		{
+			m_PoolBullets[bulletIndex] = new List<Bullet>();
+		}
+
+		var bullets = m_PoolBullets[bulletIndex];
+		Bullet bullet = null;
+
+		foreach( var b in bullets )
+		{
+			if( b.gameObject.activeSelf )
+			{
+				continue;
+			}
+
+			bullet = b;
+			break;
+		}
+
+		if( bullet == null )
+		{
+			bullet = Instantiate( m_BulletPrefabs[bulletIndex] );
+			BulletManager.Instance.SetBulletParent( bullet );
+			bullets.Add( bullet );
+		}
+
+		bullet.gameObject.SetActive( true );
+		return bullet;
 	}
 
 	protected virtual void UpdateProtector()
