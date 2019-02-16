@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 1926405811160240040}
   - component: {fileID: 1926405811160240039}
   - component: {fileID: 1926405811160240038}
-  - component: {fileID: 1926405811160240037}
+  - component: {fileID: 2621416974828342494}
   m_Layer: 0
   m_Name: Echo
   m_TagString: Player
@@ -829,7 +829,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1926405811160240037
+--- !u!114 &2621416974828342494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -838,19 +838,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1926405811160240036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb5181c1bffe7c488eced62eee9afc7, type: 3}
+  m_Script: {fileID: 11500000, guid: ff2157817085c684bb42207a3d218b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletController: {fileID: 0}
-  m_MoveSpeed: 10
-  m_Protectors:
-  - {fileID: 1926405810939894245}
-  - {fileID: 1926405809941892449}
-  - {fileID: 1926405810530812961}
-  - {fileID: 1926405810096334313}
-  - {fileID: 1926405811081243380}
-  - {fileID: 1926405809988279361}
-  - {fileID: 1926405810984359052}
-  - {fileID: 1926405810516442118}
-  m_ProtectorRadius: 3
-  m_ProtectorSpeed: 3
+  m_MoveSpeed: 5
+  m_BulletPrefabs: []
+  m_BombPrefabs: []
+  m_Protectors: []
+  m_ProtectorRadius: 0
+  m_ProtectorSpeed: 0
+  m_Lv: 0
+  m_Exp: 0
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_LifeCycle: 0
+  m_HitSize: 0
+  m_BulletPrefab: {fileID: 0}
+  m_BombPrefab: {fileID: 0}
+  m_Protectors: []

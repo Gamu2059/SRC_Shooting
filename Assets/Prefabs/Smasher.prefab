@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 1215113177835792062}
   - component: {fileID: 1215113177835792063}
   - component: {fileID: 1215113177835792056}
-  - component: {fileID: 1215113177835792057}
+  - component: {fileID: 2455306305075876736}
   m_Layer: 0
   m_Name: Smasher
   m_TagString: Player
@@ -738,7 +738,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1215113177835792057
+--- !u!114 &2455306305075876736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -747,22 +747,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1215113177835792058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb5181c1bffe7c488eced62eee9afc7, type: 3}
+  m_Script: {fileID: 11500000, guid: ff2157817085c684bb42207a3d218b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletController: {fileID: 0}
-  m_MoveSpeed: 10
-  m_Protectors:
-  - {fileID: 1215113176688278961}
-  - {fileID: 1215113176783628977}
-  - {fileID: 1215113178383421955}
-  - {fileID: 1215113176964047581}
-  - {fileID: 1215113177751288388}
-  - {fileID: 1215113176537253215}
-  - {fileID: 1215113176821981120}
-  - {fileID: 1215113177019522363}
-  m_ProtectorRadius: 3
-  m_ProtectorSpeed: 3
+  m_MoveSpeed: 5
+  m_BulletPrefabs: []
+  m_BombPrefabs: []
+  m_Protectors: []
+  m_ProtectorRadius: 0
+  m_ProtectorSpeed: 0
+  m_Lv: 0
+  m_Exp: 0
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_LifeCycle: 0
+  m_HitSize: 0
+  m_BulletPrefab: {fileID: 0}
+  m_BombPrefab: {fileID: 0}
+  m_Protectors: []
 --- !u!1 &1215113178383421964
 GameObject:
   m_ObjectHideFlags: 0
