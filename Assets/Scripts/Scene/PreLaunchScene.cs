@@ -10,7 +10,7 @@ public class PreLaunchScene : BaseScene
 
 	private void Start()
 	{
-		BaseSceneManager.Instance.Init();
+		BaseSceneManager.Instance.OnInit();
 
 		BaseSceneManager.Instance.LoadScene( m_NextScene );
 	}

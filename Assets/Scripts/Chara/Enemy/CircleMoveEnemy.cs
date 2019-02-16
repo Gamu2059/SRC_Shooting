@@ -33,11 +33,8 @@ public class CircleMoveEnemy : EnemyController
 
 	private float m_ShotTime;
 
-	private List<BehaviorBase> m_Bullets;
-
 	private void Awake()
 	{
-		m_Bullets = new List<BehaviorBase>();
 		m_ShotTime = 0;
 	}
 
@@ -58,45 +55,14 @@ public class CircleMoveEnemy : EnemyController
 		{
 			m_ShotTime -= Time.deltaTime;
 		}
-
-		List<BehaviorBase> removeList = new List<BehaviorBase>();
-
-		foreach( var bullet in m_Bullets )
-		{
-			float rad = bullet.transform.eulerAngles.y * Mathf.Deg2Rad;
-			var move = new Vector3( Mathf.Cos( rad ), 0, Mathf.Sin( rad ) ) * m_BulletSpeed *Time.deltaTime;
-			bullet.transform.Translate( move, Space.World );
-
-			if( bullet.transform.position.sqrMagnitude > m_DeadDistance )
-			{
-				removeList.Add( bullet );
-			}
-		}
-
-		int num = removeList.Count;
-
-		for( int i = 0; i < num; i++ )
-		{
-			var bullet = removeList[0];
-			m_Bullets.Remove( bullet );
-			removeList.Remove( bullet );
-			Destroy( bullet.gameObject );
-		}
 	}
 
-	public override void ShotBullet()
+	public override void ShotBullet( int bulletIndex = 0 )
 	{
-		var bullets = GetBulletPrefabs();
-
-		if( bullets == null )
-		{
-			return;
-		}
-
-		BehaviorBase bullet = Instantiate( bullets[0] );
+		Bullet bullet = GetPoolBullet( 0 );
 		bullet.transform.position = transform.position;
 		bullet.transform.eulerAngles = Vector3.up * m_NowRad * Mathf.Rad2Deg;
 		bullet.transform.Translate( m_ShotPosOffset * Mathf.Cos( m_NowRad ), 0, m_ShotPosOffset * Mathf.Sin( m_NowRad ) );
-		m_Bullets.Add( bullet );
+		bullet.ShotBullet();
 	}
 }
