@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 7268531045547703935}
   - component: {fileID: 7268531045547703920}
   - component: {fileID: 7268531045547703921}
-  - component: {fileID: 7268531045547703922}
+  - component: {fileID: 8406267782085249620}
   m_Layer: 0
   m_Name: Hacker
   m_TagString: Player
@@ -283,7 +283,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7268531045547703922
+--- !u!114 &8406267782085249620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,22 +292,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7268531045547703923}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb5181c1bffe7c488eced62eee9afc7, type: 3}
+  m_Script: {fileID: 11500000, guid: ff2157817085c684bb42207a3d218b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletController: {fileID: 0}
-  m_MoveSpeed: 10
-  m_Protectors:
-  - {fileID: 7268531046428240023}
-  - {fileID: 7268531046580294075}
-  - {fileID: 7268531045720261307}
-  - {fileID: 7268531044913389281}
-  - {fileID: 7268531044635007262}
-  - {fileID: 7268531046299984185}
-  - {fileID: 7268531046204256540}
-  - {fileID: 7268531046567989056}
-  m_ProtectorRadius: 3
-  m_ProtectorSpeed: 3
+  m_MoveSpeed: 5
+  m_BulletPrefabs: []
+  m_BombPrefabs: []
+  m_Protectors: []
+  m_ProtectorRadius: 0
+  m_ProtectorSpeed: 0
+  m_Lv: 0
+  m_Exp: 0
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_LifeCycle: 0
+  m_HitSize: 0
+  m_BulletPrefab: {fileID: 0}
+  m_BombPrefab: {fileID: 0}
+  m_Protectors: []
 --- !u!1 &7268531045720261308
 GameObject:
   m_ObjectHideFlags: 0

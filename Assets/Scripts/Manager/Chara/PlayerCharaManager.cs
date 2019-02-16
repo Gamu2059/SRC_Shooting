@@ -41,10 +41,10 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 
 	[SerializeField]
-	private CharaControllerBase[] m_CharaControllers;
+	private CharaControllerBase[] m_Controllers;
 
 	[SerializeField]
-	private CharaControllerBase m_CurrentCharaController;
+	private CharaControllerBase m_CurrentController;
 
 	#endregion
 
@@ -54,6 +54,23 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	private int m_CharaIndex = 0;
 
 	private float m_WaitChangeTime = 0;
+
+
+
+	#region Get Set
+
+	public CharaControllerBase[] GetControllers()
+	{
+		return m_Controllers;
+	}
+
+	public CharaControllerBase GetCurrentController()
+	{
+		return m_CurrentController;
+	}
+
+	#endregion
+
 
 
 	public override void Init()
@@ -73,7 +90,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 	private void Start()
 	{
-		foreach( var chara in m_CharaControllers )
+		foreach( var chara in m_Controllers )
 		{
 			chara.gameObject.SetActive( false );
 		}
@@ -83,7 +100,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 	private void Update()
 	{
-		if( m_CurrentCharaController == null )
+		if( m_CurrentController == null )
 		{
 			return;
 		}
@@ -116,25 +133,25 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 			moveDir.x -= 1;
 		}
 
-		m_CurrentCharaController.Move( moveDir );
+		m_CurrentController.Move( moveDir );
 
 		// 通常弾
 		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
-			m_CurrentCharaController.ShotBullet();
+			m_CurrentController.ShotBullet();
 		}
 
 		// ボム
 		if( IsGetKeyDown( m_ShotBomb, Input.GetMouseButtonDown( 1 ) ) )
 		{
-			m_CurrentCharaController.ShotBomb();
+			m_CurrentController.ShotBomb();
 		}
 
 		// 上にスクロールするとプラス、下でマイナス
 		float wheel = Input.GetAxis( "Mouse ScrollWheel" );
 
 		// キャラ交代の入力
-		int charaNum = m_CharaControllers.Length;
+		int charaNum = m_Controllers.Length;
 
 		if( wheel > 0 )
 		{
@@ -158,12 +175,12 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 			ChangeChara( 2 );
 		}
 
-		m_CurrentCharaController.OnUpdate();
+		m_CurrentController.OnUpdate();
 	}
 
 	private void LateUpdate()
 	{
-		m_CurrentCharaController.OnLateUpdate();
+		m_CurrentController.OnLateUpdate();
 	}
 
 	private bool IsGetKeyDown( KeyCode[] targetKeys, bool additionalCondition = false )
@@ -194,20 +211,20 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 	private void ChangeChara( int index )
 	{
-		if( m_CharaIndex == index && m_CurrentCharaController != null || m_WaitChangeTime > 0f )
+		if( m_CharaIndex == index && m_CurrentController != null || m_WaitChangeTime > 0f )
 		{
 			return;
 		}
 
 		m_CharaIndex = index;
 
-		if( m_CurrentCharaController != null )
+		if( m_CurrentController != null )
 		{
-			m_CurrentCharaController.gameObject.SetActive( false );
+			m_CurrentController.gameObject.SetActive( false );
 		}
 
-		m_CurrentCharaController = m_CharaControllers[m_CharaIndex];
-		m_CurrentCharaController.gameObject.SetActive( true );
+		m_CurrentController = m_Controllers[m_CharaIndex];
+		m_CurrentController.gameObject.SetActive( true );
 		m_WaitChangeTime = 1f;
 	}
 }
