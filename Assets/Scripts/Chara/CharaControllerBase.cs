@@ -9,7 +9,7 @@ public class CharaControllerBase : BehaviorBase
 {
 
 	[Header( "キャラの基礎パラメータ" )]
-
+        
 	[SerializeField]
 	private float m_MoveSpeed = 5f;
 

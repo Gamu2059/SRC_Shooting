@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &633615266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 633615267}
+  m_Layer: 0
+  m_Name: Main
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &633615267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633615266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1361059287}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1361059286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1361059287}
+  m_Layer: 0
+  m_Name: HackerShooter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1361059287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361059286}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 633615267}
+  m_Father: {fileID: 7268531045547703934}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7268531044635007263
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268531044635007263}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 7268531045547703934}
@@ -118,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268531044913389282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 7268531045547703934}
@@ -194,14 +255,14 @@ GameObject:
   - component: {fileID: 7268531045547703935}
   - component: {fileID: 7268531045547703920}
   - component: {fileID: 7268531045547703921}
-  - component: {fileID: 8406267782085249620}
+  - component: {fileID: 8299653067761503205}
   m_Layer: 0
   m_Name: Hacker
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7268531045547703934
 Transform:
   m_ObjectHideFlags: 0
@@ -221,6 +282,7 @@ Transform:
   - {fileID: 7268531046299984185}
   - {fileID: 7268531046204256540}
   - {fileID: 7268531046567989056}
+  - {fileID: 1361059287}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -283,7 +345,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8406267782085249620
+--- !u!114 &8299653067761503205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,24 +354,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 7268531045547703923}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff2157817085c684bb42207a3d218b54, type: 3}
+  m_Script: {fileID: 11500000, guid: b067d7c6e4ed5e441b470b77f3148d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 5
-  m_BulletPrefabs: []
+  m_BulletPrefabs:
+  - {fileID: 7292297653876647175, guid: 7fa1804904bc01647a9280f9a489ab53, type: 3}
   m_BombPrefabs: []
-  m_Protectors: []
-  m_ProtectorRadius: 0
-  m_ProtectorSpeed: 0
+  m_Protectors:
+  - {fileID: 7268531046428240023}
+  - {fileID: 7268531046580294075}
+  - {fileID: 7268531045720261307}
+  - {fileID: 7268531044913389281}
+  - {fileID: 7268531044635007262}
+  - {fileID: 7268531046299984185}
+  - {fileID: 7268531046204256540}
+  - {fileID: 7268531046567989056}
+  m_ProtectorRadius: 3
+  m_ProtectorSpeed: 3
   m_Lv: 0
   m_Exp: 0
   m_NowHp: 0
   m_MaxHp: 0
   m_LifeCycle: 0
   m_HitSize: 0
-  m_BulletPrefab: {fileID: 0}
+  m_BulletPrefab: {fileID: 7292297653876647168, guid: 7fa1804904bc01647a9280f9a489ab53,
+    type: 3}
   m_BombPrefab: {fileID: 0}
-  m_Protectors: []
+  m_ShotInterval: 0.075
+  m_MainShotPosition:
+  - {fileID: 633615267}
 --- !u!1 &7268531045720261308
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268531045720261308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 7268531045547703934}
@@ -428,7 +502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268531046204256541}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 7268531045547703934}
@@ -519,7 +593,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268531046299984186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 7268531045547703934}
@@ -701,7 +775,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268531046567989057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 7268531045547703934}

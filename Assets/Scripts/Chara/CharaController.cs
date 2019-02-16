@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+/*
+ * 
+ * 【注意】
+ * PlayerControllerを継承して自機の制御に関するスクリプトを
+ * 書くようにしたので、これはもう使わない
+ * 
+ */
 public class CharaController : MonoBehaviour
 {
 

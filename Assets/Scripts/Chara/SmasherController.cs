@@ -33,15 +33,9 @@ public class SmasherController : PlayerController
 
     private float m_SubShotLv2AngleRad;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnUpdate()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        base.OnUpdate();
         shotDelay += Time.deltaTime;
         UpdateSubShot();
     }
@@ -80,6 +74,11 @@ public class SmasherController : PlayerController
             }
             shotDelay = 0;
         }
+    }
+
+    public override void ShotBomb(int bombIndex = 0)
+    {
+        base.ShotBomb(bombIndex);
     }
 
     private void UpdateSubShot()
