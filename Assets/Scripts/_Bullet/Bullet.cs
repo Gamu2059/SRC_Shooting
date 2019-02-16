@@ -38,7 +38,7 @@ public class Bullet : BehaviorBase
 	/// </summary>
 	public virtual void DestroyBullet()
 	{
-		BulletManager.Instance.RemoveBullet( this );
+		BulletManager.Instance.CheckRemovingBullet( this );
 		gameObject.SetActive( false );
 	}
 }
