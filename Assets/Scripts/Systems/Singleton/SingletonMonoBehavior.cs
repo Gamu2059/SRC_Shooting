@@ -28,6 +28,11 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBeh
 		}
 	}
 
+	public static bool CheckExistInstance()
+	{
+		return Instance;
+	}
+
 	protected virtual void OnAwake()
 	{
 	}
@@ -36,12 +41,19 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBeh
 	{
 	}
 
-	public static bool CheckExistInstance()
+	public virtual void OnInit()
 	{
-		return Instance;
 	}
 
-	public virtual void Init()
+	public virtual void OnStart()
+	{
+	}
+
+	public virtual void OnUpdate()
+	{
+	}
+
+	public virtual void OnLateUpdate()
 	{
 	}
 }

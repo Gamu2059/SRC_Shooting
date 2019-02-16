@@ -73,9 +73,9 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 
 
-	public override void Init()
+	public override void OnInit()
 	{
-		base.Init();
+		base.OnInit();
 	}
 
 	protected override void OnAwake()
