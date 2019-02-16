@@ -13,9 +13,13 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 	[SerializeField]
 	private List<Bullet> m_Bullets;
 
+	private List<Bullet> m_RemovingBullets;
+
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+		m_Bullets = new List<Bullet>();
+		m_RemovingBullets = new List<Bullet>();
 	}
 
 	private void Start()
@@ -60,6 +64,8 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 				bullet.OnUpdate();
 			}
 		}
+
+		RemoveBullet();
 	}
 
 	public override void OnLateUpdate()
@@ -72,6 +78,23 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 			}
 
 			bullet.OnLateUpdate();
+		}
+
+		RemoveBullet();
+	}
+
+	/// <summary>
+	/// 削除リストに入っている弾を制御下から外す。
+	/// </summary>
+	private void RemoveBullet()
+	{
+		int removeNum = m_RemovingBullets.Count;
+
+		for( int i = 0; i < removeNum; i++ )
+		{
+			var bullet = m_RemovingBullets[0];
+			m_Bullets.Remove( bullet );
+			m_RemovingBullets.Remove( bullet );
 		}
 	}
 
@@ -86,14 +109,14 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 		m_Bullets.Add( bullet );
 	}
 
-	public void RemoveBullet( Bullet bullet )
+	public void CheckRemovingBullet( Bullet bullet )
 	{
 		if( bullet == null || !m_Bullets.Contains( bullet ) )
 		{
 			return;
 		}
 
-		m_Bullets.Remove( bullet );
+		m_RemovingBullets.Add( bullet );
 	}
 
 	public void SetBulletParent( Bullet bullet )
