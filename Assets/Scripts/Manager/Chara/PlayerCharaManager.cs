@@ -39,17 +39,12 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	private KeyCode[] m_3rdCharaChange;
 
 
-	[SerializeField]
-	private int m_Smasher;
 
 	[SerializeField]
-	private int m_Echo;
+	private CharaControllerBase[] m_CharaControllers;
 
 	[SerializeField]
-	private int m_Hacker;
-
-	[SerializeField]
-	private CharaControllerBase m_CharaController;
+	private CharaControllerBase m_CurrentCharaController;
 
 	#endregion
 
@@ -58,6 +53,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	// 現在出撃中のキャラのインデックス
 	private int m_CharaIndex = 0;
 
+	private float m_WaitChangeTime = 0;
 
 
 	public override void Init()
@@ -68,27 +64,33 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-
-		m_CharaController.OnAwake();
 	}
 
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
-
-		m_CharaController.OnDestroyed();
 	}
 
 	private void Start()
 	{
-		m_CharaController.OnStart();
+		foreach( var chara in m_CharaControllers )
+		{
+			chara.gameObject.SetActive( false );
+		}
+
+		ChangeChara( 0 );
 	}
 
 	private void Update()
 	{
-		if( m_CharaController == null )
+		if( m_CurrentCharaController == null )
 		{
 			return;
+		}
+
+		if( m_WaitChangeTime > 0f )
+		{
+			m_WaitChangeTime -= Time.deltaTime;
 		}
 
 		Vector3 moveDir = Vector3.zero;
@@ -114,43 +116,54 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 			moveDir.x -= 1;
 		}
 
-		m_CharaController.Move( moveDir );
+		m_CurrentCharaController.Move( moveDir );
 
 		// 通常弾
 		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
-			m_CharaController.ShotBullet();
+			m_CurrentCharaController.ShotBullet();
 		}
 
 		// ボム
 		if( IsGetKeyDown( m_ShotBomb, Input.GetMouseButtonDown( 1 ) ) )
 		{
-			m_CharaController.ShotBomb();
+			m_CurrentCharaController.ShotBomb();
 		}
 
 		// 上にスクロールするとプラス、下でマイナス
 		float wheel = Input.GetAxis( "Mouse ScrollWheel" );
 
 		// キャラ交代の入力
-		if( IsGetKey( m_1stCharaChange, m_CharaIndex > 0 && wheel > 0 ) )
+		int charaNum = m_CharaControllers.Length;
+
+		if( wheel > 0 )
+		{
+			ChangeChara( ( m_CharaIndex - 1 + charaNum ) % charaNum );
+		}
+		else if( wheel < 0 )
+		{
+			ChangeChara( ( m_CharaIndex + 1 + charaNum ) % charaNum );
+		}
+
+		if( IsGetKey( m_1stCharaChange ) )
 		{
 			ChangeChara( 0 );
 		}
-		else if( IsGetKey( m_2ndCharaChange, m_CharaIndex < 1 && wheel < 0 || m_CharaIndex > 1 && wheel > 0 ) )
+		else if( IsGetKey( m_2ndCharaChange ) )
 		{
 			ChangeChara( 1 );
 		}
-		else if( IsGetKey( m_3rdCharaChange, m_CharaIndex < 2 && wheel < 0 ) )
+		else if( IsGetKey( m_3rdCharaChange ) )
 		{
 			ChangeChara( 2 );
 		}
 
-		m_CharaController.OnUpdate();
+		m_CurrentCharaController.OnUpdate();
 	}
 
 	private void LateUpdate()
 	{
-		m_CharaController.OnLateUpdate();
+		m_CurrentCharaController.OnLateUpdate();
 	}
 
 	private bool IsGetKeyDown( KeyCode[] targetKeys, bool additionalCondition = false )
@@ -181,13 +194,20 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 	private void ChangeChara( int index )
 	{
-		if( m_CharaIndex == index )
+		if( m_CharaIndex == index && m_CurrentCharaController != null || m_WaitChangeTime > 0f )
 		{
 			return;
 		}
 
 		m_CharaIndex = index;
 
-		Debug.Log( "Change Chara : " + m_CharaIndex );
+		if( m_CurrentCharaController != null )
+		{
+			m_CurrentCharaController.gameObject.SetActive( false );
+		}
+
+		m_CurrentCharaController = m_CharaControllers[m_CharaIndex];
+		m_CurrentCharaController.gameObject.SetActive( true );
+		m_WaitChangeTime = 1f;
 	}
 }
