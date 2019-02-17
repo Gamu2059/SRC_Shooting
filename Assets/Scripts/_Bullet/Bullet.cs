@@ -33,10 +33,8 @@ public class Bullet : BehaviorBase
 	private BulletOrbitalParam m_OrbitalParam;
 
 	protected float m_NowLifeTime;
-	protected float m_NowSpeed;
-	protected Vector3 m_NowScale;
-	protected Vector3 m_NowRotate;
 	protected float m_NowHitSize;
+	protected float m_NowSpeed;
 	protected bool m_IsReverseHacked; // ハッカーのリバースハックを受けたかどうか
 
 	public BulletParam GetBulletParam()
@@ -64,7 +62,6 @@ public class Bullet : BehaviorBase
 	public override void OnUpdate()
 	{
 		base.OnUpdate();
-
 
 	}
 

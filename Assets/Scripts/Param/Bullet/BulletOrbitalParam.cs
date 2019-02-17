@@ -30,12 +30,6 @@ public struct BulletOrbitalParam
 	[Tooltip( "Scaleの適用は絶対か相対か" )]
 	public BulletParam.E_BULLET_PARAM_RELATIVE ScaleRelative;
 
-	[Tooltip( "これが適用された時のDeltaPosition" )]
-	public Vector3 DeltaPosition;
-
-	[Tooltip( "DeltaPositionの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE DeltaPositionRelative;
-
 	[Tooltip( "これが適用された時のDeltaRotation" )]
 	public Vector3 DeltaRotation;
 
