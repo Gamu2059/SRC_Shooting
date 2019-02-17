@@ -41,10 +41,10 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 
 	[SerializeField]
-	private CharaControllerBase[] m_Controllers;
+	private PlayerController[] m_Controllers;
 
 	[SerializeField]
-	private CharaControllerBase m_CurrentController;
+	private PlayerController m_CurrentController;
 
 	#endregion
 
@@ -59,12 +59,12 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 	#region Get Set
 
-	public CharaControllerBase[] GetControllers()
+	public PlayerController[] GetControllers()
 	{
 		return m_Controllers;
 	}
 
-	public CharaControllerBase GetCurrentController()
+	public PlayerController GetCurrentController()
 	{
 		return m_CurrentController;
 	}
@@ -138,7 +138,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		// 通常弾
 		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
-			m_CurrentController.ShotBullet();
+			m_CurrentController.ShotBullet( 0, 0 );
 		}
 
 		// ボム

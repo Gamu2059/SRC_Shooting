@@ -54,15 +54,7 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 				continue;
 			}
 
-			if( !bullet.IsStarted )
-			{
-				bullet.OnStart();
-				bullet.IsStarted = true;
-			}
-			else
-			{
-				bullet.OnUpdate();
-			}
+			bullet.OnUpdate();
 		}
 
 		RemoveBullet();
@@ -105,7 +97,6 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 			return;
 		}
 
-		bullet.IsStarted = false;
 		m_Bullets.Add( bullet );
 	}
 

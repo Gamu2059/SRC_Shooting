@@ -750,9 +750,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff2157817085c684bb42207a3d218b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Troop: 0
   m_MoveSpeed: 5
-  m_BulletPrefabs: []
+  m_BulletPrefabs:
+  - {fileID: 2380427692720716458, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
   m_BombPrefabs: []
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
   m_Protectors: []
   m_ProtectorRadius: 0
   m_ProtectorSpeed: 0
@@ -764,7 +768,6 @@ MonoBehaviour:
   m_HitSize: 0
   m_BulletPrefab: {fileID: 0}
   m_BombPrefab: {fileID: 0}
-  m_Protectors: []
 --- !u!1 &1215113178383421964
 GameObject:
   m_ObjectHideFlags: 0

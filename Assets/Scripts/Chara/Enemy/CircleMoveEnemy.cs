@@ -46,23 +46,18 @@ public class CircleMoveEnemy : EnemyController
 		Vector3 pos = new Vector3( Mathf.Cos( m_NowRad ), 0, Mathf.Sin( m_NowRad ) ) * m_Radius + m_BasePos;
 		transform.position = pos;
 
+		Vector3 angle = transform.eulerAngles;
+		angle.y = -( m_NowRad * Mathf.Rad2Deg ) + 90;
+		transform.eulerAngles = angle;
+
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			ShotBullet();
+			ShotBullet( 0, 0 );
 		}
 		else
 		{
 			m_ShotTime -= Time.deltaTime;
 		}
-	}
-
-	public override void ShotBullet( int bulletIndex = 0 )
-	{
-		Bullet bullet = GetPoolBullet( 0 );
-		bullet.transform.position = transform.position;
-		bullet.transform.eulerAngles = Vector3.up * m_NowRad * Mathf.Rad2Deg;
-		bullet.transform.Translate( m_ShotPosOffset * Mathf.Cos( m_NowRad ), 0, m_ShotPosOffset * Mathf.Sin( m_NowRad ) );
-		bullet.ShotBullet();
 	}
 }
