@@ -37,4 +37,12 @@ public class PlayerController : CharaControllerBase
 
 	[SerializeField]
 	private GameObject m_BombPrefab;
+
+    [SerializeField]
+    protected bool IsReadyShotBullet;
+
+    public void SetReadyShotBullet()
+    {
+        IsReadyShotBullet = true;
+    }
 }

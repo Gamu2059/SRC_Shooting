@@ -40,15 +40,16 @@ public class SmasherController : PlayerController
         UpdateSubShot();
     }
 
-    public override void ShotBullet( int bulletIndex = 0)
+    public override void ShotBullet( int bulletIndex = 0, int bulletParamIndex = 0 )
     { 
         if(shotDelay >= m_ShotInterval)
         {
-            for (int i = 0; i < m_MainShotPosition.Length; i++)
+            Bullet b = GetOriginalBullet(0);
+            
+             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
-                Bullet bullet = GetPoolBullet(0);
-                bullet.transform.position = m_MainShotPosition[i].position;
-                bullet.ShotBullet();
+                Bullet bullet = GetPoolBullet(0);   
+                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles,  b.transform.localScale, bulletIndex, m_BulletParams[0], -1);
             }
 
             if (m_SubShotLv1CanShot)
@@ -56,8 +57,7 @@ public class SmasherController : PlayerController
                 for (int i = 0; i < m_SubShotLv1.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(0);
-                    bullet.transform.position = m_SubShotLv1[i].GetComponent<Transform>().position;
-                    bullet.ShotBullet();
+                    bullet.ShotBullet(this, m_SubShotLv1[i].transform.position, m_SubShotLv1[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], -1);
                 }
             }
 
@@ -66,13 +66,21 @@ public class SmasherController : PlayerController
                 for (int i = 0; i < m_SubShotLv2.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(0);
-                    bullet.transform.position = m_SubShotLv2[i].GetComponent<Transform>().position;
-                    bullet.ShotBullet();
+                    bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_MainShotPosition[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], -1);
 
                 }
             }
 
             shotDelay = 0;
+        }
+    }
+
+    private void Shoot(CharaControllerBase owner, Transform[] shooter, Bullet originBullet, int bulletIndex, BulletParam bulletParam, int orbitalIndex = -1)
+    {
+        for(int i=0; i < shooter.Length; i++)
+        {
+            Bullet bullet = GetPoolBullet(0);
+            bullet.ShotBullet(owner, shooter[i].position, shooter[i].eulerAngles, originBullet.transform.localScale, bulletIndex, bulletParam, orbitalIndex);
         }
     }
 

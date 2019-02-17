@@ -1215,21 +1215,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880db4892b3c2fc48b167732da1391cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Troop: 0
   m_MoveSpeed: 5
   m_BulletPrefabs:
-  - {fileID: 7076031899561738867, guid: b507b614d478d7e4e8e0f8dbf27ff96c, type: 3}
+  - {fileID: 2380427692720716458, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
   m_BombPrefabs: []
-  m_Protectors:
-  - {fileID: 1215113176688278961}
-  - {fileID: 1215113176783628977}
-  - {fileID: 1215113178383421955}
-  - {fileID: 1215113176964047581}
-  - {fileID: 1215113177751288388}
-  - {fileID: 1215113176537253215}
-  - {fileID: 1215113176821981120}
-  - {fileID: 1215113177019522363}
-  m_ProtectorRadius: 3
-  m_ProtectorSpeed: 3
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
+  m_Protectors: []
+  m_ProtectorRadius: 0
+  m_ProtectorSpeed: 0
   m_Lv: 0
   m_Exp: 0
   m_NowHp: 0
@@ -1238,19 +1233,6 @@ MonoBehaviour:
   m_HitSize: 0
   m_BulletPrefab: {fileID: 0}
   m_BombPrefab: {fileID: 0}
-  m_ShotInterval: 0.05
-  m_MainShotPosition:
-  - {fileID: 299423730}
-  - {fileID: 325473606}
-  m_SubShotLv1:
-  - {fileID: 1246524644}
-  - {fileID: 471817006}
-  m_SubShotLv2:
-  - {fileID: 1174230990}
-  - {fileID: 1227746000}
-  m_ShotLevel: 1
-  m_SubShotLv2Radius: 4
-  m_SubShotLv2Speed: 5
 --- !u!1 &1215113178383421964
 GameObject:
   m_ObjectHideFlags: 0

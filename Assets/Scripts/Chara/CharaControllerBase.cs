@@ -8,8 +8,20 @@ using UnityEngine;
 public class CharaControllerBase : BehaviorBase
 {
 
+	public enum E_CHARA_TROOP
+	{
+		// プレイヤーキャラ
+		PLAYER,
+
+		// 敵キャラ
+		ENEMY,
+	}
+
 	[Header( "キャラの基礎パラメータ" )]
         
+	[SerializeField]
+	private E_CHARA_TROOP m_Troop;
+
 	[SerializeField]
 	private float m_MoveSpeed = 5f;
 
@@ -20,6 +32,9 @@ public class CharaControllerBase : BehaviorBase
 
 	[SerializeField]
 	private BehaviorBase[] m_BombPrefabs;
+
+	[SerializeField]
+	protected BulletParam[] m_BulletParams;
 
 	[Header( "プロテクタのパラメータ" )]
 
@@ -39,6 +54,12 @@ public class CharaControllerBase : BehaviorBase
 	private List<Bullet>[] m_PoolBullets;
 
 
+
+	public E_CHARA_TROOP GetTroop()
+	{
+		return m_Troop;
+	}
+
 	public float GetMoveSpeed()
 	{
 		return m_MoveSpeed;
@@ -47,16 +68,6 @@ public class CharaControllerBase : BehaviorBase
 	protected void SetMoveSpeed( float speed )
 	{
 		m_MoveSpeed = speed;
-	}
-
-	public BehaviorBase[] GetBulletPrefabs()
-	{
-		return m_BulletPrefabs;
-	}
-
-	public BehaviorBase[] GetBombPrefabs()
-	{
-		return m_BombPrefabs;
 	}
 
 
@@ -80,9 +91,41 @@ public class CharaControllerBase : BehaviorBase
 	/// <summary>
 	/// 通常弾を発射する。
 	/// </summary>
-	public virtual void ShotBullet( int bulletIndex = 0 )
+	/// <param name="bulletIndex">発射したい弾のindex</param>
+	/// <param name="bulletParamIndex">弾の軌道を定めるパラメータのindex</param>
+	public virtual void ShotBullet( int bulletIndex, int bulletParamIndex )
 	{
+		if( bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length )
+		{
+			return;
+		}
 
+		if( bulletParamIndex < 0 || bulletParamIndex >= m_BulletParams.Length )
+		{
+			return;
+		}
+
+		BulletParam bulletParam = m_BulletParams[bulletParamIndex];
+
+		if( bulletParam == null )
+		{
+			return;
+		}
+
+		GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
+		Bullet bullet = GetPoolBullet( bulletIndex );
+		bullet.ShotBullet( this, transform.position, transform.eulerAngles, bulletPrefab.transform.localScale, bulletIndex, bulletParam, -1 );
+
+		//float angle = bulletRot.y;
+		//angle -= initSpreadParam.DeltaAngle * ( i - ( bulletNum - 1 ) / 2f );
+		//bulletRot.y = angle;
+
+		//// 数学上の回転は反時計だがUnityの回転は時計なのでangleを逆にし、青軸方向に向けるには90度足す必要がある
+		//angle = ( -angle + 90 ) * Mathf.Deg2Rad;
+		//Vector3 offsetPos = new Vector3( Mathf.Cos( angle ), 0, Mathf.Sin( angle ) ) * initSpreadParam.Radius;
+		//bulletPos += offsetPos;
+
+		//Bullet bullet = GetPoolBullet( bulletIndex );
 	}
 
 	/// <summary>
@@ -91,6 +134,20 @@ public class CharaControllerBase : BehaviorBase
 	public virtual void ShotBomb( int bombIndex = 0 )
 	{
 
+	}
+
+	/// <summary>
+	/// このキャラが保持する弾のプレハブを返す。
+	/// 複製物を使用したい場合は、GetPoolBulletから取得して下さい。
+	/// </summary>
+	public Bullet GetOriginalBullet( int bulletIndex = 0 )
+	{
+		if( bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length )
+		{
+			return null;
+		}
+
+		return m_BulletPrefabs[bulletIndex];
 	}
 
 	/// <summary>
