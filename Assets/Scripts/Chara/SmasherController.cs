@@ -31,7 +31,7 @@ public class SmasherController : PlayerController
     [SerializeField]
     private float m_SubShotLv2Speed;
 
-    private float m_SubShotLv2AngleRad;
+    private float m_SubShotLv2AngleDeg;
 
     public override void OnUpdate()
     {
@@ -44,34 +44,34 @@ public class SmasherController : PlayerController
     { 
         if(shotDelay >= m_ShotInterval)
         {
-            // メインショット
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
                 Bullet bullet = GetPoolBullet(0);
-                bullet.ShotBullet();
                 bullet.transform.position = m_MainShotPosition[i].position;
+                bullet.ShotBullet();
             }
-            // サブLv1
+
             if (m_SubShotLv1CanShot)
             {
                 for (int i = 0; i < m_SubShotLv1.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(0);
-                    bullet.ShotBullet();
                     bullet.transform.position = m_SubShotLv1[i].GetComponent<Transform>().position;
+                    bullet.ShotBullet();
                 }
             }
-            // サブLv2
+
             if (m_SubShotLv2CanShot)
             {
                 for (int i = 0; i < m_SubShotLv2.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(0);
-                    bullet.ShotBullet();
                     bullet.transform.position = m_SubShotLv2[i].GetComponent<Transform>().position;
+                    bullet.ShotBullet();
 
                 }
             }
+
             shotDelay = 0;
         }
     }
@@ -109,17 +109,15 @@ public class SmasherController : PlayerController
             m_SubShotLv2[i].SetActive(m_SubShotLv2CanShot);
         }
 
-
-
-        m_SubShotLv2AngleRad += m_SubShotLv2Speed * Time.deltaTime;
-        m_SubShotLv2AngleRad %= Mathf.PI * 2;
+        m_SubShotLv2AngleDeg += m_SubShotLv2Speed * Time.deltaTime;
+        m_SubShotLv2AngleDeg %= Mathf.PI * 2;
         float unitAngle = Mathf.PI * 2 / m_SubShotLv2.Length;
 
         if (m_SubShotLv2CanShot)
         {
             for (int i = 0; i < m_SubShotLv2.Length; i++)
             {
-                float angle = unitAngle * i + m_SubShotLv2AngleRad;
+                float angle = unitAngle * i + m_SubShotLv2AngleDeg;
                 float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
                 float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
                 m_SubShotLv2[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
