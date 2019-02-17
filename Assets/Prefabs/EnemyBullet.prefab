@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6914097940554999020}
-  - component: {fileID: 2380427692720716458}
+  - component: {fileID: 7663632291520977884}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -123,7 +123,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2380427692720716458
+--- !u!114 &7663632291520977884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,9 +132,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 6000828579167568356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5d0554d7ac2d0741ac9f87f916d10d1, type: 3}
+  m_Script: {fileID: 11500000, guid: bbdf47c6427522a41a78eff3d8c8994c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsStarted: 0
-  m_Speed: 30
-  m_DeadDistance: 100
+  m_Troop: 0
+  m_Owner: {fileID: 0}
+  m_Target: {fileID: 0}
+  m_BulletIndex: 0
+  m_BulletParam: {fileID: 0}
+  m_OrbitalParam:
+    Target: 0
+    Position: {x: 0, y: 0, z: 0}
+    PositionRelative: 0
+    Rotation: {x: 0, y: 0, z: 0}
+    RotationRelative: 0
+    Scale: {x: 0, y: 0, z: 0}
+    ScaleRelative: 0
+    DeltaRotation: {x: 0, y: 0, z: 0}
+    DeltaRotationRelative: 0
+    DeltaScale: {x: 0, y: 0, z: 0}
+    DeltaScaleRelative: 0
+    HitSize: 0
+    HitSizeRelative: 0
+    DeltaHitSize: 0
+    DeltaHitSizeRelative: 0
+    Damage: 0
+    DamageRelative: 0
+    Speed: 0
+    SpeedRelative: 0
+    Accel: 0
+    AccelRelative: 0
+    IsSearch: 0
+    Lerp: 0
+    LerpRelative: 0
+    OptionObjectParams: []
+    OptionValueParams: []

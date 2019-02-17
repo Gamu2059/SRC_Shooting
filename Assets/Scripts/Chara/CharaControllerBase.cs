@@ -8,7 +8,19 @@ using UnityEngine;
 public class CharaControllerBase : BehaviorBase
 {
 
+	public enum E_CHARA_TROOP
+	{
+		// プレイヤーキャラ
+		PLAYER,
+
+		// 敵キャラ
+		ENEMY,
+	}
+
 	[Header( "キャラの基礎パラメータ" )]
+
+	[SerializeField]
+	private E_CHARA_TROOP m_Troop;
 
 	[SerializeField]
 	private float m_MoveSpeed = 5f;
@@ -42,6 +54,12 @@ public class CharaControllerBase : BehaviorBase
 	private List<Bullet>[] m_PoolBullets;
 
 
+
+	public E_CHARA_TROOP GetTroop()
+	{
+		return m_Troop;
+	}
+
 	public float GetMoveSpeed()
 	{
 		return m_MoveSpeed;
@@ -50,16 +68,6 @@ public class CharaControllerBase : BehaviorBase
 	protected void SetMoveSpeed( float speed )
 	{
 		m_MoveSpeed = speed;
-	}
-
-	public BehaviorBase[] GetBulletPrefabs()
-	{
-		return m_BulletPrefabs;
-	}
-
-	public BehaviorBase[] GetBombPrefabs()
-	{
-		return m_BombPrefabs;
 	}
 
 
@@ -105,60 +113,19 @@ public class CharaControllerBase : BehaviorBase
 		}
 
 		GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
-		BulletOrbitalParam initParam = bulletParam.OrbitalParam;
-		BulletSpreadParam initSpreadParam = initParam.SpreadParam;
+		Bullet bullet = GetPoolBullet( bulletIndex );
+		bullet.ShotBullet( this, transform.position, transform.eulerAngles, bulletPrefab.transform.localScale, bulletIndex, bulletParam, -1 );
 
-		int bulletNum = initSpreadParam.BulletNum;
+		//float angle = bulletRot.y;
+		//angle -= initSpreadParam.DeltaAngle * ( i - ( bulletNum - 1 ) / 2f );
+		//bulletRot.y = angle;
 
-		for( int i = 0; i < bulletNum; i++ )
-		{
-			Vector3 bulletPos = transform.position;
+		//// 数学上の回転は反時計だがUnityの回転は時計なのでangleを逆にし、青軸方向に向けるには90度足す必要がある
+		//angle = ( -angle + 90 ) * Mathf.Deg2Rad;
+		//Vector3 offsetPos = new Vector3( Mathf.Cos( angle ), 0, Mathf.Sin( angle ) ) * initSpreadParam.Radius;
+		//bulletPos += offsetPos;
 
-			if( initParam.PositionRelative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
-			{
-				bulletPos += initParam.Position;
-			}
-			else
-			{
-				bulletPos = initParam.Position;
-			}
-
-			Vector3 bulletRot = transform.eulerAngles;
-
-			if( initParam.RotationRelative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
-			{
-				bulletRot += initParam.Rotation;
-			}
-			else
-			{
-				bulletRot = initParam.Rotation;
-			}
-
-			Vector3 bulletScale = bulletPrefab.transform.lossyScale;
-
-			if( initParam.ScaleRelative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
-			{
-				bulletScale += initParam.Scale;
-			}
-			else
-			{
-				bulletScale = initParam.Scale;
-			}
-
-			float angle = bulletRot.y;
-			angle += initSpreadParam.DeltaAngle * ( i - ( bulletNum - 1 ) / 2f );
-			bulletRot.y = angle;
-
-			Vector3 offsetPos = new Vector3( Mathf.Cos( angle * Mathf.Deg2Rad ), 0, Mathf.Sin( angle * Mathf.Deg2Rad ) ) * initSpreadParam.Radius;
-			bulletPos += offsetPos;
-
-			Bullet bullet = GetPoolBullet( bulletIndex );
-			bullet.transform.position = bulletPos;
-			bullet.transform.eulerAngles = bulletRot;
-			bullet.transform.localScale = bulletScale;
-			bullet.ShotBullet( bulletParam );
-		}
-
+		//Bullet bullet = GetPoolBullet( bulletIndex );
 	}
 
 	/// <summary>
@@ -167,6 +134,20 @@ public class CharaControllerBase : BehaviorBase
 	public virtual void ShotBomb( int bombIndex = 0 )
 	{
 
+	}
+
+	/// <summary>
+	/// このキャラが保持する弾のプレハブを返す。
+	/// 複製物を使用したい場合は、GetPoolBulletから取得して下さい。
+	/// </summary>
+	public Bullet GetOriginalBullet( int bulletIndex = 0 )
+	{
+		if( bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length )
+		{
+			return null;
+		}
+
+		return m_BulletPrefabs[bulletIndex];
 	}
 
 	/// <summary>

@@ -42,12 +42,6 @@ public struct BulletOrbitalParam
 	[Tooltip( "DeltaScaleの適用は絶対か相対か" )]
 	public BulletParam.E_BULLET_PARAM_RELATIVE DeltaScaleRelative;
 
-	[Space()]
-	[Header( "Spread" )]
-
-	[Tooltip( "これが適用された時の拡散情報" )]
-	public BulletSpreadParam SpreadParam;
-
 
 	[Space()]
 	[Header( "Hit" )]

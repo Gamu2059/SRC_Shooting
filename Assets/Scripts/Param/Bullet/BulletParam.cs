@@ -11,9 +11,6 @@ public class BulletParam : ScriptableObject
 	[System.Serializable]
 	public enum E_BULLET_TARGET
 	{
-		// 自分自身
-		SELF,
-
 		// 敵
 		ENEMY,
 
