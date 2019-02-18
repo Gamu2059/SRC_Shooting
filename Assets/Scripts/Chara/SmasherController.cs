@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SmasherController : PlayerController
 {
-    [SerializeField]
+    [SerializeField, Range(0f, 1f)]
     private float m_ShotInterval;
 
     private float shotDelay;
@@ -32,6 +32,9 @@ public class SmasherController : PlayerController
     private float m_SubShotLv2Speed;
 
     private float m_SubShotLv2AngleDeg;
+
+    [SerializeField]
+    private bool m_IsSpinTurn;
 
     public override void OnUpdate()
     {
@@ -66,8 +69,7 @@ public class SmasherController : PlayerController
                 for (int i = 0; i < m_SubShotLv2.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(0);
-                    bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_MainShotPosition[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
-
+                    bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, Vector3.zero, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
                 }
             }
 
@@ -117,8 +119,15 @@ public class SmasherController : PlayerController
             for (int i = 0; i < m_SubShotLv2.Length; i++)
             {
                 float angle = unitAngle * i + m_SubShotLv2AngleDeg;
-                float x = m_SubShotLv2Radius * Mathf.Cos(angle * (i == 0 ? 1 : -1));
-                float z = m_SubShotLv2Radius * Mathf.Sin(angle * (i == 0 ? 1 : -1));
+
+                if (m_IsSpinTurn)
+                {
+                    angle *= (i == 0 ? 1 : -1);
+                }
+
+                float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
+                float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
+                 
                 m_SubShotLv2[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
                 m_SubShotLv2[i].GetComponent<Transform>().LookAt(transform);
             }
