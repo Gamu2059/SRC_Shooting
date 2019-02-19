@@ -36,10 +36,25 @@ public class SmasherController : PlayerController
     [SerializeField]
     private bool m_IsSpinTurn;
 
+    
+    //遊び用
+    //[SerializeField]
+    private float m_SubShotLv2MaxSpeed;
+
+    //[SerializeField]
+    private float step;
+
+    public override void OnStart()
+    {
+        base.OnStart();
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
+        // 遊び用
+        //UpdateSpeed();
         UpdateSubShot();
     }
 
@@ -82,6 +97,22 @@ public class SmasherController : PlayerController
         base.ShotBomb(bombIndex);
     }
 
+    private void UpdateSpeed()
+    {
+        /*
+         * 速度が直線的に変化するバージョン
+        m_SubShotLv2Speed -= step * Time.deltaTime;
+        if(Mathf.Abs(m_SubShotLv2Speed) >= m_SubShotLv2MaxSpeed)
+        {
+            m_SubShotLv2Speed = (m_SubShotLv2Speed < 0 ? -m_SubShotLv2MaxSpeed : m_SubShotLv2MaxSpeed);
+            step = -step;
+        }
+        */
+
+        // 速度が正弦波に従って変化するバージョン
+        m_SubShotLv2Speed = m_SubShotLv2MaxSpeed * Mathf.Sin(Time.time * step);
+    }
+
     private void UpdateSubShot()
     {
         if (m_ShotLevel >= 3)
@@ -122,11 +153,11 @@ public class SmasherController : PlayerController
 
                 if (m_IsSpinTurn)
                 {
-                    angle *= (i == 0 ? 1 : -1);
+                    angle *= (i % 2 == 0 ? -1 : 1);
                 }
 
-                float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
-                float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
+                float x = m_SubShotLv2Radius * Mathf.Cos(angle);
+                float z = m_SubShotLv2Radius * Mathf.Sin(angle);
                  
                 m_SubShotLv2[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
                 m_SubShotLv2[i].GetComponent<Transform>().LookAt(transform);
