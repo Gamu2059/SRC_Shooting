@@ -158,6 +158,7 @@ public class Bullet : BehaviorBase
 		OnDestroyBullet();
 		BulletManager.Instance.CheckRemovingBullet( this );
 		gameObject.SetActive( false );
+		Debug.Log( gameObject.activeSelf );
 	}
 
 	/// <summary>
@@ -346,5 +347,14 @@ public class Bullet : BehaviorBase
 		m_NowLerp = 0;
 
 		m_IsReverseHacked = false;
+	}
+
+	protected virtual void OnBecameVisible()
+	{
+	}
+
+	protected virtual void OnBecameInvisible()
+	{
+		DestroyBullet();
 	}
 }

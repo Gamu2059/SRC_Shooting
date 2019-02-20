@@ -19,7 +19,7 @@ MonoBehaviour:
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
+    Scale: {x: 0, y: 0, z: 2}
     ScaleRelative: 0
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
@@ -31,9 +31,9 @@ MonoBehaviour:
     DeltaHitSizeRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 10
+    Speed: 40
     SpeedRelative: 0
-    Accel: 0
+    Accel: -60
     AccelRelative: 0
     IsSearch: 0
     Lerp: 0
