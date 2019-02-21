@@ -3,37 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 全ての弾オブジェクトの基礎クラス。
+/// 全てのレーザーオブジェクトの基礎クラス。
 /// </summary>
-public class Bullet : BehaviorBase
+public class Laser : BehaviorBase
 {
+
+	[System.Serializable]
+	public enum E_LASER_LIFE_CYCLE
+	{
+		BEGIN,
+		FIRE,
+		END,
+	}
 
 	[SerializeField]
 	private CharaControllerBase.E_CHARA_TROOP m_Troop;
 
-	/// <summary>
-	/// 弾を発射したキャラ
-	/// </summary>
 	[SerializeField]
 	private CharaControllerBase m_Owner;
 
-	/// <summary>
-	/// 弾の標的となっているキャラ
-	/// </summary>
 	[SerializeField]
 	private CharaControllerBase m_Target;
 
 	[SerializeField]
-	private int m_BulletIndex;
+	private int m_LaserIndex;
 
 	[SerializeField]
-	private BulletParam m_BulletParam;
+	private LaserParam m_LaserParam;
 
 	[SerializeField]
-	private BulletOrbitalParam m_OrbitalParam;
+	private LaserOrbitalParam m_OrbitalParam;
+
+	[SerializeField]
+	protected int m_OrbitalIndex;
 
 	protected bool m_IsStarted;
+	protected E_LASER_LIFE_CYCLE m_LifeCycle;
 	protected float m_NowLifeTime;
+
+	protected Vector3 m_NowAnchor;
+
+	protected Vector3 m_NowAnchoredPosition;
 
 	protected Vector3 m_NowDeltaRotation;
 	protected Vector3 m_NowDeltaScale;
@@ -49,20 +59,6 @@ public class Bullet : BehaviorBase
 	protected float m_NowLerp;
 
 	protected bool m_IsReverseHacked; // ハッカーのリバースハックを受けたかどうか
-
-
-
-	public BulletParam GetBulletParam()
-	{
-		return m_BulletParam;
-	}
-
-	public BulletOrbitalParam GetOrbitalParam()
-	{
-		return m_OrbitalParam;
-	}
-
-
 
 	/// <summary>
 	/// 最初のフレームで呼び出される。
@@ -85,7 +81,7 @@ public class Bullet : BehaviorBase
 		}
 
 		base.OnUpdate();
-		OnUpdateBulletOrbital();
+		OnUpdateLaserOrbital();
 	}
 
 	/// <summary>
@@ -94,26 +90,24 @@ public class Bullet : BehaviorBase
 	public override void OnLateUpdate()
 	{
 		base.OnLateUpdate();
-		OnLateUpdateBulletOrbital();
+		OnLateUpdateLaserOrbital();
 	}
 
-
-
 	/// <summary>
-	/// この弾を発射させる。
+	/// このレーザーを発射させる。
 	/// </summary>
-	/// <param name="owner">この弾を発射させるキャラ</param>
-	/// <param name="position">この弾を発射させる基準座標</param>
-	/// <param name="rotation">この弾を発射させる基準回転</param>
-	/// <param name="originScale">この弾の元々のスケール</param>
-	/// <param name="bulletIndex">owneの何番目のプレハブの弾なのかを意味するindex</param>
-	/// <param name="bulletParam">弾の全体のパラメータ</param>
-	/// <param name="orbitalIndex">弾の軌道パラメータのインデックス defaultで初期軌道パラメータになる</param>
-	public void ShotBullet( CharaControllerBase owner, Vector3 position, Vector3 rotation, Vector3 originScale, int bulletIndex, BulletParam bulletParam, int orbitalIndex = -1 )
+	/// <param name="owner">このレーザーを発射させるキャラ</param>
+	/// <param name="position">このレーザーを発射させる基準座標</param>
+	/// <param name="rotation">このレーザーを発射させる基準回転</param>
+	/// <param name="originScale">このレーザーの元々のスケール</param>
+	/// <param name="bulletIndex">owneの何番目のプレハブのレーザーなのかを意味するindex</param>
+	/// <param name="bulletParam">レーザーの全体のパラメータ</param>
+	/// <param name="orbitalIndex">レーザーの軌道パラメータのインデックス defaultで初期軌道パラメータになる</param>
+	public void ShotLaser( CharaControllerBase owner, Vector3 position, Vector3 rotation, Vector3 originScale, int laserIndex, LaserParam laserParam, int orbitalIndex = -1 )
 	{
-		if( owner == null || bulletParam == null )
+		if( owner == null || laserParam == null )
 		{
-			DestroyBullet();
+			DestroyLaser();
 			return;
 		}
 
@@ -128,44 +122,35 @@ public class Bullet : BehaviorBase
 		transform.eulerAngles = rotation;
 		transform.localScale = originScale;
 
-		m_BulletIndex = bulletIndex;
+		m_LaserIndex = laserIndex;
 
-		m_BulletParam = bulletParam;
+		m_LaserParam = laserParam;
 
-		BulletOrbitalParam orbitalParam;
+		LaserOrbitalParam orbitalParam = laserParam.BeginOrbitalParam;
 
-		if( orbitalIndex < 0 || orbitalIndex >= m_BulletParam.ConditionalOrbitalParams.Length )
-		{
-			orbitalParam = m_BulletParam.OrbitalParam;
-		}
-		else
-		{
-			orbitalParam = m_BulletParam.ConditionalOrbitalParams[orbitalIndex];
-		}
+		m_OrbitalIndex = orbitalIndex;
 
 		ChangeOrbital( orbitalParam );
 
 		gameObject.SetActive( true );
-		BulletManager.Instance.AddBullet( this );
+		//BulletManager.Instance.AddBullet( this );
 		OnShotBullet();
 	}
 
 	/// <summary>
-	/// この弾を破棄する。
+	/// このレーザーを破棄する。
 	/// </summary>
-	public virtual void DestroyBullet()
+	public virtual void DestroyLaser()
 	{
-		OnDestroyBullet();
-		BulletManager.Instance.CheckRemovingBullet( this );
 		gameObject.SetActive( false );
 	}
 
 	/// <summary>
 	/// この弾の軌道情報を上書きする。
 	/// </summary>
-	public virtual void ChangeOrbital( BulletOrbitalParam orbitalParam )
+	public virtual void ChangeOrbital( LaserOrbitalParam orbitalParam )
 	{
-		if( m_Owner == null || m_BulletParam == null )
+		if( m_Owner == null || m_LaserParam == null )
 		{
 			return;
 		}
@@ -173,24 +158,16 @@ public class Bullet : BehaviorBase
 		m_OrbitalParam = orbitalParam;
 
 		// ターゲットの上書き
-		if( m_OrbitalParam.Target == E_ATTACK_TARGET.ENEMY )
-		{
-			m_Target = GetNearestEnemy();
-		}
-		else if( m_OrbitalParam.Target == E_ATTACK_TARGET.OWNER )
-		{
-			m_Target = m_Owner;
-		}
-
+		m_Target = GetNearestEnemy();
 
 		// 各種パラメータの上書き
+		m_NowAnchor = GetRelativeValue( m_OrbitalParam.AnchorRelative, m_NowAnchor, m_OrbitalParam.Anchor );
 
-		Vector3 bulletPos = GetRelativeValue( m_OrbitalParam.PositionRelative, transform.position, m_OrbitalParam.Position );
-		Vector3 bulletRot = GetRelativeValue( m_OrbitalParam.RotationRelative, transform.eulerAngles, m_OrbitalParam.Rotation );
-		Vector3 bulletScale = GetRelativeValue( m_OrbitalParam.ScaleRelative, transform.localScale, m_OrbitalParam.Scale );
-		transform.position = bulletPos;
-		transform.eulerAngles = bulletRot;
-		transform.localScale = bulletScale;
+		Vector3 laserAnchoredPos = GetRelativeValue( m_OrbitalParam.AnchoredPositionRelative, m_NowAnchoredPosition, m_OrbitalParam.AnchoredPosition );
+		Vector3 laserRot = GetRelativeValue( m_OrbitalParam.RotationRelative, transform.eulerAngles, m_OrbitalParam.Rotation );
+		Vector3 laserScale = GetRelativeValue( m_OrbitalParam.ScaleRelative, transform.localScale, m_OrbitalParam.Scale );
+		transform.eulerAngles = laserRot;
+		transform.localScale = laserScale;
 
 		m_NowDeltaRotation = GetRelativeValue( m_OrbitalParam.DeltaRotationRelative, m_NowDeltaRotation, m_OrbitalParam.DeltaRotation );
 		m_NowDeltaScale = GetRelativeValue( m_OrbitalParam.DeltaScaleRelative, m_NowDeltaScale, m_OrbitalParam.DeltaScale );
@@ -198,9 +175,6 @@ public class Bullet : BehaviorBase
 		m_NowHitSize = GetRelativeValue( m_OrbitalParam.HitSizeRelative, m_NowHitSize, m_OrbitalParam.HitSize );
 		m_NowDeltaHitSize = GetRelativeValue( m_OrbitalParam.DeltaHitSizeRelative, m_NowDeltaHitSize, m_OrbitalParam.DeltaHitSize );
 		m_NowDamage = ( int )GetRelativeValue( m_OrbitalParam.DamageRelative, m_NowDamage, m_OrbitalParam.Damage );
-
-		m_NowSpeed = GetRelativeValue( m_OrbitalParam.SpeedRelative, m_NowSpeed, m_OrbitalParam.Speed );
-		m_NowAccel = GetRelativeValue( m_OrbitalParam.AccelRelative, m_NowAccel, m_OrbitalParam.Accel );
 
 		m_NowSearch = m_OrbitalParam.IsSearch;
 		m_NowLerp = GetRelativeValue( m_OrbitalParam.LerpRelative, m_NowLerp, m_OrbitalParam.Lerp );
@@ -211,6 +185,9 @@ public class Bullet : BehaviorBase
 		}
 
 		// オプションパラメータは後で実装
+
+		// 位置をアンカーに合わせる
+		transform.position = laserAnchoredPos;
 	}
 
 	protected Vector3 GetRelativeValue( E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
@@ -278,15 +255,17 @@ public class Bullet : BehaviorBase
 	}
 
 	/// <summary>
-	/// 弾の軌道を更新する。
-	/// 弾の軌道を特殊なものにしたい場合は、このメソッドをオーバーライドして下さい。
+	/// レーザーの軌道を更新する。
+	/// レーザーの軌道を特殊なものにしたい場合は、このメソッドをオーバーライドして下さい。
 	/// </summary>
-	protected virtual void OnUpdateBulletOrbital()
+	protected virtual void OnUpdateLaserOrbital()
 	{
-		if( m_BulletParam == null )
+		if( m_LaserParam == null )
 		{
 			return;
 		}
+
+
 
 		Vector3 rot = transform.eulerAngles;
 		Vector3 scl = transform.localScale;
@@ -309,19 +288,19 @@ public class Bullet : BehaviorBase
 
 		m_NowLifeTime += Time.deltaTime;
 
-		if( m_NowLifeTime > m_BulletParam.LifeTime )
+		if( m_NowLifeTime > m_LaserParam.LifeTime )
 		{
-			DestroyBullet();
+			DestroyLaser();
 		}
 	}
 
 	/// <summary>
-	/// 弾の軌道を更新する。
-	/// 弾の軌道を特殊なものにしたい場合は、このメソッドをオーバーライドして下さい。
+	/// レーザーの軌道を更新する。
+	/// レーザーの軌道を特殊なものにしたい場合は、このメソッドをオーバーライドして下さい。
 	/// </summary>
-	protected virtual void OnLateUpdateBulletOrbital()
+	protected virtual void OnLateUpdateLaserOrbital()
 	{
-		if( m_BulletParam == null )
+		if( m_LaserParam == null )
 		{
 			return;
 		}
@@ -332,6 +311,8 @@ public class Bullet : BehaviorBase
 	/// </summary>
 	protected void InitNowBulletParams()
 	{
+		m_NowAnchor = Vector3.zero;
+
 		m_NowDeltaRotation = Vector3.zero;
 		m_NowDeltaScale = Vector3.zero;
 
@@ -346,10 +327,5 @@ public class Bullet : BehaviorBase
 		m_NowLerp = 0;
 
 		m_IsReverseHacked = false;
-	}
-
-	protected virtual void OnBecameInvisible()
-	{
-		DestroyBullet();
 	}
 }

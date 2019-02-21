@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct BulletOrbitalParam
+public struct LaserOrbitalParam
 {
+	[Header( "Anchor" )]
 
-	[Tooltip( "この弾の標的となるもの" )]
-	public E_ATTACK_TARGET Target;
+	[Tooltip( "矩形のどこを基準にトランスフォームを適用するか" )]
+	public Vector3 Anchor;
 
-	[Space()]
+	[Tooltip( "Anchorの適用は絶対か相対か" )]
+	public E_ATTACK_PARAM_RELATIVE AnchorRelative;
+
 	[Header( "Transform" )]
 
-	[Tooltip( "これが適用された時のPosition" )]
-	public Vector3 Position;
+	[Tooltip( "これが適用された時のAnchoredPosition" )]
+	public Vector3 AnchoredPosition;
 
-	[Tooltip( "Positionの適用は絶対か相対か" )]
-	public E_ATTACK_PARAM_RELATIVE PositionRelative;
+	[Tooltip( "AnchoredPositionの適用は絶対か相対か" )]
+	public E_ATTACK_PARAM_RELATIVE AnchoredPositionRelative;
 
 	[Tooltip( "これが適用された時のRotation" )]
 	public Vector3 Rotation;
@@ -42,18 +45,17 @@ public struct BulletOrbitalParam
 	[Tooltip( "DeltaScaleの適用は絶対か相対か" )]
 	public E_ATTACK_PARAM_RELATIVE DeltaScaleRelative;
 
-
 	[Space()]
 	[Header( "Hit" )]
 
 	[Tooltip( "これが適用された時のHitSize" )]
-	public Vector3 HitSize;
+	public Vector2 HitSize;
 
 	[Tooltip( "HitSizeの適用は絶対か相対か" )]
 	public E_ATTACK_PARAM_RELATIVE HitSizeRelative;
 
 	[Tooltip( "これが適用された時のDeltaHitSize" )]
-	public Vector3 DeltaHitSize;
+	public Vector2 DeltaHitSize;
 
 	[Tooltip( "DeltaHitSizeの適用は絶対か相対か" )]
 	public E_ATTACK_PARAM_RELATIVE DeltaHitSizeRelative;
@@ -63,24 +65,6 @@ public struct BulletOrbitalParam
 
 	[Tooltip( "Damageの適用は絶対か相対か" )]
 	public E_ATTACK_PARAM_RELATIVE DamageRelative;
-
-
-	[Space()]
-	[Header( "Speed" )]
-
-	[Tooltip( "これが適用された時のSpeed" )]
-	public float Speed;
-
-	[Tooltip( "Speedの適用は絶対か相対か" )]
-	public E_ATTACK_PARAM_RELATIVE SpeedRelative;
-
-	[Tooltip( "これが適用された時のAccel" )]
-	public float Accel;
-
-	[Tooltip( "Accelの適用は絶対か相対か" )]
-	public E_ATTACK_PARAM_RELATIVE AccelRelative;
-
-
 	[Space()]
 	[Header( "Sticky" )]
 
@@ -102,4 +86,5 @@ public struct BulletOrbitalParam
 
 	[Tooltip( "オプションのfloatパラメータ" )]
 	public OptionValueParam[] OptionValueParams;
+
 }
