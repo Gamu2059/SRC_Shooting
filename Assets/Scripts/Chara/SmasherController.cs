@@ -39,10 +39,10 @@ public class SmasherController : PlayerController
     
     //遊び用
     //[SerializeField]
-    private float m_SubShotLv2MaxSpeed;
+    private float m_SubShotLv2MaxSpeed = 25f;
 
     //[SerializeField]
-    private float step;
+    private float step = 1f;
 
     public override void OnStart()
     {
@@ -53,8 +53,10 @@ public class SmasherController : PlayerController
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
+
         // 遊び用
         //UpdateSpeed();
+
         UpdateSubShot();
     }
 
@@ -85,6 +87,7 @@ public class SmasherController : PlayerController
                 {
                     Bullet bullet = GetPoolBullet(0);
                     bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, Vector3.zero, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+                    //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
                 }
             }
 
@@ -156,8 +159,8 @@ public class SmasherController : PlayerController
                     angle *= (i % 2 == 0 ? -1 : 1);
                 }
 
-                float x = m_SubShotLv2Radius * Mathf.Cos(angle);
-                float z = m_SubShotLv2Radius * Mathf.Sin(angle);
+                float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
+                float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
                  
                 m_SubShotLv2[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
                 m_SubShotLv2[i].GetComponent<Transform>().LookAt(transform);

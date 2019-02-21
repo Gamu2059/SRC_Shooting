@@ -136,7 +136,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		m_CurrentController.Move( moveDir );
 
 		// 通常弾
-		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
+		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) || m_CurrentController.GetIsAutoShot())
 		{
 			m_CurrentController.ShotBullet( 0, 0 );
         }

@@ -41,8 +41,16 @@ public class PlayerController : CharaControllerBase
     [SerializeField]
     protected bool IsReadyShotBullet;
 
+    [SerializeField]
+    protected bool IsAutoShot;
+
     public void SetReadyShotBullet()
     {
         IsReadyShotBullet = true;
+    }
+
+    public bool GetIsAutoShot()
+    {
+        return IsAutoShot;
     }
 }
