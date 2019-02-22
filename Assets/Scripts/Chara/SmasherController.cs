@@ -62,6 +62,8 @@ public class SmasherController : PlayerController
 
     public override void ShotBullet( int bulletIndex = 0, int bulletParamIndex = 0 )
     { 
+
+
         if(shotDelay >= m_ShotInterval)
         {
             Bullet b = GetOriginalBullet(0);
