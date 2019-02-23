@@ -14,7 +14,7 @@ public class PlayerController : CharaControllerBase
 		DEAD_AHEAD,
 	}
 
-	[SerializeField]
+	[SerializeField, Range(1,3)]
 	private int m_Lv;
 
 	[SerializeField]
@@ -42,7 +42,7 @@ public class PlayerController : CharaControllerBase
     protected bool IsReadyShotBullet;
 
     [SerializeField]
-    protected bool IsAutoShot;
+    private bool IsAutoShot;
 
     public void SetReadyShotBullet()
     {
@@ -53,4 +53,10 @@ public class PlayerController : CharaControllerBase
     {
         return IsAutoShot;
     }
+
+    public int GetLevel()
+    {
+        return m_Lv;
+    }
+
 }

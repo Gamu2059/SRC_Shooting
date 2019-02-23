@@ -7,6 +7,11 @@ public class SmasherController : PlayerController
     [SerializeField, Range(0f, 1f)]
     private float m_ShotInterval;
 
+    private float initialShotInterval;
+
+    [SerializeField]
+    private float m_ShotIntervalDecrease;
+
     private float shotDelay;
 
     [SerializeField]
@@ -21,9 +26,6 @@ public class SmasherController : PlayerController
     private GameObject[] m_SubShotLv2;
 
     private bool m_SubShotLv2CanShot;
-
-    [SerializeField, Range(1, 3)]
-    private int m_ShotLevel;
 
     [SerializeField]
     private float m_SubShotLv2Radius;
@@ -44,9 +46,9 @@ public class SmasherController : PlayerController
     //[SerializeField]
     private float step = 1f;
 
-    public override void OnStart()
+    private void Awake()
     {
-        base.OnStart();
+        initialShotInterval = m_ShotInterval;
     }
 
     public override void OnUpdate()
@@ -62,7 +64,6 @@ public class SmasherController : PlayerController
 
     public override void ShotBullet( int bulletIndex = 0, int bulletParamIndex = 0 )
     { 
-
 
         if(shotDelay >= m_ShotInterval)
         {
@@ -120,20 +121,23 @@ public class SmasherController : PlayerController
 
     private void UpdateSubShot()
     {
-        if (m_ShotLevel >= 3)
+        if (GetLevel() >= 3)
         {
             m_SubShotLv1CanShot = true;
             m_SubShotLv2CanShot = true;
+            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
         }
-        else if (m_ShotLevel >= 2)
+        else if (GetLevel() >= 2)
         {
             m_SubShotLv2CanShot = false;
             m_SubShotLv1CanShot = true;
+            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
         }
         else
         {
             m_SubShotLv1CanShot = false;
             m_SubShotLv2CanShot = false;
+            m_ShotInterval = initialShotInterval;
         }
 
         for (int i = 0; i < m_SubShotLv1.Length; i++)

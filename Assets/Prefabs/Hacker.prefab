@@ -375,7 +375,7 @@ MonoBehaviour:
   - {fileID: 7268531046567989056}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_Lv: 0
+  m_Lv: 1
   m_Exp: 0
   m_NowHp: 0
   m_MaxHp: 0
@@ -384,6 +384,7 @@ MonoBehaviour:
   m_BulletPrefab: {fileID: 0}
   m_BombPrefab: {fileID: 0}
   IsReadyShotBullet: 0
+  IsAutoShot: 0
   m_ShotInterval: 1
   m_MainShotPosition:
   - {fileID: 633615267}
