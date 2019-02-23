@@ -7,4 +7,5 @@ public class EnemyController : CharaControllerBase
 
 	[SerializeField]
 	private bool m_IsBoss;
+
 }

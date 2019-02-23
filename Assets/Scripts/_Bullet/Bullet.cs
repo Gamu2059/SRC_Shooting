@@ -9,28 +9,28 @@ public class Bullet : BehaviorBase
 {
 
 	[SerializeField]
-	private CharaControllerBase.E_CHARA_TROOP m_Troop;
+	protected CharaControllerBase.E_CHARA_TROOP m_Troop;
 
 	/// <summary>
 	/// 弾を発射したキャラ
 	/// </summary>
 	[SerializeField]
-	private CharaControllerBase m_Owner;
+	protected CharaControllerBase m_Owner;
 
 	/// <summary>
 	/// 弾の標的となっているキャラ
 	/// </summary>
 	[SerializeField]
-	private CharaControllerBase m_Target;
+	protected CharaControllerBase m_Target;
 
 	[SerializeField]
-	private int m_BulletIndex;
+	protected int m_BulletIndex;
 
 	[SerializeField]
-	private BulletParam m_BulletParam;
+	protected BulletParam m_BulletParam;
 
 	[SerializeField]
-	private BulletOrbitalParam m_OrbitalParam;
+	protected BulletOrbitalParam m_OrbitalParam;
 
 	protected bool m_IsStarted;
 	protected float m_NowLifeTime;
