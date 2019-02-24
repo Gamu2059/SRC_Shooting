@@ -76,5 +76,6 @@ public class CircleMoveEnemy : EnemyController
 	{
 		base.OnSuffer( bullet, colliderData );
 		m_Renderer.material = m_HitMate;
+		Debug.LogError( 1111111 );
 	}
 }

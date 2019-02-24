@@ -245,7 +245,7 @@ public class CharaControllerBase : BehaviorBase, ICollisionBase
 			var c = new CollisionManager.ColliderData();
 			c.CenterPos = new Vector2( t.position.x, t.position.z );
 			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
-			c.Angle = t.eulerAngles.y;
+			c.Angle = -t.eulerAngles.y;
 			c.ColliderType = m_ColliderTransforms[i].ColliderType;
 
 			colliders[i] = c;

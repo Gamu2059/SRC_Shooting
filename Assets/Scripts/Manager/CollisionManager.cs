@@ -170,18 +170,22 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 	{
 		if( collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.RECT )
 		{
+			//Debug.Log( 11 );
 			return IsCollideRectAndRect( collider1, collider2 );
 		}
 		else if( collider1.ColliderType == E_COLLIDER_SHAPE.ELLIPSE && collider2.ColliderType == E_COLLIDER_SHAPE.ELLIPSE )
 		{
+			//Debug.Log( 22 );
 			return IsCollideEllipseAndEllipse( collider1, collider2 );
 		}
 		else if( collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.ELLIPSE )
 		{
+			//Debug.Log( 33 );
 			return IsCollideRectAndEllipse( collider1, collider2 );
 		}
 		else
 		{
+			//Debug.Log( 44 );
 			return IsCollideRectAndEllipse( collider2, collider1 );
 		}
 	}
@@ -251,9 +255,11 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 			float x = offset.x * cos + offset.y * sin;
 			float y = scaleRate * ( -offset.x * sin + offset.y * cos );
 
+			//Debug.Log( "corner " + corners[i] );
+			//Debug.Log( "offset x " + offset.x + ", y " + offset.y );
 			//Debug.Log( "sin" + sin + " cos" + cos );
 			//Debug.Log( "x " + x + " y " + y );
-			//Debug.Log( "sqrDist : " + x * x + y * y );
+			//Debug.Log( "sqrDist : " + ( x * x + y * y ) );
 			//Debug.Log( "ellipse sqrSize : " + ellipse.Size.x * ellipse.Size.x );
 
 			if( x * x + y * y <= ellipse.Size.x * ellipse.Size.x )
@@ -263,7 +269,8 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 			}
 		}
 
-		return false;
+		// 大きすぎる、小さすぎる時の対策のため矩形同士の判定処理を適用する
+		return IsCollideRectAndRect( rect, ellipse );
 	}
 
 	/// <summary>

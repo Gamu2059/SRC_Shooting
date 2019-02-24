@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &601994209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
+  m_ColliderTransforms:
+  - ColliderType: 0
+    Transform: {fileID: 601994213}
   m_Troop: 1
   m_MoveSpeed: 5
   m_BulletPrefabs:
@@ -199,6 +201,9 @@ MonoBehaviour:
   m_ProtectorRadius: 0
   m_ProtectorSpeed: 0
   m_IsBoss: 0
+  m_Normal: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_HitMate: {fileID: 2100000, guid: 6f82f66acb75a3a4f9f45ed38d117757, type: 2}
+  m_Renderer: {fileID: 601994211}
   m_BasePos: {x: 0, y: 0, z: 5}
   m_Radius: 0
   m_AngleSpeed: 5
@@ -273,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 601994208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 24.8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -297,7 +302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &639212203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f274bb037c66ec741aac84e6b5896fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
+  m_ColliderTransforms:
+  - ColliderType: 0
+    Transform: {fileID: 639212207}
   m_Troop: 1
   m_MoveSpeed: 5
   m_BulletPrefabs:
@@ -696,7 +703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EnemyControllers:
-  - {fileID: 601994209}
+  - {fileID: 639212203}
 --- !u!4 &1937813321
 Transform:
   m_ObjectHideFlags: 0

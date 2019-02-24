@@ -41,6 +41,6 @@ public class PlayerController : CharaControllerBase
 	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
-		Debug.Log( 11111 );
+		Debug.LogWarning( 11111 );
 	}
 }
