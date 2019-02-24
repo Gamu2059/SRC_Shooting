@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class PlayerController : CharaControllerBase
 {
@@ -14,8 +15,8 @@ public class PlayerController : CharaControllerBase
 		DEAD_AHEAD,
 	}
 
-	[SerializeField, Range(1,3)]
-	private int m_Lv;
+    [SerializeField, Range(1,3)]
+    private int m_Lv;
 
 	[SerializeField]
 	private int m_Exp;
@@ -44,6 +45,8 @@ public class PlayerController : CharaControllerBase
     [SerializeField]
     private bool IsAutoShot;
 
+    private IntReactiveProperty Level = new IntReactiveProperty(0);
+
     public void SetReadyShotBullet()
     {
         IsReadyShotBullet = true;
@@ -54,14 +57,20 @@ public class PlayerController : CharaControllerBase
         return IsAutoShot;
     }
 
-    public int GetLevel()
+    public override void OnAwake()
     {
-        return m_Lv;
+        base.OnAwake();     
+        Level.Subscribe(x => UpdateShotLevel(x));
     }
 
-    public void SetLevel(int level)
+    public override void OnUpdate()
     {
-        m_Lv = level;
+        base.OnUpdate();
+        Level.Value = m_Lv;
     }
 
+    public virtual void UpdateShotLevel(int level)
+    {
+        // レベルによるショット変化の処理
+    }
 }
