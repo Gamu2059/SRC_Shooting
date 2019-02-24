@@ -15,6 +15,11 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 
 	private List<Bullet> m_RemovingBullets;
 
+	public List<Bullet> GetBullets()
+	{
+		return m_Bullets;
+	}
+
 	protected override void OnAwake()
 	{
 		base.OnAwake();

@@ -11,7 +11,7 @@ public class EnemyCharaManager : GlobalSingletonMonoBehavior<EnemyCharaManager>
 	[SerializeField]
 	private EnemyController[] m_EnemyControllers;
 
-	public EnemyController[] GetAllEnemyControllers()
+	public EnemyController[] GetControllers()
 	{
 		return m_EnemyControllers;
 	}

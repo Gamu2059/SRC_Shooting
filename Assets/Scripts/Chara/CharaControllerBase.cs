@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラの制御を行うコンポーネント。
 /// </summary>
-public class CharaControllerBase : BehaviorBase
+public class CharaControllerBase : BehaviorBase, ICollisionBase
 {
 
 	public enum E_CHARA_TROOP
@@ -18,6 +18,9 @@ public class CharaControllerBase : BehaviorBase
 	}
 
 	[Header( "キャラの基礎パラメータ" )]
+
+	[SerializeField]
+	protected CollisionManager.ColliderTransform[] m_ColliderTransforms;
 
 	[SerializeField]
 	protected E_CHARA_TROOP m_Troop;
@@ -55,6 +58,11 @@ public class CharaControllerBase : BehaviorBase
 
 
 
+	public CollisionManager.ColliderTransform[] GetColliderTransforms()
+	{
+		return m_ColliderTransforms;
+	}
+
 	public E_CHARA_TROOP GetTroop()
 	{
 		return m_Troop;
@@ -69,6 +77,8 @@ public class CharaControllerBase : BehaviorBase
 	{
 		m_MoveSpeed = speed;
 	}
+
+
 
 	protected virtual void Awake()
 	{
@@ -222,5 +232,45 @@ public class CharaControllerBase : BehaviorBase
 			m_Protectors[i].localPosition = new Vector3( x, 0, z );
 			m_Protectors[i].LookAt( transform );
 		}
+	}
+
+	public virtual CollisionManager.ColliderData[] GetColliderData()
+	{
+		int hitNum = m_ColliderTransforms.Length;
+		var colliders = new CollisionManager.ColliderData[hitNum];
+
+		for( int i = 0; i < hitNum; i++ )
+		{
+			Transform t = m_ColliderTransforms[i].Transform;
+			var c = new CollisionManager.ColliderData();
+			c.CenterPos = new Vector2( t.position.x, t.position.z );
+			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
+			c.Angle = t.eulerAngles.y;
+			c.ColliderType = m_ColliderTransforms[i].ColliderType;
+
+			colliders[i] = c;
+		}
+
+		return colliders;
+	}
+
+	public virtual bool CanHitBullet()
+	{
+		return false;
+	}
+
+	public virtual void OnHitCharacter( CharaControllerBase chara )
+	{
+
+	}
+
+	public virtual void OnHitBullet( Bullet bullet )
+	{
+
+	}
+
+	public virtual void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+
 	}
 }

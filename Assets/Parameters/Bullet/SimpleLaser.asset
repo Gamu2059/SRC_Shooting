@@ -19,11 +19,11 @@ MonoBehaviour:
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 200}
+    Scale: {x: 0, y: 0, z: 100}
     ScaleRelative: 0
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
-    DeltaScale: {x: 4, y: 0, z: 0}
+    DeltaScale: {x: 4, y: 0, z: 100}
     DeltaScaleRelative: 0
     HitSize: {x: 0, y: 0, z: 0}
     HitSizeRelative: 0
@@ -35,15 +35,11 @@ MonoBehaviour:
     SpeedRelative: 0
     Accel: 0
     AccelRelative: 0
-    IsSearch: 0
-    Lerp: 0.01
+    IsSearch: 1
+    Lerp: 0
     LerpRelative: 0
     OptionObjectParams: []
-    OptionValueParams:
-    - Key: Offset X
-      Value: 5
-    - Key: Offset Z
-      Value: 5
+    OptionValueParams: []
   ConditionalOrbitalParams:
   - Target: 0
     Position: {x: 0, y: 0, z: 0}

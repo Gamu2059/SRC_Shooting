@@ -5,8 +5,14 @@ using UnityEngine;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class Bullet : BehaviorBase
+public class Bullet : BehaviorBase, ICollisionBase
 {
+	[Header( "Hit Info" )]
+
+	[SerializeField]
+	protected CollisionManager.ColliderTransform[] m_ColliderTransforms;
+
+	[Header( "Parameter" )]
 
 	[SerializeField]
 	protected CharaControllerBase.E_CHARA_TROOP m_Troop;
@@ -51,6 +57,15 @@ public class Bullet : BehaviorBase
 	protected bool m_IsReverseHacked; // ハッカーのリバースハックを受けたかどうか
 
 
+	public CollisionManager.ColliderTransform[] GetColliderTransforms()
+	{
+		return m_ColliderTransforms;
+	}
+
+	public CharaControllerBase.E_CHARA_TROOP GetTroop()
+	{
+		return m_Troop;
+	}
 
 	public BulletParam GetBulletParam()
 	{
@@ -248,7 +263,7 @@ public class Bullet : BehaviorBase
 		}
 		else
 		{
-			EnemyController[] enemies = EnemyCharaManager.Instance.GetAllEnemyControllers();
+			EnemyController[] enemies = EnemyCharaManager.Instance.GetControllers();
 			CharaControllerBase nearestEnemy = null;
 			float minSqrDist = float.MaxValue;
 
@@ -351,5 +366,45 @@ public class Bullet : BehaviorBase
 	protected virtual void OnBecameInvisible()
 	{
 		DestroyBullet();
+	}
+
+	public virtual CollisionManager.ColliderData[] GetColliderData()
+	{
+		int hitNum = m_ColliderTransforms.Length;
+		var colliders = new CollisionManager.ColliderData[hitNum];
+
+		for( int i = 0; i < hitNum; i++ )
+		{
+			Transform t = m_ColliderTransforms[i].Transform;
+			var c = new CollisionManager.ColliderData();
+			c.CenterPos = new Vector2( t.position.x, t.position.z );
+			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
+			c.Angle = t.eulerAngles.y;
+			c.ColliderType = m_ColliderTransforms[i].ColliderType;
+
+			colliders[i] = c;
+		}
+
+		return colliders;
+	}
+
+	public virtual bool CanHitBullet()
+	{
+		return false;
+	}
+
+	public virtual void OnHitCharacter( CharaControllerBase chara )
+	{
+
+	}
+
+	public virtual void OnHitBullet( Bullet bullet )
+	{
+
+	}
+
+	public virtual void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+
 	}
 }

@@ -136,6 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbdf47c6427522a41a78eff3d8c8994c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ColliderTransforms:
+  - ColliderType: 0
+    Transform: {fileID: 3869610063111172743}
   m_Troop: 0
   m_Owner: {fileID: 0}
   m_Target: {fileID: 0}
@@ -153,9 +156,9 @@ MonoBehaviour:
     DeltaRotationRelative: 0
     DeltaScale: {x: 0, y: 0, z: 0}
     DeltaScaleRelative: 0
-    HitSize: 0
+    HitSize: {x: 0, y: 0, z: 0}
     HitSizeRelative: 0
-    DeltaHitSize: 0
+    DeltaHitSize: {x: 0, y: 0, z: 0}
     DeltaHitSizeRelative: 0
     Damage: 0
     DamageRelative: 0
