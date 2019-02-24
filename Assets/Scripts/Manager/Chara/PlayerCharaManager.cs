@@ -81,6 +81,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+		Application.targetFrameRate = 30;
 	}
 
 	protected override void OnDestroy()
@@ -136,7 +137,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		m_CurrentController.Move( moveDir );
 
 		// 通常弾
-		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
+		if( IsGetKeyDown( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
 			m_CurrentController.ShotBullet( 0, 0 );
 		}

@@ -7,7 +7,7 @@ public struct BulletOrbitalParam
 {
 
 	[Tooltip( "この弾の標的となるもの" )]
-	public BulletParam.E_BULLET_TARGET Target;
+	public E_ATTACK_TARGET Target;
 
 	[Space()]
 	[Header( "Transform" )]
@@ -16,53 +16,53 @@ public struct BulletOrbitalParam
 	public Vector3 Position;
 
 	[Tooltip( "Positionの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE PositionRelative;
+	public E_ATTACK_PARAM_RELATIVE PositionRelative;
 
 	[Tooltip( "これが適用された時のRotation" )]
 	public Vector3 Rotation;
 
 	[Tooltip( "Rotationの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE RotationRelative;
+	public E_ATTACK_PARAM_RELATIVE RotationRelative;
 
 	[Tooltip( "これが適用された時のScale" )]
 	public Vector3 Scale;
 
 	[Tooltip( "Scaleの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE ScaleRelative;
+	public E_ATTACK_PARAM_RELATIVE ScaleRelative;
 
 	[Tooltip( "これが適用された時のDeltaRotation" )]
 	public Vector3 DeltaRotation;
 
 	[Tooltip( "DeltaRotationの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE DeltaRotationRelative;
+	public E_ATTACK_PARAM_RELATIVE DeltaRotationRelative;
 
 	[Tooltip( "これが適用された時のDeltaScale" )]
 	public Vector3 DeltaScale;
 
 	[Tooltip( "DeltaScaleの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE DeltaScaleRelative;
+	public E_ATTACK_PARAM_RELATIVE DeltaScaleRelative;
 
 
 	[Space()]
 	[Header( "Hit" )]
 
 	[Tooltip( "これが適用された時のHitSize" )]
-	public float HitSize;
+	public Vector3 HitSize;
 
 	[Tooltip( "HitSizeの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE HitSizeRelative;
+	public E_ATTACK_PARAM_RELATIVE HitSizeRelative;
 
 	[Tooltip( "これが適用された時のDeltaHitSize" )]
-	public float DeltaHitSize;
+	public Vector3 DeltaHitSize;
 
 	[Tooltip( "DeltaHitSizeの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE DeltaHitSizeRelative;
+	public E_ATTACK_PARAM_RELATIVE DeltaHitSizeRelative;
 
 	[Tooltip( "これが適用された時のDamage" )]
 	public float Damage;
 
 	[Tooltip( "Damageの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE DamageRelative;
+	public E_ATTACK_PARAM_RELATIVE DamageRelative;
 
 
 	[Space()]
@@ -72,13 +72,13 @@ public struct BulletOrbitalParam
 	public float Speed;
 
 	[Tooltip( "Speedの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE SpeedRelative;
+	public E_ATTACK_PARAM_RELATIVE SpeedRelative;
 
 	[Tooltip( "これが適用された時のAccel" )]
 	public float Accel;
 
 	[Tooltip( "Accelの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE AccelRelative;
+	public E_ATTACK_PARAM_RELATIVE AccelRelative;
 
 
 	[Space()]
@@ -91,7 +91,7 @@ public struct BulletOrbitalParam
 	public float Lerp;
 
 	[Tooltip( "Lerpの適用は絶対か相対か" )]
-	public BulletParam.E_BULLET_PARAM_RELATIVE LerpRelative;
+	public E_ATTACK_PARAM_RELATIVE LerpRelative;
 
 
 	[Space()]

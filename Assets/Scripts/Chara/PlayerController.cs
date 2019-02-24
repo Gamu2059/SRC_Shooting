@@ -37,4 +37,10 @@ public class PlayerController : CharaControllerBase
 
 	[SerializeField]
 	private GameObject m_BombPrefab;
+
+	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+		base.OnSuffer( bullet, colliderData );
+		Debug.LogWarning( 11111 );
+	}
 }

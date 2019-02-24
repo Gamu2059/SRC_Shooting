@@ -15,6 +15,11 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 
 	private List<Bullet> m_RemovingBullets;
 
+	public List<Bullet> GetBullets()
+	{
+		return m_Bullets;
+	}
+
 	protected override void OnAwake()
 	{
 		base.OnAwake();
@@ -86,14 +91,17 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 		{
 			var bullet = m_RemovingBullets[0];
 			m_Bullets.Remove( bullet );
-			m_RemovingBullets.Remove( bullet );
+			m_RemovingBullets.RemoveAt( 0 );
 		}
+
+		m_RemovingBullets.Clear();
 	}
 
 	public void AddBullet( Bullet bullet )
 	{
-		if( bullet == null || m_Bullets.Contains( bullet ) )
+		if( bullet == null /*|| m_Bullets.Contains( bullet )*/ )
 		{
+			Debug.Log( "追加できなかった" );
 			return;
 		}
 
@@ -102,8 +110,9 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 
 	public void CheckRemovingBullet( Bullet bullet )
 	{
-		if( bullet == null || !m_Bullets.Contains( bullet ) )
+		if( bullet == null /*|| !m_Bullets.Contains( bullet )*/ )
 		{
+			Debug.Log( "削除できなかった" );
 			return;
 		}
 
