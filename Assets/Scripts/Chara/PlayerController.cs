@@ -59,4 +59,9 @@ public class PlayerController : CharaControllerBase
         return m_Lv;
     }
 
+    public void SetLevel(int level)
+    {
+        m_Lv = level;
+    }
+
 }
