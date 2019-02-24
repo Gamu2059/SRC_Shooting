@@ -882,7 +882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1215113177835792061
 Transform:
   m_ObjectHideFlags: 0
@@ -981,6 +981,7 @@ MonoBehaviour:
   m_MoveSpeed: 5
   m_BulletPrefabs:
   - {fileID: 7076031899561738867, guid: b507b614d478d7e4e8e0f8dbf27ff96c, type: 3}
+  - {fileID: 4505914296954946076, guid: fa084918d092767439b05089de0f4abc, type: 3}
   m_BombPrefabs: []
   m_BulletParams:
   - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
@@ -995,7 +996,7 @@ MonoBehaviour:
   - {fileID: 1215113177019522363}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_Lv: 1
+  m_Lv: 3
   m_Exp: 0
   m_NowHp: 0
   m_MaxHp: 0
@@ -1005,8 +1006,8 @@ MonoBehaviour:
   m_BombPrefab: {fileID: 0}
   IsReadyShotBullet: 0
   IsAutoShot: 0
-  m_ShotInterval: 0.05
-  m_ShotIntervalDecrease: 0.01
+  m_ShotInterval: 0.03
+  m_ShotIntervalDecrease: 0.0025
   m_MainShotPosition:
   - {fileID: 299423730}
   - {fileID: 325473606}

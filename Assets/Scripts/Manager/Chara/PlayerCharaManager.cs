@@ -222,13 +222,13 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 		m_CharaIndex = index;
 
-		if( m_CurrentController != null )
+        if ( m_CurrentController != null )
 		{
 			m_CurrentController.gameObject.SetActive( false );
 		}
 
-		m_CurrentController = m_Controllers[m_CharaIndex];
-		m_CurrentController.gameObject.SetActive( true );
+        m_CurrentController = m_Controllers[m_CharaIndex];
+        m_CurrentController.gameObject.SetActive( true );
 		m_WaitChangeTime = 1f;
 	}
 }
