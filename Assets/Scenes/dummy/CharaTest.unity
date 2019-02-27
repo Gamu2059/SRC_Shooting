@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 0
+  - ColliderType: 1
     Transform: {fileID: 601994213}
   m_Troop: 1
   m_MoveSpeed: 5
@@ -302,7 +302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &639212203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_ProtectorSpeed: 0
   m_IsBoss: 0
   m_BasePos: {x: 20, y: 0, z: 20}
-  m_Amplitude: 10
+  m_Amplitude: 0
   m_PeriodSpeed: 1
   m_Axis: {x: 1, y: 0, z: 0}
   m_ShotInterval: 5
