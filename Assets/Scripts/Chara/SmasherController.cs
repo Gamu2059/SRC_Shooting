@@ -38,7 +38,7 @@ public class SmasherController : PlayerController
     [SerializeField]
     private bool m_IsSpinTurn;
 
-    
+
     //遊び用
     //[SerializeField]
     private float m_SubShotLv2MaxSpeed = 25f;
@@ -46,7 +46,7 @@ public class SmasherController : PlayerController
     //[SerializeField]
     private float step = 1f;
 
-    private void Awake()
+    protected override void Awake()
     {
         initialShotInterval = m_ShotInterval;
         OnAwake();
@@ -59,27 +59,29 @@ public class SmasherController : PlayerController
 
     public override void OnUpdate()
     {
-        base.OnUpdate();
         shotDelay += Time.deltaTime;
+        base.OnUpdate();
+        UpdateShotLevel(GetLevel());
+        UpdateSubShot();
+        
 
         // 遊び用
         //UpdateSpeed();
         //UpdateSubShot();
     }
 
-    public override Bullet ShotBullet( int bulletIndex = 0, int bulletParamIndex = 0 )
+    public override Bullet ShotBullet(int bulletIndex = 0, int bulletParamIndex = 0)
     {
-        return base.ShotBullet(bulletIndex, bulletParamIndex);
-        /*
-        if(shotDelay >= m_ShotInterval)
+
+        if (shotDelay >= m_ShotInterval)
         {
             Bullet Main = GetOriginalBullet(0);
-            Bullet Sub2 = GetOriginalBullet(1);
-            
-             for (int i = 0; i < m_MainShotPosition.Length; i++)
+            BulletParam bulletParam = m_BulletParams[bulletParamIndex];
+
+            for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
-                Bullet bullet = GetPoolBullet(0);   
-                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles,  Main.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+                Bullet bullet = GetPoolBullet(0);
+                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, Main.transform.localScale, bulletIndex, bulletParam, -1);
             }
 
             if (m_SubShotLv1CanShot)
@@ -87,56 +89,41 @@ public class SmasherController : PlayerController
                 for (int i = 0; i < m_SubShotLv1Position.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(0);
-                    bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, Main.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+                    bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, Main.transform.localScale, bulletIndex, bulletParam, -1);
                 }
             }
 
             if (m_SubShotLv2CanShot)
             {
+                Bullet Sub2 = GetOriginalBullet(1);
+
                 for (int i = 0; i < m_SubShotLv2Position.Length; i++)
                 {
                     Bullet bullet = GetPoolBullet(1);
-                    bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
+                    bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, -1);
 
-                    
+
                     //Bullet bulletR = GetPoolBullet(1);
                     //Bullet bulletL = GetPoolBullet(1);
                     //bulletR.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
                     //bulletL.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(-0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4); 
-                     
+
 
                     //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
                 }
+
             }
 
             shotDelay = 0;
-         */
 
+            return null;
+
+        }
+
+        return null;
     }
-}
 
-/*
-private void UpdateSpeed()
-{
-
-    //速度が直線的に変化するバージョン
-    //m_SubShotLv2Speed -= step * Time.deltaTime;
-    //if(Mathf.Abs(m_SubShotLv2Speed) >= m_SubShotLv2MaxSpeed)
-   // {
-   //     m_SubShotLv2Speed = (m_SubShotLv2Speed < 0 ? -m_SubShotLv2MaxSpeed : m_SubShotLv2MaxSpeed);
-   //     step = -step;
-    //}
-
-
-    // 速度が正弦波に従って変化するバージョン
-    m_SubShotLv2Speed = m_SubShotLv2MaxSpeed * Mathf.Sin(Time.time * step);
-}
- */
-
-
-
-/*
-    public override void UpdateShotLevel(int level)
+    public void UpdateShotLevel(int level)
     {
         if (level >= 3)
         {
@@ -165,13 +152,13 @@ private void UpdateSpeed()
         for (int i = 0; i < m_SubShotLv2Position.Length; i++)
         {
             m_SubShotLv2Position[i].gameObject.SetActive(m_SubShotLv2CanShot);
-        }       
+        }
     }
- */
 
 
-    /*
-private void UpdateSubShot()
+
+
+    private void UpdateSubShot()
     {
         if (m_SubShotLv2CanShot)
         {
@@ -194,6 +181,30 @@ private void UpdateSubShot()
                 m_SubShotLv2Position[i].GetComponent<Transform>().LookAt(transform);
             }
         }
-    }     
-     */
+    }
+}
+
+/*
+private void UpdateSpeed()
+{
+
+    //速度が直線的に変化するバージョン
+    //m_SubShotLv2Speed -= step * Time.deltaTime;
+    //if(Mathf.Abs(m_SubShotLv2Speed) >= m_SubShotLv2MaxSpeed)
+   // {
+   //     m_SubShotLv2Speed = (m_SubShotLv2Speed < 0 ? -m_SubShotLv2MaxSpeed : m_SubShotLv2MaxSpeed);
+   //     step = -step;
+    //}
+
+
+    // 速度が正弦波に従って変化するバージョン
+    m_SubShotLv2Speed = m_SubShotLv2MaxSpeed * Mathf.Sin(Time.time * step);
+}
+ */
+
+
+
+
+     
+     
 

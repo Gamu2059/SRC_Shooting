@@ -43,4 +43,10 @@ public class PlayerController : CharaControllerBase
 		base.OnSuffer( bullet, colliderData );
 		Debug.LogWarning( 11111 );
 	}
+
+    public int GetLevel()
+    {
+        return m_Lv;
+    }
+
 }

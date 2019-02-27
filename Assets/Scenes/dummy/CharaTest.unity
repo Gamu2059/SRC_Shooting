@@ -157,14 +157,14 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &192641982 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2455306305075876736, guid: d247464a9787d8a418094c891be90fb9,
+  m_CorrespondingSourceObject: {fileID: 192641982, guid: d247464a9787d8a418094c891be90fb9,
     type: 3}
   m_PrefabInstance: {fileID: 1908930502}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff2157817085c684bb42207a3d218b54, type: 3}
+  m_Script: {fileID: 11500000, guid: 880db4892b3c2fc48b167732da1391cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &601994208
@@ -718,11 +718,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smasher
       objectReference: {fileID: 0}
-    - target: {fileID: 1215113177835792058, guid: d247464a9787d8a418094c891be90fb9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1215113177835792061, guid: d247464a9787d8a418094c891be90fb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -892,16 +887,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2621416974828342494, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_ProtectorRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2621416974828342494, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_ProtectorSpeed
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1e5085ede72a304ca1d068b898062b5, type: 3}
 --- !u!1001 &7268531045230987079
@@ -970,16 +955,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8406267782085249620, guid: 3dec3a8ae114e2647ae9211630c4814b,
-        type: 3}
-      propertyPath: m_ProtectorRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8406267782085249620, guid: 3dec3a8ae114e2647ae9211630c4814b,
-        type: 3}
-      propertyPath: m_ProtectorSpeed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dec3a8ae114e2647ae9211630c4814b, type: 3}

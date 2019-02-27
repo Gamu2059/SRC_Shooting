@@ -90,7 +90,7 @@ Transform:
   - {fileID: 525829046}
   - {fileID: 633881005}
   m_Father: {fileID: 1926405811160240041}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926405809941892448
 GameObject:
@@ -491,6 +491,7 @@ Transform:
   - {fileID: 1926405809941892449}
   - {fileID: 1926405810530812961}
   - {fileID: 1926405810096334313}
+  - {fileID: 1764601977}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -565,18 +566,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74835719b2e7be24491d365080eb3019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ColliderTransforms: []
   m_Troop: 0
   m_MoveSpeed: 20
-  m_BulletPrefabs: []
+  m_BulletPrefabs:
+  - {fileID: 3404226922437352252, guid: 23cacf77b0180504887854e7cf135531, type: 3}
   m_BombPrefabs: []
-  m_BulletParams: []
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
   m_Protectors:
   - {fileID: 1926405810939894245}
   - {fileID: 1926405809941892449}
   - {fileID: 1926405810530812961}
   - {fileID: 1926405810096334313}
-  m_ProtectorRadius: 0
-  m_ProtectorSpeed: 0
+  m_ProtectorRadius: 3
+  m_ProtectorSpeed: 3
   m_Lv: 0
   m_Exp: 0
   m_NowHp: 0
@@ -586,3 +590,6 @@ MonoBehaviour:
   m_BulletPrefab: {fileID: 3404226922437352249, guid: 23cacf77b0180504887854e7cf135531,
     type: 3}
   m_BombPrefab: {fileID: 0}
+  m_ShotInterval: 0
+  m_ShotIntervalDecrease: 0
+  m_MainShotPosition: []
