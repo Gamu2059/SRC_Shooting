@@ -5,32 +5,38 @@ using UnityEngine;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class Bullet : BehaviorBase
+public class Bullet : BehaviorBase, ICollisionBase
 {
+	[Header( "Hit Info" )]
 
 	[SerializeField]
-	private CharaControllerBase.E_CHARA_TROOP m_Troop;
+	protected CollisionManager.ColliderTransform[] m_ColliderTransforms;
+
+	[Header( "Parameter" )]
+
+	[SerializeField]
+	protected CharaControllerBase.E_CHARA_TROOP m_Troop;
 
 	/// <summary>
 	/// 弾を発射したキャラ
 	/// </summary>
 	[SerializeField]
-	private CharaControllerBase m_Owner;
+	protected CharaControllerBase m_Owner;
 
 	/// <summary>
 	/// 弾の標的となっているキャラ
 	/// </summary>
 	[SerializeField]
-	private CharaControllerBase m_Target;
+	protected CharaControllerBase m_Target;
 
 	[SerializeField]
-	private int m_BulletIndex;
+	protected int m_BulletIndex;
 
 	[SerializeField]
-	private BulletParam m_BulletParam;
+	protected BulletParam m_BulletParam;
 
 	[SerializeField]
-	private BulletOrbitalParam m_OrbitalParam;
+	protected BulletOrbitalParam m_OrbitalParam;
 
 	protected bool m_IsStarted;
 	protected float m_NowLifeTime;
@@ -38,8 +44,8 @@ public class Bullet : BehaviorBase
 	protected Vector3 m_NowDeltaRotation;
 	protected Vector3 m_NowDeltaScale;
 
-	protected float m_NowHitSize;
-	protected float m_NowDeltaHitSize;
+	protected Vector3 m_NowHitSize;
+	protected Vector3 m_NowDeltaHitSize;
 	protected int m_NowDamage;
 
 	protected float m_NowSpeed;
@@ -51,6 +57,15 @@ public class Bullet : BehaviorBase
 	protected bool m_IsReverseHacked; // ハッカーのリバースハックを受けたかどうか
 
 
+	public CollisionManager.ColliderTransform[] GetColliderTransforms()
+	{
+		return m_ColliderTransforms;
+	}
+
+	public CharaControllerBase.E_CHARA_TROOP GetTroop()
+	{
+		return m_Troop;
+	}
 
 	public BulletParam GetBulletParam()
 	{
@@ -173,11 +188,11 @@ public class Bullet : BehaviorBase
 		m_OrbitalParam = orbitalParam;
 
 		// ターゲットの上書き
-		if( m_OrbitalParam.Target == BulletParam.E_BULLET_TARGET.ENEMY )
+		if( m_OrbitalParam.Target == E_ATTACK_TARGET.ENEMY )
 		{
 			m_Target = GetNearestEnemy();
 		}
-		else if( m_OrbitalParam.Target == BulletParam.E_BULLET_TARGET.OWNER )
+		else if( m_OrbitalParam.Target == E_ATTACK_TARGET.OWNER )
 		{
 			m_Target = m_Owner;
 		}
@@ -213,9 +228,9 @@ public class Bullet : BehaviorBase
 		// オプションパラメータは後で実装
 	}
 
-	protected Vector3 GetRelativeValue( BulletParam.E_BULLET_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
+	protected Vector3 GetRelativeValue( E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
 	{
-		if( relative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
+		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
 		{
 			return baseValue + relativeValue;
 		}
@@ -225,9 +240,9 @@ public class Bullet : BehaviorBase
 		}
 	}
 
-	protected float GetRelativeValue( BulletParam.E_BULLET_PARAM_RELATIVE relative, float baseValue, float relativeValue )
+	protected float GetRelativeValue( E_ATTACK_PARAM_RELATIVE relative, float baseValue, float relativeValue )
 	{
-		if( relative == BulletParam.E_BULLET_PARAM_RELATIVE.RELATIVE )
+		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
 		{
 			return baseValue + relativeValue;
 		}
@@ -248,7 +263,7 @@ public class Bullet : BehaviorBase
 		}
 		else
 		{
-			EnemyController[] enemies = EnemyCharaManager.Instance.GetAllEnemyControllers();
+			EnemyController[] enemies = EnemyCharaManager.Instance.GetControllers();
 			CharaControllerBase nearestEnemy = null;
 			float minSqrDist = float.MaxValue;
 
@@ -335,8 +350,8 @@ public class Bullet : BehaviorBase
 		m_NowDeltaRotation = Vector3.zero;
 		m_NowDeltaScale = Vector3.zero;
 
-		m_NowHitSize = 0;
-		m_NowDeltaHitSize = 0;
+		m_NowHitSize = Vector3.zero;
+		m_NowDeltaHitSize = Vector3.zero;
 		m_NowDamage = 0;
 
 		m_NowSpeed = 0;
@@ -346,5 +361,50 @@ public class Bullet : BehaviorBase
 		m_NowLerp = 0;
 
 		m_IsReverseHacked = false;
+	}
+
+	protected virtual void OnBecameInvisible()
+	{
+		DestroyBullet();
+	}
+
+	public virtual CollisionManager.ColliderData[] GetColliderData()
+	{
+		int hitNum = m_ColliderTransforms.Length;
+		var colliders = new CollisionManager.ColliderData[hitNum];
+
+		for( int i = 0; i < hitNum; i++ )
+		{
+			Transform t = m_ColliderTransforms[i].Transform;
+			var c = new CollisionManager.ColliderData();
+			c.CenterPos = new Vector2( t.position.x, t.position.z );
+			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
+			c.Angle = -t.eulerAngles.y;
+			c.ColliderType = m_ColliderTransforms[i].ColliderType;
+
+			colliders[i] = c;
+		}
+
+		return colliders;
+	}
+
+	public virtual bool CanHitBullet()
+	{
+		return false;
+	}
+
+	public virtual void OnHitCharacter( CharaControllerBase chara )
+	{
+
+	}
+
+	public virtual void OnHitBullet( Bullet bullet )
+	{
+
+	}
+
+	public virtual void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+
 	}
 }

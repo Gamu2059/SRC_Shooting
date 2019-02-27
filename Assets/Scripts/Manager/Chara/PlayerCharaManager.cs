@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -81,6 +81,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+		Application.targetFrameRate = 30;
 	}
 
 	protected override void OnDestroy()
@@ -136,14 +137,10 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		m_CurrentController.Move( moveDir );
 
 		// 通常弾
-		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) || m_CurrentController.GetIsAutoShot())
+		if( IsGetKeyDown( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
 			m_CurrentController.ShotBullet( 0, 0 );
-        }
-        else
-        {
-            m_CurrentController.SetReadyShotBullet();
-        }
+		}
 
 		// ボム
 		if( IsGetKeyDown( m_ShotBomb, Input.GetMouseButtonDown( 1 ) ) )
@@ -222,13 +219,13 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 		m_CharaIndex = index;
 
-        if ( m_CurrentController != null )
+		if( m_CurrentController != null )
 		{
 			m_CurrentController.gameObject.SetActive( false );
 		}
 
-        m_CurrentController = m_Controllers[m_CharaIndex];
-        m_CurrentController.gameObject.SetActive( true );
+		m_CurrentController = m_Controllers[m_CharaIndex];
+		m_CurrentController.gameObject.SetActive( true );
 		m_WaitChangeTime = 1f;
 	}
 }

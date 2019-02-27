@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラの制御を行うコンポーネント。
 /// </summary>
-public class CharaControllerBase : BehaviorBase
+public class CharaControllerBase : BehaviorBase, ICollisionBase
 {
 
 	public enum E_CHARA_TROOP
@@ -20,18 +20,21 @@ public class CharaControllerBase : BehaviorBase
 	[Header( "キャラの基礎パラメータ" )]
         
 	[SerializeField]
-	private E_CHARA_TROOP m_Troop;
+	protected CollisionManager.ColliderTransform[] m_ColliderTransforms;
 
 	[SerializeField]
-	private float m_MoveSpeed = 5f;
+	protected E_CHARA_TROOP m_Troop;
+
+	[SerializeField]
+	protected float m_MoveSpeed = 5f;
 
 	[Header( "弾のパラメータ" )]
 
 	[SerializeField]
-	private Bullet[] m_BulletPrefabs;
+	protected Bullet[] m_BulletPrefabs;
 
 	[SerializeField]
-	private BehaviorBase[] m_BombPrefabs;
+	protected BehaviorBase[] m_BombPrefabs;
 
 	[SerializeField]
 	protected BulletParam[] m_BulletParams;
@@ -39,21 +42,26 @@ public class CharaControllerBase : BehaviorBase
 	[Header( "プロテクタのパラメータ" )]
 
 	[SerializeField]
-	private Transform[] m_Protectors;
+	protected Transform[] m_Protectors;
 
 	[SerializeField]
-	private float m_ProtectorRadius;
+	protected float m_ProtectorRadius;
 
 	[SerializeField]
-	private float m_ProtectorSpeed;
+	protected float m_ProtectorSpeed;
+
+	protected bool m_IsStarted;
+
+	protected float m_ProtectorRad;
+
+	protected List<Bullet>[] m_PoolBullets;
 
 
 
-	private float m_Rad;
-
-	private List<Bullet>[] m_PoolBullets;
-
-
+	public CollisionManager.ColliderTransform[] GetColliderTransforms()
+	{
+		return m_ColliderTransforms;
+	}
 
 	public E_CHARA_TROOP GetTroop()
 	{
@@ -72,8 +80,20 @@ public class CharaControllerBase : BehaviorBase
 
 
 
+	protected virtual void Awake()
+	{
+		m_IsStarted = false;
+	}
+
 	public override void OnUpdate()
 	{
+		if( !m_IsStarted )
+		{
+			OnStart();
+			m_IsStarted = true;
+			return;
+		}
+
 		UpdateProtector();
 	}
 
@@ -93,28 +113,30 @@ public class CharaControllerBase : BehaviorBase
 	/// </summary>
 	/// <param name="bulletIndex">発射したい弾のindex</param>
 	/// <param name="bulletParamIndex">弾の軌道を定めるパラメータのindex</param>
-	public virtual void ShotBullet( int bulletIndex, int bulletParamIndex )
+	public virtual Bullet ShotBullet( int bulletIndex, int bulletParamIndex )
 	{
 		if( bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length )
 		{
-			return;
+			return null;
 		}
 
 		if( bulletParamIndex < 0 || bulletParamIndex >= m_BulletParams.Length )
 		{
-			return;
+			return null;
 		}
 
 		BulletParam bulletParam = m_BulletParams[bulletParamIndex];
 
 		if( bulletParam == null )
 		{
-			return;
+			return null;
 		}
 
 		GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
 		Bullet bullet = GetPoolBullet( bulletIndex );
 		bullet.ShotBullet( this, transform.position, transform.eulerAngles, bulletPrefab.transform.localScale, bulletIndex, bulletParam, -1 );
+
+		return bullet;
 
 		//float angle = bulletRot.y;
 		//angle -= initSpreadParam.DeltaAngle * ( i - ( bulletNum - 1 ) / 2f );
@@ -134,6 +156,11 @@ public class CharaControllerBase : BehaviorBase
 	public virtual void ShotBomb( int bombIndex = 0 )
 	{
 
+	}
+
+	public BulletParam GetBulletParam( int bulletParamIndex = 0 )
+	{
+		return m_BulletParams[bulletParamIndex];
 	}
 
 	/// <summary>
@@ -193,17 +220,57 @@ public class CharaControllerBase : BehaviorBase
 
 	protected virtual void UpdateProtector()
 	{
-		m_Rad += m_ProtectorSpeed * Time.deltaTime;
-		m_Rad %= Mathf.PI * 2;
+		m_ProtectorRad += m_ProtectorSpeed * Time.deltaTime;
+		m_ProtectorRad %= Mathf.PI * 2;
 		float unitAngle = Mathf.PI * 2 / m_Protectors.Length;
 
 		for( int i = 0; i < m_Protectors.Length; i++ )
 		{
-			float angle = unitAngle * i + m_Rad;
+			float angle = unitAngle * i + m_ProtectorRad;
 			float x = m_ProtectorRadius * Mathf.Cos( angle );
 			float z = m_ProtectorRadius * Mathf.Sin( angle );
 			m_Protectors[i].localPosition = new Vector3( x, 0, z );
 			m_Protectors[i].LookAt( transform );
 		}
+	}
+
+	public virtual CollisionManager.ColliderData[] GetColliderData()
+	{
+		int hitNum = m_ColliderTransforms.Length;
+		var colliders = new CollisionManager.ColliderData[hitNum];
+
+		for( int i = 0; i < hitNum; i++ )
+		{
+			Transform t = m_ColliderTransforms[i].Transform;
+			var c = new CollisionManager.ColliderData();
+			c.CenterPos = new Vector2( t.position.x, t.position.z );
+			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
+			c.Angle = -t.eulerAngles.y;
+			c.ColliderType = m_ColliderTransforms[i].ColliderType;
+
+			colliders[i] = c;
+		}
+
+		return colliders;
+	}
+
+	public virtual bool CanHitBullet()
+	{
+		return false;
+	}
+
+	public virtual void OnHitCharacter( CharaControllerBase chara )
+	{
+
+	}
+
+	public virtual void OnHitBullet( Bullet bullet )
+	{
+
+	}
+
+	public virtual void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+
 	}
 }

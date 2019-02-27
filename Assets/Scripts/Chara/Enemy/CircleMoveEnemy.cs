@@ -9,6 +9,15 @@ public class CircleMoveEnemy : EnemyController
 {
 
 	[SerializeField]
+	private Material m_Normal;
+
+	[SerializeField]
+	private Material m_HitMate;
+
+	[SerializeField]
+	private Renderer m_Renderer;
+
+	[SerializeField]
 	private Vector3 m_BasePos;
 
 	[SerializeField]
@@ -59,5 +68,14 @@ public class CircleMoveEnemy : EnemyController
 		{
 			m_ShotTime -= Time.deltaTime;
 		}
+
+		m_Renderer.material = m_Normal;
+	}
+
+	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+		base.OnSuffer( bullet, colliderData );
+		m_Renderer.material = m_HitMate;
+		Debug.LogError( 1111111 );
 	}
 }

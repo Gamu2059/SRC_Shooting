@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: StraightBullet
+  m_Name: SimpleLaser
   m_EditorClassIdentifier: 
-  LifeTime: 0
+  LifeTime: 2
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
+    Scale: {x: 0, y: 0, z: 300}
     ScaleRelative: 0
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
-    DeltaScale: {x: 0, y: 0, z: 0}
+    DeltaScale: {x: 4, y: 0, z: 0}
     DeltaScaleRelative: 0
     HitSize: {x: 0, y: 0, z: 0}
     HitSizeRelative: 0
@@ -36,10 +36,36 @@ MonoBehaviour:
     Accel: 0
     AccelRelative: 0
     IsSearch: 0
-    Lerp: 0
+    Lerp: 0.02
     LerpRelative: 0
     OptionObjectParams: []
     OptionValueParams: []
-  ConditionalOrbitalParams: []
+  ConditionalOrbitalParams:
+  - Target: 0
+    Position: {x: 0, y: 0, z: 0}
+    PositionRelative: 0
+    Rotation: {x: 0, y: 0, z: 0}
+    RotationRelative: 0
+    Scale: {x: 1, y: 0, z: 100}
+    ScaleRelative: 0
+    DeltaRotation: {x: 0, y: 0, z: 0}
+    DeltaRotationRelative: 0
+    DeltaScale: {x: 4, y: 0, z: 0}
+    DeltaScaleRelative: 0
+    HitSize: {x: 0, y: 0, z: 0}
+    HitSizeRelative: 0
+    DeltaHitSize: {x: 0, y: 0, z: 0}
+    DeltaHitSizeRelative: 0
+    Damage: 0
+    DamageRelative: 0
+    Speed: 0
+    SpeedRelative: 0
+    Accel: 0
+    AccelRelative: 0
+    IsSearch: 1
+    Lerp: 0.005
+    LerpRelative: 0
+    OptionObjectParams: []
+    OptionValueParams: []
   OptionObjectParams: []
   OptionValueParams: []

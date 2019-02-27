@@ -1,7 +1,6 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
 
 public class PlayerController : CharaControllerBase
 {
@@ -15,8 +14,8 @@ public class PlayerController : CharaControllerBase
 		DEAD_AHEAD,
 	}
 
-    [SerializeField, Range(1,3)]
-    private int m_Lv;
+	[SerializeField]
+	private int m_Lv;
 
 	[SerializeField]
 	private int m_Exp;
@@ -39,38 +38,9 @@ public class PlayerController : CharaControllerBase
 	[SerializeField]
 	private GameObject m_BombPrefab;
 
-    [SerializeField]
-    protected bool IsReadyShotBullet;
-
-    [SerializeField]
-    private bool IsAutoShot;
-
-    private IntReactiveProperty Level = new IntReactiveProperty(0);
-
-    public void SetReadyShotBullet()
-    {
-        IsReadyShotBullet = true;
-    }
-
-    public bool GetIsAutoShot()
-    {
-        return IsAutoShot;
-    }
-
-    public override void OnAwake()
-    {
-        base.OnAwake();     
-        Level.Subscribe(x => UpdateShotLevel(x));
-    }
-
-    public override void OnUpdate()
-    {
-        base.OnUpdate();
-        Level.Value = m_Lv;
-    }
-
-    public virtual void UpdateShotLevel(int level)
-    {
-        // レベルによるショット変化の処理
-    }
+	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	{
+		base.OnSuffer( bullet, colliderData );
+		Debug.LogWarning( 11111 );
+	}
 }
