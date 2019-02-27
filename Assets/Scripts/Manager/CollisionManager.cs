@@ -180,7 +180,7 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		}
 		else if( collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.ELLIPSE )
 		{
-			//Debug.Log( 33 );
+			//Debug.Log(33);
 			return IsCollideRectAndEllipse( collider1, collider2 );
 		}
 		else
@@ -204,6 +204,9 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 
 	}
 
+	/// <summary>
+	/// 矩形と矩形の衝突判定。
+	/// </summary>
 	private bool IsCollideRectAndRect( Vector2[] corners1, Vector2[] corners2 )
 	{
 		for( int j = 0; j < corners2.Length; j++ )
@@ -231,6 +234,9 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		return false;
 	}
 
+	/// <summary>
+	/// 矩形と楕円の衝突判定。
+	/// </summary>
 	private bool IsCollideRectAndEllipse( ColliderData rect, ColliderData ellipse )
 	{
 		Vector2[] corners = GetCornerPosFromRect( rect );
@@ -241,10 +247,10 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		//Debug.Log( "Corner" );
 		//Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
 
-		//for( int i = 0; i < corners.Length; i++ )
-		//{
-		//	Debug.Log( corners[i] );
-		//}
+		for( int i = 0; i < corners.Length; i++ )
+		{
+			Debug.Log( corners[i] );
+		}
 
 		//Debug.Log( "Ellipse" );
 		//Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );
@@ -278,16 +284,20 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 	/// </summary>
 	private bool IsCollideEllipseAndEllipse( ColliderData ellipse1, ColliderData ellipse2 )
 	{
+		ellipse1.Size /= 2;
+		ellipse2.Size /= 2;
+
 		float deffAngle = ( ellipse1.Angle - ellipse2.Angle ) * Mathf.Deg2Rad;
 		Vector2 deltaPos = ellipse2.CenterPos - ellipse1.CenterPos;
-		float cos1 = Mathf.Cos( ellipse1.Angle * Mathf.Deg2Rad );
-		float sin1 = Mathf.Sin( ellipse1.Angle * Mathf.Deg2Rad );
 		float deffCos = Mathf.Cos( deffAngle );
 		float deffSin = Mathf.Sin( deffAngle );
 		float nx = ellipse2.Size.x * deffCos;
 		float ny = -ellipse2.Size.x * deffSin;
 		float px = ellipse2.Size.y * deffSin;
 		float py = ellipse2.Size.y * deffCos;
+
+		float cos1 = Mathf.Cos( ellipse1.Angle * Mathf.Deg2Rad );
+		float sin1 = Mathf.Sin( ellipse1.Angle * Mathf.Deg2Rad );
 		float ox = cos1 * deltaPos.x + sin1 * deltaPos.y;
 		float oy = -sin1 * deltaPos.x + cos1 * deltaPos.y;
 
