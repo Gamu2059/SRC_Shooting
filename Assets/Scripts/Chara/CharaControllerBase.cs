@@ -18,7 +18,7 @@ public class CharaControllerBase : BehaviorBase, ICollisionBase
 	}
 
 	[Header( "キャラの基礎パラメータ" )]
-
+        
 	[SerializeField]
 	protected CollisionManager.ColliderTransform[] m_ColliderTransforms;
 
