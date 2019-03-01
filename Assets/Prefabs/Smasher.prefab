@@ -724,7 +724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880db4892b3c2fc48b167732da1391cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
+  m_ColliderTransforms:
+  - ColliderType: 1
+    Transform: {fileID: 2303494924641994316}
   m_Troop: 0
   m_MoveSpeed: 10
   m_BulletPrefabs:
@@ -738,7 +740,7 @@ MonoBehaviour:
   - {fileID: 1215113176783628977}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_Lv: 0
+  m_Lv: 1
   m_Exp: 0
   m_NowHp: 0
   m_MaxHp: 0
@@ -759,7 +761,7 @@ MonoBehaviour:
   - {fileID: 1653954344}
   m_SubShotLv2Radius: 5
   m_SubShotLv2Speed: 5
-  m_IsSpinTurn: 0
+  m_IsSpinTurn: 1
 --- !u!1 &8610552162442630501
 GameObject:
   m_ObjectHideFlags: 0

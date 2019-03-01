@@ -42,8 +42,9 @@ public class CircleMoveEnemy : EnemyController
 
 	private float m_ShotTime;
 
-	private void Awake()
+	protected override void Awake()
 	{
+        base.Awake();
 		m_ShotTime = 0;
 	}
 

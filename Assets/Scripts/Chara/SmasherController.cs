@@ -70,57 +70,114 @@ public class SmasherController : PlayerController
         //UpdateSubShot();
     }
 
-    public override Bullet ShotBullet(int bulletIndex = 0, int bulletParamIndex = 0)
+    public override Bullet ShotBullet(int bulletIndex, int bulletParamIndex)
     {
-
-        if (shotDelay >= m_ShotInterval)
+        if (bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length)
         {
-            Bullet Main = GetOriginalBullet(0);
-            BulletParam bulletParam = m_BulletParams[bulletParamIndex];
-
-            for (int i = 0; i < m_MainShotPosition.Length; i++)
-            {
-                Bullet bullet = GetPoolBullet(0);
-                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, Main.transform.localScale, bulletIndex, bulletParam, -1);
-            }
-
-            if (m_SubShotLv1CanShot)
-            {
-                for (int i = 0; i < m_SubShotLv1Position.Length; i++)
-                {
-                    Bullet bullet = GetPoolBullet(0);
-                    bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, Main.transform.localScale, bulletIndex, bulletParam, -1);
-                }
-            }
-
-            if (m_SubShotLv2CanShot)
-            {
-                Bullet Sub2 = GetOriginalBullet(1);
-
-                for (int i = 0; i < m_SubShotLv2Position.Length; i++)
-                {
-                    Bullet bullet = GetPoolBullet(1);
-                    bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, -1);
-
-
-                    //Bullet bulletR = GetPoolBullet(1);
-                    //Bullet bulletL = GetPoolBullet(1);
-                    //bulletR.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
-                    //bulletL.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(-0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4); 
-
-
-                    //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
-                }
-
-            }
-
-            shotDelay = 0;
-
             return null;
+        }
+
+        if (bulletParamIndex < 0 || bulletParamIndex >= m_BulletParams.Length)
+        {
+            return null;
+        }
+
+        BulletParam bulletParam = m_BulletParams[bulletParamIndex];
+
+        if (bulletParam == null)
+        {
+            return null;
+        }
+
+        GameObject mainBullet = m_BulletPrefabs[bulletIndex].gameObject;
+
+        for(int i=0;i < m_MainShotPosition.Length; i++)
+        {
+            Bullet bullet = GetPoolBullet(bulletIndex);
+            bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
+        }
+
+        if (m_SubShotLv1CanShot)
+        {
+            for (int i = 0; i < m_SubShotLv1Position.Length; i++)
+            {
+                Bullet bullet = GetPoolBullet(bulletIndex);
+                bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
+            }
+        }
+
+        if (m_SubShotLv2CanShot)
+        {
+            GameObject Sub2 = m_BulletPrefabs[1].gameObject;
+
+            for (int i = 0; i < m_SubShotLv2Position.Length; i++)
+            {
+                Bullet bullet = GetPoolBullet(bulletIndex + 1);
+                bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, 1);
+
+
+                //Bullet bulletR = GetPoolBullet(1);
+                //Bullet bulletL = GetPoolBullet(1);
+                //bulletR.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
+                //bulletL.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(-0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4); 
+
+
+                //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+            }
 
         }
 
         return null;
+        /*
+                if (shotDelay >= m_ShotInterval)
+                {
+
+                    GameObject Main = m_BulletPrefabs[0].gameObject;
+
+                    for (int i = 0; i < m_MainShotPosition.Length; i++)
+                    {
+                        Bullet bullet = GetPoolBullet(0);
+                        bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, Main.transform.localScale, bulletIndex, bulletParam, -1);
+                    }
+
+                    if (m_SubShotLv1CanShot)
+                    {
+                        for (int i = 0; i < m_SubShotLv1Position.Length; i++)
+                        {
+                            Bullet bullet = GetPoolBullet(0);
+                            bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, Main.transform.localScale, bulletIndex, bulletParam, -1);
+                        }
+                    }
+
+                    if (m_SubShotLv2CanShot)
+                    {
+                        GameObject Sub2 = m_BulletPrefabs[1].gameObject;
+
+                        for (int i = 0; i < m_SubShotLv2Position.Length; i++)
+                        {
+                            Bullet bullet = GetPoolBullet(1);
+                            bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, -1);
+
+
+                            //Bullet bulletR = GetPoolBullet(1);
+                            //Bullet bulletL = GetPoolBullet(1);
+                            //bulletR.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
+                            //bulletL.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(-0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4); 
+
+
+                            //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+                        }
+
+                    }
+
+                    shotDelay = 0;
+
+                    return null;
+
+                }
+
+                return null;
+        */
     }
 
     public void UpdateShotLevel(int level)

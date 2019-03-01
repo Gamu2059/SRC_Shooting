@@ -17,10 +17,13 @@ public class EchoController : PlayerController
     [SerializeField]
     private Transform[] m_MainShotPosition;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         initialShotInterval = m_ShotInterval;
         OnAwake();
+        
     }
 
     public override void OnAwake()

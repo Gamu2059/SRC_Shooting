@@ -199,20 +199,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
+  m_ColliderTransforms:
+  - ColliderType: 0
+    Transform: {fileID: 0}
   m_Troop: 1
   m_MoveSpeed: 5
   m_BulletPrefabs:
   - {fileID: 7663632291520977884, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
   m_BombPrefabs: []
-  m_BulletParams: []
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
   m_Protectors: []
   m_ProtectorRadius: 0
   m_ProtectorSpeed: 0
   m_IsBoss: 0
   m_Normal: {fileID: 0}
   m_HitMate: {fileID: 0}
-  m_Renderer: {fileID: 0}
+  m_Renderer: {fileID: 601994211}
   m_BasePos: {x: 0, y: 0, z: 5}
   m_Radius: 0
   m_AngleSpeed: 5
@@ -804,8 +807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af96562584e1d34492f618b3bb43318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EnemyControllers:
-  - {fileID: 639212203}
+  m_EnemyControllers: []
 --- !u!4 &1937813321
 Transform:
   m_ObjectHideFlags: 0
