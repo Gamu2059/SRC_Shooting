@@ -186,7 +186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &601994209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
   - ColliderType: 0
-    Transform: {fileID: 0}
+    Transform: {fileID: 601994213}
   m_Troop: 1
   m_MoveSpeed: 5
   m_BulletPrefabs:
@@ -807,7 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af96562584e1d34492f618b3bb43318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EnemyControllers: []
+  m_EnemyControllers:
+  - {fileID: 601994209}
 --- !u!4 &1937813321
 Transform:
   m_ObjectHideFlags: 0

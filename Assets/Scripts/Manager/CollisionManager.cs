@@ -244,18 +244,21 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		float sin = Mathf.Sin( ellipse.Angle * Mathf.Deg2Rad );
 		float scaleRate = ellipse.Size.x / ellipse.Size.y;
 
-		//Debug.Log( "Corner" );
-		//Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
+        //Debug.Log( "Corner" );
+        //Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
 
-		for( int i = 0; i < corners.Length; i++ )
+        /*
+        for( int i = 0; i < corners.Length; i++ )
 		{
 			Debug.Log( corners[i] );
-		}
+		} 
+         */
 
-		//Debug.Log( "Ellipse" );
-		//Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );
 
-		for( int i = 0; i < corners.Length; i++ )
+        //Debug.Log( "Ellipse" );
+        //Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );
+
+        for ( int i = 0; i < corners.Length; i++ )
 		{
 			Vector2 offset = corners[i] - ellipse.CenterPos;
 			float x = offset.x * cos + offset.y * sin;
