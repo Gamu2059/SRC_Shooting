@@ -76,7 +76,10 @@ public class CircleMoveEnemy : EnemyController
 	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
+
 		m_Renderer.material = m_HitMate;
+        bullet.DestroyBullet();
+        //Debug.Log("Itai.");
 		//Debug.LogError( 1111111 );
 	}
 }

@@ -35,23 +35,42 @@ public class EchoController : PlayerController
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
+        UpdateShotInterval(GetLevel());
     }
 
     public override Bullet ShotBullet(int bulletIndex = 0, int bulletParamIndex = 0)
     {
-        return base.ShotBullet(bulletIndex, bulletParamIndex);
-
-        /*if (shotDelay >= m_ShotInterval)
+        if(shotDelay >= m_ShotInterval)
         {
-            Bullet b = GetOriginalBullet(0);
-
-            for(int i=0; i< m_MainShotPosition.Length; i++)
+            if (bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length)
             {
-                Bullet bullet = GetPoolBullet(0);
-                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 1);
+                return null;
             }
+
+            if (bulletParamIndex < 0 || bulletParamIndex >= m_BulletParams.Length)
+            {
+                return null;
+            }
+
+            BulletParam bulletParam = m_BulletParams[bulletParamIndex];
+
+            if (bulletParam == null)
+            {
+                return null;
+            }
+
+            GameObject mainBullet = m_BulletPrefabs[bulletIndex].gameObject;
+
+            for (int i = 0; i < m_MainShotPosition.Length; i++)
+            {
+                Bullet bullet = GetPoolBullet(bulletIndex);
+                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
+            }
+
             shotDelay = 0;
-        }*/
+        }
+
+        return null;
     }
 
     public override void ShotBomb(int bombIndex = 0)
@@ -60,6 +79,19 @@ public class EchoController : PlayerController
     }
 
     private void UpdateShotInterval(int level) {
-
+        if (level >= 3)
+        {
+            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
+        }
+        else if (level >= 2)
+        {
+            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease;
+        }
+        else
+        {
+            m_ShotInterval = initialShotInterval;
+        }
     }
+
+
 }
