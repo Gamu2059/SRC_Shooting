@@ -17,6 +17,12 @@ public class EchoController : PlayerController
     [SerializeField]
     private Transform[] m_MainShotPosition;
 
+    [SerializeField]
+    private bool canShotWave;
+
+    [SerializeField]
+    private CharaControllerBase lastHitCharacter;
+
     protected override void Awake()
     {
         base.Awake();
@@ -35,7 +41,11 @@ public class EchoController : PlayerController
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
+        //TestShot();
         UpdateShotInterval(GetLevel());
+        
+        //ShotDiffusinBullet();
+        //Debug.Log(string.Format("canshotdif={0}, lastHit={1}@OnUpdate", canShotWave, lastHitCharacter));
     }
 
     public override Bullet ShotBullet(int bulletIndex = 0, int bulletParamIndex = 0)
@@ -63,7 +73,8 @@ public class EchoController : PlayerController
 
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
-                Bullet bullet = GetPoolBullet(bulletIndex);
+                EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
+                bullet.SetShooter(this);
                 bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
             }
 
@@ -93,5 +104,32 @@ public class EchoController : PlayerController
         }
     }
 
+    public void ReadyShotDiffusionBullet(CharaControllerBase chara)
+    {
+        if (!canShotWave)
+        {
+            canShotWave = true;
+        }
+        lastHitCharacter = chara;
+        //Debug.Log(string.Format("canshotdif={0}, lastHit={1}@ReadyShotDiffBullet", canShotWave, lastHitCharacter));
+    }
 
+    private void ShotDiffusinBullet(int bulletIndex = 0, int bulletParamIndex = 0)
+    {
+        if (canShotWave)
+        {
+            if(lastHitCharacter == null)
+            {
+                return;
+            }
+
+            BulletParam bulletParam = m_BulletParams[bulletParamIndex];
+            GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
+
+            Bullet bullet = GetPoolBullet(bulletIndex);
+            bullet.ShotBullet(this, lastHitCharacter.transform.position + new Vector3(-5, 0, 0) , Vector3.left, bulletPrefab.transform.localScale, bulletIndex, bulletParam, 0);
+
+            canShotWave = false;
+        }
+    }
 }

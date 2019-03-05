@@ -406,12 +406,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!4 &664137530 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 633881005, guid: f1e5085ede72a304ca1d068b898062b5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1926405810755916688}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &954413434
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,11 +697,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smasher
       objectReference: {fileID: 0}
-    - target: {fileID: 1215113177835792058, guid: d247464a9787d8a418094c891be90fb9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1215113177835792061, guid: d247464a9787d8a418094c891be90fb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -821,36 +810,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Echo
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_MainShotPosition.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_BulletPrefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_MainShotPosition.Array.data[0]
-      value: 
-      objectReference: {fileID: 664137530}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_MainShotPosition.Array.data[1]
-      value: 
-      objectReference: {fileID: 664137530}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_ShotInterval
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_ShotIntervalDecrease
-      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 1926405811160240041, guid: f1e5085ede72a304ca1d068b898062b5,
         type: 3}
