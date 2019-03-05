@@ -18,6 +18,9 @@ public class EchoController : PlayerController
     private Transform[] m_MainShotPosition;
 
     [SerializeField]
+    private float m_DiffusionRadius;
+
+    [SerializeField]
     private bool canShotWave;
 
     [SerializeField]
@@ -44,7 +47,7 @@ public class EchoController : PlayerController
         //TestShot();
         UpdateShotInterval(GetLevel());
         
-        //ShotDiffusinBullet();
+        ShotDiffusinBullet();
         //Debug.Log(string.Format("canshotdif={0}, lastHit={1}@OnUpdate", canShotWave, lastHitCharacter));
     }
 
@@ -126,10 +129,29 @@ public class EchoController : PlayerController
             BulletParam bulletParam = m_BulletParams[bulletParamIndex];
             GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
 
-            Bullet bullet = GetPoolBullet(bulletIndex);
-            bullet.ShotBullet(this, lastHitCharacter.transform.position + new Vector3(-5, 0, 0) , Vector3.left, bulletPrefab.transform.localScale, bulletIndex, bulletParam, 0);
+            for(int i = 0; i < 4; i++)
+            {
+                float angleRad = (Mathf.PI / 2) * i;
+                float yAngle = 90f * Direction4(i);
+                EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
+                bullet.SetShooter(this);
+                bullet.ShotBullet(this, lastHitCharacter.transform.position + m_DiffusionRadius * new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)), lastHitCharacter.transform.eulerAngles + new Vector3(0, yAngle, 0), bulletPrefab.transform.localScale, bulletIndex, bulletParam, 0);
+            }
+            
 
             canShotWave = false;
+        }
+    }
+
+    private int Direction4(int i)
+    {
+        if(i < 2)
+        {
+            return - i + 1;
+        }
+        else
+        {
+            return 3 * i - 7;
         }
     }
 }
