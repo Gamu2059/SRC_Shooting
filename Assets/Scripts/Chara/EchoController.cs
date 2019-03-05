@@ -145,13 +145,17 @@ public class EchoController : PlayerController
 
     private int Direction4(int i)
     {
-        if(i < 2)
+        if(i < 1)
         {
-            return - i + 1;
+            return -i;
+
+        }else if(i < 2)
+        {
+            return 3 * i - 4;
         }
         else
         {
-            return 3 * i - 7;
+            return - i + 4;
         }
     }
 }
