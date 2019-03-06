@@ -581,7 +581,7 @@ MonoBehaviour:
   - {fileID: 1926405810096334313}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_Lv: 0
+  m_Lv: 1
   m_Exp: 0
   m_NowHp: 0
   m_MaxHp: 0
@@ -594,5 +594,8 @@ MonoBehaviour:
   m_MainShotPosition:
   - {fileID: 633881005}
   m_DiffusionRadius: 3
-  canShotWave: 0
-  lastHitCharacter: {fileID: 0}
+  m_CanShotWave: 0
+  m_LatestHitCharacter: {fileID: 0}
+  m_LatestHitCount: 0
+  m_MaxHitCount: 3
+  m_MaxHitCountIncrease: 1

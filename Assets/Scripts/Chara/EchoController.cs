@@ -21,18 +21,28 @@ public class EchoController : PlayerController
     private float m_DiffusionRadius;
 
     [SerializeField]
-    private bool canShotWave;
+    private bool m_CanShotWave;
 
     [SerializeField]
-    private CharaControllerBase lastHitCharacter;
+    private CharaControllerBase m_LatestHitCharacter;
+
+    [SerializeField]
+    private int m_LatestHitCount;
+
+    [SerializeField]
+    private int m_MaxHitCount;
+
+    private int initialMaxHitCount;
+
+    [SerializeField]
+    private int m_MaxHitCountIncrease;
 
     protected override void Awake()
     {
-        base.Awake();
-        
+        base.Awake();        
         initialShotInterval = m_ShotInterval;
+        initialMaxHitCount = m_MaxHitCount;
         OnAwake();
-        
     }
 
     public override void OnAwake()
@@ -44,11 +54,8 @@ public class EchoController : PlayerController
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
-        //TestShot();
-        UpdateShotInterval(GetLevel());
-        
+        UpdateShotLevel(GetLevel());
         ShotDiffusinBullet();
-        //Debug.Log(string.Format("canshotdif={0}, lastHit={1}@OnUpdate", canShotWave, lastHitCharacter));
     }
 
     public override Bullet ShotBullet(int bulletIndex = 0, int bulletParamIndex = 0)
@@ -77,7 +84,7 @@ public class EchoController : PlayerController
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
                 EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
-                bullet.SetShooter(this);
+                bullet.InitializeBullet(this);
                 bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
             }
 
@@ -92,36 +99,41 @@ public class EchoController : PlayerController
         base.ShotBomb(bombIndex);
     }
 
-    private void UpdateShotInterval(int level) {
+    private void UpdateShotLevel(int level) {
+
         if (level >= 3)
         {
             m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
+            m_MaxHitCount = initialMaxHitCount + m_MaxHitCountIncrease * 2;
         }
         else if (level >= 2)
         {
             m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease;
+            m_MaxHitCount = initialMaxHitCount + m_MaxHitCountIncrease;
         }
         else
         {
             m_ShotInterval = initialShotInterval;
+            m_MaxHitCount = initialMaxHitCount;
         }
     }
 
-    public void ReadyShotDiffusionBullet(CharaControllerBase chara)
+    public void ReadyShotDiffusionBullet(CharaControllerBase chara, int count)
     {
-        if (!canShotWave)
+        if (!m_CanShotWave)
         {
-            canShotWave = true;
+            m_CanShotWave = true;
         }
-        lastHitCharacter = chara;
-        //Debug.Log(string.Format("canshotdif={0}, lastHit={1}@ReadyShotDiffBullet", canShotWave, lastHitCharacter));
+
+        m_LatestHitCharacter = chara;
+        m_LatestHitCount = count;
     }
 
     private void ShotDiffusinBullet(int bulletIndex = 0, int bulletParamIndex = 0)
     {
-        if (canShotWave)
+        if (m_CanShotWave)
         {
-            if(lastHitCharacter == null)
+            if(m_LatestHitCharacter == null)
             {
                 return;
             }
@@ -134,12 +146,11 @@ public class EchoController : PlayerController
                 float angleRad = (Mathf.PI / 2) * i;
                 float yAngle = 90f * Direction4(i);
                 EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
-                bullet.SetShooter(this);
-                bullet.ShotBullet(this, lastHitCharacter.transform.position + m_DiffusionRadius * new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)), lastHitCharacter.transform.eulerAngles + new Vector3(0, yAngle, 0), bulletPrefab.transform.localScale, bulletIndex, bulletParam, 0);
+                bullet.SetShooter(this, m_LatestHitCount++);
+                bullet.ShotBullet(this, m_LatestHitCharacter.transform.position + m_DiffusionRadius * new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)), m_LatestHitCharacter.transform.eulerAngles + new Vector3(0, yAngle, 0), bulletPrefab.transform.localScale, bulletIndex, bulletParam, 0);
             }
             
-
-            canShotWave = false;
+            m_CanShotWave = false;
         }
     }
 
@@ -157,5 +168,10 @@ public class EchoController : PlayerController
         {
             return - i + 4;
         }
+    }
+
+    public int GetMaxHitCount()
+    {
+        return m_MaxHitCount;
     }
 }
