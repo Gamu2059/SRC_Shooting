@@ -85,7 +85,7 @@ public class EchoController : PlayerController
             {
                 EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
                 bullet.InitializeBullet(this);
-                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
+                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, -1);
             }
 
             shotDelay = 0;
@@ -129,7 +129,7 @@ public class EchoController : PlayerController
         m_LatestHitCount = count;
     }
 
-    private void ShotDiffusinBullet(int bulletIndex = 0, int bulletParamIndex = 0)
+    private void ShotDiffusinBullet(int bulletIndex = 1, int bulletParamIndex = 0)
     {
         if (m_CanShotWave)
         {
@@ -146,8 +146,8 @@ public class EchoController : PlayerController
                 float angleRad = (Mathf.PI / 2) * i;
                 float yAngle = 90f * Direction4(i);
                 EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
-                bullet.SetShooter(this, m_LatestHitCount++);
-                bullet.ShotBullet(this, m_LatestHitCharacter.transform.position + m_DiffusionRadius * new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)), m_LatestHitCharacter.transform.eulerAngles + new Vector3(0, yAngle, 0), bulletPrefab.transform.localScale, bulletIndex, bulletParam, 0);
+                bullet.SetShooter(this, ++m_LatestHitCount);
+                bullet.ShotBullet(this, m_LatestHitCharacter.transform.position + m_DiffusionRadius * new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)), m_LatestHitCharacter.transform.eulerAngles + new Vector3(0, yAngle, 0), bulletPrefab.transform.localScale, bulletIndex, bulletParam, -1);
             }
             
             m_CanShotWave = false;

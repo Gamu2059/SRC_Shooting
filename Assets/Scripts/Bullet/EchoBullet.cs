@@ -16,6 +16,10 @@ public class EchoBullet : Bullet
         {            
             m_Parent.ReadyShotDiffusionBullet(chara, m_HitCount);
         }
+        else
+        {
+            m_HitCount = 0;
+        }
         
         base.OnHitCharacter(chara);
     }
