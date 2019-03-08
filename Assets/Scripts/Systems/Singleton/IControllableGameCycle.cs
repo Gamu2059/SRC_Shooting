@@ -38,4 +38,10 @@ public interface IControllableGameCycle
 	/// このメソッドの呼び出しは、Unityではなく任意の制御下で行われる。
 	/// </summary>
 	void OnLateUpdate();
+
+	/// <summary>
+	/// 固定フレームで呼び出される処理。
+	/// このメソッドの呼び出しは、Unityではなく任意の制御下で行われる。
+	/// </summary>
+	void OnFixedUpdate();
 }

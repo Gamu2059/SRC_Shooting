@@ -133,6 +133,11 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 		m_ManagerList.ForEach( ( m ) => m.OnLateUpdate() );
 	}
 
+	public virtual void OnFixedUpdate()
+	{
+		m_ManagerList.ForEach( ( m ) => m.OnFixedUpdate() );
+	}
+
 	/// <summary>
 	/// シーン遷移前の演出が入る直前に呼び出される処理。
 	/// </summary>

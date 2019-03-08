@@ -47,12 +47,16 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 		OnLateUpdate();
 	}
 
+	private void FixedUpdate()
+	{
+		OnFixedUpdate();
+	}
+
 	public override void OnInitialize()
 	{
 		m_Managers = new List<IControllableGameCycle>();
-		m_Managers.Add( gameObject.AddComponent<BaseSceneManager>() );
-		m_Managers.Add( gameObject.AddComponent<PlayerCharaManager>() );
-		m_Managers.Add( gameObject.AddComponent<EnemyCharaManager>() );
+		m_Managers.Add( gameObject.GetComponent<BaseSceneManager>() );
+		m_Managers.Add( gameObject.AddComponent<TimerManager>() );
 		m_Managers.Add( gameObject.AddComponent<BulletManager>() );
 		m_Managers.Add( gameObject.AddComponent<CollisionManager>() );
 
@@ -89,5 +93,10 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	public override void OnLateUpdate()
 	{
 		m_Managers.ForEach( ( m ) => m.OnLateUpdate() );
+	}
+
+	public override void OnFixedUpdate()
+	{
+		m_Managers.ForEach( ( m ) => m.OnFixedUpdate() );
 	}
 }

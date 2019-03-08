@@ -80,4 +80,8 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour, IControllableGam
 	public virtual void OnLateUpdate()
 	{
 	}
+
+	public virtual void OnFixedUpdate()
+	{
+	}
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 /// プレイヤーキャラの動作を制御するマネージャ。
 /// とりあえずで作ってます。
 /// </summary>
-public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager>
+public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 {
 
 	#region Inspector

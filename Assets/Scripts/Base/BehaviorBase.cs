@@ -48,4 +48,8 @@ public class ControllableMonoBehaviour : MonoBehaviour, IControllableGameCycle
 	{
 	}
 
+	public virtual void OnFixedUpdate()
+	{
+	}
+
 }
