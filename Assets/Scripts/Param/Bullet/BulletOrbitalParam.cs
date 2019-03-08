@@ -44,19 +44,7 @@ public struct BulletOrbitalParam
 
 
 	[Space()]
-	[Header( "Hit" )]
-
-	[Tooltip( "これが適用された時のHitSize" )]
-	public Vector3 HitSize;
-
-	[Tooltip( "HitSizeの適用は絶対か相対か" )]
-	public E_ATTACK_PARAM_RELATIVE HitSizeRelative;
-
-	[Tooltip( "これが適用された時のDeltaHitSize" )]
-	public Vector3 DeltaHitSize;
-
-	[Tooltip( "DeltaHitSizeの適用は絶対か相対か" )]
-	public E_ATTACK_PARAM_RELATIVE DeltaHitSizeRelative;
+	[Header( "Damage" )]
 
 	[Tooltip( "これが適用された時のDamage" )]
 	public float Damage;

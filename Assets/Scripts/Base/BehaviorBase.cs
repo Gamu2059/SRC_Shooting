@@ -5,31 +5,47 @@ using UnityEngine;
 /// <summary>
 /// SRC_Shootingでコンポーネントを制御しやすいようにするための拡張です。
 /// </summary>
-public class BehaviorBase : MonoBehaviour
+public class ControllableMonoBehaviour : MonoBehaviour, IControllableGameCycle
 {
+	private void Awake()
+	{
+		OnAwake();
+	}
+
+	private void OnDestroy()
+	{
+		OnDestroyed();
+	}
+
 	/// <summary>
-	/// 上位の制御スクリプトのAwakeで呼び出されるメソッド。
+	/// Awakeで呼び出されるメソッド。
 	/// </summary>
 	public virtual void OnAwake() { }
 
 	/// <summary>
-	/// 上位の制御スクリプトのStartで呼び出されるメソッド。
-	/// </summary>
-	public virtual void OnStart() { }
-
-	/// <summary>
-	/// 上位の制御スクリプトのUpdateで呼び出されるメソッド。
-	/// </summary>
-	public virtual void OnUpdate() { }
-
-	/// <summary>
-	/// 上位の制御スクリプトのLateUpdateで呼び出されるメソッド。
-	/// </summary>
-	public virtual void OnLateUpdate() { }
-
-	/// <summary>
-	/// 上位の制御スクリプトのOnDestroyで呼び出されるメソッド。
+	/// OnDestroyで呼び出されるメソッド。
 	/// </summary>
 	public virtual void OnDestroyed() { }
+
+
+	public virtual void OnInitialize()
+	{
+	}
+
+	public virtual void OnFinalize()
+	{
+	}
+
+	public virtual void OnStart()
+	{
+	}
+
+	public virtual void OnUpdate()
+	{
+	}
+
+	public virtual void OnLateUpdate()
+	{
+	}
 
 }

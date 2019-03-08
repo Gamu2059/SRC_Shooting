@@ -73,9 +73,9 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 
 
-	public override void OnInit()
+	public override void OnInitialize()
 	{
-		base.OnInit();
+		base.OnInitialize();
 	}
 
 	protected override void OnAwake()
@@ -84,9 +84,9 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		Application.targetFrameRate = 30;
 	}
 
-	protected override void OnDestroy()
+	protected override void OnDestroyed()
 	{
-		base.OnDestroy();
+		base.OnDestroyed();
 	}
 
 	private void Start()

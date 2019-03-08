@@ -62,7 +62,7 @@ public class CircleMoveEnemy : EnemyController
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			ShotBullet( 0, 0 );
+			Bullet.ShotBullet( this );
 		}
 		else
 		{
