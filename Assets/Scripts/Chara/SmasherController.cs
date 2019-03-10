@@ -45,12 +45,6 @@ public class SmasherController : PlayerController
         OnAwake();
     }
 
-	//protected void Awake()
-	//{
-		//initialShotInterval = m_ShotInterval;
-		//OnAwake();
-	//}
-
     public override void OnUpdate()
     {
         shotDelay += Time.deltaTime;
@@ -87,7 +81,7 @@ public class SmasherController : PlayerController
             {
                 var shotParam = new BulletShotParam();
                 shotParam.Position = m_MainShotPosition[i].position;
-                Bullet.ShotBullet(this);
+                Bullet.ShotBullet(shotParam);
                 //Bullet bullet = GetPoolBullet(bulletIndex);
                 //bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
             }
@@ -98,7 +92,7 @@ public class SmasherController : PlayerController
                 {
                     var shotParam = new BulletShotParam();
                     shotParam.Position = m_SubShotLv1Position[i].position;
-                    Bullet.ShotBullet(this);
+                    Bullet.ShotBullet(shotParam);
                     //Bullet bullet = GetPoolBullet(bulletIndex);
                     //bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
                 }
@@ -112,7 +106,7 @@ public class SmasherController : PlayerController
                 {
                     var shotParam = new BulletShotParam();
                     shotParam.Position = m_SubShotLv2Position[i].position;
-                    Bullet.ShotBullet(this);
+                    Bullet.ShotBullet(shotParam);
                     //Bullet bullet = GetPoolBullet(bulletIndex + 1);
                     //bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, 1);
                 }
