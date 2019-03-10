@@ -55,7 +55,7 @@ public class EchoController : PlayerController
 		base.OnUpdate();
 		shotDelay += Time.deltaTime;
 		UpdateShotLevel( GetLevel() );
-		//ShotDiffusinBullet();
+		ShotDiffusinBullet();
 	}
 
 	public override void ShotBullet()
@@ -109,7 +109,7 @@ public class EchoController : PlayerController
 		m_LatestHitCharacter = chara;
 		m_LatestHitCount = count;
 	}
-    /*
+    
 	private void ShotDiffusinBullet( int bulletIndex = 1, int bulletParamIndex = 0 )
 	{
 		if( m_CanShotWave )
@@ -119,16 +119,13 @@ public class EchoController : PlayerController
 				return;
 			}
 
-			BulletParam bulletParam = m_BulletParams[bulletParamIndex];
-			GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
-
 			for( int i = 0; i < 4; i++ )
 			{
 				float angleRad = ( Mathf.PI / 2 ) * i;
 				float yAngle = 90f * Direction4( i );
 
-				var shotParam = new BulletShotParam();
-				shotParam.Position = new Vector3( Mathf.Cos( angleRad ), 0, Mathf.Sin( angleRad ) ) * m_DiffusionRadius;
+				var shotParam = new BulletShotParam( this );
+				shotParam.Position = m_LatestHitCharacter.transform.position + m_DiffusionRadius * new Vector3( Mathf.Cos( angleRad ), 0, Mathf.Sin( angleRad ) );
 				shotParam.Rotation = m_LatestHitCharacter.transform.eulerAngles + new Vector3( 0, yAngle, 0 );
                 shotParam.BulletIndex = 1;
                 shotParam.OrbitalIndex = 2;
@@ -160,5 +157,5 @@ public class EchoController : PlayerController
 	{
 		return m_MaxHitCount;
 	}
-    */
+    
 }
