@@ -16,6 +16,7 @@ public class EnemyController : CharaControllerBase
 	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
+        bullet.DestroyBullet();
 	}
 
 }

@@ -104,18 +104,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ColliderTransforms:
+  - ColliderType: 1
+    Transform: {fileID: 8349637421816395282}
+  m_Troop: 0
   m_MoveSpeed: 5
   m_BulletPrefabs:
   - {fileID: 2380427692720716458, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
   m_BombPrefabs:
   - {fileID: 2380427692720716458, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
+  m_BulletParams: []
   m_Protectors: []
   m_ProtectorRadius: 0
   m_ProtectorSpeed: 0
   m_IsBoss: 0
-  m_BasePos: {x: 0, y: 0, z: 5}
-  m_Radius: 3
-  m_AngleSpeed: 5
+  m_Normal: {fileID: 2100000, guid: 34991efb998f0a549bfeb551224c3abe, type: 2}
+  m_HitMate: {fileID: 2100000, guid: 6f82f66acb75a3a4f9f45ed38d117757, type: 2}
+  m_Renderer: {fileID: 8349637421816395284}
+  m_BasePos: {x: 0, y: 0, z: 15}
+  m_Radius: 0
+  m_AngleSpeed: 0
   m_ShotInterval: 0.05
   m_ShotPosOffset: 1
   m_BulletSpeed: 20

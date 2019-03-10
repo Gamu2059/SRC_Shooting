@@ -12,18 +12,11 @@ public class EchoBullet : Bullet
 
     public override void OnHitCharacter(CharaControllerBase chara)
     {
-        if(m_HitCount < m_Parent.GetMaxHitCount())
-        {            
-            m_Parent.ReadyShotDiffusionBullet(chara, m_HitCount);
-        }
-        else
-        {
-            m_HitCount = 0;
-        }
-        
+        Debug.Log(string.Format("Hit! @ {0}", chara.transform.position));
         base.OnHitCharacter(chara);
     }
 
+    /*
     public void SetShooter(EchoController echoController, int count)
     {
         m_Parent = echoController;
@@ -35,5 +28,6 @@ public class EchoBullet : Bullet
         m_Parent = echoController;
         m_HitCount = 0;
     }
+    */
 
 }
