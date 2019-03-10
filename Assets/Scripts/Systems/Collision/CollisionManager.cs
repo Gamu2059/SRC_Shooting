@@ -2,88 +2,102 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
+/// <summary>
+/// 弾やキャラの当たり判定を管理する。
+/// </summary>
+public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 {
+	/// <summary>
+	/// 衝突判定の形状。
+	/// </summary>
 	public enum E_COLLIDER_SHAPE
 	{
-		// 矩形
+		/// <summary>
+		/// 矩形
+		/// </summary>
 		RECT,
 
-		// 楕円
+		/// <summary>
+		/// 楕円
+		/// </summary>
 		ELLIPSE
 	}
 
+	/// <summary>
+	/// 衝突判定に用いるトランスフォームの情報。
+	/// </summary>
 	[System.Serializable]
 	public struct ColliderTransform
 	{
+		/// <summary>
+		/// 衝突判定に用いるトランスフォームの形状。
+		/// </summary>
 		public E_COLLIDER_SHAPE ColliderType;
 
+		/// <summary>
+		/// 衝突判定に用いるトランスフォーム。
+		/// </summary>
 		public Transform Transform;
 	}
 
+	/// <summary>
+	/// 衝突判定情報。
+	/// </summary>
 	[System.Serializable]
 	public struct ColliderData
 	{
 		/// <summary>
-		/// 矩形か楕円か
+		/// 矩形か楕円か。
 		/// </summary>
 		public E_COLLIDER_SHAPE ColliderType;
 
 		/// <summary>
-		/// 中心座標
+		/// 中心座標。
 		/// </summary>
 		public Vector2 CenterPos;
 
 		/// <summary>
-		/// サイズ
+		/// サイズ。
 		/// </summary>
 		public Vector2 Size;
 
 		/// <summary>
-		/// 回転(度数法)
+		/// 回転(度数法)。
 		/// </summary>
 		public float Angle;
 	}
 
-	protected override void OnAwake()
+
+
+	public override void OnInitialize()
 	{
-		base.OnAwake();
 	}
 
-	private void Start()
-	{
-		OnStart();
-	}
-
-	private void Update()
-	{
-		OnUpdate();
-	}
-
-	private void LateUpdate()
-	{
-		OnLateUpdate();
-	}
-
-	public override void OnInit()
+	public override void OnFinalize()
 	{
 	}
 
 	public override void OnStart()
 	{
-
 	}
 
 	public override void OnUpdate()
 	{
+		CheckCollision();
 	}
 
-	/// <summary>
-	/// 当たり判定を司るのでLateUpdateで判定を行う。
-	/// </summary>
 	public override void OnLateUpdate()
 	{
-		List<Bullet> bullets = BulletManager.Instance.GetBullets();
+	}
+
+
+
+	/// <summary>
+	/// 衝突判定を行う。
+	/// </summary>
+	public void CheckCollision()
+	{
+		var bullets = BulletManager.Instance.GetUpdateBullets();
 
 		foreach( var bullet in bullets )
 		{
@@ -94,12 +108,11 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 			{
 				foreach( var targetBullet in bullets )
 				{
-					if( bullet == targetBullet )
+					if( bullet != targetBullet )
 					{
-						continue;
+						BulletCollide( bullet, targetBullet, colliderDatas );
 					}
 
-					BulletCollide( bullet, targetBullet, colliderDatas );
 				}
 			}
 
@@ -122,6 +135,9 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		}
 	}
 
+	/// <summary>
+	/// 弾同士の衝突判定。
+	/// </summary>
 	private void BulletCollide( Bullet bullet, Bullet target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
@@ -141,6 +157,9 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		}
 	}
 
+	/// <summary>
+	/// 弾とキャラの衝突判定。
+	/// </summary>
 	private void CharaCollide( Bullet bullet, CharaControllerBase target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
@@ -163,9 +182,6 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 	/// <summary>
 	/// 二つの衝突情報が、互いに衝突しているかを判定する。
 	/// </summary>
-	/// <param name="collider1"></param>
-	/// <param name="collider2"></param>
-	/// <returns></returns>
 	public bool IsCollide( ColliderData collider1, ColliderData collider2 )
 	{
 		if( collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.RECT )
@@ -190,6 +206,9 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		}
 	}
 
+	/// <summary>
+	/// 矩形と矩形の衝突判定。
+	/// </summary>
 	private bool IsCollideRectAndRect( ColliderData rect1, ColliderData rect2 )
 	{
 		Vector2[] corners1 = GetCornerPosFromRect( rect1 );
@@ -205,7 +224,7 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 	}
 
 	/// <summary>
-	/// 矩形と矩形の衝突判定。
+	/// 矩形と矩形の衝突判定の詳細処理。
 	/// </summary>
 	private bool IsCollideRectAndRect( Vector2[] corners1, Vector2[] corners2 )
 	{
@@ -244,21 +263,18 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		float sin = Mathf.Sin( ellipse.Angle * Mathf.Deg2Rad );
 		float scaleRate = ellipse.Size.x / ellipse.Size.y;
 
-        //Debug.Log( "Corner" );
-        //Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
+		//Debug.Log( "Corner" );
+		//Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
 
-        /*
-        for( int i = 0; i < corners.Length; i++ )
-		{
-			Debug.Log( corners[i] );
-		} 
-         */
+		//for( int i = 0; i < corners.Length; i++ )
+		//{
+		//	Debug.Log( corners[i] );
+		//}
 
+		//Debug.Log( "Ellipse" );
+		//Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );
 
-        //Debug.Log( "Ellipse" );
-        //Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );
-
-        for ( int i = 0; i < corners.Length; i++ )
+		for( int i = 0; i < corners.Length; i++ )
 		{
 			Vector2 offset = corners[i] - ellipse.CenterPos;
 			float x = offset.x * cos + offset.y * sin;
@@ -344,6 +360,9 @@ public class CollisionManager : GlobalSingletonMonoBehavior<CollisionManager>
 		return false;
 	}
 
+	/// <summary>
+	/// 指定した衝突判定の頂点の座標配列を取得する。
+	/// </summary>
 	public Vector2[] GetCornerPosFromRect( ColliderData colliderData )
 	{
 		Vector2 halfSize = colliderData.Size / 2f;

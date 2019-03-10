@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class SmasherController : PlayerController
 {
-    [SerializeField, Range(0f, 1f)]
-    private float m_ShotInterval;
+	[SerializeField, Range( 0f, 1f )]
+	private float m_ShotInterval;
 
-    private float initialShotInterval;
+	private float initialShotInterval;
 
-    [SerializeField]
-    private float m_ShotIntervalDecrease;
+	[SerializeField]
+	private float m_ShotIntervalDecrease;
 
-    private float shotDelay;
+	private float shotDelay;
 
-    [SerializeField]
-    private Transform[] m_MainShotPosition;
+	[SerializeField]
+	private Transform[] m_MainShotPosition;
 
-    [SerializeField]
-    private Transform[] m_SubShotLv1Position;
+	[SerializeField]
+	private Transform[] m_SubShotLv1Position;
 
-    private bool m_SubShotLv1CanShot;
+	private bool m_SubShotLv1CanShot;
 
-    [SerializeField]
-    private Transform[] m_SubShotLv2Position;
+	[SerializeField]
+	private Transform[] m_SubShotLv2Position;
 
-    private bool m_SubShotLv2CanShot;
+	private bool m_SubShotLv2CanShot;
 
-    [SerializeField]
-    private float m_SubShotLv2Radius;
+	[SerializeField]
+	private float m_SubShotLv2Radius;
 
-    [SerializeField]
-    private float m_SubShotLv2Speed;
+	[SerializeField]
+	private float m_SubShotLv2Speed;
 
-    private float m_SubShotLv2AngleDeg;
+	private float m_SubShotLv2AngleDeg;
 
-    [SerializeField]
-    private bool m_IsSpinTurn;
+	[SerializeField]
+	private bool m_IsSpinTurn;
 
 
     protected override void Awake()
@@ -45,10 +45,11 @@ public class SmasherController : PlayerController
         OnAwake();
     }
 
-    public override void OnAwake()
-    {
-        base.OnAwake();
-    }
+	//protected void Awake()
+	//{
+		//initialShotInterval = m_ShotInterval;
+		//OnAwake();
+	//}
 
     public override void OnUpdate()
     {
@@ -84,16 +85,22 @@ public class SmasherController : PlayerController
 
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
-                Bullet bullet = GetPoolBullet(bulletIndex);
-                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
+                var shotParam = new BulletShotParam();
+                shotParam.Position = m_MainShotPosition[i].position;
+                Bullet.ShotBullet(this);
+                //Bullet bullet = GetPoolBullet(bulletIndex);
+                //bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
             }
 
             if (m_SubShotLv1CanShot)
             {
                 for (int i = 0; i < m_SubShotLv1Position.Length; i++)
                 {
-                    Bullet bullet = GetPoolBullet(bulletIndex);
-                    bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
+                    var shotParam = new BulletShotParam();
+                    shotParam.Position = m_SubShotLv1Position[i].position;
+                    Bullet.ShotBullet(this);
+                    //Bullet bullet = GetPoolBullet(bulletIndex);
+                    //bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, 0);
                 }
             }
 
@@ -103,8 +110,11 @@ public class SmasherController : PlayerController
 
                 for (int i = 0; i < m_SubShotLv2Position.Length; i++)
                 {
-                    Bullet bullet = GetPoolBullet(bulletIndex + 1);
-                    bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, 1);
+                    var shotParam = new BulletShotParam();
+                    shotParam.Position = m_SubShotLv2Position[i].position;
+                    Bullet.ShotBullet(this);
+                    //Bullet bullet = GetPoolBullet(bulletIndex + 1);
+                    //bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, bulletParam, 1);
                 }
 
             }
@@ -152,26 +162,23 @@ public class SmasherController : PlayerController
 
     private void UpdateSubShot()
     {
-        if (m_SubShotLv2CanShot)
+        m_SubShotLv2AngleDeg += m_SubShotLv2Speed * Time.deltaTime;
+        m_SubShotLv2AngleDeg %= Mathf.PI * 2;
+        float unitAngle = Mathf.PI * 2 / m_SubShotLv2Position.Length;
+        for (int i = 0; i < m_SubShotLv2Position.Length; i++)
         {
-            m_SubShotLv2AngleDeg += m_SubShotLv2Speed * Time.deltaTime;
-            m_SubShotLv2AngleDeg %= Mathf.PI * 2;
-            float unitAngle = Mathf.PI * 2 / m_SubShotLv2Position.Length;
-            for (int i = 0; i < m_SubShotLv2Position.Length; i++)
+            float angle = unitAngle * i + m_SubShotLv2AngleDeg;
+
+            if (m_IsSpinTurn)
             {
-                float angle = unitAngle * i + m_SubShotLv2AngleDeg;
-
-                if (m_IsSpinTurn)
-                {
-                    angle *= (i % 2 == 0 ? -1 : 1);
-                }
-
-                float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
-                float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
-
-                m_SubShotLv2Position[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
-                m_SubShotLv2Position[i].GetComponent<Transform>().LookAt(transform);
+                angle *= (i % 2 == 0 ? -1 : 1);
             }
+
+            float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
+            float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
+
+            m_SubShotLv2Position[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
+            m_SubShotLv2Position[i].GetComponent<Transform>().LookAt(transform);
         }
     }
 }
