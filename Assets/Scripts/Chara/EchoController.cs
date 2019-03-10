@@ -98,7 +98,7 @@ public class EchoController : PlayerController
 			m_MaxHitCount = initialMaxHitCount;
 		}
 	}
-    /*
+    
 	public void ReadyShotDiffusionBullet( CharaControllerBase chara, int count )
 	{
 		if( !m_CanShotWave )
@@ -109,7 +109,7 @@ public class EchoController : PlayerController
 		m_LatestHitCharacter = chara;
 		m_LatestHitCount = count;
 	}
-
+    /*
 	private void ShotDiffusinBullet( int bulletIndex = 1, int bulletParamIndex = 0 )
 	{
 		if( m_CanShotWave )
