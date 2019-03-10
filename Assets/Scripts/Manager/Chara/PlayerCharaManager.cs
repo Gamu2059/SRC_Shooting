@@ -144,7 +144,7 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		// 通常弾
 		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
-			m_CurrentController.ShotBullet( 0, 0 );
+			m_CurrentController.ShotBullet();
 		}
 
 		// ボム
@@ -252,5 +252,11 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		}
 
 		m_Controllers.Add( controller );
+
+		// 最初のキャラだけONにする
+		if( m_Controllers.Count > 1 )
+		{
+			controller.gameObject.SetActive( false );
+		}
 	}
 }

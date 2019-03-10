@@ -48,12 +48,9 @@ public class PlayerController : CharaControllerBase
 	/// <summary>
 	/// ’Êí’e‚ğ”­Ë‚·‚éB
 	/// </summary>
-	/// <param name="bulletIndex">”­Ë‚µ‚½‚¢’e‚Ìindex</param>
-	/// <param name="bulletParamIndex">’e‚Ì‹O“¹‚ğ’è‚ß‚éƒpƒ‰ƒ[ƒ^‚Ìindex</param>
-	public virtual Bullet ShotBullet( int bulletIndex, int bulletParamIndex )
+	public virtual void ShotBullet()
 	{
-		var shotParam = new BulletShotParam( this, bulletIndex, bulletParamIndex, -1 );
-		return Bullet.ShotBullet( shotParam );
+		Bullet.ShotBullet( this );
 	}
 
 
@@ -84,9 +81,9 @@ public class PlayerController : CharaControllerBase
 		base.OnSuffer( bullet, colliderData );
 	}
 
-    public int GetLevel()
-    {
-        return m_Lv;
-    }
+	public int GetLevel()
+	{
+		return m_Lv;
+	}
 
 }
