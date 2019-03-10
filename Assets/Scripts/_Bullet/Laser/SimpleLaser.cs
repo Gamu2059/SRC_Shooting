@@ -28,11 +28,11 @@ public class SimpleLaser : Bullet
 		}
 	}
 
-	protected override void OnUpdateBulletOrbital()
+	public override void OnUpdate()
 	{
-		base.OnUpdateBulletOrbital();
+		base.OnUpdate();
 
-		transform.position = m_Owner.transform.position;
+		transform.position = GetBulletOwner().transform.position;
 		transform.Translate( m_OffsetPos, Space.Self );
 	}
 

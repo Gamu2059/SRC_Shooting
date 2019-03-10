@@ -6,7 +6,7 @@ using UnityEngine;
 /// プレイヤーキャラの動作を制御するマネージャ。
 /// とりあえずで作ってます。
 /// </summary>
-public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager>
+public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 {
 
 	#region Inspector
@@ -39,9 +39,8 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	private KeyCode[] m_3rdCharaChange;
 
 
-
 	[SerializeField]
-	private PlayerController[] m_Controllers;
+	private List<PlayerController> m_Controllers;
 
 	[SerializeField]
 	private PlayerController m_CurrentController;
@@ -56,10 +55,9 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 	private float m_WaitChangeTime = 0;
 
 
-
 	#region Get Set
 
-	public PlayerController[] GetControllers()
+	public List<PlayerController> GetControllers()
 	{
 		return m_Controllers;
 	}
@@ -73,36 +71,43 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 
 
 
-	public override void OnInit()
-	{
-		base.OnInit();
-	}
-
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-		Application.targetFrameRate = 30;
+		m_Controllers = new List<PlayerController>();
 	}
 
-	protected override void OnDestroy()
+	protected override void OnDestroyed()
 	{
-		base.OnDestroy();
+		base.OnDestroyed();
 	}
 
-	private void Start()
+	public override void OnInitialize()
 	{
-		foreach( var chara in m_Controllers )
-		{
-			chara.gameObject.SetActive( false );
-		}
-
-		ChangeChara( 0 );
+		base.OnInitialize();
 	}
 
-	private void Update()
+	public override void OnFinalize()
+	{
+		base.OnFinalize();
+		m_Controllers.Clear();
+	}
+
+	//private void Start()
+	//{
+	//	foreach( var chara in m_Controllers )
+	//	{
+	//		chara.gameObject.SetActive( false );
+	//	}
+
+	//	ChangeChara( 0 );
+	//}
+
+	public override void OnUpdate()
 	{
 		if( m_CurrentController == null )
 		{
+			ChangeChara( 0 );
 			return;
 		}
 
@@ -137,7 +142,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		m_CurrentController.Move( moveDir );
 
 		// 通常弾
-		if( IsGetKeyDown( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
+		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
 		{
 			m_CurrentController.ShotBullet( 0, 0 );
 		}
@@ -152,7 +157,7 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		float wheel = Input.GetAxis( "Mouse ScrollWheel" );
 
 		// キャラ交代の入力
-		int charaNum = m_Controllers.Length;
+		int charaNum = m_Controllers.Count;
 
 		if( wheel > 0 )
 		{
@@ -179,8 +184,13 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		m_CurrentController.OnUpdate();
 	}
 
-	private void LateUpdate()
+	public override void OnLateUpdate()
 	{
+		if( m_CurrentController == null )
+		{
+			return;
+		}
+
 		m_CurrentController.OnLateUpdate();
 	}
 
@@ -217,6 +227,11 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 			return;
 		}
 
+		if( index < 0 || index >= m_Controllers.Count )
+		{
+			return;
+		}
+
 		m_CharaIndex = index;
 
 		if( m_CurrentController != null )
@@ -227,5 +242,15 @@ public class PlayerCharaManager : GlobalSingletonMonoBehavior<PlayerCharaManager
 		m_CurrentController = m_Controllers[m_CharaIndex];
 		m_CurrentController.gameObject.SetActive( true );
 		m_WaitChangeTime = 1f;
+	}
+
+	public void RegistChara( PlayerController controller )
+	{
+		if( controller == null || m_Controllers.Contains( controller ) )
+		{
+			return;
+		}
+
+		m_Controllers.Add( controller );
 	}
 }

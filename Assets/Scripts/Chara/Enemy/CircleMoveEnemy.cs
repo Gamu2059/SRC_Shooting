@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// 円運動をしながら定期的に弾を撃ってくる敵。
@@ -42,9 +43,13 @@ public class CircleMoveEnemy : EnemyController
 
 	private float m_ShotTime;
 
+	Timer hitTimer;
+
 	private void Awake()
 	{
 		m_ShotTime = 0;
+
+		m_Renderer.material = m_Normal;
 	}
 
 	public override void OnUpdate()
@@ -62,20 +67,37 @@ public class CircleMoveEnemy : EnemyController
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			ShotBullet( 0, 0 );
+			Bullet.ShotBullet( this );
 		}
 		else
 		{
 			m_ShotTime -= Time.deltaTime;
 		}
-
-		m_Renderer.material = m_Normal;
 	}
 
 	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 		m_Renderer.material = m_HitMate;
-		Debug.LogError( 1111111 );
+
+		if( hitTimer == null )
+		{
+			hitTimer = Timer.CreateTimeoutTimer( Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
+			{
+				m_Renderer.material = m_Normal;
+				hitTimer = null;
+			} );
+			TimerManager.Instance.RegistTimter( hitTimer );
+		}
+		else
+		{
+			TimerManager.Instance.RemoveTimer( hitTimer );
+			hitTimer = Timer.CreateTimeoutTimer( Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
+			{
+				m_Renderer.material = m_Normal;
+				hitTimer = null;
+			} );
+			TimerManager.Instance.RegistTimter( hitTimer );
+		}
 	}
 }

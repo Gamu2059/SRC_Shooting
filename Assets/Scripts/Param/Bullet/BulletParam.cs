@@ -22,4 +22,18 @@ public class BulletParam : ScriptableObject
 
 	[Tooltip( "オプションのfloatパラメータ" )]
 	public OptionValueParam[] OptionValueParams;
+
+	/// <summary>
+	/// 指定したインデックスのConditionalOrbitalParamを取得する。
+	/// もし範囲外ならデフォルトのOrbitalParamを取得する。
+	/// </summary>
+	public BulletOrbitalParam GetOrbitalParam( int orbitalIndex = -1 )
+	{
+		if( orbitalIndex < 0 || orbitalIndex >= ConditionalOrbitalParams.Length )
+		{
+			return OrbitalParam;
+		}
+
+		return ConditionalOrbitalParams[orbitalIndex];
+	}
 }

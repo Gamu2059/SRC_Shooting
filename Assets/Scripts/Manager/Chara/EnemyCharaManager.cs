@@ -5,25 +5,58 @@ using UnityEngine;
 /// <summary>
 /// 敵の振る舞いの制御を行う。
 /// </summary>
-public class EnemyCharaManager : GlobalSingletonMonoBehavior<EnemyCharaManager>
+public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 {
 
 	[SerializeField]
-	private EnemyController[] m_EnemyControllers;
+	private List<EnemyController> m_Controllers;
 
-	public EnemyController[] GetControllers()
+	public List<EnemyController> GetControllers()
 	{
-		return m_EnemyControllers;
+		return m_Controllers;
 	}
 
-	private void Update()
+	protected override void OnAwake()
 	{
-		if( m_EnemyControllers != null )
+		base.OnAwake();
+
+		m_Controllers = new List<EnemyController>();
+	}
+
+	protected override void OnDestroyed()
+	{
+		base.OnDestroyed();
+	}
+
+	public override void OnInitialize()
+	{
+		base.OnInitialize();
+	}
+
+	public override void OnFinalize()
+	{
+		base.OnFinalize();
+		m_Controllers.Clear();
+	}
+
+	public override void OnUpdate()
+	{
+		if( m_Controllers != null )
 		{
-			foreach( var enemy in m_EnemyControllers )
+			foreach( var enemy in m_Controllers )
 			{
 				enemy.OnUpdate();
 			}
 		}
+	}
+
+	public void RegistChara( EnemyController controller )
+	{
+		if( controller == null || m_Controllers.Contains( controller ) )
+		{
+			return;
+		}
+
+		m_Controllers.Add( controller );
 	}
 }

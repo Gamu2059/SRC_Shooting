@@ -38,9 +38,49 @@ public class PlayerController : CharaControllerBase
 	[SerializeField]
 	private GameObject m_BombPrefab;
 
+
+
+	private void Start()
+	{
+		PlayerCharaManager.Instance.RegistChara( this );
+	}
+
+	/// <summary>
+	/// 通常弾を発射する。
+	/// </summary>
+	/// <param name="bulletIndex">発射したい弾のindex</param>
+	/// <param name="bulletParamIndex">弾の軌道を定めるパラメータのindex</param>
+	public virtual Bullet ShotBullet( int bulletIndex, int bulletParamIndex )
+	{
+		var shotParam = new BulletShotParam( this, bulletIndex, bulletParamIndex, -1 );
+		return Bullet.ShotBullet( shotParam );
+	}
+
+
+	/// <summary>
+	/// ボムを使用する。
+	/// </summary>
+	public virtual void ShotBomb( int bombIndex = 0 )
+	{
+
+	}
+
+
+
+	/// <summary>
+	/// キャラを移動させる。
+	/// 移動速度はキャラに現在設定されているものとなる。
+	/// </summary>
+	/// <param name="moveDirection"> 移動方向 </param>
+	public virtual void Move( Vector3 moveDirection )
+	{
+		Vector3 move = moveDirection.normalized * m_MoveSpeed * Time.deltaTime;
+		transform.Translate( move, Space.World );
+	}
+
+
 	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
-		Debug.LogWarning( 11111 );
 	}
 }

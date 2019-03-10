@@ -4,9 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// シングルトンパターンを実装したMonoBehaviorの基底クラス。
-/// ただし、これを直接継承しないで下さい。
 /// </summary>
-public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class SingletonMonoBehavior<T> : ControllableMonoBehaviour where T : MonoBehaviour
 {
 
 	public static T Instance
@@ -15,7 +14,10 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBeh
 		private set;
 	}
 
-	protected virtual void Awake()
+	/// <summary>
+	/// Unityで制御される生成直後に呼び出される処理。
+	/// </summary>
+	protected override void Awake()
 	{
 		if( CheckExistInstance() )
 		{
@@ -28,32 +30,20 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBeh
 		}
 	}
 
+	/// <summary>
+	/// Unityで制御される破棄直前に呼び出される処理。
+	/// </summary>
+	protected override void OnDestroy()
+	{
+		OnDestroyed();
+		Instance = null;
+	}
+
+	/// <summary>
+	/// このクラスのインスタンスが存在するかどうかを取得する。
+	/// </summary>
 	public static bool CheckExistInstance()
 	{
 		return Instance;
-	}
-
-	protected virtual void OnAwake()
-	{
-	}
-
-	protected virtual void OnDestroy()
-	{
-	}
-
-	public virtual void OnInit()
-	{
-	}
-
-	public virtual void OnStart()
-	{
-	}
-
-	public virtual void OnUpdate()
-	{
-	}
-
-	public virtual void OnLateUpdate()
-	{
 	}
 }

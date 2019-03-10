@@ -1,49 +1,91 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Linq;
 
 /// <summary>
 /// 全ての弾の制御を管理する。
 /// </summary>
-public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
+public class BulletManager : SingletonMonoBehavior<BulletManager>
 {
+	/// <summary>
+	/// 全ての弾を保持するトランスフォーム。
+	/// </summary>
 	[SerializeField]
 	private Transform m_BulletHolder;
 
+	/// <summary>
+	/// STANDBY状態の弾を保持するリスト。
+	/// </summary>
 	[SerializeField]
-	private List<Bullet> m_Bullets;
+	private List<Bullet> m_StandbyBullets;
 
-	private List<Bullet> m_RemovingBullets;
+	/// <summary>
+	/// UPDATE状態の弾を保持するリスト。
+	/// </summary>
+	[SerializeField]
+	private List<Bullet> m_UpdateBullets;
 
-	public List<Bullet> GetBullets()
+	/// <summary>
+	/// POOL状態の弾を保持するリスト。
+	/// </summary>
+	[SerializeField]
+	private List<Bullet> m_PoolBullets;
+
+	/// <summary>
+	/// UPDATE状態に遷移する弾のリスト。
+	/// </summary>
+	private List<Bullet> m_GotoUpdateBullets;
+
+	/// <summary>
+	/// POOL状態に遷移する弾のリスト。
+	/// </summary>
+	private List<Bullet> m_GotoPoolBullets;
+
+	/// <summary>
+	/// STANDBY状態の弾を保持するリストを取得する。
+	/// </summary>
+	public List<Bullet> GetStandbyBullets()
 	{
-		return m_Bullets;
+		return m_StandbyBullets;
 	}
 
-	protected override void OnAwake()
+	/// <summary>
+	/// UPDATE状態の弾を保持するリストを取得する。
+	/// </summary>
+	public List<Bullet> GetUpdateBullets()
 	{
-		base.OnAwake();
-		m_Bullets = new List<Bullet>();
-		m_RemovingBullets = new List<Bullet>();
+		return m_UpdateBullets;
 	}
 
-	private void Start()
+	/// <summary>
+	/// POOL状態の弾を保持するリストを取得する。
+	/// </summary>
+	public List<Bullet> GetPoolBullets()
 	{
-		OnStart();
+		return m_PoolBullets;
 	}
 
-	private void Update()
+
+
+	public override void OnInitialize()
 	{
-		OnUpdate();
+		m_StandbyBullets = new List<Bullet>();
+		m_UpdateBullets = new List<Bullet>();
+		m_PoolBullets = new List<Bullet>();
+		m_GotoUpdateBullets = new List<Bullet>();
+		m_GotoPoolBullets = new List<Bullet>();
 	}
 
-	private void LateUpdate()
+	public override void OnFinalize()
 	{
-		OnLateUpdate();
-	}
-
-	public override void OnInit()
-	{
+		m_StandbyBullets.Clear();
+		m_StandbyBullets = null;
+		m_UpdateBullets.Clear();
+		m_UpdateBullets = null;
+		m_PoolBullets.Clear();
+		m_PoolBullets = null;
 	}
 
 	public override void OnStart()
@@ -52,7 +94,22 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 
 	public override void OnUpdate()
 	{
-		foreach( var bullet in m_Bullets )
+		// Start処理
+		foreach( var bullet in m_StandbyBullets )
+		{
+			if( bullet == null )
+			{
+				continue;
+			}
+
+			bullet.OnStart();
+			m_GotoUpdateBullets.Add( bullet );
+		}
+
+		GotoUpdateFromStandby();
+
+		// Update処理
+		foreach( var bullet in m_UpdateBullets )
 		{
 			if( bullet == null )
 			{
@@ -61,13 +118,12 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 
 			bullet.OnUpdate();
 		}
-
-		RemoveBullet();
 	}
 
 	public override void OnLateUpdate()
 	{
-		foreach( var bullet in m_Bullets )
+		// LateUpdate処理
+		foreach( var bullet in m_UpdateBullets )
 		{
 			if( bullet == null )
 			{
@@ -77,49 +133,88 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 			bullet.OnLateUpdate();
 		}
 
-		RemoveBullet();
+		GotoPoolFromUpdate();
+	}
+
+
+
+	/// <summary>
+	/// UPDATE状態にする。
+	/// </summary>
+	private void GotoUpdateFromStandby()
+	{
+		int count = m_GotoUpdateBullets.Count();
+
+		for( int i = 0; i < count; i++ )
+		{
+			int idx = count - i - 1;
+			var bullet = m_GotoUpdateBullets[idx];
+			m_GotoUpdateBullets.RemoveAt( idx );
+			m_StandbyBullets.Remove( bullet );
+			m_UpdateBullets.Add( bullet );
+			bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.UPDATE );
+		}
+
+		m_GotoUpdateBullets.Clear();
 	}
 
 	/// <summary>
-	/// 削除リストに入っている弾を制御下から外す。
+	/// POOL状態にする。
 	/// </summary>
-	private void RemoveBullet()
+	private void GotoPoolFromUpdate()
 	{
-		int removeNum = m_RemovingBullets.Count;
+		int count = m_GotoPoolBullets.Count;
 
-		for( int i = 0; i < removeNum; i++ )
+		for( int i = 0; i < count; i++ )
 		{
-			var bullet = m_RemovingBullets[0];
-			m_Bullets.Remove( bullet );
-			m_RemovingBullets.RemoveAt( 0 );
+			int idx = count - i - 1;
+			var bullet = m_GotoPoolBullets[idx];
+			bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.POOLED );
+			m_GotoPoolBullets.RemoveAt( idx );
+			m_UpdateBullets.Remove( bullet );
+			m_PoolBullets.Add( bullet );
 		}
 
-		m_RemovingBullets.Clear();
+		m_GotoPoolBullets.Clear();
 	}
 
-	public void AddBullet( Bullet bullet )
+	/// <summary>
+	/// 弾をSTANDBY状態にして制御下に入れる。
+	/// </summary>
+	public void CheckStandbyBullet( Bullet bullet )
 	{
-		if( bullet == null /*|| m_Bullets.Contains( bullet )*/ )
+		if( bullet == null || !m_PoolBullets.Contains( bullet ) )
 		{
-			Debug.Log( "追加できなかった" );
+			Debug.LogError( "指定された弾を追加できませんでした。" );
 			return;
 		}
 
-		m_Bullets.Add( bullet );
+		m_PoolBullets.Remove( bullet );
+		m_StandbyBullets.Add( bullet );
+		bullet.gameObject.SetActive( true );
+		bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.STANDBY_UPDATE );
 	}
 
-	public void CheckRemovingBullet( Bullet bullet )
+	/// <summary>
+	/// 指定した弾を制御から外すためにチェックする。
+	/// </summary>
+	public void CheckPoolBullet( Bullet bullet )
 	{
-		if( bullet == null /*|| !m_Bullets.Contains( bullet )*/ )
+		if( bullet == null || m_GotoPoolBullets.Contains( bullet ) )
 		{
-			Debug.Log( "削除できなかった" );
+			Debug.LogError( "指定した弾を削除できませんでした。" );
 			return;
 		}
 
-		m_RemovingBullets.Add( bullet );
+		bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.STANDBY_POOL );
+		m_GotoPoolBullets.Add( bullet );
+		bullet.gameObject.SetActive( false );
 	}
 
-	public void SetBulletParent( Bullet bullet )
+	/// <summary>
+	/// 指定した弾をBulletHolderの直下に入れる。
+	/// </summary>
+	private void SetBulletParent( Bullet bullet )
 	{
 		if( bullet == null )
 		{
@@ -134,5 +229,39 @@ public class BulletManager : GlobalSingletonMonoBehavior<BulletManager>
 		}
 
 		bullet.transform.SetParent( t );
+	}
+
+	/// <summary>
+	/// プールから弾を取得する。
+	/// 足りなければ生成する。
+	/// </summary>
+	/// <param name="bulletPrefab">取得や生成の情報源となる弾のプレハブ</param>
+	public Bullet GetPoolingBullet( Bullet bulletPrefab )
+	{
+		if( bulletPrefab == null )
+		{
+			return null;
+		}
+
+		string bulletId = bulletPrefab.GetBulletGroupId();
+		Bullet bullet = null;
+
+		foreach( var b in m_PoolBullets )
+		{
+			if( b != null && b.GetBulletGroupId() == bulletId )
+			{
+				bullet = b;
+				break;
+			}
+		}
+
+		if( bullet == null )
+		{
+			bullet = Instantiate( bulletPrefab );
+			SetBulletParent( bullet );
+			m_PoolBullets.Add( bullet );
+		}
+
+		return bullet;
 	}
 }
