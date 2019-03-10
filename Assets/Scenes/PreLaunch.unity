@@ -122,9 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1379646825}
   - component: {fileID: 1379646824}
-  - component: {fileID: 1379646823}
   - component: {fileID: 1379646826}
-  - component: {fileID: 1379646827}
+  - component: {fileID: 1379646823}
   m_Layer: 0
   m_Name: '[GameManager]'
   m_TagString: Untagged
@@ -192,37 +191,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1379646822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1821c57d805f63346aebcba9de85da8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 36241712d6eee1546acdb35142c7c0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ForwardMove: 7700000011010000
-  m_BackMove: 7300000012010000
-  m_RightMove: 6400000013010000
-  m_LeftMove: 6100000014010000
-  m_ShotBullet: 20000000
-  m_ShotBomb: 66000000
-  m_1stCharaChange: 7a000000
-  m_2ndCharaChange: 78000000
-  m_3rdCharaChange: 63000000
-  m_Controllers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_CurrentController: {fileID: 0}
---- !u!114 &1379646827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379646822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af96562584e1d34492f618b3bb43318, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EnemyControllers:
-  - {fileID: 0}
 --- !u!1 &1647350130
 GameObject:
   m_ObjectHideFlags: 0

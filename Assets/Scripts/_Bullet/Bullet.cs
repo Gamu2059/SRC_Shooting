@@ -14,12 +14,17 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 		/// <summary>
 		/// 発射される直前。
 		/// </summary>
-		STANDBY,
+		STANDBY_UPDATE,
 
 		/// <summary>
 		/// 発射された後、動いている状態。
 		/// </summary>
 		UPDATE,
+
+		/// <summary>
+		/// プールされる準備状態。
+		/// </summary>
+		STANDBY_POOL,
 
 		/// <summary>
 		/// プーリングされた状態。
@@ -536,6 +541,8 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 			bullet.ChangeOrbital( bulletParam.GetOrbitalParam() );
 		}
 
+		bullet.m_BulletParam = bulletParam;
+
 		if( isCheck )
 		{
 			BulletManager.Instance.CheckStandbyBullet( bullet );
@@ -639,6 +646,8 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 			bullet.ChangeOrbital( bulletParam.GetOrbitalParam( shotParam.OrbitalIndex ) );
 		}
 
+		bullet.m_BulletParam = bulletParam;
+
 		if( isCheck )
 		{
 			BulletManager.Instance.CheckStandbyBullet( bullet );
@@ -739,7 +748,10 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public virtual void DestroyBullet()
 	{
-		BulletManager.Instance.CheckPoolBullet( this );
+		if( m_BulletCycle == E_BULLET_CYCLE.UPDATE )
+		{
+			BulletManager.Instance.CheckPoolBullet( this );
+		}
 	}
 
 	/// <summary>
@@ -788,7 +800,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 		}
 		else
 		{
-			EnemyController[] enemies = EnemyCharaManager.Instance.GetControllers();
+			List<EnemyController> enemies = EnemyCharaManager.Instance.GetControllers();
 			CharaControllerBase nearestEnemy = null;
 			float minSqrDist = float.MaxValue;
 

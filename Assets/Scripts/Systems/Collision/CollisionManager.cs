@@ -97,7 +97,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 	/// </summary>
 	public void CheckCollision()
 	{
-		LinkedList<Bullet> bullets = BulletManager.Instance.GetUpdateBullets();
+		var bullets = BulletManager.Instance.GetUpdateBullets();
 
 		foreach( var bullet in bullets )
 		{
@@ -266,10 +266,10 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 		//Debug.Log( "Corner" );
 		//Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
 
-		for( int i = 0; i < corners.Length; i++ )
-		{
-			Debug.Log( corners[i] );
-		}
+		//for( int i = 0; i < corners.Length; i++ )
+		//{
+		//	Debug.Log( corners[i] );
+		//}
 
 		//Debug.Log( "Ellipse" );
 		//Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );

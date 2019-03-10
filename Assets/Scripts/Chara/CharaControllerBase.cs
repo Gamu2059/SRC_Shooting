@@ -108,7 +108,7 @@ public class CharaControllerBase : ControllableMonoBehaviour, ICollisionBase
 	{
 		int paramCount = GetBulletParamsCount();
 
-		if( m_BulletPrefabs == null || paramCount < 1 )
+		if( m_BulletParams == null || paramCount < 1 )
 		{
 			return null;
 		}

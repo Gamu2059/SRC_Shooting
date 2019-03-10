@@ -412,7 +412,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		List<AsyncOperation> asyncList = new List<AsyncOperation>();
 		asyncList.Add( SceneManager.LoadSceneAsync( ( int )m_CurrentInfoNextScene ) );
 
-		if( m_CurrentInfoNextAdditiveScenes == null )
+		if( m_CurrentInfoNextAdditiveScenes != null )
 		{
 			foreach( var scene in m_CurrentInfoNextAdditiveScenes )
 			{

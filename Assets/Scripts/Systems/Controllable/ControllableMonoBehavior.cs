@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// SRC_Shootingでコンポーネントを制御しやすいようにするための拡張です。
+/// コンポーネントを制御しやすいようにするための拡張です。
 /// </summary>
 public class ControllableMonoBehaviour : MonoBehaviour, IControllableGameCycle
 {
-	private void Awake()
+	protected virtual void Awake()
 	{
 		OnAwake();
 	}
 
-	private void OnDestroy()
+	protected virtual void OnDestroy()
 	{
 		OnDestroyed();
 	}
@@ -20,12 +20,12 @@ public class ControllableMonoBehaviour : MonoBehaviour, IControllableGameCycle
 	/// <summary>
 	/// Awakeで呼び出されるメソッド。
 	/// </summary>
-	public virtual void OnAwake() { }
+	protected virtual void OnAwake() { }
 
 	/// <summary>
 	/// OnDestroyで呼び出されるメソッド。
 	/// </summary>
-	public virtual void OnDestroyed() { }
+	protected virtual void OnDestroyed() { }
 
 
 	public virtual void OnInitialize()

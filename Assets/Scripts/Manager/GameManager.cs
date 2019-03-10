@@ -55,10 +55,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	public override void OnInitialize()
 	{
 		m_Managers = new List<IControllableGameCycle>();
+		m_Managers.Add( gameObject.GetComponent<TimerManager>() );
 		m_Managers.Add( gameObject.GetComponent<BaseSceneManager>() );
-		m_Managers.Add( gameObject.AddComponent<TimerManager>() );
-		m_Managers.Add( gameObject.AddComponent<BulletManager>() );
-		m_Managers.Add( gameObject.AddComponent<CollisionManager>() );
 
 		m_Managers.ForEach( ( m ) => m.OnInitialize() );
 	}

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// シングルトンパターンを実装したMonoBehaviorの基底クラス。
 /// </summary>
-public abstract class SingletonMonoBehavior<T> : MonoBehaviour, IControllableGameCycle where T : MonoBehaviour
+public abstract class SingletonMonoBehavior<T> : ControllableMonoBehaviour where T : MonoBehaviour
 {
 
 	public static T Instance
@@ -17,7 +17,7 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour, IControllableGam
 	/// <summary>
 	/// Unityで制御される生成直後に呼び出される処理。
 	/// </summary>
-	private void Awake()
+	protected override void Awake()
 	{
 		if( CheckExistInstance() )
 		{
@@ -33,7 +33,7 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour, IControllableGam
 	/// <summary>
 	/// Unityで制御される破棄直前に呼び出される処理。
 	/// </summary>
-	private void OnDestroy()
+	protected override void OnDestroy()
 	{
 		OnDestroyed();
 		Instance = null;
@@ -45,43 +45,5 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour, IControllableGam
 	public static bool CheckExistInstance()
 	{
 		return Instance;
-	}
-
-	/// <summary>
-	/// インスタンス生成直後に呼び出される処理。
-	/// </summary>
-	protected virtual void OnAwake()
-	{
-	}
-
-	/// <summary>
-	/// インスタンス破棄直前に呼び出される処理。
-	/// </summary>
-	protected virtual void OnDestroyed()
-	{
-	}
-
-	public virtual void OnInitialize()
-	{
-	}
-
-	public virtual void OnFinalize()
-	{
-	}
-
-	public virtual void OnStart()
-	{
-	}
-
-	public virtual void OnUpdate()
-	{
-	}
-
-	public virtual void OnLateUpdate()
-	{
-	}
-
-	public virtual void OnFixedUpdate()
-	{
 	}
 }

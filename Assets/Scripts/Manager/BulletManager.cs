@@ -19,34 +19,34 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// STANDBY状態の弾を保持するリスト。
 	/// </summary>
 	[SerializeField]
-	private LinkedList<Bullet> m_StandbyBullets;
+	private List<Bullet> m_StandbyBullets;
 
 	/// <summary>
 	/// UPDATE状態の弾を保持するリスト。
 	/// </summary>
 	[SerializeField]
-	private LinkedList<Bullet> m_UpdateBullets;
+	private List<Bullet> m_UpdateBullets;
 
 	/// <summary>
 	/// POOL状態の弾を保持するリスト。
 	/// </summary>
 	[SerializeField]
-	private LinkedList<Bullet> m_PoolBullets;
+	private List<Bullet> m_PoolBullets;
 
 	/// <summary>
 	/// UPDATE状態に遷移する弾のリスト。
 	/// </summary>
-	private LinkedList<Bullet> m_GotoUpdateBullets;
+	private List<Bullet> m_GotoUpdateBullets;
 
 	/// <summary>
 	/// POOL状態に遷移する弾のリスト。
 	/// </summary>
-	private LinkedList<Bullet> m_GotoPoolBullets;
+	private List<Bullet> m_GotoPoolBullets;
 
 	/// <summary>
 	/// STANDBY状態の弾を保持するリストを取得する。
 	/// </summary>
-	public LinkedList<Bullet> GetStandbyBullets()
+	public List<Bullet> GetStandbyBullets()
 	{
 		return m_StandbyBullets;
 	}
@@ -54,7 +54,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// <summary>
 	/// UPDATE状態の弾を保持するリストを取得する。
 	/// </summary>
-	public LinkedList<Bullet> GetUpdateBullets()
+	public List<Bullet> GetUpdateBullets()
 	{
 		return m_UpdateBullets;
 	}
@@ -62,7 +62,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// <summary>
 	/// POOL状態の弾を保持するリストを取得する。
 	/// </summary>
-	public LinkedList<Bullet> GetPoolBullets()
+	public List<Bullet> GetPoolBullets()
 	{
 		return m_PoolBullets;
 	}
@@ -71,11 +71,11 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 
 	public override void OnInitialize()
 	{
-		m_StandbyBullets = new LinkedList<Bullet>();
-		m_UpdateBullets = new LinkedList<Bullet>();
-		m_PoolBullets = new LinkedList<Bullet>();
-		m_GotoUpdateBullets = new LinkedList<Bullet>();
-		m_GotoPoolBullets = new LinkedList<Bullet>();
+		m_StandbyBullets = new List<Bullet>();
+		m_UpdateBullets = new List<Bullet>();
+		m_PoolBullets = new List<Bullet>();
+		m_GotoUpdateBullets = new List<Bullet>();
+		m_GotoPoolBullets = new List<Bullet>();
 	}
 
 	public override void OnFinalize()
@@ -103,7 +103,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 			}
 
 			bullet.OnStart();
-			m_GotoUpdateBullets.AddLast( bullet );
+			m_GotoUpdateBullets.Add( bullet );
 		}
 
 		GotoUpdateFromStandby();
@@ -147,11 +147,11 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 
 		for( int i = 0; i < count; i++ )
 		{
-			var node = m_GotoUpdateBullets.First;
-			var bullet = node.Value;
+			int idx = count - i - 1;
+			var bullet = m_GotoUpdateBullets[idx];
+			m_GotoUpdateBullets.RemoveAt( idx );
 			m_StandbyBullets.Remove( bullet );
-			m_UpdateBullets.AddLast( bullet );
-			m_GotoUpdateBullets.RemoveFirst();
+			m_UpdateBullets.Add( bullet );
 			bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.UPDATE );
 		}
 
@@ -167,11 +167,12 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 
 		for( int i = 0; i < count; i++ )
 		{
-			var node = m_GotoPoolBullets.First;
-			var bullet = node.Value;
-			m_UpdateBullets.Remove( node );
-			m_GotoPoolBullets.RemoveFirst();
+			int idx = count - i - 1;
+			var bullet = m_GotoPoolBullets[idx];
 			bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.POOLED );
+			m_GotoPoolBullets.RemoveAt( idx );
+			m_UpdateBullets.Remove( bullet );
+			m_PoolBullets.Add( bullet );
 		}
 
 		m_GotoPoolBullets.Clear();
@@ -182,15 +183,16 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// </summary>
 	public void CheckStandbyBullet( Bullet bullet )
 	{
-		if( bullet == null )
+		if( bullet == null || !m_PoolBullets.Contains( bullet ) )
 		{
-			Debug.LogError( "指定された弾がnullのため、追加できませんでした。" );
+			Debug.LogError( "指定された弾を追加できませんでした。" );
 			return;
 		}
 
-		m_StandbyBullets.AddLast( bullet );
-		bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.STANDBY );
+		m_PoolBullets.Remove( bullet );
+		m_StandbyBullets.Add( bullet );
 		bullet.gameObject.SetActive( true );
+		bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.STANDBY_UPDATE );
 	}
 
 	/// <summary>
@@ -198,14 +200,15 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// </summary>
 	public void CheckPoolBullet( Bullet bullet )
 	{
-		if( bullet == null )
+		if( bullet == null || m_GotoPoolBullets.Contains( bullet ) )
 		{
-			Debug.LogError( "指定した弾がnullのため、削除できませんでした。" );
+			Debug.LogError( "指定した弾を削除できませんでした。" );
 			return;
 		}
 
+		bullet.SetBulletCycle( Bullet.E_BULLET_CYCLE.STANDBY_POOL );
+		m_GotoPoolBullets.Add( bullet );
 		bullet.gameObject.SetActive( false );
-		m_GotoPoolBullets.AddLast( bullet );
 	}
 
 	/// <summary>
@@ -256,7 +259,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		{
 			bullet = Instantiate( bulletPrefab );
 			SetBulletParent( bullet );
-			m_PoolBullets.AddLast( bullet );
+			m_PoolBullets.Add( bullet );
 		}
 
 		return bullet;

@@ -40,6 +40,11 @@ public class PlayerController : CharaControllerBase
 
 
 
+	private void Start()
+	{
+		PlayerCharaManager.Instance.RegistChara( this );
+	}
+
 	/// <summary>
 	/// 通常弾を発射する。
 	/// </summary>
@@ -47,43 +52,8 @@ public class PlayerController : CharaControllerBase
 	/// <param name="bulletParamIndex">弾の軌道を定めるパラメータのindex</param>
 	public virtual Bullet ShotBullet( int bulletIndex, int bulletParamIndex )
 	{
-		if( bulletIndex < 0 || bulletIndex >= m_BulletPrefabs.Length )
-		{
-			return null;
-		}
-
-		if( bulletParamIndex < 0 || bulletParamIndex >= m_BulletParams.Length )
-		{
-			return null;
-		}
-
-		BulletParam bulletParam = m_BulletParams[bulletParamIndex];
-
-		if( bulletParam == null )
-		{
-			return null;
-		}
-
-		return null;
-
-		//GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
-		//Bullet bullet = GetPoolBullet( bulletIndex );
-		//bullet.ShotBullet( this, transform.position, transform.eulerAngles, bulletPrefab.transform.localScale, bulletIndex, bulletParam, -1 );
-
-		//return bullet;
-
-
-
-		//float angle = bulletRot.y;
-		//angle -= initSpreadParam.DeltaAngle * ( i - ( bulletNum - 1 ) / 2f );
-		//bulletRot.y = angle;
-
-		//// 数学上の回転は反時計だがUnityの回転は時計なのでangleを逆にし、青軸方向に向けるには90度足す必要がある
-		//angle = ( -angle + 90 ) * Mathf.Deg2Rad;
-		//Vector3 offsetPos = new Vector3( Mathf.Cos( angle ), 0, Mathf.Sin( angle ) ) * initSpreadParam.Radius;
-		//bulletPos += offsetPos;
-
-		//Bullet bullet = GetPoolBullet( bulletIndex );
+		var shotParam = new BulletShotParam( this, bulletIndex, bulletParamIndex, -1 );
+		return Bullet.ShotBullet( shotParam );
 	}
 
 
@@ -112,6 +82,5 @@ public class PlayerController : CharaControllerBase
 	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
-		Debug.LogWarning( 11111 );
 	}
 }

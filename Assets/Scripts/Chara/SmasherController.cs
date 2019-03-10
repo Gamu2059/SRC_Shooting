@@ -4,115 +4,115 @@ using UnityEngine;
 
 public class SmasherController : PlayerController
 {
-    [SerializeField, Range(0f, 1f)]
-    private float m_ShotInterval;
+	[SerializeField, Range( 0f, 1f )]
+	private float m_ShotInterval;
 
-    private float initialShotInterval;
+	private float initialShotInterval;
 
-    [SerializeField]
-    private float m_ShotIntervalDecrease;
+	[SerializeField]
+	private float m_ShotIntervalDecrease;
 
-    private float shotDelay;
+	private float shotDelay;
 
-    [SerializeField]
-    private Transform[] m_MainShotPosition;
+	[SerializeField]
+	private Transform[] m_MainShotPosition;
 
-    [SerializeField]
-    private Transform[] m_SubShotLv1Position;
+	[SerializeField]
+	private Transform[] m_SubShotLv1Position;
 
-    private bool m_SubShotLv1CanShot;
+	private bool m_SubShotLv1CanShot;
 
-    [SerializeField]
-    private Transform[] m_SubShotLv2Position;
+	[SerializeField]
+	private Transform[] m_SubShotLv2Position;
 
-    private bool m_SubShotLv2CanShot;
+	private bool m_SubShotLv2CanShot;
 
-    [SerializeField]
-    private float m_SubShotLv2Radius;
+	[SerializeField]
+	private float m_SubShotLv2Radius;
 
-    [SerializeField]
-    private float m_SubShotLv2Speed;
+	[SerializeField]
+	private float m_SubShotLv2Speed;
 
-    private float m_SubShotLv2AngleDeg;
+	private float m_SubShotLv2AngleDeg;
 
-    [SerializeField]
-    private bool m_IsSpinTurn;
+	[SerializeField]
+	private bool m_IsSpinTurn;
 
-    
-    //遊び用
-    //[SerializeField]
-    private float m_SubShotLv2MaxSpeed = 25f;
 
-    //[SerializeField]
-    private float step = 1f;
+	//遊び用
+	//[SerializeField]
+	private float m_SubShotLv2MaxSpeed = 25f;
 
-    private void Awake()
-    {
-        initialShotInterval = m_ShotInterval;
-        OnAwake();
-    }
+	//[SerializeField]
+	private float step = 1f;
 
-    public override void OnAwake()
-    {
-        base.OnAwake();
-    }
+	protected void Awake()
+	{
+		initialShotInterval = m_ShotInterval;
+		OnAwake();
+	}
 
-    public override void OnUpdate()
-    {
-        base.OnUpdate();
-        shotDelay += Time.deltaTime;
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+	}
 
-        // 遊び用
-        //UpdateSpeed();
-        //UpdateSubShot();
-    }
+	public override void OnUpdate()
+	{
+		base.OnUpdate();
+		shotDelay += Time.deltaTime;
 
-    public override Bullet ShotBullet( int bulletIndex = 0, int bulletParamIndex = 0 )
-    {
-        return base.ShotBullet(bulletIndex, bulletParamIndex);
-        /*
-        if(shotDelay >= m_ShotInterval)
-        {
-            Bullet Main = GetOriginalBullet(0);
-            Bullet Sub2 = GetOriginalBullet(1);
-            
-             for (int i = 0; i < m_MainShotPosition.Length; i++)
-            {
-                Bullet bullet = GetPoolBullet(0);   
-                bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles,  Main.transform.localScale, bulletIndex, m_BulletParams[0], 0);
-            }
+		// 遊び用
+		//UpdateSpeed();
+		//UpdateSubShot();
+	}
 
-            if (m_SubShotLv1CanShot)
-            {
-                for (int i = 0; i < m_SubShotLv1Position.Length; i++)
-                {
-                    Bullet bullet = GetPoolBullet(0);
-                    bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, Main.transform.localScale, bulletIndex, m_BulletParams[0], 0);
-                }
-            }
+	public override Bullet ShotBullet( int bulletIndex = 0, int bulletParamIndex = 0 )
+	{
+		return base.ShotBullet( bulletIndex, bulletParamIndex );
+		/*
+		if(shotDelay >= m_ShotInterval)
+		{
+		    Bullet Main = GetOriginalBullet(0);
+		    Bullet Sub2 = GetOriginalBullet(1);
 
-            if (m_SubShotLv2CanShot)
-            {
-                for (int i = 0; i < m_SubShotLv2Position.Length; i++)
-                {
-                    Bullet bullet = GetPoolBullet(1);
-                    bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
+		     for (int i = 0; i < m_MainShotPosition.Length; i++)
+		    {
+		        Bullet bullet = GetPoolBullet(0);
+		        bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles,  Main.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+		    }
 
-                    
-                    //Bullet bulletR = GetPoolBullet(1);
-                    //Bullet bulletL = GetPoolBullet(1);
-                    //bulletR.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
-                    //bulletL.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(-0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4); 
-                     
+		    if (m_SubShotLv1CanShot)
+		    {
+		        for (int i = 0; i < m_SubShotLv1Position.Length; i++)
+		        {
+		            Bullet bullet = GetPoolBullet(0);
+		            bullet.ShotBullet(this, m_SubShotLv1Position[i].position, m_SubShotLv1Position[i].eulerAngles, Main.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+		        }
+		    }
 
-                    //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
-                }
-            }
+		    if (m_SubShotLv2CanShot)
+		    {
+		        for (int i = 0; i < m_SubShotLv2Position.Length; i++)
+		        {
+		            Bullet bullet = GetPoolBullet(1);
+		            bullet.ShotBullet(this, m_SubShotLv2Position[i].position, Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
 
-            shotDelay = 0;
-         */
 
-    }
+		            //Bullet bulletR = GetPoolBullet(1);
+		            //Bullet bulletL = GetPoolBullet(1);
+		            //bulletR.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
+		            //bulletL.ShotBullet(this, m_SubShotLv2Position[i].position + new Vector3(-0.5f, 0, 0), Vector3.zero, Sub2.transform.localScale, bulletIndex, m_BulletParams[0], 4);
+
+
+		            //bullet.ShotBullet(this, m_SubShotLv2[i].transform.position, m_SubShotLv2[i].transform.eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 0);
+		        }
+		    }
+
+		    shotDelay = 0;
+		 */
+
+	}
 }
 
 /*
@@ -165,35 +165,35 @@ private void UpdateSpeed()
         for (int i = 0; i < m_SubShotLv2Position.Length; i++)
         {
             m_SubShotLv2Position[i].gameObject.SetActive(m_SubShotLv2CanShot);
-        }       
+        }
     }
  */
 
 
-    /*
+/*
 private void UpdateSubShot()
+{
+    if (m_SubShotLv2CanShot)
     {
-        if (m_SubShotLv2CanShot)
+        m_SubShotLv2AngleDeg += m_SubShotLv2Speed * Time.deltaTime;
+        m_SubShotLv2AngleDeg %= Mathf.PI * 2;
+        float unitAngle = Mathf.PI * 2 / m_SubShotLv2Position.Length;
+        for (int i = 0; i < m_SubShotLv2Position.Length; i++)
         {
-            m_SubShotLv2AngleDeg += m_SubShotLv2Speed * Time.deltaTime;
-            m_SubShotLv2AngleDeg %= Mathf.PI * 2;
-            float unitAngle = Mathf.PI * 2 / m_SubShotLv2Position.Length;
-            for (int i = 0; i < m_SubShotLv2Position.Length; i++)
+            float angle = unitAngle * i + m_SubShotLv2AngleDeg;
+
+            if (m_IsSpinTurn)
             {
-                float angle = unitAngle * i + m_SubShotLv2AngleDeg;
-
-                if (m_IsSpinTurn)
-                {
-                    angle *= (i % 2 == 0 ? -1 : 1);
-                }
-
-                float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
-                float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
-
-                m_SubShotLv2Position[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
-                m_SubShotLv2Position[i].GetComponent<Transform>().LookAt(transform);
+                angle *= (i % 2 == 0 ? -1 : 1);
             }
+
+            float x = m_SubShotLv2Radius * Mathf.Cos(-angle);
+            float z = m_SubShotLv2Radius * Mathf.Sin(-angle);
+
+            m_SubShotLv2Position[i].GetComponent<Transform>().localPosition = new Vector3(x, 0, z);
+            m_SubShotLv2Position[i].GetComponent<Transform>().LookAt(transform);
         }
-    }     
-     */
+    }
+}
+ */
 

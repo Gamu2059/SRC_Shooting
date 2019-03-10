@@ -8,7 +8,7 @@ using System.Linq;
 /// <summary>
 /// シーンごとのマネージャ等を管理するコンポーネント。
 /// </summary>
-public class BaseScene : MonoBehaviour, IControllableGameCycle
+public class BaseScene : ControllableMonoBehaviour
 {
 	/// <summary>
 	/// このシーンが何のシーンなのか。
@@ -25,8 +25,8 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 	/// <summary>
 	/// このシーンに固有で紐づいているマネージャのリスト。
 	/// </summary>
-	[SerializeField]
-	private List<IControllableGameCycle> m_ManagerList;
+	[SerializeField, Tooltip( "シーンに固有で紐づいているマネージャは、ここにアタッチして下さい。なお、アタッチした順番通りにマネージャは実行されることに注意して下さい。" )]
+	private List<ControllableMonoBehaviour> m_ManagerList;
 
 
 
@@ -59,7 +59,7 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 	/// <summary>
 	/// このシーンに固有で紐づいているマネージャのリストを取得する。。
 	/// </summary>
-	public List<IControllableGameCycle> GetManagerList()
+	public List<ControllableMonoBehaviour> GetManagerList()
 	{
 		return m_ManagerList;
 	}
@@ -70,7 +70,7 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 	/// Unityで制御される生成直後に呼び出される処理。
 	/// GameManagerが初期化されていない場合、最初にあるシーンに強制的に遷移する。
 	/// </summary>
-	private void Awake()
+	protected override void Awake()
 	{
 		if( !GameManager.CheckExistInstance() )
 		{
@@ -86,7 +86,7 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 	/// <summary>
 	/// Unityで制御される破棄直前に呼び出される処理。
 	/// </summary>
-	private void OnDestroy()
+	protected override void OnDestroy()
 	{
 		OnDestroyed();
 	}
@@ -94,46 +94,55 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 	/// <summary>
 	/// インスタンス生成直後に呼び出される処理。
 	/// </summary>
-	protected virtual void OnAwake()
+	protected override void OnAwake()
 	{
-		m_ManagerList = new List<IControllableGameCycle>();
 	}
 
 	/// <summary>
 	/// インスタンス破棄直前に呼び出される処理。
 	/// </summary>
-	protected virtual void OnDestroyed()
+	protected override void OnDestroyed()
 	{
-		m_ManagerList.Clear();
+		if( m_ManagerList != null )
+		{
+			m_ManagerList.Clear();
+		}
+
 		m_ManagerList = null;
 	}
 
-	public virtual void OnInitialize()
+	/// <summary>
+	/// BaseSceneManagerからこのメソッドが呼び出されることはありません。
+	/// 代わりにOnBeforeShotやOnAfterShowを使用して下さい。
+	/// </summary>
+	public sealed override void OnInitialize()
 	{
-		m_ManagerList.ForEach( ( m ) => m.OnInitialize() );
 	}
 
-	public virtual void OnFinalize()
+	/// <summary>
+	/// BaseSceneManagerからこのメソッドが呼び出されることはありません。
+	/// 代わりにOnBeforeHideやOnAfterHideを使用して下さい。
+	/// </summary>
+	public sealed override void OnFinalize()
 	{
-		m_ManagerList.ForEach( ( m ) => m.OnFinalize() );
 	}
 
-	public virtual void OnStart()
+	public override void OnStart()
 	{
 		m_ManagerList.ForEach( ( m ) => m.OnStart() );
 	}
 
-	public virtual void OnUpdate()
+	public override void OnUpdate()
 	{
 		m_ManagerList.ForEach( ( m ) => m.OnUpdate() );
 	}
 
-	public virtual void OnLateUpdate()
+	public override void OnLateUpdate()
 	{
 		m_ManagerList.ForEach( ( m ) => m.OnLateUpdate() );
 	}
 
-	public virtual void OnFixedUpdate()
+	public override void OnFixedUpdate()
 	{
 		m_ManagerList.ForEach( ( m ) => m.OnFixedUpdate() );
 	}
@@ -168,5 +177,15 @@ public class BaseScene : MonoBehaviour, IControllableGameCycle
 	public virtual void OnAfterShow( Action onComplete )
 	{
 		EventUtility.SafeInvokeAction( onComplete );
+	}
+
+	public void OnInitializeManagers()
+	{
+		m_ManagerList.ForEach( ( m ) => m.OnInitialize() );
+	}
+
+	public void OnFinalizeManagers()
+	{
+		m_ManagerList.ForEach( ( m ) => m.OnFinalize() );
 	}
 }

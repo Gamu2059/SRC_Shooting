@@ -17,6 +17,8 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 	/// </summary>
 	private LinkedList<Timer> m_TimerList;
 
+	private LinkedList<Timer> m_GotoStopTimerList;
+
 	/// <summary>
 	/// TimerManagerのタイマーサイクルを取得する。
 	/// </summary>
@@ -30,6 +32,7 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 	public override void OnInitialize()
 	{
 		m_TimerList = new LinkedList<Timer>();
+		m_GotoStopTimerList = new LinkedList<Timer>();
 		m_TimerManagerCycle = Timer.E_TIMER_CYCLE.UPDATE;
 	}
 
@@ -49,6 +52,25 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 			{
 				timer.OnFixedUpdate();
 			}
+		}
+
+		RemoveStopTimers();
+	}
+
+
+
+	/// <summary>
+	/// 停止したタイマーを削除する。
+	/// </summary>
+	private void RemoveStopTimers()
+	{
+		int count = m_GotoStopTimerList.Count;
+
+		for( int i = 0; i < count; i++ )
+		{
+			var timer = m_GotoStopTimerList.First.Value;
+			m_TimerList.Remove( timer );
+			m_GotoStopTimerList.RemoveFirst();
 		}
 	}
 
@@ -85,7 +107,7 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 			EventUtility.SafeInvokeAction( timer.GetStopCallBack() );
 		}
 
-		m_TimerList.Remove( timer );
+		m_GotoStopTimerList.AddLast( timer );
 	}
 
 	/// <summary>
