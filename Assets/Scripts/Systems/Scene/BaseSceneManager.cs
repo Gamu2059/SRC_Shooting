@@ -20,8 +20,9 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		PRE_LAUNCH = 0,
 		MAIN = 1,
 		CHARA_TEST = 2,
+		STAGE_TEST = 3,
 
-		BATTLE = 3,
+		BATTLE = 4,
 	}
 
 	/// <summary>
