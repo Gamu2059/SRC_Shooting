@@ -132,9 +132,10 @@ public class Timer
 		return m_RegistingTimerManager;
 	}
 
-	public void SetTimerManager( TimerManager timerManager )
+	public Timer SetTimerManager( TimerManager timerManager )
 	{
 		m_RegistingTimerManager = timerManager;
+		return this;
 	}
 
 	public E_TIMER_TYPE GetTimerType()
@@ -147,9 +148,10 @@ public class Timer
 		return m_TimerCycle;
 	}
 
-	public void SetTimerCycle( E_TIMER_CYCLE cycle )
+	public Timer SetTimerCycle( E_TIMER_CYCLE cycle )
 	{
 		m_TimerCycle = cycle;
+		return this;
 	}
 
 	public Action GetStepCallBack()
@@ -157,9 +159,10 @@ public class Timer
 		return m_StepCallBack;
 	}
 
-	public void SetStepCallBack( Action callBack )
+	public Timer SetStepCallBack( Action callBack )
 	{
 		m_StepCallBack = callBack;
+		return this;
 	}
 
 	public Action GetIntervalCallBack()
@@ -167,9 +170,10 @@ public class Timer
 		return m_IntervalCallBack;
 	}
 
-	public void SetIntervalCallBack( Action callBack )
+	public Timer SetIntervalCallBack( Action callBack )
 	{
 		m_IntervalCallBack = callBack;
+		return this;
 	}
 
 	public Action GetTimeoutCallBack()
@@ -177,9 +181,10 @@ public class Timer
 		return m_TimeoutCallBack;
 	}
 
-	public void SetTimeoutCallBack( Action callBack )
+	public Timer SetTimeoutCallBack( Action callBack )
 	{
 		m_TimeoutCallBack = callBack;
+		return this;
 	}
 
 	public Action GetPauseCallBack()
@@ -187,9 +192,10 @@ public class Timer
 		return m_OnPauseCallBack;
 	}
 
-	public void SetPauseCallBack( Action callBack )
+	public Timer SetPauseCallBack( Action callBack )
 	{
 		m_OnPauseCallBack = callBack;
+		return this;
 	}
 
 	public Action GetResumeCallBack()
@@ -197,9 +203,10 @@ public class Timer
 		return m_OnResumeCallBack;
 	}
 
-	public void SetResumeCallBack( Action callBack )
+	public Timer SetResumeCallBack( Action callBack )
 	{
 		m_OnResumeCallBack = callBack;
+		return this;
 	}
 
 	public Action GetStopCallBack()
@@ -207,9 +214,10 @@ public class Timer
 		return m_OnStopCallBack;
 	}
 
-	public void SetStopCallBack( Action callBack )
+	public Timer SetStopCallBack( Action callBack )
 	{
 		m_OnStopCallBack = callBack;
+		return this;
 	}
 
 	public float GetTimeoutDuration()
