@@ -165,7 +165,7 @@ public class TestEnemyController : EnemyController
 		}
 		else if( m_MoveStatus == 7 )
 		{
-			EnemyCharaManager.Instance.DestroyChara( this );
+			EnemyCharaManager.Instance.DestroyEnemy( this );
 		}
 	}
 

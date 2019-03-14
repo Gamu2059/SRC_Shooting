@@ -59,7 +59,7 @@ MonoBehaviour:
   m_ProtectorSpeed: 0
   m_IsBoss: 0
   m_ShotPosition: {fileID: 6847149185305147300}
-  m_MoveTargetLocalPosition: {x: 0, y: 0, z: -50}
+  m_MoveTargetLocalPosition: {x: 0, y: 0, z: -40}
   m_MoveTargetDuration: 3
   m_WaitDuration: 3.2
   m_WithdrawalXSpeed:
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_BulletShotInterval: 0.6
   m_BulletShotNum: 3
   m_BulletSpreadAngle: 5
-  m_IsSearchBullet: 1
+  m_IsSearchBullet: 0
   m_MoveStatus: 0
 --- !u!1 &683522017491908259
 GameObject:

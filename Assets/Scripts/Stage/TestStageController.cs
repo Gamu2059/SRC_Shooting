@@ -64,11 +64,19 @@ public class TestStageController : ControllableMonoBehaviour
 				continue;
 			}
 
-			if( appearData.ApperTime >= m_Count )
+			if( appearData.ApperTime < m_Count )
 			{
 				appearData.IsAppeared = true;
+				var enemy = EnemyCharaManager.Instance.CreateEnemy( appearData.Enemy );
 
+				if( enemy == null )
+				{
+					continue;
+				}
 
+				var pos = appearData.ApperPosition.ToVector3XZ();
+				pos.y = 20;
+				enemy.transform.position = pos;
 			}
 		}
 

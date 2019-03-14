@@ -53,4 +53,43 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 			m_MoveObjectHolder.transform.position = pos;
 		}
 	}
+
+	/// <summary>
+	/// 移動型オブジェクトホルダの子にする。
+	/// </summary>
+	public void AddMoveObjectHolder( Transform obj )
+	{
+		if( obj == null )
+		{
+			return;
+		}
+
+		obj.SetParent( m_MoveObjectHolder.transform );
+	}
+
+	/// <summary>
+	/// 固定型オブジェクトホルダの子にする。
+	/// </summary>
+	public void AddFixedObjectHolder( Transform obj )
+	{
+		if( obj == null )
+		{
+			return;
+		}
+
+		obj.SetParent( m_FixedObjectHolder.transform );
+	}
+
+	/// <summary>
+	/// ステージオブジェクトホルダの子にする。
+	/// </summary>
+	public void AddStageObjectHolder( Transform obj )
+	{
+		if( obj == null )
+		{
+			return;
+		}
+
+		obj.SetParent( m_StageObjectHolder.transform );
+	}
 }

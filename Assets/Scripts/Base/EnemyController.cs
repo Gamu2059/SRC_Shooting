@@ -10,7 +10,7 @@ public class EnemyController : CharaControllerBase
 
 	private void Start()
 	{
-		EnemyCharaManager.Instance.RegistChara( this );
+		EnemyCharaManager.Instance.RegistEnemy( this );
 	}
 
 	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
