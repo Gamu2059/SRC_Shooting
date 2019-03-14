@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
   m_Name: StraightBullet
   m_EditorClassIdentifier: 
-  LifeTime: 1
+  LifeTime: 10
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
@@ -23,13 +23,13 @@ MonoBehaviour:
     ScaleRelative: 0
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
-    DeltaScale: {x: 0, y: 0, z: 2}
+    DeltaScale: {x: 0, y: 0, z: 0}
     DeltaScaleRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 100
+    Speed: 20
     SpeedRelative: 0
-    Accel: -60
+    Accel: 0
     AccelRelative: 0
     IsSearch: 0
     Lerp: 0
@@ -48,10 +48,6 @@ MonoBehaviour:
     DeltaRotationRelative: 0
     DeltaScale: {x: 0, y: 0, z: 0}
     DeltaScaleRelative: 0
-    HitSize: {x: 0, y: 0, z: 0}
-    HitSizeRelative: 0
-    DeltaHitSize: {x: 0, y: 0, z: 0}
-    DeltaHitSizeRelative: 0
     Damage: 0
     DamageRelative: 0
     Speed: 150
@@ -74,10 +70,6 @@ MonoBehaviour:
     DeltaRotationRelative: 0
     DeltaScale: {x: 0, y: 0, z: 0}
     DeltaScaleRelative: 0
-    HitSize: {x: 0, y: 0, z: 0}
-    HitSizeRelative: 0
-    DeltaHitSize: {x: 0, y: 0, z: 0}
-    DeltaHitSizeRelative: 0
     Damage: 0
     DamageRelative: 0
     Speed: 180
@@ -100,10 +92,6 @@ MonoBehaviour:
     DeltaRotationRelative: 0
     DeltaScale: {x: 0, y: 0, z: 0}
     DeltaScaleRelative: 0
-    HitSize: {x: 0, y: 0, z: 0}
-    HitSizeRelative: 0
-    DeltaHitSize: {x: 0, y: 0, z: 0}
-    DeltaHitSizeRelative: 0
     Damage: 0
     DamageRelative: 0
     Speed: 50

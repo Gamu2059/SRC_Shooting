@@ -23,10 +23,10 @@ public interface ICollisionBase
 	/// <summary>
 	/// 弾と当たり続けている時の処理。
 	/// </summary>
-	void OnHitBullet( Bullet bullet );
+	void OnHitBullet( BulletController bullet );
 
 	/// <summary>
 	/// 被弾し続けているの処理。
 	/// </summary>
-	void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData );
+	void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData );
 }
