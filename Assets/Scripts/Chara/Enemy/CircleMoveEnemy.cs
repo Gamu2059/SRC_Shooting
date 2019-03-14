@@ -47,6 +47,7 @@ public class CircleMoveEnemy : EnemyController
 
 	private void Awake()
 	{
+		base.Awake();
 		m_ShotTime = 0;
 
 		m_Renderer.material = m_Normal;
@@ -67,7 +68,7 @@ public class CircleMoveEnemy : EnemyController
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			Bullet.ShotBullet( this );
+			BulletController.ShotBullet( this );
 		}
 		else
 		{
@@ -75,9 +76,10 @@ public class CircleMoveEnemy : EnemyController
 		}
 	}
 
-	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
+
 		m_Renderer.material = m_HitMate;
 
 		if( hitTimer == null )

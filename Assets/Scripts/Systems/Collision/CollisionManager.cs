@@ -138,7 +138,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 	/// <summary>
 	/// 弾同士の衝突判定。
 	/// </summary>
-	private void BulletCollide( Bullet bullet, Bullet target, ColliderData[] bulletDatas )
+	private void BulletCollide( BulletController bullet, BulletController target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
 
@@ -160,7 +160,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 	/// <summary>
 	/// 弾とキャラの衝突判定。
 	/// </summary>
-	private void CharaCollide( Bullet bullet, CharaControllerBase target, ColliderData[] bulletDatas )
+	private void CharaCollide( BulletController bullet, CharaControllerBase target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
 
