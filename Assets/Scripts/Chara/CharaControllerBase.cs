@@ -41,7 +41,7 @@ public class CharaControllerBase : ControllableMonoBehaviour, ICollisionBase
 	[Header( "弾のパラメータ" )]
 
 	[SerializeField]
-	protected Bullet[] m_BulletPrefabs;
+	protected BulletController[] m_BulletPrefabs;
 
 	[SerializeField]
 	protected ControllableMonoBehaviour[] m_BombPrefabs;
@@ -137,7 +137,7 @@ public class CharaControllerBase : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// 指定したインデックスの弾のプレハブを取得する。
 	/// </summary>
-	public Bullet GetBulletPrefab( int bulletIndex = 0 )
+	public BulletController GetBulletPrefab( int bulletIndex = 0 )
 	{
 		int prefabCount = GetBulletPrefabsCount();
 
@@ -213,12 +213,12 @@ public class CharaControllerBase : ControllableMonoBehaviour, ICollisionBase
 
 	}
 
-	public virtual void OnHitBullet( Bullet bullet )
+	public virtual void OnHitBullet( BulletController bullet )
 	{
 
 	}
 
-	public virtual void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	public virtual void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
 	{
 
 	}

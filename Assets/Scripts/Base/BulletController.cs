@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class Bullet : ControllableMonoBehaviour, ICollisionBase
+public class BulletController : ControllableMonoBehaviour, ICollisionBase
 {
 	[Serializable]
 	public enum E_BULLET_CYCLE
@@ -450,7 +450,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// 弾を生成する。
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
-	private static Bullet CreateBullet( CharaControllerBase bulletOwner )
+	private static BulletController CreateBullet( CharaControllerBase bulletOwner )
 	{
 		if( bulletOwner == null )
 		{
@@ -500,7 +500,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
 	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-	public static Bullet ShotBulletWithoutBulletParam( CharaControllerBase bulletOwner, bool isCheck = true )
+	public static BulletController ShotBulletWithoutBulletParam( CharaControllerBase bulletOwner, bool isCheck = true )
 	{
 		var bullet = CreateBullet( bulletOwner );
 
@@ -523,7 +523,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
 	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-	public static Bullet ShotBullet( CharaControllerBase bulletOwner, bool isCheck = true )
+	public static BulletController ShotBullet( CharaControllerBase bulletOwner, bool isCheck = true )
 	{
 		var bullet = CreateBullet( bulletOwner );
 
@@ -555,7 +555,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// 指定したパラメータを用いて弾を生成する。
 	/// </summary>
 	/// <param name="shotParam">弾を発射させるパラメータ</param>
-	private static Bullet CreateBullet( BulletShotParam shotParam )
+	private static BulletController CreateBullet( BulletShotParam shotParam )
 	{
 		var bulletOwner = shotParam.BulletOwner;
 
@@ -606,7 +606,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
 	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-	public static Bullet ShotBulletWithoutBulletParam( BulletShotParam shotParam, bool isCheck = true )
+	public static BulletController ShotBulletWithoutBulletParam( BulletShotParam shotParam, bool isCheck = true )
 	{
 		var bullet = CreateBullet( shotParam );
 
@@ -628,7 +628,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="shotParam">発射時のパラメータ</param>
 	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-	public static Bullet ShotBullet( BulletShotParam shotParam, bool isCheck = true )
+	public static BulletController ShotBullet( BulletShotParam shotParam, bool isCheck = true )
 	{
 		var bullet = CreateBullet( shotParam );
 
@@ -739,8 +739,10 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 
 		// オプションパラメータは後で実装
 
-
-		LookAtTarget();
+		if( m_IsSearch )
+		{
+			LookAtTarget();
+		}
 	}
 
 	/// <summary>
@@ -759,7 +761,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public void LookAtTarget()
 	{
-		if( m_Target != null && m_IsSearch )
+		if( m_Target != null )
 		{
 			transform.LookAt( m_Target.transform );
 		}
@@ -954,7 +956,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// この弾が他の弾に衝突した時に呼び出される処理。
 	/// </summary>
 	/// <param name="bullet">この弾に衝突された他の弾</param>
-	public virtual void OnHitBullet( Bullet bullet )
+	public virtual void OnHitBullet( BulletController bullet )
 	{
 
 	}
@@ -965,7 +967,7 @@ public class Bullet : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bullet">この弾に衝突してきた他の弾</param>
 	/// <param name="colliderData">衝突を検出したこの弾の衝突情報</param>
-	public virtual void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	public virtual void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
 	{
 
 	}

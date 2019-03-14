@@ -57,6 +57,19 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 			return;
 		}
 
+		controller.OnInitialize();
 		m_Controllers.Add( controller );
+	}
+
+	public void DestroyChara( EnemyController controller )
+	{
+		if( controller == null || !m_Controllers.Contains( controller ) )
+		{
+			return;
+		}
+
+		controller.OnFinalize();
+		m_Controllers.Remove( controller );
+		Destroy( controller.gameObject );
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleLaser : Bullet
+public class SimpleLaser : BulletController
 {
 
 	[SerializeField]

@@ -13,7 +13,7 @@ public class EnemyController : CharaControllerBase
 		EnemyCharaManager.Instance.RegistChara( this );
 	}
 
-	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 	}

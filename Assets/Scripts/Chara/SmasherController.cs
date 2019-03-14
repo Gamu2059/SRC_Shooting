@@ -61,8 +61,8 @@ public class SmasherController : PlayerController
 			{
 				var shotParam = new BulletShotParam( this );
 				shotParam.Position = m_MainShotPosition[i].position;
-                shotParam.OrbitalIndex = 0;
-				Bullet.ShotBullet( shotParam );
+				shotParam.OrbitalIndex = 0;
+				BulletController.ShotBullet( shotParam );
 			}
 
 			if( m_SubShotLv1CanShot )
@@ -71,8 +71,8 @@ public class SmasherController : PlayerController
 				{
 					var shotParam = new BulletShotParam( this );
 					shotParam.Position = m_SubShotLv1Position[i].position;
-                    shotParam.OrbitalIndex = 0;
-                    Bullet.ShotBullet( shotParam );
+					shotParam.OrbitalIndex = 0;
+					BulletController.ShotBullet( shotParam );
 				}
 			}
 
@@ -84,9 +84,9 @@ public class SmasherController : PlayerController
 				{
 					var shotParam = new BulletShotParam( this );
 					shotParam.Position = m_SubShotLv2Position[i].position;
-                    shotParam.BulletIndex = 1;
-                    shotParam.OrbitalIndex = 1;
-                    Bullet.ShotBullet( shotParam );
+					shotParam.BulletIndex = 1;
+					shotParam.OrbitalIndex = 1;
+					BulletController.ShotBullet( shotParam );
 				}
 
 			}
