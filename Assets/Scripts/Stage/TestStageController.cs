@@ -74,8 +74,9 @@ public class TestStageController : ControllableMonoBehaviour
 					continue;
 				}
 
-				var pos = appearData.ApperPosition.ToVector3XZ();
-				pos.y = 20;
+				var camera = CameraManager.Instance.GetTargetCamera();
+				var pos = GetViewportWorldPoint( camera, new Vector3( 0, 20, 0 ), Vector3.up, 0.5f, 1 );
+				Debug.Log( pos );
 				enemy.transform.position = pos;
 			}
 		}
@@ -91,5 +92,16 @@ public class TestStageController : ControllableMonoBehaviour
 	public override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
+	}
+
+	private Vector3 GetViewportWorldPoint( Camera camera, Vector3 basePos, Vector3 axis, float viewX, float viewY )
+	{
+		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( viewX, viewY, camera.farClipPlane ) );
+		Vector3 originPos = camera.transform.position;
+		Vector3 dir = farPos - originPos;
+
+		// axisは単位ベクトルなのが前提
+		float h = Vector3.Dot( basePos, axis );
+		return originPos + dir * ( h - Vector3.Dot( axis, originPos ) ) / ( Vector3.Dot( axis, dir ) );
 	}
 }
