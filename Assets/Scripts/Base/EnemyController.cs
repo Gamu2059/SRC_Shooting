@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : CharaControllerBase
+public class EnemyController : CharaController
 {
 
 	[SerializeField]
@@ -13,7 +13,7 @@ public class EnemyController : CharaControllerBase
 		EnemyCharaManager.Instance.RegistEnemy( this );
 	}
 
-	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 	}

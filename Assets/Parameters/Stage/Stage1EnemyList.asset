@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a521176545f5f8488d0a023e03918aa, type: 3}
-  m_Name: StageEnemyParam
+  m_Name: Stage1EnemyList
   m_EditorClassIdentifier: 
   m_EnemyPrefabs: []
-  m_EnemyControllers: []
-  m_BulletSets: []
+  m_EnemyControllers:
+  - {fileID: 1691318828, guid: aef8591eb47a52e4da2832f5cef6e0d7, type: 3}
+  - {fileID: 7197006002151575974, guid: c08af6876c6969646aea7be2d326975c, type: 3}
+  m_BulletSets:
+  - {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}

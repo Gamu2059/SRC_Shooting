@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf40c08fba0a874d9db523eb7656f18, type: 3}
   m_Name: BulletSetParam
   m_EditorClassIdentifier: 
-  m_BulletPrefabs: []
-  m_BulletParams: []
+  m_BulletPrefabs:
+  - {fileID: 7663632291520977884, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}

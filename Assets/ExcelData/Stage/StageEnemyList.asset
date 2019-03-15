@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12,4 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c321f1448d201459f7182cf0758e17, type: 3}
   m_Name: StageEnemyList
   m_EditorClassIdentifier: 
-  sheets: []
+  sheets:
+  - name: Sheet1
+    list:
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: ' '
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: ' '

@@ -193,6 +193,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		m_StandbyBullets.Add( bullet );
 		bullet.gameObject.SetActive( true );
 		bullet.SetBulletCycle( BulletController.E_BULLET_CYCLE.STANDBY_UPDATE );
+		bullet.OnInitialize();
 	}
 
 	/// <summary>
@@ -207,6 +208,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		}
 
 		bullet.SetBulletCycle( BulletController.E_BULLET_CYCLE.STANDBY_POOL );
+		bullet.OnFinalize();
 		m_GotoPoolBullets.Add( bullet );
 		bullet.gameObject.SetActive( false );
 	}

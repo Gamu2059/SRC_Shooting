@@ -7,27 +7,25 @@ using UnityEngine;
 /// </summary>
 public class TestStageController : ControllableMonoBehaviour
 {
-	[System.Serializable]
-	internal class EnemyAppearData
-	{
-		public float ApperTime;
-		public Vector2 ApperPosition;
-		public EnemyController Enemy;
-		public bool IsAppeared;
-	}
+	[SerializeField]
+	private StageEnemyParam m_StageEnemyParam;
 
 	[SerializeField]
-	private List<EnemyAppearData> m_EnemyAppearDataList;
+	private X_StageEnemyList m_StageEnemyList;
 
-	[SerializeField]
-	private EnemyAppearData m_BossAppearData;
-
+	private List<X_StageEnemyList.Param> m_StageEnemyAppearData;
+	private List<X_StageEnemyList.Param> m_RemovingData;
 	private bool m_IsStarted;
 	private float m_Count;
 
 	public override void OnInitialize()
 	{
 		base.OnInitialize();
+
+		m_StageEnemyAppearData = new List<X_StageEnemyList.Param>();
+		m_RemovingData = new List<X_StageEnemyList.Param>();
+
+		BuildEnemyAppearData();
 	}
 
 	public override void OnFinalize()
@@ -42,10 +40,6 @@ public class TestStageController : ControllableMonoBehaviour
 		m_IsStarted = true;
 		m_Count = 0;
 
-		foreach( var appearData in m_EnemyAppearDataList )
-		{
-			appearData.IsAppeared = false;
-		}
 	}
 
 	public override void OnUpdate()
@@ -57,29 +51,38 @@ public class TestStageController : ControllableMonoBehaviour
 			OnStart();
 		}
 
-		foreach( var appearData in m_EnemyAppearDataList )
+		var camera = CameraManager.Instance.GetCamera();
+
+		foreach( var data in m_StageEnemyAppearData )
 		{
-			if( appearData.IsAppeared )
+			if( data.Time >= m_Count )
 			{
 				continue;
 			}
 
-			if( appearData.ApperTime < m_Count )
+			var enemy = EnemyCharaManager.Instance.CreateEnemy( m_StageEnemyParam.GetEnemyControllers()[data.EnemyMoveId] );
+
+			if( enemy == null )
 			{
-				appearData.IsAppeared = true;
-				var enemy = EnemyCharaManager.Instance.CreateEnemy( appearData.Enemy );
-
-				if( enemy == null )
-				{
-					continue;
-				}
-
-				var camera = CameraManager.Instance.GetTargetCamera();
-				var pos = GetViewportWorldPoint( camera, new Vector3( 0, 20, 0 ), Vector3.up, 0.5f, 1 );
-				Debug.Log( pos );
-				enemy.transform.position = pos;
+				continue;
 			}
+
+			enemy.SetBulletSetParam( m_StageEnemyParam.GetBulletSets()[data.BulletSetId] );
+
+			var pos = GetViewportWorldPoint( camera, data );
+			pos.x += data.AppearOffsetX;
+			pos.y += data.AppearOffsetY;
+			pos.z += data.AppearOffsetZ;
+			enemy.transform.position = pos;
+
+			var rot = transform.eulerAngles;
+			rot.y = data.AppearRotateY;
+			transform.eulerAngles = rot;
+
+			m_RemovingData.Add( data );
 		}
+
+		RemoveEnemyAppearData();
 
 		m_Count += Time.deltaTime;
 	}
@@ -94,14 +97,35 @@ public class TestStageController : ControllableMonoBehaviour
 		base.OnFixedUpdate();
 	}
 
-	private Vector3 GetViewportWorldPoint( Camera camera, Vector3 basePos, Vector3 axis, float viewX, float viewY )
+	private void BuildEnemyAppearData()
 	{
-		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( viewX, viewY, camera.farClipPlane ) );
+		if( m_StageEnemyList == null )
+		{
+			return;
+		}
+
+		m_StageEnemyAppearData.Clear();
+		m_StageEnemyAppearData.AddRange( m_StageEnemyList.sheets[0].list );
+	}
+
+	private void RemoveEnemyAppearData()
+	{
+		foreach( var data in m_RemovingData )
+		{
+			m_StageEnemyAppearData.Remove( data );
+		}
+
+		m_RemovingData.Clear();
+	}
+
+	private Vector3 GetViewportWorldPoint( Camera camera, X_StageEnemyList.Param param )
+	{
+		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( param.AppearViewportX, param.AppearViewportY, camera.farClipPlane ) );
 		Vector3 originPos = camera.transform.position;
 		Vector3 dir = farPos - originPos;
 
-		// axisは単位ベクトルなのが前提
-		float h = Vector3.Dot( basePos, axis );
+		Vector3 axis = Vector3.up;
+		float h = Vector3.Dot( new Vector3( 0, ParamDef.BASE_Y_POS, 0 ), axis );
 		return originPos + dir * ( h - Vector3.Dot( axis, originPos ) ) / ( Vector3.Dot( axis, dir ) );
 	}
 }

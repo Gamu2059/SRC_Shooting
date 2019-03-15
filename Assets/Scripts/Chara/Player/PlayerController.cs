@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : CharaControllerBase
+public class PlayerController : CharaController
 {
 
 	[System.Serializable]
@@ -27,6 +27,9 @@ public class PlayerController : CharaControllerBase
 	private int m_MaxHp;
 
 	[SerializeField]
+	protected float m_MoveSpeed = 5f;
+
+	[SerializeField]
 	private E_PLAYER_LIFE_CYCLE m_LifeCycle;
 
 	[SerializeField]
@@ -37,6 +40,19 @@ public class PlayerController : CharaControllerBase
 
 	[SerializeField]
 	private GameObject m_BombPrefab;
+
+	[Header( "プロテクタのパラメータ" )]
+
+	[SerializeField]
+	protected Transform[] m_Protectors;
+
+	[SerializeField]
+	protected float m_ProtectorRadius;
+
+	[SerializeField]
+	protected float m_ProtectorSpeed;
+
+	protected float m_ProtectorRad;
 
 
 
@@ -76,7 +92,7 @@ public class PlayerController : CharaControllerBase
 	}
 
 
-	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 	}
@@ -84,6 +100,22 @@ public class PlayerController : CharaControllerBase
 	public int GetLevel()
 	{
 		return m_Lv;
+	}
+
+	protected virtual void UpdateProtector()
+	{
+		m_ProtectorRad += m_ProtectorSpeed * Time.deltaTime;
+		m_ProtectorRad %= Mathf.PI * 2;
+		float unitAngle = Mathf.PI * 2 / m_Protectors.Length;
+
+		for( int i = 0; i < m_Protectors.Length; i++ )
+		{
+			float angle = unitAngle * i + m_ProtectorRad;
+			float x = m_ProtectorRadius * Mathf.Cos( angle );
+			float z = m_ProtectorRadius * Mathf.Sin( angle );
+			m_Protectors[i].localPosition = new Vector3( x, 0, z );
+			m_Protectors[i].LookAt( transform );
+		}
 	}
 
 }

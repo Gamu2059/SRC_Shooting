@@ -218,4 +218,10 @@ public class TestEnemyController : EnemyController
 
 		return spreadAngles;
 	}
+
+	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
+	{
+		base.OnSuffer( bullet, colliderData );
+		EnemyCharaManager.Instance.DestroyEnemy( this );
+	}
 }

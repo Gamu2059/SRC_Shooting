@@ -76,7 +76,7 @@ public class CircleMoveEnemy : EnemyController
 		}
 	}
 
-	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 

@@ -622,6 +622,7 @@ GameObject:
   - component: {fileID: 1215113177835792062}
   - component: {fileID: 1215113177835792063}
   - component: {fileID: 1215113177835792056}
+  - component: {fileID: 5559674636122851273}
   - component: {fileID: 192641982}
   m_Layer: 0
   m_Name: Smasher
@@ -712,6 +713,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5559674636122851273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215113177835792058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms:
+  - ColliderType: 1
+    Transform: {fileID: 2303494924641994316}
+  m_CanHitOtherBullet: 0
 --- !u!114 &192641982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,30 +741,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880db4892b3c2fc48b167732da1391cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms:
-  - ColliderType: 1
-    Transform: {fileID: 2303494924641994316}
   m_Troop: 0
+  m_BulletSetParam: {fileID: 11400000, guid: 15b02c12ed1d63c48803374b282ffe8e, type: 2}
+  m_Collider: {fileID: 0}
+  m_Lv: 1
+  m_Exp: 0
+  m_NowHp: 0
+  m_MaxHp: 0
   m_MoveSpeed: 10
-  m_BulletPrefabs:
-  - {fileID: 7076031899561738867, guid: b507b614d478d7e4e8e0f8dbf27ff96c, type: 3}
-  - {fileID: 4505914296954946076, guid: fa084918d092767439b05089de0f4abc, type: 3}
-  m_BombPrefabs: []
-  m_BulletParams:
-  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
+  m_LifeCycle: 0
+  m_HitSize: 0
+  m_BulletPrefab: {fileID: 0}
+  m_BombPrefab: {fileID: 0}
   m_Protectors:
   - {fileID: 1215113176688278961}
   - {fileID: 1215113176783628977}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_Lv: 1
-  m_Exp: 0
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_LifeCycle: 0
-  m_HitSize: 0
-  m_BulletPrefab: {fileID: 0}
-  m_BombPrefab: {fileID: 0}
   m_ShotInterval: 0.05
   m_ShotIntervalDecrease: 0.0025
   m_MainShotPosition:

@@ -10,7 +10,7 @@ public class EchoBullet : BulletController
 	[SerializeField]
 	private int m_HitCount;
 
-	public override void OnHitCharacter( CharaControllerBase chara )
+	public override void OnHitCharacter( CharaController chara )
 	{
 		if( m_HitCount < m_Parent.GetMaxHitCount() )
 		{

@@ -78,8 +78,6 @@ public class SmasherController : PlayerController
 
 			if( m_SubShotLv2CanShot )
 			{
-				GameObject Sub2 = m_BulletPrefabs[1].gameObject;
-
 				for( int i = 0; i < m_SubShotLv2Position.Length; i++ )
 				{
 					var shotParam = new BulletShotParam( this );

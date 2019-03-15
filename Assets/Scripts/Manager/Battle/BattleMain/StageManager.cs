@@ -28,11 +28,13 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 	public override void OnInitialize()
 	{
 		base.OnInitialize();
+		m_StageController.OnInitialize();
 	}
 
 	public override void OnUpdate()
 	{
 		base.OnUpdate();
+		m_StageController.OnUpdate();
 
 		if( m_MoveObjectHolder == null )
 		{

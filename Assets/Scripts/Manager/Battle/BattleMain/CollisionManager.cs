@@ -7,68 +7,6 @@ using UnityEngine;
 /// </summary>
 public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 {
-	/// <summary>
-	/// 衝突判定の形状。
-	/// </summary>
-	public enum E_COLLIDER_SHAPE
-	{
-		/// <summary>
-		/// 矩形
-		/// </summary>
-		RECT,
-
-		/// <summary>
-		/// 楕円
-		/// </summary>
-		ELLIPSE
-	}
-
-	/// <summary>
-	/// 衝突判定に用いるトランスフォームの情報。
-	/// </summary>
-	[System.Serializable]
-	public struct ColliderTransform
-	{
-		/// <summary>
-		/// 衝突判定に用いるトランスフォームの形状。
-		/// </summary>
-		public E_COLLIDER_SHAPE ColliderType;
-
-		/// <summary>
-		/// 衝突判定に用いるトランスフォーム。
-		/// </summary>
-		public Transform Transform;
-	}
-
-	/// <summary>
-	/// 衝突判定情報。
-	/// </summary>
-	[System.Serializable]
-	public struct ColliderData
-	{
-		/// <summary>
-		/// 矩形か楕円か。
-		/// </summary>
-		public E_COLLIDER_SHAPE ColliderType;
-
-		/// <summary>
-		/// 中心座標。
-		/// </summary>
-		public Vector2 CenterPos;
-
-		/// <summary>
-		/// サイズ。
-		/// </summary>
-		public Vector2 Size;
-
-		/// <summary>
-		/// 回転(度数法)。
-		/// </summary>
-		public float Angle;
-	}
-
-
-
 	public override void OnInitialize()
 	{
 	}
@@ -117,7 +55,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 			}
 
 			// 弾とキャラの当たり判定処理
-			if( bullet.GetTroop() == CharaControllerBase.E_CHARA_TROOP.ENEMY )
+			if( bullet.GetTroop() == CharaController.E_CHARA_TROOP.ENEMY )
 			{
 				var targetChara = PlayerCharaManager.Instance.GetCurrentController();
 
@@ -160,7 +98,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 	/// <summary>
 	/// 弾とキャラの衝突判定。
 	/// </summary>
-	private void CharaCollide( BulletController bullet, CharaControllerBase target, ColliderData[] bulletDatas )
+	private void CharaCollide( BulletController bullet, CharaController target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
 

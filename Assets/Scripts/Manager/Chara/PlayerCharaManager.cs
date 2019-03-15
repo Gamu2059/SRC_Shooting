@@ -220,6 +220,8 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		}
 
 		m_Controllers.Add( controller );
+		Debug.Log( 11 );
+		controller.OnInitialize();
 
 		// 最初のキャラだけONにする
 		if( m_Controllers.Count > 1 )

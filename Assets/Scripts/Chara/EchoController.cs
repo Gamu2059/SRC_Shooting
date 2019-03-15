@@ -24,7 +24,7 @@ public class EchoController : PlayerController
 	private bool m_CanShotWave;
 
 	[SerializeField]
-	private CharaControllerBase m_LatestHitCharacter;
+	private CharaController m_LatestHitCharacter;
 
 	[SerializeField]
 	private int m_LatestHitCount;
@@ -101,7 +101,7 @@ public class EchoController : PlayerController
 		}
 	}
 
-	public void ReadyShotDiffusionBullet( CharaControllerBase chara, int count )
+	public void ReadyShotDiffusionBullet( CharaController chara, int count )
 	{
 		if( !m_CanShotWave )
 		{
@@ -121,8 +121,7 @@ public class EchoController : PlayerController
 				return;
 			}
 
-			BulletParam bulletParam = m_BulletParams[bulletParamIndex];
-			GameObject bulletPrefab = m_BulletPrefabs[bulletIndex].gameObject;
+			BulletParam bulletParam = GetBulletParam( bulletParamIndex );
 
 			for( int i = 0; i < 4; i++ )
 			{

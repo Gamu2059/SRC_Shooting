@@ -1339,6 +1339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1691318829}
+  - component: {fileID: 2574788703496481005}
   - component: {fileID: 1691318828}
   m_Layer: 0
   m_Name: LeftMoveParas
@@ -1362,6 +1363,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &2574788703496481005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691318826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms:
+  - ColliderType: 0
+    Transform: {fileID: 1691318827}
+  m_CanHitOtherBullet: 0
 --- !u!114 &1691318828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,9 +1391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae59efed1acde114689d4c2126990052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms:
-  - ColliderType: 0
-    Transform: {fileID: 1691318827}
   m_Troop: 1
   m_MoveSpeed: 5
   m_BulletPrefabs:
@@ -1654,7 +1668,7 @@ GameObject:
   - component: {fileID: 1691318827}
   - component: {fileID: 1936516600}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -161,52 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a821bc8a4aba54e8bc8409559a1bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EnemyAppearDataList:
-  - ApperTime: 1
-    ApperPosition: {x: -5, y: 50}
-    Enemy: {fileID: 1691318828, guid: aef8591eb47a52e4da2832f5cef6e0d7, type: 3}
-    IsAppeared: 0
-  - ApperTime: 1.2
-    ApperPosition: {x: -8, y: 55}
-    Enemy: {fileID: 1691318828, guid: aef8591eb47a52e4da2832f5cef6e0d7, type: 3}
-    IsAppeared: 0
-  - ApperTime: 1
-    ApperPosition: {x: 5, y: 50}
-    Enemy: {fileID: 1417100743932142423, guid: c08af6876c6969646aea7be2d326975c, type: 3}
-    IsAppeared: 0
-  - ApperTime: 1.2
-    ApperPosition: {x: 8, y: 55}
-    Enemy: {fileID: 1417100743932142423, guid: c08af6876c6969646aea7be2d326975c, type: 3}
-    IsAppeared: 0
-  - ApperTime: 10
-    ApperPosition: {x: -5, y: 50}
-    Enemy: {fileID: 1691318828, guid: aef8591eb47a52e4da2832f5cef6e0d7, type: 3}
-    IsAppeared: 0
-  - ApperTime: 10
-    ApperPosition: {x: 5, y: 50}
-    Enemy: {fileID: 1417100743932142423, guid: c08af6876c6969646aea7be2d326975c, type: 3}
-    IsAppeared: 0
-  - ApperTime: 11
-    ApperPosition: {x: -8, y: 55}
-    Enemy: {fileID: 1691318828, guid: aef8591eb47a52e4da2832f5cef6e0d7, type: 3}
-    IsAppeared: 0
-  - ApperTime: 11
-    ApperPosition: {x: 8, y: 55}
-    Enemy: {fileID: 1417100743932142423, guid: c08af6876c6969646aea7be2d326975c, type: 3}
-    IsAppeared: 0
-  - ApperTime: 12
-    ApperPosition: {x: -11, y: 60}
-    Enemy: {fileID: 1691318828, guid: aef8591eb47a52e4da2832f5cef6e0d7, type: 3}
-    IsAppeared: 0
-  - ApperTime: 12
-    ApperPosition: {x: 11, y: 60}
-    Enemy: {fileID: 1417100743932142423, guid: c08af6876c6969646aea7be2d326975c, type: 3}
-    IsAppeared: 0
-  m_BossAppearData:
-    ApperTime: 0
-    ApperPosition: {x: 0, y: 0}
-    Enemy: {fileID: 0}
-    IsAppeared: 0
+  m_StageEnemyParam: {fileID: 11400000, guid: 994df26fe38afd243815b9e42cc29f73, type: 2}
+  m_StageEnemyList: {fileID: 11400000, guid: 39377529dc20d78409706b1a5dcd1ad0, type: 2}
 --- !u!1 &413374478
 GameObject:
   m_ObjectHideFlags: 0

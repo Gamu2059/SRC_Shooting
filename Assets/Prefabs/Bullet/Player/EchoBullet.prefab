@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3404226922437352253}
   - component: {fileID: 3404226922437352252}
+  - component: {fileID: 6494890778341579643}
   m_Layer: 0
   m_Name: EchoBullet
   m_TagString: Untagged
@@ -44,12 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63401b0c50ca4543a806853a35d36bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms:
-  - ColliderType: 1
-    Transform: {fileID: 6778240039581673945}
   m_BulletGroupId: Echo
   m_Parent: {fileID: 0}
   m_HitCount: 0
+--- !u!114 &6494890778341579643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404226922437352249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms:
+  - ColliderType: 1
+    Transform: {fileID: 6778240039581673945}
+  m_CanHitOtherBullet: 0
 --- !u!1 &6353219119838419139
 GameObject:
   m_ObjectHideFlags: 0

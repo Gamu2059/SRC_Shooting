@@ -60,7 +60,8 @@ public class StageEnemyList_importer : AssetPostprocessor {
 					cell = row.GetCell(7); p.AppearOffsetZ = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(8); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(9); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(10); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(10); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(11); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
 						s.list.Add (p);
 					}
 					data.sheets.Add(s);

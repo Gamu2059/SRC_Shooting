@@ -27,6 +27,7 @@ public class X_StageEnemyList : ScriptableObject
 		public float AppearOffsetZ;
 		public float AppearOffsetY;
 		public float AppearRotateY;
+		public int IsBoss;
 		public string OtherParameters;
 	}
 }

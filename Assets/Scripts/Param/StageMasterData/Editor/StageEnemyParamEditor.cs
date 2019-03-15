@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+#if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEditorInternal;
 using System;
@@ -16,7 +17,7 @@ public class StageEnemyParamEditor : Editor
 
 	private void OnEnable()
 	{
-		m_ListFields = SortableListEditorBase.InitSortableList( target.GetType(), serializedObject );
+		m_ListFields = InitSortableList( target.GetType(), serializedObject );
 	}
 
 	public override void OnInspectorGUI()
@@ -36,4 +37,70 @@ public class StageEnemyParamEditor : Editor
 			}
 		}
 	}
+
+	/// <summary>
+	/// 指定したクラスのフィールドからリストや配列を検出してReorderableListのリストを取得する。
+	/// </summary>
+	private static List<ReorderableList> InitSortableList( Type type, SerializedObject serializedObject )
+	{
+		var fields = type.GetFields( BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public );
+
+		var listFields = new List<ReorderableList>();
+
+		foreach( var f in fields )
+		{
+			var prop = serializedObject.FindProperty( f.Name );
+
+			Type fType = f.FieldType;
+			bool isCollection = false;
+
+			if( fType.IsArray )
+			{
+				isCollection = true;
+			}
+			else if( fType.IsGenericType && typeof( List<> ).IsAssignableFrom( fType.GetGenericTypeDefinition() ) )
+			{
+				isCollection = true;
+			}
+
+			if( isCollection )
+			{
+				listFields.Add( new ReorderableList( serializedObject, prop ) );
+			}
+		}
+
+		foreach( var l in listFields )
+		{
+			SetupCallback( l );
+		}
+
+		return listFields;
+	}
+
+	/// <summary>
+	/// ReorderableListの初期化。
+	/// </summary>
+	private static void SetupCallback( ReorderableList list )
+	{
+		if( list == null )
+		{
+			return;
+		}
+
+		var prop = list.serializedProperty;
+
+		list.drawElementCallback = ( rect, idx, isActive, isFocused ) =>
+		{
+			var element = prop.GetArrayElementAtIndex( idx );
+			EditorGUI.PropertyField( rect, element );
+		};
+		list.drawHeaderCallback = ( rect ) =>
+		{
+			EditorGUI.LabelField( rect, prop.displayName );
+		};
+		// フッターは操作できないようにする
+		list.drawFooterCallback = rect => {;};
+	}
 }
+
+#endif
