@@ -219,8 +219,8 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 			return;
 		}
 
+		StageManager.Instance.AddPlayerCharaHolder( controller.transform );
 		m_Controllers.Add( controller );
-		Debug.Log( 11 );
 		controller.OnInitialize();
 
 		// 最初のキャラだけONにする

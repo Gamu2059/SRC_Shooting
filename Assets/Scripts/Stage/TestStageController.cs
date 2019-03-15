@@ -13,7 +13,9 @@ public class TestStageController : ControllableMonoBehaviour
 	[SerializeField]
 	private X_StageEnemyList m_StageEnemyList;
 
+	[SerializeField]
 	private List<X_StageEnemyList.Param> m_StageEnemyAppearData;
+	[SerializeField]
 	private List<X_StageEnemyList.Param> m_RemovingData;
 	private bool m_IsStarted;
 	private float m_Count;
@@ -39,6 +41,7 @@ public class TestStageController : ControllableMonoBehaviour
 
 		m_IsStarted = true;
 		m_Count = 0;
+
 
 	}
 
@@ -75,9 +78,9 @@ public class TestStageController : ControllableMonoBehaviour
 			pos.z += data.AppearOffsetZ;
 			enemy.transform.position = pos;
 
-			var rot = transform.eulerAngles;
+			var rot = enemy.transform.eulerAngles;
 			rot.y = data.AppearRotateY;
-			transform.eulerAngles = rot;
+			enemy.transform.eulerAngles = rot;
 
 			m_RemovingData.Add( data );
 		}
@@ -120,9 +123,9 @@ public class TestStageController : ControllableMonoBehaviour
 
 	private Vector3 GetViewportWorldPoint( Camera camera, X_StageEnemyList.Param param )
 	{
-		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( param.AppearViewportX, param.AppearViewportY, camera.farClipPlane ) );
+		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( param.AppearViewportX, param.AppearViewportY, camera.nearClipPlane ) );
 		Vector3 originPos = camera.transform.position;
-		Vector3 dir = farPos - originPos;
+		Vector3 dir = ( farPos - originPos ).normalized;
 
 		Vector3 axis = Vector3.up;
 		float h = Vector3.Dot( new Vector3( 0, ParamDef.BASE_Y_POS, 0 ), axis );

@@ -116,8 +116,8 @@ public class TestEnemyController : EnemyController
 		if( m_MoveStatus == 0 )
 		{
 			// 行先の計算
-			m_TargetLocalPosition = m_MoveTargetLocalPosition + transform.localPosition;
-			m_TargetLocalPosition.y = transform.localPosition.y;
+			var pos = new Vector3( m_MoveTargetLocalPosition.x * transform.forward.x, 0, m_MoveTargetLocalPosition.z * transform.forward.z );
+			m_TargetLocalPosition = pos + transform.localPosition;
 			m_MoveStatus = 1;
 		}
 		else if( m_MoveStatus == 1 )
@@ -178,7 +178,7 @@ public class TestEnemyController : EnemyController
 
 		var spreadAngles = GetSpreadAngles( m_BulletShotNum, m_BulletSpreadAngle );
 		var shotParam = new BulletShotParam( this );
-		shotParam.Position = m_ShotPosition.position;
+		shotParam.Position = m_ShotPosition.GetMoveObjectHolderBasePosition();
 
 		for( int i = 0; i < m_BulletShotNum; i++ )
 		{

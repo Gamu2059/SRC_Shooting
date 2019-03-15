@@ -88,6 +88,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾の状態。
 	/// </summary>
+	[SerializeField]
 	private E_BULLET_CYCLE m_BulletCycle;
 
 	/// <summary>
@@ -471,10 +472,10 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		}
 
 		// 座標を設定
-		bullet.SetPosition( bulletOwner.transform.position );
+		bullet.SetPosition( bulletOwner.transform.localPosition );
 
 		// 回転を設定
-		bullet.SetRotation( bulletOwner.transform.eulerAngles );
+		bullet.SetRotation( bulletOwner.transform.localEulerAngles );
 
 		// スケールを設定
 		bullet.SetScale( bulletPrefab.transform.localScale );
@@ -578,10 +579,10 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		}
 
 		// 座標を設定
-		bullet.SetPosition( shotParam.Position != null ? ( Vector3 )shotParam.Position : bulletOwner.transform.position );
+		bullet.SetPosition( shotParam.Position != null ? ( Vector3 )shotParam.Position : bulletOwner.transform.localPosition );
 
 		// 回転を設定
-		bullet.SetRotation( shotParam.Rotation != null ? ( Vector3 )shotParam.Rotation : bulletOwner.transform.eulerAngles );
+		bullet.SetRotation( shotParam.Rotation != null ? ( Vector3 )shotParam.Rotation : bulletOwner.transform.localEulerAngles );
 
 		// スケールを設定
 		bullet.SetScale( shotParam.Scale != null ? ( Vector3 )shotParam.Scale : bulletPrefab.transform.localScale );
@@ -748,7 +749,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		}
 		else
 		{
-			List<EnemyController> enemies = EnemyCharaManager.Instance.GetControllers();
+			List<EnemyController> enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
 			CharaController nearestEnemy = null;
 			float minSqrDist = float.MaxValue;
 
@@ -827,22 +828,19 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 			return;
 		}
 
-		Vector3 rot = transform.eulerAngles;
-		Vector3 scl = transform.localScale;
-		rot += m_NowDeltaRotation * Time.deltaTime;
-		scl += m_NowDeltaScale * Time.deltaTime;
-		transform.eulerAngles = rot;
-		transform.localScale = scl;
+		SetRotation( GetNowDeltaRotation() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetScale( GetNowDeltaScale() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
-		m_NowSpeed += m_NowAccel * Time.deltaTime;
+		SetNowSpeed( GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
 		if( m_Target != null )
 		{
-			Vector3 deltaPos = m_Target.transform.position - transform.position;
-			transform.forward = Vector3.Lerp( transform.forward, deltaPos.normalized, m_NowLerp );
+			Vector3 targetDeltaPos = m_Target.transform.position - transform.position;
+			transform.forward = Vector3.Lerp( transform.forward, targetDeltaPos.normalized, m_NowLerp );
 		}
 
-		transform.Translate( transform.forward * m_NowSpeed * Time.deltaTime, Space.World );
+		var speed = GetNowSpeed() * Time.deltaTime;
+		SetPosition( transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
 		m_NowLifeTime += Time.deltaTime;
 

@@ -1392,18 +1392,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_MoveSpeed: 5
-  m_BulletPrefabs:
-  - {fileID: 7663632291520977884, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
-  m_BombPrefabs: []
-  m_BulletParams:
-  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}
-  m_Protectors: []
-  m_ProtectorRadius: 0
-  m_ProtectorSpeed: 0
+  m_BulletSetParam: {fileID: 0}
+  m_Collider: {fileID: 0}
   m_IsBoss: 0
   m_ShotPosition: {fileID: 1690036944}
-  m_MoveTargetLocalPosition: {x: 0, y: 0, z: -40}
+  m_MoveTargetLocalPosition: {x: 0, y: 0, z: 15}
   m_MoveTargetDuration: 3
   m_WaitDuration: 3.2
   m_WithdrawalXSpeed:

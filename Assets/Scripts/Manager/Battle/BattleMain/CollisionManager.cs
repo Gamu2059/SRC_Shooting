@@ -63,7 +63,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 			}
 			else
 			{
-				var charaList = EnemyCharaManager.Instance.GetControllers();
+				var charaList = EnemyCharaManager.Instance.GetUpdateEnemies();
 
 				foreach( var targetChara in charaList )
 				{
