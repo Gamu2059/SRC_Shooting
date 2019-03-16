@@ -201,13 +201,15 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		}
 
 		m_CharaIndex = index;
+		var nextController = m_Controllers[m_CharaIndex];
 
 		if( m_CurrentController != null )
 		{
 			m_CurrentController.gameObject.SetActive( false );
+			nextController.transform.localPosition = m_CurrentController.transform.localPosition;
 		}
 
-		m_CurrentController = m_Controllers[m_CharaIndex];
+		m_CurrentController = nextController;
 		m_CurrentController.gameObject.SetActive( true );
 		m_WaitChangeTime = 1f;
 	}

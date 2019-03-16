@@ -140,7 +140,7 @@ public class TestEnemyController : EnemyController
 			{
 				m_MoveStatus = 5;
 			} );
-			TimerManager.Instance.RegistTimter( timer );
+			TimerManager.Instance.RegistTimer( timer );
 		}
 		else if( m_MoveStatus == 5 )
 		{
@@ -217,11 +217,5 @@ public class TestEnemyController : EnemyController
 		}
 
 		return spreadAngles;
-	}
-
-	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
-	{
-		base.OnSuffer( bullet, colliderData );
-		EnemyCharaManager.Instance.DestroyEnemy( this );
 	}
 }

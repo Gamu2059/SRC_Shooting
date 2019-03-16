@@ -26,20 +26,26 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 
 
 
-	#region Field
+	#region Field Inspector
 
 	[Header( "キャラの基礎パラメータ" )]
 
-	[SerializeField]
+	[SerializeField, Tooltip( "キャラの所属" )]
 	private E_CHARA_TROOP m_Troop;
 
-	[Header( "弾のパラメータ" )]
-
-	[SerializeField]
+	[SerializeField, Tooltip( "キャラが用いる弾の組み合わせ" )]
 	private BulletSetParam m_BulletSetParam;
 
-	[SerializeField]
+	[SerializeField, Tooltip( "キャラの衝突情報" )]
 	private BattleObjectCollider m_Collider;
+
+	[Header( "キャラの基礎ステータス" )]
+
+	[SerializeField, Tooltip( "キャラの現在HP" )]
+	private int m_NowHp;
+
+	[SerializeField, Tooltip( "キャラの最大HP" )]
+	private int m_MaxHp;
 
 	#endregion
 
@@ -143,28 +149,86 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 		m_Collider = GetComponent<BattleObjectCollider>();
 	}
 
+	/// <summary>
+	/// このキャラを回復する。
+	/// </summary>
+	public virtual void Recover( int recover )
+	{
+		if( recover <= 0 )
+		{
+			return;
+		}
+
+		m_NowHp = Mathf.Clamp( m_NowHp + recover, 0, m_MaxHp );
+	}
+
+	/// <summary>
+	/// このキャラにダメージを与える。
+	/// HPが0になった場合は死ぬ。
+	/// </summary>
+	public virtual void Damage( int damage )
+	{
+		if( damage <= 0 )
+		{
+			return;
+		}
+
+		m_NowHp = Mathf.Clamp( m_NowHp - damage, 0, m_MaxHp );
+
+		if( m_NowHp == 0 )
+		{
+			Dead();
+		}
+	}
+
+	/// <summary>
+	/// このキャラを死亡させる。
+	/// </summary>
+	public virtual void Dead()
+	{
+
+	}
+
+
+	/// <summary>
+	/// このキャラの衝突情報を取得する。
+	/// </summary>
 	public virtual ColliderData[] GetColliderData()
 	{
 		return m_Collider.GetColliderData();
 	}
 
+	/// <summary>
+	/// このキャラ自身から弾に当たることがあるかどうか。
+	/// 基本的にキャラから弾に当たりに行くことはないので、falseが返ってくる。
+	/// </summary>
 	public virtual bool CanHitBullet()
 	{
-		return m_Collider.CanHitBullet();
+		return false;
+		//return m_Collider.CanHitBullet();
 	}
 
+	/// <summary>
+	/// このキャラが他のキャラに当たった場合のコールバック。
+	/// </summary>
 	public virtual void OnHitCharacter( CharaController chara )
 	{
 
 	}
 
+	/// <summary>
+	/// このキャラが他の弾に当たった場合のコールバック。
+	/// </summary>
 	public virtual void OnHitBullet( BulletController bullet )
 	{
 
 	}
 
+	/// <summary>
+	/// 他の弾がこのキャラに当たった場合のコールバック。
+	/// </summary>
 	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
-
+		Damage( 1 );
 	}
 }

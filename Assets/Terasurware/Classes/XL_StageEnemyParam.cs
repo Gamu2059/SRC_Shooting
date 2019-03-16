@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class X_StageEnemyList : ScriptableObject
+public class XL_StageEnemyParam : ScriptableObject
 {	
 	public List<Sheet> sheets = new List<Sheet> ();
 

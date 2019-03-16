@@ -7,9 +7,9 @@ using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 
-public class Stage_importer : AssetPostprocessor {
-	private static readonly string filePath = "Assets/ExcelData/Stage/Stage.xlsx";
-	private static readonly string exportPath = "Assets/ExcelData/Stage/Stage.asset";
+public class StageEnemyParam_importer : AssetPostprocessor {
+	private static readonly string filePath = "Assets/ExcelData/Stage/StageEnemyParam.xlsx";
+	private static readonly string exportPath = "Assets/ExcelData/Stage/StageEnemyParam.asset";
 	private static readonly string[] sheetNames = { "Sheet1", };
 	
 	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
@@ -18,9 +18,9 @@ public class Stage_importer : AssetPostprocessor {
 			if (!filePath.Equals (asset))
 				continue;
 				
-			X_StageEnemyList data = (X_StageEnemyList)AssetDatabase.LoadAssetAtPath (exportPath, typeof(X_StageEnemyList));
+			XL_StageEnemyParam data = (XL_StageEnemyParam)AssetDatabase.LoadAssetAtPath (exportPath, typeof(XL_StageEnemyParam));
 			if (data == null) {
-				data = ScriptableObject.CreateInstance<X_StageEnemyList> ();
+				data = ScriptableObject.CreateInstance<XL_StageEnemyParam> ();
 				AssetDatabase.CreateAsset ((ScriptableObject)data, exportPath);
 				data.hideFlags = HideFlags.NotEditable;
 			}
@@ -41,14 +41,14 @@ public class Stage_importer : AssetPostprocessor {
 						continue;
 					}
 
-					X_StageEnemyList.Sheet s = new X_StageEnemyList.Sheet ();
+					XL_StageEnemyParam.Sheet s = new XL_StageEnemyParam.Sheet ();
 					s.name = sheetName;
 				
 					for (int i=1; i<= sheet.LastRowNum; i++) {
 						IRow row = sheet.GetRow (i);
 						ICell cell = null;
 						
-						X_StageEnemyList.Param p = new X_StageEnemyList.Param ();
+						XL_StageEnemyParam.Param p = new XL_StageEnemyParam.Param ();
 						
 					cell = row.GetCell(0); p.Time = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(1); p.EnemyViewId = (int)(cell == null ? 0 : cell.NumericCellValue);
@@ -60,7 +60,8 @@ public class Stage_importer : AssetPostprocessor {
 					cell = row.GetCell(7); p.AppearOffsetZ = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(8); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(9); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(10); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(10); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(11); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
 						s.list.Add (p);
 					}
 					data.sheets.Add(s);

@@ -11,12 +11,12 @@ public class TestStageController : ControllableMonoBehaviour
 	private StageEnemyParam m_StageEnemyParam;
 
 	[SerializeField]
-	private X_StageEnemyList m_StageEnemyList;
+	private XL_StageEnemyParam m_StageEnemyList;
 
 	[SerializeField]
-	private List<X_StageEnemyList.Param> m_StageEnemyAppearData;
+	private List<XL_StageEnemyParam.Param> m_StageEnemyAppearData;
 	[SerializeField]
-	private List<X_StageEnemyList.Param> m_RemovingData;
+	private List<XL_StageEnemyParam.Param> m_RemovingData;
 	private bool m_IsStarted;
 	private float m_Count;
 
@@ -24,8 +24,8 @@ public class TestStageController : ControllableMonoBehaviour
 	{
 		base.OnInitialize();
 
-		m_StageEnemyAppearData = new List<X_StageEnemyList.Param>();
-		m_RemovingData = new List<X_StageEnemyList.Param>();
+		m_StageEnemyAppearData = new List<XL_StageEnemyParam.Param>();
+		m_RemovingData = new List<XL_StageEnemyParam.Param>();
 
 		BuildEnemyAppearData();
 	}
@@ -121,7 +121,7 @@ public class TestStageController : ControllableMonoBehaviour
 		m_RemovingData.Clear();
 	}
 
-	private Vector3 GetViewportWorldPoint( Camera camera, X_StageEnemyList.Param param )
+	private Vector3 GetViewportWorldPoint( Camera camera, XL_StageEnemyParam.Param param )
 	{
 		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( param.AppearViewportX, param.AppearViewportY, camera.nearClipPlane ) );
 		Vector3 originPos = camera.transform.position;

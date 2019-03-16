@@ -76,9 +76,9 @@ public class EchoController : PlayerController
 		}
 	}
 
-	public override void ShotBomb( int bombIndex = 0 )
+	public override void ShotBomb()
 	{
-		base.ShotBomb( bombIndex );
+		base.ShotBomb();
 	}
 
 	private void UpdateShotLevel( int level )
