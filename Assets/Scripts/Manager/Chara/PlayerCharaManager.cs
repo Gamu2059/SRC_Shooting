@@ -14,29 +14,7 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 	[Header( "Key config" )]
 
 	[SerializeField]
-	private KeyCode[] m_ForwardMove;
-
-	[SerializeField]
-	private KeyCode[] m_BackMove;
-
-	[SerializeField]
-	private KeyCode[] m_RightMove;
-
-	[SerializeField]
-	private KeyCode[] m_LeftMove;
-
-	[SerializeField]
-	private KeyCode[] m_ShotBullet;
-
-	[SerializeField]
-	private KeyCode[] m_ShotBomb;
-
-	[SerializeField]
-	private KeyCode[] m_1stCharaChange;
-	[SerializeField]
-	private KeyCode[] m_2ndCharaChange;
-	[SerializeField]
-	private KeyCode[] m_3rdCharaChange;
+	private InputParam m_InputParam;
 
 
 	[SerializeField]
@@ -93,16 +71,6 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		m_Controllers.Clear();
 	}
 
-	//private void Start()
-	//{
-	//	foreach( var chara in m_Controllers )
-	//	{
-	//		chara.gameObject.SetActive( false );
-	//	}
-
-	//	ChangeChara( 0 );
-	//}
-
 	public override void OnUpdate()
 	{
 		if( m_CurrentController == null )
@@ -119,22 +87,22 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		Vector3 moveDir = Vector3.zero;
 
 		// 移動関係の入力
-		if( IsGetKey( m_ForwardMove ) )
+		if( IsGetKey( m_InputParam.GetForwardMove() ) )
 		{
 			moveDir.z += 1;
 		}
 
-		if( IsGetKey( m_BackMove ) )
+		if( IsGetKey( m_InputParam.GetBackMove() ) )
 		{
 			moveDir.z -= 1;
 		}
 
-		if( IsGetKey( m_RightMove ) )
+		if( IsGetKey( m_InputParam.GetRightMove() ) )
 		{
 			moveDir.x += 1;
 		}
 
-		if( IsGetKey( m_LeftMove ) )
+		if( IsGetKey( m_InputParam.GetLeftMove() ) )
 		{
 			moveDir.x -= 1;
 		}
@@ -142,13 +110,13 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		m_CurrentController.Move( moveDir );
 
 		// 通常弾
-		if( IsGetKey( m_ShotBullet, Input.GetMouseButton( 0 ) ) )
+		if( IsGetKey( m_InputParam.GetShotBullet(), Input.GetMouseButton( 0 ) ) )
 		{
 			m_CurrentController.ShotBullet();
 		}
 
 		// ボム
-		if( IsGetKeyDown( m_ShotBomb, Input.GetMouseButtonDown( 1 ) ) )
+		if( IsGetKeyDown( m_InputParam.GetShotBomb(), Input.GetMouseButtonDown( 1 ) ) )
 		{
 			m_CurrentController.ShotBomb();
 		}
@@ -168,15 +136,15 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 			ChangeChara( ( m_CharaIndex + 1 + charaNum ) % charaNum );
 		}
 
-		if( IsGetKey( m_1stCharaChange ) )
+		if( IsGetKey( m_InputParam.Get1stCharaChange() ) )
 		{
 			ChangeChara( 0 );
 		}
-		else if( IsGetKey( m_2ndCharaChange ) )
+		else if( IsGetKey( m_InputParam.Get2ndCharaChange() ) )
 		{
 			ChangeChara( 1 );
 		}
-		else if( IsGetKey( m_3rdCharaChange ) )
+		else if( IsGetKey( m_InputParam.Get3rdCharaChange() ) )
 		{
 			ChangeChara( 2 );
 		}
@@ -233,13 +201,15 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		}
 
 		m_CharaIndex = index;
+		var nextController = m_Controllers[m_CharaIndex];
 
 		if( m_CurrentController != null )
 		{
 			m_CurrentController.gameObject.SetActive( false );
+			nextController.transform.localPosition = m_CurrentController.transform.localPosition;
 		}
 
-		m_CurrentController = m_Controllers[m_CharaIndex];
+		m_CurrentController = nextController;
 		m_CurrentController.gameObject.SetActive( true );
 		m_WaitChangeTime = 1f;
 	}
@@ -251,7 +221,9 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 			return;
 		}
 
+		StageManager.Instance.AddPlayerCharaHolder( controller.transform );
 		m_Controllers.Add( controller );
+		controller.OnInitialize();
 
 		// 最初のキャラだけONにする
 		if( m_Controllers.Count > 1 )

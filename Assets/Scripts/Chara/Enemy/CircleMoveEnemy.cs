@@ -47,7 +47,7 @@ public class CircleMoveEnemy : EnemyController
 
 	private void Awake()
 	{
-        base.Awake();
+		base.Awake();
 		m_ShotTime = 0;
 
 		m_Renderer.material = m_Normal;
@@ -68,7 +68,7 @@ public class CircleMoveEnemy : EnemyController
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			Bullet.ShotBullet( this );
+			BulletController.ShotBullet( this );
 		}
 		else
 		{
@@ -76,7 +76,7 @@ public class CircleMoveEnemy : EnemyController
 		}
 	}
 
-	public override void OnSuffer( Bullet bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 
@@ -89,7 +89,7 @@ public class CircleMoveEnemy : EnemyController
 				m_Renderer.material = m_Normal;
 				hitTimer = null;
 			} );
-			TimerManager.Instance.RegistTimter( hitTimer );
+			TimerManager.Instance.RegistTimer( hitTimer );
 		}
 		else
 		{
@@ -99,7 +99,7 @@ public class CircleMoveEnemy : EnemyController
 				m_Renderer.material = m_Normal;
 				hitTimer = null;
 			} );
-			TimerManager.Instance.RegistTimter( hitTimer );
+			TimerManager.Instance.RegistTimer( hitTimer );
 		}
 	}
 }

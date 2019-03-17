@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HackerBullet : Bullet
+public class HackerBullet : BulletController
 {
-    
+
 }

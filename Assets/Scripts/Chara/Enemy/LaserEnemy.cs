@@ -45,10 +45,10 @@ public class LaserEnemy : EnemyController
 		if( m_ShotTime < 0f )
 		{
 			m_ShotTime = m_ShotInterval;
-			int index = Random.Range( 0, m_BulletPrefabs.Length );
+			int index = Random.Range( 0, GetBulletPrefabsCount() );
 
 			var shotParam = new BulletShotParam( this, index );
-			var laser = Bullet.ShotBullet( shotParam );
+			var laser = BulletController.ShotBullet( shotParam );
 
 			// index == 1 の時は、軌道を変えて撃ってみる
 			if( index > 0 )

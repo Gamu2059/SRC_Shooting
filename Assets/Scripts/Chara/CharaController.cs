@@ -1,176 +1,234 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
-/*
- * 
- * 【注意】
- * PlayerControllerを継承して自機の制御に関するスクリプトを
- * 書くようにしたので、これはもう使わない
- * 
- */
-public class CharaController : MonoBehaviour
+/// <summary>
+/// キャラの制御を行うコンポーネント。
+/// </summary>
+[RequireComponent( typeof( BattleObjectCollider ) )]
+public class CharaController : ControllableMonoBehaviour, ICollisionBase
 {
-
-	[SerializeField]
-	private float m_MoveSpeed;
-
-	[SerializeField]
-	private KeyCode m_FrontKey;
-
-	[SerializeField]
-	private KeyCode m_BackKey;
-
-	[SerializeField]
-	private KeyCode m_LeftKey;
-
-	[SerializeField]
-	private KeyCode m_RightKey;
-
-	[SerializeField]
-	private KeyCode m_ShotKey;
-
-	[SerializeField]
-	private GameObject m_Bullet;
-
-	[SerializeField]
-	private float m_ShotInterval;
-
-	private float shotDelay;
-
-	[SerializeField]
-	private Transform[] m_MainShotPosition;
-
-	[SerializeField]
-	private GameObject[] m_SubShotLv2;
-
-	private bool m_SubShotLv2CanShot;
-
-	[SerializeField]
-	private GameObject[] m_SubShotLv3;
-
-	private bool m_SubShotLv3CanShot;
-
-	[SerializeField]
-	private float m_SubShotLv3Radius;
-
-	[SerializeField]
-	private float m_SubShotLv3RotateSpeed;
-
-	[SerializeField, Range(1,3)]
-	private int m_ShotLevel;
-
-	[SerializeField]
-	private Transform[] m_Protectors;
-
-	[SerializeField]
-	private float m_ProtectorRadius;
-
-	[SerializeField]
-	private float m_ProtectorSpeed;
-
-	private float m_ProtectorRad;
-
-	private float m_SubShotLv3Rad;
-
-	private void Update()
+	/// <summary>
+	/// キャラの所属。
+	/// </summary>
+	public enum E_CHARA_TROOP
 	{
-		shotDelay += Time.deltaTime;
+		/// <summary>
+		/// プレイヤーキャラ。
+		/// </summary>
+		PLAYER,
 
-		if(m_ShotLevel >= 3){
-			m_SubShotLv3CanShot = true;
-			m_SubShotLv2CanShot = true;
-		}else if(m_ShotLevel >= 2){
-			m_SubShotLv3CanShot = false;
-			m_SubShotLv2CanShot = true;
-		}else{
-			m_SubShotLv3CanShot = false;
-			m_SubShotLv2CanShot = false;
-		}
+		/// <summary>
+		/// 敵キャラ。
+		/// </summary>
+		ENEMY,
+	}
 
-		for(int i=0; i< m_SubShotLv2.Length; i++){
-			m_SubShotLv2[i].SetActive(m_SubShotLv2CanShot);
-		}
 
-		for(int i=0; i< m_SubShotLv3.Length; i++){
-			m_SubShotLv3[i].SetActive(m_SubShotLv3CanShot);
-		}
 
-		if( Input.GetKey( m_FrontKey ) )
+	#region Field Inspector
+
+	[Header( "キャラの基礎パラメータ" )]
+
+	[SerializeField, Tooltip( "キャラの所属" )]
+	private E_CHARA_TROOP m_Troop;
+
+	[SerializeField, Tooltip( "キャラが用いる弾の組み合わせ" )]
+	private BulletSetParam m_BulletSetParam;
+
+	[SerializeField, Tooltip( "キャラの衝突情報" )]
+	private BattleObjectCollider m_Collider;
+
+	[Header( "キャラの基礎ステータス" )]
+
+	[SerializeField, Tooltip( "キャラの現在HP" )]
+	private int m_NowHp;
+
+	[SerializeField, Tooltip( "キャラの最大HP" )]
+	private int m_MaxHp;
+
+	#endregion
+
+
+
+	#region Getter & Setter
+
+	public BattleObjectCollider GetCollider()
+	{
+		return m_Collider;
+	}
+
+	public E_CHARA_TROOP GetTroop()
+	{
+		return m_Troop;
+	}
+
+	public BulletSetParam GetBulletSetParam()
+	{
+		return m_BulletSetParam;
+	}
+
+	public void SetBulletSetParam( BulletSetParam param )
+	{
+		m_BulletSetParam = param;
+	}
+
+	/// <summary>
+	/// キャラが保持するBulletParamの個数を取得する。
+	/// </summary>
+	public int GetBulletParamsCount()
+	{
+		if( GetBulletSetParam().GetBulletParams() == null )
 		{
-			transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
+			return -1;
 		}
 
-		if( Input.GetKey( m_BackKey ) )
+		return GetBulletSetParam().GetBulletParams().Length;
+	}
+
+	/// <summary>
+	/// 指定したインデックスのBulletParamを取得する。
+	/// </summary>
+	public BulletParam GetBulletParam( int bulletParamIndex = 0 )
+	{
+		int paramCount = GetBulletParamsCount();
+
+		if( GetBulletSetParam().GetBulletParams() == null || paramCount < 1 )
 		{
-			transform.Translate( Vector3.back * m_MoveSpeed * Time.deltaTime );
+			return null;
 		}
 
-		if( Input.GetKey( m_LeftKey ) )
+		if( bulletParamIndex < 0 || bulletParamIndex >= paramCount )
 		{
-			transform.Translate( Vector3.left * m_MoveSpeed * Time.deltaTime );
+			bulletParamIndex = 0;
 		}
 
-		if( Input.GetKey( m_RightKey ) )
+		return GetBulletSetParam().GetBulletParams()[bulletParamIndex];
+	}
+
+	/// <summary>
+	/// キャラが保持する弾プレハブの個数を取得する。
+	/// </summary>
+	public int GetBulletPrefabsCount()
+	{
+		if( GetBulletSetParam().GetBulletPrefabs() == null )
 		{
-			transform.Translate( Vector3.right * m_MoveSpeed * Time.deltaTime );
+			return -1;
 		}
 
-		if(Input.GetKey(m_ShotKey)){
-			if(shotDelay >= m_ShotInterval){
-				ShootBullet();
-				shotDelay = 0;
-			}
+		return GetBulletSetParam().GetBulletPrefabs().Length;
+	}
+
+	/// <summary>
+	/// 指定したインデックスの弾のプレハブを取得する。
+	/// </summary>
+	public BulletController GetBulletPrefab( int bulletIndex = 0 )
+	{
+		int prefabCount = GetBulletPrefabsCount();
+
+		if( GetBulletSetParam().GetBulletPrefabs() == null || prefabCount < 1 )
+		{
+			return null;
 		}
 
-		m_SubShotLv3Rad += m_SubShotLv3RotateSpeed * Time.deltaTime;
-		m_SubShotLv3Rad %= Mathf.PI * 2;
-		float unitAngle = Mathf.PI * 2 / m_SubShotLv3.Length;
-
-		if(m_SubShotLv3CanShot){
-			for(int i=0; i< m_SubShotLv3.Length; i++){
-				float angle = unitAngle * i + m_SubShotLv3Rad;
-				float x = m_SubShotLv3Radius * Mathf.Cos( angle );
-				float z = m_SubShotLv3Radius * Mathf.Sin( angle );
-				m_SubShotLv3[i].GetComponent<Transform>().localPosition = new Vector3( x, 0, z );
-				m_SubShotLv3[i].GetComponent<Transform>().LookAt( transform );
-			}
+		if( bulletIndex < 0 || bulletIndex >= prefabCount )
+		{
+			bulletIndex = 0;
 		}
 
-		if( m_Protectors == null || m_Protectors.Length < 1 )
+		return GetBulletSetParam().GetBulletPrefabs()[bulletIndex];
+	}
+
+	#endregion
+
+
+
+	public override void OnInitialize()
+	{
+		base.OnInitialize();
+		m_Collider = GetComponent<BattleObjectCollider>();
+	}
+
+	/// <summary>
+	/// このキャラを回復する。
+	/// </summary>
+	public virtual void Recover( int recover )
+	{
+		if( recover <= 0 )
 		{
 			return;
 		}
 
-		m_ProtectorRad += m_ProtectorSpeed * Time.deltaTime;
-		m_ProtectorRad %= Mathf.PI * 2;
-		unitAngle = Mathf.PI * 2 / m_Protectors.Length;
-
-		for( int i = 0; i < m_Protectors.Length; i++ )
-		{
-			float angle = unitAngle * i + m_ProtectorRad;
-			float x = m_ProtectorRadius * Mathf.Cos( angle );
-			float z = m_ProtectorRadius * Mathf.Sin( angle );
-			m_Protectors[i].localPosition = new Vector3( x, 0, z );
-			m_Protectors[i].LookAt( transform );
-		}		
+		m_NowHp = Mathf.Clamp( m_NowHp + recover, 0, m_MaxHp );
 	}
 
-	private void ShootBullet(){
-		for(int i=0; i < m_MainShotPosition.Length; i++){
-					Instantiate(m_Bullet, m_MainShotPosition[i].position, m_MainShotPosition[i].rotation);
-				}
-
-		if(m_SubShotLv2CanShot){
-			for(int i=0; i < m_SubShotLv2.Length; i++){
-					Instantiate(m_Bullet, m_SubShotLv2[i].GetComponent<Transform>().position, m_SubShotLv2[i].GetComponent<Transform>().rotation);
-				}
+	/// <summary>
+	/// このキャラにダメージを与える。
+	/// HPが0になった場合は死ぬ。
+	/// </summary>
+	public virtual void Damage( int damage )
+	{
+		if( damage <= 0 )
+		{
+			return;
 		}
-		if(m_SubShotLv3CanShot){
-			for(int i=0; i < m_SubShotLv3.Length; i++){
-					Instantiate(m_Bullet, m_SubShotLv3[i].GetComponent<Transform>().position, m_SubShotLv3[i].GetComponent<Transform>().rotation);
-				}
-		}	
+
+		m_NowHp = Mathf.Clamp( m_NowHp - damage, 0, m_MaxHp );
+
+		if( m_NowHp == 0 )
+		{
+			Dead();
+		}
+	}
+
+	/// <summary>
+	/// このキャラを死亡させる。
+	/// </summary>
+	public virtual void Dead()
+	{
+
+	}
+
+
+	/// <summary>
+	/// このキャラの衝突情報を取得する。
+	/// </summary>
+	public virtual ColliderData[] GetColliderData()
+	{
+		return m_Collider.GetColliderData();
+	}
+
+	/// <summary>
+	/// このキャラ自身から弾に当たることがあるかどうか。
+	/// 基本的にキャラから弾に当たりに行くことはないので、falseが返ってくる。
+	/// </summary>
+	public virtual bool CanHitBullet()
+	{
+		return false;
+		//return m_Collider.CanHitBullet();
+	}
+
+	/// <summary>
+	/// このキャラが他のキャラに当たった場合のコールバック。
+	/// </summary>
+	public virtual void OnHitCharacter( CharaController chara )
+	{
+
+	}
+
+	/// <summary>
+	/// このキャラが他の弾に当たった場合のコールバック。
+	/// </summary>
+	public virtual void OnHitBullet( BulletController bullet )
+	{
+
+	}
+
+	/// <summary>
+	/// 他の弾がこのキャラに当たった場合のコールバック。
+	/// </summary>
+	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
+	{
+		Damage( 1 );
 	}
 }

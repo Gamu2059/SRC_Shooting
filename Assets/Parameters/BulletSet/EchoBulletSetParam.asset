@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf40c08fba0a874d9db523eb7656f18, type: 3}
+  m_Name: EchoBulletSetParam
+  m_EditorClassIdentifier: 
+  m_BulletPrefabs:
+  - {fileID: 3404226922437352252, guid: 23cacf77b0180504887854e7cf135531, type: 3}
+  - {fileID: 3404226922437352252, guid: 0528cd663140b8c4fa216625df71d3db, type: 3}
+  m_BulletParams:
+  - {fileID: 11400000, guid: e6d9cd286df35b248a95865e81e92cdb, type: 2}

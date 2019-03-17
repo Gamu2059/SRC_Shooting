@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EchoBullet : Bullet
+public class EchoBullet : BulletController
 {
     [SerializeField]
     private int m_HitCount;
@@ -15,22 +15,24 @@ public class EchoBullet : Bullet
 
     private float delay;
     
-    public override void OnHitCharacter(CharaControllerBase chara)
+    public override void OnHitCharacter(CharaController chara)
     {
-
         base.OnHitCharacter(chara);
     }
 
-    private void Update()
+    public override void OnUpdate()
     {
+        
         delay += Time.deltaTime;
 
-        if(delay >= m_Interval && m_IsRoot)
+        if (delay >= m_Interval && m_IsRoot)
         {
             EchoController echo = (EchoController)GetBulletOwner();
             echo.ReadyRadiateShot(this.GetPosition());
-            delay = 0;            
+            delay = 0;
         }
+
+        base.OnUpdate();
     }
 
 }
