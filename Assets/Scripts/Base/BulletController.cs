@@ -857,7 +857,6 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	protected virtual void OnBecameInvisible()
 	{
         // 画面から見えなくなったら弾を破棄する
-        Debug.Log(string.Format("DESTROY@{0}", this.gameObject));
 		DestroyBullet();
 	}
 
