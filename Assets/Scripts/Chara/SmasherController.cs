@@ -60,7 +60,7 @@ public class SmasherController : PlayerController
 			for( int i = 0; i < m_MainShotPosition.Length; i++ )
 			{
 				var shotParam = new BulletShotParam( this );
-				shotParam.Position = m_MainShotPosition[i].position;
+				shotParam.Position = m_MainShotPosition[i].GetMoveObjectHolderBasePosition();
 				shotParam.OrbitalIndex = 0;
 				BulletController.ShotBullet( shotParam );
 			}
@@ -70,7 +70,7 @@ public class SmasherController : PlayerController
 				for( int i = 0; i < m_SubShotLv1Position.Length; i++ )
 				{
 					var shotParam = new BulletShotParam( this );
-					shotParam.Position = m_SubShotLv1Position[i].position;
+					shotParam.Position = m_SubShotLv1Position[i].GetMoveObjectHolderBasePosition();
 					shotParam.OrbitalIndex = 0;
 					BulletController.ShotBullet( shotParam );
 				}
@@ -78,12 +78,10 @@ public class SmasherController : PlayerController
 
 			if( m_SubShotLv2CanShot )
 			{
-				GameObject Sub2 = m_BulletPrefabs[1].gameObject;
-
 				for( int i = 0; i < m_SubShotLv2Position.Length; i++ )
 				{
 					var shotParam = new BulletShotParam( this );
-					shotParam.Position = m_SubShotLv2Position[i].position;
+					shotParam.Position = m_SubShotLv2Position[i].GetMoveObjectHolderBasePosition();
 					shotParam.BulletIndex = 1;
 					shotParam.OrbitalIndex = 1;
 					BulletController.ShotBullet( shotParam );

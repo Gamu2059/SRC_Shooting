@@ -79,7 +79,7 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 	/// <summary>
 	/// タイマーを登録する。
 	/// </summary>
-	public void RegistTimter( Timer timer )
+	public void RegistTimer( Timer timer )
 	{
 		if( timer == null )
 		{
