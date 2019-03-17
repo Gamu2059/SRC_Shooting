@@ -47,40 +47,10 @@ MonoBehaviour:
   m_ColliderTransforms:
   - ColliderType: 1
     Transform: {fileID: 6778240039581673945}
-  m_Troop: 0
-  m_Owner: {fileID: 0}
-  m_Target: {fileID: 0}
-  m_BulletIndex: 0
-  m_BulletParam: {fileID: 0}
-  m_OrbitalParam:
-    Target: 0
-    Position: {x: 0, y: 0, z: 0}
-    PositionRelative: 0
-    Rotation: {x: 0, y: 0, z: 0}
-    RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
-    ScaleRelative: 0
-    DeltaRotation: {x: 0, y: 0, z: 0}
-    DeltaRotationRelative: 0
-    DeltaScale: {x: 0, y: 0, z: 0}
-    DeltaScaleRelative: 0
-    HitSize: {x: 0, y: 0, z: 0}
-    HitSizeRelative: 0
-    DeltaHitSize: {x: 0, y: 0, z: 0}
-    DeltaHitSizeRelative: 0
-    Damage: 0
-    DamageRelative: 0
-    Speed: 0
-    SpeedRelative: 0
-    Accel: 0
-    AccelRelative: 0
-    IsSearch: 0
-    Lerp: 0
-    LerpRelative: 0
-    OptionObjectParams: []
-    OptionValueParams: []
-  m_Parent: {fileID: 0}
+  m_BulletGroupId: EchoDiff
   m_HitCount: 0
+  m_Interval: 0
+  m_IsRoot: 0
 --- !u!1 &6353219119838419139
 GameObject:
   m_ObjectHideFlags: 0

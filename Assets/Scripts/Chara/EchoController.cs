@@ -37,6 +37,11 @@ public class EchoController : PlayerController
 	[SerializeField]
 	private int m_MaxHitCountIncrease;
 
+    [SerializeField]
+    private bool m_CanRadShot;
+
+    private Vector3 latestPosition;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -55,7 +60,7 @@ public class EchoController : PlayerController
 		base.OnUpdate();
 		shotDelay += Time.deltaTime;
 		UpdateShotLevel( GetLevel() );
-		ShotDiffusinBullet();
+        RadiateShot();
 	}
 
 	public override void ShotBullet()
@@ -99,6 +104,7 @@ public class EchoController : PlayerController
 		}
 	}
     
+    // 使ってないけど残して
 	public void ReadyShotDiffusionBullet( CharaControllerBase chara, int count )
 	{
 		if( !m_CanShotWave )
@@ -110,9 +116,10 @@ public class EchoController : PlayerController
 		m_LatestHitCount = count;
 	}
     
-	private void ShotDiffusinBullet( int bulletIndex = 1, int bulletParamIndex = 0 )
+    // 使ってないけど残して
+	private void ShotDiffusinBullet()
 	{
-		if( m_CanShotWave )
+		if( m_CanShotWave  && m_LatestHitCount >= m_MaxHitCount)
 		{
 			if( m_LatestHitCharacter == null )
 			{
@@ -153,9 +160,42 @@ public class EchoController : PlayerController
 		}
 	}
 
+    // 使ってないけど残して
 	public int GetMaxHitCount()
 	{
 		return m_MaxHitCount;
 	}
-    
+
+    public void ReadyRadiateShot(Vector3 position)
+    {
+        latestPosition = position;
+        m_CanRadShot = true;
+    }
+
+    private void RadiateShot()
+    {
+        if (!m_CanRadShot)
+        {
+            return;
+        }
+        else
+        {
+            Debug.Log(string.Format("FIRE!@{0}", latestPosition));
+
+            for (int i = 0; i < 8; i++)
+            {
+                float angleRad = (Mathf.PI / 4) * i;
+                float yAngle = (Mathf.PI / 4) * i * Mathf.Rad2Deg;
+
+                var shotParam = new BulletShotParam(this);
+                shotParam.Position = latestPosition;
+                shotParam.Rotation = new Vector3(0, yAngle, 0);
+                shotParam.BulletIndex = 1;
+                shotParam.OrbitalIndex = 3;
+                Bullet.ShotBullet(shotParam);
+            }
+
+            m_CanRadShot = false;
+        }
+    }
 }

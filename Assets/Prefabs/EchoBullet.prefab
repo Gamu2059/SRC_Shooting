@@ -48,8 +48,9 @@ MonoBehaviour:
   - ColliderType: 1
     Transform: {fileID: 6778240039581673945}
   m_BulletGroupId: Echo
-  m_Parent: {fileID: 0}
   m_HitCount: 0
+  m_Interval: 0.2
+  m_IsRoot: 1
 --- !u!1 &6353219119838419139
 GameObject:
   m_ObjectHideFlags: 0

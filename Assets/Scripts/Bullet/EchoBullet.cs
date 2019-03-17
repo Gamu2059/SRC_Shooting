@@ -6,12 +6,31 @@ public class EchoBullet : Bullet
 {
     [SerializeField]
     private int m_HitCount;
+
+    [SerializeField]
+    private float m_Interval;
+
+    [SerializeField]
+    private bool m_IsRoot;
+
+    private float delay;
     
     public override void OnHitCharacter(CharaControllerBase chara)
     {
-        EchoController echoController = (EchoController)this.GetBulletOwner();
-        echoController.ReadyShotDiffusionBullet(chara, ++m_HitCount);
+
         base.OnHitCharacter(chara);
+    }
+
+    private void Update()
+    {
+        delay += Time.deltaTime;
+
+        if(delay >= m_Interval && m_IsRoot)
+        {
+            EchoController echo = (EchoController)GetBulletOwner();
+            echo.ReadyRadiateShot(this.GetPosition());
+            delay = 0;            
+        }
     }
 
 }
