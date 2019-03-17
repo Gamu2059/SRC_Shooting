@@ -6,6 +6,7 @@ using System;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
+[RequireComponent( typeof( BattleObjectCollider ) )]
 public class BulletController : ControllableMonoBehaviour, ICollisionBase
 {
 	[Serializable]
@@ -37,12 +38,6 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	#region Field Inspector
 
 	/// <summary>
-	/// この弾の当たり判定情報。
-	/// </summary>
-	[SerializeField]
-	private CollisionManager.ColliderTransform[] m_ColliderTransforms;
-
-	/// <summary>
 	/// この弾のグループ名。
 	/// 同じ名前同士の弾は、違うキャラから生成されたものであっても、プールから再利用される。
 	/// </summary>
@@ -55,21 +50,23 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 
 	#region Field
 
+	private BattleObjectCollider m_Collider;
+
 	/// <summary>
 	/// この弾がプレイヤー側と敵側のどちらに属しているか。
 	/// 同じ値同士を持つ弾やキャラには被弾しない。
 	/// </summary>
-	private CharaControllerBase.E_CHARA_TROOP m_Troop;
+	private CharaController.E_CHARA_TROOP m_Troop;
 
 	/// <summary>
 	/// 弾を発射したキャラ。
 	/// </summary>
-	private CharaControllerBase m_BulletOwner;
+	private CharaController m_BulletOwner;
 
 	/// <summary>
 	/// 弾の標的となっているキャラ。
 	/// </summary>
-	private CharaControllerBase m_Target;
+	private CharaController m_Target;
 
 	/// <summary>
 	/// 発射したキャラの何番目の弾か。
@@ -91,6 +88,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾の状態。
 	/// </summary>
+	[SerializeField]
 	private E_BULLET_CYCLE m_BulletCycle;
 
 	/// <summary>
@@ -145,11 +143,11 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	#region Getter & Setter
 
 	/// <summary>
-	/// この弾の当たり判定情報を取得する。
+	/// この弾の衝突情報コンポーネントを取得する。
 	/// </summary>
-	public CollisionManager.ColliderTransform[] GetColliderTransforms()
+	public BattleObjectCollider GetCollider()
 	{
-		return m_ColliderTransforms;
+		return m_Collider;
 	}
 
 	/// <summary>
@@ -165,7 +163,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// この弾がプレイヤー側と敵側のどちらに属しているか。
 	/// 同じ値同士を持つ弾やキャラには被弾しない。
 	/// </summary>
-	public CharaControllerBase.E_CHARA_TROOP GetTroop()
+	public CharaController.E_CHARA_TROOP GetTroop()
 	{
 		return m_Troop;
 	}
@@ -173,7 +171,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾がプレイヤー側と敵側のどちらに属しているかを設定する。
 	/// </summary>
-	public void SetTroop( CharaControllerBase.E_CHARA_TROOP troop )
+	public void SetTroop( CharaController.E_CHARA_TROOP troop )
 	{
 		m_Troop = troop;
 	}
@@ -181,7 +179,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾を発射したキャラを取得する。
 	/// </summary>
-	public CharaControllerBase GetBulletOwner()
+	public CharaController GetBulletOwner()
 	{
 		return m_BulletOwner;
 	}
@@ -189,7 +187,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾の標的となっているキャラを取得する。
 	/// </summary>
-	public CharaControllerBase GetTarget()
+	public CharaController GetTarget()
 	{
 		return m_Target;
 	}
@@ -197,7 +195,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾の標的となっているキャラを設定する。
 	/// </summary>
-	public void SetTarget( CharaControllerBase target )
+	public void SetTarget( CharaController target )
 	{
 		m_Target = target;
 	}
@@ -450,7 +448,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// 弾を生成する。
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
-	private static BulletController CreateBullet( CharaControllerBase bulletOwner )
+	private static BulletController CreateBullet( CharaController bulletOwner )
 	{
 		if( bulletOwner == null )
 		{
@@ -474,10 +472,10 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		}
 
 		// 座標を設定
-		bullet.SetPosition( bulletOwner.transform.position );
+		bullet.SetPosition( bulletOwner.transform.localPosition );
 
 		// 回転を設定
-		bullet.SetRotation( bulletOwner.transform.eulerAngles );
+		bullet.SetRotation( bulletOwner.transform.localEulerAngles );
 
 		// スケールを設定
 		bullet.SetScale( bulletPrefab.transform.localScale );
@@ -500,7 +498,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
 	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-	public static BulletController ShotBulletWithoutBulletParam( CharaControllerBase bulletOwner, bool isCheck = true )
+	public static BulletController ShotBulletWithoutBulletParam( CharaController bulletOwner, bool isCheck = true )
 	{
 		var bullet = CreateBullet( bulletOwner );
 
@@ -523,7 +521,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bulletOwner">弾を発射させるキャラ</param>
 	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-	public static BulletController ShotBullet( CharaControllerBase bulletOwner, bool isCheck = true )
+	public static BulletController ShotBullet( CharaController bulletOwner, bool isCheck = true )
 	{
 		var bullet = CreateBullet( bulletOwner );
 
@@ -581,10 +579,10 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		}
 
 		// 座標を設定
-		bullet.SetPosition( shotParam.Position != null ? ( Vector3 )shotParam.Position : bulletOwner.transform.position );
+		bullet.SetPosition( shotParam.Position != null ? ( Vector3 )shotParam.Position : bulletOwner.transform.localPosition );
 
 		// 回転を設定
-		bullet.SetRotation( shotParam.Rotation != null ? ( Vector3 )shotParam.Rotation : bulletOwner.transform.eulerAngles );
+		bullet.SetRotation( shotParam.Rotation != null ? ( Vector3 )shotParam.Rotation : bulletOwner.transform.localEulerAngles );
 
 		// スケールを設定
 		bullet.SetScale( shotParam.Scale != null ? ( Vector3 )shotParam.Scale : bulletPrefab.transform.localScale );
@@ -655,57 +653,6 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 
 		return bullet;
 	}
-
-	[Obsolete]
-	/// <summary>
-	/// この弾を発射させる。
-	/// </summary>
-	/// <param name="owner">この弾を発射させるキャラ</param>
-	/// <param name="position">この弾を発射させる基準座標</param>
-	/// <param name="rotation">この弾を発射させる基準回転</param>
-	/// <param name="originScale">この弾の元々のスケール</param>
-	/// <param name="bulletIndex">owneの何番目のプレハブの弾なのかを意味するindex</param>
-	/// <param name="bulletParam">弾の全体のパラメータ</param>
-	/// <param name="orbitalIndex">弾の軌道パラメータのインデックス defaultで初期軌道パラメータになる</param>
-	public void ShotBullet( CharaControllerBase owner, Vector3 position, Vector3 rotation, Vector3 originScale, int bulletIndex, BulletParam bulletParam, int orbitalIndex = -1 )
-	{
-		if( owner == null || bulletParam == null )
-		{
-			DestroyBullet();
-			return;
-		}
-
-		m_NowLifeTime = 0;
-		ResetBulletParam();
-
-		m_BulletOwner = owner;
-		m_Troop = m_BulletOwner.GetTroop();
-
-		transform.position = position;
-		transform.eulerAngles = rotation;
-		transform.localScale = originScale;
-
-		m_BulletIndex = bulletIndex;
-
-		m_BulletParam = bulletParam;
-
-		BulletOrbitalParam orbitalParam;
-
-		if( orbitalIndex < 0 || orbitalIndex >= m_BulletParam.ConditionalOrbitalParams.Length )
-		{
-			orbitalParam = m_BulletParam.OrbitalParam;
-		}
-		else
-		{
-			orbitalParam = m_BulletParam.ConditionalOrbitalParams[orbitalIndex];
-		}
-
-		ChangeOrbital( orbitalParam );
-
-		BulletManager.Instance.CheckStandbyBullet( this );
-	}
-
-
 
 	/// <summary>
 	/// この弾の軌道情報を上書きする。
@@ -794,16 +741,16 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾の最も近くにいる敵を探し出す。
 	/// </summary>
-	public CharaControllerBase GetNearestEnemy()
+	public CharaController GetNearestEnemy()
 	{
-		if( m_Troop == CharaControllerBase.E_CHARA_TROOP.ENEMY )
+		if( m_Troop == CharaController.E_CHARA_TROOP.ENEMY )
 		{
 			return PlayerCharaManager.Instance.GetCurrentController();
 		}
 		else
 		{
-			List<EnemyController> enemies = EnemyCharaManager.Instance.GetControllers();
-			CharaControllerBase nearestEnemy = null;
+			List<EnemyController> enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
+			CharaController nearestEnemy = null;
 			float minSqrDist = float.MaxValue;
 
 			foreach( var enemy in enemies )
@@ -855,6 +802,12 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public override void OnInitialize()
 	{
+		base.OnInitialize();
+
+		if( m_Collider == null )
+		{
+			m_Collider = GetComponent<BattleObjectCollider>();
+		}
 	}
 
 	/// <summary>
@@ -875,22 +828,19 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 			return;
 		}
 
-		Vector3 rot = transform.eulerAngles;
-		Vector3 scl = transform.localScale;
-		rot += m_NowDeltaRotation * Time.deltaTime;
-		scl += m_NowDeltaScale * Time.deltaTime;
-		transform.eulerAngles = rot;
-		transform.localScale = scl;
+		SetRotation( GetNowDeltaRotation() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetScale( GetNowDeltaScale() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
-		m_NowSpeed += m_NowAccel * Time.deltaTime;
+		SetNowSpeed( GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
 		if( m_Target != null )
 		{
-			Vector3 deltaPos = m_Target.transform.position - transform.position;
-			transform.forward = Vector3.Lerp( transform.forward, deltaPos.normalized, m_NowLerp );
+			Vector3 targetDeltaPos = m_Target.transform.position - transform.position;
+			transform.forward = Vector3.Lerp( transform.forward, targetDeltaPos.normalized, m_NowLerp );
 		}
 
-		transform.Translate( transform.forward * m_NowSpeed * Time.deltaTime, Space.World );
+		var speed = GetNowSpeed() * Time.deltaTime;
+		SetPosition( transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
 		m_NowLifeTime += Time.deltaTime;
 
@@ -915,24 +865,9 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾の当たり判定情報を取得する。
 	/// </summary>
-	public virtual CollisionManager.ColliderData[] GetColliderData()
+	public virtual ColliderData[] GetColliderData()
 	{
-		int hitNum = m_ColliderTransforms.Length;
-		var colliders = new CollisionManager.ColliderData[hitNum];
-
-		for( int i = 0; i < hitNum; i++ )
-		{
-			Transform t = m_ColliderTransforms[i].Transform;
-			var c = new CollisionManager.ColliderData();
-			c.CenterPos = new Vector2( t.position.x, t.position.z );
-			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
-			c.Angle = -t.eulerAngles.y;
-			c.ColliderType = m_ColliderTransforms[i].ColliderType;
-
-			colliders[i] = c;
-		}
-
-		return colliders;
+		return m_Collider.GetColliderData();
 	}
 
 	/// <summary>
@@ -940,14 +875,14 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public virtual bool CanHitBullet()
 	{
-		return false;
+		return m_Collider.CanHitBullet();
 	}
 
 	/// <summary>
 	/// この弾がキャラに衝突した時に呼び出される処理。
 	/// </summary>
 	/// <param name="chara">この弾に衝突されたキャラ</param>
-	public virtual void OnHitCharacter( CharaControllerBase chara )
+	public virtual void OnHitCharacter( CharaController chara )
 	{
 
 	}
@@ -967,7 +902,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	/// <param name="bullet">この弾に衝突してきた他の弾</param>
 	/// <param name="colliderData">衝突を検出したこの弾の衝突情報</param>
-	public virtual void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
+	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 
 	}

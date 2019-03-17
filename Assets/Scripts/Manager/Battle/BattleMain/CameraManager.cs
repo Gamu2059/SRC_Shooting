@@ -20,7 +20,7 @@ public class CameraManager : SingletonMonoBehavior<CameraManager>
 	private Vector3 m_TargetOffsetPos;
 
 
-	public Camera GetTargetCamera()
+	public Camera GetCamera()
 	{
 		return m_TargetCamera;
 	}

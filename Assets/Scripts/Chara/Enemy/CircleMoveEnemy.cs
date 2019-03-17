@@ -76,7 +76,7 @@ public class CircleMoveEnemy : EnemyController
 		}
 	}
 
-	public override void OnSuffer( BulletController bullet, CollisionManager.ColliderData colliderData )
+	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
 
@@ -89,7 +89,7 @@ public class CircleMoveEnemy : EnemyController
 				m_Renderer.material = m_Normal;
 				hitTimer = null;
 			} );
-			TimerManager.Instance.RegistTimter( hitTimer );
+			TimerManager.Instance.RegistTimer( hitTimer );
 		}
 		else
 		{
@@ -99,7 +99,7 @@ public class CircleMoveEnemy : EnemyController
 				m_Renderer.material = m_Normal;
 				hitTimer = null;
 			} );
-			TimerManager.Instance.RegistTimter( hitTimer );
+			TimerManager.Instance.RegistTimer( hitTimer );
 		}
 	}
 }

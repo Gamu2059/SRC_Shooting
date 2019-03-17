@@ -10,12 +10,6 @@ using System.Linq;
 public class BulletManager : SingletonMonoBehavior<BulletManager>
 {
 	/// <summary>
-	/// 全ての弾を保持するトランスフォーム。
-	/// </summary>
-	[SerializeField]
-	private Transform m_BulletHolder;
-
-	/// <summary>
 	/// STANDBY状態の弾を保持するリスト。
 	/// </summary>
 	[SerializeField]
@@ -143,7 +137,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// </summary>
 	private void GotoUpdateFromStandby()
 	{
-		int count = m_GotoUpdateBullets.Count();
+		int count = m_GotoUpdateBullets.Count;
 
 		for( int i = 0; i < count; i++ )
 		{
@@ -193,6 +187,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		m_StandbyBullets.Add( bullet );
 		bullet.gameObject.SetActive( true );
 		bullet.SetBulletCycle( BulletController.E_BULLET_CYCLE.STANDBY_UPDATE );
+		bullet.OnInitialize();
 	}
 
 	/// <summary>
@@ -207,28 +202,9 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		}
 
 		bullet.SetBulletCycle( BulletController.E_BULLET_CYCLE.STANDBY_POOL );
+		bullet.OnFinalize();
 		m_GotoPoolBullets.Add( bullet );
 		bullet.gameObject.SetActive( false );
-	}
-
-	/// <summary>
-	/// 指定した弾をBulletHolderの直下に入れる。
-	/// </summary>
-	private void SetBulletParent( BulletController bullet )
-	{
-		if( bullet == null )
-		{
-			return;
-		}
-
-		Transform t = m_BulletHolder;
-
-		if( t == null )
-		{
-			t = transform;
-		}
-
-		bullet.transform.SetParent( t );
 	}
 
 	/// <summary>
@@ -258,7 +234,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		if( bullet == null )
 		{
 			bullet = Instantiate( bulletPrefab );
-			SetBulletParent( bullet );
+			StageManager.Instance.AddBulletHolder( bullet.transform );
 			m_PoolBullets.Add( bullet );
 		}
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの入力ボタンのパラメータ。
+/// プレイヤーの入力パラメータ。
 /// </summary>
 [CreateAssetMenu( menuName = "Param/Input", fileName = "InputParam" )]
 public class InputParam : ScriptableObject

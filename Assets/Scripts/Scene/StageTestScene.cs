@@ -5,8 +5,6 @@ using System;
 
 public class StageTestScene : BaseScene
 {
-
-
 	public override void OnBeforeShow( Action onComplete )
 	{
 		OnInitializeManagers();
