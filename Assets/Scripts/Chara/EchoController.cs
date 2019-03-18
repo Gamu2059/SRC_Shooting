@@ -22,16 +22,23 @@ public class EchoController : PlayerController
 
     private Vector3 latestPosition;
 
+    [SerializeField]
+    private int m_RadiateDirection;
+
+    [SerializeField]
+    private float m_RotateOffset;
+
 	protected override void Awake()
 	{
 		base.Awake();
-		initialShotInterval = m_ShotInterval;
+		
 		OnAwake();
 	}
 
 	protected override void OnAwake()
 	{
-		base.OnAwake();
+        initialShotInterval = m_ShotInterval;
+        base.OnAwake();
 	}
 
 	public override void OnUpdate()
@@ -97,20 +104,23 @@ public class EchoController : PlayerController
         }
         else
         {
-            for (int i = 0; i < 8; i++)
-            {
-                float angleRad = (Mathf.PI / 4) * i;
-                float yAngle = (Mathf.PI / 4) * i * Mathf.Rad2Deg;
-
-                var shotParam = new BulletShotParam(this);
-                shotParam.Position = latestPosition;
-                shotParam.Rotation = new Vector3(0, yAngle, 0);
-                shotParam.BulletIndex = 1;
-                shotParam.OrbitalIndex = 3;
-                BulletController.ShotBullet(shotParam);
-            }
-
+            RadiateShot1(m_RadiateDirection);
             m_CanRadShot = false;
         }
     }
+
+    private void RadiateShot1(int direction)
+    {
+        for (int i=0; i< direction; i++)
+        {
+            float yAngle = (2 * Mathf.PI / direction) * (i % 2 == 0 ? i : -i) * Mathf.Rad2Deg;
+            var shotParam = new BulletShotParam(this);
+            shotParam.Position = latestPosition;
+            shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
+            shotParam.BulletIndex = 1;
+            shotParam.OrbitalIndex = 3;
+
+            BulletController.ShotBullet(shotParam);
+        }
+    }   
 }
