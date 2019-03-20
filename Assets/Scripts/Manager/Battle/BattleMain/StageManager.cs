@@ -7,27 +7,39 @@ using UnityEngine;
 /// </summary>
 public class StageManager : SingletonMonoBehavior<StageManager>
 {
-	[SerializeField]
-	private float m_Speed;
-
-	[SerializeField]
-	private Vector3 m_Direction;
-
+	/// <summary>
+	/// 動物体を保持するためのホルダー
+	/// </summary>
 	[SerializeField]
 	private GameObject m_MoveObjectHolder;
 
+	/// <summary>
+	/// 静止物体を保持するためのホルダー
+	/// </summary>
 	[SerializeField]
 	private GameObject m_FixedObjectHolder;
 
+	/// <summary>
+	/// ステージ上の背景オブジェクトを保持するためのホルダー
+	/// </summary>
 	[SerializeField]
 	private GameObject m_StageObjectHolder;
 
+	/// <summary>
+	/// プレイヤーキャラを保持するためのホルダー
+	/// </summary>
 	[SerializeField]
 	private GameObject m_PlayerCharaHolder;
 
+	/// <summary>
+	/// 敵キャラを保持するためのホルダー
+	/// </summary>
 	[SerializeField]
 	private GameObject m_EnemyCharaHolder;
 
+	/// <summary>
+	/// 弾を保持するためのホルダー
+	/// </summary>
 	[SerializeField]
 	private GameObject m_BulletHolder;
 
@@ -45,24 +57,24 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 		base.OnUpdate();
 		m_StageController.OnUpdate();
 
-		if( m_MoveObjectHolder == null )
-		{
-			return;
-		}
+		//if( m_MoveObjectHolder == null )
+		//{
+		//	return;
+		//}
 
-		if( m_StageController != null )
-		{
-			m_StageController.OnUpdate();
-		}
+		//if( m_StageController != null )
+		//{
+		//	m_StageController.OnUpdate();
+		//}
 
-		m_MoveObjectHolder.transform.Translate( m_Direction * m_Speed * Time.deltaTime, Space.World );
+		//m_MoveObjectHolder.transform.Translate( m_Direction * m_Speed * Time.deltaTime, Space.World );
 
-		if( m_MoveObjectHolder.transform.position.z > 448 )
-		{
-			var pos = m_MoveObjectHolder.transform.position;
-			pos.z = 0;
-			m_MoveObjectHolder.transform.position = pos;
-		}
+		//if( m_MoveObjectHolder.transform.position.z > 448 )
+		//{
+		//	var pos = m_MoveObjectHolder.transform.position;
+		//	pos.z = 0;
+		//	m_MoveObjectHolder.transform.position = pos;
+		//}
 	}
 
 	/// <summary>
