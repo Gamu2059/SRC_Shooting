@@ -61,10 +61,10 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		return m_PoolBullets;
 	}
 
-
-
-	public override void OnInitialize()
+	protected override void OnAwake()
 	{
+		base.OnAwake();
+
 		m_StandbyBullets = new List<BulletController>();
 		m_UpdateBullets = new List<BulletController>();
 		m_PoolBullets = new List<BulletController>();
@@ -72,14 +72,17 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		m_GotoPoolBullets = new List<BulletController>();
 	}
 
+	public override void OnInitialize()
+	{
+		base.OnInitialize();
+	}
+
 	public override void OnFinalize()
 	{
+		base.OnFinalize();
 		m_StandbyBullets.Clear();
-		m_StandbyBullets = null;
 		m_UpdateBullets.Clear();
-		m_UpdateBullets = null;
 		m_PoolBullets.Clear();
-		m_PoolBullets = null;
 	}
 
 	public override void OnStart()
