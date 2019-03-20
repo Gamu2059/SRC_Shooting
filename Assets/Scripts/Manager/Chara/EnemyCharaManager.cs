@@ -65,6 +65,12 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+
+		m_StandbyEnemies = new List<EnemyController>();
+		m_UpdateEnemies = new List<EnemyController>();
+		m_GotoUpdateEnemies = new List<EnemyController>();
+		m_GotoDestroyEnemies = new List<EnemyController>();
+		m_BossControllers = new List<EnemyController>();
 	}
 
 	protected override void OnDestroyed()
@@ -75,12 +81,6 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 	public override void OnInitialize()
 	{
 		base.OnInitialize();
-
-		m_StandbyEnemies = new List<EnemyController>();
-		m_UpdateEnemies = new List<EnemyController>();
-		m_GotoUpdateEnemies = new List<EnemyController>();
-		m_GotoDestroyEnemies = new List<EnemyController>();
-		m_BossControllers = new List<EnemyController>();
 	}
 
 	public override void OnFinalize()
