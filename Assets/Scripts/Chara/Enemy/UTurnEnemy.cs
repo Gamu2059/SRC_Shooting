@@ -220,12 +220,12 @@ public class UTurnEnemy : EnemyController
 	{
 		base.OnBecameVisible();
 
-		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
+		m_StartShotTimer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
 		{
 			OnShot( m_StraightMoveShotParam );
 		} );
 
-		BattleMainTimerManager.Instance.RegistTimer( timer );
+		BattleMainTimerManager.Instance.RegistTimer( m_StartShotTimer );
 	}
 
 	public override void Dead()
