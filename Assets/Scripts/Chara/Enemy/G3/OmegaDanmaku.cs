@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 発射方向が等角速度で変化する弾幕
 /// </summary>
-public class CircleBaramakiG3 : AbstractBezierMove
+public class OmegaDanmaku : AbstractBezierMove
 {
     // 発射間隔
     [SerializeField, Tooltip("発射の時間間隔")]

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 全方位にランダムに弾を出す弾幕
 /// </summary>
-public class OmniG3 : AbstractBezierMove
+public class OmniDirectionalDanmaku : AbstractBezierMove
 {
     // 発射間隔
     [SerializeField, Tooltip("発射の時間間隔")]

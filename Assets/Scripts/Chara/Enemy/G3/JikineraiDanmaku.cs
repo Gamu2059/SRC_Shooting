@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 自機を狙って弾を出す弾幕
 /// </summary>
-public class JikineraiBullets : AbstractBezierMove
+public class JikineraiDanmaku : AbstractBezierMove
 {
     
     [SerializeField, Tooltip("発射の時間間隔")]

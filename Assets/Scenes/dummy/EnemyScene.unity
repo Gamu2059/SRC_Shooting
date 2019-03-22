@@ -956,7 +956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &259908672
 Transform:
   m_ObjectHideFlags: 0
@@ -991,15 +991,9 @@ MonoBehaviour:
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  m_Time: 0
-  m_NowPhase: 0
-  m_NumPhase: 0
   m_PhaseTime:
   - 8
-  m_InitialPosition: {x: 0, y: 0, z: 0}
   m_DanmakuPhase: 0
-  m_IsDanmakuPhase: 0
-  m_RealShotNum: 
   m_LocalPositionBezier0: []
   m_LocalPositionBezier1: []
   m_LocalPositionBezier2: []
@@ -3971,7 +3965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1182073430
 Transform:
   m_ObjectHideFlags: 0
@@ -4006,15 +4000,9 @@ MonoBehaviour:
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  m_Time: 0
-  m_NowPhase: 0
-  m_NumPhase: 0
   m_PhaseTime:
   - 5
-  m_InitialPosition: {x: 0, y: 0, z: 0}
   m_DanmakuPhase: 0
-  m_IsDanmakuPhase: 0
-  m_RealShotNum: 
   m_LocalPositionBezier0: []
   m_LocalPositionBezier1: []
   m_LocalPositionBezier2: []
@@ -8043,31 +8031,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05425c9adcd45ef4c87757bf7cf2bfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
-  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_Troop: 0
+  m_BulletSetParam: {fileID: 0}
   m_Collider: {fileID: 0}
-  m_NowHp: 1000
-  m_MaxHp: 1000
+  m_NowHp: 0
+  m_MaxHp: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  m_Time: 0
-  m_NowPhase: 0
-  m_NumPhase: 0
-  m_PhaseTime:
-  - 2
-  - 2
-  - 2
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_DanmakuPhase: 1
-  m_IsDanmakuPhase: 0
-  m_RealShotNum: 
+  m_PhaseTime: []
+  m_DanmakuPhase: 0
   m_LocalPositionBezier0: []
   m_LocalPositionBezier1: []
   m_LocalPositionBezier2: []
-  m_ShotInterval: 0.3
-  m_Way: 20
-  m_BulletSpeed: 10
+  m_ShotInterval: 0
+  m_Way: 0
+  m_BulletSpeed: 0
 --- !u!114 &2080180927
 MonoBehaviour:
   m_ObjectHideFlags: 0
