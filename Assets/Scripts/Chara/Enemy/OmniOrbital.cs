@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OmniInheritance : DanmakuAbstract
+public class OmniOrbital : DanmakuAbstract
 {
 
     // 発射間隔
@@ -11,11 +11,20 @@ public class OmniInheritance : DanmakuAbstract
 
     // way数
     [SerializeField]
-    private int m_Way;
+    private int m_way;
 
     // 弾の速さ
     [SerializeField]
     private float m_BulletSpeed = 10;
+
+    // 弾の配列
+    private BulletController[] m_bullets;
+
+    // それぞれの弾の経過時間
+    private float[] m_bulletLifeTimes;
+
+    // それぞれの弾の大まかな進む角度
+    private float[] m_bulletRads;
 
 
     // 本体の位置とオイラー角を更新する
@@ -48,10 +57,10 @@ public class OmniInheritance : DanmakuAbstract
         // ランダムな角度
         float rad0 = Random.Range(0, Mathf.PI * 2);
 
-        for (int i = 0; i < m_Way; i++)
+        for (int i = 0; i < m_way; i++)
         {
             // 1つの弾の角度
-            float rad = rad0 + Mathf.PI * 2 * i / m_Way;
+            float rad = rad0 + Mathf.PI * 2 * i / m_way;
 
             // その弾の発射角度
             Vector3 eulerAngles;
@@ -63,7 +72,7 @@ public class OmniInheritance : DanmakuAbstract
 
             // 弾を撃つ
             BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
-            BulletController.ShotBullet(bulletShotParam);
+            BulletController.ShotBulletWithoutBulletParam(bulletShotParam);
         }
     }
 }

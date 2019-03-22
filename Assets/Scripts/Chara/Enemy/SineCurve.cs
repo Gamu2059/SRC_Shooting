@@ -95,7 +95,8 @@ public class SineCurve : EnemyController
                 tempAngle.y = -((wayRad + Mathf.PI / 2) * Mathf.Rad2Deg) + 90;
 
                 // 弾を撃つ
-                //ShotBullet(0, 0, pos, tempAngle);
+                BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, tempAngle, transform.localScale);
+                BulletController.ShotBullet(bulletShotParam);
 
                 // 発射された弾の現在の位置
                 pos = m_BasePos;
@@ -107,7 +108,8 @@ public class SineCurve : EnemyController
                 tempAngle.y = -((wayRad - Mathf.PI / 2) * Mathf.Rad2Deg) + 90;
 
                 // 弾を撃つ
-                //ShotBullet(0, 0, pos, tempAngle);
+                bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, tempAngle, transform.localScale);
+                BulletController.ShotBullet(bulletShotParam);
             }
 
             ShotOrNot();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkakuInheri : DanmakusAbstract
+public class LissajousAlice : DanmakuAbstract
 {
 
     // 発射間隔
@@ -13,13 +13,21 @@ public class KinkakuInheri : DanmakusAbstract
     [SerializeField]
     private int way;
 
-    // 発射地点の円の半径
+    // x軸方向の振幅
     [SerializeField]
-    private float circleRadius;
+    private float ampX;
 
-    // 角速度
+    // x軸方向の各振動数
     [SerializeField]
-    private float angleSpeed;
+    private float angFreqX;
+
+    // y軸方向の振幅
+    [SerializeField]
+    private float ampY;
+
+    // y軸方向の各振動数
+    [SerializeField]
+    private float angFreqY;
 
     // 弾の速さ
     [SerializeField]
@@ -34,40 +42,42 @@ public class KinkakuInheri : DanmakusAbstract
 
 
     // 現在のあるべき発射回数を計算する(小数)
-    protected float ShotNum()
+    protected override float CalcNowShotNum()
     {
         return Time.time / shotInterval;
     }
 
 
     // 発射時刻を計算する
-    protected float LaunchTime(float realShotNum)
+    protected override float CalcLaunchTime()
     {
         return shotInterval * realShotNum;
     }
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    protected void ShotBullets(float launchTime, float dTime)
+    protected override void ShotBullets(float launchTime, float dTime)
     {
 
-        float pastRad = angleSpeed * launchTime;
-        pastRad = Modulo2PI(pastRad);
 
+        // リサージュの中心から見た発射位置
+        Vector3 relativeLaunchPos = new Vector3(ampX * Mathf.Sin(angFreqX * launchTime),0, ampY * Mathf.Sin(angFreqY * launchTime));
+
+        // 発射後の移動距離
         float distance = bulletSpeed * dTime;
+
+        // 発射角度
+        float frontLaunchRad = Mathf.Atan2(ampY * angFreqY * Mathf.Cos(angFreqY * launchTime),ampX * angFreqX * Mathf.Cos(angFreqX * launchTime));
 
         for (int i = 0; i < way; i++)
         {
             // way数による角度のズレ
-            float wayRad = pastRad + Mathf.PI * 2 * i / way;
-
-            // 位置のランダムなブレの成分
-            Vector2 randomPos = Random.insideUnitCircle * circleRadius;
+            float wayRad = frontLaunchRad + Mathf.PI * 2 * i / way;
 
             // 発射された弾の位置
             Vector3 pos = transform.position;
-            pos += new Vector3(randomPos.x, 0, randomPos.y);
-            pos += new Vector3(distance * Mathf.Cos(pastRad), 0, distance * Mathf.Sin(pastRad));
+            pos += relativeLaunchPos;
+            pos += new Vector3(distance * Mathf.Cos(wayRad), 0, distance * Mathf.Sin(wayRad));
 
             Vector3 eulerAngles;
 
@@ -77,15 +87,5 @@ public class KinkakuInheri : DanmakusAbstract
             BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
             BulletController.ShotBullet(bulletShotParam);
         }
-    }
-
-
-    protected void Awake()
-    {
-        CalcRealShotNum[] calcRealShotNum = { ShotNum };
-        CalcLaunchTime[] calcLaunchTime = { LaunchTime };
-        ShotBullets[] shotBullets = { ShotBullets };
-
-        base.Awake(calcRealShotNum, calcLaunchTime, shotBullets);
     }
 }

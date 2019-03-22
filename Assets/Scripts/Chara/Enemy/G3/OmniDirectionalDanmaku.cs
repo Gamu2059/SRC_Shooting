@@ -2,47 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OmniInheritance : DanmakuAbstract
+/// <summary>
+/// 全方位にランダムに弾を出す弾幕
+/// </summary>
+public class OmniG3 : AbstractBezierMove
 {
-
     // 発射間隔
-    [SerializeField]
+    [SerializeField, Tooltip("発射の時間間隔")]
     private float m_ShotInterval;
 
     // way数
-    [SerializeField]
+    [SerializeField, Tooltip("way数")]
     private int m_Way;
 
     // 弾の速さ
-    [SerializeField]
-    private float m_BulletSpeed = 10;
-
-
-    // 本体の位置とオイラー角を更新する
-    protected override void UpdateSelf()
-    {
-
-    }
+    [SerializeField, Tooltip("弾の速さ")]
+    private float m_BulletSpeed;
 
 
     // 現在のあるべき発射回数を計算する(小数)
-    protected override float CalcNowShotNum()
+    protected float ShotNum()
     {
-        return Time.time / m_ShotInterval;
+        return m_Time / m_ShotInterval;
     }
 
 
     // 発射時刻を計算する
-    protected override float CalcLaunchTime()
+    protected float LaunchTime(float realShotNum)
     {
         return m_ShotInterval * realShotNum;
     }
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    protected override void ShotBullets(float launchTime, float dTime)
+    protected void ShotBullet(float launchTime, float dTime)
     {
-
         float distance = m_BulletSpeed * dTime;
 
         // ランダムな角度
@@ -65,5 +59,29 @@ public class OmniInheritance : DanmakuAbstract
             BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
             BulletController.ShotBullet(bulletShotParam);
         }
+    }
+
+
+    protected override ProperShotNumDelegate[] GetProperShotNumDelegate()
+    {
+        ProperShotNumDelegate[] calcRealShotNums = { ShotNum };
+
+        return calcRealShotNums;
+    }
+
+
+    protected override LaunchTimeDelegate[] GetLaunchTimeDelegate()
+    {
+        LaunchTimeDelegate[] calcLaunchTimes = { LaunchTime };
+
+        return calcLaunchTimes;
+    }
+
+
+    protected override ShotBulletsDelegate[] GetShotBulletsDelegate()
+    {
+        ShotBulletsDelegate[] shotBullets = { ShotBullet };
+
+        return shotBullets;
     }
 }

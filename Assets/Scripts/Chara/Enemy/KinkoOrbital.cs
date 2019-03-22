@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoInheritance : DanmakuAbstract
+public class KinkoOrbital : DanmakuAbstract
 {
 
     // 発射間隔
@@ -15,7 +15,7 @@ public class KinkoInheritance : DanmakuAbstract
 
     // 発射位置
     [SerializeField]
-    private Vector3 relativeLaunchPos;
+    private Vector3 m_RelativeLaunchPos;
 
     // 弾の速さ
     [SerializeField]
@@ -62,7 +62,7 @@ public class KinkoInheritance : DanmakuAbstract
         float distance = m_BulletSpeed * dTime;
 
         // 弾の位置を発射時の位置にする
-        pos += relativeLaunchPos;
+        pos += m_RelativeLaunchPos;
 
         // 弾を経過した時間だけ進ませる
         pos += new Vector3(distance * Mathf.Cos(pastRad), 0, distance * Mathf.Sin(pastRad));

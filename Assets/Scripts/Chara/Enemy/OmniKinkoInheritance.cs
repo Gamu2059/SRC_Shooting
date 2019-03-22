@@ -82,7 +82,9 @@ public class OmniKinkoInheritance : DanmakusAbstract
 
         eulerAngles = CalcEulerAngles(pastRad);
 
-        //ShotBullet(0, 0, pos, eulerAngles);
+        // 弾を撃つ
+        BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
+        BulletController.ShotBullet(bulletShotParam);
     }
 
 
@@ -123,7 +125,8 @@ public class OmniKinkoInheritance : DanmakusAbstract
             pos += new Vector3(distance * Mathf.Cos(rad), 0, distance * Mathf.Sin(rad));
 
             // 弾を撃つ
-            //ShotBullet(0, 0, pos, eulerAngles);
+            BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
+            BulletController.ShotBullet(bulletShotParam);
         }
     }
 }

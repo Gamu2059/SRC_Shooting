@@ -13,13 +13,17 @@ public class AliceTsujoInheri : DanmakusAbstract
     [SerializeField]
     private int way;
 
-    // 発射地点の円の半径
-    [SerializeField]
-    private float circleRadius;
-
     // 角速度
     [SerializeField]
     private float angleSpeed;
+
+    // 弾源円半径の位相速度
+    [SerializeField]
+    private float circleRadiusPhaseSpeed;
+
+    // 発射地点の円の半径の最大値
+    [SerializeField]
+    private float circleRadiusMax;
 
     // 弾の速さ
     [SerializeField]
@@ -56,6 +60,8 @@ public class AliceTsujoInheri : DanmakusAbstract
 
         float distance = bulletSpeed * dTime;
 
+        float circleRadius = circleRadiusMax * (1 - Mathf.Cos(circleRadiusPhaseSpeed * launchTime)) / 2;
+
         for (int i = 0; i < way; i++)
         {
             // way数による角度のズレ
@@ -70,7 +76,9 @@ public class AliceTsujoInheri : DanmakusAbstract
 
             eulerAngles = CalcEulerAngles(wayRad);
 
-            //ShotBullet(0, 0, pos, eulerAngles);
+            // 弾を撃つ
+            BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
+            BulletController.ShotBullet(bulletShotParam);
         }
     }
 

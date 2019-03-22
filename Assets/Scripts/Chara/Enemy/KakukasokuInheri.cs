@@ -81,17 +81,11 @@ public class KakukasokuInheri : DanmakusAbstract
 
         eulerAngles = CalcEulerAngles(angle);
 
-        //Bullet.ShotBullet(this);
-
-        //ShotBullet(0, 0, pos, eulerAngles);
-
-        CharaControllerBase chara = this;
-
         BulletParam bulletParam = GetBulletParam();
 
         BulletShotParam bulletShotParam = new BulletShotParam(this,0,0,0,pos, eulerAngles,transform.localScale);
 
-        Bullet.ShotBullet(bulletShotParam);
+        BulletController.ShotBullet(bulletShotParam);
 
         phase = angleSpeed / (Mathf.PI * 2) * shotInterval;
     }

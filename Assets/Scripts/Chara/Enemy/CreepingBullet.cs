@@ -9,6 +9,10 @@ public class CreepingBullet : DanmakuAbstract
     [SerializeField]
     private float shotInterval;
 
+    // 弾源の円運動の半径
+    [SerializeField]
+    private float circleRadius;
+
     // 弾源の位置の位相
     [SerializeField]
     private float angle;
@@ -17,7 +21,7 @@ public class CreepingBullet : DanmakuAbstract
     [SerializeField]
     private float angleSpeed;
 
-    // 弾源の位置の位相速度
+    // 連続発射帯の数(way数)
     [SerializeField]
     private float[] shotRads;
 
@@ -59,8 +63,6 @@ public class CreepingBullet : DanmakuAbstract
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
     protected override void ShotBullets(float launchTime, float dTime)
     {
-        // 弾の位置を発射時の位置にする
-        Vector3 pos = transform.position;
 
         // 発射時の角度
         float pastAngle = angleSpeed * launchTime;
@@ -69,13 +71,31 @@ public class CreepingBullet : DanmakuAbstract
         // 発射後の移動距離
         float distance = bulletSpeed * dTime;
 
-        // 弾を経過した時間だけ進ませる
-        pos += new Vector3(distance * Mathf.Cos(pastAngle), 0, distance * Mathf.Sin(pastAngle));
+        for (int shotRadsIndex = 0; shotRadsIndex < shotRads.Length; shotRadsIndex++)
+        {
 
-        // 弾の角度
-        Vector3 eulerAngles = CalcEulerAngles(pastAngle);
+            // このwayの中心角度
+            float centerWayRad = pastAngle + shotRads[shotRadsIndex];
 
-        // 弾を撃つ
-        //ShotBullet(0, 0, pos, eulerAngles);
+            // このwayの発射角度
+            float launchRad = Random.Range(centerWayRad - ampRad, centerWayRad + ampRad);
+
+            // 弾の位置を敵本体の位置にする
+            Vector3 pos = transform.position;
+
+            // 弾源の位置に移動する
+            pos += new Vector3(circleRadius * Mathf.Cos(pastAngle), 0, circleRadius * Mathf.Sin(pastAngle));
+
+            // 弾を経過した時間だけ進ませる
+            pos += new Vector3(distance * Mathf.Cos(launchRad), 0, distance * Mathf.Sin(launchRad));
+
+            // 弾の角度
+            Vector3 eulerAngles = CalcEulerAngles(launchRad);
+
+            // 弾を撃つ
+            BulletShotParam bulletShotParam = new BulletShotParam(this,0,0,0, pos, eulerAngles,transform.localScale);
+            BulletController.ShotBullet(bulletShotParam);
+
+        }
     }
 }

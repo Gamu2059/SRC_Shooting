@@ -47,7 +47,8 @@ public class Jikinerai : DanmakusAbstract
     protected void ShotBullets(float launchTime, float dTime)
     {
 
-        Vector3 relativeVector = PlayerCharaManager.Instance.GetCurrentController().transform.position - transform.position;
+        //Vector3 relativeVector = PlayerCharaManager.Instance.GetCurrentController().transform.position - transform.position;
+        Vector3 relativeVector = new Vector3(0,0,-10) - transform.position;
         relativeVector.Normalize();
 
         float relativeRad = Mathf.Atan2(relativeVector.z, relativeVector.x);
@@ -62,7 +63,7 @@ public class Jikinerai : DanmakusAbstract
             float wayRad = relativeRad + radAWay * aWay;
 
             // 撃つ角度を決定する
-            eulerAngles = CalcEulerAngles(relativeRad);
+            eulerAngles = CalcEulerAngles(wayRad);
 
             // 弾速の数だけ弾を撃つ
             for (int bulletSpeedIndex = 0; bulletSpeedIndex < bulletSpeeds.Length; bulletSpeedIndex++)
@@ -72,9 +73,11 @@ public class Jikinerai : DanmakusAbstract
 
                 // 発射された弾の位置
                 Vector3 pos = transform.position;
-                pos += distance * relativeVector;
+                pos += distance * new Vector3(Mathf.Cos(wayRad),0, Mathf.Cos(wayRad));
 
-                //ShotBullet(0, bulletSpeedIndex, pos, eulerAngles);
+                // 弾を撃つ
+                BulletShotParam bulletShotParam = new BulletShotParam(this, 0, bulletSpeedIndex, 0, pos, eulerAngles, transform.localScale);
+                BulletController.ShotBullet(bulletShotParam);
             }
         }
     }
