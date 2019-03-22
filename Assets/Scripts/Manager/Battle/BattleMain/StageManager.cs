@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// メインのバトル画面のステージを管理する。
+/// メインのバトル画面のオブジェクトを保持するためのマネージャ。
 /// </summary>
 public class StageManager : SingletonMonoBehavior<StageManager>
 {
@@ -43,116 +43,44 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 	[SerializeField]
 	private GameObject m_BulletHolder;
 
-	[SerializeField]
-	private ControllableMonoBehaviour m_StageController;
-
 	public override void OnInitialize()
 	{
 		base.OnInitialize();
-		m_StageController.OnInitialize();
 	}
 
 	public override void OnUpdate()
 	{
 		base.OnUpdate();
-		m_StageController.OnUpdate();
-
-		//if( m_MoveObjectHolder == null )
-		//{
-		//	return;
-		//}
-
-		//if( m_StageController != null )
-		//{
-		//	m_StageController.OnUpdate();
-		//}
-
-		//m_MoveObjectHolder.transform.Translate( m_Direction * m_Speed * Time.deltaTime, Space.World );
-
-		//if( m_MoveObjectHolder.transform.position.z > 448 )
-		//{
-		//	var pos = m_MoveObjectHolder.transform.position;
-		//	pos.z = 0;
-		//	m_MoveObjectHolder.transform.position = pos;
-		//}
 	}
 
-	/// <summary>
-	/// 移動型オブジェクトホルダの子にする。
-	/// </summary>
-	public void AddMoveObjectHolder( Transform obj )
+	public GameObject GetMoveObjectHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_MoveObjectHolder.transform );
+		return m_MoveObjectHolder;
 	}
 
-	/// <summary>
-	/// 固定型オブジェクトホルダの子にする。
-	/// </summary>
-	public void AddFixedObjectHolder( Transform obj )
+	public GameObject GetFixedObjectHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_FixedObjectHolder.transform );
+		return m_FixedObjectHolder;
 	}
 
-	/// <summary>
-	/// ステージオブジェクトホルダの子にする。
-	/// </summary>
-	public void AddStageObjectHolder( Transform obj )
+	public GameObject GetStageObjectHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_StageObjectHolder.transform );
+		return m_StageObjectHolder;
 	}
 
-	/// <summary>
-	/// プレイヤーキャラホルダの子にする。
-	/// </summary>
-	public void AddPlayerCharaHolder( Transform obj )
+	public GameObject GetPlayerCharaHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_PlayerCharaHolder.transform );
+		return m_PlayerCharaHolder;
 	}
 
-	/// <summary>
-	/// 敵キャラホルダの子にする。
-	/// </summary>
-	public void AddEnemyCharaHolder( Transform obj )
+	public GameObject GetEnemyCharaHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_EnemyCharaHolder.transform );
+		return m_EnemyCharaHolder;
 	}
 
-	/// <summary>
-	/// 弾ホルダの子にする。
-	/// </summary>
-	public void AddBulletHolder( Transform obj )
+	public GameObject GetBulletHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_BulletHolder.transform );
+		return m_BulletHolder;
 	}
 
 	/// <summary>

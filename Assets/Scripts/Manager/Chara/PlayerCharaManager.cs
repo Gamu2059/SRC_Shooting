@@ -11,11 +11,31 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 
 	#region Inspector
 
+	[Header( "Holder" )]
+
+	[SerializeField]
+	private Transform m_PlayerCharaHolder;
+
+	[Header( "Chara" )]
+
+	[SerializeField]
+	private PlayerController[] m_CharaPrefabs;
+
+	[SerializeField]
+	private Vector2 m_InitAppearViewportPosition;
+
 	[Header( "Key config" )]
 
 	[SerializeField]
 	private InputParam m_InputParam;
 
+	[Header( "Restrict Filed" )]
+
+	[SerializeField]
+	private Vector2 m_MinViewportRestrict;
+
+	[SerializeField]
+	private Vector2 m_MaxViewportRestrict;
 
 	[SerializeField]
 	private List<PlayerController> m_Controllers;
@@ -69,6 +89,30 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 	{
 		base.OnFinalize();
 		m_Controllers.Clear();
+	}
+
+	public override void OnStart()
+	{
+		base.OnStart();
+
+		if( StageManager.Instance != null && StageManager.Instance.GetPlayerCharaHolder() != null )
+		{
+			m_PlayerCharaHolder = StageManager.Instance.GetPlayerCharaHolder().transform;
+		}
+		else if( m_PlayerCharaHolder == null )
+		{
+			var obj = new GameObject( "[PlayerCharaHolder]" );
+			obj.transform.position = Vector3.zero;
+			m_PlayerCharaHolder = obj.transform;
+		}
+
+		foreach( var charaPrefab in m_CharaPrefabs )
+		{
+			var chara = Instantiate( charaPrefab );
+			RegistChara( chara );
+			var pos = CameraManager.Instance.GetViewportWorldPoint( m_InitAppearViewportPosition.x, m_InitAppearViewportPosition.y );
+			chara.transform.position = pos;
+		}
 	}
 
 	public override void OnUpdate()
@@ -159,6 +203,7 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 			return;
 		}
 
+		RestrictCharaPosition();
 		m_CurrentController.OnLateUpdate();
 	}
 
@@ -221,7 +266,7 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 			return;
 		}
 
-		StageManager.Instance.AddPlayerCharaHolder( controller.transform );
+		controller.transform.SetParent( m_PlayerCharaHolder );
 		m_Controllers.Add( controller );
 		controller.OnInitialize();
 
@@ -230,5 +275,27 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 		{
 			controller.gameObject.SetActive( false );
 		}
+	}
+
+	public void RestrictCharaPosition()
+	{
+		var chara = GetCurrentController();
+
+		if( chara == null )
+		{
+			return;
+		}
+
+		Vector3 viewPos = CameraManager.Instance.WorldToViewportPoint( chara.transform.position );
+		float x = Mathf.Clamp( viewPos.x, m_MinViewportRestrict.x, m_MaxViewportRestrict.x );
+		float y = Mathf.Clamp( viewPos.y, m_MinViewportRestrict.y, m_MaxViewportRestrict.y );
+
+		if( viewPos.x == x && viewPos.y == y )
+		{
+			return;
+		}
+
+		var pos = CameraManager.Instance.GetViewportWorldPoint( x, y );
+		chara.transform.position = pos;
 	}
 }

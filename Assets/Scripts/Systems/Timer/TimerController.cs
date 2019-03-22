@@ -2,46 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// タイマーを管理する。
-/// </summary>
-public class TimerManager : SingletonMonoBehavior<TimerManager>
+public class TimerController
 {
-	/// <summary>
-	/// TimerManagerのタイマーサイクル。
-	/// </summary>
-	private Timer.E_TIMER_CYCLE m_TimerManagerCycle;
 
-	/// <summary>
-	/// このTimerManagerが保持する全てのTimerインスタンス。
-	/// </summary>
 	private LinkedList<Timer> m_TimerList;
 
 	private LinkedList<Timer> m_GotoStopTimerList;
 
 	/// <summary>
-	/// TimerManagerのタイマーサイクルを取得する。
+	/// TimerManagerのタイマーサイクル。
 	/// </summary>
-	public Timer.E_TIMER_CYCLE GetTimerManagerCycle()
-	{
-		return m_TimerManagerCycle;
-	}
+	private E_TIMER_CYCLE m_TimerCycle;
 
-
-
-	public override void OnInitialize()
+	public TimerController()
 	{
 		m_TimerList = new LinkedList<Timer>();
 		m_GotoStopTimerList = new LinkedList<Timer>();
-		m_TimerManagerCycle = Timer.E_TIMER_CYCLE.UPDATE;
+		m_TimerCycle = E_TIMER_CYCLE.UPDATE;
 	}
 
 	/// <summary>
 	/// 1秒間に FixedTimeStep * TimeScale 回呼び出される。
 	/// </summary>
-	public override void OnFixedUpdate()
+	public void OnFixedUpdate()
 	{
-		if( m_TimerManagerCycle != Timer.E_TIMER_CYCLE.UPDATE )
+		if( m_TimerCycle != E_TIMER_CYCLE.UPDATE )
 		{
 			return;
 		}
@@ -57,12 +42,10 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 		RemoveStopTimers();
 	}
 
-
-
 	/// <summary>
 	/// 停止したタイマーを削除する。
 	/// </summary>
-	private void RemoveStopTimers()
+	public void RemoveStopTimers()
 	{
 		int count = m_GotoStopTimerList.Count;
 
@@ -73,8 +56,6 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 			m_GotoStopTimerList.RemoveFirst();
 		}
 	}
-
-
 
 	/// <summary>
 	/// タイマーを登録する。
@@ -87,8 +68,8 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 		}
 
 		m_TimerList.AddLast( timer );
-		timer.SetTimerCycle( Timer.E_TIMER_CYCLE.UPDATE );
-		timer.SetTimerManager( this );
+		timer.SetTimerCycle( E_TIMER_CYCLE.UPDATE );
+		timer.SetTimerController( this );
 	}
 
 	/// <summary>
@@ -101,9 +82,9 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 			return;
 		}
 
-		if( timer.GetTimerCycle() != Timer.E_TIMER_CYCLE.UPDATE && timer.GetTimerCycle() != Timer.E_TIMER_CYCLE.PAUSE )
+		if( timer.GetTimerCycle() != E_TIMER_CYCLE.UPDATE && timer.GetTimerCycle() != E_TIMER_CYCLE.PAUSE )
 		{
-			timer.SetTimerCycle( Timer.E_TIMER_CYCLE.STOP );
+			timer.SetTimerCycle( E_TIMER_CYCLE.STOP );
 			EventUtility.SafeInvokeAction( timer.GetStopCallBack() );
 		}
 
@@ -115,12 +96,12 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 	/// </summary>
 	public void PauseTimerManager()
 	{
-		if( m_TimerManagerCycle != Timer.E_TIMER_CYCLE.UPDATE )
+		if( m_TimerCycle != E_TIMER_CYCLE.UPDATE )
 		{
 			return;
 		}
 
-		m_TimerManagerCycle = Timer.E_TIMER_CYCLE.PAUSE;
+		m_TimerCycle = E_TIMER_CYCLE.PAUSE;
 	}
 
 	/// <summary>
@@ -128,11 +109,11 @@ public class TimerManager : SingletonMonoBehavior<TimerManager>
 	/// </summary>
 	public void ResumeTimerManager()
 	{
-		if( m_TimerManagerCycle != Timer.E_TIMER_CYCLE.PAUSE )
+		if( m_TimerCycle != E_TIMER_CYCLE.PAUSE )
 		{
 			return;
 		}
 
-		m_TimerManagerCycle = Timer.E_TIMER_CYCLE.UPDATE;
+		m_TimerCycle = E_TIMER_CYCLE.UPDATE;
 	}
 }

@@ -171,6 +171,11 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		SceneGameCycle( E_SCENE_CYCLE.UPDATE, ( scene ) => scene.OnLateUpdate() );
 	}
 
+	public override void OnFixedUpdate()
+	{
+		SceneGameCycle( E_SCENE_CYCLE.UPDATE, ( scene ) => scene.OnFixedUpdate() );
+	}
+
 
 
 	/// <summary>

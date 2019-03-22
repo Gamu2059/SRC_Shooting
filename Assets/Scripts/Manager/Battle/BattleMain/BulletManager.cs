@@ -9,6 +9,9 @@ using System.Linq;
 /// </summary>
 public class BulletManager : SingletonMonoBehavior<BulletManager>
 {
+	[SerializeField]
+	private Transform m_BulletHolder;
+
 	/// <summary>
 	/// STANDBY状態の弾を保持するリスト。
 	/// </summary>
@@ -87,6 +90,18 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 
 	public override void OnStart()
 	{
+		base.OnStart();
+
+		if( StageManager.Instance != null && StageManager.Instance.GetBulletHolder() != null )
+		{
+			m_BulletHolder = StageManager.Instance.GetBulletHolder().transform;
+		}
+		else if( m_BulletHolder == null )
+		{
+			var obj = new GameObject( "[BulletHolder]" );
+			obj.transform.position = Vector3.zero;
+			m_BulletHolder = obj.transform;
+		}
 	}
 
 	public override void OnUpdate()
@@ -237,7 +252,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		if( bullet == null )
 		{
 			bullet = Instantiate( bulletPrefab );
-			StageManager.Instance.AddBulletHolder( bullet.transform );
+			bullet.transform.SetParent( m_BulletHolder );
 			m_PoolBullets.Add( bullet );
 		}
 

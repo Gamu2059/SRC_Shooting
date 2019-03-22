@@ -129,7 +129,7 @@ public class TestEnemyController : EnemyController
 		else if( m_MoveStatus == 3 )
 		{
 			m_MoveStatus = 4;
-			var timer = Timer.CreateTimer( Timer.E_TIMER_TYPE.SCALED_TIMER, m_BulletShotInterval, m_WaitDuration );
+			var timer = Timer.CreateTimer( E_TIMER_TYPE.SCALED_TIMER, m_BulletShotInterval, m_WaitDuration );
 			timer.SetIntervalCallBack( () =>
 			{
 				ShotBullet();
@@ -140,7 +140,7 @@ public class TestEnemyController : EnemyController
 			{
 				m_MoveStatus = 5;
 			} );
-			TimerManager.Instance.RegistTimer( timer );
+			BattleMainTimerManager.Instance.RegistTimer( timer );
 		}
 		else if( m_MoveStatus == 5 )
 		{

@@ -84,22 +84,22 @@ public class CircleMoveEnemy : EnemyController
 
 		if( hitTimer == null )
 		{
-			hitTimer = Timer.CreateTimeoutTimer( Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
+			hitTimer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
 			{
 				m_Renderer.material = m_Normal;
 				hitTimer = null;
 			} );
-			TimerManager.Instance.RegistTimer( hitTimer );
+			BattleMainTimerManager.Instance.RegistTimer( hitTimer );
 		}
 		else
 		{
-			TimerManager.Instance.RemoveTimer( hitTimer );
-			hitTimer = Timer.CreateTimeoutTimer( Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
+			BattleMainTimerManager.Instance.RemoveTimer( hitTimer );
+			hitTimer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
 			{
 				m_Renderer.material = m_Normal;
 				hitTimer = null;
 			} );
-			TimerManager.Instance.RegistTimer( hitTimer );
+			BattleMainTimerManager.Instance.RegistTimer( hitTimer );
 		}
 	}
 }

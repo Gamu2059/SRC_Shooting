@@ -8,6 +8,11 @@ using System.Linq;
 /// </summary>
 public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 {
+	[Header( "Holder " )]
+
+	[SerializeField]
+	private Transform m_EnemyCharaHolder;
+
 	/// <summary>
 	/// STANDBY状態の弾を保持するリスト。
 	/// </summary>
@@ -88,6 +93,22 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 		base.OnFinalize();
 
 		DestroyAllEnemyImmediate();
+	}
+
+	public override void OnStart()
+	{
+		base.OnStart();
+
+		if( StageManager.Instance != null && StageManager.Instance.GetEnemyCharaHolder() != null )
+		{
+			m_EnemyCharaHolder = StageManager.Instance.GetEnemyCharaHolder().transform;
+		}
+		else if( m_EnemyCharaHolder == null )
+		{
+			var obj = new GameObject( "[EnemyCharaHolder]" );
+			obj.transform.position = Vector3.zero;
+			m_EnemyCharaHolder = obj.transform;
+		}
 	}
 
 	public override void OnUpdate()
@@ -195,7 +216,7 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 			return null;
 		}
 
-		StageManager.Instance.AddEnemyCharaHolder( controller.transform );
+		controller.transform.SetParent( m_EnemyCharaHolder );
 		m_StandbyEnemies.Add( controller );
 		controller.OnInitialize();
 		return controller;
@@ -213,6 +234,20 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 
 		EnemyController controller = Instantiate( enemyPrefab );
 		return RegistEnemy( controller );
+	}
+
+	public EnemyController CreateEnemy( EnemyController enemyPrefab, string paramString )
+	{
+		var enemy = CreateEnemy( enemyPrefab );
+
+		if( enemy == null )
+		{
+			return null;
+		}
+
+		enemy.SetStringParam( paramString );
+
+		return enemy;
 	}
 
 	/// <summary>
