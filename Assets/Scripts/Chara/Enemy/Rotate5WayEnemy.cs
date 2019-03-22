@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 出現してすぐに離脱する敵のコントローラ。
+/// 5砲塔持つ敵のコントローラ
+/// ベースはFastWithdrawalEnemy
 /// </summary>
-public class FastWithdrawalEnemy : EnemyController
+public class Rotate5WayEnemy : EnemyController
 {
 	protected enum E_PHASE
 	{
@@ -13,6 +14,17 @@ public class FastWithdrawalEnemy : EnemyController
 		WAIT_WITHDRAWAL,
 		WITHDRAWAL,
 	}
+
+	[Header( "Gan Param" )]
+
+	[SerializeField]
+	protected Transform[] m_GanArray;
+
+	[SerializeField]
+	protected Transform[] m_ShotPositionArray;
+
+	[SerializeField]
+	protected float m_GanRadius;
 
 	[Header( "Move Param" )]
 
@@ -57,6 +69,14 @@ public class FastWithdrawalEnemy : EnemyController
 	[SerializeField]
 	protected EnemyShotParam m_ShotParam;
 
+	// 回転射出の射出間隔
+	[SerializeField]
+	protected float m_RotateShotInterval;
+
+	// 射出の回転速度
+	[SerializeField]
+	protected float m_RotateSpeed;
+
 
 
 	// 処理分けを行うためのデータ
@@ -67,8 +87,9 @@ public class FastWithdrawalEnemy : EnemyController
 
 	protected Vector3 m_FactWithdrawalMoveEndPosition;
 
-	protected Timer m_WithdrawalTimer;
+	protected float m_NowRotateAngle;
 
+	protected Timer m_WithdrawalTimer;
 
 
 	public override void SetStringParam( string param )
@@ -85,6 +106,11 @@ public class FastWithdrawalEnemy : EnemyController
 
 		m_ShotParam.Num = m_ParamSet.IntParam["BN"];
 		m_ShotParam.Angle = m_ParamSet.FloatParam["BA"];
+
+		m_RotateShotInterval = m_ParamSet.FloatParam["RSI"];
+		m_RotateSpeed = m_ParamSet.FloatParam["RSPD"];
+
+		m_NowRotateAngle = 0;
 	}
 
 	public override void OnStart()
@@ -110,6 +136,8 @@ public class FastWithdrawalEnemy : EnemyController
 	{
 		base.OnUpdate();
 
+		RotateGan();
+
 		switch( m_Phase )
 		{
 			case E_PHASE.APPEAR:
@@ -123,10 +151,13 @@ public class FastWithdrawalEnemy : EnemyController
 
 					transform.localPosition = m_FactStraightMoveEndPosition;
 
-					m_WithdrawalTimer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_WaitWithdrawalTime, () =>
-					{
-						m_Phase = E_PHASE.WITHDRAWAL;
-					} );
+					m_WithdrawalTimer = Timer.CreateTimer(
+					                        E_TIMER_TYPE.SCALED_TIMER,
+					                        m_RotateShotInterval,
+					                        m_WaitWithdrawalTime,
+					                        null,
+					                        () => ShotRotatingGan(),
+					                        () => m_Phase = E_PHASE.WITHDRAWAL );
 					BattleMainTimerManager.Instance.RegistTimer( m_WithdrawalTimer );
 
 					Shot();
@@ -135,6 +166,8 @@ public class FastWithdrawalEnemy : EnemyController
 				break;
 
 			case E_PHASE.WAIT_WITHDRAWAL:
+
+
 				break;
 
 			case E_PHASE.WITHDRAWAL:
@@ -154,7 +187,24 @@ public class FastWithdrawalEnemy : EnemyController
 		float angle = m_ShotParam.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
 		var shotParam = new BulletShotParam( this );
+		shotParam.OrbitalIndex = -1;
 		shotParam.Position = m_ShotPosition.position - transform.parent.position;
+
+		for( int i = 0; i < num; i++ )
+		{
+			var bullet = BulletController.ShotBullet( shotParam );
+			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		}
+
+		shotParam.OrbitalIndex = 1;
+
+		for( int i = 0; i < num; i++ )
+		{
+			var bullet = BulletController.ShotBullet( shotParam );
+			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		}
+
+		shotParam.OrbitalIndex = 2;
 
 		for( int i = 0; i < num; i++ )
 		{
@@ -163,6 +213,49 @@ public class FastWithdrawalEnemy : EnemyController
 		}
 	}
 
+	protected virtual void RotateGan()
+	{
+		if( m_GanArray.Length < 1 )
+		{
+			return;
+		}
+
+		float radSpeed = m_RotateSpeed * Time.deltaTime * Mathf.Deg2Rad;
+		m_NowRotateAngle += radSpeed;
+		m_NowRotateAngle %= Mathf.PI * 2;
+
+		int count = m_GanArray.Length;
+		float deltaAngle = Mathf.PI * 2 / count;
+
+		for( int i = 0; i < count; i++ )
+		{
+			float angle = m_NowRotateAngle + i * deltaAngle;
+			var dir = new Vector3( Mathf.Cos( angle ), 0f, Mathf.Sin( angle ) );
+			Vector3 pos = dir * m_GanRadius;
+
+			m_GanArray[i].localPosition = pos;
+			m_GanArray[i].forward = m_GanArray[i].position - transform.position;
+		}
+	}
+
+	protected virtual void ShotRotatingGan()
+	{
+		if( m_GanArray.Length < 1 )
+		{
+			return;
+		}
+
+		var shotParam = new BulletShotParam( this );
+		shotParam.BulletIndex = 1;
+		shotParam.OrbitalIndex = 0;
+
+		for( int i = 0; i < m_GanArray.Length; i++ )
+		{
+			shotParam.Position = m_ShotPositionArray[i].position - transform.parent.position;
+			shotParam.Rotation = m_GanArray[i].eulerAngles - transform.parent.eulerAngles;
+			BulletController.ShotBullet( shotParam );
+		}
+	}
 	public override void Dead()
 	{
 		base.Dead();

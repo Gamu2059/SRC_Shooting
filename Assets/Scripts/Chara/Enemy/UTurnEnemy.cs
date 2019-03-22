@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class UTurnEnemy : EnemyController
 {
-	private enum E_PHASE
+	protected enum E_PHASE
 	{
 		BEGIN_STRAIGHT,
 		CIRCLE_MOVE,
@@ -18,60 +18,67 @@ public class UTurnEnemy : EnemyController
 
 	// 初期出現地点に対して、相対座標で直進終了地点を定める
 	[SerializeField]
-	private Vector3 m_RelativeStraightMoveEndPosition;
+	protected Vector3 m_RelativeStraightMoveEndPosition;
 
 	// 直進時の移動速度
 	[SerializeField]
-	private float m_StraightMoveSpeed;
+	protected float m_StraightMoveSpeed;
 
 	// 直進終点の相対座標で円の中心点を定める
 	[SerializeField]
-	private Vector3 m_RelativeCircleCenterPosition;
+	protected Vector3 m_RelativeCircleCenterPosition;
 
 	// 直進から切り替わった時に円周上をどのくらいの角度移動するか(Degree)
 	[SerializeField]
-	private float m_CircleMoveAngle;
+	protected float m_CircleMoveAngle;
 
 	// 円周移動時の移動角速度
 	[SerializeField]
-	private float m_CircleMoveSpeed;
+	protected float m_CircleMoveSpeed;
 
 	[Header( "Shot Param" )]
 
 	[SerializeField]
-	private Transform m_ShotPosition;
+	protected Transform m_ShotPosition;
 
 	[SerializeField]
-	private EnemyShotParam m_StraightMoveShotParam;
+	protected float m_VisibleOffsetShotTime;
 
 	[SerializeField]
-	private EnemyShotParam m_CircleMoveShotParam;
+	protected EnemyShotParam m_StraightMoveShotParam;
+
+	[SerializeField]
+	protected EnemyShotParam m_CircleMoveShotParam;
 
 
 
 	// 処理分けを行うためのデータ
-	private E_PHASE m_Phase;
+	protected E_PHASE m_Phase;
 
 	// 直進時の実際に行きつく先の終了座標
-	private Vector3 m_FactStraightMoveEndPosition;
+	protected Vector3 m_FactStraightMoveEndPosition;
 
 	// 直進時の進行方向
-	private Vector3 m_StraightMoveDirection;
+	protected Vector3 m_StraightMoveDirection;
 
 	// 円の中心点の実際の座標
-	private Vector3 m_FactCircleCenterPosition;
+	protected Vector3 m_FactCircleCenterPosition;
 
 	// 円の半径
-	private float m_CircleRadius;
+	protected float m_CircleRadius;
 
 	// 円周移動開始時の角度
-	private float m_BeginCircleMoveAngle;
+	protected float m_BeginCircleMoveAngle;
 
 	// 現在の移動角度
-	private float m_NowCircleMoveAngle;
+	protected float m_NowCircleMoveAngle;
 
 	// 弾発射間隔のカウンター
-	private float m_ShotTimeCount;
+	protected float m_ShotTimeCount;
+
+	protected Timer m_StartShotTimer;
+
+
 
 	public override void SetStringParam( string param )
 	{
@@ -90,6 +97,8 @@ public class UTurnEnemy : EnemyController
 		m_CircleMoveShotParam.Interval = m_ParamSet.FloatParam["CBI"];
 		m_CircleMoveShotParam.Num = m_ParamSet.IntParam["CBN"];
 		m_CircleMoveShotParam.Angle = m_ParamSet.FloatParam["CBA"];
+
+		m_VisibleOffsetShotTime = m_ParamSet.FloatParam["VOST"];
 	}
 
 	public override void OnStart()
@@ -122,7 +131,7 @@ public class UTurnEnemy : EnemyController
 		Shot();
 	}
 
-	private void Move()
+	protected virtual void Move()
 	{
 		float deltaTime = Time.deltaTime;
 
@@ -163,14 +172,14 @@ public class UTurnEnemy : EnemyController
 		transform.LookAt( PlayerCharaManager.Instance.GetCurrentController().transform );
 	}
 
-	private void SetPositionOnCircle( float angle )
+	protected virtual void SetPositionOnCircle( float angle )
 	{
 		float radAngle = angle * Mathf.Deg2Rad;
 		var pos = new Vector3( Mathf.Cos( radAngle ), 0f, Mathf.Sin( radAngle ) ) * m_CircleRadius + m_FactCircleCenterPosition;
 		transform.localPosition = pos;
 	}
 
-	private void Shot()
+	protected virtual void Shot()
 	{
 		m_ShotTimeCount += Time.deltaTime;
 
@@ -192,18 +201,41 @@ public class UTurnEnemy : EnemyController
 		}
 	}
 
-	private void OnShot( EnemyShotParam param )
+	protected virtual void OnShot( EnemyShotParam param )
 	{
 		int num = param.Num;
 		float angle = param.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
 		var shotParam = new BulletShotParam( this );
-		shotParam.Position = transform.localPosition + m_ShotPosition.localPosition;
+		shotParam.Position = m_ShotPosition.position - transform.parent.position;
 
 		for( int i = 0; i < num; i++ )
 		{
 			var bullet = BulletController.ShotBullet( shotParam );
 			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		}
+	}
+
+	protected override void OnBecameVisible()
+	{
+		base.OnBecameVisible();
+
+		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
+		{
+			OnShot( m_StraightMoveShotParam );
+		} );
+
+		BattleMainTimerManager.Instance.RegistTimer( timer );
+	}
+
+	public override void Dead()
+	{
+		base.Dead();
+
+		if( m_StartShotTimer != null )
+		{
+			m_StartShotTimer.StopTimer();
+			m_StartShotTimer = null;
 		}
 	}
 }

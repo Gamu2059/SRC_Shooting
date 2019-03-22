@@ -90,7 +90,7 @@ public class TestStageController : ControllableMonoBehaviour
 			case E_TEST_STAGE_STATE.FIRST_HALF:
 				moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
 
-				if( m_BuildEnemyTimeCount >= 5 )
+				if( m_BuildEnemyTimeCount >= 80 )
 				{
 					m_StageState = E_TEST_STAGE_STATE.SECOND_HALF;
 				}
@@ -101,7 +101,7 @@ public class TestStageController : ControllableMonoBehaviour
 			case E_TEST_STAGE_STATE.SECOND_HALF:
 				moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
 
-				if( m_BuildEnemyTimeCount >= 10f )
+				if( m_BuildEnemyTimeCount >= 120 )
 				{
 					m_StageState = E_TEST_STAGE_STATE.BOSS;
 				}

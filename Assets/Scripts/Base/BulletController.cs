@@ -251,6 +251,16 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	}
 
 	/// <summary>
+	/// この弾のライフタイムを設定する。
+	/// </summary>
+	/// <param name="value">設定する値</param>
+	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
+	protected void SetNowLifeTime( float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	{
+		m_NowLifeTime = GetRelativeValue( relative, GetNowLifeTime(), value );
+	}
+
+	/// <summary>
 	/// この弾のローカル座標を取得する。
 	/// </summary>
 	public Vector3 GetPosition()
@@ -842,9 +852,9 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		var speed = GetNowSpeed() * Time.deltaTime;
 		SetPosition( transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
-		m_NowLifeTime += Time.deltaTime;
+		SetNowLifeTime( Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
 
-		if( m_NowLifeTime > m_BulletParam.LifeTime )
+		if( GetNowLifeTime() > GetBulletParam().LifeTime )
 		{
 			DestroyBullet();
 		}
