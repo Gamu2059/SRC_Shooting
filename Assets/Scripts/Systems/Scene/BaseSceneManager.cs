@@ -23,6 +23,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		STAGE_TEST = 3,
 
 		BATTLE = 4,
+		TITLE = 5,
 	}
 
 	/// <summary>
@@ -171,6 +172,11 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		SceneGameCycle( E_SCENE_CYCLE.UPDATE, ( scene ) => scene.OnLateUpdate() );
 	}
 
+	public override void OnFixedUpdate()
+	{
+		SceneGameCycle( E_SCENE_CYCLE.UPDATE, ( scene ) => scene.OnFixedUpdate() );
+	}
+
 
 
 	/// <summary>
@@ -299,6 +305,10 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		////ロード画面生成
 		//var loadingObj = Instantiate( info.LoadingEffect );
 
+		bool isCompleteTransition = false;
+		TransitionManager.Instance.Hide( () => isCompleteTransition = true );
+		yield return new WaitUntil( () => isCompleteTransition );
+
 		yield return OnBeforeTransition( ( scene, callback ) => scene.OnAfterHide( callback ) );
 
 		m_CurrentScene = null;
@@ -322,6 +332,9 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		//	yield return StartCoroutine( obj.FadeIn() );
 		//	Destroy( obj );
 		//}
+		isCompleteTransition = false;
+		TransitionManager.Instance.Show( () => isCompleteTransition = true );
+		yield return new WaitUntil( () => isCompleteTransition );
 
 		yield return OnAfterTransition( ( scene, callback ) => scene.OnAfterShow( callback ) );
 		SetSceneCycle( E_SCENE_CYCLE.STANDBY );
