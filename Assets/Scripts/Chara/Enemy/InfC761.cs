@@ -17,10 +17,16 @@ public class InfC761 : EnemyController
 		SKILL3,
 	}
 
+	[System.Serializable]
+	private struct NormalMoveTargetPosition
+	{
+		public Vector3[] Pos;
+	}
+
 	[Header( "Normal Move Param" )]
 
 	[SerializeField]
-	private Vector3[][] m_NormalMoveTargetPositions;
+	private NormalMoveTargetPosition[] m_NormalMoveTargetPositions;
 
 	[SerializeField]
 	private float m_MinMoveInterval;
@@ -44,7 +50,7 @@ public class InfC761 : EnemyController
 	[Header( "Normal3 Param" )]
 
 	[SerializeField]
-	private EnemyShotParam m_;
+	private EnemyShotParam m_Normal3ShotParam;
 
 
 
@@ -55,8 +61,12 @@ public class InfC761 : EnemyController
 	private float m_NormalMoveInterval;
 	private int m_NormalMoveCurrentPosIndex;
 	private int m_NormalMovePosDir;
+
+	[SerializeField]
 	private Vector3 m_FactNormalMoveTargetPos;
 
+	private bool m_IsStay;
+	private float m_NormalShotInterval;
 
 	public override void SetStringParam( string param )
 	{
@@ -70,11 +80,15 @@ public class InfC761 : EnemyController
 		ResetNormalTimeCount();
 		// 最初の行先の決定
 		DecideStartNormalTargetPos();
+
+		m_IsStay = false;
 	}
 
 	public override void OnUpdate()
 	{
 		base.OnUpdate();
+		Move();
+		Shot();
 	}
 
 	private void ResetNormalTimeCount()
@@ -88,8 +102,10 @@ public class InfC761 : EnemyController
 		int groupNum = m_NormalMoveTargetPositions.Length;
 		m_NormalMoveCurrentPosIndex = Random.Range( 0, groupNum );
 		var targetPositions = m_NormalMoveTargetPositions[m_NormalMoveCurrentPosIndex];
-		int posNum = targetPositions.Length;
-		m_FactNormalMoveTargetPos = targetPositions[Random.Range( 0, posNum )];
+		int posNum = targetPositions.Pos.Length;
+		var viewPos = targetPositions.Pos[Random.Range( 0, posNum )];
+
+		m_FactNormalMoveTargetPos = CameraManager.Instance.GetViewportWorldPoint( viewPos.x, viewPos.z ) - transform.parent.position;
 
 		if( m_NormalMoveCurrentPosIndex < 1 )
 		{
@@ -110,8 +126,10 @@ public class InfC761 : EnemyController
 		int groupNum = m_NormalMoveTargetPositions.Length;
 		m_NormalMoveCurrentPosIndex += m_NormalMovePosDir;
 		var targetPositions = m_NormalMoveTargetPositions[m_NormalMoveCurrentPosIndex];
-		int posNum = targetPositions.Length;
-		m_FactNormalMoveTargetPos = targetPositions[Random.Range( 0, posNum )];
+		int posNum = targetPositions.Pos.Length;
+		var viewPos = targetPositions.Pos[Random.Range( 0, posNum )];
+
+		m_FactNormalMoveTargetPos = CameraManager.Instance.GetViewportWorldPoint( viewPos.x, viewPos.z ) - transform.parent.position;
 
 		if( m_NormalMoveCurrentPosIndex < 1 )
 		{
@@ -138,9 +156,79 @@ public class InfC761 : EnemyController
 					DecideNormalTargetPos();
 				}
 
+
 				Vector3 pos = Vector3.Lerp( transform.localPosition, m_FactNormalMoveTargetPos, m_NormalMoveLerp );
 				transform.localPosition = pos;
+
+				m_IsStay = ( m_FactNormalMoveTargetPos - pos ).sqrMagnitude <= 0.01f;
 				break;
 		}
+	}
+
+	private void Shot()
+	{
+		switch( m_Phase )
+		{
+			case E_PHASE.NORMAL1:
+				if( m_IsStay )
+				{
+
+				}
+
+				break;
+
+			case E_PHASE.NORMAL2:
+				if( m_IsStay )
+				{
+
+				}
+
+				break;
+
+			case E_PHASE.NORMAL3:
+				if( m_IsStay )
+				{
+
+				}
+
+				break;
+		}
+	}
+
+	private void ShotNormal1()
+	{
+		m_NormalShotInterval += Time.deltaTime;
+
+		if( m_NormalShotInterval >= m_Normal1ShotParam.Interval )
+		{
+			m_NormalShotInterval = 0;
+		}
+	}
+
+	private void ShotNormal2()
+	{
+		m_NormalShotInterval += Time.deltaTime;
+
+		if( m_NormalShotInterval >= m_Normal2ShotParam.Interval )
+		{
+			m_NormalShotInterval = 0;
+		}
+	}
+
+	private void ShotNormal3()
+	{
+		m_NormalShotInterval += Time.deltaTime;
+
+		if( m_NormalShotInterval >= m_Normal3ShotParam.Interval )
+		{
+			m_NormalShotInterval = 0;
+		}
+	}
+
+	public override void Dead()
+	{
+		base.Dead();
+
+		BattleManager.Instance.GameClear();
 	}
 }

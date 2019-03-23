@@ -86,4 +86,25 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
 		m_BattleMainManagers.ForEach( m => m.OnFixedUpdate() );
 	}
+
+	public void GameOver()
+	{
+		BattleMainUiManager.Instance.ShowGameOver();
+		BattleMainAudioManager.Instance.StopAllBGM();
+		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, 1, () =>
+		{
+			BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.TITLE );
+		} );
+		TimerManager.Instance.RegistTimer( timer );
+	}
+
+	public void GameClear()
+	{
+		BattleMainUiManager.Instance.ShowGameClear();
+		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, 1, () =>
+		{
+			BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.TITLE );
+		} );
+		TimerManager.Instance.RegistTimer( timer );
+	}
 }

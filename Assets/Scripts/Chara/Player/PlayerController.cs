@@ -205,4 +205,11 @@ public class PlayerController : CharaController
 		}
 	}
 
+	public override void Dead()
+	{
+		base.Dead();
+
+		Destroy( gameObject );
+		BattleManager.Instance.GameOver();
+	}
 }
