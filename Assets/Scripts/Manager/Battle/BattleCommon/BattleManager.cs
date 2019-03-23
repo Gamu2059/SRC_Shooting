@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UniRx;
 
 /// <summary>
 /// バトル画面のマネージャーを管理する上位マネージャ。
@@ -27,6 +28,16 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 	[SerializeField]
 	private List<ControllableMonoBehaviour> m_BattleCommandManagers;
 
+	[Header( "Game Progress" )]
+
+	[SerializeField]
+	private IntReactiveProperty m_Score;
+
+	[SerializeField]
+	private IntReactiveProperty m_BestScore;
+
+	[SerializeField]
+	private BoolReactiveProperty m_IsBestScore;
 
 
 	/// <summary>
@@ -44,6 +55,38 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 	{
 		return m_BattleCommandManagers;
 	}
+
+
+	public void SubscribeScore( System.IObserver<int> action )
+	{
+		if( m_Score == null )
+		{
+			return;
+		}
+
+		m_Score.Subscribe( action );
+	}
+
+	public void SubscribeBestScore( System.IObserver<int> action )
+	{
+		if( m_BestScore == null )
+		{
+			return;
+		}
+
+		m_BestScore.Subscribe( action );
+	}
+
+	public void SubscribeIsBestScore( System.IObserver<bool> action )
+	{
+		if( m_IsBestScore == null )
+		{
+			return;
+		}
+
+		m_IsBestScore.Subscribe( action );
+	}
+
 
 	public override void OnInitialize()
 	{
@@ -100,11 +143,46 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
 	public void GameClear()
 	{
+		if( m_IsBestScore.Value )
+		{
+			PlayerPrefs.SetInt( "BestScore", m_BestScore.Value );
+			PlayerPrefs.Save();
+		}
+
 		BattleMainUiManager.Instance.ShowGameClear();
 		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, 1, () =>
 		{
 			BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.TITLE );
 		} );
 		TimerManager.Instance.RegistTimer( timer );
+	}
+
+	public void AddScore( int score )
+	{
+		m_Score.Value += score;
+
+		if( m_Score.Value > m_BestScore.Value )
+		{
+			if( !m_IsBestScore.Value )
+			{
+				m_IsBestScore.Value = true;
+			}
+
+			m_BestScore.Value = m_Score.Value;
+		}
+	}
+
+
+	private void InitReactiveProperty()
+	{
+		m_BestScore = new IntReactiveProperty( 0 );
+		m_Score = new IntReactiveProperty( 0 );
+		m_IsBestScore = new BoolReactiveProperty( false );
+	}
+
+	private void InitScore()
+	{
+		m_Score.Value = 0;
+		m_BestScore.Value = PlayerPrefs.GetInt( "BestScore", 0 );
 	}
 }
