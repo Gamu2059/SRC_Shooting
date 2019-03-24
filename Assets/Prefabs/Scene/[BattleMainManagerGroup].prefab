@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2878423045518255913}
   - component: {fileID: 9116061731419416957}
+  - component: {fileID: 488972555095900866}
   - component: {fileID: 3871153532367532177}
   - component: {fileID: 8621981717037409208}
   - component: {fileID: 4820006072425332297}
   - component: {fileID: 1062016442395351199}
+  - component: {fileID: 4867682160774085349}
   m_Layer: 0
   m_Name: '[BattleMainManagerGroup]'
   m_TagString: Untagged
@@ -48,10 +50,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BehaviorList:
+  - {fileID: 488972555095900866}
+  - {fileID: 4867682160774085349}
   - {fileID: 3871153532367532177}
   - {fileID: 8621981717037409208}
   - {fileID: 4820006072425332297}
   - {fileID: 1062016442395351199}
+--- !u!114 &488972555095900866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738506033191002612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce0e0c1f3342d146bf82cf9d983e4e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveObjectHolder: {fileID: 0}
+  m_FixedObjectHolder: {fileID: 0}
+  m_StageObjectHolder: {fileID: 0}
+  m_PlayerCharaHolder: {fileID: 0}
+  m_EnemyCharaHolder: {fileID: 0}
+  m_BulletHolder: {fileID: 0}
 --- !u!114 &3871153532367532177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +86,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1821c57d805f63346aebcba9de85da8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PlayerCharaHolder: {fileID: 0}
+  m_CharaPrefabs:
+  - {fileID: 192641982, guid: d247464a9787d8a418094c891be90fb9, type: 3}
+  m_InitAppearViewportPosition: {x: 0.5, y: 0.1}
   m_InputParam: {fileID: 11400000, guid: c30c27d28d94ef449b06d19569c3058e, type: 2}
+  m_MinViewportRestrict: {x: 0.3, y: 0}
+  m_MaxViewportRestrict: {x: 0.7, y: 1}
   m_Controllers: []
   m_CurrentController: {fileID: 0}
 --- !u!114 &8621981717037409208
@@ -79,7 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af96562584e1d34492f618b3bb43318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Controllers: []
+  m_EnemyCharaHolder: {fileID: 0}
+  m_StandbyEnemies: []
+  m_UpdateEnemies: []
+  m_GotoUpdateEnemies: []
+  m_GotoDestroyEnemies: []
+  m_BossControllers: []
 --- !u!114 &4820006072425332297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,3 +141,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7750f1d21c51b17489f835d87c95cabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4867682160774085349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738506033191002612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bbdac4589425fa47824137bd0b5416a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 0}
+  m_TargetObject: {fileID: 0}
+  m_CameraOffsetPos: {x: 0, y: 80, z: -20}
+  m_TargetOffsetPos: {x: 0, y: 0, z: 0}
