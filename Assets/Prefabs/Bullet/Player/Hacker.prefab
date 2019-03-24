@@ -254,7 +254,6 @@ GameObject:
   - component: {fileID: 7268531045547703934}
   - component: {fileID: 7268531045547703935}
   - component: {fileID: 7268531045547703920}
-  - component: {fileID: 7268531045547703921}
   - component: {fileID: 8299653067761503205}
   - component: {fileID: 7268531045547703924}
   m_Layer: 0
@@ -263,7 +262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7268531045547703934
 Transform:
   m_ObjectHideFlags: 0
@@ -332,20 +331,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &7268531045547703921
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7268531045547703923}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8299653067761503205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,8 +363,9 @@ MonoBehaviour:
   - {fileID: 7268531046567989056}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_ShotInterval: 0
-  m_MainShotPosition: []
+  m_ShotInterval: 1
+  m_MainShotPosition:
+  - {fileID: 633615267}
 --- !u!114 &7268531045547703924
 MonoBehaviour:
   m_ObjectHideFlags: 0

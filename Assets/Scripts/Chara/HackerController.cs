@@ -20,20 +20,18 @@ public class HackerController : PlayerController
 
 	public override void ShotBullet()
 	{
-		/*
-		if (shotDelay >= m_ShotInterval && IsReadyShotBullet)
-		{
-		    Bullet b = GetOriginalBullet(0);
-		    for (int i = 0; i < m_MainShotPosition.Length; i++)
-		    {
-		        Bullet bullet = GetPoolBullet(0);
-		        bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, b.transform.localScale, bulletIndex, m_BulletParams[0], 2);
-		    }
-		    shotDelay = 0;
-		    IsReadyShotBullet = false;
-		}
-		 */
+         if(shotDelay >= m_ShotInterval)
+        {
+            for (int i = 0; i < m_MainShotPosition.Length; i++)
+            {
+                var shotParam = new BulletShotParam(this);
+                shotParam.Position = m_MainShotPosition[i].transform.GetMoveObjectHolderBasePosition();
+                shotParam.OrbitalIndex = 4;
+                BulletController.ShotBullet(shotParam);
+            }
 
+            shotDelay = 0;
+        }
 	}
 
 	public override void ShotBomb()
