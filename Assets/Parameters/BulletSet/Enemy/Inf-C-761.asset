@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf40c08fba0a874d9db523eb7656f18, type: 3}
+  m_Name: Inf-C-761
+  m_EditorClassIdentifier: 
+  m_BulletPrefabs:
+  - {fileID: 7663632291520977884, guid: 7d19cc69dba08894284fc298422b2349, type: 3}
+  - {fileID: 3496977592150340366, guid: 46fc1806d1609a24f86fd073d49de0c3, type: 3}
+  - {fileID: 3496977592150340366, guid: 46fc1806d1609a24f86fd073d49de0c3, type: 3}
+  m_BulletParams:
+  - {fileID: 11400000, guid: 0af6add0262e3e64491e37f4dcfc770d, type: 2}
+  - {fileID: 11400000, guid: 3f2b0dab06fb6cd4987778b6620d83af, type: 2}
+  - {fileID: 11400000, guid: 975e3af89f029244fa52bdf50fcebdc8, type: 2}

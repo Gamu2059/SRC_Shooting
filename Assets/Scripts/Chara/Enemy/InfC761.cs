@@ -37,10 +37,16 @@ public class InfC761 : EnemyController
 	[SerializeField]
 	private float m_NormalMoveLerp;
 
+	[SerializeField]
+	private float m_StayThreshold;
+
 	[Header( "Normal1 Param" )]
 
 	[SerializeField]
 	private EnemyShotParam m_Normal1ShotParam;
+
+	[SerializeField]
+	private float m_DeltaRotation;
 
 	[Header( "Normal2 Param" )]
 
@@ -52,9 +58,17 @@ public class InfC761 : EnemyController
 	[SerializeField]
 	private EnemyShotParam m_Normal3ShotParam;
 
+	[Header( "Shot Position" )]
 
+	[SerializeField]
+	private Transform m_RightRailgunShotPosition;
 
+	[SerializeField]
+	private Transform m_LeftRailgunShotPosition;
 
+	[Space()]
+
+	[SerializeField]
 	private E_PHASE m_Phase;
 
 	private float m_NormalMoveTimeCount;
@@ -80,7 +94,6 @@ public class InfC761 : EnemyController
 		ResetNormalTimeCount();
 		// 最初の行先の決定
 		DecideStartNormalTargetPos();
-
 		m_IsStay = false;
 	}
 
@@ -148,19 +161,30 @@ public class InfC761 : EnemyController
 			case E_PHASE.NORMAL1:
 			case E_PHASE.NORMAL2:
 			case E_PHASE.NORMAL3:
-				m_NormalMoveTimeCount += Time.deltaTime;
 
-				if( m_NormalMoveTimeCount >= m_NormalMoveInterval )
+				if( m_IsStay )
 				{
-					ResetNormalTimeCount();
-					DecideNormalTargetPos();
-				}
+					m_NormalMoveTimeCount += Time.deltaTime;
 
+					if( m_NormalMoveTimeCount >= m_NormalMoveInterval )
+					{
+						ResetNormalTimeCount();
+						DecideNormalTargetPos();
+						m_IsStay = false;
+					}
+				}
 
 				Vector3 pos = Vector3.Lerp( transform.localPosition, m_FactNormalMoveTargetPos, m_NormalMoveLerp );
 				transform.localPosition = pos;
 
-				m_IsStay = ( m_FactNormalMoveTargetPos - pos ).sqrMagnitude <= 0.01f;
+				if( !m_IsStay && ( m_FactNormalMoveTargetPos - pos ).sqrMagnitude <= m_StayThreshold )
+				{
+					m_IsStay = true;
+					m_NormalShotInterval = float.MaxValue;
+				}
+
+				var target = PlayerCharaManager.Instance.GetCurrentController().transform;
+				transform.LookAt( target );
 				break;
 		}
 	}
@@ -172,7 +196,7 @@ public class InfC761 : EnemyController
 			case E_PHASE.NORMAL1:
 				if( m_IsStay )
 				{
-
+					ShotNormal1();
 				}
 
 				break;
@@ -180,7 +204,7 @@ public class InfC761 : EnemyController
 			case E_PHASE.NORMAL2:
 				if( m_IsStay )
 				{
-
+					ShotNormal2();
 				}
 
 				break;
@@ -188,7 +212,7 @@ public class InfC761 : EnemyController
 			case E_PHASE.NORMAL3:
 				if( m_IsStay )
 				{
-
+					ShotNormal3();
 				}
 
 				break;
@@ -202,8 +226,29 @@ public class InfC761 : EnemyController
 		if( m_NormalShotInterval >= m_Normal1ShotParam.Interval )
 		{
 			m_NormalShotInterval = 0;
+			OnShotNormal1( m_LeftRailgunShotPosition, true );
+			OnShotNormal1( m_RightRailgunShotPosition, false );
 		}
 	}
+
+	private void OnShotNormal1( Transform shotPosition, bool isLeft )
+	{
+		var shotParam = new BulletShotParam( this );
+		shotParam.BulletIndex = 0;
+		shotParam.BulletParamIndex = 0;
+		shotParam.Position = shotPosition.position - transform.parent.position;
+
+		float deltaRotation = ( isLeft ? -1 : 1 ) * m_DeltaRotation;
+
+		for( int i = 0; i < 3; i++ )
+		{
+			shotParam.OrbitalIndex = i;
+			var bullet = BulletController.ShotBullet( shotParam );
+			bullet.SetRotation( new Vector3( 0, deltaRotation, 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		}
+	}
+
+
 
 	private void ShotNormal2()
 	{
@@ -212,8 +257,31 @@ public class InfC761 : EnemyController
 		if( m_NormalShotInterval >= m_Normal2ShotParam.Interval )
 		{
 			m_NormalShotInterval = 0;
+
+			var shotParam = new BulletShotParam( this );
+			shotParam.BulletIndex = 1;
+			shotParam.BulletParamIndex = 1;
+			shotParam.OrbitalIndex = -1;
+
+			// 後にパラメータ化
+			int num = m_Normal2ShotParam.Num;
+			float deltaAngle = Mathf.PI * 2 / num;
+
+			for( int i = 0; i < num; i++ )
+			{
+				float angle = deltaAngle * i;
+
+				// z軸が0度とするために、パラメータの使い方が数学的に逆
+				var dir = new Vector3( Mathf.Sin( angle ), 0, Mathf.Cos( angle ) );
+				var bullet = BulletController.ShotBullet( shotParam );
+
+				bullet.SetRotation( new Vector3( 0, angle * Mathf.Rad2Deg, 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+				bullet.SetPosition( dir * 5f, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			}
 		}
 	}
+
+
 
 	private void ShotNormal3()
 	{
@@ -222,8 +290,35 @@ public class InfC761 : EnemyController
 		if( m_NormalShotInterval >= m_Normal3ShotParam.Interval )
 		{
 			m_NormalShotInterval = 0;
+			OnShotNormal3( m_LeftRailgunShotPosition );
+			OnShotNormal3( m_RightRailgunShotPosition );
 		}
 	}
+
+	private void OnShotNormal3( Transform shotPosition )
+	{
+		int num = m_Normal3ShotParam.Num;
+		float angle = m_Normal3ShotParam.Angle;
+		var spreadAngles = GetBulletSpreadAngles( num, angle );
+
+		var shotParam = new BulletShotParam( this );
+		shotParam.BulletIndex = 2;
+		shotParam.BulletParamIndex = 2;
+		shotParam.Position = shotPosition.position - transform.parent.position;
+
+		for( int i = 0; i < 3; i++ )
+		{
+			shotParam.OrbitalIndex = i;
+
+			for( int j = 0; j < num; j++ )
+			{
+				var bullet = BulletController.ShotBullet( shotParam );
+				bullet.SetRotation( new Vector3( 0, spreadAngles[j], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			}
+		}
+	}
+
+
 
 	public override void Dead()
 	{

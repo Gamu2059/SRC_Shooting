@@ -209,7 +209,7 @@ public class PlayerController : CharaController
 	{
 		base.Dead();
 
-		Destroy( gameObject );
+		gameObject.SetActive( false );
 		BattleManager.Instance.GameOver();
 	}
 }
