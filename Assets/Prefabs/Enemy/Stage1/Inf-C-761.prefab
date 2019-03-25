@@ -1762,7 +1762,7 @@ MonoBehaviour:
   m_ColliderTransforms:
   - ColliderType: 0
     Transform: {fileID: 2517418064617433550}
-  m_CanHitOtherBullet: 0
+  m_CanHitOtherBullet: 1
 --- !u!114 &6378489499246140519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,10 +1807,11 @@ MonoBehaviour:
     Interval: 0
     Num: 0
     Angle: 0
-  m_:
+  m_Normal3ShotParam:
     Interval: 0
     Num: 0
     Angle: 0
+  m_FactNormalMoveTargetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &8054439382712105713
 GameObject:
   m_ObjectHideFlags: 0

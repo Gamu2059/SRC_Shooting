@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SmasherController : PlayerController
 {
+    [Header("Smasher専用 ショットに関するパラメータ")]
 	[SerializeField, Range( 0f, 1f )]
 	private float m_ShotInterval;
 

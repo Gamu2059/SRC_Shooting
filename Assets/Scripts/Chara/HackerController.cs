@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HackerController : PlayerController
 {
+    [Header("Hacker専用 ショットに関するパラメータ")]
 	[SerializeField, Range( 0f, 1f )]
 	private float m_ShotInterval;
 
