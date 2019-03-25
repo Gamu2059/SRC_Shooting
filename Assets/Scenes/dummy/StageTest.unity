@@ -129,6 +129,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
+        type: 3}
+      propertyPath: m_RadiateDirection
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
+        type: 3}
+      propertyPath: m_RotateOffset
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
+        type: 3}
+      propertyPath: m_ShotInterval
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
+        type: 3}
+      propertyPath: m_WaveRad
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1926405811160240041, guid: f1e5085ede72a304ca1d068b898062b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -183,21 +203,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_RadiateDirection
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_RotateOffset
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
-        type: 3}
-      propertyPath: m_ShotInterval
-      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1926405811160240038, guid: f1e5085ede72a304ca1d068b898062b5, type: 3}

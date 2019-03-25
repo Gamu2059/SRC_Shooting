@@ -14,7 +14,14 @@ public class EchoBullet : BulletController
     private bool m_IsRoot;
 
     private float delay;
-    
+
+    public override void OnHitCharacter(CharaController chara)
+    {
+        var controller = (EchoController)GetBulletOwner();
+        controller.ShotWaveBullet(chara);
+    }
+
+    /*
     public override void OnHitCharacter(CharaController chara)
     {
         base.OnHitCharacter(chara);
@@ -33,6 +40,8 @@ public class EchoBullet : BulletController
         }
 
         base.OnUpdate();
-    }
+    } 
+    */
+
 
 }

@@ -26,6 +26,9 @@ public class EchoController : PlayerController
     private int m_RadiateDirection;
 
     [SerializeField]
+    private float m_WaveRad;
+
+    [SerializeField]
     private float m_RotateOffset;
 
 	protected override void Awake()
@@ -46,7 +49,6 @@ public class EchoController : PlayerController
 		base.OnUpdate();
 		shotDelay += Time.deltaTime;
 		UpdateShotLevel( GetLevel() );
-        RadiateShot();
 	}
 
 	public override void ShotBullet()
@@ -59,9 +61,6 @@ public class EchoController : PlayerController
 				shotParam.Position = m_MainShotPosition[i].transform.GetMoveObjectHolderBasePosition();
                 shotParam.OrbitalIndex = 2;
 				BulletController.ShotBullet( shotParam );
-				//EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
-				//bullet.InitializeBullet(this);
-				//bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, -1);
 			}
 
 			shotDelay = 0;
@@ -90,12 +89,17 @@ public class EchoController : PlayerController
 		}
 	}
 
+    public void ShotWaveBullet(CharaController chara)
+    {
+        RadiateShot1(m_RadiateDirection, chara.transform.localPosition);
+    }
+    
     public void ReadyRadiateShot(Vector3 position)
     {
         latestPosition = position;
         m_CanRadShot = true;
     }
-
+    /*
     private void RadiateShot()
     {
         if (!m_CanRadShot)
@@ -108,19 +112,19 @@ public class EchoController : PlayerController
             m_CanRadShot = false;
         }
     }
-
-    private void RadiateShot1(int direction)
+    */
+    private void RadiateShot1(int direction, Vector3 centerPosition)
     {
         for (int i=0; i< direction; i++)
         {
             float yAngle = (2 * Mathf.PI / direction) * (i % 2 == 0 ? i : -i) * Mathf.Rad2Deg;
             var shotParam = new BulletShotParam(this);
-            shotParam.Position = latestPosition;
+            shotParam.Position = new Vector3(centerPosition.x + m_WaveRad * Mathf.Sin(Time.deltaTime), 0, centerPosition.z + m_WaveRad * Mathf.Cos(Time.deltaTime));
             shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
             shotParam.BulletIndex = 1;
             shotParam.OrbitalIndex = 3;
-
             BulletController.ShotBullet(shotParam);
         }
-    }   
+    } 
+         
 }
