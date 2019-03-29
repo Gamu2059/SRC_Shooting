@@ -1690,7 +1690,7 @@ MonoBehaviour:
     - {x: 0.67, y: 0, z: 0.7}
   m_NormalMinMoveInterval: 0
   m_NormalMaxMoveInterval: 0
-  m_NormalMoveLerp: 1
+  m_NormalMoveLerp: 0.01
   m_StayThreshold: 10
   m_SkillMinMoveInterval: 0
   m_SkillMaxMoveInterval: 0
@@ -1740,19 +1740,19 @@ MonoBehaviour:
   m_Skill1ThrowSpeed: 180
   m_Skill1WaitNextLaserTime: 2
   m_Skill2FireBulletShotIndex:
-    BulletIndex: 0
-    BulletParamIndex: 0
-    OrbitalParamIndex: 0
-  m_Skill2SpreadOrbitalBaseIndex: 0
+    BulletIndex: 4
+    BulletParamIndex: 4
+    OrbitalParamIndex: -1
+  m_Skill2SpreadOrbitalBaseIndex: 3
   m_Skill2FireBulletConstParam:
-    m_BulletIndex: 0
-    m_BulletParamIndex: 0
-    m_OrbitalIndex: 0
-    m_BulletNum: 0
-  m_Skill2WaitNextShotFireBulletTime: 0
-  m_Skill2WaitFireTime: 0
-  m_Skill2WaitNextFireTime: 0
-  m_Skill2WaitNextSkill2Time: 0
+    m_BulletIndex: 2
+    m_BulletParamIndex: 4
+    m_OrbitalIndex: -1
+    m_BulletNum: 20
+  m_Skill2WaitNextShotFireBulletTime: 0.5
+  m_Skill2WaitFireTime: 1
+  m_Skill2WaitNextFireTime: 0.5
+  m_Skill2WaitNextSkill2Time: 2
   m_Skill3NormalLaserIndex:
     BulletIndex: 0
     BulletParamIndex: 0

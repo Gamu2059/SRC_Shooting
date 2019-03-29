@@ -319,6 +319,8 @@ public class InfC761 : EnemyController
 		// 最初の行先の決定
 		DecideStartNormalTargetPos();
 		m_IsStay = false;
+
+		m_Skill2FireBullets = new InfC761Skill2FireBullet[3];
 	}
 
 	public override void OnUpdate()
@@ -402,7 +404,11 @@ public class InfC761 : EnemyController
 				break;
 
 			case E_PHASE.SKILL2:
+				MoveSkill2();
+				break;
 
+			case E_PHASE.SKILL3:
+				MoveSkill3();
 				break;
 		}
 	}
@@ -444,15 +450,34 @@ public class InfC761 : EnemyController
 			m_IsStay = true;
 		}
 
-		var target = PlayerCharaManager.Instance.GetCurrentController().transform;
 
 		switch( m_Skill1Phase )
 		{
 			case E_SKILL1_PHASE.WAIT_LEFT_LASER:
 			case E_SKILL1_PHASE.WAIT_RIGHT_LASER:
+				var target = PlayerCharaManager.Instance.GetCurrentController().transform;
 				transform.LookAt( target );
 				break;
 		}
+	}
+
+	private void MoveSkill2()
+	{
+		Vector3 pos = Vector3.Lerp( transform.localPosition, m_FactNormalMoveTargetPos, m_NormalMoveLerp );
+		transform.localPosition = pos;
+
+		if( !m_IsStay && ( m_FactNormalMoveTargetPos - pos ).sqrMagnitude <= m_StayThreshold )
+		{
+			m_IsStay = true;
+		}
+
+		var target = PlayerCharaManager.Instance.GetCurrentController().transform;
+		transform.LookAt( target );
+	}
+
+	private void MoveSkill3()
+	{
+
 	}
 
 	#endregion
@@ -675,6 +700,7 @@ public class InfC761 : EnemyController
 
 					ResetSkillTimeCount();
 					DecideNormalTargetPos();
+					m_IsStay = false;
 				}
 
 				break;
@@ -767,10 +793,16 @@ public class InfC761 : EnemyController
 				break;
 
 			case E_SKILL2_PHASE.WAIT_SHOT_BOMB:
+				Debug.Log( m_SkillShotTimeCount );
+
 				if( m_SkillShotTimeCount >= m_Skill2WaitNextSkill2Time )
 				{
 					m_Skill2Phase = E_SKILL2_PHASE.SHOT_BOMB;
 					m_Skill2IsShotRight = !m_Skill2IsShotRight;
+
+					ResetSkillTimeCount();
+					DecideNormalTargetPos();
+					m_IsStay = false;
 				}
 
 				break;
