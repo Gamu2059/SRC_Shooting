@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// 一定まで減速する弾コントローラ。
 /// </summary>
-public class DecelerationBulletController : BulletController
+public class DecelerationBullet : BulletController
 {
 	private const string DT_KEY = "Deceleration Threshold";
 

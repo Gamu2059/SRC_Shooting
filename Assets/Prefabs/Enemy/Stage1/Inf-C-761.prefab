@@ -1673,6 +1673,8 @@ MonoBehaviour:
   m_IsBoss: 1
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
+  m_RightRailgunShotPosition: {fileID: 1196961841797507096}
+  m_LeftRailgunShotPosition: {fileID: 8914646012846677445}
   m_NormalMoveTargetPositions:
   - Pos:
     - {x: 0.3, y: 0, z: 0.8}
@@ -1686,27 +1688,109 @@ MonoBehaviour:
     - {x: 0.65, y: 0, z: 0.6}
     - {x: 0.7, y: 0, z: 0.8}
     - {x: 0.67, y: 0, z: 0.7}
-  m_MinMoveInterval: 3
-  m_MaxMoveInterval: 5
-  m_NormalMoveLerp: 0.01
-  m_StayThreshold: 5
+  m_NormalMinMoveInterval: 0
+  m_NormalMaxMoveInterval: 0
+  m_NormalMoveLerp: 1
+  m_StayThreshold: 10
+  m_SkillMinMoveInterval: 0
+  m_SkillMaxMoveInterval: 0
   m_Normal1ShotParam:
     Interval: 1
     Num: 1
     Angle: 0
-  m_DeltaRotation: -5
+  m_Normal1RelativeShotRotation: -5
+  m_Normal1ShotIndex:
+    BulletIndex: 0
+    BulletParamIndex: 0
+    OrbitalParamIndex: -1
   m_Normal2ShotParam:
     Interval: 1.5
     Num: 24
     Angle: 0
+  m_Normal2ShotIndex:
+    BulletIndex: 3
+    BulletParamIndex: 1
+    OrbitalParamIndex: -1
   m_Normal3ShotParam:
     Interval: 2
     Num: 3
     Angle: 15
-  m_RightRailgunShotPosition: {fileID: 1196961841797507096}
-  m_LeftRailgunShotPosition: {fileID: 8914646012846677445}
-  m_Phase: 1
-  m_FactNormalMoveTargetPos: {x: 0, y: 0, z: 0}
+  m_Normal3ShotIndex:
+    BulletIndex: 3
+    BulletParamIndex: 2
+    OrbitalParamIndex: -1
+  m_Skill1NormalLaserIndex:
+    BulletIndex: 5
+    BulletParamIndex: 3
+    OrbitalParamIndex: 0
+  m_Skill1WaitShotLaserTime: 2
+  m_Skill1LaserConstParam:
+    m_MaxLength: 300
+    m_ThrowWaitTime: 1
+    m_MoveBulletWaitTime: 0.5
+    m_ThrowSpeed: 0
+    m_BulletCreateTimingNum: 6
+    m_BulletCreateNum: 15
+    m_BulletCreateUnitDistance: 5
+    m_SpreadBulletAngle: 180
+    m_SpreadBulletAccel: 10
+    m_BulletIndex: 2
+    m_BulletParamIndex: 3
+    m_OrbitalIndex: 1
+  m_Skill1ThrowSpeed: 180
+  m_Skill1WaitNextLaserTime: 2
+  m_Skill2FireBulletShotIndex:
+    BulletIndex: 0
+    BulletParamIndex: 0
+    OrbitalParamIndex: 0
+  m_Skill2SpreadOrbitalBaseIndex: 0
+  m_Skill2FireBulletConstParam:
+    m_BulletIndex: 0
+    m_BulletParamIndex: 0
+    m_OrbitalIndex: 0
+    m_BulletNum: 0
+  m_Skill2WaitNextShotFireBulletTime: 0
+  m_Skill2WaitFireTime: 0
+  m_Skill2WaitNextFireTime: 0
+  m_Skill2WaitNextSkill2Time: 0
+  m_Skill3NormalLaserIndex:
+    BulletIndex: 0
+    BulletParamIndex: 0
+    OrbitalParamIndex: 0
+  m_Skill3CenterLaserIndex:
+    BulletIndex: 0
+    BulletParamIndex: 0
+    OrbitalParamIndex: 0
+  m_Skill3NormalLaserBulletIndex:
+    BulletIndex: 0
+    BulletParamIndex: 0
+    OrbitalParamIndex: 0
+  m_Skill3CenterLaserBulletIndex:
+    BulletIndex: 0
+    BulletParamIndex: 0
+    OrbitalParamIndex: 0
+  m_Skill3NormalLaserParam:
+    m_BulletCreateNum: 0
+    m_BulletCreateUnitDistance: 0
+    m_BulletIndex: 0
+    m_BulletParamIndex: 0
+    m_OrbitalIndex: 0
+  m_Skill3CenterLaserParam:
+    m_BulletCreateNum: 0
+    m_BulletAccel: 0
+    m_BulletIndex: 0
+    m_BulletParamIndex: 0
+    m_OrbitalIndex: 0
+  m_Skill3NormalLaserUnitAngle: 0
+  m_Skill3NormalLaserShotNum: 0
+  m_Skill3WaitNextNormalLaserTime: 0
+  m_Skill3WaitCenterLaserChargeTime: 0
+  m_Skill3CenterLaserChargeTime: 0
+  m_Skill3CenterLaserShotTime: 0
+  m_Phase: 4
+  m_Skill1Phase: 0
+  m_Skill2Phase: 0
+  m_Skill3Phase: 0
 --- !u!1 &8054439382712105713
 GameObject:
   m_ObjectHideFlags: 0

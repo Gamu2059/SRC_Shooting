@@ -80,10 +80,20 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	private BulletParam m_BulletParam;
 
 	/// <summary>
-	/// この弾のOrbialParam。
+	/// この弾のBulletParamのインデックス。
+	/// </summary>
+	private int m_BulletParamIndex;
+
+	/// <summary>
+	/// この弾のOrbitalParam。
 	/// 何も指定しない場合、この弾はプログラムで直接制御しなければならない。
 	/// </summary>
 	private BulletOrbitalParam m_OrbitalParam;
+
+	/// <summary>
+	/// この弾のOrbitalParamのインデックス。
+	/// </summary>
+	private int m_OrbitalParamIndex;
 
 	/// <summary>
 	/// この弾の状態。
@@ -135,6 +145,12 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// Hackerのリバースハックを受けたかどうか。
 	/// </summary>
 	private bool m_IsReverseHacked;
+
+	/// <summary>
+	/// 弾処理で用いるタイマーを保持するリスト
+	/// このリストにタイマーを登録しないと潜在的な例外発生を招く場合があります
+	/// </summary>
+	private Dictionary<string, Timer> m_TimerDict;
 
 	#endregion
 
@@ -218,12 +234,28 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	}
 
 	/// <summary>
+	/// この弾のBulletParamのインデックス。
+	/// </summary>
+	public int GetBulletParamIndex()
+	{
+		return m_BulletParamIndex;
+	}
+
+	/// <summary>
 	/// この弾のOrbialParam。
 	/// 何も指定しない場合、この弾はプログラムで直接制御しなければならない。
 	/// </summary>
 	public BulletOrbitalParam GetOrbitalParam()
 	{
 		return m_OrbitalParam;
+	}
+
+	/// <summary>
+	/// この弾のOrbitalParamのインデックス。
+	/// </summary>
+	public int GetOrbitalParamIndex()
+	{
+		return m_OrbitalParamIndex;
 	}
 
 	/// <summary>
@@ -293,7 +325,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
 	public void SetRotation( Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
 	{
-		transform.localEulerAngles = GetRelativeValue( relative, GetRotation(), value );
+		transform.localEulerAngles = GetRelativeRotateValue( relative, GetRotation(), value );
 	}
 
 	/// <summary>
@@ -449,6 +481,13 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		m_IsReverseHacked = value;
 	}
 
+	/// <summary>
+	/// タイマーのディクショナリを取得する。
+	/// </summary>
+	public Dictionary<string, Timer> GetTimerDict()
+	{
+		return m_TimerDict;
+	}
 
 	#endregion
 
@@ -497,6 +536,8 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		bullet.SetTroop( bulletOwner.GetTroop() );
 		bullet.m_BulletParam = null;
 		bullet.m_BulletIndex = 0;
+		bullet.m_BulletParamIndex = 0;
+		bullet.m_OrbitalParamIndex = -1;
 
 		return bullet;
 	}
@@ -604,6 +645,8 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		bullet.SetTroop( bulletOwner.GetTroop() );
 		bullet.m_BulletParam = null;
 		bullet.m_BulletIndex = 0;
+		bullet.m_BulletParamIndex = 0;
+		bullet.m_OrbitalParamIndex = -1;
 
 		return bullet;
 	}
@@ -647,11 +690,13 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 
 		// BulletParamを取得
 		var bulletParam = shotParam.BulletOwner.GetBulletParam( shotParam.BulletParamIndex );
+		bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
 
 		if( bulletParam != null )
 		{
 			// 軌道を設定
 			bullet.ChangeOrbital( bulletParam.GetOrbitalParam( shotParam.OrbitalIndex ) );
+			bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
 		}
 
 		bullet.m_BulletParam = bulletParam;
@@ -707,6 +752,8 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public virtual void DestroyBullet()
 	{
+		DestroyAllTimer();
+
 		if( m_BulletCycle == E_BULLET_CYCLE.UPDATE )
 		{
 			BulletManager.Instance.CheckPoolBullet( this );
@@ -729,6 +776,29 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
 		{
 			return baseValue + relativeValue;
+		}
+		else
+		{
+			return relativeValue;
+		}
+	}
+
+	protected Vector3 GetRelativeRotateValue( E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
+	{
+		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
+		{
+			var value = baseValue + relativeValue;
+
+			if( relativeValue.x != 0 )
+				value.x = value.x % 360 + 360;
+
+			if( relativeValue.y != 0 )
+				value.y = value.y % 360 + 360;
+
+			if( relativeValue.z != 0 )
+				value.z = value.z % 360 + 360;
+
+			return value;
 		}
 		else
 		{
@@ -818,6 +888,8 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		{
 			m_Collider = GetComponent<BattleObjectCollider>();
 		}
+
+		m_TimerDict = new Dictionary<string, Timer>();
 	}
 
 	/// <summary>
@@ -858,10 +930,6 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		{
 			DestroyBullet();
 		}
-	}
-
-	public override void OnLateUpdate()
-	{
 	}
 
 	protected virtual void OnBecameInvisible()
@@ -915,5 +983,59 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 
+	}
+
+	/// <summary>
+	/// この弾にタイマーを登録する。
+	/// </summary>
+	/// <param name="key">タイマーのキー</param>
+	/// <param name="timer">タイマー</param>
+	public void RegistTimer( string key, Timer timer )
+	{
+		if( m_TimerDict == null || m_TimerDict.ContainsKey( key ) )
+		{
+			return;
+		}
+
+		m_TimerDict.Add( key, timer );
+		BattleMainTimerManager.Instance.RegistTimer( timer );
+	}
+
+	/// <summary>
+	/// 指定したキーに対するタイマーを完全破棄する。
+	/// </summary>
+	/// <param name="key">タイマーのキー</param>
+	public void DestroyTimer( string key )
+	{
+		if( m_TimerDict == null || !m_TimerDict.ContainsKey( key ) )
+		{
+			return;
+		}
+
+		var timer = m_TimerDict[key];
+		m_TimerDict.Remove( key );
+
+		if( timer != null )
+		{
+			timer.DestroyTimer();
+		}
+	}
+
+	/// <summary>
+	/// この弾に紐づけられている全てのタイマーを完全破棄する。
+	/// </summary>
+	public void DestroyAllTimer()
+	{
+		if( m_TimerDict == null )
+		{
+			return;
+		}
+
+		foreach( var timer in m_TimerDict.Values )
+		{
+			timer.DestroyTimer();
+		}
+
+		m_TimerDict.Clear();
 	}
 }
