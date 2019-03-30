@@ -62,7 +62,15 @@ public class InfC761 : EnemyController
 		public int OrbitalParamIndex;
 	}
 
-
+	private static E_PHASE[] PHASES = new[]
+	{
+		E_PHASE.NORMAL1,
+		E_PHASE.SKILL1,
+		E_PHASE.NORMAL2,
+		E_PHASE.SKILL2,
+		E_PHASE.NORMAL3,
+		E_PHASE.SKILL3,
+	};
 
 
 	#region Field Inspector
@@ -275,6 +283,8 @@ public class InfC761 : EnemyController
 	private E_SKILL3_PHASE m_Skill3Phase;
 
 
+	private int m_PhaseIndex;
+
 	// Normal系
 
 	private float m_NormalMoveTimeCount;
@@ -326,15 +336,51 @@ public class InfC761 : EnemyController
 		DecideStartNormalTargetPos();
 		m_IsStay = false;
 
+		m_Phase = E_PHASE.NORMAL1;
+		m_PhaseIndex = 0;
 		m_Skill2FireBullets = new InfC761Skill2FireBullet[3];
 
 		m_Phase = E_PHASE.NORMAL1;
-		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, 0.1f, () =>
+		var timer = Timer.CreateIntervalTimer( E_TIMER_TYPE.SCALED_TIMER, 15f, () =>
 		{
-			m_Phase = E_PHASE.SKILL3;
-			ChangeToSkill3();
+			ChangePhase();
 		} );
 		RegistTimer( "aa", timer );
+	}
+
+	private void ChangePhase()
+	{
+		m_PhaseIndex = ( m_PhaseIndex + 1 ) % PHASES.Length;
+		m_Phase = PHASES[m_PhaseIndex];
+
+		switch( m_Phase )
+		{
+			case E_PHASE.NORMAL1:
+			case E_PHASE.NORMAL2:
+			case E_PHASE.NORMAL3:
+				ResetNormalTimeCount();
+				DecideNormalTargetPos();
+				m_IsStay = false;
+				break;
+
+			case E_PHASE.SKILL1:
+				m_Skill1Phase = E_SKILL1_PHASE.WAIT_RIGHT_LASER;
+				ResetSkillTimeCount();
+				DecideNormalTargetPos();
+				m_IsStay = false;
+				break;
+
+			case E_PHASE.SKILL2:
+				m_Skill2Phase = E_SKILL2_PHASE.SHOT_BOMB;
+				ResetSkillTimeCount();
+				DecideNormalTargetPos();
+				m_IsStay = false;
+				break;
+
+			case E_PHASE.SKILL3:
+				ChangeToSkill3();
+				break;
+		}
 	}
 
 	public override void OnUpdate()
