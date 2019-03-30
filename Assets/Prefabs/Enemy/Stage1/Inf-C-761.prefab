@@ -1692,8 +1692,9 @@ MonoBehaviour:
   m_NormalMaxMoveInterval: 0
   m_NormalMoveLerp: 0.01
   m_StayThreshold: 10
-  m_SkillMinMoveInterval: 0
-  m_SkillMaxMoveInterval: 0
+  m_SkillMinMoveInterval: 3
+  m_SkillMaxMoveInterval: 5
+  m_SkillLookAtLerp: 0.01
   m_Normal1ShotParam:
     Interval: 1
     Num: 1
@@ -1753,41 +1754,34 @@ MonoBehaviour:
   m_Skill2WaitFireTime: 1
   m_Skill2WaitNextFireTime: 0.5
   m_Skill2WaitNextSkill2Time: 2
+  m_Skill3EndPosition: {x: 0.5, y: 0.95}
   m_Skill3NormalLaserIndex:
-    BulletIndex: 0
-    BulletParamIndex: 0
+    BulletIndex: 6
+    BulletParamIndex: 5
     OrbitalParamIndex: 0
   m_Skill3CenterLaserIndex:
-    BulletIndex: 0
-    BulletParamIndex: 0
-    OrbitalParamIndex: 0
-  m_Skill3NormalLaserBulletIndex:
-    BulletIndex: 0
-    BulletParamIndex: 0
-    OrbitalParamIndex: 0
-  m_Skill3CenterLaserBulletIndex:
-    BulletIndex: 0
-    BulletParamIndex: 0
-    OrbitalParamIndex: 0
+    BulletIndex: 7
+    BulletParamIndex: 5
+    OrbitalParamIndex: 1
   m_Skill3NormalLaserParam:
-    m_BulletCreateNum: 0
-    m_BulletCreateUnitDistance: 0
-    m_BulletIndex: 0
-    m_BulletParamIndex: 0
-    m_OrbitalIndex: 0
+    m_BulletCreateNum: 10
+    m_BulletCreateUnitDistance: 5
+    m_BulletIndex: 2
+    m_BulletParamIndex: 5
+    m_OrbitalIndex: 2
   m_Skill3CenterLaserParam:
-    m_BulletCreateNum: 0
-    m_BulletAccel: 0
-    m_BulletIndex: 0
-    m_BulletParamIndex: 0
-    m_OrbitalIndex: 0
-  m_Skill3NormalLaserUnitAngle: 0
-  m_Skill3NormalLaserShotNum: 0
-  m_Skill3WaitNextNormalLaserTime: 0
-  m_Skill3WaitCenterLaserChargeTime: 0
-  m_Skill3CenterLaserChargeTime: 0
-  m_Skill3CenterLaserShotTime: 0
-  m_Phase: 4
+    m_BulletCreateNum: 20
+    m_BulletAccel: 15
+    m_BulletIndex: 1
+    m_BulletParamIndex: 5
+    m_OrbitalIndex: 3
+  m_Skill3NormalLaserUnitAngle: 10
+  m_Skill3NormalLaserShotNum: 5
+  m_Skill3WaitNextNormalLaserTime: 1
+  m_Skill3WaitCenterLaserChargeTime: 2
+  m_Skill3CenterLaserChargeTime: 2
+  m_Skill3CenterLaserShotTime: 2
+  m_Phase: 3
   m_Skill1Phase: 0
   m_Skill2Phase: 0
   m_Skill3Phase: 0

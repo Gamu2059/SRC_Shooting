@@ -46,8 +46,17 @@ public class InfC761Skill3NormalLaser : BulletController
 		m_Param = param;
 	}
 
+	public override void OnStart()
+	{
+		base.OnStart();
+
+		m_Phase = E_PHASE.BIGGER;
+	}
+
 	public override void OnUpdate()
 	{
+		base.OnUpdate();
+
 		switch( m_Phase )
 		{
 			case E_PHASE.BIGGER:
@@ -63,11 +72,11 @@ public class InfC761Skill3NormalLaser : BulletController
 	private void OnBiggerUpdate()
 	{
 		var scale = GetScale();
-		scale.x += 3 * Time.deltaTime;
+		scale.x += 5 * Time.deltaTime;
 
 		SetScale( scale );
 
-		if( scale.x >= 2f )
+		if( scale.x >= 1f )
 		{
 			CreateBullet();
 			m_Phase = E_PHASE.SMALLER;
@@ -77,16 +86,16 @@ public class InfC761Skill3NormalLaser : BulletController
 	private void OnSmallerUpdate()
 	{
 		var scale = GetScale();
-		scale.x -= 3 * Time.deltaTime;
+		scale.x -= 5 * Time.deltaTime;
 
-		if( scale.x < 0f )
+		if( scale.x < 0.01f )
 		{
-			scale.x = 0f;
+			scale.x = 0.01f;
 		}
 
 		SetScale( scale );
 
-		if( scale.x <= 0 )
+		if( scale.x <= 0.01f )
 		{
 			DestroyBullet();
 		}
@@ -101,6 +110,7 @@ public class InfC761Skill3NormalLaser : BulletController
 			return;
 		}
 
+		Debug.Log( 111 );
 		var shotParam = new BulletShotParam( GetBulletOwner(), m_Param.m_BulletIndex, m_Param.m_BulletParamIndex, m_Param.m_OrbitalIndex );
 		shotParam.Rotation = GetRotation();
 
@@ -109,8 +119,11 @@ public class InfC761Skill3NormalLaser : BulletController
 
 		List<BulletController> bullets = new List<BulletController>();
 
+		Debug.Log( 222 );
+
 		for( int i = 0; i < m_Param.m_BulletCreateNum; i++ )
 		{
+			Debug.Log( i );
 			shotParam.Position = ( i + 1 ) * m_Param.m_BulletCreateUnitDistance * dir + GetPosition();
 			bullets.Add( ShotBullet( shotParam ) );
 		}

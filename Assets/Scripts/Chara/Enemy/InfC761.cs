@@ -38,9 +38,9 @@ public class InfC761 : EnemyController
 	private enum E_SKILL3_PHASE
 	{
 		LASER_SHOT,
+		WAIT_CENTER_LASER_SHOT,
 		CENTER_LASER_SHOT,
 		SPREAD_BULLETS,
-		WAIT_LASER,
 	}
 
 
@@ -106,6 +106,9 @@ public class InfC761 : EnemyController
 
 	[SerializeField]
 	private float m_SkillMaxMoveInterval;
+
+	[SerializeField]
+	private float m_SkillLookAtLerp;
 
 	#region Field Inspector Normal Param
 
@@ -207,17 +210,17 @@ public class InfC761 : EnemyController
 
 	[Header( "Skill3 Param" )]
 
+	// スキル3を発動する時の開始座標
+	[SerializeField]
+	private Vector2 m_Skill3EndPosition;
+
+	// スキル3通常レーザーインデックス
 	[SerializeField]
 	private ShotIndex m_Skill3NormalLaserIndex;
 
+	// スキル3巨大レーザーインデックス
 	[SerializeField]
 	private ShotIndex m_Skill3CenterLaserIndex;
-
-	[SerializeField]
-	private ShotIndex m_Skill3NormalLaserBulletIndex;
-
-	[SerializeField]
-	private ShotIndex m_Skill3CenterLaserBulletIndex;
 
 	// スキル3の通常レーザーに関するパラメータ
 	[SerializeField]
@@ -302,6 +305,9 @@ public class InfC761 : EnemyController
 	private bool m_Skill3IsShotRight;
 	private int m_Skill3NormalLaserAngleIndex;
 	private List<BulletController> m_Skill3NormalLaserFireBullets;
+	private InfC761Skill3CenterLaser m_Skill3RightCenterLaser;
+	private InfC761Skill3CenterLaser m_Skill3LeftCenterLaser;
+
 
 
 
@@ -321,6 +327,14 @@ public class InfC761 : EnemyController
 		m_IsStay = false;
 
 		m_Skill2FireBullets = new InfC761Skill2FireBullet[3];
+
+		m_Phase = E_PHASE.NORMAL1;
+		var timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, 0.1f, () =>
+		{
+			m_Phase = E_PHASE.SKILL3;
+			ChangeToSkill3();
+		} );
+		RegistTimer( "aa", timer );
 	}
 
 	public override void OnUpdate()
@@ -384,6 +398,11 @@ public class InfC761 : EnemyController
 		{
 			m_NormalMovePosDir = -1;
 		}
+	}
+
+	private void DeceideSkill3TargetPos()
+	{
+		m_FactNormalMoveTargetPos = CameraManager.Instance.GetViewportWorldPoint( m_Skill3EndPosition.x, m_Skill3EndPosition.y ) - transform.parent.position;
 	}
 
 	#region Move Method
@@ -456,7 +475,8 @@ public class InfC761 : EnemyController
 			case E_SKILL1_PHASE.WAIT_LEFT_LASER:
 			case E_SKILL1_PHASE.WAIT_RIGHT_LASER:
 				var target = PlayerCharaManager.Instance.GetCurrentController().transform;
-				transform.LookAt( target );
+				var forward = Vector3.Lerp( transform.forward, ( target.position - transform.position ), m_SkillLookAtLerp );
+				transform.forward = forward;
 				break;
 		}
 	}
@@ -477,7 +497,16 @@ public class InfC761 : EnemyController
 
 	private void MoveSkill3()
 	{
+		Vector3 pos = Vector3.Lerp( transform.localPosition, m_FactNormalMoveTargetPos, m_NormalMoveLerp );
+		transform.localPosition = pos;
 
+		if( !m_IsStay && ( m_FactNormalMoveTargetPos - pos ).sqrMagnitude <= m_StayThreshold )
+		{
+			m_IsStay = true;
+		}
+
+		Vector3 forward = Vector3.Lerp( transform.forward, Vector3.back, m_SkillLookAtLerp );
+		transform.forward = forward;
 	}
 
 	#endregion
@@ -529,7 +558,11 @@ public class InfC761 : EnemyController
 				break;
 
 			case E_PHASE.SKILL3:
-				ShotSkill3();
+				if( m_IsStay )
+				{
+					ShotSkill3();
+				}
+
 				break;
 		}
 	}
@@ -829,21 +862,85 @@ public class InfC761 : EnemyController
 
 					if( m_Skill3IsShotRight )
 					{
+						shotParam.Position = m_RightRailgunShotPosition.position - transform.parent.position;
+					}
+					else
+					{
+						shotParam.Position = m_LeftRailgunShotPosition.position - transform.parent.position;
+					}
 
+					float deltaAngle = m_Skill3NormalLaserAngleIndex * m_Skill3NormalLaserUnitAngle;
+					shotParam.Rotation = new Vector3( 0, deltaAngle, 0 ) + transform.eulerAngles - transform.parent.eulerAngles;
+
+					var bullet = BulletController.ShotBullet( shotParam );
+					var normalLaser = bullet as InfC761Skill3NormalLaser;
+					normalLaser.SetParam( m_Skill3NormalLaserParam );
+
+					m_Skill3IsShotRight = !m_Skill3IsShotRight;
+					m_Skill3NormalLaserAngleIndex *= -1;
+
+					if( m_Skill3IsShotRight )
+					{
+						m_Skill3NormalLaserAngleIndex--;
+
+						if( m_Skill3NormalLaserAngleIndex <= 0 )
+						{
+							m_Skill3Phase = E_SKILL3_PHASE.WAIT_CENTER_LASER_SHOT;
+						}
 					}
 				}
 
 				break;
 
+			case E_SKILL3_PHASE.WAIT_CENTER_LASER_SHOT:
+				if( m_SkillShotTimeCount >= m_Skill3WaitCenterLaserChargeTime )
+				{
+					m_SkillShotTimeCount = 0;
+					m_Skill3Phase = E_SKILL3_PHASE.CENTER_LASER_SHOT;
+					ShotSkill3CenterLaser();
+					SpreadSkill3NormalLaserFireBullets();
+				}
+
+				break;
+
 			case E_SKILL3_PHASE.CENTER_LASER_SHOT:
+				if( m_SkillShotTimeCount >= m_Skill3CenterLaserShotTime )
+				{
+					m_SkillShotTimeCount = 0;
+					m_Skill3Phase = E_SKILL3_PHASE.SPREAD_BULLETS;
+				}
+
 				break;
 
 			case E_SKILL3_PHASE.SPREAD_BULLETS:
-				break;
+				if( m_SkillShotTimeCount >= m_Skill3WaitNextNormalLaserTime )
+				{
+					m_Skill3Phase = E_SKILL3_PHASE.LASER_SHOT;
+					m_SkillShotTimeCount = 0;
+					ChangeToSkill3();
+				}
 
-			case E_SKILL3_PHASE.WAIT_LASER:
 				break;
 		}
+	}
+
+	private void ShotSkill3CenterLaser()
+	{
+		m_Skill3RightCenterLaser = OnShotSkill3CenterLaser( m_RightRailgunShotPosition );
+		m_Skill3LeftCenterLaser = OnShotSkill3CenterLaser( m_LeftRailgunShotPosition );
+		m_Skill3RightCenterLaser.SetParam( m_Skill3CenterLaserParam );
+		m_Skill3LeftCenterLaser.SetParam( m_Skill3CenterLaserParam );
+	}
+
+	private InfC761Skill3CenterLaser OnShotSkill3CenterLaser( Transform shotPosition )
+	{
+		var shotParam = new BulletShotParam( this );
+		shotParam.BulletIndex = m_Skill3CenterLaserIndex.BulletIndex;
+		shotParam.BulletParamIndex = m_Skill3CenterLaserIndex.BulletParamIndex;
+		shotParam.OrbitalIndex = m_Skill3CenterLaserIndex.OrbitalParamIndex;
+		shotParam.Position = shotPosition.position - transform.parent.position;
+		var laser = BulletController.ShotBullet( shotParam );
+		return laser as InfC761Skill3CenterLaser;
 	}
 
 	public void AddSkill3NormalLaserFireBullets( List<BulletController> bullets )
@@ -859,6 +956,31 @@ public class InfC761 : EnemyController
 		}
 
 		m_Skill3NormalLaserFireBullets.AddRange( bullets );
+	}
+
+	private void SpreadSkill3NormalLaserFireBullets()
+	{
+		foreach( var bullet in m_Skill3NormalLaserFireBullets )
+		{
+			Vector3 dir = ( bullet.transform.position - transform.position ).normalized;
+			bullet.transform.forward = dir;
+			bullet.SetNowAccel( 20 );
+		}
+	}
+
+	#endregion
+
+	#region Change Phase Method
+
+	private void ChangeToSkill3()
+	{
+		m_Skill3NormalLaserAngleIndex = m_Skill3NormalLaserShotNum;
+		m_Skill3Phase = E_SKILL3_PHASE.LASER_SHOT;
+		m_Skill3IsShotRight = true;
+
+		ResetSkillTimeCount();
+		DeceideSkill3TargetPos();
+		m_IsStay = false;
 	}
 
 	#endregion

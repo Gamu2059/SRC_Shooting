@@ -41,9 +41,22 @@ public class InfC761Skill3CenterLaser : BulletController
 	private List<BulletController> m_Bullets;
 
 
+	public void SetParam( ConstParam param )
+	{
+		m_Param = param;
+	}
+
+	public override void OnStart()
+	{
+		base.OnStart();
+
+		m_Phase = E_PHASE.BIGGER;
+	}
 
 	public override void OnUpdate()
 	{
+		base.OnUpdate();
+
 		switch( m_Phase )
 		{
 			case E_PHASE.BIGGER:
