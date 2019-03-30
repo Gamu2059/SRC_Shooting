@@ -390,4 +390,12 @@ public class Timer
 			m_RegistingTimerController.RemoveTimer( this );
 		}
 	}
+
+	/// <summary>
+	/// タイマーを完全停止させて破棄する。
+	/// </summary>
+	public void DestroyTimer()
+	{
+		m_RegistingTimerController.RemoveTimer( this );
+	}
 }

@@ -39,6 +39,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 	[SerializeField]
 	private BoolReactiveProperty m_IsBestScore;
 
+	[SerializeField]
+	public bool m_PlayerNotDead;
 
 	/// <summary>
 	/// メインのバトル画面のマネージャーリストを取得する。
