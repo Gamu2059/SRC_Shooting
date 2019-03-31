@@ -29,6 +29,14 @@ public class EchoController : PlayerController
     [SerializeField]
     private float m_RotateOffset;
 
+    [SerializeField]
+    private int m_MaxHitCount;
+
+    public int GetMaxHitCount()
+    {
+        return m_MaxHitCount;
+    }
+
     protected override void Awake()
 	{
 		base.Awake();
