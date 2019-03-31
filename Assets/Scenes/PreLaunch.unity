@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 1379646823}
   - component: {fileID: 1379646827}
   - component: {fileID: 1379646826}
+  - component: {fileID: 1379646828}
   m_Layer: 0
   m_Name: '[GameManager]'
   m_TagString: Untagged
@@ -223,6 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e0cc4b7c5c1c84f8513456e185b3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsStartFromBeginningScene: 1
+  m_StartScene: 5
   m_TransitionInfos:
   - CurrentScene: -1
     NextScene: -1
@@ -246,8 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347c4a47961631d4ab1b369b5acff547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsStartFromBeginningScene: 1
-  m_StartScene: 5
+  m_Managers:
+  - {fileID: 1379646823}
+  - {fileID: 1379646826}
+  - {fileID: 1379646827}
+  - {fileID: 1379646828}
 --- !u!4 &1379646825
 Transform:
   m_ObjectHideFlags: 0
@@ -288,6 +294,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DefaultTransition: {fileID: 2135274159}
+--- !u!114 &1379646828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379646822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc2fd8d35d9e7b47b6b267c19e56a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InputParam: {fileID: 0}
 --- !u!1 &1647350130
 GameObject:
   m_ObjectHideFlags: 0

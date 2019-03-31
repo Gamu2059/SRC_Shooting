@@ -4,4 +4,11 @@ using UnityEngine;
 
 public class PreLaunchScene : BaseScene
 {
+	/// <summary>
+	/// BaseSceneManagerで定義されている最初に遷移すべきシーンに遷移する。
+	/// </summary>
+	protected void Start()
+	{
+		BaseSceneManager.Instance.LoadStartScene();
+	}
 }
