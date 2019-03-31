@@ -75,6 +75,9 @@ public class InfC761 : EnemyController
 
 	#region Field Inspector
 
+	[SerializeField]
+	private float m_ChangePhaseTime;
+
 	[Header( "Shot Position" )]
 
 	// このキャラから見て右側のレールガンの射出点
@@ -341,7 +344,7 @@ public class InfC761 : EnemyController
 		m_Skill2FireBullets = new InfC761Skill2FireBullet[3];
 
 		m_Phase = E_PHASE.NORMAL1;
-		var timer = Timer.CreateIntervalTimer( E_TIMER_TYPE.SCALED_TIMER, 15f, () =>
+		var timer = Timer.CreateIntervalTimer( E_TIMER_TYPE.SCALED_TIMER, m_ChangePhaseTime, () =>
 		{
 			ChangePhase();
 		} );
