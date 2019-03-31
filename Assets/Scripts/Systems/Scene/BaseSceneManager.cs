@@ -74,6 +74,12 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 	const float MAX_LOAD_PROGRESS = 0.9f;
 
+	[SerializeField, Tooltip( "起動した瞬間にいたシーンから始めるかどうか" )]
+	private bool m_IsStartFromBeginningScene;
+
+	[SerializeField, Tooltip( "PreLaunchシーンから最初に遷移するシーン" )]
+	private E_SCENE m_StartScene;
+
 	[SerializeField]
 	List<TransitionInfo> m_TransitionInfos;
 
@@ -525,5 +531,22 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 			EventUtility.SafeInvokeAction( callback, addScene );
 		}
+	}
+
+	public void LoadOnGameStart()
+	{
+		if( m_IsStartFromBeginningScene )
+		{
+			LoadBeginScene();
+		}
+		else
+		{
+			LoadStartScene();
+		}
+	}
+
+	public void LoadStartScene()
+	{
+		Instance.LoadScene( m_StartScene );
 	}
 }
