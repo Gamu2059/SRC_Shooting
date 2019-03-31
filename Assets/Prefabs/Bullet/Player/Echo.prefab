@@ -537,13 +537,13 @@ MonoBehaviour:
   - {fileID: 1926405810096334313}
   m_ProtectorRadius: 3
   m_ProtectorSpeed: 3
-  m_ShotInterval: 0.3
+  m_ShotInterval: 0.75
   m_ShotIntervalDecrease: 0.075
   m_MainShotPosition:
   - {fileID: 633881005}
-  m_CanRadShot: 0
-  m_RadiateDirection: 16
-  m_RotateOffset: 10
+  m_RadiateDirection: 32
+  m_WaveRad: 0
+  m_RotateOffset: 0
 --- !u!114 &1926405811160240037
 MonoBehaviour:
   m_ObjectHideFlags: 0

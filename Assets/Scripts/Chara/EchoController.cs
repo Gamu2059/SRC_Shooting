@@ -37,8 +37,8 @@ public class EchoController : PlayerController
 
 	protected override void OnAwake()
 	{
-        base.OnAwake();
         initialShotInterval = m_ShotInterval;
+        base.OnAwake();
 	}
 
 	public override void OnUpdate()
