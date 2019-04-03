@@ -182,7 +182,12 @@ PrefabInstance:
     - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
         type: 3}
       propertyPath: m_WaveRad
-      value: 5
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
+        type: 3}
+      propertyPath: m_RadiateDirection
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1e5085ede72a304ca1d068b898062b5, type: 3}
@@ -655,7 +660,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.06443574, g: 0.0754717, b: 0.068241246, a: 0}
+  m_BackGroundColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -669,9 +674,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 10
+  field of view: 60
   orthographic: 0
-  orthographic size: 30
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -694,13 +699,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015162416}
-  m_LocalRotation: {x: 0.5373527, y: -0, z: -0, w: 0.8433576}
-  m_LocalPosition: {x: 0, y: 250, z: -108}
+  m_LocalRotation: {x: 0.6225146, y: 0, z: 0, w: 0.7826082}
+  m_LocalPosition: {x: 0, y: 80, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 65.007, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 77, y: 0, z: 0}
 --- !u!4 &2878423045518255913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2878423045518255913, guid: 13a49f352e7b812448d3584ce73352b3,
@@ -965,12 +970,12 @@ PrefabInstance:
     - target: {fileID: 4867682160774085349, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
       propertyPath: m_CameraOffsetPos.y
-      value: 250
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4867682160774085349, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
       propertyPath: m_CameraOffsetPos.z
-      value: -70
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4867682160774085349, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}

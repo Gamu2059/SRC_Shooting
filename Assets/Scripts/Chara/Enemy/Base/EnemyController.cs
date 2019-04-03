@@ -85,18 +85,7 @@ public class EnemyController : CharaController
 
 	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
-        if(bullet.gameObject.name == "EchoBullet")
-        {
-            /*
-            var eBullet = (EchoBullet)bullet;
-
-            if (m_IndexList.Contains(eBullet.GetIndex()))
-            {
-                return;
-            } 
-             */
-            Debug.Log("foobar");
-        }
+        Debug.Log(bullet.GetBulletOwner().ToString());
 
         if ( m_OnHitInvincibleDuration <= 0 )
 		{

@@ -94,7 +94,7 @@ public class EchoController : PlayerController
 		}
 	}
 
-    public void ShotWaveBullet(Vector3 centerLocalPosition)
+    public void ShotWaveBullet(int index, Vector3 centerLocalPosition)
     {
         for (int i=0; i< m_RadiateDirection; i++)
         {
@@ -104,7 +104,8 @@ public class EchoController : PlayerController
             shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
             shotParam.BulletIndex = 1;
             shotParam.OrbitalIndex = 3;
-            BulletController.ShotBullet(shotParam);
+            EchoBullet.setIndex(index);
+            EchoBullet.ShotBullet(shotParam);
         }
     } 
          

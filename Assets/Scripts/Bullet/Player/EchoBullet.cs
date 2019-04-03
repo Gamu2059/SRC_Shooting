@@ -7,29 +7,22 @@ public class EchoBullet : BulletController
     [SerializeField]
     private bool m_IsRoot;
 
-    private int index;
-
-    public int GetIndex()
-    {
-        return index;
-    }
+    static int index;
 
     public override void OnHitCharacter(CharaController chara)
     {
         var controller = (EchoController)GetBulletOwner();
-
-        if (!m_IsRoot)
+        if (m_IsRoot)
         {
             index = EchoBulletIndexGenerater.GenerateBulletIndex();
+        }
+        controller.ShotWaveBullet(index, chara.transform.position);
 
-            if(index % controller.GetMaxHitCount() != 0)
-            {
-                controller.ShotWaveBullet(chara.transform.localPosition);
-            }
-        }
-        else
-        {
-            controller.ShotWaveBullet(chara.transform.localPosition);
-        }
+        Debug.Log(string.Format("index={0}", index));
+    }
+
+    public static void setIndex(int n)
+    {
+        index = n;
     }
 }
