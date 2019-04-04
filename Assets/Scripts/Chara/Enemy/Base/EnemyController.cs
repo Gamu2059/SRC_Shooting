@@ -31,7 +31,9 @@ public class EnemyController : CharaController
 
 	private bool m_CanOutDestroy;
 
-
+    /*
+    今まで当たった弾のインデックスを保持するリスト 
+    */
 
 	#region Getter & Setter
 
@@ -85,7 +87,12 @@ public class EnemyController : CharaController
 
 	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
-        Debug.Log(bullet.GetBulletOwner().ToString());
+        
+        /*
+         もし、bulletのOwnerがEchoControllerだったら
+         bulletのインデックスを参照し、それがすでにリストの中にあれば処理を中断する
+         なければ、インデックスをリストに追加し処理を続ける
+         */
 
         if ( m_OnHitInvincibleDuration <= 0 )
 		{
@@ -112,6 +119,7 @@ public class EnemyController : CharaController
 
 			base.OnSuffer( bullet, colliderData );
 		}
+
 	}
 
 	public override void Dead()

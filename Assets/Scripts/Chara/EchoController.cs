@@ -32,6 +32,8 @@ public class EchoController : PlayerController
     [SerializeField]
     private int m_MaxHitCount;
 
+    private Dictionary<int, int> RootBulletIndex;
+
     public int GetMaxHitCount()
     {
         return m_MaxHitCount;
@@ -39,13 +41,14 @@ public class EchoController : PlayerController
 
     protected override void Awake()
 	{
-		base.Awake();
+        initialShotInterval = m_ShotInterval;
+        RootBulletIndex = new Dictionary<int, int>();
 		OnAwake();
 	}
 
 	protected override void OnAwake()
 	{
-        initialShotInterval = m_ShotInterval;
+        
         base.OnAwake();
 	}
 
@@ -96,17 +99,48 @@ public class EchoController : PlayerController
 
     public void ShotWaveBullet(int index, Vector3 centerLocalPosition)
     {
-        for (int i=0; i< m_RadiateDirection; i++)
+        if (!IndexExistP(index))
         {
-            float yAngle = (2 * Mathf.PI / m_RadiateDirection) * (i % 2 == 0 ? i : -i) * Mathf.Rad2Deg;
-            var shotParam = new BulletShotParam(this);
-            shotParam.Position = new Vector3(centerLocalPosition.x + m_WaveRad * Mathf.Sin(Time.deltaTime), 0, centerLocalPosition.z + m_WaveRad * Mathf.Cos(Time.deltaTime));
-            shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
-            shotParam.BulletIndex = 1;
-            shotParam.OrbitalIndex = 3;
-            EchoBullet.setIndex(index);
-            EchoBullet.ShotBullet(shotParam);
+            SetNewIndex(index);
+        }
+        else
+        {
+            UpdateIndex(index);
+        }
+
+        if(GetRootBulletHitCount(index) < m_MaxHitCount)
+        {
+            for (int i = 0; i < m_RadiateDirection; i++)
+            {
+                float yAngle = (2 * Mathf.PI / m_RadiateDirection) * (i % 2 == 0 ? i : -i) * Mathf.Rad2Deg;
+                var shotParam = new BulletShotParam(this);
+                shotParam.Position = new Vector3(centerLocalPosition.x + m_WaveRad * Mathf.Sin(Time.deltaTime), 0, centerLocalPosition.z + m_WaveRad * Mathf.Cos(Time.deltaTime));
+                shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
+                shotParam.BulletIndex = 1;
+                shotParam.OrbitalIndex = 3;
+                EchoBullet.setIndex(index);
+                EchoBullet.ShotBullet(shotParam);
+            }
         }
     } 
-         
+    
+    private bool IndexExistP(int index)
+    {
+        return RootBulletIndex.ContainsKey(index);
+    }
+
+    private void SetNewIndex(int index)
+    {
+        RootBulletIndex.Add(index, 0);
+    }
+
+    private void UpdateIndex(int index)
+    {
+        RootBulletIndex[index]++; 
+    }
+
+    private int GetRootBulletHitCount(int index)
+    {
+        return RootBulletIndex[index];
+    }
 }
