@@ -229,6 +229,7 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
+        //Debug.Log(string.Format("ITAI!@{0}", colliderData.CenterPos));
 		Damage( 1 );
 	}
 

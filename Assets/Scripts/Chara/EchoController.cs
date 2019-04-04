@@ -32,7 +32,7 @@ public class EchoController : PlayerController
     [SerializeField]
     private int m_MaxHitCount;
 
-    private Dictionary<int, int> RootBulletIndex;
+    private Dictionary <int, int> RootBulletIndex;
 
     public int GetMaxHitCount()
     {
@@ -118,7 +118,7 @@ public class EchoController : PlayerController
                 shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
                 shotParam.BulletIndex = 1;
                 shotParam.OrbitalIndex = 3;
-                EchoBullet.setIndex(index);
+                EchoBullet.SetIndex(index);
                 EchoBullet.ShotBullet(shotParam);
             }
         }

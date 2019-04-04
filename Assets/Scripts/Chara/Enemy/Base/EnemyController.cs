@@ -16,8 +16,6 @@ public class EnemyController : CharaController
 	[SerializeField, Tooltip( "被弾直後の無敵時間" )]
 	private float m_OnHitInvincibleDuration;
 
-    private List<int> m_IndexList;
-
 	/// <summary>
 	/// マスターデータから取得するパラメータセット
 	/// </summary>
@@ -31,13 +29,14 @@ public class EnemyController : CharaController
 
 	private bool m_CanOutDestroy;
 
-    /*
-    今まで当たった弾のインデックスを保持するリスト 
-    */
+    /// <summary>
+    /// 今まで当たった弾のインデックスを保持するリスト 
+    /// </summary>
+    private List<int> m_IndexList;
 
-	#region Getter & Setter
+    #region Getter & Setter
 
-	public StringParamSet GetParamSet()
+    public StringParamSet GetParamSet()
 	{
 		return m_ParamSet;
 	}
@@ -87,12 +86,22 @@ public class EnemyController : CharaController
 
 	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
-        
         /*
          もし、bulletのOwnerがEchoControllerだったら
-         bulletのインデックスを参照し、それがすでにリストの中にあれば処理を中断する
-         なければ、インデックスをリストに追加し処理を続ける
-         */
+         bulletのインデックスを参照し、それがすでにm_IndexListの中にあれば処理を中断する
+         なければ、インデックスをm_IndexListに追加し処理を続ける
+        */
+        if (bullet is EchoBullet b)
+        {
+            if (m_IndexList.Contains(b.GetRootIndex()))
+            {
+                return;
+            }
+            else
+            {
+                m_IndexList.Add(b.GetRootIndex());
+            }
+        }
 
         if ( m_OnHitInvincibleDuration <= 0 )
 		{

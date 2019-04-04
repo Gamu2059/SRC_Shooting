@@ -18,11 +18,16 @@ public class EchoBullet : BulletController
         }
         controller.ShotWaveBullet(index, chara.transform.position);
 
-        Debug.Log(string.Format("index={0}", index));
+        //Debug.Log(string.Format("index={0}", index));
     }
 
-    public static void setIndex(int n)
+    public static void SetIndex(int n)
     {
         index = n;
+    }
+
+    public int GetRootIndex()
+    {
+        return index;
     }
 }
