@@ -95,12 +95,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 		base.OnInitialize();
 
 		m_BattleMainManagers.ForEach( m => m.OnInitialize() );
+        AttachInputAction();
 	}
 
 	public override void OnFinalize()
 	{
 		base.OnFinalize();
 
+        DetachInputAction();
 		m_BattleMainManagers.ForEach( m => m.OnFinalize() );
 	}
 
@@ -130,7 +132,34 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 		base.OnFixedUpdate();
 
 		m_BattleMainManagers.ForEach( m => m.OnFixedUpdate() );
-	}
+
+    }
+
+    /// <summary>
+    /// バトル画面で必要な入力アクションを付与する。
+    /// </summary>
+    private void AttachInputAction()
+    {
+        InputManager.Instance.HorizontalAction += PlayerCharaManager.Instance.OnInputHorizontal;
+        InputManager.Instance.VerticalAction += PlayerCharaManager.Instance.OnInputVertical;
+        InputManager.Instance.ChangeCharaAction += PlayerCharaManager.Instance.OnInputChangeChara;
+        InputManager.Instance.ShotAction += PlayerCharaManager.Instance.OnInputShot;
+        InputManager.Instance.BombAction += PlayerCharaManager.Instance.OnInputBomb;
+        //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
+    }
+
+    /// <summary>
+    /// バトル画面で必要な入力アクションを外す。
+    /// </summary>
+    private void DetachInputAction()
+    {
+        InputManager.Instance.HorizontalAction -= PlayerCharaManager.Instance.OnInputHorizontal;
+        InputManager.Instance.VerticalAction -= PlayerCharaManager.Instance.OnInputVertical;
+        InputManager.Instance.ChangeCharaAction -= PlayerCharaManager.Instance.OnInputChangeChara;
+        InputManager.Instance.ShotAction -= PlayerCharaManager.Instance.OnInputShot;
+        InputManager.Instance.BombAction -= PlayerCharaManager.Instance.OnInputBomb;
+        //InputManager.Instance.MenuAction -= PlayerCharaManager.Instance.OnInputMenu;
+    }
 
 	public void GameOver()
 	{
