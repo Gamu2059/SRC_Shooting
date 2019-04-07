@@ -875,8 +875,6 @@ public class InfC761 : EnemyController
 				break;
 
 			case E_SKILL2_PHASE.WAIT_SHOT_BOMB:
-				Debug.Log( m_SkillShotTimeCount );
-
 				if( m_SkillShotTimeCount >= m_Skill2WaitNextSkill2Time )
 				{
 					m_Skill2Phase = E_SKILL2_PHASE.SHOT_BOMB;
