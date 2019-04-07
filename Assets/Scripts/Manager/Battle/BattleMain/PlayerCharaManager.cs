@@ -25,18 +25,13 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
     [SerializeField]
     private Vector2 m_InitAppearViewportPosition;
 
-    [Header("Key config")]
-
-    [SerializeField]
-    private InputParam m_InputParam;
-
     [Header("Restrict Filed")]
 
     [SerializeField]
-    private Vector2 m_MinViewportRestrict;
+    private Vector2 m_MinLocalPositionRestrict;
 
     [SerializeField]
-    private Vector2 m_MaxViewportRestrict;
+    private Vector2 m_MaxLocalPositionRestrict;
 
     [SerializeField]
     private List<PlayerController> m_Controllers;
@@ -228,17 +223,18 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
             return;
         }
 
-        Vector3 viewPos = CameraManager.Instance.WorldToViewportPoint(chara.transform.position);
-        float x = Mathf.Clamp(viewPos.x, m_MinViewportRestrict.x, m_MaxViewportRestrict.x);
-        float y = Mathf.Clamp(viewPos.y, m_MinViewportRestrict.y, m_MaxViewportRestrict.y);
+        Vector3 pos = chara.transform.localPosition;
+        float x = Mathf.Clamp(pos.x, m_MinLocalPositionRestrict.x, m_MaxLocalPositionRestrict.x);
+        float z = Mathf.Clamp(pos.z, m_MinLocalPositionRestrict.y, m_MaxLocalPositionRestrict.y);
 
-        if (viewPos.x == x && viewPos.y == y)
+        if (pos.x == x && pos.z == z)
         {
             return;
         }
 
-        var pos = CameraManager.Instance.GetViewportWorldPoint(x, y);
-        chara.transform.position = pos;
+        pos.x = x;
+        pos.z = z;
+        chara.transform.localPosition = pos;
     }
 
     /// <summary>
