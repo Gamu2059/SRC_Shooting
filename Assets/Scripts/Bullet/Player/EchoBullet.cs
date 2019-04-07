@@ -16,7 +16,7 @@ public class EchoBullet : BulletController
         {
             index = EchoBulletIndexGenerater.GenerateBulletIndex();
         }
-        controller.ShotWaveBullet(index, chara.transform.position);
+        controller.ShotWaveBullet(index, chara.transform.localPosition);
 
         //Debug.Log(string.Format("index={0}", index));
     }

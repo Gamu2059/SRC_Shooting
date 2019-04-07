@@ -114,7 +114,8 @@ public class EchoController : PlayerController
             {
                 float yAngle = (2 * Mathf.PI / m_RadiateDirection) * (i % 2 == 0 ? i : -i) * Mathf.Rad2Deg;
                 var shotParam = new BulletShotParam(this);
-                shotParam.Position = new Vector3(centerLocalPosition.x + m_WaveRad * Mathf.Sin(Time.deltaTime), 0, centerLocalPosition.z + m_WaveRad * Mathf.Cos(Time.deltaTime));
+                var currentTime = Time.deltaTime;
+                shotParam.Position = new Vector3(centerLocalPosition.x + m_WaveRad * Mathf.Cos(currentTime), centerLocalPosition.y, centerLocalPosition.z + m_WaveRad * Mathf.Sin(currentTime));
                 shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
                 shotParam.BulletIndex = 1;
                 shotParam.OrbitalIndex = 3;
