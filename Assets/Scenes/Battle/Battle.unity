@@ -1053,9 +1053,6 @@ GameObject:
   - component: {fileID: 357313393}
   - component: {fileID: 357313394}
   - component: {fileID: 357313395}
-  - component: {fileID: 357313396}
-  - component: {fileID: 357313397}
-  - component: {fileID: 357313398}
   m_Layer: 0
   m_Name: '[BattleScene]'
   m_TagString: Untagged
@@ -1108,9 +1105,6 @@ MonoBehaviour:
   m_BattleMainManagers:
   - {fileID: 1597879443}
   - {fileID: 992195444}
-  - {fileID: 357313396}
-  - {fileID: 357313397}
-  - {fileID: 357313398}
   m_BattleCommandManagers: []
   m_Score:
     value: 0
@@ -1119,55 +1113,6 @@ MonoBehaviour:
   m_IsBestScore:
     value: 0
   m_PlayerNotDead: 1
---- !u!114 &357313396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357313392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d6a6bf805c5c184cba2d62732c36303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BgmMixer: {fileID: 243452287409929234, guid: 4367a5a38cf0ad84fb892f0415c07bbd,
-    type: 2}
-  m_SeMixer: {fileID: 243915490300920172, guid: 4367a5a38cf0ad84fb892f0415c07bbd,
-    type: 2}
-  m_MaxBGMSource: 1
-  m_AudioInfos:
-  - m_Name: Stage1
-    m_Clip: {fileID: 8300000, guid: 5174ecb4b8243c541b08c3d35376b18d, type: 3}
-  - m_Name: Stage1Boss
-    m_Clip: {fileID: 8300000, guid: 767b8cdc282d3e447a45a8ba46c674b3, type: 3}
---- !u!114 &357313397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357313392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c99a9bd4d8db014f97b7c4b56f57a8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &357313398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357313392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f4fea0652427174d917b9323a4a67ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_GameOverGroup: {fileID: 1284811955}
-  m_GameClearGroup: {fileID: 346521851}
-  m_ScoreText: {fileID: 0}
 --- !u!1 &366129865
 GameObject:
   m_ObjectHideFlags: 0
@@ -5872,11 +5817,16 @@ PrefabInstance:
       propertyPath: m_TargetObject
       value: 
       objectReference: {fileID: 1986466845}
-    - target: {fileID: 3871153532367532177, guid: 13a49f352e7b812448d3584ce73352b3,
+    - target: {fileID: 15298492513902401, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
-      propertyPath: m_PlayerCharaHolder
+      propertyPath: m_GameOverGroup
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1284811955}
+    - target: {fileID: 15298492513902401, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_GameClearGroup
+      value: 
+      objectReference: {fileID: 346521851}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13a49f352e7b812448d3584ce73352b3, type: 3}
 --- !u!4 &1597879442 stripped
