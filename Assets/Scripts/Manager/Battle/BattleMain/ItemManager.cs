@@ -7,71 +7,70 @@ using UnityEngine;
 /// </summary>
 public class ItemManager : SingletonMonoBehavior<ItemManager>
 {
-
     [SerializeField]
-    private Transform m_BulletHolder;
+    private Transform m_ItemHolder;
 
     /// <summary>
-    /// STANDBY状態の弾を保持するリスト。
-    /// </summary>
-    [SerializeField]
-    private List<BulletController> m_StandbyBullets;
-
-    /// <summary>
-    /// UPDATE状態の弾を保持するリスト。
+    /// STANDBY状態のアイテムを保持するリスト。
     /// </summary>
     [SerializeField]
-    private List<BulletController> m_UpdateBullets;
+    private List<ItemController> m_StandbyItems;
 
     /// <summary>
-    /// POOL状態の弾を保持するリスト。
+    /// UPDATE状態のアイテムを保持するリスト。
     /// </summary>
     [SerializeField]
-    private List<BulletController> m_PoolBullets;
+    private List<ItemController> m_UpdateItems;
 
     /// <summary>
-    /// UPDATE状態に遷移する弾のリスト。
+    /// POOL状態のアイテムを保持するリスト。
     /// </summary>
-    private List<BulletController> m_GotoUpdateBullets;
+    [SerializeField]
+    private List<ItemController> m_PoolItems;
 
     /// <summary>
-    /// POOL状態に遷移する弾のリスト。
+    /// UPDATE状態に遷移するアイテムのリスト。
     /// </summary>
-    private List<BulletController> m_GotoPoolBullets;
+    private List<ItemController> m_GotoUpdateItems;
 
     /// <summary>
-    /// STANDBY状態の弾を保持するリストを取得する。
+    /// POOL状態に遷移するアイテムのリスト。
     /// </summary>
-    public List<BulletController> GetStandbyBullets()
+    private List<ItemController> m_GotoPoolItems;
+
+    /// <summary>
+    /// STANDBY状態のアイテムを保持するリストを取得する。
+    /// </summary>
+    public List<ItemController> GetStandbyItems()
     {
-        return m_StandbyBullets;
+        return m_StandbyItems;
     }
 
     /// <summary>
-    /// UPDATE状態の弾を保持するリストを取得する。
+    /// UPDATE状態のアイテムを保持するリストを取得する。
     /// </summary>
-    public List<BulletController> GetUpdateBullets()
+    public List<ItemController> GetUpdateItems()
     {
-        return m_UpdateBullets;
+        return m_UpdateItems;
     }
 
     /// <summary>
-    /// POOL状態の弾を保持するリストを取得する。
+    /// POOL状態のアイテムを保持するリストを取得する。
     /// </summary>
-    public List<BulletController> GetPoolBullets()
+    public List<ItemController> GetPoolItems()
     {
-        return m_PoolBullets;
+        return m_PoolItems;
     }
 
     protected override void OnAwake()
     {
         base.OnAwake();
 
-        m_StandbyBullets = new List<BulletController>();
-        m_UpdateBullets = new List<BulletController>();
-        m_PoolBullets = new List<BulletController>();
-        m_GotoUpdateBullets = new List<BulletController>();
-        m_GotoPoolBullets = new List<BulletController>();
+        m_StandbyItems = new List<ItemController>();
+        m_UpdateItems = new List<ItemController>();
+        m_PoolItems = new List<ItemController>();
+        m_GotoUpdateItems = new List<ItemController>();
+        m_GotoPoolItems = new List<ItemController>();
     }
 
     public override void OnInitialize()
@@ -82,9 +81,9 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     public override void OnFinalize()
     {
         base.OnFinalize();
-        m_StandbyBullets.Clear();
-        m_UpdateBullets.Clear();
-        m_PoolBullets.Clear();
+        m_StandbyItems.Clear();
+        m_UpdateItems.Clear();
+        m_PoolItems.Clear();
     }
 
     public override void OnStart()
@@ -93,20 +92,20 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
 
         if (StageManager.Instance != null && StageManager.Instance.GetBulletHolder() != null)
         {
-            m_BulletHolder = StageManager.Instance.GetBulletHolder().transform;
+            m_ItemHolder = StageManager.Instance.GetBulletHolder().transform;
         }
-        else if (m_BulletHolder == null)
+        else if (m_ItemHolder == null)
         {
-            var obj = new GameObject("[BulletHolder]");
+            var obj = new GameObject("[ItemHolder]");
             obj.transform.position = Vector3.zero;
-            m_BulletHolder = obj.transform;
+            m_ItemHolder = obj.transform;
         }
     }
 
     public override void OnUpdate()
     {
         // Start処理
-        foreach (var bullet in m_StandbyBullets)
+        foreach (var bullet in m_StandbyItems)
         {
             if (bullet == null)
             {
@@ -114,13 +113,13 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
             }
 
             bullet.OnStart();
-            m_GotoUpdateBullets.Add(bullet);
+            m_GotoUpdateItems.Add(bullet);
         }
 
         GotoUpdateFromStandby();
 
         // Update処理
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in m_UpdateItems)
         {
             if (bullet == null)
             {
@@ -134,7 +133,7 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     public override void OnLateUpdate()
     {
         // LateUpdate処理
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in m_UpdateItems)
         {
             if (bullet == null)
             {
@@ -154,19 +153,19 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     /// </summary>
     private void GotoUpdateFromStandby()
     {
-        int count = m_GotoUpdateBullets.Count;
+        int count = m_GotoUpdateItems.Count;
 
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var bullet = m_GotoUpdateBullets[idx];
-            m_GotoUpdateBullets.RemoveAt(idx);
-            m_StandbyBullets.Remove(bullet);
-            m_UpdateBullets.Add(bullet);
-            bullet.SetBulletCycle(BulletController.E_BULLET_CYCLE.UPDATE);
+            var bullet = m_GotoUpdateItems[idx];
+            m_GotoUpdateItems.RemoveAt(idx);
+            m_StandbyItems.Remove(bullet);
+            m_UpdateItems.Add(bullet);
+            bullet.SetItemCycle(ItemController.E_ITEM_CYCLE.UPDATE);
         }
 
-        m_GotoUpdateBullets.Clear();
+        m_GotoUpdateItems.Clear();
     }
 
     /// <summary>
@@ -174,87 +173,95 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     /// </summary>
     private void GotoPoolFromUpdate()
     {
-        int count = m_GotoPoolBullets.Count;
+        int count = m_GotoPoolItems.Count;
 
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var bullet = m_GotoPoolBullets[idx];
-            bullet.SetBulletCycle(BulletController.E_BULLET_CYCLE.POOLED);
-            m_GotoPoolBullets.RemoveAt(idx);
-            m_UpdateBullets.Remove(bullet);
-            m_PoolBullets.Add(bullet);
+            var bullet = m_GotoPoolItems[idx];
+            bullet.SetItemCycle(ItemController.E_ITEM_CYCLE.POOLED);
+            m_GotoPoolItems.RemoveAt(idx);
+            m_UpdateItems.Remove(bullet);
+            m_PoolItems.Add(bullet);
         }
 
-        m_GotoPoolBullets.Clear();
+        m_GotoPoolItems.Clear();
     }
 
     /// <summary>
-    /// 弾をSTANDBY状態にして制御下に入れる。
+    /// アイテムをSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public void CheckStandbyBullet(BulletController bullet)
+    public void CheckStandbyItem(ItemController item)
     {
-        if (bullet == null || !m_PoolBullets.Contains(bullet))
+        if (item == null || !m_PoolItems.Contains(item))
         {
-            Debug.LogError("指定された弾を追加できませんでした。");
+            Debug.LogError("指定されたアイテムを追加できませんでした。");
             return;
         }
 
-        m_PoolBullets.Remove(bullet);
-        m_StandbyBullets.Add(bullet);
-        bullet.gameObject.SetActive(true);
-        bullet.SetBulletCycle(BulletController.E_BULLET_CYCLE.STANDBY_UPDATE);
-        bullet.OnInitialize();
+        m_PoolItems.Remove(item);
+        m_StandbyItems.Add(item);
+        item.gameObject.SetActive(true);
+        item.SetItemCycle(ItemController.E_ITEM_CYCLE.STANDBY_UPDATE);
+        item.OnInitialize();
     }
 
     /// <summary>
-    /// 指定した弾を制御から外すためにチェックする。
+    /// 指定したアイテムを制御から外すためにチェックする。
     /// </summary>
-    public void CheckPoolBullet(BulletController bullet)
+    public void CheckPoolItem(ItemController item)
     {
-        if (bullet == null || m_GotoPoolBullets.Contains(bullet))
+        if (item == null || m_GotoPoolItems.Contains(item))
         {
-            Debug.LogError("指定した弾を削除できませんでした。");
+            Debug.LogError("指定したアイテムを削除できませんでした。");
             return;
         }
 
-        bullet.SetBulletCycle(BulletController.E_BULLET_CYCLE.STANDBY_POOL);
-        bullet.OnFinalize();
-        m_GotoPoolBullets.Add(bullet);
-        bullet.gameObject.SetActive(false);
+        item.SetItemCycle(ItemController.E_ITEM_CYCLE.STANDBY_POOL);
+        item.OnFinalize();
+        m_GotoPoolItems.Add(item);
+        item.gameObject.SetActive(false);
     }
 
     /// <summary>
-    /// プールから弾を取得する。
+    /// プールからアイテムを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    /// <param name="bulletPrefab">取得や生成の情報源となる弾のプレハブ</param>
-    public BulletController GetPoolingBullet(BulletController bulletPrefab)
+    /// <param name="itemPrefab">取得や生成の情報源となるアイテムのプレハブ</param>
+    public ItemController GetPoolingItem(ItemController itemPrefab)
     {
-        if (bulletPrefab == null)
+        if (itemPrefab == null)
         {
             return null;
         }
 
-        string bulletId = bulletPrefab.GetBulletGroupId();
-        BulletController bullet = null;
+        string bulletId = itemPrefab.GetItemGroupId();
+        ItemController item = null;
 
-        foreach (var b in m_PoolBullets)
+        foreach (var i in m_PoolItems)
         {
-            if (b != null && b.GetBulletGroupId() == bulletId)
+            if (i != null && i.GetItemGroupId() == bulletId)
             {
-                bullet = b;
+                item = i;
                 break;
             }
         }
 
-        if (bullet == null)
+        if (item == null)
         {
-            bullet = Instantiate(bulletPrefab);
-            bullet.transform.SetParent(m_BulletHolder);
-            m_PoolBullets.Add(bullet);
+            item = Instantiate(itemPrefab);
+            item.transform.SetParent(m_ItemHolder);
+            m_PoolItems.Add(item);
         }
 
-        return bullet;
+        return item;
+    }
+
+    /// <summary>
+    /// 指定した座標から指定した情報でアイテムを生成する。
+    /// </summary>
+    public void CreateItem(Vector3 position, ItemCreateParam param)
+    {
+
     }
 }

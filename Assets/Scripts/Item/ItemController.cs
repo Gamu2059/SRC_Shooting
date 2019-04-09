@@ -33,12 +33,40 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
         POOLED,
     }
 
+    [SerializeField]
+    private string m_ItemGroupId;
+
     private BattleObjectCollider m_Collider;
 
+    private E_ITEM_CYCLE m_ItemCycle;
+
+
+
+    #region Get Set
+
+    public string GetItemGroupId()
+    {
+        return m_ItemGroupId;
+    }
+
+    public E_ITEM_CYCLE GetItemCycle()
+    {
+        return m_ItemCycle;
+    }
+
+    public void SetItemCycle(E_ITEM_CYCLE value)
+    {
+        m_ItemCycle = value;
+    }
+
+    #endregion
+
+
+
     /// <summary>
-	/// この弾が発射された瞬間に呼び出される処理。
-	/// </summary>
-	public override void OnInitialize()
+    /// この弾が発射された瞬間に呼び出される処理。
+    /// </summary>
+    public override void OnInitialize()
     {
         base.OnInitialize();
 
