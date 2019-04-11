@@ -139,7 +139,7 @@ public class TestStageController : ControllableMonoBehaviour
 
 			enemy.SetBulletSetParam( m_StageEnemyParam.GetBulletSets()[data.BulletSetId] );
 
-			var pos = CameraManager.Instance.GetViewportWorldPoint( data.AppearViewportX, data.AppearViewportY );
+            var pos = EnemyCharaManager.Instance.GetPositionFromFieldViewPortPosition(data.AppearViewportX, data.AppearViewportY);
 			pos.x += data.AppearOffsetX;
 			pos.y += data.AppearOffsetY;
 			pos.z += data.AppearOffsetZ;

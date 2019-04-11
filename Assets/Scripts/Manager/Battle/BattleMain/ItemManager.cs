@@ -7,8 +7,25 @@ using UnityEngine;
 /// </summary>
 public class ItemManager : SingletonMonoBehavior<ItemManager>
 {
+    #region Field Inspector
+
+    /// <summary>
+    /// アイテムオブジェクトを保持する。
+    /// </summary>
     [SerializeField]
     private Transform m_ItemHolder;
+
+    /// <summary>
+    /// アイテムのプレハブ群。
+    /// </summary>
+    [SerializeField]
+    private ItemController[] m_ItemPrefabs;
+
+    /// <summary>
+    /// アイテムに適用する軌道パラメータ。
+    /// </summary>
+    [SerializeField]
+    private BulletOrbitalParam m_ItemOrbitalParam;
 
     /// <summary>
     /// STANDBY状態のアイテムを保持するリスト。
@@ -38,6 +55,13 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     /// </summary>
     private List<ItemController> m_GotoPoolItems;
 
+    #endregion
+
+    private Dictionary<E_ITEM_TYPE, ItemController> m_ItemPrefabCache;
+
+
+    #region Get
+
     /// <summary>
     /// STANDBY状態のアイテムを保持するリストを取得する。
     /// </summary>
@@ -62,6 +86,10 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
         return m_PoolItems;
     }
 
+    #endregion
+
+
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -71,6 +99,8 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
         m_PoolItems = new List<ItemController>();
         m_GotoUpdateItems = new List<ItemController>();
         m_GotoPoolItems = new List<ItemController>();
+
+        m_ItemPrefabCache = new Dictionary<E_ITEM_TYPE, ItemController>();
     }
 
     public override void OnInitialize()
@@ -90,9 +120,9 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     {
         base.OnStart();
 
-        if (StageManager.Instance != null && StageManager.Instance.GetBulletHolder() != null)
+        if (StageManager.Instance != null && StageManager.Instance.GetItemHolder() != null)
         {
-            m_ItemHolder = StageManager.Instance.GetBulletHolder().transform;
+            m_ItemHolder = StageManager.Instance.GetItemHolder().transform;
         }
         else if (m_ItemHolder == null)
         {
@@ -235,12 +265,12 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
             return null;
         }
 
-        string bulletId = itemPrefab.GetItemGroupId();
+        E_ITEM_TYPE itemType = itemPrefab.GetItemType();
         ItemController item = null;
 
         foreach (var i in m_PoolItems)
         {
-            if (i != null && i.GetItemGroupId() == bulletId)
+            if (i != null && i.GetItemType() == itemType)
             {
                 item = i;
                 break;
@@ -258,10 +288,72 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     }
 
     /// <summary>
+    /// アイテムの種類を指定してアイテムプレハブを取得する。
+    /// なければnullを返す。
+    /// </summary>
+    public ItemController GetItemPrefabFromItemType(E_ITEM_TYPE itemType)
+    {
+        // キャッシュされていれば、それを返す
+        if (m_ItemPrefabCache.ContainsKey(itemType))
+        {
+            var item = m_ItemPrefabCache[itemType];
+            if (item != null)
+            {
+                return item;
+            }
+        }
+
+        foreach(var item in m_ItemPrefabs)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (item.GetItemType() == itemType)
+            {
+                m_ItemPrefabCache.Add(itemType, item);
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// 指定した座標から指定した情報でアイテムを生成する。
     /// </summary>
+    /// 
+    /// <param name="position">生成座標</param>
+    /// <param name="param">アイテムの生成情報</param>
+
     public void CreateItem(Vector3 position, ItemCreateParam param)
     {
+        foreach(var spreadParam in param.ItemSpreadParams)
+        {
+            var prefab = GetItemPrefabFromItemType(spreadParam.ItemType);
+            if (prefab == null)
+            {
+                continue;
+            }
 
+            var item = GetPoolingItem(prefab);
+            item.transform.SetParent(m_ItemHolder);
+
+            if (spreadParam.ItemType == param.CenterCreateItemType)
+            {
+                item.SetPosition(position);
+            } else
+            {
+                float r = spreadParam.SpreadRadius;
+                float x = Random.Range(-r, r);
+                float zR = Mathf.Sqrt(r * r - x * x);
+                float z = Random.Range(-zR, zR);
+                item.SetPosition(position + new Vector3(x, 0, z));
+            }
+
+            item.ChangeOrbital(m_ItemOrbitalParam);
+            CheckStandbyItem(item);
+        }
     }
 }

@@ -25,14 +25,6 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
     [SerializeField]
     private Vector2 m_InitAppearViewportPosition;
 
-    [Header("Restrict Filed")]
-
-    [SerializeField]
-    private Vector2 m_MinLocalPositionRestrict;
-
-    [SerializeField]
-    private Vector2 m_MaxLocalPositionRestrict;
-
     [SerializeField]
     private List<PlayerController> m_Controllers;
 
@@ -223,18 +215,7 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
             return;
         }
 
-        Vector3 pos = chara.transform.localPosition;
-        float x = Mathf.Clamp(pos.x, m_MinLocalPositionRestrict.x, m_MaxLocalPositionRestrict.x);
-        float z = Mathf.Clamp(pos.z, m_MinLocalPositionRestrict.y, m_MaxLocalPositionRestrict.y);
-
-        if (pos.x == x && pos.z == z)
-        {
-            return;
-        }
-
-        pos.x = x;
-        pos.z = z;
-        chara.transform.localPosition = pos;
+        StageManager.Instance.ClampMovingObjectPosition(chara.transform);
     }
 
     /// <summary>
