@@ -232,6 +232,39 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 		Damage( 1 );
 	}
 
+    /// <summary>
+    /// 他のキャラがこのキャラに当たった場合のコールバック。
+    /// </summary>
+    /// <param name="hitChara">当った他のキャラ</param>
+    /// <param name="hitData">他のキャラの当たったデータ</param>
+    /// <param name="sufferData">このキャラの当たったデータ</param>
+    public virtual void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
+    {
+
+    }
+
+    /// <summary>
+    /// このキャラが他のキャラに当たった場合のコールバック。
+    /// </summary>
+    /// <param name="sufferChara">当った他のキャラ</param>
+    /// <param name="hitData">このキャラの当たったデータ</param>
+    /// <param name="sufferData">他のキャラの当たったデータ</param>
+    public virtual void OnHitChara(CharaController sufferChara, ColliderData hitData, ColliderData sufferData)
+    {
+
+    }
+
+    /// <summary>
+    /// このキャラがアイテムに当たった場合のコールバック。
+    /// </summary>
+    /// <param name="sufferItem">当ったアイテム</param>
+    /// <param name="hitData">このキャラの当たったデータ</param>
+    /// <param name="sufferData">アイテムの当たったデータ</param>
+    public virtual void OnHitItem(ItemController sufferItem, ColliderData hitData, ColliderData sufferData)
+    {
+
+    }
+
 	/// <summary>
 	/// 複数の弾を拡散させたい時の拡散角度のリストを取得する。
 	/// </summary>

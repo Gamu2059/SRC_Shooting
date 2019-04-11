@@ -38,6 +38,9 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     private E_ITEM_TYPE m_ItemType;
 
     [SerializeField]
+    private int m_Point;
+
+    [SerializeField]
     private Transform m_LookCameraTransform;
 
 
@@ -115,6 +118,14 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     public void SetItemCycle(E_ITEM_CYCLE value)
     {
         m_ItemCycle = value;
+    }
+
+    /// <summary>
+    /// このアイテムのポイントを取得する。
+    /// </summary>
+    public int GetPoint()
+    {
+        return m_Point;
     }
 
     /// <summary>
@@ -448,5 +459,16 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     public virtual void OnSuffer(BulletController bullet, ColliderData colliderData)
     {
 
+    }
+
+    /// <summary>
+    /// 他のキャラがこのアイテムに当たった場合のコールバック。
+    /// </summary>
+    /// <param name="hitChara">当った他のキャラ</param>
+    /// <param name="hitData">他のキャラの当たったデータ</param>
+    /// <param name="sufferData">このアイテムの当たったデータ</param>
+    public virtual void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
+    {
+        DestroyItem();
     }
 }

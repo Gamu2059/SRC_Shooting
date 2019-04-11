@@ -182,9 +182,36 @@ public class PlayerController : CharaController
 	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 		base.OnSuffer( bullet, colliderData );
-	}
+    }
 
-	public int GetLevel()
+    public override void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
+    {
+        base.OnSufferChara(hitChara, hitData, sufferData);
+        Damage(1);
+    }
+
+    public override void OnHitItem(ItemController sufferItem, ColliderData hitData, ColliderData sufferData)
+    {
+        base.OnHitItem(sufferItem, hitData, sufferData);
+
+        switch(sufferItem.GetItemType())
+        {
+            case E_ITEM_TYPE.SMALL_SCORE:
+            case E_ITEM_TYPE.BIG_SCORE:
+                break;
+            case E_ITEM_TYPE.SMALL_SCORE_UP:
+            case E_ITEM_TYPE.BIG_SCORE_UP:
+                break;
+            case E_ITEM_TYPE.SMALL_EXP:
+            case E_ITEM_TYPE.BIG_EXP:
+                break;
+            case E_ITEM_TYPE.SMALL_BOMB:
+            case E_ITEM_TYPE.BIG_BOMB:
+                break;
+        }
+    }
+
+    public int GetLevel()
 	{
 		return m_Lv;
 	}
