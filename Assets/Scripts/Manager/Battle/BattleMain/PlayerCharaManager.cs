@@ -96,11 +96,11 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
             m_PlayerCharaHolder = obj.transform;
         }
 
+        var pos = GetInitAppearPosition();
         foreach (var charaPrefab in m_CharaPrefabs)
         {
             var chara = Instantiate(charaPrefab);
             RegistChara(chara);
-            var pos = CameraManager.Instance.GetViewportWorldPoint(m_InitAppearViewportPosition.x, m_InitAppearViewportPosition.y);
             chara.transform.position = pos;
         }
     }
@@ -134,32 +134,6 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
         RestrictCharaPosition();
         m_CurrentController.OnLateUpdate();
         m_CharaMoveDir = Vector3.zero;
-    }
-
-    private bool IsGetKeyDown(KeyCode[] targetKeys, bool additionalCondition = false)
-    {
-        foreach (var key in targetKeys)
-        {
-            if (Input.GetKeyDown(key))
-            {
-                return true;
-            }
-        }
-
-        return additionalCondition;
-    }
-
-    private bool IsGetKey(KeyCode[] targetKeys, bool additionalCondition = false)
-    {
-        foreach (var key in targetKeys)
-        {
-            if (Input.GetKey(key))
-            {
-                return true;
-            }
-        }
-
-        return additionalCondition;
     }
 
     private void ChangeChara(int index)
@@ -216,6 +190,22 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
         }
 
         StageManager.Instance.ClampMovingObjectPosition(chara.transform);
+    }
+
+    /// <summary>
+    /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
+    /// </summary>
+    public Vector3 GetInitAppearPosition()
+    {
+        var minPos = StageManager.Instance.GetMinLocalPositionField();
+        var maxPos = StageManager.Instance.GetMaxLocalPositionField();
+
+        var factX = (maxPos.x - minPos.x) * m_InitAppearViewportPosition.x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * m_InitAppearViewportPosition.y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+
+        return pos;
     }
 
     /// <summary>

@@ -9,32 +9,6 @@ using System;
 [RequireComponent( typeof( BattleObjectCollider ) )]
 public class BulletController : ControllableMonoBehaviour, ICollisionBase
 {
-	[Serializable]
-	public enum E_BULLET_CYCLE
-	{
-		/// <summary>
-		/// 発射される直前。
-		/// </summary>
-		STANDBY_UPDATE,
-
-		/// <summary>
-		/// 発射された後、動いている状態。
-		/// </summary>
-		UPDATE,
-
-		/// <summary>
-		/// プールされる準備状態。
-		/// </summary>
-		STANDBY_POOL,
-
-		/// <summary>
-		/// プーリングされた状態。
-		/// </summary>
-		POOLED,
-	}
-
-
-
 	#region Field Inspector
 
 	/// <summary>
@@ -56,7 +30,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// この弾がプレイヤー側と敵側のどちらに属しているか。
 	/// 同じ値同士を持つ弾やキャラには被弾しない。
 	/// </summary>
-	private CharaController.E_CHARA_TROOP m_Troop;
+	private E_CHARA_TROOP m_Troop;
 
 	/// <summary>
 	/// 弾を発射したキャラ。
@@ -179,7 +153,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// この弾がプレイヤー側と敵側のどちらに属しているか。
 	/// 同じ値同士を持つ弾やキャラには被弾しない。
 	/// </summary>
-	public CharaController.E_CHARA_TROOP GetTroop()
+	public E_CHARA_TROOP GetTroop()
 	{
 		return m_Troop;
 	}
@@ -187,7 +161,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// <summary>
 	/// この弾がプレイヤー側と敵側のどちらに属しているかを設定する。
 	/// </summary>
-	public void SetTroop( CharaController.E_CHARA_TROOP troop )
+	public void SetTroop( E_CHARA_TROOP troop )
 	{
 		m_Troop = troop;
 	}
@@ -823,7 +797,7 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	public CharaController GetNearestEnemy()
 	{
-		if( m_Troop == CharaController.E_CHARA_TROOP.ENEMY )
+		if( m_Troop == E_CHARA_TROOP.ENEMY )
 		{
 			return PlayerCharaManager.Instance.GetCurrentController();
 		}

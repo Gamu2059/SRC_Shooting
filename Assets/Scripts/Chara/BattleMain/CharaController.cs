@@ -8,24 +8,6 @@ using UnityEngine;
 [RequireComponent( typeof( BattleObjectCollider ) )]
 public class CharaController : ControllableMonoBehaviour, ICollisionBase
 {
-	/// <summary>
-	/// キャラの所属。
-	/// </summary>
-	public enum E_CHARA_TROOP
-	{
-		/// <summary>
-		/// プレイヤーキャラ。
-		/// </summary>
-		PLAYER,
-
-		/// <summary>
-		/// 敵キャラ。
-		/// </summary>
-		ENEMY,
-	}
-
-
-
 	#region Field Inspector
 
 	[Header( "キャラの基礎パラメータ" )]
