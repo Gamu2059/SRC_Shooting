@@ -9,6 +9,6 @@ public class PreLaunchScene : BaseScene
 	/// </summary>
 	protected void Start()
 	{
-		BaseSceneManager.Instance.LoadStartScene();
+		BaseSceneManager.Instance.LoadOnGameStart();
 	}
 }

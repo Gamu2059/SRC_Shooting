@@ -24,6 +24,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 		BATTLE = 4,
 		TITLE = 5,
+        COMMAND_TEST = 6,
 	}
 
 	/// <summary>
@@ -97,6 +98,14 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 	private FloatReactiveProperty m_ProgressProperty;
 
+    /// <summary>
+    /// 起動した瞬間にいたシーンから始めるかどうかを取得する。
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStartFromBeginningScene()
+    {
+        return m_IsStartFromBeginningScene;
+    }
 
 	/// <summary>
 	/// Unityのプレイ開始時にいたシーンの値を設定する。
@@ -185,13 +194,6 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 
 
-	/// <summary>
-	/// Unityを開いた時にいたシーンに遷移する。
-	/// </summary>
-	public void LoadBeginScene()
-	{
-		LoadScene( ms_BeginScene );
-	}
 
 	/// <summary>
 	/// シーン遷移する。
@@ -535,18 +537,13 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 	public void LoadOnGameStart()
 	{
-		if( m_IsStartFromBeginningScene )
-		{
-			LoadBeginScene();
-		}
+		if( m_IsStartFromBeginningScene && ms_BeginScene != E_SCENE.PRE_LAUNCH)
+        {
+            LoadScene(ms_BeginScene);
+        }
 		else
-		{
-			LoadStartScene();
-		}
-	}
-
-	public void LoadStartScene()
-	{
-		Instance.LoadScene( m_StartScene );
+        {
+            LoadScene(m_StartScene);
+        }
 	}
 }
