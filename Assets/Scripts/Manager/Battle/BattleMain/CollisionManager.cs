@@ -35,48 +35,58 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 	/// </summary>
 	public void CheckCollision()
 	{
-		var bullets = BulletManager.Instance.GetUpdateBullets();
-
-		foreach( var bullet in bullets )
-		{
-			ColliderData[] colliderDatas = bullet.GetColliderData();
-
-			// 弾同士の当たり判定処理
-			if( bullet.CanHitBullet() )
-			{
-				foreach( var targetBullet in bullets )
-				{
-					if( bullet != targetBullet )
-					{
-						BulletCollide( bullet, targetBullet, colliderDatas );
-					}
-
-				}
-			}
-
-			// 弾とキャラの当たり判定処理
-			if( bullet.GetTroop() == CharaController.E_CHARA_TROOP.ENEMY )
-			{
-				var targetChara = PlayerCharaManager.Instance.GetCurrentController();
-
-				CharaCollide( bullet, targetChara, colliderDatas );
-			}
-			else
-			{
-				var charaList = EnemyCharaManager.Instance.GetUpdateEnemies();
-
-				foreach( var targetChara in charaList )
-				{
-					CharaCollide( bullet, targetChara, colliderDatas );
-				}
-			}
-		}
+        OnCheckCollisionBullet();
+        OnCheckCollisionChara();
+        OnCheckCollisionItem();
 	}
+
+    /// <summary>
+    /// 弾に関する衝突判定
+    /// </summary>
+    private void OnCheckCollisionBullet()
+    {
+        var bullets = BulletManager.Instance.GetUpdateBullets();
+
+        foreach (var bullet in bullets)
+        {
+            ColliderData[] colliderDatas = bullet.GetColliderData();
+
+            // 弾同士の当たり判定処理
+            if (bullet.CanHitBullet())
+            {
+                foreach (var targetBullet in bullets)
+                {
+                    if (bullet != targetBullet)
+                    {
+                        OnBulletCollide(bullet, targetBullet, colliderDatas);
+                    }
+
+                }
+            }
+
+            // 弾とキャラの当たり判定処理
+            if (bullet.GetTroop() == CharaController.E_CHARA_TROOP.ENEMY)
+            {
+                var targetChara = PlayerCharaManager.Instance.GetCurrentController();
+
+                OnCharaCollide(bullet, targetChara, colliderDatas);
+            }
+            else
+            {
+                var charaList = EnemyCharaManager.Instance.GetUpdateEnemies();
+
+                foreach (var targetChara in charaList)
+                {
+                    OnCharaCollide(bullet, targetChara, colliderDatas);
+                }
+            }
+        }
+    }
 
 	/// <summary>
 	/// 弾同士の衝突判定。
 	/// </summary>
-	private void BulletCollide( BulletController bullet, BulletController target, ColliderData[] bulletDatas )
+	private void OnBulletCollide( BulletController bullet, BulletController target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
 
@@ -98,7 +108,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 	/// <summary>
 	/// 弾とキャラの衝突判定。
 	/// </summary>
-	private void CharaCollide( BulletController bullet, CharaController target, ColliderData[] bulletDatas )
+	private void OnCharaCollide( BulletController bullet, CharaController target, ColliderData[] bulletDatas )
 	{
 		ColliderData[] targetDatas = target.GetColliderData();
 
@@ -117,10 +127,78 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 		}
 	}
 
-	/// <summary>
-	/// 二つの衝突情報が、互いに衝突しているかを判定する。
-	/// </summary>
-	public bool IsCollide( ColliderData collider1, ColliderData collider2 )
+    /// <summary>
+    /// キャラ同士に関する衝突判定
+    /// </summary>
+    private void OnCheckCollisionChara()
+    {
+        var player = PlayerCharaManager.Instance.GetCurrentController();
+        var enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
+
+        foreach (var enemy in enemies)
+        {
+            OnCharaCollide(enemy, player);
+        }
+    }
+
+    private void OnCharaCollide(CharaController chara1, CharaController chara2)
+    {
+        var chara1Datas = chara1.GetColliderData();
+        var chara2Datas = chara2.GetColliderData();
+
+        foreach(var baseData in chara1Datas)
+        {
+            foreach(var targetData in chara2Datas)
+            {
+                bool isHit = IsCollide(baseData, targetData);
+
+                if (isHit)
+                {
+                    chara2.OnSufferChara(chara1, baseData, targetData);
+                    chara1.OnHitChara(chara2, baseData, targetData);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// アイテムに関する衝突判定
+    /// </summary>
+    private void OnCheckCollisionItem()
+    {
+        var player = PlayerCharaManager.Instance.GetCurrentController();
+        var items = ItemManager.Instance.GetUpdateItems();
+
+        foreach(var item in items)
+        {
+            OnItemCollide(player, item);
+        }
+    }
+
+    private void OnItemCollide(CharaController player, ItemController item)
+    {
+        var charaDatas = player.GetColliderData();
+        var itemDatas = item.GetColliderData();
+
+        foreach (var baseData in charaDatas)
+        {
+            foreach (var targetData in itemDatas)
+            {
+                bool isHit = IsCollide(baseData, targetData);
+
+                if (isHit)
+                {
+                    item.OnSufferChara(player, baseData, targetData);
+                    player.OnHitItem(item, baseData, targetData);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 二つの衝突情報が、互いに衝突しているかを判定する。
+    /// </summary>
+    public bool IsCollide( ColliderData collider1, ColliderData collider2 )
 	{
 		if( collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.RECT )
 		{
@@ -201,33 +279,14 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 		float sin = Mathf.Sin( ellipse.Angle * Mathf.Deg2Rad );
 		float scaleRate = ellipse.Size.x / ellipse.Size.y;
 
-		//Debug.Log( "Corner" );
-		//Debug.Log( "CenterPos:" + rect.CenterPos + ", Size:" + rect.Size + ", Angle:" + rect.Angle );
-
-		//for( int i = 0; i < corners.Length; i++ )
-		//{
-		//	Debug.Log( corners[i] );
-		//}
-
-		//Debug.Log( "Ellipse" );
-		//Debug.Log( "CenterPos:" + ellipse.CenterPos + ", Size:" + ellipse.Size + ", Angle:" + ellipse.Angle );
-
 		for( int i = 0; i < corners.Length; i++ )
 		{
 			Vector2 offset = corners[i] - ellipse.CenterPos;
 			float x = offset.x * cos + offset.y * sin;
 			float y = scaleRate * ( -offset.x * sin + offset.y * cos );
 
-			//Debug.Log( "corner " + corners[i] );
-			//Debug.Log( "offset x " + offset.x + ", y " + offset.y );
-			//Debug.Log( "sin" + sin + " cos" + cos );
-			//Debug.Log( "x " + x + " y " + y );
-			//Debug.Log( "sqrDist : " + ( x * x + y * y ) );
-			//Debug.Log( "ellipse sqrSize : " + ellipse.Size.x * ellipse.Size.x );
-
 			if( x * x + y * y <= ellipse.Size.x * ellipse.Size.x )
 			{
-				//Debug.LogError( "Hit!" );
 				return true;
 			}
 		}

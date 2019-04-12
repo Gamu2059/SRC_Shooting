@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class EnemyController : CharaController
 {
-	[Space()]
-	[Header( "敵専用 パラメータ" )]
+    [Space()]
+    [Header("敵専用 パラメータ")]
+
+    [SerializeField, Tooltip("アイテムの生成情報")]
+    private ItemCreateParam m_ItemCreateParam;
 
 	[SerializeField, Tooltip( "ボスかどうか" )]
 	private bool m_IsBoss;
@@ -116,6 +119,7 @@ public class EnemyController : CharaController
 
 		DestroyAllTimer();
 		EnemyCharaManager.Instance.DestroyEnemy( this );
+        ItemManager.Instance.CreateItem(transform.localPosition, m_ItemCreateParam);
 	}
 
 	/// <summary>

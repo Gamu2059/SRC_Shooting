@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using System;
 using UniRx;
 
 /// <summary>
@@ -59,36 +59,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 	}
 
 
-	public void SubscribeScore( System.IObserver<int> action )
-	{
-		if( m_Score == null )
-		{
-			return;
-		}
-
-		m_Score.Subscribe( action );
-	}
-
-	public void SubscribeBestScore( System.IObserver<int> action )
-	{
-		if( m_BestScore == null )
-		{
-			return;
-		}
-
-		m_BestScore.Subscribe( action );
-	}
-
-	public void SubscribeIsBestScore( System.IObserver<bool> action )
-	{
-		if( m_IsBestScore == null )
-		{
-			return;
-		}
-
-		m_IsBestScore.Subscribe( action );
-	}
-
+    public IntReactiveProperty GetScorePoperty()
+    {
+        return m_Score;
+    }
+    public IntReactiveProperty GetBestScorePoperty()
+    {
+        return m_BestScore;
+    }
+    public BoolReactiveProperty GetIsBestScorePoperty()
+    {
+        return m_IsBestScore;
+    }
 
 	public override void OnInitialize()
 	{
@@ -145,6 +127,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         InputManager.Instance.ChangeCharaAction += PlayerCharaManager.Instance.OnInputChangeChara;
         InputManager.Instance.ShotAction += PlayerCharaManager.Instance.OnInputShot;
         InputManager.Instance.BombAction += PlayerCharaManager.Instance.OnInputBomb;
+        InputManager.Instance.MenuAction += ItemManager.Instance.OnAttractAction;
         //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
     }
 
@@ -158,9 +141,13 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         InputManager.Instance.ChangeCharaAction -= PlayerCharaManager.Instance.OnInputChangeChara;
         InputManager.Instance.ShotAction -= PlayerCharaManager.Instance.OnInputShot;
         InputManager.Instance.BombAction -= PlayerCharaManager.Instance.OnInputBomb;
+        InputManager.Instance.MenuAction -= ItemManager.Instance.OnAttractAction;
         //InputManager.Instance.MenuAction -= PlayerCharaManager.Instance.OnInputMenu;
     }
 
+    /// <summary>
+    /// ゲームクリアにする。
+    /// </summary>
 	public void GameOver()
 	{
 		BattleMainUiManager.Instance.ShowGameOver();
@@ -172,6 +159,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 		TimerManager.Instance.RegistTimer( timer );
 	}
 
+    /// <summary>
+    /// ゲームオーバーにする。
+    /// </summary>
 	public void GameClear()
 	{
 		if( m_IsBestScore.Value )

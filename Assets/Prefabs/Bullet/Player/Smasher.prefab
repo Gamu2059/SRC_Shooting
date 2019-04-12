@@ -726,7 +726,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 1
+  - CollideName: HOGE
+    ColliderType: 1
     Transform: {fileID: 2303494924641994316}
   m_CanHitOtherBullet: 0
 --- !u!114 &192641982
@@ -748,7 +749,7 @@ MonoBehaviour:
   m_MaxHp: 0
   m_Lv: 1
   m_Exp: 0
-  m_MoveSpeed: 15
+  m_MoveSpeed: 20
   m_LifeCycle: 0
   m_Protectors:
   - {fileID: 1215113176688278961}
