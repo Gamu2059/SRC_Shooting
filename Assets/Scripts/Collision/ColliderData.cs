@@ -8,10 +8,15 @@ using UnityEngine;
 [System.Serializable]
 public struct ColliderData
 {
-	/// <summary>
-	/// 矩形か楕円か。
-	/// </summary>
-	public E_COLLIDER_SHAPE ColliderType;
+    /// <summary>
+    /// 衝突判定の名前。
+    /// </summary>
+    public string CollideName;
+
+    /// <summary>
+    /// 矩形か楕円か。
+    /// </summary>
+    public E_COLLIDER_SHAPE ColliderType;
 
 	/// <summary>
 	/// 中心座標。

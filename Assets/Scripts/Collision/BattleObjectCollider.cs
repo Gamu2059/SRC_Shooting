@@ -33,6 +33,7 @@ public class BattleObjectCollider : MonoBehaviour
 			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
 			c.Angle = -t.eulerAngles.y;
 			c.ColliderType = m_ColliderTransforms[i].ColliderType;
+            c.CollideName = m_ColliderTransforms[i].CollideName;
 
 			colliders[i] = c;
 		}

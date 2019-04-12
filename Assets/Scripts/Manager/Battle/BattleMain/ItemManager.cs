@@ -29,6 +29,12 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     private BulletOrbitalParam m_ItemOrbitalParam;
 
     /// <summary>
+    /// アイテムの吸引強度。
+    /// </summary>
+    [SerializeField]
+    private float m_ItemAttractRate;
+
+    /// <summary>
     /// STANDBY状態のアイテムを保持するリスト。
     /// </summary>
     [SerializeField]
@@ -62,6 +68,14 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
 
 
     #region Get
+
+    /// <summary>
+    /// アイテムの吸引強度を取得する。
+    /// </summary>
+    public float GetItemAttractRate()
+    {
+        return m_ItemAttractRate;
+    }
 
     /// <summary>
     /// STANDBY状態のアイテムを保持するリストを取得する。
@@ -356,5 +370,26 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
             item.ChangeOrbital(m_ItemOrbitalParam);
             CheckStandbyItem(item);
         }
+    }
+
+    /// <summary>
+    /// 全てのアイテムを吸引状態にする。
+    /// </summary>
+    public void AttractAllItem()
+    {
+        foreach(var item in m_StandbyItems)
+        {
+            item.AttractPlayer();
+        }
+
+        foreach(var item in m_UpdateItems)
+        {
+            item.AttractPlayer();
+        }
+    }
+
+    public void OnAttractAction(InputManager.E_INPUT_STATE state)
+    {
+        AttractAllItem();
     }
 }

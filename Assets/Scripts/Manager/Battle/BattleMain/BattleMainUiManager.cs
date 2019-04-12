@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using UniRx;
 
 /// <summary>
 /// BattleMainのUIを管理する。
@@ -23,7 +25,14 @@ public class BattleMainUiManager : SingletonMonoBehavior<BattleMainUiManager>
 
 		HideGameClear();
 		HideGameOver();
+
+        SubscribeUiEvent();
 	}
+
+    private void SubscribeUiEvent()
+    {
+        BattleManager.Instance.GetScorePoperty().Subscribe((x)=>UpdateScore(x));
+    }
 
 	public void ShowGameOver()
 	{
@@ -44,4 +53,14 @@ public class BattleMainUiManager : SingletonMonoBehavior<BattleMainUiManager>
 	{
 		m_GameClearGroup.SetActive( false );
 	}
+
+    public void UpdateScore(int score)
+    {
+        if (m_ScoreText == null)
+        {
+            return;
+        }
+
+        m_ScoreText.text = string.Format("Score : {0}", score);
+    }
 }

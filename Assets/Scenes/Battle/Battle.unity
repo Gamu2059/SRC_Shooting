@@ -5882,6 +5882,11 @@ PrefabInstance:
       propertyPath: m_GameClearGroup
       value: 
       objectReference: {fileID: 346521851}
+    - target: {fileID: 15298492513902401, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_ScoreText
+      value: 
+      objectReference: {fileID: 1062923976}
     - target: {fileID: 9116061731419416957, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
       propertyPath: m_BehaviorList.Array.size
@@ -5902,6 +5907,17 @@ PrefabInstance:
       propertyPath: m_BehaviorList.Array.data[8]
       value: 
       objectReference: {fileID: 1597879446}
+    - target: {fileID: 3871153532367532177, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_CharaPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871153532367532177, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_CharaPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8524009715119107619, guid: f1e5085ede72a304ca1d068b898062b5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13a49f352e7b812448d3584ce73352b3, type: 3}
 --- !u!4 &1597879442 stripped
@@ -5990,6 +6006,7 @@ MonoBehaviour:
     LerpRelative: 1
     OptionObjectParams: []
     OptionValueParams: []
+  m_ItemAttractRate: 0.5
   m_StandbyItems: []
   m_UpdateItems: []
   m_PoolItems: []

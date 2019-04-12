@@ -194,10 +194,16 @@ public class PlayerController : CharaController
     {
         base.OnHitItem(sufferItem, hitData, sufferData);
 
+        if (sufferData.CollideName != ItemController.GAIN_COLLIDE)
+        {
+            return;
+        }
+
         switch(sufferItem.GetItemType())
         {
             case E_ITEM_TYPE.SMALL_SCORE:
             case E_ITEM_TYPE.BIG_SCORE:
+                BattleManager.Instance.AddScore(sufferItem.GetPoint());
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
             case E_ITEM_TYPE.BIG_SCORE_UP:

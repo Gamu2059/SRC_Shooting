@@ -9,6 +9,10 @@ using System;
 [RequireComponent(typeof(BattleObjectCollider))]
 public class ItemController : ControllableMonoBehaviour, ICollisionBase
 {
+    public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
+    public const string GAIN_COLLIDE = "GAIN COLLIDE";
+
+
     [Serializable]
     public enum E_ITEM_CYCLE
     {
@@ -89,6 +93,11 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     /// 非表示になって破棄されるかどうか。
     /// </summary>
     private bool m_CanOutDestroy;
+
+    /// <summary>
+    /// 引き寄せられるかどうか。
+    /// </summary>
+    private bool m_IsAttract;
 
     #endregion
 
@@ -297,6 +306,7 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
 
         m_NowRotateAngle = 0;
         m_CanOutDestroy = false;
+        m_IsAttract = false;
     }
 
     public override void OnFinalize()
@@ -306,12 +316,20 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
 
     public override void OnUpdate()
     {
-        SetNowSpeed(GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE);
-
         var speed = GetNowSpeed() * Time.deltaTime;
-        SetPosition(transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE);
 
-        SetNowLifeTime(Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE);
+        if (!m_IsAttract) {
+            SetNowSpeed(GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE);
+            SetPosition(transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE);
+        } else
+        {
+            var player = PlayerCharaManager.Instance.GetCurrentController();
+            if (player != null)
+            {
+                var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, ItemManager.Instance.GetItemAttractRate());
+                SetPosition(nextPos);
+            }
+        }
 
         m_NowRotateAngle += GetNowDeltaRotation().z * Time.deltaTime;
         if (speed <= 0)
@@ -417,6 +435,14 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     }
 
     /// <summary>
+    /// プレイヤーに引き寄せられるようにする。
+    /// </summary>
+    public void AttractPlayer()
+    {
+        m_IsAttract = true;
+    }
+
+    /// <summary>
 	/// このアイテムの当たり判定情報を取得する。
 	/// </summary>
 	public virtual ColliderData[] GetColliderData()
@@ -469,6 +495,12 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     /// <param name="sufferData">このアイテムの当たったデータ</param>
     public virtual void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
     {
-        DestroyItem();
+        if (sufferData.CollideName == ATTRACT_COLLIDE)
+        {
+            AttractPlayer();
+        } else if (sufferData.CollideName == GAIN_COLLIDE)
+        {
+            DestroyItem();
+        }
     }
 }
