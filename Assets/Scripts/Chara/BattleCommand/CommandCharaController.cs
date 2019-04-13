@@ -8,24 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(BattleObjectCollider))]
 public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
 {
-    /// <summary>
-    /// キャラの所属。
-    /// </summary>
-    public enum E_CHARA_TROOP
-    {
-        /// <summary>
-        /// プレイヤーキャラ。
-        /// </summary>
-        PLAYER,
-
-        /// <summary>
-        /// 敵キャラ。
-        /// </summary>
-        ENEMY,
-    }
-
-
-
     #region Field Inspector
 
     [Header("キャラの基礎パラメータ")]
@@ -34,7 +16,7 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
     private E_CHARA_TROOP m_Troop;
 
     [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
-    private BulletSetParam m_BulletSetParam;
+    private CommandBulletSetParam m_BulletSetParam;
 
     [SerializeField, Tooltip("キャラの衝突情報")]
     private BattleObjectCollider m_Collider;
@@ -63,12 +45,12 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
         return m_Troop;
     }
 
-    public BulletSetParam GetBulletSetParam()
+    public CommandBulletSetParam GetBulletSetParam()
     {
         return m_BulletSetParam;
     }
 
-    public void SetBulletSetParam(BulletSetParam param)
+    public void SetBulletSetParam(CommandBulletSetParam param)
     {
         m_BulletSetParam = param;
     }
@@ -122,7 +104,7 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
     /// <summary>
     /// 指定したインデックスの弾のプレハブを取得する。
     /// </summary>
-    public BulletController GetBulletPrefab(int bulletIndex = 0)
+    public CommandBulletController GetBulletPrefab(int bulletIndex = 0)
     {
         int prefabCount = GetBulletPrefabsCount();
 

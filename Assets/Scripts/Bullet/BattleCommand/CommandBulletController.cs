@@ -534,7 +534,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -568,7 +568,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -578,7 +578,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
     /// 指定したパラメータを用いて弾を生成する。
     /// </summary>
     /// <param name="shotParam">弾を発射させるパラメータ</param>
-    private static CommandBulletController CreateBullet(BulletShotParam shotParam)
+    private static CommandBulletController CreateBullet(CommandBulletShotParam shotParam)
     {
         var bulletOwner = shotParam.BulletOwner;
 
@@ -596,7 +596,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
         }
 
         // プールから弾を取得
-        var bullet = BulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        var bullet = CommandBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
         if (bullet == null)
         {
@@ -631,7 +631,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static BulletController ShotBulletWithoutBulletParam(BulletShotParam shotParam, bool isCheck = true)
+    public static CommandBulletController ShotBulletWithoutBulletParam(CommandBulletShotParam shotParam, bool isCheck = true)
     {
         var bullet = CreateBullet(shotParam);
 
@@ -642,7 +642,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -653,7 +653,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
     /// </summary>
     /// <param name="shotParam">発射時のパラメータ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static BulletController ShotBullet(BulletShotParam shotParam, bool isCheck = true)
+    public static CommandBulletController ShotBullet(CommandBulletShotParam shotParam, bool isCheck = true)
     {
         var bullet = CreateBullet(shotParam);
 
@@ -677,7 +677,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -730,7 +730,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
 
         if (m_BulletCycle == E_BULLET_CYCLE.UPDATE)
         {
-            BulletManager.Instance.CheckPoolBullet(this);
+            CommandBulletManager.Instance.CheckPoolBullet(this);
         }
     }
 
@@ -795,16 +795,16 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
     /// <summary>
     /// この弾の最も近くにいる敵を探し出す。
     /// </summary>
-    public CharaController GetNearestEnemy()
+    public CommandCharaController GetNearestEnemy()
     {
-        if (m_Troop == CharaController.E_CHARA_TROOP.ENEMY)
+        if (m_Troop == E_CHARA_TROOP.ENEMY)
         {
-            return PlayerCharaManager.Instance.GetCurrentController();
+            return CommandPlayerCharaManager.Instance.GetController();
         }
         else
         {
-            List<EnemyController> enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
-            CharaController nearestEnemy = null;
+            List<CommandEnemyController> enemies = CommandEnemyCharaManager.Instance.GetUpdateEnemies();
+            CommandCharaController nearestEnemy = null;
             float minSqrDist = float.MaxValue;
 
             foreach (var enemy in enemies)

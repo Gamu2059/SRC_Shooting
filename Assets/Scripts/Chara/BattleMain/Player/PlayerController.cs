@@ -126,27 +126,6 @@ public class PlayerController : CharaController
 		PlayerCharaManager.Instance.RegistChara( this );
 	}
 
-	public override void OnInitialize()
-	{
-		base.OnInitialize();
-	}
-
-	public override void OnStart()
-	{
-		base.OnStart();
-	}
-
-	public override void OnUpdate()
-	{
-		base.OnUpdate();
-		UpdateProtector();
-	}
-
-	public override void OnLateUpdate()
-	{
-		base.OnLateUpdate();
-	}
-
 	/// <summary>
 	/// 通常弾を発射する。
 	/// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。

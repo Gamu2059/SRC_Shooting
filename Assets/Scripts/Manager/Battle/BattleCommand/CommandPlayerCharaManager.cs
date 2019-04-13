@@ -71,13 +71,13 @@ public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerChar
         var chara = Instantiate(m_CharaPrefab);
         RegistChara(chara);
         chara.transform.position = pos;
+        m_Controller = chara;
     }
 
     public override void OnUpdate()
     {
         if (m_Controller == null)
         {
-            ChangeChara(0);
             return;
         }
 

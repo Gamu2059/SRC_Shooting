@@ -65,11 +65,6 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
 	private BulletOrbitalParam m_OrbitalParam;
 
     /// <summary>
-	/// このアイテムが何秒生存しているか。
-	/// </summary>
-	private float m_NowLifeTime;
-
-    /// <summary>
     /// このアイテムが1秒間にどれくらい回転するか。
     /// </summary>
     private Vector3 m_NowDeltaRotation;
@@ -146,38 +141,11 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     }
 
     /// <summary>
-    /// このアイテムがプレイヤー側と敵側のどちらに属しているか。
-    /// 同じ値同士を持つアイテムやキャラには被アイテムしない。
-    /// </summary>
-    public CharaController.E_CHARA_TROOP GetTroop()
-    {
-        return CharaController.E_CHARA_TROOP.ENEMY;
-    }
-
-    /// <summary>
     /// このアイテムのOrbialParam。
     /// </summary>
     public BulletOrbitalParam GetOrbitalParam()
     {
         return m_OrbitalParam;
-    }
-
-    /// <summary>
-    /// このアイテムが何秒生存しているかを取得する。
-    /// </summary>
-    public float GetNowLifeTime()
-    {
-        return m_NowLifeTime;
-    }
-
-    /// <summary>
-    /// このアイテムのライフタイムを設定する。
-    /// </summary>
-    /// <param name="value">設定する値</param>
-    /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    protected void SetNowLifeTime(float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
-    {
-        m_NowLifeTime = GetRelativeValue(relative, GetNowLifeTime(), value);
     }
 
     /// <summary>
