@@ -22,12 +22,6 @@ public class CommandEnemyController : CommandCharaController
     /// </summary>
     protected StringParamSet m_ParamSet;
 
-    /// <summary>
-    /// 敵処理で用いるタイマーを保持するリスト
-    /// このリストにタイマーを登録しないと潜在的な例外発生を招く場合があります
-    /// </summary>
-    protected Dictionary<string, Timer> m_TimerDict;
-
     private bool m_CanOutDestroy;
 
 
@@ -55,7 +49,6 @@ public class CommandEnemyController : CommandCharaController
     {
         base.OnInitialize();
 
-        m_TimerDict = new Dictionary<string, Timer>();
         m_CanOutDestroy = false;
     }
 
@@ -117,59 +110,5 @@ public class CommandEnemyController : CommandCharaController
         DestroyAllTimer();
         CommandEnemyCharaManager.Instance.DestroyEnemy(this);
         //ItemManager.Instance.CreateItem(transform.localPosition, m_ItemCreateParam);
-    }
-
-    /// <summary>
-    /// この弾にタイマーを登録する。
-    /// </summary>
-    /// <param name="key">タイマーのキー</param>
-    /// <param name="timer">タイマー</param>
-    public void RegistTimer(string key, Timer timer)
-    {
-        //if (m_TimerDict == null || m_TimerDict.ContainsKey(key))
-        //{
-        //    return;
-        //}
-
-        //m_TimerDict.Add(key, timer);
-        //BattleMainTimerManager.Instance.RegistTimer(timer);
-    }
-
-    /// <summary>
-    /// 指定したキーに対するタイマーを完全破棄する。
-    /// </summary>
-    /// <param name="key">タイマーのキー</param>
-    public void DestroyTimer(string key)
-    {
-        //if (m_TimerDict == null || !m_TimerDict.ContainsKey(key))
-        //{
-        //    return;
-        //}
-
-        //var timer = m_TimerDict[key];
-        //m_TimerDict.Remove(key);
-
-        //if (timer != null)
-        //{
-        //    timer.DestroyTimer();
-        //}
-    }
-
-    /// <summary>
-    /// この弾に紐づけられている全てのタイマーを完全破棄する。
-    /// </summary>
-    public void DestroyAllTimer()
-    {
-        //if (m_TimerDict == null)
-        //{
-        //    return;
-        //}
-
-        //foreach (var timer in m_TimerDict.Values)
-        //{
-        //    timer.DestroyTimer();
-        //}
-
-        //m_TimerDict.Clear();
     }
 }
