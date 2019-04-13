@@ -65,7 +65,7 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
             }
 
             // 弾とキャラの当たり判定処理
-            if (bullet.GetTroop() == CharaController.E_CHARA_TROOP.ENEMY)
+            if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
             {
                 var targetChara = PlayerCharaManager.Instance.GetCurrentController();
 
