@@ -6,8 +6,7 @@ using System;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
-[RequireComponent( typeof( BattleObjectCollider ) )]
-public class BulletController : ControllableMonoBehaviour, ICollisionBase
+public class BulletController : BattleMainObjectBase
 {
 	#region Field Inspector
 
@@ -18,13 +17,17 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	[SerializeField]
 	private string m_BulletGroupId = "Default Bullet";
 
+    /// <summary>
+    /// この弾が他の弾に当たるかどうか。
+    /// </summary>
+    [SerializeField]
+    private bool m_CanHitOtherBullet;
+
 	#endregion
 
 
 
 	#region Field
-
-	private BattleObjectCollider m_Collider;
 
 	/// <summary>
 	/// この弾がプレイヤー側と敵側のどちらに属しているか。
@@ -120,25 +123,11 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	/// </summary>
 	private bool m_IsReverseHacked;
 
-	/// <summary>
-	/// 弾処理で用いるタイマーを保持するリスト
-	/// このリストにタイマーを登録しないと潜在的な例外発生を招く場合があります
-	/// </summary>
-	private Dictionary<string, Timer> m_TimerDict;
-
 	#endregion
 
 
 
 	#region Getter & Setter
-
-	/// <summary>
-	/// この弾の衝突情報コンポーネントを取得する。
-	/// </summary>
-	public BattleObjectCollider GetCollider()
-	{
-		return m_Collider;
-	}
 
 	/// <summary>
 	/// この弾のグループ名を取得する。
@@ -453,14 +442,6 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	public void SetReverseHacked( bool value )
 	{
 		m_IsReverseHacked = value;
-	}
-
-	/// <summary>
-	/// タイマーのディクショナリを取得する。
-	/// </summary>
-	public Dictionary<string, Timer> GetTimerDict()
-	{
-		return m_TimerDict;
 	}
 
 	#endregion
@@ -851,32 +832,6 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 
 
 
-	/// <summary>
-	/// この弾が発射された瞬間に呼び出される処理。
-	/// </summary>
-	public override void OnInitialize()
-	{
-		base.OnInitialize();
-
-		if( m_Collider == null )
-		{
-			m_Collider = GetComponent<BattleObjectCollider>();
-		}
-
-		m_TimerDict = new Dictionary<string, Timer>();
-	}
-
-	/// <summary>
-	/// この弾が消滅する瞬間に呼び出される処理。
-	/// </summary>
-	public override void OnFinalize()
-	{
-	}
-
-	public override void OnStart()
-	{
-	}
-
 	public override void OnUpdate()
 	{
 		if( m_BulletParam == null )
@@ -912,22 +867,12 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 		DestroyBullet();
 	}
 
-
-
-	/// <summary>
-	/// この弾の当たり判定情報を取得する。
-	/// </summary>
-	public virtual ColliderData[] GetColliderData()
-	{
-		return m_Collider.GetColliderData();
-	}
-
 	/// <summary>
 	/// この弾が他の弾に衝突するかどうかを取得する。
 	/// </summary>
 	public virtual bool CanHitBullet()
 	{
-		return m_Collider.CanHitBullet();
+        return m_CanHitOtherBullet;
 	}
 
 	/// <summary>
@@ -957,59 +902,5 @@ public class BulletController : ControllableMonoBehaviour, ICollisionBase
 	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
 	{
 
-	}
-
-	/// <summary>
-	/// この弾にタイマーを登録する。
-	/// </summary>
-	/// <param name="key">タイマーのキー</param>
-	/// <param name="timer">タイマー</param>
-	public void RegistTimer( string key, Timer timer )
-	{
-		if( m_TimerDict == null || m_TimerDict.ContainsKey( key ) )
-		{
-			return;
-		}
-
-		m_TimerDict.Add( key, timer );
-		BattleMainTimerManager.Instance.RegistTimer( timer );
-	}
-
-	/// <summary>
-	/// 指定したキーに対するタイマーを完全破棄する。
-	/// </summary>
-	/// <param name="key">タイマーのキー</param>
-	public void DestroyTimer( string key )
-	{
-		if( m_TimerDict == null || !m_TimerDict.ContainsKey( key ) )
-		{
-			return;
-		}
-
-		var timer = m_TimerDict[key];
-		m_TimerDict.Remove( key );
-
-		if( timer != null )
-		{
-			timer.DestroyTimer();
-		}
-	}
-
-	/// <summary>
-	/// この弾に紐づけられている全てのタイマーを完全破棄する。
-	/// </summary>
-	public void DestroyAllTimer()
-	{
-		if( m_TimerDict == null )
-		{
-			return;
-		}
-
-		foreach( var timer in m_TimerDict.Values )
-		{
-			timer.DestroyTimer();
-		}
-
-		m_TimerDict.Clear();
 	}
 }

@@ -5,8 +5,7 @@ using UnityEngine;
 /// <summary>
 /// コマンドイベントのキャラの制御コンポーネント。
 /// </summary>
-[RequireComponent(typeof(BattleObjectCollider))]
-public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
+public class CommandCharaController : BattleCommandObjectBase
 {
     #region Field Inspector
 
@@ -34,11 +33,6 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
 
 
     #region Getter & Setter
-
-    public BattleObjectCollider GetCollider()
-    {
-        return m_Collider;
-    }
 
     public E_CHARA_TROOP GetTroop()
     {
@@ -125,12 +119,6 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
 
 
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-        m_Collider = GetComponent<BattleObjectCollider>();
-    }
-
     /// <summary>
     /// このキャラを回復する。
     /// </summary>
@@ -169,25 +157,6 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
     public virtual void Dead()
     {
 
-    }
-
-
-    /// <summary>
-    /// このキャラの衝突情報を取得する。
-    /// </summary>
-    public virtual ColliderData[] GetColliderData()
-    {
-        return m_Collider.GetColliderData();
-    }
-
-    /// <summary>
-    /// このキャラ自身から弾に当たることがあるかどうか。
-    /// 基本的にキャラから弾に当たりに行くことはないので、falseが返ってくる。
-    /// </summary>
-    public virtual bool CanHitBullet()
-    {
-        return false;
-        //return m_Collider.CanHitBullet();
     }
 
     /// <summary>

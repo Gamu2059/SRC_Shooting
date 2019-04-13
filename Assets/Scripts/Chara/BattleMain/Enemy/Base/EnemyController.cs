@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : CharaController
 {
+    public const string HIT_INVINCIBLE_TIMER_KEY = "HitInvincibleTimer";
+
     [Space()]
     [Header("敵専用 パラメータ")]
 
@@ -24,12 +26,6 @@ public class EnemyController : CharaController
 	/// マスターデータから取得するパラメータセット
 	/// </summary>
 	protected StringParamSet m_ParamSet;
-
-	/// <summary>
-	/// 敵処理で用いるタイマーを保持するリスト
-	/// このリストにタイマーを登録しないと潜在的な例外発生を招く場合があります
-	/// </summary>
-	protected Dictionary<string, Timer> m_TimerDict;
 
 	private bool m_CanOutDestroy;
 
@@ -58,7 +54,6 @@ public class EnemyController : CharaController
 	{
 		base.OnInitialize();
 
-		m_TimerDict = new Dictionary<string, Timer>();
 		m_CanOutDestroy = false;
 	}
 
@@ -92,12 +87,7 @@ public class EnemyController : CharaController
 			return;
 		}
 
-		Timer timer = null;
-
-		if( m_TimerDict.ContainsKey( "HitInvincibleTimer" ) )
-		{
-			timer = m_TimerDict["HitInvincibleTimer"];
-		}
+		Timer timer = GetTimer(HIT_INVINCIBLE_TIMER_KEY);
 
 		if( timer == null )
 		{
@@ -105,10 +95,7 @@ public class EnemyController : CharaController
 			{
 				timer = null;
 			} );
-			BattleMainTimerManager.Instance.RegistTimer( timer );
-
-			m_TimerDict.Add( "HitInvincibleTimer", timer );
-
+            RegistTimer(HIT_INVINCIBLE_TIMER_KEY, timer);
 			base.OnSuffer( bullet, colliderData );
 		}
 	}
@@ -120,59 +107,5 @@ public class EnemyController : CharaController
 		DestroyAllTimer();
 		EnemyCharaManager.Instance.DestroyEnemy( this );
         ItemManager.Instance.CreateItem(transform.localPosition, m_ItemCreateParam);
-	}
-
-	/// <summary>
-	/// この弾にタイマーを登録する。
-	/// </summary>
-	/// <param name="key">タイマーのキー</param>
-	/// <param name="timer">タイマー</param>
-	public void RegistTimer( string key, Timer timer )
-	{
-		if( m_TimerDict == null || m_TimerDict.ContainsKey( key ) )
-		{
-			return;
-		}
-
-		m_TimerDict.Add( key, timer );
-		BattleMainTimerManager.Instance.RegistTimer( timer );
-	}
-
-	/// <summary>
-	/// 指定したキーに対するタイマーを完全破棄する。
-	/// </summary>
-	/// <param name="key">タイマーのキー</param>
-	public void DestroyTimer( string key )
-	{
-		if( m_TimerDict == null || !m_TimerDict.ContainsKey( key ) )
-		{
-			return;
-		}
-
-		var timer = m_TimerDict[key];
-		m_TimerDict.Remove( key );
-
-		if( timer != null )
-		{
-			timer.DestroyTimer();
-		}
-	}
-
-	/// <summary>
-	/// この弾に紐づけられている全てのタイマーを完全破棄する。
-	/// </summary>
-	public void DestroyAllTimer()
-	{
-		if( m_TimerDict == null )
-		{
-			return;
-		}
-
-		foreach( var timer in m_TimerDict.Values )
-		{
-			timer.DestroyTimer();
-		}
-
-		m_TimerDict.Clear();
 	}
 }
