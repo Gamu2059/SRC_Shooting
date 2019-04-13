@@ -6,7 +6,7 @@ using UnityEngine;
 /// バトルにおけるオブジェクトの基底クラス。
 /// </summary>
 [RequireComponent(typeof(BattleObjectCollider))]
-public class BattleObjectBase : ControllableMonoBehaviour, ICollisionBase
+public class BattleObjectBase : ControllableMonoBehaviour, IColliderBase
 {
     /// <summary>
     /// 衝突情報コンポーネント。

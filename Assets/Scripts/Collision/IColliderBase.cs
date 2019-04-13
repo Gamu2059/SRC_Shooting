@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICollisionBase
+public interface IColliderBase
 {
 	/// <summary>
 	/// 当たり判定情報を取得する。
