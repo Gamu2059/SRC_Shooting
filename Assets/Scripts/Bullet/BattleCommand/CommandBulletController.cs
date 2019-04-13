@@ -919,7 +919,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
     /// </summary>
     public virtual ColliderData[] GetColliderData()
     {
-        return m_Collider.GetColliderData();
+        return m_Collider.CreateColliderData();
     }
 
     /// <summary>
@@ -927,7 +927,7 @@ public class CommandBulletController : ControllableMonoBehaviour, ICollisionBase
     /// </summary>
     public virtual bool CanHitBullet()
     {
-        return m_Collider.CanHitBullet();
+        return false;
     }
 
     /// <summary>

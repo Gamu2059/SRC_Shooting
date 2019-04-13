@@ -6,12 +6,10 @@ using System;
 /// <summary>
 /// 全てのアイテムオブジェクトの基礎クラス。
 /// </summary>
-[RequireComponent(typeof(BattleObjectCollider))]
-public class ItemController : ControllableMonoBehaviour, ICollisionBase
+public class ItemController : BattleMainObjectBase
 {
     public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
     public const string GAIN_COLLIDE = "GAIN COLLIDE";
-
 
     [Serializable]
     public enum E_ITEM_CYCLE
@@ -52,8 +50,6 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
 
     #region Field
 
-    private BattleObjectCollider m_Collider;
-    
     /// <summary>
     /// アイテムのサイクル。
     /// </summary>
@@ -130,14 +126,6 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     public int GetPoint()
     {
         return m_Point;
-    }
-
-    /// <summary>
-	/// このアイテムの衝突情報コンポーネントを取得する。
-	/// </summary>
-	public BattleObjectCollider GetCollider()
-    {
-        return m_Collider;
     }
 
     /// <summary>
@@ -266,11 +254,6 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     public override void OnInitialize()
     {
         base.OnInitialize();
-
-        if (m_Collider == null)
-        {
-            m_Collider = GetComponent<BattleObjectCollider>();
-        }
 
         m_NowRotateAngle = 0;
         m_CanOutDestroy = false;
@@ -408,51 +391,6 @@ public class ItemController : ControllableMonoBehaviour, ICollisionBase
     public void AttractPlayer()
     {
         m_IsAttract = true;
-    }
-
-    /// <summary>
-	/// このアイテムの当たり判定情報を取得する。
-	/// </summary>
-	public virtual ColliderData[] GetColliderData()
-    {
-        return m_Collider.GetColliderData();
-    }
-
-    /// <summary>
-    /// このアイテムが他のアイテムに衝突するかどうかを取得する。
-    /// </summary>
-    public virtual bool CanHitBullet()
-    {
-        return m_Collider.CanHitBullet();
-    }
-
-    /// <summary>
-    /// このアイテムがキャラに衝突した時に呼び出される処理。
-    /// </summary>
-    /// <param name="chara">このアイテムに衝突されたキャラ</param>
-    public virtual void OnHitCharacter(CharaController chara)
-    {
-
-    }
-
-    /// <summary>
-    /// このアイテムが他のアイテムに衝突した時に呼び出される処理。
-    /// </summary>
-    /// <param name="bullet">このアイテムに衝突された他のアイテム</param>
-    public virtual void OnHitBullet(BulletController bullet)
-    {
-
-    }
-
-    /// <summary>
-    /// このアイテムが他のアイテムから衝突された時に呼び出される処理。
-    /// OnHitBulletはこちら側から衝突した場合に対して、この処理は向こう側から衝突してきた場合に呼び出される。
-    /// </summary>
-    /// <param name="bullet">このアイテムに衝突してきた他のアイテム</param>
-    /// <param name="colliderData">衝突を検出したこのアイテムの衝突情報</param>
-    public virtual void OnSuffer(BulletController bullet, ColliderData colliderData)
-    {
-
     }
 
     /// <summary>

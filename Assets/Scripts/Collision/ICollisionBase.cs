@@ -9,24 +9,4 @@ public interface ICollisionBase
 	/// 複数あることを考慮して配列として取得する。
 	/// </summary>
 	ColliderData[] GetColliderData();
-
-	/// <summary>
-	/// このオブジェクトが他の弾に当たるか。
-	/// </summary>
-	bool CanHitBullet();
-
-	/// <summary>
-	/// キャラと当たり続けている時の処理。
-	/// </summary>
-	void OnHitCharacter( CharaController chara );
-
-	/// <summary>
-	/// 弾と当たり続けている時の処理。
-	/// </summary>
-	void OnHitBullet( BulletController bullet );
-
-	/// <summary>
-	/// 被弾し続けているの処理。
-	/// </summary>
-	void OnSuffer( BulletController bullet, ColliderData colliderData );
 }

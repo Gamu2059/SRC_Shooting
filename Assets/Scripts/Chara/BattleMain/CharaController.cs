@@ -5,8 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラの制御を行うコンポーネント。
 /// </summary>
-[RequireComponent( typeof( BattleObjectCollider ) )]
-public class CharaController : ControllableMonoBehaviour, ICollisionBase
+public class CharaController : BattleMainObjectBase
 {
 	#region Field Inspector
 
@@ -17,9 +16,6 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 
 	[SerializeField, Tooltip( "キャラが用いる弾の組み合わせ" )]
 	private BulletSetParam m_BulletSetParam;
-
-	[SerializeField, Tooltip( "キャラの衝突情報" )]
-	private BattleObjectCollider m_Collider;
 
 	[Header( "キャラの基礎ステータス" )]
 
@@ -35,10 +31,6 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 
 	#region Getter & Setter
 
-	public BattleObjectCollider GetCollider()
-	{
-		return m_Collider;
-	}
 
 	public E_CHARA_TROOP GetTroop()
 	{
@@ -125,12 +117,6 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 
 
 
-	public override void OnInitialize()
-	{
-		base.OnInitialize();
-		m_Collider = GetComponent<BattleObjectCollider>();
-	}
-
 	/// <summary>
 	/// このキャラを回復する。
 	/// </summary>
@@ -169,25 +155,6 @@ public class CharaController : ControllableMonoBehaviour, ICollisionBase
 	public virtual void Dead()
 	{
 
-	}
-
-
-	/// <summary>
-	/// このキャラの衝突情報を取得する。
-	/// </summary>
-	public virtual ColliderData[] GetColliderData()
-	{
-		return m_Collider.GetColliderData();
-	}
-
-	/// <summary>
-	/// このキャラ自身から弾に当たることがあるかどうか。
-	/// 基本的にキャラから弾に当たりに行くことはないので、falseが返ってくる。
-	/// </summary>
-	public virtual bool CanHitBullet()
-	{
-		return false;
-		//return m_Collider.CanHitBullet();
 	}
 
 	/// <summary>

@@ -177,7 +177,7 @@ public class CommandCharaController : ControllableMonoBehaviour, ICollisionBase
     /// </summary>
     public virtual ColliderData[] GetColliderData()
     {
-        return m_Collider.GetColliderData();
+        return m_Collider.CreateColliderData();
     }
 
     /// <summary>
