@@ -32,11 +32,15 @@ public class BattleObjectBase : ControllableMonoBehaviour, ICollisionBase
         m_Collider = GetComponent<BattleObjectCollider>();
     }
 
+    public override void OnStart()
+    {
+        base.OnStart();
+        m_ColliderDatas = m_Collider.CreateColliderData();
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
-
-        // 毎フレーム衝突情報を更新する
         m_ColliderDatas = m_Collider.CreateColliderData();
     }
 
