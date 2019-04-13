@@ -341,7 +341,6 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
     /// 
     /// <param name="position">生成座標</param>
     /// <param name="param">アイテムの生成情報</param>
-
     public void CreateItem(Vector3 position, ItemCreateParam param)
     {
         foreach(var spreadParam in param.ItemSpreadParams)

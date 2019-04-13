@@ -29,19 +29,15 @@ public class BattleObjectBase : ControllableMonoBehaviour, IColliderBase
     public override void OnInitialize()
     {
         base.OnInitialize();
-        m_Collider = GetComponent<BattleObjectCollider>();
-    }
 
-    public override void OnStart()
-    {
-        base.OnStart();
-        m_ColliderDatas = m_Collider.CreateColliderData();
+        if (m_Collider == null) {
+            m_Collider = GetComponent<BattleObjectCollider>();
+        }
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-        m_ColliderDatas = m_Collider.CreateColliderData();
     }
 
     /// <summary>
@@ -50,6 +46,11 @@ public class BattleObjectBase : ControllableMonoBehaviour, IColliderBase
 	public ColliderData[] GetColliderData()
     {
         return m_ColliderDatas;
+    }
+
+    public void UpdateColliderData()
+    {
+        m_ColliderDatas = m_Collider.CreateColliderData();
     }
 }
 

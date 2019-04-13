@@ -260,11 +260,6 @@ public class ItemController : BattleMainObjectBase
         m_IsAttract = false;
     }
 
-    public override void OnFinalize()
-    {
-        base.OnFinalize();
-    }
-
     public override void OnUpdate()
     {
         var speed = GetNowSpeed() * Time.deltaTime;
@@ -394,17 +389,18 @@ public class ItemController : BattleMainObjectBase
     }
 
     /// <summary>
-    /// 他のキャラがこのアイテムに当たった場合のコールバック。
+    /// 他のキャラから当てられた時の処理。
     /// </summary>
-    /// <param name="hitChara">当った他のキャラ</param>
-    /// <param name="hitData">他のキャラの当たったデータ</param>
-    /// <param name="sufferData">このアイテムの当たったデータ</param>
-    public virtual void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
+    /// <param name="attackChara">他のキャラ</param>
+    /// <param name="attackData">他のキャラの衝突情報</param>
+    /// <param name="targetData">このアイテムの衝突情報</param>
+    public virtual void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData)
     {
-        if (sufferData.CollideName == ATTRACT_COLLIDE)
+        if (targetData.CollideName == ATTRACT_COLLIDE)
         {
             AttractPlayer();
-        } else if (sufferData.CollideName == GAIN_COLLIDE)
+        }
+        else if (targetData.CollideName == GAIN_COLLIDE)
         {
             DestroyItem();
         }

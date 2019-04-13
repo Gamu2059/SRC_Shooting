@@ -10,19 +10,19 @@ public class EchoBullet : BulletController
 	[SerializeField]
 	private int m_HitCount;
 
-	public override void OnHitCharacter( CharaController chara )
-	{
-		if( m_HitCount < m_Parent.GetMaxHitCount() )
-		{
-			m_Parent.ReadyShotDiffusionBullet( chara, m_HitCount );
-		}
-		else
-		{
-			m_HitCount = 0;
-		}
+    public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    {
+        if (m_HitCount < m_Parent.GetMaxHitCount())
+        {
+            m_Parent.ReadyShotDiffusionBullet(targetChara, m_HitCount);
+        }
+        else
+        {
+            m_HitCount = 0;
+        }
 
-		base.OnHitCharacter( chara );
-	}
+        base.HitChara(targetChara, attackData, targetData);
+    }
 
 	public void SetShooter( EchoController echoController, int count )
 	{

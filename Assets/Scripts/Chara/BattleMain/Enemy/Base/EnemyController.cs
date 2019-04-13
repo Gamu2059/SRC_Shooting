@@ -79,26 +79,26 @@ public class EnemyController : CharaController
 
 
 
-	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
-	{
-		if( m_OnHitInvincibleDuration <= 0 )
-		{
-			base.OnSuffer( bullet, colliderData );
-			return;
-		}
+    public override void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    {
+        if (m_OnHitInvincibleDuration <= 0)
+        {
+            base.SufferBullet(attackBullet, attackData, targetData);
+            return;
+        }
 
-		Timer timer = GetTimer(HIT_INVINCIBLE_TIMER_KEY);
+        Timer timer = GetTimer(HIT_INVINCIBLE_TIMER_KEY);
 
-		if( timer == null )
-		{
-			timer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_OnHitInvincibleDuration, () =>
-			{
-				timer = null;
-			} );
+        if (timer == null)
+        {
+            timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, m_OnHitInvincibleDuration, () =>
+            {
+                timer = null;
+            });
             RegistTimer(HIT_INVINCIBLE_TIMER_KEY, timer);
-			base.OnSuffer( bullet, colliderData );
-		}
-	}
+            base.SufferBullet(attackBullet, attackData, targetData);
+        }
+    }
 
 	public override void Dead()
 	{
