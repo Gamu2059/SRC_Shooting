@@ -116,18 +116,6 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 
 
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
-    public override void OnUpdate()
-    {
-        base.OnUpdate();
-    }
-
-
-
     /// <summary>
     /// MoveObjectHolderのピボットを基準にした座標に変換する。
     /// </summary>

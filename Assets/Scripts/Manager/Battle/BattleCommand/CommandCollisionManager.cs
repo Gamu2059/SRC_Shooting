@@ -40,38 +40,48 @@ public class CommandCollisionManager : SingletonMonoBehavior<CommandCollisionMan
     /// </summary>
     public void CheckCollision()
     {
-        CheckCollisionBulletToBullet();
+        CheckCollisionBulletToWall();
+        CheckCollisionWallToPlayer();
         CheckCollisionBulletToChara();
         CheckCollisionEnemyToPlayer();
-        CheckCollisionPlayerToItem();
     }
 
     /// <summary>
-    /// 弾から弾への衝突判定を行う。
+    /// 弾から壁への衝突判定を行う。
     /// </summary>
-    private void CheckCollisionBulletToBullet()
+    private void CheckCollisionBulletToWall()
     {
-        var bullets = BulletManager.Instance.GetUpdateBullets();
+        var bullets = CommandBulletManager.Instance.GetUpdateBullets();
+        var walls = CommandWallManager.Instance.GetUpdateWalls();
 
         foreach (var bullet in bullets)
         {
-            if (!bullet.CanHitBullet())
+            foreach (var wall in walls)
             {
-                continue;
-            }
-
-            foreach (var targetBullet in bullets)
-            {
-                if (bullet == targetBullet || bullet.GetTroop() == targetBullet.GetTroop())
+                Collision.CheckCollide(bullet, wall, (attackData, targetData) =>
                 {
-                    continue;
-                }
-
-                Collision.CheckCollide(bullet, targetBullet, (attackData, targetData) => {
-                    targetBullet.SufferBullet(bullet, attackData, targetData);
-                    bullet.HitBullet(targetBullet, attackData, targetData);
+                    wall.SufferBullet(bullet, attackData, targetData);
+                    bullet.HitWall(wall, attackData, targetData);
                 });
             }
+        }
+    }
+
+    /// <summary>
+    /// 壁からプレイヤーキャラへの衝突判定を行う。
+    /// </summary>
+    private void CheckCollisionWallToPlayer()
+    {
+        var player = CommandPlayerCharaManager.Instance.GetController();
+        var walls = CommandWallManager.Instance.GetUpdateWalls();
+
+        foreach (var wall in walls)
+        {
+            Collision.CheckCollide(wall, player, (attackData, targetData) =>
+            {
+                player.SufferWall(wall, attackData, targetData);
+                wall.HitChara(player, attackData, targetData);
+            });
         }
     }
 
@@ -80,16 +90,16 @@ public class CommandCollisionManager : SingletonMonoBehavior<CommandCollisionMan
     /// </summary>
     private void CheckCollisionBulletToChara()
     {
-        var bullets = BulletManager.Instance.GetUpdateBullets();
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
+        var bullets = CommandBulletManager.Instance.GetUpdateBullets();
+        var player = CommandPlayerCharaManager.Instance.GetController();
+        var enemies = CommandEnemyCharaManager.Instance.GetUpdateEnemies();
 
         foreach (var bullet in bullets)
         {
             if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
             {
-                Collision.CheckCollide(bullet, player, (attackData, targetData) => {
-                    Debug.Log(111);
+                Collision.CheckCollide(bullet, player, (attackData, targetData) =>
+                {
                     player.SufferBullet(bullet, attackData, targetData);
                     bullet.HitChara(player, attackData, targetData);
                 });
@@ -98,8 +108,8 @@ public class CommandCollisionManager : SingletonMonoBehavior<CommandCollisionMan
             {
                 foreach (var enemy in enemies)
                 {
-                    Collision.CheckCollide(bullet, enemy, (attackData, targetData) => {
-                        Debug.Log(222);
+                    Collision.CheckCollide(bullet, enemy, (attackData, targetData) =>
+                    {
                         enemy.SufferBullet(bullet, attackData, targetData);
                         bullet.HitChara(enemy, attackData, targetData);
                     });
@@ -113,31 +123,15 @@ public class CommandCollisionManager : SingletonMonoBehavior<CommandCollisionMan
     /// </summary>
     private void CheckCollisionEnemyToPlayer()
     {
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
+        var player = CommandPlayerCharaManager.Instance.GetController();
+        var enemies = CommandEnemyCharaManager.Instance.GetUpdateEnemies();
 
         foreach (var enemy in enemies)
         {
-            Collision.CheckCollide(enemy, player, (attackData, targetData) => {
+            Collision.CheckCollide(enemy, player, (attackData, targetData) =>
+            {
                 player.SufferChara(enemy, attackData, targetData);
                 enemy.HitChara(player, attackData, targetData);
-            });
-        }
-    }
-
-    /// <summary>
-    /// プレイヤーキャラからアイテムへの衝突判定を行う。
-    /// </summary>
-    private void CheckCollisionPlayerToItem()
-    {
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var items = ItemManager.Instance.GetUpdateItems();
-
-        foreach (var item in items)
-        {
-            Collision.CheckCollide(player, item, (attackData, targetData) => {
-                item.SufferChara(player, attackData, targetData);
-                player.HitItem(item, attackData, targetData);
             });
         }
     }

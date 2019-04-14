@@ -112,11 +112,6 @@ public class CommandBulletController : BattleCommandObjectBase
     /// </summary>
     private float m_NowLerp;
 
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうか。
-    /// </summary>
-    private bool m_IsReverseHacked;
-
     #endregion
 
 
@@ -420,22 +415,6 @@ public class CommandBulletController : BattleCommandObjectBase
     public void SetNowLerp(float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
     {
         m_NowLerp = GetRelativeValue(relative, GetNowLerp(), value);
-    }
-
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうかを取得する。
-    /// </summary>
-    public bool IsReverseHacked()
-    {
-        return m_IsReverseHacked;
-    }
-
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうかを設定する。
-    /// </summary>
-    public void SetReverseHacked(bool value)
-    {
-        m_IsReverseHacked = value;
     }
 
     #endregion
@@ -820,8 +799,6 @@ public class CommandBulletController : BattleCommandObjectBase
 
         m_IsSearch = false;
         m_NowLerp = 0;
-
-        m_IsReverseHacked = false;
     }
 
 
@@ -861,41 +838,24 @@ public class CommandBulletController : BattleCommandObjectBase
         DestroyBullet();
     }
 
-
-
     /// <summary>
-    /// この弾が他の弾に衝突するかどうかを取得する。
+    /// 他の壁に当たった時の処理。
     /// </summary>
-    public virtual bool CanHitBullet()
-    {
-        return false;
-    }
-
-    /// <summary>
-    /// この弾がキャラに衝突した時に呼び出される処理。
-    /// </summary>
-    /// <param name="chara">この弾に衝突されたキャラ</param>
-    public virtual void OnHitCharacter(CharaController chara)
+    /// <param name="targetWall">他の壁</param>
+    /// <param name="attackData">この弾の衝突情報</param>
+    /// <param name="targetData">他の壁の衝突情報</param>
+    public virtual void HitWall(CommandWallController targetWall, ColliderData attackData, ColliderData targetData)
     {
 
     }
 
     /// <summary>
-    /// この弾が他の弾に衝突した時に呼び出される処理。
+    /// 他のキャラに当たった時の処理。
     /// </summary>
-    /// <param name="bullet">この弾に衝突された他の弾</param>
-    public virtual void OnHitBullet(BulletController bullet)
-    {
-
-    }
-
-    /// <summary>
-    /// この弾が他の弾から衝突された時に呼び出される処理。
-    /// OnHitBulletはこちら側から衝突した場合に対して、この処理は向こう側から衝突してきた場合に呼び出される。
-    /// </summary>
-    /// <param name="bullet">この弾に衝突してきた他の弾</param>
-    /// <param name="colliderData">衝突を検出したこの弾の衝突情報</param>
-    public virtual void OnSuffer(BulletController bullet, ColliderData colliderData)
+    /// <param name="targetChara">他のキャラ</param>
+    /// <param name="attackData">この弾の衝突情報</param>
+    /// <param name="targetData">他のキャラの衝突情報</param>
+    public virtual void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
 
     }

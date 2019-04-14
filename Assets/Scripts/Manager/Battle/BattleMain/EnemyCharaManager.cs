@@ -4,11 +4,13 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// 敵の振る舞いの制御を行う。
+/// 敵コントローラの管理を行う。
 /// </summary>
 public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 {
-	[Header( "Holder " )]
+    public const string HOLDER_NAME = "[EnemyCharaHolder]";
+
+    [Header( "Holder " )]
 
 	[SerializeField]
 	private Transform m_EnemyCharaHolder;
@@ -126,7 +128,7 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 		}
 		else if( m_EnemyCharaHolder == null )
 		{
-			var obj = new GameObject( "[EnemyCharaHolder]" );
+			var obj = new GameObject( HOLDER_NAME );
 			obj.transform.position = Vector3.zero;
 			m_EnemyCharaHolder = obj.transform;
 		}

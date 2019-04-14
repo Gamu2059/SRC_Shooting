@@ -159,59 +159,47 @@ public class CommandCharaController : BattleCommandObjectBase
 
     }
 
-    /// <summary>
-    /// このキャラが他のキャラに当たった場合のコールバック。
-    /// </summary>
-    public virtual void OnHitCharacter(CharaController chara)
-    {
-
-    }
 
     /// <summary>
-    /// このキャラが他の弾に当たった場合のコールバック。
+    /// 他の壁から当てられた時の処理。
     /// </summary>
-    public virtual void OnHitBullet(BulletController bullet)
-    {
-
-    }
-
-    /// <summary>
-    /// 他の弾がこのキャラに当たった場合のコールバック。
-    /// </summary>
-    public virtual void OnSuffer(BulletController bullet, ColliderData colliderData)
+    /// <param name="attackWall">他の壁</param>
+    /// <param name="attackData">他の壁の衝突情報</param>
+    /// <param name="targetData">このキャラの衝突情報</param>
+    public virtual void SufferWall(CommandWallController attackWall, ColliderData attackData, ColliderData targetData)
     {
         Damage(1);
     }
 
     /// <summary>
-    /// 他のキャラがこのキャラに当たった場合のコールバック。
+    /// 他の弾から当てられた時の処理。
     /// </summary>
-    /// <param name="hitChara">当った他のキャラ</param>
-    /// <param name="hitData">他のキャラの当たったデータ</param>
-    /// <param name="sufferData">このキャラの当たったデータ</param>
-    public virtual void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
+    /// <param name="attackBullet">他の弾</param>
+    /// <param name="attackData">他の弾の衝突情報</param>
+    /// <param name="targetData">このキャラの衝突情報</param>
+    public virtual void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
     {
-
+        Damage(1);
     }
 
     /// <summary>
-    /// このキャラが他のキャラに当たった場合のコールバック。
+    /// 他のキャラから当てられた時の処理。
     /// </summary>
-    /// <param name="sufferChara">当った他のキャラ</param>
-    /// <param name="hitData">このキャラの当たったデータ</param>
-    /// <param name="sufferData">他のキャラの当たったデータ</param>
-    public virtual void OnHitChara(CharaController sufferChara, ColliderData hitData, ColliderData sufferData)
+    /// <param name="attackChara">他のキャラ</param>
+    /// <param name="attackData">他のキャラの衝突情報</param>
+    /// <param name="targetData">このキャラの衝突情報</param>
+    public virtual void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
     {
-
+        Damage(1);
     }
 
     /// <summary>
-    /// このキャラがアイテムに当たった場合のコールバック。
+    /// 他のキャラに当たった時の処理。
     /// </summary>
-    /// <param name="sufferItem">当ったアイテム</param>
-    /// <param name="hitData">このキャラの当たったデータ</param>
-    /// <param name="sufferData">アイテムの当たったデータ</param>
-    public virtual void OnHitItem(ItemController sufferItem, ColliderData hitData, ColliderData sufferData)
+    /// <param name="targetChara">他のキャラ</param>
+    /// <param name="attackData">このキャラの衝突情報</param>
+    /// <param name="targetData">他のキャラの衝突情報</param>
+    public virtual void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
 
     }

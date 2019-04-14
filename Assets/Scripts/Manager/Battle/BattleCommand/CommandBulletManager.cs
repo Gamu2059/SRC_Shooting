@@ -9,25 +9,25 @@ using System.Linq;
 /// </summary>
 public class CommandBulletManager : SingletonMonoBehavior<CommandBulletManager>
 {
-    [SerializeField]
+    public const string HOLDER_NAME = "[CommandBulletHolder]";
+
+    #region Field
+
     private Transform m_BulletHolder;
 
     /// <summary>
     /// STANDBY状態の弾を保持するリスト。
     /// </summary>
-    [SerializeField]
     private List<CommandBulletController> m_StandbyBullets;
 
     /// <summary>
     /// UPDATE状態の弾を保持するリスト。
     /// </summary>
-    [SerializeField]
     private List<CommandBulletController> m_UpdateBullets;
 
     /// <summary>
     /// POOL状態の弾を保持するリスト。
     /// </summary>
-    [SerializeField]
     private List<CommandBulletController> m_PoolBullets;
 
     /// <summary>
@@ -39,6 +39,10 @@ public class CommandBulletManager : SingletonMonoBehavior<CommandBulletManager>
     /// POOL状態に遷移する弾のリスト。
     /// </summary>
     private List<CommandBulletController> m_GotoPoolBullets;
+
+    #endregion
+
+    #region Get
 
     /// <summary>
     /// STANDBY状態の弾を保持するリストを取得する。
@@ -63,6 +67,8 @@ public class CommandBulletManager : SingletonMonoBehavior<CommandBulletManager>
     {
         return m_PoolBullets;
     }
+
+    #endregion
 
     protected override void OnAwake()
     {
@@ -98,7 +104,7 @@ public class CommandBulletManager : SingletonMonoBehavior<CommandBulletManager>
         }
         else if (m_BulletHolder == null)
         {
-            var obj = new GameObject("[BulletHolder]");
+            var obj = new GameObject(HOLDER_NAME);
             obj.transform.position = Vector3.zero;
             m_BulletHolder = obj.transform;
         }
