@@ -830,10 +830,10 @@ public class BulletController : BattleMainObjectBase
 		m_IsReverseHacked = false;
 	}
 
-
-
 	public override void OnUpdate()
 	{
+        base.OnUpdate();
+
 		if( m_BulletParam == null )
 		{
 			return;
@@ -875,32 +875,36 @@ public class BulletController : BattleMainObjectBase
         return m_CanHitOtherBullet;
 	}
 
-	/// <summary>
-	/// この弾がキャラに衝突した時に呼び出される処理。
-	/// </summary>
-	/// <param name="chara">この弾に衝突されたキャラ</param>
-	public virtual void OnHitCharacter( CharaController chara )
-	{
+    /// <summary>
+    /// 他の弾から当てられた時の処理。
+    /// </summary>
+    /// <param name="attackBullet">他の弾</param>
+    /// <param name="attackData">他の弾の衝突情報</param>
+    /// <param name="targetData">この弾の衝突情報</param>
+    public virtual void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    {
 
-	}
+    }
 
-	/// <summary>
-	/// この弾が他の弾に衝突した時に呼び出される処理。
-	/// </summary>
-	/// <param name="bullet">この弾に衝突された他の弾</param>
-	public virtual void OnHitBullet( BulletController bullet )
-	{
+    /// <summary>
+    /// 他の弾に当たった時の処理。
+    /// </summary>
+    /// <param name="targetBullet">他の弾</param>
+    /// <param name="attackData">この弾の衝突情報</param>
+    /// <param name="targetData">他の弾の衝突情報</param>
+    public virtual void HitBullet(BulletController targetBullet, ColliderData attackData, ColliderData targetData)
+    {
 
-	}
+    }
 
-	/// <summary>
-	/// この弾が他の弾から衝突された時に呼び出される処理。
-	/// OnHitBulletはこちら側から衝突した場合に対して、この処理は向こう側から衝突してきた場合に呼び出される。
-	/// </summary>
-	/// <param name="bullet">この弾に衝突してきた他の弾</param>
-	/// <param name="colliderData">衝突を検出したこの弾の衝突情報</param>
-	public virtual void OnSuffer( BulletController bullet, ColliderData colliderData )
-	{
+    /// <summary>
+    /// 他のキャラに当たった時の処理。
+    /// </summary>
+    /// <param name="targetChara">他のキャラ</param>
+    /// <param name="attackData">この弾の衝突情報</param>
+    /// <param name="targetData">他のキャラの衝突情報</param>
+    public virtual void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    {
 
-	}
+    }
 }

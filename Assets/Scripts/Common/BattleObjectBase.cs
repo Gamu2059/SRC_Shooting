@@ -6,7 +6,7 @@ using UnityEngine;
 /// バトルにおけるオブジェクトの基底クラス。
 /// </summary>
 [RequireComponent(typeof(BattleObjectCollider))]
-public class BattleObjectBase : ControllableMonoBehaviour, ICollisionBase
+public class BattleObjectBase : ControllableMonoBehaviour, IColliderBase
 {
     /// <summary>
     /// 衝突情報コンポーネント。
@@ -29,19 +29,15 @@ public class BattleObjectBase : ControllableMonoBehaviour, ICollisionBase
     public override void OnInitialize()
     {
         base.OnInitialize();
-        m_Collider = GetComponent<BattleObjectCollider>();
-    }
 
-    public override void OnStart()
-    {
-        base.OnStart();
-        m_ColliderDatas = m_Collider.CreateColliderData();
+        if (m_Collider == null) {
+            m_Collider = GetComponent<BattleObjectCollider>();
+        }
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-        m_ColliderDatas = m_Collider.CreateColliderData();
     }
 
     /// <summary>
@@ -50,6 +46,11 @@ public class BattleObjectBase : ControllableMonoBehaviour, ICollisionBase
 	public ColliderData[] GetColliderData()
     {
         return m_ColliderDatas;
+    }
+
+    public void UpdateColliderData()
+    {
+        m_ColliderDatas = m_Collider.CreateColliderData();
     }
 }
 

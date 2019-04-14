@@ -126,11 +126,17 @@ public class PlayerController : CharaController
 		PlayerCharaManager.Instance.RegistChara( this );
 	}
 
-	/// <summary>
-	/// 通常弾を発射する。
-	/// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
-	/// </summary>
-	public virtual void ShotBullet()
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        UpdateProtector();
+    }
+
+    /// <summary>
+    /// 通常弾を発射する。
+    /// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
+    /// </summary>
+    public virtual void ShotBullet()
 	{
 		// 何もオーバーロードしない場合は適当に弾を飛ばす
 		BulletController.ShotBullet( this );
@@ -157,32 +163,20 @@ public class PlayerController : CharaController
 		transform.Translate( move, Space.World );
 	}
 
-
-	public override void OnSuffer( BulletController bullet, ColliderData colliderData )
-	{
-		base.OnSuffer( bullet, colliderData );
-    }
-
-    public override void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
+    public override void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
     {
-        base.OnSufferChara(hitChara, hitData, sufferData);
-        Damage(1);
-    }
+        base.HitItem(targetItem, attackData, targetData);
 
-    public override void OnHitItem(ItemController sufferItem, ColliderData hitData, ColliderData sufferData)
-    {
-        base.OnHitItem(sufferItem, hitData, sufferData);
-
-        if (sufferData.CollideName != ItemController.GAIN_COLLIDE)
+        if (targetData.CollideName != ItemController.GAIN_COLLIDE)
         {
             return;
         }
 
-        switch(sufferItem.GetItemType())
+        switch(targetItem.GetItemType())
         {
             case E_ITEM_TYPE.SMALL_SCORE:
             case E_ITEM_TYPE.BIG_SCORE:
-                BattleManager.Instance.AddScore(sufferItem.GetPoint());
+                BattleManager.Instance.AddScore(targetItem.GetPoint());
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
             case E_ITEM_TYPE.BIG_SCORE_UP:
