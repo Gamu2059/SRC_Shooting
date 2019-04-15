@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// 敵の振る舞いの制御を行う。
 /// </summary>
-public class CommandEnemyCharaManager : SingletonMonoBehavior<CommandEnemyCharaManager>
+public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemyCharaManager>
 {
     [Header("Holder ")]
 

@@ -13,7 +13,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	/// GameManagerでサイクルを管理するマネージャのリスト。
 	/// </summary>
 	[SerializeField]
-	private List<ControllableMonoBehaviour> m_Managers;
+	private List<ControllableMonoBehavior> m_Managers;
 
 
 	protected override void OnAwake()

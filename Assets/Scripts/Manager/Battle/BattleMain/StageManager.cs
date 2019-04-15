@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// メインのバトル画面のオブジェクトを保持するためのマネージャ。
 /// </summary>
-public class StageManager : SingletonMonoBehavior<StageManager>
+public class StageManager : BattleSingletonMonoBehavior<StageManager>
 {
     #region Inspector
 

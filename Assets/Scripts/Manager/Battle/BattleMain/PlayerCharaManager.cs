@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// プレイヤーキャラの動作を制御するマネージャ。
 /// </summary>
-public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
+public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager>
 {
     public const string HOLDER_NAME = "[PlayerCharaHolder]";
 

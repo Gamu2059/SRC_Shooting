@@ -42,6 +42,11 @@ public class CommandWallController : BattleCommandObjectBase
         m_WallCycle = cycle;
     }
 
+    protected virtual void Start()
+    {
+        CommandWallManager.Instance.RegistWall(this);
+    }
+
     /// <summary>
     /// このアイテムが生成された瞬間に呼び出される処理。
     /// </summary>

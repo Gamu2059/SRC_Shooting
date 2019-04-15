@@ -17,9 +17,6 @@ public class CommandCharaController : BattleCommandObjectBase
     [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
     private CommandBulletSetParam m_BulletSetParam;
 
-    [SerializeField, Tooltip("キャラの衝突情報")]
-    private BattleObjectCollider m_Collider;
-
     [Header("キャラの基礎ステータス")]
 
     [SerializeField, Tooltip("キャラの現在HP")]

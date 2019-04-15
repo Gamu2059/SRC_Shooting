@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ステージ全体を制御するためのコントローラ。
 /// </summary>
-public class StageController : ControllableMonoBehaviour
+public class StageController : ControllableMonoBehavior
 {
 
 }

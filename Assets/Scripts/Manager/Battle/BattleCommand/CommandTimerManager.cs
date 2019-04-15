@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandTimerManager : TimerManagerBase<CommandTimerManager>
+public class CommandTimerManager : BattleTimerManagerBase<CommandTimerManager>
 {
 }

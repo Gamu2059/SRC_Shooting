@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// シングルトンパターンを実装したMonoBehaviorの基底クラス。
 /// </summary>
-public abstract class SingletonMonoBehavior<T> : ControllableMonoBehaviour where T : MonoBehaviour
+public abstract class SingletonMonoBehavior<T> : ControllableMonoBehavior where T : MonoBehaviour
 {
 
 	public static T Instance

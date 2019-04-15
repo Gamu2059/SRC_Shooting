@@ -6,10 +6,10 @@ using System.Linq;
 /// <summary>
 /// あるオブジェクトのサイクルを一纏めにしておきたい時に用いる。
 /// </summary>
-public class BehaviorGroup : ControllableMonoBehaviour
+public class BehaviorGroup : ControllableMonoBehavior
 {
 	[SerializeField]
-	private List<ControllableMonoBehaviour> m_BehaviorList;
+	private List<ControllableMonoBehavior> m_BehaviorList;
 
 	public override void OnInitialize()
 	{

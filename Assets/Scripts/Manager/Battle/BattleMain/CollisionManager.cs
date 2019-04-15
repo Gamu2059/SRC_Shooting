@@ -5,13 +5,13 @@ using UnityEngine;
 /// <summary>
 /// 弾やキャラの当たり判定を管理する。
 /// </summary>
-public class CollisionManager : SingletonMonoBehavior<CollisionManager>
+public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
 {
-	public override void OnUpdate()
-	{
+    public override void OnUpdate()
+    {
         UpdateColliderData();
-		CheckCollision();
-	}
+        CheckCollision();
+    }
 
     /// <summary>
     /// 衝突情報を更新する。
@@ -24,33 +24,21 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
         var items = ItemManager.Instance.GetUpdateItems();
 
         player.UpdateColliderData();
-
-        foreach (var enemy in enemies)
-        {
-            enemy.UpdateColliderData();
-        }
-
-        foreach(var bullet in bullets)
-        {
-            bullet.UpdateColliderData();
-        }
-
-        foreach(var item in items)
-        {
-            item.UpdateColliderData();
-        }
+        enemies.ForEach(e => e.UpdateColliderData());
+        bullets.ForEach(b => b.UpdateColliderData());
+        items.ForEach(i => i.UpdateColliderData());
     }
 
-	/// <summary>
-	/// 衝突判定を行う。
-	/// </summary>
-	public void CheckCollision()
-	{
+    /// <summary>
+    /// 衝突判定を行う。
+    /// </summary>
+    public void CheckCollision()
+    {
         CheckCollisionBulletToBullet();
         CheckCollisionBulletToChara();
         CheckCollisionEnemyToPlayer();
         CheckCollisionPlayerToItem();
-	}
+    }
 
     /// <summary>
     /// 弾から弾への衝突判定を行う。
@@ -66,14 +54,15 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
                 continue;
             }
 
-            foreach(var targetBullet in bullets)
+            foreach (var targetBullet in bullets)
             {
                 if (bullet == targetBullet || bullet.GetTroop() == targetBullet.GetTroop())
                 {
                     continue;
                 }
 
-                Collision.CheckCollide(bullet, targetBullet, (attackData, targetData)=> {
+                Collision.CheckCollide(bullet, targetBullet, (attackData, targetData) =>
+                {
                     targetBullet.SufferBullet(bullet, attackData, targetData);
                     bullet.HitBullet(targetBullet, attackData, targetData);
                 });
@@ -94,17 +83,18 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
         {
             if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
             {
-                Collision.CheckCollide(bullet, player, (attackData, targetData)=> {
-                    Debug.Log(111);
+                Collision.CheckCollide(bullet, player, (attackData, targetData) =>
+                {
                     player.SufferBullet(bullet, attackData, targetData);
                     bullet.HitChara(player, attackData, targetData);
                 });
-            } else
+            }
+            else
             {
-                foreach(var enemy in enemies)
+                foreach (var enemy in enemies)
                 {
-                    Collision.CheckCollide(bullet, enemy, (attackData, targetData) => {
-                        Debug.Log(222);
+                    Collision.CheckCollide(bullet, enemy, (attackData, targetData) =>
+                    {
                         enemy.SufferBullet(bullet, attackData, targetData);
                         bullet.HitChara(enemy, attackData, targetData);
                     });
@@ -123,13 +113,14 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 
         foreach (var enemy in enemies)
         {
-            Collision.CheckCollide(enemy, player, (attackData, targetData)=> {
+            Collision.CheckCollide(enemy, player, (attackData, targetData) =>
+            {
                 player.SufferChara(enemy, attackData, targetData);
                 enemy.HitChara(player, attackData, targetData);
             });
         }
     }
-    
+
     /// <summary>
     /// プレイヤーキャラからアイテムへの衝突判定を行う。
     /// </summary>
@@ -140,7 +131,8 @@ public class CollisionManager : SingletonMonoBehavior<CollisionManager>
 
         foreach (var item in items)
         {
-            Collision.CheckCollide(player, item, (attackData, targetData)=> {
+            Collision.CheckCollide(player, item, (attackData, targetData) =>
+            {
                 item.SufferChara(player, attackData, targetData);
                 player.HitItem(item, attackData, targetData);
             });

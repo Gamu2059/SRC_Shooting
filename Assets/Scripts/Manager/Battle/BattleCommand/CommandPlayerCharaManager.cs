@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerCharaManager>
+public class CommandPlayerCharaManager : BattleSingletonMonoBehavior<CommandPlayerCharaManager>
 {
     public const string HOLDER_NAME = "[CommandPlayerCharaHolder]";
 

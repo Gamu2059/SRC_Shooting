@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// 敵コントローラの管理を行う。
 /// </summary>
-public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
+public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 {
     public const string HOLDER_NAME = "[EnemyCharaHolder]";
 

@@ -7,7 +7,7 @@ using System.Linq;
 /// <summary>
 /// 全ての弾の制御を管理する。
 /// </summary>
-public class BulletManager : SingletonMonoBehavior<BulletManager>
+public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
 {
     public const string HOLDER_NAME = "[BulletHolder]";
 

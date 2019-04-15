@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// コマンドイベントの壁を管理する。
 /// </summary>
-public class CommandWallManager : SingletonMonoBehavior<CommandWallManager>
+public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager>
 {
     public const string HOLDER_NAME = "[CommandWallHolder]";
 
@@ -168,7 +168,7 @@ public class CommandWallManager : SingletonMonoBehavior<CommandWallManager>
             m_GotoUpdateWalls.RemoveAt(idx);
             m_StandbyWalls.Remove(Wall);
             m_UpdateWalls.Add(Wall);
-            Wall.SetWallCycle(E_Wall_CYCLE.UPDATE);
+            Wall.SetWallCycle(E_WALL_CYCLE.UPDATE);
         }
 
         m_GotoUpdateWalls.Clear();
@@ -185,7 +185,7 @@ public class CommandWallManager : SingletonMonoBehavior<CommandWallManager>
         {
             int idx = count - i - 1;
             var Wall = m_GotoPoolWalls[idx];
-            Wall.SetWallCycle(E_Wall_CYCLE.POOLED);
+            Wall.SetWallCycle(E_WALL_CYCLE.POOLED);
             m_GotoPoolWalls.RemoveAt(idx);
             m_UpdateWalls.Remove(Wall);
             m_PoolWalls.Add(Wall);
@@ -197,69 +197,84 @@ public class CommandWallManager : SingletonMonoBehavior<CommandWallManager>
     /// <summary>
     /// 壁をSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public void CheckStandbyWall(CommandWallController Wall)
+    public void CheckStandbyWall(CommandWallController wall)
     {
-        if (Wall == null || !m_PoolWalls.Contains(Wall))
+        if (wall == null || !m_PoolWalls.Contains(wall))
         {
             Debug.LogError("指定された壁を追加できませんでした。");
             return;
         }
 
-        m_PoolWalls.Remove(Wall);
-        m_StandbyWalls.Add(Wall);
-        Wall.gameObject.SetActive(true);
-        Wall.SetWallCycle(E_Wall_CYCLE.STANDBY_UPDATE);
-        Wall.OnInitialize();
+        m_PoolWalls.Remove(wall);
+        m_StandbyWalls.Add(wall);
+        wall.gameObject.SetActive(true);
+        wall.SetWallCycle(E_WALL_CYCLE.STANDBY_UPDATE);
+        wall.OnInitialize();
     }
 
     /// <summary>
     /// 指定した壁を制御から外すためにチェックする。
     /// </summary>
-    public void CheckPoolWall(CommandWallController Wall)
+    public void CheckPoolWall(CommandWallController wall)
     {
-        if (Wall == null || m_GotoPoolWalls.Contains(Wall))
+        if (wall == null || m_GotoPoolWalls.Contains(wall))
         {
             Debug.LogError("指定した壁を削除できませんでした。");
             return;
         }
 
-        Wall.SetWallCycle(E_Wall_CYCLE.STANDBY_POOL);
-        Wall.OnFinalize();
-        m_GotoPoolWalls.Add(Wall);
-        Wall.gameObject.SetActive(false);
+        wall.SetWallCycle(E_WALL_CYCLE.STANDBY_POOL);
+        wall.OnFinalize();
+        m_GotoPoolWalls.Add(wall);
+        wall.gameObject.SetActive(false);
     }
 
     /// <summary>
     /// プールから壁を取得する。
     /// 足りなければ生成する。
     /// </summary>
-    /// <param name="WallPrefab">取得や生成の情報源となる壁のプレハブ</param>
-    public CommandWallController GetPoolingWall(CommandWallController WallPrefab)
+    /// <param name="wallPrefab">取得や生成の情報源となる壁のプレハブ</param>
+    public CommandWallController GetPoolingWall(CommandWallController wallPrefab)
     {
-        if (WallPrefab == null)
+        if (wallPrefab == null)
         {
             return null;
         }
 
-        string WallId = WallPrefab.GetWallGroupId();
-        CommandWallController Wall = null;
+        string wallId = wallPrefab.GetWallGroupId();
+        CommandWallController wall = null;
 
         foreach (var b in m_PoolWalls)
         {
-            if (b != null && b.GetWallGroupId() == WallId)
+            if (b != null && b.GetWallGroupId() == wallId)
             {
-                Wall = b;
+                wall = b;
                 break;
             }
         }
 
-        if (Wall == null)
+        if (wall == null)
         {
-            Wall = Instantiate(WallPrefab);
-            Wall.transform.SetParent(m_WallHolder);
-            m_PoolWalls.Add(Wall);
+            wall = Instantiate(wallPrefab);
+            wall.transform.SetParent(m_WallHolder);
+            m_PoolWalls.Add(wall);
         }
 
-        return Wall;
+        return wall;
+    }
+
+    /// <summary>
+    /// 壁を直接登録する。
+    /// </summary>
+    public void RegistWall(CommandWallController wall)
+    {
+        if (wall == null)
+        {
+            return;
+        }
+
+        wall.transform.SetParent(m_WallHolder);
+        m_PoolWalls.Add(wall);
+        CheckStandbyWall(wall);
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// アイテムを管理するマネージャ。
 /// </summary>
-public class ItemManager : SingletonMonoBehavior<ItemManager>
+public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
 {
     public const string HOLDER_NAME = "[ItemHolder]";
 

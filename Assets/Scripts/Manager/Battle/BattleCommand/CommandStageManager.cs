@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandStageManager : SingletonMonoBehavior<CommandStageManager>
+public class CommandStageManager : BattleSingletonMonoBehavior<CommandStageManager>
 {
     #region Inspector
 

@@ -7,7 +7,7 @@ using System.Linq;
 /// <summary>
 /// コマンドイベントの全ての弾の制御を管理する。
 /// </summary>
-public class CommandBulletManager : SingletonMonoBehavior<CommandBulletManager>
+public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletManager>
 {
     public const string HOLDER_NAME = "[CommandBulletHolder]";
 

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// コマンドイベントの弾やキャラの当たり判定を管理する。
 /// </summary>
-public class CommandCollisionManager : SingletonMonoBehavior<CommandCollisionManager>
+public class CommandCollisionManager : BattleSingletonMonoBehavior<CommandCollisionManager>
 {
     public override void OnUpdate()
     {
@@ -21,18 +22,12 @@ public class CommandCollisionManager : SingletonMonoBehavior<CommandCollisionMan
         var player = CommandPlayerCharaManager.Instance.GetController();
         var enemies = CommandEnemyCharaManager.Instance.GetUpdateEnemies();
         var bullets = CommandBulletManager.Instance.GetUpdateBullets();
+        var walls = CommandWallManager.Instance.GetUpdateWalls();
 
         player.UpdateColliderData();
-
-        foreach (var enemy in enemies)
-        {
-            enemy.UpdateColliderData();
-        }
-
-        foreach (var bullet in bullets)
-        {
-            bullet.UpdateColliderData();
-        }
+        enemies.ForEach(e => e.UpdateColliderData());
+        bullets.ForEach(b => b.UpdateColliderData());
+        walls.ForEach(w => w.UpdateColliderData());
     }
 
     /// <summary>
