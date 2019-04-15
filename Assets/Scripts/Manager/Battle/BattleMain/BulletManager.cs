@@ -7,27 +7,27 @@ using System.Linq;
 /// <summary>
 /// 全ての弾の制御を管理する。
 /// </summary>
-public class BulletManager : SingletonMonoBehavior<BulletManager>
+public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
 {
-	[SerializeField]
+    public const string HOLDER_NAME = "[BulletHolder]";
+
+    #region Field
+
 	private Transform m_BulletHolder;
 
 	/// <summary>
 	/// STANDBY状態の弾を保持するリスト。
 	/// </summary>
-	[SerializeField]
 	private List<BulletController> m_StandbyBullets;
 
 	/// <summary>
 	/// UPDATE状態の弾を保持するリスト。
 	/// </summary>
-	[SerializeField]
 	private List<BulletController> m_UpdateBullets;
 
 	/// <summary>
 	/// POOL状態の弾を保持するリスト。
 	/// </summary>
-	[SerializeField]
 	private List<BulletController> m_PoolBullets;
 
 	/// <summary>
@@ -40,10 +40,14 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 	/// </summary>
 	private List<BulletController> m_GotoPoolBullets;
 
-	/// <summary>
-	/// STANDBY状態の弾を保持するリストを取得する。
-	/// </summary>
-	public List<BulletController> GetStandbyBullets()
+    #endregion
+
+    #region Get
+
+    /// <summary>
+    /// STANDBY状態の弾を保持するリストを取得する。
+    /// </summary>
+    public List<BulletController> GetStandbyBullets()
 	{
 		return m_StandbyBullets;
 	}
@@ -64,7 +68,9 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		return m_PoolBullets;
 	}
 
-	protected override void OnAwake()
+    #endregion
+
+    protected override void OnAwake()
 	{
 		base.OnAwake();
 
@@ -98,7 +104,7 @@ public class BulletManager : SingletonMonoBehavior<BulletManager>
 		}
 		else if( m_BulletHolder == null )
 		{
-			var obj = new GameObject( "[BulletHolder]" );
+			var obj = new GameObject( HOLDER_NAME );
 			obj.transform.position = Vector3.zero;
 			m_BulletHolder = obj.transform;
 		}

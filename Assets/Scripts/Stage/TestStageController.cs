@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// テストステージの敵配置やカメラ制御などを管理する。
 /// </summary>
-public class TestStageController : ControllableMonoBehaviour
+public class TestStageController : BattleControllableMonoBehavior
 {
 	public enum E_TEST_STAGE_STATE
 	{

@@ -5,10 +5,10 @@ using System;
 
 /// <summary>
 /// プレイヤーキャラの動作を制御するマネージャ。
-/// とりあえずで作ってます。
 /// </summary>
-public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
+public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager>
 {
+    public const string HOLDER_NAME = "[PlayerCharaHolder]";
 
     #region Inspector
 
@@ -91,7 +91,7 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
         }
         else if (m_PlayerCharaHolder == null)
         {
-            var obj = new GameObject("[PlayerCharaHolder]");
+            var obj = new GameObject(HOLDER_NAME);
             obj.transform.position = Vector3.zero;
             m_PlayerCharaHolder = obj.transform;
         }

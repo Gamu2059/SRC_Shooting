@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// メイン画面のカメラの管理をする。
 /// </summary>
-public class CameraManager : SingletonMonoBehavior<CameraManager>
+public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
 {
 	[SerializeField]
 	private Camera m_Camera;

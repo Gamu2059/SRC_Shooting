@@ -8,7 +8,7 @@ using System.Linq;
 /// <summary>
 /// シーンごとのマネージャ等を管理するコンポーネント。
 /// </summary>
-public class BaseScene : ControllableMonoBehaviour
+public class BaseScene : ControllableMonoBehavior
 {
 	/// <summary>
 	/// このシーンが何のシーンなのか。
@@ -26,7 +26,7 @@ public class BaseScene : ControllableMonoBehaviour
 	/// このシーンに固有で紐づいているマネージャのリスト。
 	/// </summary>
 	[SerializeField, Tooltip( "シーンに固有で紐づいているマネージャは、ここにアタッチして下さい。なお、アタッチした順番通りにマネージャは実行されることに注意して下さい。" )]
-	private List<ControllableMonoBehaviour> m_ManagerList;
+	private List<ControllableMonoBehavior> m_ManagerList;
 
 
 
@@ -59,7 +59,7 @@ public class BaseScene : ControllableMonoBehaviour
 	/// <summary>
 	/// このシーンに固有で紐づいているマネージャのリストを取得する。。
 	/// </summary>
-	public List<ControllableMonoBehaviour> GetManagerList()
+	public List<ControllableMonoBehavior> GetManagerList()
 	{
 		return m_ManagerList;
 	}

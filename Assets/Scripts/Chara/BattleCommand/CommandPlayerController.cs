@@ -7,24 +7,29 @@ public class CommandPlayerController : CommandCharaController
     [SerializeField, Tooltip("キャラの移動速度")]
     private float m_MoveSpeed = 5f;
 
+    [SerializeField, Tooltip("弾を撃つ間隔")]
+    private float m_ShotInterval;
 
-
-    public float GetMoveSpeed()
-    {
-        return m_MoveSpeed;
-    }
-
-    public void SetMoveSpeed(float moveSpeed)
-    {
-        m_MoveSpeed = moveSpeed;
-    }
-
-
+    private float m_ShotTimeCount;
 
     private void Start()
     {
         // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
         CommandPlayerCharaManager.Instance.RegistChara(this);
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+
+        m_ShotTimeCount = 0;
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        m_ShotTimeCount -= Time.deltaTime;
     }
 
     /// <summary>
@@ -33,19 +38,14 @@ public class CommandPlayerController : CommandCharaController
     /// </summary>
     public virtual void ShotBullet()
     {
-        // 何もオーバーロードしない場合は適当に弾を飛ばす
+        if (m_ShotTimeCount > 0)
+        {
+            return;
+        }
+
         CommandBulletController.ShotBullet(this);
+        m_ShotTimeCount = m_ShotInterval;
     }
-
-    /// <summary>
-    /// ボムを使用する。
-    /// </summary>
-    public virtual void ShotBomb()
-    {
-
-    }
-
-
 
     /// <summary>
     /// キャラを移動させる。
@@ -56,45 +56,6 @@ public class CommandPlayerController : CommandCharaController
     {
         Vector3 move = moveDirection.normalized * m_MoveSpeed * Time.deltaTime;
         transform.Translate(move, Space.World);
-    }
-
-
-    public override void OnSuffer(BulletController bullet, ColliderData colliderData)
-    {
-        base.OnSuffer(bullet, colliderData);
-    }
-
-    public override void OnSufferChara(CharaController hitChara, ColliderData hitData, ColliderData sufferData)
-    {
-        base.OnSufferChara(hitChara, hitData, sufferData);
-        Damage(1);
-    }
-
-    public override void OnHitItem(ItemController sufferItem, ColliderData hitData, ColliderData sufferData)
-    {
-        //base.OnHitItem(sufferItem, hitData, sufferData);
-
-        //if (sufferData.CollideName != ItemController.GAIN_COLLIDE)
-        //{
-        //    return;
-        //}
-
-        //switch (sufferItem.GetItemType())
-        //{
-        //    case E_ITEM_TYPE.SMALL_SCORE:
-        //    case E_ITEM_TYPE.BIG_SCORE:
-        //        BattleManager.Instance.AddScore(sufferItem.GetPoint());
-        //        break;
-        //    case E_ITEM_TYPE.SMALL_SCORE_UP:
-        //    case E_ITEM_TYPE.BIG_SCORE_UP:
-        //        break;
-        //    case E_ITEM_TYPE.SMALL_EXP:
-        //    case E_ITEM_TYPE.BIG_EXP:
-        //        break;
-        //    case E_ITEM_TYPE.SMALL_BOMB:
-        //    case E_ITEM_TYPE.BIG_BOMB:
-        //        break;
-        //}
     }
 
     public override void Dead()
@@ -108,5 +69,7 @@ public class CommandPlayerController : CommandCharaController
 
         //gameObject.SetActive(false);
         //BattleManager.Instance.GameOver();
+
+        Debug.Log("Dead");
     }
 }

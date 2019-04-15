@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerCharaManager>
+public class CommandPlayerCharaManager : BattleSingletonMonoBehavior<CommandPlayerCharaManager>
 {
+    public const string HOLDER_NAME = "[CommandPlayerCharaHolder]";
 
     #region Inspector
 
@@ -56,22 +57,21 @@ public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerChar
     {
         base.OnStart();
 
-        //if (StageManager.Instance != null && StageManager.Instance.GetPlayerCharaHolder() != null)
-        //{
-        //    m_PlayerCharaHolder = StageManager.Instance.GetPlayerCharaHolder().transform;
-        //}
-        //else if (m_PlayerCharaHolder == null)
-        //{
-        //    var obj = new GameObject("[PlayerCharaHolder]");
-        //    obj.transform.position = Vector3.zero;
-        //    m_PlayerCharaHolder = obj.transform;
-        //}
+        if (CommandStageManager.Instance != null && CommandStageManager.Instance.GetPlayerCharaHolder() != null)
+        {
+            m_PlayerCharaHolder = CommandStageManager.Instance.GetPlayerCharaHolder().transform;
+        }
+        else if (m_PlayerCharaHolder == null)
+        {
+            var obj = new GameObject(HOLDER_NAME);
+            obj.transform.position = Vector3.zero;
+            m_PlayerCharaHolder = obj.transform;
+        }
 
         var pos = GetInitAppearPosition();
         var chara = Instantiate(m_CharaPrefab);
         RegistChara(chara);
         chara.transform.position = pos;
-        m_Controller = chara;
     }
 
     public override void OnUpdate()
@@ -109,6 +109,7 @@ public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerChar
         controller.transform.SetParent(m_PlayerCharaHolder);
         controller.OnInitialize();
         controller.gameObject.SetActive(true);
+        m_Controller = controller;
     }
 
     public void RestrictCharaPosition()
@@ -120,7 +121,7 @@ public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerChar
             return;
         }
 
-        //StageManager.Instance.ClampMovingObjectPosition(chara.transform);
+        CommandStageManager.Instance.ClampMovingObjectPosition(chara.transform);
     }
 
     /// <summary>
@@ -128,13 +129,13 @@ public class CommandPlayerCharaManager : SingletonMonoBehavior<CommandPlayerChar
     /// </summary>
     public Vector3 GetInitAppearPosition()
     {
-        var minPos = StageManager.Instance.GetMinLocalPositionField();
-        var maxPos = StageManager.Instance.GetMaxLocalPositionField();
+        var minPos = CommandStageManager.Instance.GetMinLocalPositionField();
+        var maxPos = CommandStageManager.Instance.GetMaxLocalPositionField();
 
         var factX = (maxPos.x - minPos.x) * m_InitAppearViewportPosition.x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * m_InitAppearViewportPosition.y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
-        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+        pos += CommandStageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
     }

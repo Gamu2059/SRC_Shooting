@@ -6,8 +6,10 @@ using System.Linq;
 /// <summary>
 /// アイテムを管理するマネージャ。
 /// </summary>
-public class ItemManager : SingletonMonoBehavior<ItemManager>
+public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
 {
+    public const string HOLDER_NAME = "[ItemHolder]";
+
     #region Field Inspector
 
     /// <summary>
@@ -141,7 +143,7 @@ public class ItemManager : SingletonMonoBehavior<ItemManager>
         }
         else if (m_ItemHolder == null)
         {
-            var obj = new GameObject("[ItemHolder]");
+            var obj = new GameObject(HOLDER_NAME);
             obj.transform.position = Vector3.zero;
             m_ItemHolder = obj.transform;
         }

@@ -72,43 +72,11 @@ public class CommandEnemyController : CommandCharaController
         }
     }
 
-
-
-    public override void OnSuffer(BulletController bullet, ColliderData colliderData)
-    {
-        //if (m_OnHitInvincibleDuration <= 0)
-        //{
-        //    base.OnSuffer(bullet, colliderData);
-        //    return;
-        //}
-
-        //Timer timer = null;
-
-        //if (m_TimerDict.ContainsKey("HitInvincibleTimer"))
-        //{
-        //    timer = m_TimerDict["HitInvincibleTimer"];
-        //}
-
-        //if (timer == null)
-        //{
-        //    timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, m_OnHitInvincibleDuration, () =>
-        //    {
-        //        timer = null;
-        //    });
-        //    BattleMainTimerManager.Instance.RegistTimer(timer);
-
-        //    m_TimerDict.Add("HitInvincibleTimer", timer);
-
-        //    base.OnSuffer(bullet, colliderData);
-        //}
-    }
-
     public override void Dead()
     {
         base.Dead();
 
         DestroyAllTimer();
         CommandEnemyCharaManager.Instance.DestroyEnemy(this);
-        //ItemManager.Instance.CreateItem(transform.localPosition, m_ItemCreateParam);
     }
 }

@@ -8,7 +8,7 @@ using UniRx;
 /// <summary>
 /// BattleMainのUIを管理する。
 /// </summary>
-public class BattleMainUiManager : SingletonMonoBehavior<BattleMainUiManager>
+public class BattleMainUiManager : BattleSingletonMonoBehavior<BattleMainUiManager>
 {
 	[SerializeField]
 	private GameObject m_GameOverGroup;
