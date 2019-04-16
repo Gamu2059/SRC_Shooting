@@ -71,16 +71,6 @@ public class TestStageController : BattleControllableMonoBehavior
 		AppearEnemy();
 	}
 
-	public override void OnLateUpdate()
-	{
-		base.OnLateUpdate();
-	}
-
-	public override void OnFixedUpdate()
-	{
-		base.OnFixedUpdate();
-	}
-
 	private void ControlViewMoving()
 	{
 		var moveRoot = StageManager.Instance.GetMoveObjectHolder();

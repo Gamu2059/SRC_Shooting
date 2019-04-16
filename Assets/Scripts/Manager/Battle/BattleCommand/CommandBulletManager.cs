@@ -98,9 +98,9 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
     {
         base.OnStart();
 
-        if (StageManager.Instance != null && StageManager.Instance.GetBulletHolder() != null)
+        if (CommandStageManager.Instance != null && CommandStageManager.Instance.GetBulletHolder() != null)
         {
-            m_BulletHolder = StageManager.Instance.GetBulletHolder().transform;
+            m_BulletHolder = CommandStageManager.Instance.GetBulletHolder().transform;
         }
         else if (m_BulletHolder == null)
         {
