@@ -11,31 +11,6 @@ public class ItemController : BattleMainObjectBase
     public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
     public const string GAIN_COLLIDE = "GAIN COLLIDE";
 
-    [Serializable]
-    public enum E_ITEM_CYCLE
-    {
-        /// <summary>
-        /// 発射される直前。
-        /// </summary>
-        STANDBY_UPDATE,
-
-        /// <summary>
-        /// 発射された後、動いている状態。
-        /// </summary>
-        UPDATE,
-
-        /// <summary>
-        /// プールされる準備状態。
-        /// </summary>
-        STANDBY_POOL,
-
-        /// <summary>
-        /// プーリングされた状態。
-        /// </summary>
-        POOLED,
-    }
-
-
     [SerializeField]
     private E_ITEM_TYPE m_ItemType;
 
@@ -53,7 +28,7 @@ public class ItemController : BattleMainObjectBase
     /// <summary>
     /// アイテムのサイクル。
     /// </summary>
-    private E_ITEM_CYCLE m_ItemCycle;
+    private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
 	/// このアイテムのOrbitalParam。
@@ -107,17 +82,17 @@ public class ItemController : BattleMainObjectBase
     /// <summary>
     /// このアイテムのサイクルを取得する。
     /// </summary>
-    public E_ITEM_CYCLE GetItemCycle()
+    public E_POOLED_OBJECT_CYCLE GetCycle()
     {
-        return m_ItemCycle;
+        return m_Cycle;
     }
 
     /// <summary>
     /// このアイテムのサイクルを設定する。
     /// </summary>
-    public void SetItemCycle(E_ITEM_CYCLE value)
+    public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
     {
-        m_ItemCycle = value;
+        m_Cycle = cycle;
     }
 
     /// <summary>
@@ -374,7 +349,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     public virtual void DestroyItem()
     {
-        if (m_ItemCycle == E_ITEM_CYCLE.UPDATE)
+        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             ItemManager.Instance.CheckPoolItem(this);
         }

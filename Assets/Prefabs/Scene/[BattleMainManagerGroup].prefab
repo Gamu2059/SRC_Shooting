@@ -9,11 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2878423045518255913}
+  - component: {fileID: 1038783231578221413}
   - component: {fileID: 6846628251493446480}
   - component: {fileID: 488972555095900866}
   - component: {fileID: 3871153532367532177}
   - component: {fileID: 8621981717037409208}
   - component: {fileID: 4820006072425332297}
+  - component: {fileID: 8190510489573558779}
   - component: {fileID: 1062016442395351199}
   - component: {fileID: 4867682160774085349}
   - component: {fileID: 6978578709180569642}
@@ -39,6 +41,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1038783231578221413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738506033191002612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228644a5dab7a2e47ac2785f50a78666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BehaviorList:
+  - {fileID: 6846628251493446480}
+  - {fileID: 488972555095900866}
+  - {fileID: 3871153532367532177}
+  - {fileID: 8621981717037409208}
+  - {fileID: 4820006072425332297}
+  - {fileID: 8190510489573558779}
+  - {fileID: 1062016442395351199}
+  - {fileID: 4867682160774085349}
+  - {fileID: 15298492513902401}
 --- !u!114 &6846628251493446480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,8 +94,8 @@ MonoBehaviour:
   m_EnemyCharaHolder: {fileID: 0}
   m_BulletHolder: {fileID: 0}
   m_ItemHolder: {fileID: 0}
-  m_MinLocalFieldPosition: {x: 0, y: 0}
-  m_MaxLocalFieldPosition: {x: 0, y: 0}
+  m_MinLocalFieldPosition: {x: -30, y: -40}
+  m_MaxLocalFieldPosition: {x: 30, y: 40}
 --- !u!114 &3871153532367532177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,8 +112,7 @@ MonoBehaviour:
   m_CharaPrefabs:
   - {fileID: 192641982, guid: d247464a9787d8a418094c891be90fb9, type: 3}
   m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
-  m_Controllers:
-  - {fileID: 0}
+  m_Controllers: []
   m_CurrentController: {fileID: 0}
 --- !u!114 &8621981717037409208
 MonoBehaviour:
@@ -104,11 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EnemyCharaHolder: {fileID: 0}
-  m_OffsetMinField: {x: 0, y: 0}
-  m_OffsetMaxField: {x: 0, y: 0}
-  m_StandbyEnemies: []
+  m_OffsetMinField: {x: -10, y: -10}
+  m_OffsetMaxField: {x: 10, y: 10}
   m_UpdateEnemies: []
-  m_GotoUpdateEnemies: []
   m_GotoDestroyEnemies: []
   m_BossControllers: []
 --- !u!114 &4820006072425332297
@@ -123,6 +144,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e279de0410df924f81ccfc02c520b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8190510489573558779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738506033191002612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3764afba5679b74988a55cf657b6325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ItemHolder: {fileID: 0}
+  m_ItemPrefabs:
+  - {fileID: 6413526307181336518, guid: 11e8c83c607d3fc408768c9959e08555, type: 3}
+  m_ItemOrbitalParam:
+    Target: 0
+    Position: {x: 0, y: 0, z: 0}
+    PositionRelative: 0
+    Rotation: {x: 0, y: 0, z: 0}
+    RotationRelative: 0
+    Scale: {x: 0, y: 0, z: 0}
+    ScaleRelative: 0
+    DeltaRotation: {x: 0, y: 0, z: 540}
+    DeltaRotationRelative: 1
+    DeltaScale: {x: 0, y: 0, z: 0}
+    DeltaScaleRelative: 1
+    Damage: 0
+    DamageRelative: 0
+    Speed: 10
+    SpeedRelative: 1
+    Accel: -60
+    AccelRelative: 1
+    IsSearch: 0
+    Lerp: 0
+    LerpRelative: 0
+    OptionObjectParams: []
+    OptionValueParams: []
+  m_ItemAttractRate: 0.1
+  m_UpdateItems: []
+  m_PoolItems: []
 --- !u!114 &1062016442395351199
 MonoBehaviour:
   m_ObjectHideFlags: 0

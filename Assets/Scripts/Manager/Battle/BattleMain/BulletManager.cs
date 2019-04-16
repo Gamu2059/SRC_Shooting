@@ -53,11 +53,6 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
         m_GotoPoolBullets = new List<BulletController>();
     }
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
     public override void OnFinalize()
     {
         base.OnFinalize();
@@ -91,10 +86,10 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
                 continue;
             }
 
-            if (bullet.GetBulletCycle() == E_BULLET_CYCLE.STANDBY_UPDATE)
+            if (bullet.GetCycle() == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
             {
                 bullet.OnStart();
-                bullet.SetBulletCycle(E_BULLET_CYCLE.UPDATE);
+                bullet.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
             }
 
             bullet.OnUpdate();
@@ -130,7 +125,7 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
         {
             int idx = count - i - 1;
             var bullet = m_GotoPoolBullets[idx];
-            bullet.SetBulletCycle(E_BULLET_CYCLE.POOLED);
+            bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
             m_GotoPoolBullets.RemoveAt(idx);
             m_UpdateBullets.Remove(bullet);
             m_PoolBullets.Add(bullet);
@@ -153,7 +148,7 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
         m_PoolBullets.Remove(bullet);
         m_UpdateBullets.Add(bullet);
         bullet.gameObject.SetActive(true);
-        bullet.SetBulletCycle(E_BULLET_CYCLE.STANDBY_UPDATE);
+        bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
         bullet.OnInitialize();
     }
 
@@ -168,7 +163,7 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
             return;
         }
 
-        bullet.SetBulletCycle(E_BULLET_CYCLE.STANDBY_POOL);
+        bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
         bullet.OnFinalize();
         m_GotoPoolBullets.Add(bullet);
         bullet.gameObject.SetActive(false);

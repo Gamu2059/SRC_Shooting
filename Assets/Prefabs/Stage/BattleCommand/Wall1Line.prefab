@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: Command Wall
+  - CollideName: OUT WALL COLLIDE
     ColliderType: 0
     Transform: {fileID: 6780810466752307831}
 --- !u!114 &3950569407725982810
@@ -63,7 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WallGroupId: Default 1Wall
-  m_WallCycle: 0
+  m_IsUnbreakable: 0
+  m_MaxHp: 0
 --- !u!1 &6780810466752307830
 GameObject:
   m_ObjectHideFlags: 0

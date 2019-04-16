@@ -29,7 +29,7 @@ public class CommandWallController : BattleCommandObjectBase
     /// <summary>
     /// この壁の状態。
     /// </summary>
-    private E_WALL_CYCLE m_WallCycle;
+    private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
     /// 非表示になって破棄されるかどうか。
@@ -46,14 +46,14 @@ public class CommandWallController : BattleCommandObjectBase
         return m_WallGroupId;
     }
 
-    public E_WALL_CYCLE GetWallCycle()
+    public E_POOLED_OBJECT_CYCLE GetCycle()
     {
-        return m_WallCycle;
+        return m_Cycle;
     }
 
-    public void SetWallCycle(E_WALL_CYCLE cycle)
+    public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
     {
-        m_WallCycle = cycle;
+        m_Cycle = cycle;
     }
 
     protected virtual void Start()
@@ -87,7 +87,7 @@ public class CommandWallController : BattleCommandObjectBase
     /// </summary>
     public virtual void DestroyWall()
     {
-        if (m_WallCycle == E_WALL_CYCLE.UPDATE)
+        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             CommandWallManager.Instance.CheckPoolWall(this);
         }

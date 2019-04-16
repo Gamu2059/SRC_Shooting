@@ -10,7 +10,7 @@ public class CommandWallGroupController : BattleCommandObjectBase
     /// <summary>
     /// 壁のグループのサイクル。
     /// </summary>
-    private E_WALL_CYCLE m_WallGroupCycle;
+    private E_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
     /// このグループに所属する壁のリスト。
@@ -22,14 +22,14 @@ public class CommandWallGroupController : BattleCommandObjectBase
     /// </summary>
     private bool m_CanOutDestroy;
 
-    public E_WALL_CYCLE GetWallGroupCycle()
+    public E_OBJECT_CYCLE GetCycle()
     {
-        return m_WallGroupCycle;
+        return m_Cycle;
     }
 
-    public void SetWallGroupCycle(E_WALL_CYCLE cycle)
+    public void SetCycle(E_OBJECT_CYCLE cycle)
     {
-        m_WallGroupCycle = cycle;
+        m_Cycle = cycle;
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class CommandWallGroupController : BattleCommandObjectBase
     /// </summary>
     public virtual void DestroyWallGroup()
     {
-        if (m_WallGroupCycle == E_WALL_CYCLE.UPDATE)
+        if (m_Cycle == E_OBJECT_CYCLE.UPDATE)
         {
             //CommandWallManager.Instance.CheckPoolWall(this);
         }

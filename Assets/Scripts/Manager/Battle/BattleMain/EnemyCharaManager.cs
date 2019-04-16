@@ -26,23 +26,11 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
     #region Field
 
-    /// <summary>
-    /// STANDBY状態の弾を保持するリスト。
-    /// </summary>
-    [SerializeField]
-	private List<EnemyController> m_StandbyEnemies;
-
 	/// <summary>
 	/// UPDATE状態の弾を保持するリスト。
 	/// </summary>
 	[SerializeField]
 	private List<EnemyController> m_UpdateEnemies;
-
-	/// <summary>
-	/// UPDATE状態に遷移する弾のリスト。
-	/// </summary>
-	[SerializeField]
-	private List<EnemyController> m_GotoUpdateEnemies;
 
 	/// <summary>
 	/// POOL状態に遷移する弾のリスト。
@@ -61,14 +49,6 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
 
     #region Get Set
-
-    /// <summary>
-    /// スタンバイ状態の敵を取得する。
-    /// </summary>
-    public List<EnemyController> GetStandbyEnemies()
-	{
-		return m_StandbyEnemies;
-	}
 
 	/// <summary>
 	/// ゲームサイクルに入っている敵を取得する。
@@ -94,9 +74,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	{
 		base.OnAwake();
 
-		m_StandbyEnemies = new List<EnemyController>();
 		m_UpdateEnemies = new List<EnemyController>();
-		m_GotoUpdateEnemies = new List<EnemyController>();
 		m_GotoDestroyEnemies = new List<EnemyController>();
 		m_BossControllers = new List<EnemyController>();
 	}
@@ -136,20 +114,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
 	public override void OnUpdate()
 	{
-		foreach( var enemy in m_StandbyEnemies )
-		{
-			if( enemy == null )
-			{
-				m_GotoUpdateEnemies.Add( enemy );
-				continue;
-			}
-
-			enemy.OnStart();
-			m_GotoUpdateEnemies.Add( enemy );
-		}
-
-		GotoUpdateFromStandby();
-
+        // Update処理
 		foreach( var enemy in m_UpdateEnemies )
 		{
 			if( enemy == null )
@@ -158,12 +123,19 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 				continue;
 			}
 
+            if (enemy.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                enemy.OnStart();
+                enemy.SetCycle(E_OBJECT_CYCLE.UPDATE);
+            }
+
 			enemy.OnUpdate();
 		}
 	}
 
 	public override void OnLateUpdate()
 	{
+        // LateUpdate処理
 		foreach( var enemy in m_UpdateEnemies )
 		{
 			if( enemy == null )
@@ -176,30 +148,6 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 		}
 
 		GotoDestroyFromUpdate();
-	}
-
-	private void GotoUpdateFromStandby()
-	{
-		int count = m_GotoUpdateEnemies.Count;
-
-		for( int i = 0; i < count; i++ )
-		{
-			int idx = count - i - 1;
-			var enemy = m_GotoUpdateEnemies[idx];
-
-			if( enemy == null )
-			{
-				continue;
-			}
-
-			m_GotoUpdateEnemies.RemoveAt( idx );
-			m_StandbyEnemies.Remove( enemy );
-			m_UpdateEnemies.Add( enemy );
-		}
-
-		m_GotoUpdateEnemies.Clear();
-
-		m_StandbyEnemies.RemoveAll( ( e ) => e == null );
 	}
 
 	private void GotoDestroyFromUpdate()
@@ -218,6 +166,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
 			m_GotoDestroyEnemies.RemoveAt( idx );
 			m_UpdateEnemies.Remove( enemy );
+            enemy.SetCycle(E_OBJECT_CYCLE.DESTROYED);
 			enemy.OnFinalize();
 			Destroy( enemy.gameObject );
 		}
@@ -234,13 +183,14 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	/// </summary>
 	public EnemyController RegistEnemy( EnemyController controller )
 	{
-		if( controller == null || m_StandbyEnemies.Contains( controller ) || m_UpdateEnemies.Contains( controller ) || m_GotoUpdateEnemies.Contains( controller ) || m_GotoDestroyEnemies.Contains( controller ) )
+		if( controller == null || m_UpdateEnemies.Contains( controller ) || m_GotoDestroyEnemies.Contains( controller ) )
 		{
 			return null;
 		}
 
 		controller.transform.SetParent( m_EnemyCharaHolder );
-		m_StandbyEnemies.Add( controller );
+		m_UpdateEnemies.Add( controller );
+        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
 		controller.OnInitialize();
 		return controller;
 	}
@@ -285,6 +235,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 		}
 
 		m_GotoDestroyEnemies.Add( controller );
+        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_DESTROYED);
 	}
 
 	/// <summary>
@@ -293,12 +244,8 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	/// </summary>
 	public void DestroyAllEnemy()
 	{
-		m_GotoDestroyEnemies.AddRange( m_StandbyEnemies );
 		m_GotoDestroyEnemies.AddRange( m_UpdateEnemies );
-		m_GotoDestroyEnemies.AddRange( m_GotoUpdateEnemies );
-		m_StandbyEnemies.Clear();
 		m_UpdateEnemies.Clear();
-		m_GotoUpdateEnemies.Clear();
 	}
 
 	/// <summary>
@@ -322,24 +269,12 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	/// </summary>
 	public void DestroyAllEnemyImmediate()
 	{
-		foreach( var enemy in m_StandbyEnemies )
-		{
-			DestroyEnemyImmediate( enemy );
-		}
-
 		foreach( var enemy in m_UpdateEnemies )
 		{
 			DestroyEnemyImmediate( enemy );
 		}
 
-		foreach( var enemy in m_GotoUpdateEnemies )
-		{
-			DestroyEnemyImmediate( enemy );
-		}
-
-		m_StandbyEnemies.Clear();
 		m_UpdateEnemies.Clear();
-		m_GotoUpdateEnemies.Clear();
 	}
 
     /// <summary>
