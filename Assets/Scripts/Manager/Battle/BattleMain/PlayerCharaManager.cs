@@ -5,10 +5,10 @@ using System;
 
 /// <summary>
 /// プレイヤーキャラの動作を制御するマネージャ。
-/// とりあえずで作ってます。
 /// </summary>
-public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
+public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager>
 {
+    public const string HOLDER_NAME = "[PlayerCharaHolder]";
 
     #region Inspector
 
@@ -24,19 +24,6 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
 
     [SerializeField]
     private Vector2 m_InitAppearViewportPosition;
-
-    [Header("Key config")]
-
-    [SerializeField]
-    private InputParam m_InputParam;
-
-    [Header("Restrict Filed")]
-
-    [SerializeField]
-    private Vector2 m_MinViewportRestrict;
-
-    [SerializeField]
-    private Vector2 m_MaxViewportRestrict;
 
     [SerializeField]
     private List<PlayerController> m_Controllers;
@@ -104,16 +91,16 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
         }
         else if (m_PlayerCharaHolder == null)
         {
-            var obj = new GameObject("[PlayerCharaHolder]");
+            var obj = new GameObject(HOLDER_NAME);
             obj.transform.position = Vector3.zero;
             m_PlayerCharaHolder = obj.transform;
         }
 
+        var pos = GetInitAppearPosition();
         foreach (var charaPrefab in m_CharaPrefabs)
         {
             var chara = Instantiate(charaPrefab);
             RegistChara(chara);
-            var pos = CameraManager.Instance.GetViewportWorldPoint(m_InitAppearViewportPosition.x, m_InitAppearViewportPosition.y);
             chara.transform.position = pos;
         }
     }
@@ -147,32 +134,6 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
         RestrictCharaPosition();
         m_CurrentController.OnLateUpdate();
         m_CharaMoveDir = Vector3.zero;
-    }
-
-    private bool IsGetKeyDown(KeyCode[] targetKeys, bool additionalCondition = false)
-    {
-        foreach (var key in targetKeys)
-        {
-            if (Input.GetKeyDown(key))
-            {
-                return true;
-            }
-        }
-
-        return additionalCondition;
-    }
-
-    private bool IsGetKey(KeyCode[] targetKeys, bool additionalCondition = false)
-    {
-        foreach (var key in targetKeys)
-        {
-            if (Input.GetKey(key))
-            {
-                return true;
-            }
-        }
-
-        return additionalCondition;
     }
 
     private void ChangeChara(int index)
@@ -228,17 +189,23 @@ public class PlayerCharaManager : SingletonMonoBehavior<PlayerCharaManager>
             return;
         }
 
-        Vector3 viewPos = CameraManager.Instance.WorldToViewportPoint(chara.transform.position);
-        float x = Mathf.Clamp(viewPos.x, m_MinViewportRestrict.x, m_MaxViewportRestrict.x);
-        float y = Mathf.Clamp(viewPos.y, m_MinViewportRestrict.y, m_MaxViewportRestrict.y);
+        StageManager.Instance.ClampMovingObjectPosition(chara.transform);
+    }
 
-        if (viewPos.x == x && viewPos.y == y)
-        {
-            return;
-        }
+    /// <summary>
+    /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
+    /// </summary>
+    public Vector3 GetInitAppearPosition()
+    {
+        var minPos = StageManager.Instance.GetMinLocalPositionField();
+        var maxPos = StageManager.Instance.GetMaxLocalPositionField();
 
-        var pos = CameraManager.Instance.GetViewportWorldPoint(x, y);
-        chara.transform.position = pos;
+        var factX = (maxPos.x - minPos.x) * m_InitAppearViewportPosition.x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * m_InitAppearViewportPosition.y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+
+        return pos;
     }
 
     /// <summary>

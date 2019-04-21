@@ -5,8 +5,12 @@ using UnityEngine;
 /// <summary>
 /// メインのバトル画面のオブジェクトを保持するためのマネージャ。
 /// </summary>
-public class StageManager : SingletonMonoBehavior<StageManager>
+public class StageManager : BattleSingletonMonoBehavior<StageManager>
 {
+    #region Inspector
+
+    [Header("Holder")]
+
 	/// <summary>
 	/// 動物体を保持するためのホルダー
 	/// </summary>
@@ -43,17 +47,27 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 	[SerializeField]
 	private GameObject m_BulletHolder;
 
-	public override void OnInitialize()
-	{
-		base.OnInitialize();
-	}
+    /// <summary>
+    /// アイテムを保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private GameObject m_ItemHolder;
 
-	public override void OnUpdate()
-	{
-		base.OnUpdate();
-	}
+    [Header("Filed")]
 
-	public GameObject GetMoveObjectHolder()
+    [SerializeField]
+    private Vector2 m_MinLocalFieldPosition;
+
+    [SerializeField]
+    private Vector2 m_MaxLocalFieldPosition;
+
+    #endregion
+
+
+
+    #region Get
+
+    public GameObject GetMoveObjectHolder()
 	{
 		return m_MoveObjectHolder;
 	}
@@ -83,10 +97,29 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 		return m_BulletHolder;
 	}
 
-	/// <summary>
-	/// MoveObjectHolderのピボットを基準にした座標に変換する。
-	/// </summary>
-	public Vector3 GetMoveObjectHolderBasePosition( Vector3 position )
+    public GameObject GetItemHolder()
+    {
+        return m_ItemHolder;
+    }
+
+    public Vector2 GetMinLocalPositionField()
+    {
+        return m_MinLocalFieldPosition;
+    }
+
+    public Vector2 GetMaxLocalPositionField()
+    {
+        return m_MaxLocalFieldPosition;
+    }
+
+    #endregion
+
+
+
+    /// <summary>
+    /// MoveObjectHolderのピボットを基準にした座標に変換する。
+    /// </summary>
+    public Vector3 GetMoveObjectHolderBasePosition( Vector3 position )
 	{
 		return position - m_MoveObjectHolder.transform.position;
 	}
@@ -98,4 +131,33 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 	{
 		return eulerAngles - m_MoveObjectHolder.transform.eulerAngles;
 	}
+
+    /// <summary>
+    /// 指定したオブジェクトの座標が、動体オブジェクトホルダーのフィールド領域の外にあるかどうかを判定する。
+    /// </summary>
+    public bool IsOutOfFieldMovingObjectPosition(Transform movingObj)
+    {
+        var localPos = movingObj.position - m_MoveObjectHolder.transform.position;
+        return
+            localPos.x < m_MinLocalFieldPosition.x ||
+            localPos.x > m_MaxLocalFieldPosition.x ||
+            localPos.z < m_MinLocalFieldPosition.y ||
+            localPos.z > m_MaxLocalFieldPosition.y;
+    }
+
+    /// <summary>
+    /// 指定したオブジェクトの座標を動体オブジェクトホルダーのフィールド領域に入れ込む。
+    /// </summary>
+    public void ClampMovingObjectPosition(Transform movingObj)
+    {
+        if (!IsOutOfFieldMovingObjectPosition(movingObj))
+        {
+            return;
+        }
+
+        var pos = movingObj.position - m_MoveObjectHolder.transform.position;
+        pos.x = Mathf.Clamp(pos.x, m_MinLocalFieldPosition.x, m_MaxLocalFieldPosition.x);
+        pos.z = Mathf.Clamp(pos.z, m_MinLocalFieldPosition.y, m_MaxLocalFieldPosition.y);
+        movingObj.localPosition = pos;
+    }
 }

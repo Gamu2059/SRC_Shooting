@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleMainTimerManager : TimerManagerBase<BattleMainTimerManager>
+public class BattleMainTimerManager : BattleTimerManagerBase<BattleMainTimerManager>
 {
-	public override void OnFixedUpdate()
-	{
-		base.OnFixedUpdate();
-	}
 }

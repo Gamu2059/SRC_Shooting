@@ -934,6 +934,12 @@ MonoBehaviour:
   m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams:
+    - ItemType: 0
+      ItemNum: 1
+      SpreadRadius: 0
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -943,6 +949,7 @@ MonoBehaviour:
   m_CircleMoveAngle: 0
   m_CircleMoveSpeed: 0
   m_ShotPosition: {fileID: 1836440346411894371}
+  m_VisibleOffsetShotTime: 0
   m_StraightMoveShotParam:
     Interval: 0
     Num: 0

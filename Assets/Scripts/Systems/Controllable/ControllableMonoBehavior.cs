@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// コンポーネントを制御しやすいようにするための拡張です。
 /// </summary>
-public class ControllableMonoBehaviour : MonoBehaviour, IControllableGameCycle
+public class ControllableMonoBehavior : MonoBehaviour, IControllableGameCycle
 {
 	protected virtual void Awake()
 	{

@@ -4,19 +4,32 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// 敵の振る舞いの制御を行う。
+/// 敵コントローラの管理を行う。
 /// </summary>
-public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
+public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 {
-	[Header( "Holder " )]
+    public const string HOLDER_NAME = "[EnemyCharaHolder]";
+
+    [Header( "Holder " )]
 
 	[SerializeField]
 	private Transform m_EnemyCharaHolder;
 
-	/// <summary>
-	/// STANDBY状態の弾を保持するリスト。
-	/// </summary>
-	[SerializeField]
+    [Header("Offset Field")]
+
+    [SerializeField]
+    private Vector2 m_OffsetMinField;
+
+    [SerializeField]
+    private Vector2 m_OffsetMaxField;
+
+
+    #region Field
+
+    /// <summary>
+    /// STANDBY状態の弾を保持するリスト。
+    /// </summary>
+    [SerializeField]
 	private List<EnemyController> m_StandbyEnemies;
 
 	/// <summary>
@@ -43,10 +56,16 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 	[SerializeField]
 	private List<EnemyController> m_BossControllers;
 
-	/// <summary>
-	/// スタンバイ状態の敵を取得する。
-	/// </summary>
-	public List<EnemyController> GetStandbyEnemies()
+    #endregion
+
+
+
+    #region Get Set
+
+    /// <summary>
+    /// スタンバイ状態の敵を取得する。
+    /// </summary>
+    public List<EnemyController> GetStandbyEnemies()
 	{
 		return m_StandbyEnemies;
 	}
@@ -67,7 +86,11 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 		return m_BossControllers;
 	}
 
-	protected override void OnAwake()
+    #endregion
+
+
+
+    protected override void OnAwake()
 	{
 		base.OnAwake();
 
@@ -105,7 +128,7 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 		}
 		else if( m_EnemyCharaHolder == null )
 		{
-			var obj = new GameObject( "[EnemyCharaHolder]" );
+			var obj = new GameObject( HOLDER_NAME );
 			obj.transform.position = Vector3.zero;
 			m_EnemyCharaHolder = obj.transform;
 		}
@@ -318,4 +341,25 @@ public class EnemyCharaManager : SingletonMonoBehavior<EnemyCharaManager>
 		m_UpdateEnemies.Clear();
 		m_GotoUpdateEnemies.Clear();
 	}
+
+    /// <summary>
+    /// 動体フィールド領域のビューポート座標から、実際の座標を取得する。
+    /// </summary>
+    /// <param name="x">フィールド領域x座標</param>
+    /// <param name="y">フィールド領域y座標</param>
+    /// <returns></returns>
+    public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
+    {
+        var minPos = StageManager.Instance.GetMinLocalPositionField();
+        var maxPos = StageManager.Instance.GetMaxLocalPositionField();
+        minPos += m_OffsetMinField;
+        maxPos += m_OffsetMaxField;
+
+        var factX = (maxPos.x - minPos.x) * x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+
+        return pos;
+    }
 }

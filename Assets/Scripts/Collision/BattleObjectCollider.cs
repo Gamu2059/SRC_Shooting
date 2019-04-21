@@ -9,18 +9,16 @@ using System;
 public class BattleObjectCollider : MonoBehaviour
 {
 	/// <summary>
-	/// 衝突判定を保持する。
+	/// 衝突情報トランスフォームを保持する。
 	/// </summary>
 	[SerializeField]
 	private ColliderTransform[] m_ColliderTransforms;
 
-	/// <summary>
-	/// これは、他の弾にもヒットする弾かどうか。
-	/// </summary>
-	[SerializeField]
-	private bool m_CanHitOtherBullet;
-
-	public ColliderData[] GetColliderData()
+    /// <summary>
+    /// コライダーデータを生成する。
+    /// </summary>
+    /// <returns></returns>
+	public ColliderData[] CreateColliderData()
 	{
 		int hitNum = m_ColliderTransforms.Length;
 		var colliders = new ColliderData[hitNum];
@@ -33,15 +31,11 @@ public class BattleObjectCollider : MonoBehaviour
 			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
 			c.Angle = -t.eulerAngles.y;
 			c.ColliderType = m_ColliderTransforms[i].ColliderType;
+            c.CollideName = m_ColliderTransforms[i].CollideName;
 
 			colliders[i] = c;
 		}
 
 		return colliders;
-	}
-
-	public bool CanHitBullet()
-	{
-		return m_CanHitOtherBullet;
 	}
 }

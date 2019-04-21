@@ -1683,6 +1683,12 @@ MonoBehaviour:
   m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams:
+    - ItemType: 0
+      ItemNum: 5
+      SpreadRadius: 5
+    CenterCreateItemType: 1
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1690,6 +1696,7 @@ MonoBehaviour:
   m_StraightMoveDistance: 0
   m_StraightMoveDirection: {x: 0, y: 0, z: 0}
   m_StraightMoveLerp: 0
+  m_LerpThreshold: 0
   m_RelativeWithdrawalMoveEndPosition: {x: 0, y: 0, z: 0}
   m_WithdrawalMoveLerp: 0
   m_WaitWithdrawalTime: 0
