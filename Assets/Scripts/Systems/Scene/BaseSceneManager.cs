@@ -21,9 +21,10 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		MAIN = 1,
 		CHARA_TEST = 2,
 		STAGE_TEST = 3,
-
 		BATTLE = 4,
-        ENEMY_TEST = 5,
+		TITLE = 5,
+        COMMAND_TEST = 6,
+        ENEMY_TEST = 7,
 	}
 
 	/// <summary>
@@ -74,6 +75,12 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 	const float MAX_LOAD_PROGRESS = 0.9f;
 
+	[SerializeField, Tooltip( "起動した瞬間にいたシーンから始めるかどうか" )]
+	private bool m_IsStartFromBeginningScene;
+
+	[SerializeField, Tooltip( "PreLaunchシーンから最初に遷移するシーン" )]
+	private E_SCENE m_StartScene;
+
 	[SerializeField]
 	List<TransitionInfo> m_TransitionInfos;
 
@@ -91,6 +98,14 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 	private FloatReactiveProperty m_ProgressProperty;
 
+    /// <summary>
+    /// 起動した瞬間にいたシーンから始めるかどうかを取得する。
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStartFromBeginningScene()
+    {
+        return m_IsStartFromBeginningScene;
+    }
 
 	/// <summary>
 	/// Unityのプレイ開始時にいたシーンの値を設定する。
@@ -172,15 +187,13 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		SceneGameCycle( E_SCENE_CYCLE.UPDATE, ( scene ) => scene.OnLateUpdate() );
 	}
 
-
-
-	/// <summary>
-	/// Unityを開いた時にいたシーンに遷移する。
-	/// </summary>
-	public void LoadBeginScene()
+	public override void OnFixedUpdate()
 	{
-		LoadScene( ms_BeginScene );
+		SceneGameCycle( E_SCENE_CYCLE.UPDATE, ( scene ) => scene.OnFixedUpdate() );
 	}
+
+
+
 
 	/// <summary>
 	/// シーン遷移する。
@@ -300,6 +313,10 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		////ロード画面生成
 		//var loadingObj = Instantiate( info.LoadingEffect );
 
+		bool isCompleteTransition = false;
+		TransitionManager.Instance.Hide( () => isCompleteTransition = true );
+		yield return new WaitUntil( () => isCompleteTransition );
+
 		yield return OnBeforeTransition( ( scene, callback ) => scene.OnAfterHide( callback ) );
 
 		m_CurrentScene = null;
@@ -323,6 +340,9 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		//	yield return StartCoroutine( obj.FadeIn() );
 		//	Destroy( obj );
 		//}
+		isCompleteTransition = false;
+		TransitionManager.Instance.Show( () => isCompleteTransition = true );
+		yield return new WaitUntil( () => isCompleteTransition );
 
 		yield return OnAfterTransition( ( scene, callback ) => scene.OnAfterShow( callback ) );
 		SetSceneCycle( E_SCENE_CYCLE.STANDBY );
@@ -513,5 +533,17 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 			EventUtility.SafeInvokeAction( callback, addScene );
 		}
+	}
+
+	public void LoadOnGameStart()
+	{
+		if( m_IsStartFromBeginningScene && ms_BeginScene != E_SCENE.PRE_LAUNCH)
+        {
+            LoadScene(ms_BeginScene);
+        }
+		else
+        {
+            LoadScene(m_StartScene);
+        }
 	}
 }

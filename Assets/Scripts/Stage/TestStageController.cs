@@ -5,20 +5,44 @@ using UnityEngine;
 /// <summary>
 /// テストステージの敵配置やカメラ制御などを管理する。
 /// </summary>
-public class TestStageController : ControllableMonoBehaviour
+public class TestStageController : BattleControllableMonoBehavior
 {
+	public enum E_TEST_STAGE_STATE
+	{
+		FIRST_HALF,
+		SECOND_HALF,
+		BOSS
+	}
+
+    [Header("Objects Holder")]
+
+    [SerializeField]
+    private GameObject m_ObjectsHolder;
+
+	[Header( "敵出現パラメータ" )]
+
 	[SerializeField]
 	private StageEnemyParam m_StageEnemyParam;
 
 	[SerializeField]
 	private XL_StageEnemyParam m_StageEnemyList;
 
+	[Header( "カメラ移動パラメータ" )]
+
 	[SerializeField]
+	private float m_MoveSpeed;
+
+
+
 	private List<XL_StageEnemyParam.Param> m_StageEnemyAppearData;
-	[SerializeField]
 	private List<XL_StageEnemyParam.Param> m_RemovingData;
-	private bool m_IsStarted;
-	private float m_Count;
+
+	[SerializeField]
+	private E_TEST_STAGE_STATE m_StageState;
+
+	[SerializeField]
+	private float m_BuildEnemyTimeCount;
+
 
 	public override void OnInitialize()
 	{
@@ -26,8 +50,6 @@ public class TestStageController : ControllableMonoBehaviour
 
 		m_StageEnemyAppearData = new List<XL_StageEnemyParam.Param>();
 		m_RemovingData = new List<XL_StageEnemyParam.Param>();
-
-		BuildEnemyAppearData();
 	}
 
 	public override void OnFinalize()
@@ -39,31 +61,89 @@ public class TestStageController : ControllableMonoBehaviour
 	{
 		base.OnStart();
 
-		m_IsStarted = true;
-		m_Count = 0;
+		m_BuildEnemyTimeCount = 0;
+		m_StageState = E_TEST_STAGE_STATE.FIRST_HALF;
 
-
+		BuildEnemyAppearData();
+		BattleMainAudioManager.Instance.PlayBGM( BattleMainAudioManagerKeyWord.Stage1 );
 	}
 
-	public override void OnUpdate()
+    /// <summary>
+    /// BattleMainが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+        m_ObjectsHolder.SetActive(true);
+    }
+
+    /// <summary>
+    /// BattleMainが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        m_ObjectsHolder.SetActive(false);
+    }
+
+    public override void OnUpdate()
 	{
 		base.OnUpdate();
 
-		if( !m_IsStarted )
+		ControlViewMoving();
+		AppearEnemy();
+	}
+
+	private void ControlViewMoving()
+	{
+		var moveRoot = StageManager.Instance.GetMoveObjectHolder();
+
+		switch( m_StageState )
 		{
-			OnStart();
+			case E_TEST_STAGE_STATE.FIRST_HALF:
+				moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
+
+				if( m_BuildEnemyTimeCount >= 80 )
+				{
+					m_StageState = E_TEST_STAGE_STATE.SECOND_HALF;
+				}
+
+
+				break;
+
+			case E_TEST_STAGE_STATE.SECOND_HALF:
+				moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
+
+				if( m_BuildEnemyTimeCount >= 120 )
+				{
+					m_StageState = E_TEST_STAGE_STATE.BOSS;
+				}
+
+				break;
+
+			case E_TEST_STAGE_STATE.BOSS:
+				var bgm = BattleMainAudioManagerKeyWord.Stage1Boss;
+
+				if( !BattleMainAudioManager.Instance.IsPlayingBGM( bgm ) )
+				{
+
+					BattleMainAudioManager.Instance.PlayBGM( bgm );
+				}
+
+				break;
 		}
+	}
 
-		var camera = CameraManager.Instance.GetCamera();
-
+	private void AppearEnemy()
+	{
 		foreach( var data in m_StageEnemyAppearData )
 		{
-			if( data.Time >= m_Count )
+			if( data.Time >= m_BuildEnemyTimeCount )
 			{
 				continue;
 			}
 
-			var enemy = EnemyCharaManager.Instance.CreateEnemy( m_StageEnemyParam.GetEnemyControllers()[data.EnemyMoveId] );
+			var enemy = EnemyCharaManager.Instance.CreateEnemy( m_StageEnemyParam.GetEnemyControllers()[data.EnemyMoveId], data.OtherParameters );
 
 			if( enemy == null )
 			{
@@ -72,7 +152,7 @@ public class TestStageController : ControllableMonoBehaviour
 
 			enemy.SetBulletSetParam( m_StageEnemyParam.GetBulletSets()[data.BulletSetId] );
 
-			var pos = GetViewportWorldPoint( camera, data );
+            var pos = EnemyCharaManager.Instance.GetPositionFromFieldViewPortPosition(data.AppearViewportX, data.AppearViewportY);
 			pos.x += data.AppearOffsetX;
 			pos.y += data.AppearOffsetY;
 			pos.z += data.AppearOffsetZ;
@@ -87,17 +167,7 @@ public class TestStageController : ControllableMonoBehaviour
 
 		RemoveEnemyAppearData();
 
-		m_Count += Time.deltaTime;
-	}
-
-	public override void OnLateUpdate()
-	{
-		base.OnLateUpdate();
-	}
-
-	public override void OnFixedUpdate()
-	{
-		base.OnFixedUpdate();
+		m_BuildEnemyTimeCount += Time.deltaTime;
 	}
 
 	private void BuildEnemyAppearData()
@@ -119,16 +189,5 @@ public class TestStageController : ControllableMonoBehaviour
 		}
 
 		m_RemovingData.Clear();
-	}
-
-	private Vector3 GetViewportWorldPoint( Camera camera, XL_StageEnemyParam.Param param )
-	{
-		Vector3 farPos = camera.ViewportToWorldPoint( new Vector3( param.AppearViewportX, param.AppearViewportY, camera.nearClipPlane ) );
-		Vector3 originPos = camera.transform.position;
-		Vector3 dir = ( farPos - originPos ).normalized;
-
-		Vector3 axis = Vector3.up;
-		float h = Vector3.Dot( new Vector3( 0, ParamDef.BASE_Y_POS, 0 ), axis );
-		return originPos + dir * ( h - Vector3.Dot( axis, originPos ) ) / ( Vector3.Dot( axis, dir ) );
 	}
 }
