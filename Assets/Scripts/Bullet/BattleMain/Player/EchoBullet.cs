@@ -11,14 +11,14 @@ public class EchoBullet : BulletController
 
     public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
-        if (m_HitCount < m_Parent.GetMaxHitCount())
+        /*if (m_HitCount < m_Parent.GetMaxHitCount())
         {
             m_Parent.ReadyShotDiffusionBullet(targetChara, m_HitCount);
         }
         else
         {
             m_HitCount = 0;
-        }
+        }*/
 
         base.HitChara(targetChara, attackData, targetData);
     }
