@@ -28,6 +28,8 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
     /// </summary>
     private List<CommandWallController> m_GotoPoolWalls;
 
+    private List<CommandWallController> m_RegistReservedWalls;
+
     #endregion
 
     #region Get
@@ -76,6 +78,15 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
             var obj = new GameObject(HOLDER_NAME);
             obj.transform.position = Vector3.zero;
             m_WallHolder = obj.transform;
+        }
+
+        if (m_RegistReservedWalls != null)
+        {
+            foreach(var wall in m_RegistReservedWalls)
+            {
+                RegistWall(wall);
+            }
+            m_RegistReservedWalls = null;
         }
     }
 
@@ -209,7 +220,7 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
     /// <summary>
     /// 壁を直接登録する。
     /// </summary>
-    public void RegistWall(CommandWallController wall)
+    private void RegistWall(CommandWallController wall)
     {
         if (wall == null)
         {
@@ -219,5 +230,20 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
         wall.transform.SetParent(m_WallHolder);
         m_PoolWalls.Add(wall);
         CheckStandbyWall(wall);
+    }
+
+    public void RegistInitWall(CommandWallController wall)
+    {
+        if (wall == null)
+        {
+            return;
+        }
+
+        if (m_RegistReservedWalls == null)
+        {
+            m_RegistReservedWalls = new List<CommandWallController>();
+        }
+
+        m_RegistReservedWalls.Add(wall);
     }
 }

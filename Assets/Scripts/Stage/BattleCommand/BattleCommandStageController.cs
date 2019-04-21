@@ -7,6 +7,11 @@ using UnityEngine;
 /// </summary>
 public class BattleCommandStageController : BattleControllableMonoBehavior
 {
+    [Header("Objects Holder")]
+
+    [SerializeField]
+    private GameObject m_ObjectsHolder;
+
     /// <summary>
     /// 移動速度。
     /// </summary>
@@ -34,6 +39,24 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
     public float GetMoveSpeed()
     {
         return m_MoveSpeed;
+    }
+
+    /// <summary>
+    /// BattleCommandが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+        m_ObjectsHolder.SetActive(true);
+    }
+
+    /// <summary>
+    /// BattleCommandが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        m_ObjectsHolder.SetActive(false);
     }
 
     public override void OnUpdate()

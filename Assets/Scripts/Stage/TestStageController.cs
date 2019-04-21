@@ -14,6 +14,11 @@ public class TestStageController : BattleControllableMonoBehavior
 		BOSS
 	}
 
+    [Header("Objects Holder")]
+
+    [SerializeField]
+    private GameObject m_ObjectsHolder;
+
 	[Header( "敵出現パラメータ" )]
 
 	[SerializeField]
@@ -63,7 +68,25 @@ public class TestStageController : BattleControllableMonoBehavior
 		BattleMainAudioManager.Instance.PlayBGM( BattleMainAudioManagerKeyWord.Stage1 );
 	}
 
-	public override void OnUpdate()
+    /// <summary>
+    /// BattleMainが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+        m_ObjectsHolder.SetActive(true);
+    }
+
+    /// <summary>
+    /// BattleMainが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        m_ObjectsHolder.SetActive(false);
+    }
+
+    public override void OnUpdate()
 	{
 		base.OnUpdate();
 

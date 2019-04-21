@@ -139,8 +139,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 545242593}
   - {fileID: 1216276297}
+  - {fileID: 990902255}
+  - {fileID: 545242593}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -400,12 +401,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224197493}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10000, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1622067246}
   m_Father: {fileID: 1814501213}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239540258
 GameObject:
@@ -790,7 +791,7 @@ MonoBehaviour:
   m_BattleCommandManagers:
   - {fileID: 1216276298}
   - {fileID: 990902256}
-  m_InitMode: 0
+  m_InitMode: 1
   m_BattleStatus: 0
   m_Score:
     value: 0
@@ -1209,12 +1210,12 @@ GameObject:
   m_Component:
   - component: {fileID: 545242593}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: '[BattleCommandObjects]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &545242593
 Transform:
   m_ObjectHideFlags: 0
@@ -1227,10 +1228,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1815405351773788027}
-  - {fileID: 990902255}
   - {fileID: 1242110623}
   m_Father: {fileID: 80855266}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655638652
 GameObject:
@@ -1461,7 +1461,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1814501213}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &799903930
 GameObject:
@@ -1567,7 +1567,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1814501213}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!20 &871350962
 Camera:
@@ -1898,7 +1898,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 545242593}
+  m_Father: {fileID: 80855266}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &990902256
@@ -1913,6 +1913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20eb555a80b434946b148f54ac592e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ObjectsHolder: {fileID: 545242592}
   m_MoveSpeed: 30
   m_ResetPositionPoint: 370
   m_WallControllers: []
@@ -1928,7 +1929,7 @@ GameObject:
   - component: {fileID: 992195443}
   - component: {fileID: 992195444}
   m_Layer: 0
-  m_Name: '[StageController]'
+  m_Name: '[BattleMainStageController]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1945,7 +1946,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1814501213}
+  m_Father: {fileID: 1193214583}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &992195444
@@ -1960,6 +1961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a821bc8a4aba54e8bc8409559a1bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ObjectsHolder: {fileID: 1814501212}
   m_StageEnemyParam: {fileID: 11400000, guid: 994df26fe38afd243815b9e42cc29f73, type: 2}
   m_StageEnemyList: {fileID: 11400000, guid: 1466060b50b9b864c9d552de8c494996, type: 2}
   m_MoveSpeed: 40
@@ -2162,6 +2164,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1597879442}
+  - {fileID: 992195443}
   - {fileID: 1814501213}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2216,7 +2219,7 @@ PrefabInstance:
     - target: {fileID: 8680696247134962051, guid: b1bf7c2dd6700d64591cd47ce6adc7ca,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8680696247134962051, guid: b1bf7c2dd6700d64591cd47ce6adc7ca,
         type: 3}
@@ -2347,7 +2350,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: a6e6f52b934a6bb4c931157e7efd9aaf, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -2364,13 +2367,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242110620}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 545242593}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1275159458
 GameObject:
   m_ObjectHideFlags: 0
@@ -3279,7 +3282,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1814501213}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 72.5, y: 0, z: 0}
 --- !u!114 &1779331917
 MonoBehaviour:
@@ -3452,7 +3455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1814501213}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: '[BattleMainObjects]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3470,13 +3473,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1986466838}
-  - {fileID: 992195443}
   - {fileID: 789034133}
   - {fileID: 1779331916}
   - {fileID: 871350961}
   - {fileID: 224197494}
   m_Father: {fileID: 1193214583}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1825822672
 GameObject:

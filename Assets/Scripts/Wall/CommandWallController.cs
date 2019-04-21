@@ -58,7 +58,7 @@ public class CommandWallController : BattleCommandObjectBase
 
     protected virtual void Start()
     {
-        CommandWallManager.Instance.RegistWall(this);
+        CommandWallManager.Instance.RegistInitWall(this);
     }
 
     public override void OnInitialize()
