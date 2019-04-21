@@ -293,7 +293,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
-        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+        //pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
     }

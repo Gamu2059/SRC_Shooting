@@ -135,9 +135,9 @@ public class StageManager : BattleSingletonMonoBehavior<StageManager>
     /// <summary>
     /// 指定したオブジェクトの座標が、動体オブジェクトホルダーのフィールド領域の外にあるかどうかを判定する。
     /// </summary>
-    public bool IsOutOfFieldMovingObjectPosition(Transform movingObj)
+    public bool IsOutOfField(Transform movingObj)
     {
-        var localPos = movingObj.position - m_MoveObjectHolder.transform.position;
+        var localPos = movingObj.localPosition;
         return
             localPos.x < m_MinLocalFieldPosition.x ||
             localPos.x > m_MaxLocalFieldPosition.x ||
@@ -150,12 +150,12 @@ public class StageManager : BattleSingletonMonoBehavior<StageManager>
     /// </summary>
     public void ClampMovingObjectPosition(Transform movingObj)
     {
-        if (!IsOutOfFieldMovingObjectPosition(movingObj))
+        if (!IsOutOfField(movingObj))
         {
             return;
         }
 
-        var pos = movingObj.position - m_MoveObjectHolder.transform.position;
+        var pos = movingObj.localPosition;
         pos.x = Mathf.Clamp(pos.x, m_MinLocalFieldPosition.x, m_MaxLocalFieldPosition.x);
         pos.z = Mathf.Clamp(pos.z, m_MinLocalFieldPosition.y, m_MaxLocalFieldPosition.y);
         movingObj.localPosition = pos;

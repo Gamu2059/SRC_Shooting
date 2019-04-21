@@ -260,7 +260,6 @@ public class ItemController : BattleMainObjectBase
 
         if (m_LookCameraTransform != null)
         {
-            m_LookCameraTransform.LookAt(CameraManager.Instance.GetCamera().transform);
             var angle = m_LookCameraTransform.localEulerAngles;
             angle.y = 180;
             angle.z = m_NowRotateAngle;
