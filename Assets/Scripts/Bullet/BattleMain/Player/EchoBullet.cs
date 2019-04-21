@@ -11,16 +11,12 @@ public class EchoBullet : BulletController
 
     public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
-        /*if (m_HitCount < m_Parent.GetMaxHitCount())
+        var controller = (EchoController)GetBulletOwner();
+        if (m_IsRoot)
         {
-            m_Parent.ReadyShotDiffusionBullet(targetChara, m_HitCount);
+            index = EchoBulletIndexGenerater.GenerateBulletIndex();
         }
-        else
-        {
-            m_HitCount = 0;
-        }*/
-
-        base.HitChara(targetChara, attackData, targetData);
+        controller.ShotWaveBullet(index, targetChara.transform.localPosition);
     }
 
     public static void SetIndex(int n)
