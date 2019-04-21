@@ -70,7 +70,7 @@ public class CommandBulletController : BattleCommandObjectBase
     /// この弾の状態。
     /// </summary>
     [SerializeField]
-    private E_BULLET_CYCLE m_BulletCycle;
+    private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
     /// この弾が何秒生存しているか。
@@ -213,17 +213,17 @@ public class CommandBulletController : BattleCommandObjectBase
     /// <summary>
     /// この弾の状態を取得する。
     /// </summary>
-    public E_BULLET_CYCLE GetBulletCycle()
+    public E_POOLED_OBJECT_CYCLE GetCycle()
     {
-        return m_BulletCycle;
+        return m_Cycle;
     }
 
     /// <summary>
     /// この弾の状態を設定する。
     /// </summary>
-    public void SetBulletCycle(E_BULLET_CYCLE cycle)
+    public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
     {
-        m_BulletCycle = cycle;
+        m_Cycle = cycle;
     }
 
     /// <summary>
@@ -682,7 +682,7 @@ public class CommandBulletController : BattleCommandObjectBase
     {
         DestroyAllTimer();
 
-        if (m_BulletCycle == E_BULLET_CYCLE.UPDATE)
+        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             CommandBulletManager.Instance.CheckPoolBullet(this);
         }

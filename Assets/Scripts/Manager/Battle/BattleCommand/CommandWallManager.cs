@@ -14,11 +14,6 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
     private Transform m_WallHolder;
 
     /// <summary>
-    /// STANDBY状態の壁を保持するリスト。
-    /// </summary>
-    private List<CommandWallController> m_StandbyWalls;
-
-    /// <summary>
     /// UPDATE状態の壁を保持するリスト。
     /// </summary>
     private List<CommandWallController> m_UpdateWalls;
@@ -29,26 +24,15 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
     private List<CommandWallController> m_PoolWalls;
 
     /// <summary>
-    /// UPDATE状態に遷移する壁のリスト。
-    /// </summary>
-    private List<CommandWallController> m_GotoUpdateWalls;
-
-    /// <summary>
     /// POOL状態に遷移する壁のリスト。
     /// </summary>
     private List<CommandWallController> m_GotoPoolWalls;
 
+    private List<CommandWallController> m_RegistReservedWalls;
+
     #endregion
 
     #region Get
-
-    /// <summary>
-    /// STANDBY状態の壁を保持するリストを取得する。
-    /// </summary>
-    public List<CommandWallController> GetStandbyWalls()
-    {
-        return m_StandbyWalls;
-    }
 
     /// <summary>
     /// UPDATE状態の壁を保持するリストを取得する。
@@ -58,24 +42,14 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
         return m_UpdateWalls;
     }
 
-    /// <summary>
-    /// POOL状態の壁を保持するリストを取得する。
-    /// </summary>
-    public List<CommandWallController> GetPoolWalls()
-    {
-        return m_PoolWalls;
-    }
-
     #endregion
 
     protected override void OnAwake()
     {
         base.OnAwake();
 
-        m_StandbyWalls = new List<CommandWallController>();
         m_UpdateWalls = new List<CommandWallController>();
         m_PoolWalls = new List<CommandWallController>();
-        m_GotoUpdateWalls = new List<CommandWallController>();
         m_GotoPoolWalls = new List<CommandWallController>();
     }
 
@@ -87,7 +61,6 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
     public override void OnFinalize()
     {
         base.OnFinalize();
-        m_StandbyWalls.Clear();
         m_UpdateWalls.Clear();
         m_PoolWalls.Clear();
     }
@@ -106,73 +79,54 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
             obj.transform.position = Vector3.zero;
             m_WallHolder = obj.transform;
         }
+
+        if (m_RegistReservedWalls != null)
+        {
+            foreach(var wall in m_RegistReservedWalls)
+            {
+                RegistWall(wall);
+            }
+            m_RegistReservedWalls = null;
+        }
     }
 
     public override void OnUpdate()
     {
-        // Start処理
-        foreach (var Wall in m_StandbyWalls)
-        {
-            if (Wall == null)
-            {
-                continue;
-            }
-
-            Wall.OnStart();
-            m_GotoUpdateWalls.Add(Wall);
-        }
-
-        GotoUpdateFromStandby();
-
         // Update処理
-        foreach (var Wall in m_UpdateWalls)
+        foreach (var wall in m_UpdateWalls)
         {
-            if (Wall == null)
+            if (wall == null)
             {
                 continue;
             }
 
-            Wall.OnUpdate();
+            if (wall.GetCycle() == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                wall.OnStart();
+                wall.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            }
+
+            wall.OnUpdate();
         }
     }
 
     public override void OnLateUpdate()
     {
         // LateUpdate処理
-        foreach (var Wall in m_UpdateWalls)
+        foreach (var wall in m_UpdateWalls)
         {
-            if (Wall == null)
+            if (wall == null)
             {
                 continue;
             }
 
-            Wall.OnLateUpdate();
+            wall.OnLateUpdate();
         }
 
         GotoPoolFromUpdate();
     }
 
 
-
-    /// <summary>
-    /// UPDATE状態にする。
-    /// </summary>
-    private void GotoUpdateFromStandby()
-    {
-        int count = m_GotoUpdateWalls.Count;
-
-        for (int i = 0; i < count; i++)
-        {
-            int idx = count - i - 1;
-            var Wall = m_GotoUpdateWalls[idx];
-            m_GotoUpdateWalls.RemoveAt(idx);
-            m_StandbyWalls.Remove(Wall);
-            m_UpdateWalls.Add(Wall);
-            Wall.SetWallCycle(E_WALL_CYCLE.UPDATE);
-        }
-
-        m_GotoUpdateWalls.Clear();
-    }
 
     /// <summary>
     /// POOL状態にする。
@@ -184,11 +138,11 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var Wall = m_GotoPoolWalls[idx];
-            Wall.SetWallCycle(E_WALL_CYCLE.POOLED);
+            var wall = m_GotoPoolWalls[idx];
+            wall.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
             m_GotoPoolWalls.RemoveAt(idx);
-            m_UpdateWalls.Remove(Wall);
-            m_PoolWalls.Add(Wall);
+            m_UpdateWalls.Remove(wall);
+            m_PoolWalls.Add(wall);
         }
 
         m_GotoPoolWalls.Clear();
@@ -206,9 +160,9 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
         }
 
         m_PoolWalls.Remove(wall);
-        m_StandbyWalls.Add(wall);
+        m_UpdateWalls.Add(wall);
         wall.gameObject.SetActive(true);
-        wall.SetWallCycle(E_WALL_CYCLE.STANDBY_UPDATE);
+        wall.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
         wall.OnInitialize();
     }
 
@@ -223,7 +177,7 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
             return;
         }
 
-        wall.SetWallCycle(E_WALL_CYCLE.STANDBY_POOL);
+        wall.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
         wall.OnFinalize();
         m_GotoPoolWalls.Add(wall);
         wall.gameObject.SetActive(false);
@@ -266,7 +220,7 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
     /// <summary>
     /// 壁を直接登録する。
     /// </summary>
-    public void RegistWall(CommandWallController wall)
+    private void RegistWall(CommandWallController wall)
     {
         if (wall == null)
         {
@@ -276,5 +230,20 @@ public class CommandWallManager : BattleSingletonMonoBehavior<CommandWallManager
         wall.transform.SetParent(m_WallHolder);
         m_PoolWalls.Add(wall);
         CheckStandbyWall(wall);
+    }
+
+    public void RegistInitWall(CommandWallController wall)
+    {
+        if (wall == null)
+        {
+            return;
+        }
+
+        if (m_RegistReservedWalls == null)
+        {
+            m_RegistReservedWalls = new List<CommandWallController>();
+        }
+
+        m_RegistReservedWalls.Add(wall);
     }
 }

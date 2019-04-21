@@ -94,7 +94,7 @@ Transform:
   m_GameObject: {fileID: 3933868528112772378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.8, y: 0, z: 1.8}
+  m_LocalScale: {x: 3.3, y: 0, z: 1.5}
   m_Children: []
   m_Father: {fileID: 3197551529489189840}
   m_RootOrder: 1
@@ -136,7 +136,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 4, y: 2}
+  m_SizeDelta: {x: 3.3, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4835669733409426054
 MeshRenderer:
@@ -239,8 +239,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

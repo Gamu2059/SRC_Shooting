@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// コマンドイベントの壁の状態。
+/// プールされるオブジェクトのサイクル。
 /// </summary>
-public enum E_WALL_CYCLE
+public enum E_POOLED_OBJECT_CYCLE
 {
     /// <summary>
-    /// 発射される直前。
+    /// UPDATEの準備状態。
     /// </summary>
     STANDBY_UPDATE,
 
     /// <summary>
-    /// 発射された後、動いている状態。
+    /// 有効になっている状態。
     /// </summary>
     UPDATE,
 
@@ -23,7 +23,7 @@ public enum E_WALL_CYCLE
     STANDBY_POOL,
 
     /// <summary>
-    /// プーリングされた状態。
+    /// プールされた状態。
     /// </summary>
     POOLED,
 }

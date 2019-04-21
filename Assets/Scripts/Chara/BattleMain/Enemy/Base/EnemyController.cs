@@ -21,11 +21,15 @@ public class EnemyController : CharaController
 	[SerializeField, Tooltip( "被弾直後の無敵時間" )]
 	private float m_OnHitInvincibleDuration;
 
-
 	/// <summary>
 	/// マスターデータから取得するパラメータセット
 	/// </summary>
 	protected StringParamSet m_ParamSet;
+
+    /// <summary>
+    /// 敵キャラのサイクル。
+    /// </summary>
+    private E_OBJECT_CYCLE m_Cycle;
 
 	private bool m_CanOutDestroy;
 
@@ -37,6 +41,16 @@ public class EnemyController : CharaController
 	{
 		return m_ParamSet;
 	}
+
+    public E_OBJECT_CYCLE GetCycle()
+    {
+        return m_Cycle;
+    }
+
+    public void SetCycle(E_OBJECT_CYCLE cycle)
+    {
+        m_Cycle = cycle;
+    }
 
 	#endregion
 

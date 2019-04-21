@@ -15,46 +15,58 @@ public class CommandWallController : BattleCommandObjectBase
     private string m_WallGroupId = "Default Wall";
 
     /// <summary>
-    /// この壁の状態。
+    /// この壁は破壊不可能かどうか。
     /// </summary>
     [SerializeField]
-    private E_WALL_CYCLE m_WallCycle;
+    private bool m_IsUnbreakable;
+
+    /// <summary>
+    /// この壁の耐久値。
+    /// </summary>
+    [SerializeField]
+    private int m_MaxHp;
+
+    /// <summary>
+    /// この壁の状態。
+    /// </summary>
+    private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
     /// 非表示になって破棄されるかどうか。
     /// </summary>
     private bool m_CanOutDestroy;
 
-
+    /// <summary>
+    /// この壁の現在耐久値。
+    /// </summary>
+    private int m_NowHp;
 
     public string GetWallGroupId()
     {
         return m_WallGroupId;
     }
 
-    public E_WALL_CYCLE GetWallCycle()
+    public E_POOLED_OBJECT_CYCLE GetCycle()
     {
-        return m_WallCycle;
+        return m_Cycle;
     }
 
-    public void SetWallCycle(E_WALL_CYCLE cycle)
+    public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
     {
-        m_WallCycle = cycle;
+        m_Cycle = cycle;
     }
 
     protected virtual void Start()
     {
-        CommandWallManager.Instance.RegistWall(this);
+        CommandWallManager.Instance.RegistInitWall(this);
     }
 
-    /// <summary>
-    /// このアイテムが生成された瞬間に呼び出される処理。
-    /// </summary>
     public override void OnInitialize()
     {
         base.OnInitialize();
 
         m_CanOutDestroy = false;
+        m_NowHp = m_MaxHp;
     }
 
     protected virtual void OnBecameVisible()
@@ -66,19 +78,38 @@ public class CommandWallController : BattleCommandObjectBase
     {
         if (m_CanOutDestroy)
         {
-            DestroyItem();
+            DestroyWall();
         }
     }
 
     /// <summary>
     /// この壁を破棄する。
     /// </summary>
-    public virtual void DestroyItem()
+    public virtual void DestroyWall()
     {
-        if (m_WallCycle == E_WALL_CYCLE.UPDATE)
+        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             CommandWallManager.Instance.CheckPoolWall(this);
         }
+    }
+
+    public void Damage(int damage)
+    {
+        if (damage < 1)
+        {
+            return;
+        }
+
+        m_NowHp = Mathf.Clamp(m_NowHp - damage, 0, m_MaxHp);
+        if (m_NowHp == 0)
+        {
+            Dead();
+        }
+    }
+
+    public virtual void Dead()
+    {
+        DestroyWall();
     }
 
     /// <summary>
@@ -89,6 +120,11 @@ public class CommandWallController : BattleCommandObjectBase
     /// <param name="targetData">この壁の衝突情報</param>
     public virtual void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
     {
+        if (m_IsUnbreakable)
+        {
+            return;
+        }
+
 
     }
 

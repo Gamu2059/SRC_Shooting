@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CommandPlayerController : CommandCharaController
 {
+    public const string OUT_WALL_COLLIDE_NAME = "OUT WALL COLLIDE";
+
     [SerializeField, Tooltip("キャラの移動速度")]
     private float m_MoveSpeed = 5f;
 
@@ -56,6 +58,14 @@ public class CommandPlayerController : CommandCharaController
     {
         Vector3 move = moveDirection.normalized * m_MoveSpeed * Time.deltaTime;
         transform.Translate(move, Space.World);
+    }
+
+    public override void SufferWall(CommandWallController attackWall, ColliderData attackData, ColliderData targetData)
+    {
+        if (attackData.CollideName != OUT_WALL_COLLIDE_NAME)
+        {
+            base.SufferWall(attackWall, attackData, targetData);
+        }
     }
 
     public override void Dead()
