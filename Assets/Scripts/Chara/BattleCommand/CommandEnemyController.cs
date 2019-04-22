@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class CommandEnemyController : CommandCharaController
 {
-    [Space()]
-    [Header("敵専用 パラメータ")]
-
-    [SerializeField, Tooltip("ボスかどうか")]
-    private bool m_IsBoss;
-
     [SerializeField, Tooltip("死亡時エフェクト")]
     private GameObject m_DeadEffect;
 
@@ -22,25 +16,28 @@ public class CommandEnemyController : CommandCharaController
     /// </summary>
     protected StringParamSet m_ParamSet;
 
+    /// <summary>
+    /// 敵キャラのサイクル。
+    /// </summary>
+    private E_OBJECT_CYCLE m_Cycle;
+
     private bool m_CanOutDestroy;
 
 
-
-    #region Getter & Setter
 
     public StringParamSet GetParamSet()
     {
         return m_ParamSet;
     }
 
-    #endregion
-
-
-
-    private void Start()
+    public E_OBJECT_CYCLE GetCycle()
     {
-        // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        CommandEnemyCharaManager.Instance.RegistEnemy(this);
+        return m_Cycle;
+    }
+
+    public void SetCycle(E_OBJECT_CYCLE cycle)
+    {
+        m_Cycle = cycle;
     }
 
 
@@ -61,7 +58,10 @@ public class CommandEnemyController : CommandCharaController
 
     protected virtual void OnBecameVisible()
     {
-        m_CanOutDestroy = true;
+        RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
+        {
+            m_CanOutDestroy = true;
+        }));
     }
 
     protected virtual void OnBecameInvisible()

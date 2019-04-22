@@ -10,16 +10,15 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 {
     public const string HOLDER_NAME = "[EnemyCharaHolder]";
 
-    [Header( "Holder " )]
-
-	[SerializeField]
-	private Transform m_EnemyCharaHolder;
-
-    [Header("Offset Field")]
-
+    /// <summary>
+    /// ステージ領域の左下に対するオフセット左下領域
+    /// </summary>
     [SerializeField]
     private Vector2 m_OffsetMinField;
 
+    /// <summary>
+    /// ステージ領域の右上に対するオフセット右上領域
+    /// </summary>
     [SerializeField]
     private Vector2 m_OffsetMaxField;
 
@@ -32,13 +31,15 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
     #region Field
 
+	private Transform m_EnemyCharaHolder;
+
 	/// <summary>
-	/// UPDATE状態の弾を保持するリスト。
+	/// UPDATE状態の敵を保持するリスト。
 	/// </summary>
 	private List<EnemyController> m_UpdateEnemies;
 
 	/// <summary>
-	/// POOL状態に遷移する弾のリスト。
+	/// 破棄状態に遷移する敵のリスト。
 	/// </summary>
 	private List<EnemyController> m_GotoDestroyEnemies;
 
@@ -304,7 +305,6 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
-        //pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
     }
