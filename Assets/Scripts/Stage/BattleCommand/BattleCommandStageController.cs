@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// コマンドイベントのステージ移動を制御するコンポーネント。
@@ -19,6 +20,9 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
 
     [SerializeField]
     private XL_StageEnemyParam m_StageEnemyList;
+
+    [SerializeField]
+    private int m_ReferenceEnemyListIndex;
 
     /// <summary>
     /// 移動速度。
@@ -153,7 +157,7 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
         }
 
         m_StageEnemyAppearData.Clear();
-        m_StageEnemyAppearData.AddRange(m_StageEnemyList.sheets[0].list);
+        m_StageEnemyAppearData.AddRange(m_StageEnemyList.sheets[m_ReferenceEnemyListIndex].list.FindAll(i => i.Time > 0f));
     }
 
     private void RemoveEnemyAppearData()

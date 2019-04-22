@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1914,8 +1914,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ObjectsHolder: {fileID: 545242592}
-  m_StageEnemyParam: {fileID: 0}
-  m_StageEnemyList: {fileID: 0}
+  m_StageEnemyParam: {fileID: 11400000, guid: 73ed7abc23a089a4195bb004e611a8e9, type: 2}
+  m_StageEnemyList: {fileID: 11400000, guid: 1466060b50b9b864c9d552de8c494996, type: 2}
+  m_ReferenceEnemyListIndex: 1
   m_MoveSpeed: 30
   m_ResetPositionPoint: 370
   m_WallControllers: []
@@ -2284,6 +2285,11 @@ PrefabInstance:
       propertyPath: m_TargetObject
       value: 
       objectReference: {fileID: 8301002535515625565}
+    - target: {fileID: 8680696247134962056, guid: b1bf7c2dd6700d64591cd47ce6adc7ca,
+        type: 3}
+      propertyPath: m_CanOutTime
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1bf7c2dd6700d64591cd47ce6adc7ca, type: 3}
 --- !u!4 &1216276297 stripped

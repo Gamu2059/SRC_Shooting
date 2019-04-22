@@ -67,31 +67,20 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
 
     #endregion
 
-
-
-    protected override void OnAwake()
+    public override void OnInitialize()
     {
-        base.OnAwake();
+        base.OnInitialize();
 
         m_UpdateEnemies = new List<CommandEnemyController>();
         m_GotoDestroyEnemies = new List<CommandEnemyController>();
     }
 
-    protected override void OnDestroyed()
-    {
-        base.OnDestroyed();
-    }
-
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
     public override void OnFinalize()
     {
         base.OnFinalize();
-
         DestroyAllEnemyImmediate();
+        m_UpdateEnemies = null;
+        m_GotoDestroyEnemies = null;
     }
 
     public override void OnStart()
@@ -108,6 +97,23 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
             obj.transform.position = Vector3.zero;
             m_EnemyCharaHolder = obj.transform;
         }
+    }
+
+    /// <summary>
+    /// コマンドイベントが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+    }
+
+    /// <summary>
+    /// コマンドイベントが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        DestroyAllEnemyImmediate();
     }
 
     public override void OnUpdate()
@@ -282,15 +288,17 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     /// <returns></returns>
     public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
     {
-        var minPos = StageManager.Instance.GetMinLocalPositionField();
-        var maxPos = StageManager.Instance.GetMaxLocalPositionField();
+        var minPos = CommandStageManager.Instance.GetMinLocalPositionField();
+        var maxPos = CommandStageManager.Instance.GetMaxLocalPositionField();
         minPos += m_OffsetMinField;
         maxPos += m_OffsetMaxField;
 
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
-        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+
+        // コマンドイベントではMoveObjectHolderに入っているため補正を足す
+        pos += CommandStageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
     }

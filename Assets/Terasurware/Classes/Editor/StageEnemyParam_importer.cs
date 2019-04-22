@@ -10,7 +10,7 @@ using NPOI.SS.UserModel;
 public class StageEnemyParam_importer : AssetPostprocessor {
 	private static readonly string filePath = "Assets/ExcelData/Stage/StageEnemyParam.xlsx";
 	private static readonly string exportPath = "Assets/ExcelData/Stage/StageEnemyParam.asset";
-	private static readonly string[] sheetNames = { "Sheet1", };
+	private static readonly string[] sheetNames = { "Sheet1","CommandEvent 1", };
 	
 	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
 	{

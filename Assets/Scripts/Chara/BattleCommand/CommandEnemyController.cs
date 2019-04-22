@@ -21,7 +21,16 @@ public class CommandEnemyController : CommandCharaController
     /// </summary>
     private E_OBJECT_CYCLE m_Cycle;
 
+    /// <summary>
+    /// 表示されてから非表示になるかどうか。
+    /// </summary>
     private bool m_CanOutDestroy;
+
+    /// <summary>
+    /// ボスかどうか。
+    /// </summary>
+    [SerializeField]
+    private bool m_IsBoss;
 
 
 
@@ -78,5 +87,10 @@ public class CommandEnemyController : CommandCharaController
 
         DestroyAllTimer();
         CommandEnemyCharaManager.Instance.DestroyEnemy(this);
+
+        if (m_IsBoss)
+        {
+            BattleManager.Instance.TransitionBattleMain();
+        }
     }
 }
