@@ -1215,7 +1215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &545242593
 Transform:
   m_ObjectHideFlags: 0
@@ -1914,10 +1914,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ObjectsHolder: {fileID: 545242592}
+  m_StageEnemyParam: {fileID: 0}
+  m_StageEnemyList: {fileID: 0}
   m_MoveSpeed: 30
   m_ResetPositionPoint: 370
   m_WallControllers: []
   m_WallAppearInterval: 0
+  m_BuildEnemyTimeCount: 0
 --- !u!1 &992195442
 GameObject:
   m_ObjectHideFlags: 0
