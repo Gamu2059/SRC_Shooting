@@ -23,25 +23,28 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
     [SerializeField]
     private Vector2 m_OffsetMaxField;
 
+    /// <summary>
+    /// 消滅可能になるまでの最小時間
+    /// </summary>
+    [SerializeField]
+    private float m_CanOutTime;
+
 
     #region Field
 
 	/// <summary>
 	/// UPDATE状態の弾を保持するリスト。
 	/// </summary>
-	[SerializeField]
 	private List<EnemyController> m_UpdateEnemies;
 
 	/// <summary>
 	/// POOL状態に遷移する弾のリスト。
 	/// </summary>
-	[SerializeField]
 	private List<EnemyController> m_GotoDestroyEnemies;
 
 	/// <summary>
 	/// ボスのオブジェクトのみを保持する。
 	/// </summary>
-	[SerializeField]
 	private List<EnemyController> m_BossControllers;
 
     #endregion
@@ -65,6 +68,14 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	{
 		return m_BossControllers;
 	}
+
+    /// <summary>
+    /// 消滅可能になるまでの最小時間を取得する。
+    /// </summary>
+    public float GetCanOutTime()
+    {
+        return m_CanOutTime;
+    }
 
     #endregion
 
