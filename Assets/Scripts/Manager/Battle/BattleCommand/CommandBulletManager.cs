@@ -44,25 +44,28 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
 
     #endregion
 
-    protected override void OnAwake()
+    /// <summary>
+    /// マネージャが初期化される時に呼び出される。
+    /// </summary>
+    public override void OnInitialize()
     {
-        base.OnAwake();
+        base.OnInitialize();
 
         m_UpdateBullets = new List<CommandBulletController>();
         m_PoolBullets = new List<CommandBulletController>();
         m_GotoPoolBullets = new List<CommandBulletController>();
     }
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
+    /// <summary>
+    /// マネージャが破棄される時に呼び出される。
+    /// </summary>
     public override void OnFinalize()
     {
         base.OnFinalize();
-        m_UpdateBullets.Clear();
-        m_PoolBullets.Clear();
+        CheckPoolAllBulletImmediate();
+        m_UpdateBullets = null;
+        m_PoolBullets = null;
+        m_GotoPoolBullets = null;
     }
 
     public override void OnStart()
@@ -79,6 +82,23 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
             obj.transform.position = Vector3.zero;
             m_BulletHolder = obj.transform;
         }
+    }
+
+    /// <summary>
+    /// コマンドイベントが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+    }
+
+    /// <summary>
+    /// コマンドイベントが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        CheckPoolAllBulletImmediate();
     }
 
     public override void OnUpdate()
@@ -205,5 +225,18 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         }
 
         return bullet;
+    }
+
+    /// <summary>
+    /// 全ての弾をプールに戻す。
+    /// </summary>
+    private void CheckPoolAllBulletImmediate()
+    {
+        foreach(var bullet in m_UpdateBullets)
+        {
+            CheckPoolBullet(bullet);
+        }
+
+        GotoPoolFromUpdate();
     }
 }

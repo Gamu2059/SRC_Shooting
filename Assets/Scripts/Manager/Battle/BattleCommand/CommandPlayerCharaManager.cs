@@ -68,10 +68,39 @@ public class CommandPlayerCharaManager : BattleSingletonMonoBehavior<CommandPlay
             m_PlayerCharaHolder = obj.transform;
         }
 
-        var pos = GetInitAppearPosition();
+        // プレイヤーキャラは汎用的に用いるため、Startで作成する
         var chara = Instantiate(m_CharaPrefab);
         RegistChara(chara);
-        chara.transform.position = pos;
+    }
+
+    /// <summary>
+    /// コマンドイベントが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+
+        var pos = GetInitAppearPosition();
+        var chara = GetController();
+
+        if (chara != null) {
+            chara.transform.position = pos;
+            chara.OnStart();
+        }
+    }
+
+    /// <summary>
+    /// コマンドイベントが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        var chara = GetController();
+
+        if (chara != null)
+        {
+            chara.OnFinalize();
+        }
     }
 
     public override void OnUpdate()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CommandPlayerController : CommandCharaController
 {
     public const string OUT_WALL_COLLIDE_NAME = "OUT WALL COLLIDE";
+    public const string CRITICAL_COLLIDE_NAME = "CRITICAL COLLIDE";
 
     [SerializeField, Tooltip("キャラの移動速度")]
     private float m_MoveSpeed = 5f;
@@ -12,13 +13,10 @@ public class CommandPlayerController : CommandCharaController
     [SerializeField, Tooltip("弾を撃つ間隔")]
     private float m_ShotInterval;
 
-    private float m_ShotTimeCount;
+    [SerializeField, Tooltip("弾を撃つ基準点")]
+    private Transform m_ShotPosition;
 
-    private void Start()
-    {
-        // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        CommandPlayerCharaManager.Instance.RegistChara(this);
-    }
+    private float m_ShotTimeCount;
 
     public override void OnStart()
     {
@@ -45,7 +43,13 @@ public class CommandPlayerController : CommandCharaController
             return;
         }
 
-        CommandBulletController.ShotBullet(this);
+        var shotParam = new CommandBulletShotParam(this);
+        if (m_ShotPosition != null)
+        {
+            shotParam.Position = m_ShotPosition.position - transform.parent.position;
+        }
+
+        CommandBulletController.ShotBullet(shotParam);
         m_ShotTimeCount = m_ShotInterval;
     }
 
@@ -62,24 +66,41 @@ public class CommandPlayerController : CommandCharaController
 
     public override void SufferWall(CommandWallController attackWall, ColliderData attackData, ColliderData targetData)
     {
-        if (attackData.CollideName != OUT_WALL_COLLIDE_NAME)
+        if (attackData.CollideName == OUT_WALL_COLLIDE_NAME)
+        {
+            return;
+        }
+
+        if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
         {
             base.SufferWall(attackWall, attackData, targetData);
         }
     }
 
+    public override void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    {
+        if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
+        {
+            base.SufferBullet(attackBullet, attackData, targetData);
+        }
+    }
+
+    public override void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
+    {
+        if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
+        {
+            base.SufferChara(attackChara, attackData, targetData);
+        }
+    }
+
     public override void Dead()
     {
-        //if (BattleManager.Instance.m_PlayerNotDead)
-        //{
-        //    return;
-        //}
+        if (BattleManager.Instance.m_PlayerNotDead)
+        {
+            return;
+        }
 
-        //base.Dead();
-
-        //gameObject.SetActive(false);
-        //BattleManager.Instance.GameOver();
-
-        Debug.Log("Dead");
+        base.Dead();
+        BattleManager.Instance.TransitionBattleMain();
     }
 }

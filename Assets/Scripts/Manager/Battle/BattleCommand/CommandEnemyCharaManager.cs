@@ -8,65 +8,46 @@ using System.Linq;
 /// </summary>
 public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemyCharaManager>
 {
-    [Header("Holder ")]
+    public const string HOLDER_NAME = "[CommandEnemyCharaHolder]";
 
-    [SerializeField]
-    private Transform m_EnemyCharaHolder;
-
-    [Header("Offset Field")]
-
+    /// <summary>
+    /// ステージ領域の左下に対するオフセット左下領域
+    /// </summary>
     [SerializeField]
     private Vector2 m_OffsetMinField;
 
+    /// <summary>
+    /// ステージ領域の右上に対するオフセット右上領域
+    /// </summary>
     [SerializeField]
     private Vector2 m_OffsetMaxField;
+
+    /// <summary>
+    /// 消滅可能になるまでの最小時間
+    /// </summary>
+    [SerializeField]
+    private float m_CanOutTime;
 
 
     #region Field
 
-    /// <summary>
-    /// STANDBY状態の弾を保持するリスト。
-    /// </summary>
-    [SerializeField]
-    private List<CommandEnemyController> m_StandbyEnemies;
+    private Transform m_EnemyCharaHolder;
 
     /// <summary>
-    /// UPDATE状態の弾を保持するリスト。
+    /// UPDATE状態の敵を保持するリスト。
     /// </summary>
-    [SerializeField]
     private List<CommandEnemyController> m_UpdateEnemies;
 
     /// <summary>
-    /// UPDATE状態に遷移する弾のリスト。
+    /// 破棄状態に遷移する敵のリスト。
     /// </summary>
-    [SerializeField]
-    private List<CommandEnemyController> m_GotoUpdateEnemies;
-
-    /// <summary>
-    /// POOL状態に遷移する弾のリスト。
-    /// </summary>
-    [SerializeField]
     private List<CommandEnemyController> m_GotoDestroyEnemies;
-
-    /// <summary>
-    /// ボスのオブジェクトのみを保持する。
-    /// </summary>
-    [SerializeField]
-    private List<CommandEnemyController> m_BossControllers;
 
     #endregion
 
 
 
     #region Get Set
-
-    /// <summary>
-    /// スタンバイ状態の敵を取得する。
-    /// </summary>
-    public List<CommandEnemyController> GetStandbyEnemies()
-    {
-        return m_StandbyEnemies;
-    }
 
     /// <summary>
     /// ゲームサイクルに入っている敵を取得する。
@@ -77,77 +58,67 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     }
 
     /// <summary>
-    /// ステージ上の全てのボス敵を取得する。
+    /// 消滅可能になるまでの最小時間を取得する。
     /// </summary>
-    public List<CommandEnemyController> GetBossEnemies()
+    public float GetCanOutTime()
     {
-        return m_BossControllers;
+        return m_CanOutTime;
     }
 
     #endregion
 
-
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-
-        m_StandbyEnemies = new List<CommandEnemyController>();
-        m_UpdateEnemies = new List<CommandEnemyController>();
-        m_GotoUpdateEnemies = new List<CommandEnemyController>();
-        m_GotoDestroyEnemies = new List<CommandEnemyController>();
-        m_BossControllers = new List<CommandEnemyController>();
-    }
-
-    protected override void OnDestroyed()
-    {
-        base.OnDestroyed();
-    }
-
     public override void OnInitialize()
     {
         base.OnInitialize();
+
+        m_UpdateEnemies = new List<CommandEnemyController>();
+        m_GotoDestroyEnemies = new List<CommandEnemyController>();
     }
 
     public override void OnFinalize()
     {
         base.OnFinalize();
-
         DestroyAllEnemyImmediate();
+        m_UpdateEnemies = null;
+        m_GotoDestroyEnemies = null;
     }
 
     public override void OnStart()
     {
         base.OnStart();
 
-        if (StageManager.Instance != null && StageManager.Instance.GetEnemyCharaHolder() != null)
+        if (CommandStageManager.Instance != null && CommandStageManager.Instance.GetEnemyCharaHolder() != null)
         {
-            m_EnemyCharaHolder = StageManager.Instance.GetEnemyCharaHolder().transform;
+            m_EnemyCharaHolder = CommandStageManager.Instance.GetEnemyCharaHolder().transform;
         }
         else if (m_EnemyCharaHolder == null)
         {
-            var obj = new GameObject("[EnemyCharaHolder]");
+            var obj = new GameObject(HOLDER_NAME);
             obj.transform.position = Vector3.zero;
             m_EnemyCharaHolder = obj.transform;
         }
     }
 
+    /// <summary>
+    /// コマンドイベントが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+    }
+
+    /// <summary>
+    /// コマンドイベントが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        DestroyAllEnemyImmediate();
+    }
+
     public override void OnUpdate()
     {
-        foreach (var enemy in m_StandbyEnemies)
-        {
-            if (enemy == null)
-            {
-                m_GotoUpdateEnemies.Add(enemy);
-                continue;
-            }
-
-            enemy.OnStart();
-            m_GotoUpdateEnemies.Add(enemy);
-        }
-
-        GotoUpdateFromStandby();
-
+        // Update処理
         foreach (var enemy in m_UpdateEnemies)
         {
             if (enemy == null)
@@ -156,12 +127,19 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
                 continue;
             }
 
+            if (enemy.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                enemy.OnStart();
+                enemy.SetCycle(E_OBJECT_CYCLE.UPDATE);
+            }
+
             enemy.OnUpdate();
         }
     }
 
     public override void OnLateUpdate()
     {
+        // LateUpdate処理
         foreach (var enemy in m_UpdateEnemies)
         {
             if (enemy == null)
@@ -174,30 +152,6 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
         }
 
         GotoDestroyFromUpdate();
-    }
-
-    private void GotoUpdateFromStandby()
-    {
-        int count = m_GotoUpdateEnemies.Count;
-
-        for (int i = 0; i < count; i++)
-        {
-            int idx = count - i - 1;
-            var enemy = m_GotoUpdateEnemies[idx];
-
-            if (enemy == null)
-            {
-                continue;
-            }
-
-            m_GotoUpdateEnemies.RemoveAt(idx);
-            m_StandbyEnemies.Remove(enemy);
-            m_UpdateEnemies.Add(enemy);
-        }
-
-        m_GotoUpdateEnemies.Clear();
-
-        m_StandbyEnemies.RemoveAll((e) => e == null);
     }
 
     private void GotoDestroyFromUpdate()
@@ -216,6 +170,7 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
 
             m_GotoDestroyEnemies.RemoveAt(idx);
             m_UpdateEnemies.Remove(enemy);
+            enemy.SetCycle(E_OBJECT_CYCLE.DESTROYED);
             enemy.OnFinalize();
             Destroy(enemy.gameObject);
         }
@@ -232,13 +187,14 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     /// </summary>
     public CommandEnemyController RegistEnemy(CommandEnemyController controller)
     {
-        if (controller == null || m_StandbyEnemies.Contains(controller) || m_UpdateEnemies.Contains(controller) || m_GotoUpdateEnemies.Contains(controller) || m_GotoDestroyEnemies.Contains(controller))
+        if (controller == null || m_UpdateEnemies.Contains(controller) || m_GotoDestroyEnemies.Contains(controller))
         {
             return null;
         }
 
         controller.transform.SetParent(m_EnemyCharaHolder);
-        m_StandbyEnemies.Add(controller);
+        m_UpdateEnemies.Add(controller);
+        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
         controller.OnInitialize();
         return controller;
     }
@@ -291,12 +247,8 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     /// </summary>
     public void DestroyAllEnemy()
     {
-        m_GotoDestroyEnemies.AddRange(m_StandbyEnemies);
         m_GotoDestroyEnemies.AddRange(m_UpdateEnemies);
-        m_GotoDestroyEnemies.AddRange(m_GotoUpdateEnemies);
-        m_StandbyEnemies.Clear();
         m_UpdateEnemies.Clear();
-        m_GotoUpdateEnemies.Clear();
     }
 
     /// <summary>
@@ -320,24 +272,12 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     /// </summary>
     public void DestroyAllEnemyImmediate()
     {
-        foreach (var enemy in m_StandbyEnemies)
-        {
-            DestroyEnemyImmediate(enemy);
-        }
-
         foreach (var enemy in m_UpdateEnemies)
         {
             DestroyEnemyImmediate(enemy);
         }
 
-        foreach (var enemy in m_GotoUpdateEnemies)
-        {
-            DestroyEnemyImmediate(enemy);
-        }
-
-        m_StandbyEnemies.Clear();
         m_UpdateEnemies.Clear();
-        m_GotoUpdateEnemies.Clear();
     }
 
     /// <summary>
@@ -348,15 +288,17 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     /// <returns></returns>
     public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
     {
-        var minPos = StageManager.Instance.GetMinLocalPositionField();
-        var maxPos = StageManager.Instance.GetMaxLocalPositionField();
+        var minPos = CommandStageManager.Instance.GetMinLocalPositionField();
+        var maxPos = CommandStageManager.Instance.GetMaxLocalPositionField();
         minPos += m_OffsetMinField;
         maxPos += m_OffsetMaxField;
 
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
-        pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+
+        // コマンドイベントではMoveObjectHolderに入っているため補正を足す
+        pos += CommandStageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
     }

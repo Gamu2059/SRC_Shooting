@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// コマンドイベントのステージ移動を制御するコンポーネント。
@@ -11,6 +12,17 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
 
     [SerializeField]
     private GameObject m_ObjectsHolder;
+
+    [Header("敵出現パラメータ")]
+
+    [SerializeField]
+    private CommandStageEnemyParam m_StageEnemyParam;
+
+    [SerializeField]
+    private XL_StageEnemyParam m_StageEnemyList;
+
+    [SerializeField]
+    private int m_ReferenceEnemyListIndex;
 
     /// <summary>
     /// 移動速度。
@@ -36,9 +48,22 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
     [SerializeField]
     private float m_WallAppearInterval;
 
+    [SerializeField]
+    private float m_BuildEnemyTimeCount;
+
+    private List<XL_StageEnemyParam.Param> m_StageEnemyAppearData;
+    private List<XL_StageEnemyParam.Param> m_RemovingData;
+
     public float GetMoveSpeed()
     {
         return m_MoveSpeed;
+    }
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        m_StageEnemyAppearData = new List<XL_StageEnemyParam.Param>();
+        m_RemovingData = new List<XL_StageEnemyParam.Param>();
     }
 
     /// <summary>
@@ -47,6 +72,9 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
     public override void OnEnableObject()
     {
         base.OnEnableObject();
+
+        m_BuildEnemyTimeCount = 0;
+        BuildEnemyAppearData();
         m_ObjectsHolder.SetActive(true);
     }
 
@@ -65,6 +93,7 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
 
         ControlViewMoving();
         AppearWall();
+        AppearEnemy();
     }
 
     private void ControlViewMoving()
@@ -83,5 +112,61 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
     private void AppearWall()
     {
 
+    }
+
+    private void AppearEnemy()
+    {
+        foreach (var data in m_StageEnemyAppearData)
+        {
+            if (data.Time >= m_BuildEnemyTimeCount)
+            {
+                continue;
+            }
+
+            var enemy = CommandEnemyCharaManager.Instance.CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[data.EnemyMoveId], data.OtherParameters);
+
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.SetBulletSetParam(m_StageEnemyParam.GetBulletSets()[data.BulletSetId]);
+
+            var pos = CommandEnemyCharaManager.Instance.GetPositionFromFieldViewPortPosition(data.AppearViewportX, data.AppearViewportY);
+            pos.x += data.AppearOffsetX;
+            pos.y += data.AppearOffsetY;
+            pos.z += data.AppearOffsetZ;
+            enemy.transform.position = pos;
+
+            var rot = enemy.transform.eulerAngles;
+            rot.y = data.AppearRotateY;
+            enemy.transform.eulerAngles = rot;
+
+            m_RemovingData.Add(data);
+        }
+
+        RemoveEnemyAppearData();
+
+        m_BuildEnemyTimeCount += Time.deltaTime;
+    }
+    private void BuildEnemyAppearData()
+    {
+        if (m_StageEnemyList == null)
+        {
+            return;
+        }
+
+        m_StageEnemyAppearData.Clear();
+        m_StageEnemyAppearData.AddRange(m_StageEnemyList.sheets[m_ReferenceEnemyListIndex].list.FindAll(i => i.Time > 0f));
+    }
+
+    private void RemoveEnemyAppearData()
+    {
+        foreach (var data in m_RemovingData)
+        {
+            m_StageEnemyAppearData.Remove(data);
+        }
+
+        m_RemovingData.Clear();
     }
 }
