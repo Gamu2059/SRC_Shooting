@@ -2320,7 +2320,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1242110623}
   - component: {fileID: 1242110622}
-  - component: {fileID: 1242110621}
   m_Layer: 0
   m_Name: CommandEvent Camera
   m_TagString: Untagged
@@ -2328,19 +2327,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1242110621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242110620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 3891e5ae93586454294f9368c1242418, type: 2}
 --- !u!20 &1242110622
 Camera:
   m_ObjectHideFlags: 0

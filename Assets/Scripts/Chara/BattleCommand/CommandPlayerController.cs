@@ -18,12 +18,6 @@ public class CommandPlayerController : CommandCharaController
 
     private float m_ShotTimeCount;
 
-    private void Start()
-    {
-        // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        CommandPlayerCharaManager.Instance.RegistChara(this);
-    }
-
     public override void OnStart()
     {
         base.OnStart();
