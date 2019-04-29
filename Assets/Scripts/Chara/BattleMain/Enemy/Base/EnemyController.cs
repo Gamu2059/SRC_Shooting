@@ -33,6 +33,8 @@ public class EnemyController : CharaController
 
     private bool m_CanOutDestroy;
 
+    private bool m_OnBecameBeforeInitialize;
+
 
 
     #region Getter & Setter
@@ -69,6 +71,15 @@ public class EnemyController : CharaController
         base.OnInitialize();
 
         m_CanOutDestroy = false;
+
+        if (m_OnBecameBeforeInitialize)
+        {
+            RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
+            {
+                m_CanOutDestroy = true;
+            }));
+        }
+        m_OnBecameBeforeInitialize = false;
     }
 
     public virtual void SetStringParam(string param)
@@ -80,10 +91,17 @@ public class EnemyController : CharaController
 
     protected virtual void OnBecameVisible()
     {
-        RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
+        if (BattleMainTimerManager.Instance != null)
         {
-            m_CanOutDestroy = true;
-        }));
+            RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
+            {
+                m_CanOutDestroy = true;
+            }));
+        }
+        else
+        {
+            m_OnBecameBeforeInitialize = true;
+        }
     }
 
     protected virtual void OnBecameInvisible()
