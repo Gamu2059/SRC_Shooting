@@ -37,18 +37,12 @@ public class EchoController : PlayerController
 	[SerializeField]
 	private int m_MaxHitCountIncrease;
 
-	protected override void Awake()
-	{
-		base.Awake();
-		initialShotInterval = m_ShotInterval;
-		initialMaxHitCount = m_MaxHitCount;
-		OnAwake();
-	}
-
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-	}
+        initialShotInterval = m_ShotInterval;
+        initialMaxHitCount = m_MaxHitCount;
+    }
 
 	public override void OnUpdate()
 	{
@@ -67,9 +61,6 @@ public class EchoController : PlayerController
 				var shotParam = new BulletShotParam( this );
 				shotParam.Position = m_MainShotPosition[i].position;
 				BulletController.ShotBullet( shotParam );
-				//EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
-				//bullet.InitializeBullet(this);
-				//bullet.ShotBullet(this, m_MainShotPosition[i].position, m_MainShotPosition[i].eulerAngles, mainBullet.transform.localScale, bulletIndex, bulletParam, -1);
 			}
 
 			shotDelay = 0;
