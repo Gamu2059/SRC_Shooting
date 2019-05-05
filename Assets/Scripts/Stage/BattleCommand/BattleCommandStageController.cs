@@ -157,7 +157,7 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
         }
 
         m_StageEnemyAppearData.Clear();
-        m_StageEnemyAppearData.AddRange(m_StageEnemyList.sheets[m_ReferenceEnemyListIndex].list.FindAll(i => i.Time > 0f));
+        m_StageEnemyAppearData.AddRange(m_StageEnemyList.param.FindAll(i => i.Time > 0f));
     }
 
     private void RemoveEnemyAppearData()
