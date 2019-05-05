@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 8
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -13,6 +13,202 @@ MonoBehaviour:
   m_Name: StageEnemyParam
   m_EditorClassIdentifier: 
   sheets:
+  - name: Stage1_dummy
+    list: []
+  - name: CommandEvent 1
+    list:
+    - Time: 2
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.5
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: -5
+      AppearOffsetY: 0
+      AppearRotateY: 180
+      IsBoss: 0
+      OtherParameters: ' '
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
   - name: Sheet1
     list:
     - Time: 2
@@ -1161,197 +1357,3 @@ MonoBehaviour:
       IsBoss: 0
       OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(0, 0,
         30); F:WML:0.01; F:WWT:10; I:BN:5; F:BA:10; F:RSI:0.5; F:RSPD:60;
-  - name: CommandEvent 1
-    list:
-    - Time: 2
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.5
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: -5
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: ' '
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
