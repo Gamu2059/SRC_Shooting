@@ -7,25 +7,37 @@ public class EchoBullet : BulletController
     [SerializeField]
     private bool m_IsRoot;
 
-    static int index;
+    [SerializeField]
+    private int m_Index;
 
     public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
-        var controller = (EchoController)GetBulletOwner();
         if (m_IsRoot)
         {
-            index = EchoBulletIndexGenerater.GenerateBulletIndex();
+            m_Index = EchoBulletIndexGenerater.Instance.GenerateBulletIndex();
         }
-        controller.ShotWaveBullet(index, targetChara.transform.localPosition);
+
+        if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(m_Index, targetChara))
+        {
+            return;
+        } else
+        {
+            EchoBulletIndexGenerater.Instance.RegisterHitChara(m_Index, targetChara);
+        }
+
+        var controller = (EchoController)GetBulletOwner();
+        controller.ShotWaveBullet(m_Index, targetChara.transform.localPosition);
+        DestroyBullet();
+        Debug.LogFormat("echo bullet name : {0}", GetBulletGroupId());
     }
 
-    public static void SetIndex(int n)
+    public void SetIndex(int n)
     {
-        index = n;
+        m_Index = n;
     }
 
     public int GetRootIndex()
     {
-        return index;
+        return m_Index;
     }
 }

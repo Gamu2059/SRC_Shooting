@@ -112,10 +112,31 @@ public class EnemyController : CharaController
         }
     }
 
+    /// <summary>
+    /// 指定した弾がEchoBullet、かつ被弾済みのインデックスならばtrueを返す。
+    /// </summary>
+    protected bool IsSufferEchoBullet(BulletController bullet)
+    {
+        // EchoBulletかつ被弾済みならtrueを返す
+        if (bullet is EchoBullet)
+        {
+            var echoBullet = bullet as EchoBullet;
+            if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(echoBullet.GetRootIndex(), this))
+            {
+                return true;
+            }
+        }
 
+        return false;
+    }
 
     public override void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
     {
+        if (IsSufferEchoBullet(attackBullet))
+        {
+            return;
+        }   
+
         if (m_OnHitInvincibleDuration <= 0)
         {
             base.SufferBullet(attackBullet, attackData, targetData);

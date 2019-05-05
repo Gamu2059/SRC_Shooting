@@ -119,8 +119,11 @@ public class EchoController : PlayerController
                 shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
                 shotParam.BulletIndex = 1;
                 shotParam.OrbitalIndex = 3;
-                EchoBullet.SetIndex(index);
-                EchoBullet.ShotBullet(shotParam);
+                var bullet = BulletController.ShotBullet(shotParam) as EchoBullet;
+                if (bullet != null)
+                {
+                    bullet.SetIndex(index);
+                }
             }
         }
     }

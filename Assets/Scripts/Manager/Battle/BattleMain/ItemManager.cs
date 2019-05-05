@@ -13,12 +13,6 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     #region Field Inspector
 
     /// <summary>
-    /// アイテムオブジェクトを保持する。
-    /// </summary>
-    [SerializeField]
-    private Transform m_ItemHolder;
-
-    /// <summary>
     /// アイテムのプレハブ群。
     /// </summary>
     [SerializeField]
@@ -36,16 +30,28 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     [SerializeField]
     private float m_ItemAttractRate;
 
+    #endregion
+
+    #region Field
+
+    /// <summary>
+    /// アイテムオブジェクトを保持する。
+    /// </summary>
+    private Transform m_ItemHolder;
+
+    /// <summary>
+    /// STANDBY状態のアイテムを保持するリスト。
+    /// </summary>
+    private List<ItemController> m_StandbyItems;
+
     /// <summary>
     /// UPDATE状態のアイテムを保持するリスト。
     /// </summary>
-    [SerializeField]
     private List<ItemController> m_UpdateItems;
 
     /// <summary>
     /// POOL状態のアイテムを保持するリスト。
     /// </summary>
-    [SerializeField]
     private List<ItemController> m_PoolItems;
 
     /// <summary>
@@ -84,6 +90,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     {
         base.OnAwake();
 
+        m_StandbyItems = new List<ItemController>();
         m_UpdateItems = new List<ItemController>();
         m_PoolItems = new List<ItemController>();
         m_GotoPoolItems = new List<ItemController>();
@@ -94,6 +101,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     public override void OnFinalize()
     {
         base.OnFinalize();
+        m_StandbyItems.Clear();
         m_UpdateItems.Clear();
         m_PoolItems.Clear();
     }
@@ -116,7 +124,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
 
     public override void OnUpdate()
     {
-        // Update処理
+        // Start処理
         foreach (var item in m_UpdateItems)
         {
             if (item == null)
@@ -124,10 +132,17 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
                 continue;
             }
 
-            if (item.GetCycle() == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            item.OnStart();
+        }
+
+        GotoUpdateFromStandby();
+
+        // Update処理
+        foreach (var item in m_UpdateItems)
+        {
+            if (item == null)
             {
-                item.OnStart();
-                item.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+                continue;
             }
 
             item.OnUpdate();
@@ -151,6 +166,29 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     }
 
 
+
+    /// <summary>
+    /// UPDATE状態にする。
+    /// </summary>
+    private void GotoUpdateFromStandby()
+    {
+        foreach (var item in m_StandbyItems)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+            else if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                CheckPoolItem(item);
+            }
+
+            item.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            m_UpdateItems.Add(item);
+        }
+
+        m_StandbyItems.Clear();
+    }
 
     /// <summary>
     /// POOL状態にする。
@@ -184,7 +222,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
         }
 
         m_PoolItems.Remove(item);
-        m_UpdateItems.Add(item);
+        m_StandbyItems.Add(item);
         item.gameObject.SetActive(true);
         item.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
         item.OnInitialize();
@@ -257,7 +295,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
             }
         }
 
-        foreach(var item in m_ItemPrefabs)
+        foreach (var item in m_ItemPrefabs)
         {
             if (item == null)
             {
@@ -282,7 +320,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     /// <param name="param">アイテムの生成情報</param>
     public void CreateItem(Vector3 position, ItemCreateParam param)
     {
-        foreach(var spreadParam in param.ItemSpreadParams)
+        foreach (var spreadParam in param.ItemSpreadParams)
         {
             var prefab = GetItemPrefabFromItemType(spreadParam.ItemType);
             if (prefab == null)
@@ -296,7 +334,8 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
             if (spreadParam.ItemType == param.CenterCreateItemType)
             {
                 item.SetPosition(position);
-            } else
+            }
+            else
             {
                 float r = spreadParam.SpreadRadius;
                 float x = Random.Range(-r, r);
@@ -315,7 +354,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     /// </summary>
     public void AttractAllItem()
     {
-        foreach(var item in m_UpdateItems)
+        foreach (var item in m_UpdateItems)
         {
             item.AttractPlayer();
         }

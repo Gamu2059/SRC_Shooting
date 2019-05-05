@@ -112,6 +112,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         base.OnInitialize();
 
+        EchoBulletIndexGenerater.OnInitialize();
         m_BattleMainManagers.ForEach(m => m.OnInitialize());
         m_BattleCommandManagers.ForEach(m => m.OnInitialize());
     }
@@ -125,6 +126,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleMainManagers.ForEach(m => m.OnFinalize());
         m_BattleCommandManagers.ForEach(m => m.OnFinalize());
+        EchoBulletIndexGenerater.OnFinalize();
     }
 
     /// <summary>
