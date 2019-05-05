@@ -20,13 +20,6 @@ public static class Collision
         {
             foreach (var targetData in targetDatas)
             {
-                //if (attackData.CollideName == "Command Player Bullet" && targetData.CollideName == "Command Wall")
-                //{
-                //    Debug.Log("===========");
-                //    Debug.Log(attackData.CollideName + "," + attackData.CenterPos + "," + attackData.Size);
-                //    Debug.Log(targetData.CollideName + "," + targetData.CenterPos + "," + targetData.Size);
-                //    Debug.Log("Dist : " + (targetData.CenterPos - attackData.CenterPos).magnitude);
-                //}
                 if (IsCollide(attackData, targetData))
                 {
                     EventUtility.SafeInvokeAction(onCollideAction, attackData, targetData);

@@ -54,9 +54,22 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
                 continue;
             }
 
+            // UPDATE状態にないものは飛ばす
+            if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                continue;
+            }
+
             foreach (var targetBullet in bullets)
             {
+
                 if (bullet == targetBullet || bullet.GetTroop() == targetBullet.GetTroop())
+                {
+                    continue;
+                }
+
+                // UPDATE状態にないものは飛ばす
+                if (targetBullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
                 {
                     continue;
                 }
@@ -81,6 +94,12 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
 
         foreach (var bullet in bullets)
         {
+            // UPDATE状態にないものは飛ばす
+            if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                continue;
+            }
+
             if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
             {
                 Collision.CheckCollide(bullet, player, (attackData, targetData) =>
@@ -93,6 +112,12 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
             {
                 foreach (var enemy in enemies)
                 {
+                    // UPDATE状態にないものは飛ばす
+                    if (enemy.GetCycle() != E_OBJECT_CYCLE.UPDATE)
+                    {
+                        continue;
+                    }
+
                     Collision.CheckCollide(bullet, enemy, (attackData, targetData) =>
                     {
                         enemy.SufferBullet(bullet, attackData, targetData);
@@ -113,6 +138,12 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
 
         foreach (var enemy in enemies)
         {
+            // UPDATE状態にないものは飛ばす
+            if (enemy.GetCycle() != E_OBJECT_CYCLE.UPDATE)
+            {
+                continue;
+            }
+
             Collision.CheckCollide(enemy, player, (attackData, targetData) =>
             {
                 player.SufferChara(enemy, attackData, targetData);
@@ -131,6 +162,12 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
 
         foreach (var item in items)
         {
+            // UPDATE状態にないものは飛ばす
+            if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                continue;
+            }
+
             Collision.CheckCollide(player, item, (attackData, targetData) =>
             {
                 item.SufferChara(player, attackData, targetData);

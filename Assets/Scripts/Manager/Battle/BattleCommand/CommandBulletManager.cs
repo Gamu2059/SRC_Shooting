@@ -16,11 +16,6 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
     private Transform m_BulletHolder;
 
     /// <summary>
-    /// STANDBY状態の弾を保持するリスト。
-    /// </summary>
-    private List<CommandBulletController> m_StandbyBullets;
-
-    /// <summary>
     /// UPDATE状態の弾を保持するリスト。
     /// </summary>
     private List<CommandBulletController> m_UpdateBullets;
@@ -29,11 +24,6 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
     /// POOL状態の弾を保持するリスト。
     /// </summary>
     private List<CommandBulletController> m_PoolBullets;
-
-    /// <summary>
-    /// UPDATE状態に遷移する弾のリスト。
-    /// </summary>
-    private List<CommandBulletController> m_GotoUpdateBullets;
 
     /// <summary>
     /// POOL状態に遷移する弾のリスト。
@@ -45,14 +35,6 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
     #region Get
 
     /// <summary>
-    /// STANDBY状態の弾を保持するリストを取得する。
-    /// </summary>
-    public List<CommandBulletController> GetStandbyBullets()
-    {
-        return m_StandbyBullets;
-    }
-
-    /// <summary>
     /// UPDATE状態の弾を保持するリストを取得する。
     /// </summary>
     public List<CommandBulletController> GetUpdateBullets()
@@ -60,47 +42,39 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         return m_UpdateBullets;
     }
 
-    /// <summary>
-    /// POOL状態の弾を保持するリストを取得する。
-    /// </summary>
-    public List<CommandBulletController> GetPoolBullets()
-    {
-        return m_PoolBullets;
-    }
-
     #endregion
 
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-
-        m_StandbyBullets = new List<CommandBulletController>();
-        m_UpdateBullets = new List<CommandBulletController>();
-        m_PoolBullets = new List<CommandBulletController>();
-        m_GotoUpdateBullets = new List<CommandBulletController>();
-        m_GotoPoolBullets = new List<CommandBulletController>();
-    }
-
+    /// <summary>
+    /// マネージャが初期化される時に呼び出される。
+    /// </summary>
     public override void OnInitialize()
     {
         base.OnInitialize();
+
+        m_UpdateBullets = new List<CommandBulletController>();
+        m_PoolBullets = new List<CommandBulletController>();
+        m_GotoPoolBullets = new List<CommandBulletController>();
     }
 
+    /// <summary>
+    /// マネージャが破棄される時に呼び出される。
+    /// </summary>
     public override void OnFinalize()
     {
         base.OnFinalize();
-        m_StandbyBullets.Clear();
-        m_UpdateBullets.Clear();
-        m_PoolBullets.Clear();
+        CheckPoolAllBulletImmediate();
+        m_UpdateBullets = null;
+        m_PoolBullets = null;
+        m_GotoPoolBullets = null;
     }
 
     public override void OnStart()
     {
         base.OnStart();
 
-        if (StageManager.Instance != null && StageManager.Instance.GetBulletHolder() != null)
+        if (CommandStageManager.Instance != null && CommandStageManager.Instance.GetBulletHolder() != null)
         {
-            m_BulletHolder = StageManager.Instance.GetBulletHolder().transform;
+            m_BulletHolder = CommandStageManager.Instance.GetBulletHolder().transform;
         }
         else if (m_BulletHolder == null)
         {
@@ -110,22 +84,25 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         }
     }
 
+    /// <summary>
+    /// コマンドイベントが有効になった時に呼び出される。
+    /// </summary>
+    public override void OnEnableObject()
+    {
+        base.OnEnableObject();
+    }
+
+    /// <summary>
+    /// コマンドイベントが無効になった時に呼び出される。
+    /// </summary>
+    public override void OnDisableObject()
+    {
+        base.OnDisableObject();
+        CheckPoolAllBulletImmediate();
+    }
+
     public override void OnUpdate()
     {
-        // Start処理
-        foreach (var bullet in m_StandbyBullets)
-        {
-            if (bullet == null)
-            {
-                continue;
-            }
-
-            bullet.OnStart();
-            m_GotoUpdateBullets.Add(bullet);
-        }
-
-        GotoUpdateFromStandby();
-
         // Update処理
         foreach (var bullet in m_UpdateBullets)
         {
@@ -134,6 +111,11 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
                 continue;
             }
 
+            if (bullet.GetCycle() == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                bullet.OnStart();
+                bullet.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            }
             bullet.OnUpdate();
         }
     }
@@ -157,26 +139,6 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
 
 
     /// <summary>
-    /// UPDATE状態にする。
-    /// </summary>
-    private void GotoUpdateFromStandby()
-    {
-        int count = m_GotoUpdateBullets.Count;
-
-        for (int i = 0; i < count; i++)
-        {
-            int idx = count - i - 1;
-            var bullet = m_GotoUpdateBullets[idx];
-            m_GotoUpdateBullets.RemoveAt(idx);
-            m_StandbyBullets.Remove(bullet);
-            m_UpdateBullets.Add(bullet);
-            bullet.SetBulletCycle(E_BULLET_CYCLE.UPDATE);
-        }
-
-        m_GotoUpdateBullets.Clear();
-    }
-
-    /// <summary>
     /// POOL状態にする。
     /// </summary>
     private void GotoPoolFromUpdate()
@@ -187,7 +149,7 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         {
             int idx = count - i - 1;
             var bullet = m_GotoPoolBullets[idx];
-            bullet.SetBulletCycle(E_BULLET_CYCLE.POOLED);
+            bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
             m_GotoPoolBullets.RemoveAt(idx);
             m_UpdateBullets.Remove(bullet);
             m_PoolBullets.Add(bullet);
@@ -208,9 +170,9 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         }
 
         m_PoolBullets.Remove(bullet);
-        m_StandbyBullets.Add(bullet);
+        m_UpdateBullets.Add(bullet);
         bullet.gameObject.SetActive(true);
-        bullet.SetBulletCycle(E_BULLET_CYCLE.STANDBY_UPDATE);
+        bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
         bullet.OnInitialize();
     }
 
@@ -225,7 +187,7 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
             return;
         }
 
-        bullet.SetBulletCycle(E_BULLET_CYCLE.STANDBY_POOL);
+        bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
         bullet.OnFinalize();
         m_GotoPoolBullets.Add(bullet);
         bullet.gameObject.SetActive(false);
@@ -263,5 +225,18 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         }
 
         return bullet;
+    }
+
+    /// <summary>
+    /// 全ての弾をプールに戻す。
+    /// </summary>
+    private void CheckPoolAllBulletImmediate()
+    {
+        foreach(var bullet in m_UpdateBullets)
+        {
+            CheckPoolBullet(bullet);
+        }
+
+        GotoPoolFromUpdate();
     }
 }

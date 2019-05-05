@@ -37,12 +37,6 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     private float m_ItemAttractRate;
 
     /// <summary>
-    /// STANDBY状態のアイテムを保持するリスト。
-    /// </summary>
-    [SerializeField]
-    private List<ItemController> m_StandbyItems;
-
-    /// <summary>
     /// UPDATE状態のアイテムを保持するリスト。
     /// </summary>
     [SerializeField]
@@ -53,11 +47,6 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     /// </summary>
     [SerializeField]
     private List<ItemController> m_PoolItems;
-
-    /// <summary>
-    /// UPDATE状態に遷移するアイテムのリスト。
-    /// </summary>
-    private List<ItemController> m_GotoUpdateItems;
 
     /// <summary>
     /// POOL状態に遷移するアイテムのリスト。
@@ -80,27 +69,11 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     }
 
     /// <summary>
-    /// STANDBY状態のアイテムを保持するリストを取得する。
-    /// </summary>
-    public List<ItemController> GetStandbyItems()
-    {
-        return m_StandbyItems;
-    }
-
-    /// <summary>
     /// UPDATE状態のアイテムを保持するリストを取得する。
     /// </summary>
     public List<ItemController> GetUpdateItems()
     {
         return m_UpdateItems;
-    }
-
-    /// <summary>
-    /// POOL状態のアイテムを保持するリストを取得する。
-    /// </summary>
-    public List<ItemController> GetPoolItems()
-    {
-        return m_PoolItems;
     }
 
     #endregion
@@ -111,24 +84,16 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     {
         base.OnAwake();
 
-        m_StandbyItems = new List<ItemController>();
         m_UpdateItems = new List<ItemController>();
         m_PoolItems = new List<ItemController>();
-        m_GotoUpdateItems = new List<ItemController>();
         m_GotoPoolItems = new List<ItemController>();
 
         m_ItemPrefabCache = new Dictionary<E_ITEM_TYPE, ItemController>();
     }
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
     public override void OnFinalize()
     {
         base.OnFinalize();
-        m_StandbyItems.Clear();
         m_UpdateItems.Clear();
         m_PoolItems.Clear();
     }
@@ -151,69 +116,41 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
 
     public override void OnUpdate()
     {
-        // Start処理
-        foreach (var bullet in m_StandbyItems)
-        {
-            if (bullet == null)
-            {
-                continue;
-            }
-
-            bullet.OnStart();
-            m_GotoUpdateItems.Add(bullet);
-        }
-
-        GotoUpdateFromStandby();
-
         // Update処理
-        foreach (var bullet in m_UpdateItems)
+        foreach (var item in m_UpdateItems)
         {
-            if (bullet == null)
+            if (item == null)
             {
                 continue;
             }
 
-            bullet.OnUpdate();
+            if (item.GetCycle() == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                item.OnStart();
+                item.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            }
+
+            item.OnUpdate();
         }
     }
 
     public override void OnLateUpdate()
     {
         // LateUpdate処理
-        foreach (var bullet in m_UpdateItems)
+        foreach (var item in m_UpdateItems)
         {
-            if (bullet == null)
+            if (item == null)
             {
                 continue;
             }
 
-            bullet.OnLateUpdate();
+            item.OnLateUpdate();
         }
 
         GotoPoolFromUpdate();
     }
 
 
-
-    /// <summary>
-    /// UPDATE状態にする。
-    /// </summary>
-    private void GotoUpdateFromStandby()
-    {
-        int count = m_GotoUpdateItems.Count;
-
-        for (int i = 0; i < count; i++)
-        {
-            int idx = count - i - 1;
-            var bullet = m_GotoUpdateItems[idx];
-            m_GotoUpdateItems.RemoveAt(idx);
-            m_StandbyItems.Remove(bullet);
-            m_UpdateItems.Add(bullet);
-            bullet.SetItemCycle(ItemController.E_ITEM_CYCLE.UPDATE);
-        }
-
-        m_GotoUpdateItems.Clear();
-    }
 
     /// <summary>
     /// POOL状態にする。
@@ -226,7 +163,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
         {
             int idx = count - i - 1;
             var bullet = m_GotoPoolItems[idx];
-            bullet.SetItemCycle(ItemController.E_ITEM_CYCLE.POOLED);
+            bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
             m_GotoPoolItems.RemoveAt(idx);
             m_UpdateItems.Remove(bullet);
             m_PoolItems.Add(bullet);
@@ -247,9 +184,9 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
         }
 
         m_PoolItems.Remove(item);
-        m_StandbyItems.Add(item);
+        m_UpdateItems.Add(item);
         item.gameObject.SetActive(true);
-        item.SetItemCycle(ItemController.E_ITEM_CYCLE.STANDBY_UPDATE);
+        item.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
         item.OnInitialize();
     }
 
@@ -264,7 +201,7 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
             return;
         }
 
-        item.SetItemCycle(ItemController.E_ITEM_CYCLE.STANDBY_POOL);
+        item.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
         item.OnFinalize();
         m_GotoPoolItems.Add(item);
         item.gameObject.SetActive(false);
@@ -378,11 +315,6 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     /// </summary>
     public void AttractAllItem()
     {
-        foreach(var item in m_StandbyItems)
-        {
-            item.AttractPlayer();
-        }
-
         foreach(var item in m_UpdateItems)
         {
             item.AttractPlayer();

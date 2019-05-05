@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: Command Wall
+  - CollideName: OUT WALL COLLIDE
     ColliderType: 0
     Transform: {fileID: 6780810466752307831}
 --- !u!114 &3950569407725982810
@@ -63,7 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WallGroupId: Default 1Wall
-  m_WallCycle: 0
+  m_IsUnbreakable: 0
+  m_MaxHp: 0
 --- !u!1 &6780810466752307830
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 6780810466752307830}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 0, z: 30}
+  m_LocalScale: {x: 8, y: 0, z: 29}
   m_Children: []
   m_Father: {fileID: 6780810464855643890}
   m_RootOrder: 1
@@ -193,7 +194,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 5}
+  m_SizeDelta: {x: 8, y: 29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &7260092956147934663
 MeshRenderer:
@@ -332,7 +333,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 5
+  m_firstOverflowCharacterIndex: 45
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0

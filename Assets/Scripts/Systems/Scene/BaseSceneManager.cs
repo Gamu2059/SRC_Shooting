@@ -25,6 +25,8 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		BATTLE = 4,
 		TITLE = 5,
         COMMAND_TEST = 6,
+
+        STAGE1 = 7,
 	}
 
 	/// <summary>

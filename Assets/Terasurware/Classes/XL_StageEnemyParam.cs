@@ -4,14 +4,7 @@ using System.Collections.Generic;
 
 public class XL_StageEnemyParam : ScriptableObject
 {	
-	public List<Sheet> sheets = new List<Sheet> ();
-
-	[System.SerializableAttribute]
-	public class Sheet
-	{
-		public string name = string.Empty;
-		public List<Param> list = new List<Param>();
-	}
+	public List<Param> param = new List<Param> ();
 
 	[System.SerializableAttribute]
 	public class Param
@@ -31,4 +24,3 @@ public class XL_StageEnemyParam : ScriptableObject
 		public string OtherParameters;
 	}
 }
-

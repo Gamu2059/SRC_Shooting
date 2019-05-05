@@ -172,7 +172,7 @@ PrefabInstance:
     - target: {fileID: 6780810464855643890, guid: cffe71c1c25cdee40907707e57f57dd4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1956733571911275598, guid: cffe71c1c25cdee40907707e57f57dd4,
         type: 3}
@@ -337,12 +337,27 @@ PrefabInstance:
     - target: {fileID: 6780810464855643890, guid: cffe71c1c25cdee40907707e57f57dd4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8116504004622610173, guid: cffe71c1c25cdee40907707e57f57dd4,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8116504004622610173, guid: cffe71c1c25cdee40907707e57f57dd4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1956733571911275598, guid: cffe71c1c25cdee40907707e57f57dd4,
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864578583763505049, guid: cffe71c1c25cdee40907707e57f57dd4,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cffe71c1c25cdee40907707e57f57dd4, type: 3}

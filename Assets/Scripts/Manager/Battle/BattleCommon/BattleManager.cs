@@ -66,6 +66,16 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     public bool m_PlayerNotDead;
 
     /// <summary>
+    /// 状態遷移のリクエストを受けたかどうか。
+    /// </summary>
+    private bool m_IsRequestedTransition;
+
+    /// <summary>
+    /// リクエストされた遷移先状態。
+    /// </summary>
+    private E_BATTLE_STATUS m_RequestedBattleStatus;
+
+    /// <summary>
     /// メインのバトル画面のマネージャーリストを取得する。
     /// </summary>
     public List<BattleControllableMonoBehavior> GetBattleMainManegers()
@@ -171,6 +181,20 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
                 m_BattleCommandManagers.ForEach(m => m.OnLateUpdate());
                 break;
         }
+
+        if (m_IsRequestedTransition)
+        {
+            if (m_RequestedBattleStatus == E_BATTLE_STATUS.MAIN)
+            {
+                ProcessTransitionBattleMain();
+            }
+            else if (m_RequestedBattleStatus == E_BATTLE_STATUS.COMMAND)
+            {
+                ProcessTransitionBattleCommand();
+            }
+
+            m_IsRequestedTransition = false;
+        }
     }
 
     /// <summary>
@@ -258,6 +282,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     public void TransitionBattleMain()
     {
+        if (m_BattleStatus != E_BATTLE_STATUS.COMMAND || m_IsRequestedTransition)
+        {
+            return;
+        }
+
         TransitionForceBattleMain();
     }
 
@@ -266,6 +295,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     public void TransitionBattleCommand()
     {
+        if (m_BattleStatus != E_BATTLE_STATUS.MAIN || m_IsRequestedTransition)
+        {
+            return;
+        }
+
         TransitionForceBattleCommand();
     }
 
@@ -273,6 +307,24 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// 強制的にBattleMainへと遷移する。
     /// </summary>
     private void TransitionForceBattleMain()
+    {
+        m_IsRequestedTransition = true;
+        m_RequestedBattleStatus = E_BATTLE_STATUS.MAIN;
+    }
+
+    /// <summary>
+    /// 強制的にBattleCommandへと遷移する。
+    /// </summary>
+    private void TransitionForceBattleCommand()
+    {
+        m_IsRequestedTransition = true;
+        m_RequestedBattleStatus = E_BATTLE_STATUS.COMMAND;
+    }
+
+    /// <summary>
+    /// 実際にBattleMainに状態遷移する処理を行う。
+    /// </summary>
+    private void ProcessTransitionBattleMain()
     {
         m_BattleStatus = E_BATTLE_STATUS.TRANSITION_MAIN;
 
@@ -285,9 +337,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     }
 
     /// <summary>
-    /// 強制的にBattleCommandへと遷移する。
+    /// 実際にBattleCommandに状態遷移する処理を行う。
     /// </summary>
-    private void TransitionForceBattleCommand()
+    private void ProcessTransitionBattleCommand()
     {
         m_BattleStatus = E_BATTLE_STATUS.TRANSITION_COMMAND;
 
@@ -299,18 +351,43 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleStatus = E_BATTLE_STATUS.COMMAND;
     }
 
+    private void TransitionMode(InputManager.E_INPUT_STATE state)
+    {
+        if (state != InputManager.E_INPUT_STATE.DOWN)
+        {
+            return;
+        }
+
+        if (m_BattleStatus == E_BATTLE_STATUS.MAIN)
+        {
+            TransitionBattleCommand();
+        }
+        else if (m_BattleStatus == E_BATTLE_STATUS.COMMAND)
+        {
+            TransitionBattleMain();
+        }
+    }
+
     /// <summary>
     /// Main画面で必要な入力アクションを付与する。
     /// </summary>
     private void AttachBattleMainInputAction()
     {
-        InputManager.Instance.HorizontalAction += PlayerCharaManager.Instance.OnInputHorizontal;
-        InputManager.Instance.VerticalAction += PlayerCharaManager.Instance.OnInputVertical;
-        InputManager.Instance.ChangeCharaAction += PlayerCharaManager.Instance.OnInputChangeChara;
-        InputManager.Instance.ShotAction += PlayerCharaManager.Instance.OnInputShot;
-        InputManager.Instance.BombAction += PlayerCharaManager.Instance.OnInputBomb;
-        InputManager.Instance.MenuAction += ItemManager.Instance.OnAttractAction;
-        //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
+        try
+        {
+            InputManager.Instance.HorizontalAction += PlayerCharaManager.Instance.OnInputHorizontal;
+            InputManager.Instance.VerticalAction += PlayerCharaManager.Instance.OnInputVertical;
+            InputManager.Instance.ChangeCharaAction += PlayerCharaManager.Instance.OnInputChangeChara;
+            InputManager.Instance.ShotAction += PlayerCharaManager.Instance.OnInputShot;
+            InputManager.Instance.BombAction += PlayerCharaManager.Instance.OnInputBomb;
+            InputManager.Instance.MenuAction += TransitionMode;
+            //InputManager.Instance.MenuAction += ItemManager.Instance.OnAttractAction;
+            //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     /// <summary>
@@ -326,7 +403,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             InputManager.Instance.ChangeCharaAction -= PlayerCharaManager.Instance.OnInputChangeChara;
             InputManager.Instance.ShotAction -= PlayerCharaManager.Instance.OnInputShot;
             InputManager.Instance.BombAction -= PlayerCharaManager.Instance.OnInputBomb;
-            InputManager.Instance.MenuAction -= ItemManager.Instance.OnAttractAction;
+            InputManager.Instance.MenuAction -= TransitionMode;
+            //InputManager.Instance.MenuAction -= ItemManager.Instance.OnAttractAction;
             //InputManager.Instance.MenuAction -= PlayerCharaManager.Instance.OnInputMenu;
         }
         catch (Exception e)
@@ -340,10 +418,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     private void AttachBattleCommandInputAction()
     {
-        InputManager.Instance.HorizontalAction += CommandPlayerCharaManager.Instance.OnInputHorizontal;
-        InputManager.Instance.VerticalAction += CommandPlayerCharaManager.Instance.OnInputVertical;
-        InputManager.Instance.ShotAction += CommandPlayerCharaManager.Instance.OnInputShot;
-        //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
+        try
+        {
+            InputManager.Instance.HorizontalAction += CommandPlayerCharaManager.Instance.OnInputHorizontal;
+            InputManager.Instance.VerticalAction += CommandPlayerCharaManager.Instance.OnInputVertical;
+            InputManager.Instance.ShotAction += CommandPlayerCharaManager.Instance.OnInputShot;
+            InputManager.Instance.MenuAction += TransitionMode;
+            //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     /// <summary>
@@ -357,6 +443,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             InputManager.Instance.HorizontalAction -= CommandPlayerCharaManager.Instance.OnInputHorizontal;
             InputManager.Instance.VerticalAction -= CommandPlayerCharaManager.Instance.OnInputVertical;
             InputManager.Instance.ShotAction -= CommandPlayerCharaManager.Instance.OnInputShot;
+            InputManager.Instance.MenuAction -= TransitionMode;
             //InputManager.Instance.MenuAction -= PlayerCharaManager.Instance.OnInputMenu;
         }
         catch (Exception e)
