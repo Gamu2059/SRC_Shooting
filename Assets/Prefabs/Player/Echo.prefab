@@ -19,6 +19,10 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &334425927673741676
 Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395257916409381443}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -6, z: 0}
@@ -381,12 +385,10 @@ MonoBehaviour:
   m_ShotIntervalDecrease: 0.075
   m_MainShotPosition:
   - {fileID: 4994896512845937525}
-  m_DiffusionRadius: 3
-  m_CanShotWave: 0
-  m_LatestHitCharacter: {fileID: 0}
-  m_LatestHitCount: 0
+  m_RadiateDirection: 16
+  m_WaveRad: 3
+  m_RotateOffset: 0
   m_MaxHitCount: 3
-  m_MaxHitCountIncrease: 1
 --- !u!1 &4174537380625799561
 GameObject:
   m_ObjectHideFlags: 0

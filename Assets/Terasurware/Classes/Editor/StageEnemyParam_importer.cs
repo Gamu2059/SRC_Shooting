@@ -28,28 +28,6 @@ public class StageEnemyParam_importer : AssetPostprocessor
 					book = new XSSFWorkbook(stream);
 				}
 
-<<<<<<< HEAD
-					XL_StageEnemyParam.Sheet s = new XL_StageEnemyParam.Sheet ();
-					s.name = sheetName;
-				
-					for (int i=1; i<= sheet.LastRowNum; i++) {
-						IRow row = sheet.GetRow (i);
-						ICell cell = null;
-						
-						XL_StageEnemyParam.Param p = new XL_StageEnemyParam.Param ();
-						
-					cell = row.GetCell(0); p.Time = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(1); p.EnemyViewId = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(2); p.EnemyMoveId = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(3); p.BulletSetId = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(4); p.AppearViewportX = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(5); p.AppearViewportY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(6); p.AppearOffsetX = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(7); p.AppearOffsetZ = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(8); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(9); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(10); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
-=======
                 foreach (string sheetName in sheetNames)
                 {
                     var exportPath = "Assets/ExcelData/Stage/" + sheetName + ".asset";
@@ -91,7 +69,6 @@ public class StageEnemyParam_importer : AssetPostprocessor
 					cell = row.GetCell(8); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(9); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(10); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
->>>>>>> 16dbdaafc5e3a9850976a07fae821c53ff8c4fed
 					cell = row.GetCell(11); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
 
                         data.param.Add(p);
