@@ -23,6 +23,9 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     private PlayerController[] m_CharaPrefabs;
 
     [SerializeField]
+    private int m_InitSortieIndex;
+
+    [SerializeField]
     private Vector2 m_InitAppearViewportPosition;
 
     [SerializeField]
@@ -103,6 +106,8 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
             RegistChara(chara);
             chara.transform.position = pos;
         }
+
+        ChangeChara(m_InitSortieIndex);
     }
 
     public override void OnUpdate()
@@ -172,12 +177,7 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
         controller.transform.SetParent(m_PlayerCharaHolder);
         m_Controllers.Add(controller);
         controller.OnInitialize();
-
-        // 最初のキャラだけONにする
-        if (m_Controllers.Count > 1)
-        {
-            controller.gameObject.SetActive(false);
-        }
+        controller.gameObject.SetActive(false);
     }
 
     public void RestrictCharaPosition()

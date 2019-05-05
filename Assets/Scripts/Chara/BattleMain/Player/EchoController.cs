@@ -4,153 +4,147 @@ using UnityEngine;
 
 public class EchoController : PlayerController
 {
-	[SerializeField, Range( 0f, 1f )]
-	private float m_ShotInterval;
 
-	private float initialShotInterval;
+    [Header("Echo専用 ショットに関するパラメータ")]
+    [SerializeField, Range(0f, 1f)]
+    private float m_ShotInterval;
 
-	[SerializeField]
-	private float m_ShotIntervalDecrease;
+    private float initialShotInterval;
 
-	private float shotDelay;
+    [SerializeField]
+    private float m_ShotIntervalDecrease;
 
-	[SerializeField]
-	private Transform[] m_MainShotPosition;
+    private float shotDelay;
 
-	[SerializeField]
-	private float m_DiffusionRadius;
+    [SerializeField]
+    private Transform[] m_MainShotPosition;
 
-	[SerializeField]
-	private bool m_CanShotWave;
+    [Header("Echo専用 衝撃波に関するパラメータ")]
+    [SerializeField]
+    private int m_RadiateDirection;
 
-	[SerializeField]
-	private CharaController m_LatestHitCharacter;
+    [SerializeField]
+    private float m_WaveRad;
 
-	[SerializeField]
-	private int m_LatestHitCount;
+    [SerializeField]
+    private float m_RotateOffset;
 
-	[SerializeField]
-	private int m_MaxHitCount;
+    [SerializeField]
+    private int m_MaxHitCount;
 
-	private int initialMaxHitCount;
+    private Dictionary<int, int> RootBulletIndex;
 
-	[SerializeField]
-	private int m_MaxHitCountIncrease;
-
-	protected override void OnAwake()
-	{
-		base.OnAwake();
-        initialShotInterval = m_ShotInterval;
-        initialMaxHitCount = m_MaxHitCount;
+    public int GetMaxHitCount()
+    {
+        return m_MaxHitCount;
     }
 
-	public override void OnUpdate()
-	{
-		base.OnUpdate();
-		shotDelay += Time.deltaTime;
-		UpdateShotLevel( GetLevel() );
-		ShotDiffusinBullet();
-	}
+    protected override void Awake()
+    {
+        initialShotInterval = m_ShotInterval;
+        RootBulletIndex = new Dictionary<int, int>();
+        OnAwake();
+    }
 
-	public override void ShotBullet()
-	{
-		if( shotDelay >= m_ShotInterval )
-		{
-			for( int i = 0; i < m_MainShotPosition.Length; i++ )
-			{
-				var shotParam = new BulletShotParam( this );
-				shotParam.Position = m_MainShotPosition[i].position;
-				BulletController.ShotBullet( shotParam );
-			}
+    protected override void OnAwake()
+    {
 
-			shotDelay = 0;
-		}
-	}
+        base.OnAwake();
+    }
 
-	public override void ShotBomb()
-	{
-		base.ShotBomb();
-	}
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        shotDelay += Time.deltaTime;
+        UpdateShotLevel(GetLevel());
+    }
 
-	private void UpdateShotLevel( int level )
-	{
+    public override void ShotBullet()
+    {
+        if (shotDelay >= m_ShotInterval)
+        {
+            for (int i = 0; i < m_MainShotPosition.Length; i++)
+            {
+                var shotParam = new BulletShotParam(this);
+                shotParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
+                shotParam.OrbitalIndex = 2;
+                BulletController.ShotBullet(shotParam);
+            }
 
-		if( level >= 3 )
-		{
-			m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
-			m_MaxHitCount = initialMaxHitCount + m_MaxHitCountIncrease * 2;
-		}
-		else if( level >= 2 )
-		{
-			m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease;
-			m_MaxHitCount = initialMaxHitCount + m_MaxHitCountIncrease;
-		}
-		else
-		{
-			m_ShotInterval = initialShotInterval;
-			m_MaxHitCount = initialMaxHitCount;
-		}
-	}
+            shotDelay = 0;
+        }
+    }
 
-	public void ReadyShotDiffusionBullet( CharaController chara, int count )
-	{
-		if( !m_CanShotWave )
-		{
-			m_CanShotWave = true;
-		}
+    public override void ShotBomb()
+    {
 
-		m_LatestHitCharacter = chara;
-		m_LatestHitCount = count;
-	}
+        base.ShotBomb();
+    }
 
-	private void ShotDiffusinBullet( int bulletIndex = 1, int bulletParamIndex = 0 )
-	{
-		if( m_CanShotWave )
-		{
-			if( m_LatestHitCharacter == null )
-			{
-				return;
-			}
+    private void UpdateShotLevel(int level)
+    {
+        if (level >= 3)
+        {
+            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
+        }
+        else if (level >= 2)
+        {
+            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease;
+        }
+        else
+        {
+            m_ShotInterval = initialShotInterval;
+        }
+    }
 
-			BulletParam bulletParam = GetBulletParam( bulletParamIndex );
+    public void ShotWaveBullet(int index, Vector3 centerLocalPosition)
+    {
+        if (!IndexExistP(index))
+        {
+            SetNewIndex(index);
+        }
+        else
+        {
+            UpdateIndex(index);
+        }
 
-			for( int i = 0; i < 4; i++ )
-			{
-				float angleRad = ( Mathf.PI / 2 ) * i;
-				float yAngle = 90f * Direction4( i );
+        if (GetRootBulletHitCount(index) < m_MaxHitCount)
+        {
+            for (int i = 0; i < m_RadiateDirection; i++)
+            {
+                float yAngle = (2 * Mathf.PI / m_RadiateDirection) * (i % 2 == 0 ? i : -i) * Mathf.Rad2Deg;
+                var shotParam = new BulletShotParam(this);
+                var currentTime = Time.deltaTime;
+                shotParam.Position = new Vector3(centerLocalPosition.x + m_WaveRad * Mathf.Cos(currentTime), centerLocalPosition.y, centerLocalPosition.z + m_WaveRad * Mathf.Sin(currentTime));
+                shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
+                shotParam.BulletIndex = 1;
+                shotParam.OrbitalIndex = 3;
+                var bullet = BulletController.ShotBullet(shotParam) as EchoBullet;
+                if (bullet != null)
+                {
+                    bullet.SetIndex(index);
+                }
+            }
+        }
+    }
 
-				var shotParam = new BulletShotParam();
-				shotParam.Position = new Vector3( Mathf.Cos( angleRad ), 0, Mathf.Sin( angleRad ) ) * m_DiffusionRadius;
-				shotParam.Rotation = m_LatestHitCharacter.transform.eulerAngles + new Vector3( 0, yAngle, 0 );
-				BulletController.ShotBullet( shotParam );
-				//EchoBullet bullet = (EchoBullet)GetPoolBullet(bulletIndex);
-				//bullet.SetShooter(this, ++m_LatestHitCount);
-				//bullet.ShotBullet(this, m_LatestHitCharacter.transform.position + m_DiffusionRadius * new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)), m_LatestHitCharacter.transform.eulerAngles + new Vector3(0, yAngle, 0), bulletPrefab.transform.localScale, bulletIndex, bulletParam, -1);
-			}
+    private bool IndexExistP(int index)
+    {
+        return RootBulletIndex.ContainsKey(index);
+    }
 
-			m_CanShotWave = false;
-		}
-	}
+    private void SetNewIndex(int index)
+    {
+        RootBulletIndex.Add(index, 0);
+    }
 
-	private int Direction4( int i )
-	{
-		if( i < 1 )
-		{
-			return -i;
+    private void UpdateIndex(int index)
+    {
+        RootBulletIndex[index]++;
+    }
 
-		}
-		else if( i < 2 )
-		{
-			return 3 * i - 4;
-		}
-		else
-		{
-			return - i + 4;
-		}
-	}
-
-	public int GetMaxHitCount()
-	{
-		return m_MaxHitCount;
-	}
+    private int GetRootBulletHitCount(int index)
+    {
+        return RootBulletIndex[index];
+    }
 }

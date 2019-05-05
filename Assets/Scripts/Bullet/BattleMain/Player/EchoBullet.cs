@@ -1,39 +1,43 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EchoBullet : BulletController
 {
-	[SerializeField]
-	private EchoController m_Parent;
+    [SerializeField]
+    private bool m_IsRoot;
 
-	[SerializeField]
-	private int m_HitCount;
+    [SerializeField]
+    private int m_Index;
 
     public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
-        if (m_HitCount < m_Parent.GetMaxHitCount())
+        if (m_IsRoot)
         {
-            m_Parent.ReadyShotDiffusionBullet(targetChara, m_HitCount);
-        }
-        else
-        {
-            m_HitCount = 0;
+            m_Index = EchoBulletIndexGenerater.Instance.GenerateBulletIndex();
         }
 
-        base.HitChara(targetChara, attackData, targetData);
+        if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(m_Index, targetChara))
+        {
+            return;
+        } else
+        {
+            EchoBulletIndexGenerater.Instance.RegisterHitChara(m_Index, targetChara);
+        }
+
+        var controller = (EchoController)GetBulletOwner();
+        controller.ShotWaveBullet(m_Index, targetChara.transform.localPosition);
+        DestroyBullet();
+        Debug.LogFormat("echo bullet name : {0}", GetBulletGroupId());
     }
 
-	public void SetShooter( EchoController echoController, int count )
-	{
-		m_Parent = echoController;
-		m_HitCount = count;
-	}
+    public void SetIndex(int n)
+    {
+        m_Index = n;
+    }
 
-	public void InitializeBullet( EchoController echoController )
-	{
-		m_Parent = echoController;
-		m_HitCount = 0;
-	}
-
+    public int GetRootIndex()
+    {
+        return m_Index;
+    }
 }

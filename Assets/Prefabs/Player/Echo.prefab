@@ -385,12 +385,10 @@ MonoBehaviour:
   m_ShotIntervalDecrease: 0.075
   m_MainShotPosition:
   - {fileID: 4994896512845937525}
-  m_DiffusionRadius: 3
-  m_CanShotWave: 0
-  m_LatestHitCharacter: {fileID: 0}
-  m_LatestHitCount: 0
+  m_RadiateDirection: 16
+  m_WaveRad: 0.05
+  m_RotateOffset: 0
   m_MaxHitCount: 3
-  m_MaxHitCountIncrease: 1
 --- !u!1 &4174537380625799561
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,11 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
 
     private Transform m_BulletHolder;
 
+    //// <summary>
+    /// STANDBY状態の弾を保持するリスト。
+    /// </summary>
+    private List<BulletController> m_StandbyBullets;
+
     /// <summary>
     /// UPDATE状態の弾を保持するリスト。
     /// </summary>
@@ -48,6 +53,7 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
     {
         base.OnAwake();
 
+        m_StandbyBullets = new List<BulletController>();
         m_UpdateBullets = new List<BulletController>();
         m_PoolBullets = new List<BulletController>();
         m_GotoPoolBullets = new List<BulletController>();
@@ -56,6 +62,7 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
     public override void OnFinalize()
     {
         base.OnFinalize();
+        m_StandbyBullets.Clear();
         m_UpdateBullets.Clear();
         m_PoolBullets.Clear();
     }
@@ -78,18 +85,25 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
 
     public override void OnUpdate()
     {
-        // Update処理
-        foreach (var bullet in m_UpdateBullets)
+        // Start処理
+        foreach (var bullet in m_StandbyBullets)
         {
             if (bullet == null)
             {
                 continue;
             }
 
-            if (bullet.GetCycle() == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            bullet.OnStart();
+        }
+
+        GotoUpdateFromStandby();
+
+        // Update処理
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
             {
-                bullet.OnStart();
-                bullet.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+                continue;
             }
 
             bullet.OnUpdate();
@@ -113,6 +127,29 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
     }
 
 
+
+    /// <summary>
+    /// UPDATE状態にする。
+    /// </summary>
+    private void GotoUpdateFromStandby()
+    {
+        foreach (var bullet in m_StandbyBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+            else if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                CheckPoolBullet(bullet);
+            }
+
+            bullet.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            m_UpdateBullets.Add(bullet);
+        }
+
+        m_StandbyBullets.Clear();
+    }
 
     /// <summary>
     /// POOL状態にする。
@@ -146,7 +183,7 @@ public class BulletManager : BattleSingletonMonoBehavior<BulletManager>
         }
 
         m_PoolBullets.Remove(bullet);
-        m_UpdateBullets.Add(bullet);
+        m_StandbyBullets.Add(bullet);
         bullet.gameObject.SetActive(true);
         bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
         bullet.OnInitialize();

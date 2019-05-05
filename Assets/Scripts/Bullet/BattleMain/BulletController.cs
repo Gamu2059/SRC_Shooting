@@ -863,7 +863,7 @@ public class BulletController : BattleMainObjectBase
 
 	protected virtual void OnBecameInvisible()
 	{
-		// 画面から見えなくなったら弾を破棄する
+        // 画面から見えなくなったら弾を破棄する
 		DestroyBullet();
 	}
 
