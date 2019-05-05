@@ -1,0 +1,343 @@
+fileFormatVersion: 2
+guid: 3f601ef9d20d3dc459a573f1149f6f97
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Body.000
+    100004: Body.003
+    100006: Chest
+    100008: Eye.L
+    100010: Eye.L_end
+    100012: Eye.R
+    100014: Eye.R_end
+    100016: Foot.L
+    100018: Foot.R
+    100020: Hair000
+    100022: Hair001
+    100024: Hair001 1
+    100026: Hair002
+    100028: Hair002_end
+    100030: Hair100
+    100032: Hair101
+    100034: Hair102
+    100036: Hair102_end
+    100038: Hair200
+    100040: Hair201
+    100042: Hair202
+    100044: Hair202_end
+    100046: Hair300
+    100048: Hair301
+    100050: Hair301_end
+    100052: Hair400
+    100054: Hair401
+    100056: Hair401_end
+    100058: Hand.L
+    100060: Hand.R
+    100062: Head
+    100064: Hips
+    100066: Hips.001
+    100068: Hips.001_end
+    100070: Index Distal.L
+    100072: Index Distal.R
+    100074: Index End.L
+    100076: Index End.L_end
+    100078: Index End.R
+    100080: Index End.R_end
+    100082: Index Intermediate.L
+    100084: Index Intermediate.R
+    100086: Index Proximal.L
+    100088: Index Proximal.R
+    100090: //RootNode
+    100092: Little Distal.L
+    100094: Little Distal.R
+    100096: Little End.L
+    100098: Little End.L_end
+    100100: Little End.R
+    100102: Little End.R_end
+    100104: Little Intermediate.L
+    100106: Little Intermediate.R
+    100108: Little Proximal.L
+    100110: Little Proximal.R
+    100112: Lower Arm.L
+    100114: Lower Arm.R
+    100116: Lower Leg.L
+    100118: Lower Leg.R
+    100120: Middle Distal.L
+    100122: Middle Distal.R
+    100124: Middle End.L
+    100126: Middle End.L_end
+    100128: Middle End.R
+    100130: Middle End.R_end
+    100132: Middle Intermediate.L
+    100134: Middle Intermediate.R
+    100136: Middle Proximal.L
+    100138: Middle Proximal.R
+    100140: Neck
+    100142: Plane.003
+    100144: Ring Distal.L
+    100146: Ring Distal.R
+    100148: Ring End.L
+    100150: Ring End.L_end
+    100152: Ring End.R
+    100154: Ring End.R_end
+    100156: Ring Intermediate.L
+    100158: Ring Intermediate.R
+    100160: Ring Proximal.L
+    100162: Ring Proximal.R
+    100164: Shoulder.L
+    100166: Shoulder.R
+    100168: Spine
+    100170: Spine2
+    100172: Thumb Distal.L
+    100174: Thumb Distal.R
+    100176: Thumb End.L
+    100178: Thumb End.L_end
+    100180: Thumb End.R
+    100182: Thumb End.R_end
+    100184: Thumb Intermediate.L
+    100186: Thumb Intermediate.R
+    100188: Thumb Proximal.L
+    100190: Thumb Proximal.R
+    100192: Toe.L
+    100194: Toe.L_end
+    100196: Toe.R
+    100198: Toe.R_end
+    100200: Upper Arm.L
+    100202: Upper Arm.R
+    100204: Upper Leg.L
+    100206: Upper Leg.R
+    400000: Armature
+    400002: Body.000
+    400004: Body.003
+    400006: Chest
+    400008: Eye.L
+    400010: Eye.L_end
+    400012: Eye.R
+    400014: Eye.R_end
+    400016: Foot.L
+    400018: Foot.R
+    400020: Hair000
+    400022: Hair001
+    400024: Hair001 1
+    400026: Hair002
+    400028: Hair002_end
+    400030: Hair100
+    400032: Hair101
+    400034: Hair102
+    400036: Hair102_end
+    400038: Hair200
+    400040: Hair201
+    400042: Hair202
+    400044: Hair202_end
+    400046: Hair300
+    400048: Hair301
+    400050: Hair301_end
+    400052: Hair400
+    400054: Hair401
+    400056: Hair401_end
+    400058: Hand.L
+    400060: Hand.R
+    400062: Head
+    400064: Hips
+    400066: Hips.001
+    400068: Hips.001_end
+    400070: Index Distal.L
+    400072: Index Distal.R
+    400074: Index End.L
+    400076: Index End.L_end
+    400078: Index End.R
+    400080: Index End.R_end
+    400082: Index Intermediate.L
+    400084: Index Intermediate.R
+    400086: Index Proximal.L
+    400088: Index Proximal.R
+    400090: //RootNode
+    400092: Little Distal.L
+    400094: Little Distal.R
+    400096: Little End.L
+    400098: Little End.L_end
+    400100: Little End.R
+    400102: Little End.R_end
+    400104: Little Intermediate.L
+    400106: Little Intermediate.R
+    400108: Little Proximal.L
+    400110: Little Proximal.R
+    400112: Lower Arm.L
+    400114: Lower Arm.R
+    400116: Lower Leg.L
+    400118: Lower Leg.R
+    400120: Middle Distal.L
+    400122: Middle Distal.R
+    400124: Middle End.L
+    400126: Middle End.L_end
+    400128: Middle End.R
+    400130: Middle End.R_end
+    400132: Middle Intermediate.L
+    400134: Middle Intermediate.R
+    400136: Middle Proximal.L
+    400138: Middle Proximal.R
+    400140: Neck
+    400142: Plane.003
+    400144: Ring Distal.L
+    400146: Ring Distal.R
+    400148: Ring End.L
+    400150: Ring End.L_end
+    400152: Ring End.R
+    400154: Ring End.R_end
+    400156: Ring Intermediate.L
+    400158: Ring Intermediate.R
+    400160: Ring Proximal.L
+    400162: Ring Proximal.R
+    400164: Shoulder.L
+    400166: Shoulder.R
+    400168: Spine
+    400170: Spine2
+    400172: Thumb Distal.L
+    400174: Thumb Distal.R
+    400176: Thumb End.L
+    400178: Thumb End.L_end
+    400180: Thumb End.R
+    400182: Thumb End.R_end
+    400184: Thumb Intermediate.L
+    400186: Thumb Intermediate.R
+    400188: Thumb Proximal.L
+    400190: Thumb Proximal.R
+    400192: Toe.L
+    400194: Toe.L_end
+    400196: Toe.R
+    400198: Toe.R_end
+    400200: Upper Arm.L
+    400202: Upper Arm.R
+    400204: Upper Leg.L
+    400206: Upper Leg.R
+    2100000: Hair
+    2100002: Armar
+    2100004: Inner
+    4300000: Hair001
+    4300002: Plane.003
+    4300004: Body.000
+    4300006: Body.003
+    7400000: AN_HandOpne
+    7400002: AN_Fingerpoint
+    7400004: AN_Fist
+    7400006: AN_Handgun
+    7400008: AN_Rocknroll
+    7400010: AN_Thumbsup
+    7400012: AN_Victory
+    7400014: AN_EyeBlink
+    7400016: Armature|AN_EyeBlink
+    7400018: Armature|AN_Fingerpoint
+    7400020: Armature|AN_Fist
+    7400022: Armature|AN_Handgun
+    7400024: Armature|AN_HandOpne
+    7400026: Armature|AN_Rocknroll
+    7400028: Armature|AN_Thumbsup
+    7400030: Armature|AN_Victory
+    9500000: //RootNode
+    13700000: Body.000
+    13700002: Body.003
+    13700004: Hair001
+    13700006: Plane.003
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Armar
+    second: {fileID: 2100000, guid: d3c4e751d6465df4c97e4abc63291cda, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: 9fe68c744e9cbf44ea2bb0a574743072, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Inner
+    second: {fileID: 2100000, guid: b34cbbea34574f348b422d9e332f041c, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
