@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// テストステージの敵配置やカメラ制御などを管理する。
 /// </summary>
-public class TestStageController : BattleControllableMonoBehavior
+public class TestStageController : StageController
 {
 	public enum E_TEST_STAGE_STATE
 	{
@@ -14,87 +14,21 @@ public class TestStageController : BattleControllableMonoBehavior
 		BOSS
 	}
 
-    [Header("Objects Holder")]
-
     [SerializeField]
-    private GameObject m_ObjectsHolder;
-
-	[Header( "敵出現パラメータ" )]
-
-	[SerializeField]
-	private StageEnemyParam m_StageEnemyParam;
-
-	[SerializeField]
-	private XL_StageEnemyParam m_StageEnemyList;
-
-	[Header( "カメラ移動パラメータ" )]
-
-	[SerializeField]
-	private float m_MoveSpeed;
-
-
-
-	private List<XL_StageEnemyParam.Param> m_StageEnemyAppearData;
-	private List<XL_StageEnemyParam.Param> m_RemovingData;
+    private float m_MoveSpeed;
 
 	[SerializeField]
 	private E_TEST_STAGE_STATE m_StageState;
-
-	[SerializeField]
-	private float m_BuildEnemyTimeCount;
-
-
-	public override void OnInitialize()
-	{
-		base.OnInitialize();
-
-		m_StageEnemyAppearData = new List<XL_StageEnemyParam.Param>();
-		m_RemovingData = new List<XL_StageEnemyParam.Param>();
-	}
-
-	public override void OnFinalize()
-	{
-		base.OnFinalize();
-	}
 
 	public override void OnStart()
 	{
 		base.OnStart();
 
-		m_BuildEnemyTimeCount = 0;
 		m_StageState = E_TEST_STAGE_STATE.FIRST_HALF;
-
-		BuildEnemyAppearData();
 		BattleMainAudioManager.Instance.PlayBGM( BattleMainAudioManagerKeyWord.Stage1 );
 	}
 
-    /// <summary>
-    /// BattleMainが有効になった時に呼び出される。
-    /// </summary>
-    public override void OnEnableObject()
-    {
-        base.OnEnableObject();
-        m_ObjectsHolder.SetActive(true);
-    }
-
-    /// <summary>
-    /// BattleMainが無効になった時に呼び出される。
-    /// </summary>
-    public override void OnDisableObject()
-    {
-        base.OnDisableObject();
-        m_ObjectsHolder.SetActive(false);
-    }
-
-    public override void OnUpdate()
-	{
-		base.OnUpdate();
-
-		ControlViewMoving();
-		AppearEnemy();
-	}
-
-	private void ControlViewMoving()
+	protected override void ControlViewMoving()
 	{
 		var moveRoot = StageManager.Instance.GetMoveObjectHolder();
 
@@ -134,7 +68,7 @@ public class TestStageController : BattleControllableMonoBehavior
 		}
 	}
 
-	private void AppearEnemy()
+	protected override void AppearEnemy()
 	{
 		foreach( var data in m_StageEnemyAppearData )
 		{
@@ -168,26 +102,5 @@ public class TestStageController : BattleControllableMonoBehavior
 		RemoveEnemyAppearData();
 
 		m_BuildEnemyTimeCount += Time.deltaTime;
-	}
-
-	private void BuildEnemyAppearData()
-	{
-		if( m_StageEnemyList == null )
-		{
-			return;
-		}
-
-		m_StageEnemyAppearData.Clear();
-		m_StageEnemyAppearData.AddRange( m_StageEnemyList.sheets[0].list );
-	}
-
-	private void RemoveEnemyAppearData()
-	{
-		foreach( var data in m_RemovingData )
-		{
-			m_StageEnemyAppearData.Remove( data );
-		}
-
-		m_RemovingData.Clear();
 	}
 }

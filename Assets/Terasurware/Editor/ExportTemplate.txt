@@ -22,7 +22,7 @@ public class $ExportTemplate$ : AssetPostprocessor {
 			if (data == null) {
 				data = ScriptableObject.CreateInstance<$ExcelData$> ();
 				AssetDatabase.CreateAsset ((ScriptableObject)data, exportPath);
-				data.hideFlags = HideFlags.NotEditable;
+				data.hideFlags = HideFlags.None;
 			}
 			
 			data.sheets.Clear ();
