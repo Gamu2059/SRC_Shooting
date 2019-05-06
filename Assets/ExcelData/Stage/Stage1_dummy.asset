@@ -24,8 +24,8 @@ MonoBehaviour:
     AppearOffsetY: 0
     AppearRotateY: 0
     IsBoss: 0
-    OtherParameters: V3:RSMEP:(0,0,-1); F:SMS:0.2; V3:RCCP:(0.3,0,0); F:CMA:180; F:CMS:60;
-      F:SBI:0.5; I:SBN:1; F:SBA:0; F:CBI:0.5; I:CBN:1; F:CBA:0; F:VOST:0;
+    OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
+      F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
   - Time: 3
     EnemyViewId: 0
     EnemyMoveId: 0
@@ -37,8 +37,8 @@ MonoBehaviour:
     AppearOffsetY: 0
     AppearRotateY: 0
     IsBoss: 0
-    OtherParameters: V3:RSMEP:(0,0,-1); F:SMS:0.2; V3:RCCP:(0.3,0,0); F:CMA:180; F:CMS:60;
-      F:SBI:0.5; I:SBN:1; F:SBA:0; F:CBI:0.5; I:CBN:1; F:CBA:0; F:VOST:0;
+    OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
+      F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
   - Time: 4
     EnemyViewId: 0
     EnemyMoveId: 0
@@ -50,5 +50,31 @@ MonoBehaviour:
     AppearOffsetY: 0
     AppearRotateY: 0
     IsBoss: 0
-    OtherParameters: V3:RSMEP:(0,0,-1); F:SMS:0.2; V3:RCCP:(0.3,0,0); F:CMA:180; F:CMS:60;
-      F:SBI:0.5; I:SBN:1; F:SBA:0; F:CBI:0.5; I:CBN:1; F:CBA:0; F:VOST:0;
+    OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
+      F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
+  - Time: 5
+    EnemyViewId: 0
+    EnemyMoveId: 0
+    BulletSetId: 0
+    AppearViewportX: 0.4
+    AppearViewportY: 1
+    AppearOffsetX: 0
+    AppearOffsetZ: 0.1
+    AppearOffsetY: 0
+    AppearRotateY: 0
+    IsBoss: 0
+    OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
+      F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
+  - Time: 6
+    EnemyViewId: 0
+    EnemyMoveId: 0
+    BulletSetId: 0
+    AppearViewportX: 0.4
+    AppearViewportY: 1
+    AppearOffsetX: 0
+    AppearOffsetZ: 0.1
+    AppearOffsetY: 0
+    AppearRotateY: 0
+    IsBoss: 0
+    OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
+      F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;

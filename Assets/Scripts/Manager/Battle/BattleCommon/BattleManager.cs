@@ -218,24 +218,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     }
 
     /// <summary>
-    /// ゲームクリアにする。
+    /// ゲームオーバーにする。
     /// </summary>
 	public void GameOver()
     {
+        DetachBattleMainInputAction();
         BattleMainUiManager.Instance.ShowGameOver();
         BattleMainAudioManager.Instance.StopAllBGM();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-       {
-           BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
-       });
+        {
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+        });
         TimerManager.Instance.RegistTimer(timer);
     }
 
     /// <summary>
-    /// ゲームオーバーにする。
+    /// ゲームクリアにする。
     /// </summary>
 	public void GameClear()
     {
+        DetachBattleMainInputAction();
+
         if (m_IsBestScore.Value)
         {
             PlayerPrefs.SetInt("BestScore", m_BestScore.Value);
@@ -244,9 +247,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         BattleMainUiManager.Instance.ShowGameClear();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-       {
-           BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
-       });
+        {
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+        });
         TimerManager.Instance.RegistTimer(timer);
     }
 
@@ -360,14 +363,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             return;
         }
 
-        if (m_BattleStatus == E_BATTLE_STATUS.MAIN)
-        {
-            TransitionBattleCommand();
-        }
-        else if (m_BattleStatus == E_BATTLE_STATUS.COMMAND)
-        {
-            TransitionBattleMain();
-        }
+        DetachBattleMainInputAction();
+        DetachBattleCommandInputAction();
+        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.BATTLE);
     }
 
     /// <summary>
@@ -388,7 +386,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         }
         catch (Exception e)
         {
-
+            Debug.Log(e);
         }
     }
 
@@ -411,7 +409,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         }
         catch (Exception e)
         {
-
+            Debug.Log(e);
         }
     }
 
@@ -430,7 +428,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         }
         catch (Exception e)
         {
-
+            Debug.Log(e);
         }
     }
 
@@ -450,7 +448,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         }
         catch (Exception e)
         {
-
+            Debug.Log(e);
         }
     }
 }

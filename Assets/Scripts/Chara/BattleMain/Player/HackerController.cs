@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class HackerController : PlayerController
 {
-	[SerializeField, Range( 0f, 1f )]
+	[SerializeField]
+	private Transform[] m_MainShotPosition;
+
+    [SerializeField, Range( 0f, 1f )]
 	private float m_ShotInterval;
+
+    /// <summary>
+    /// コマンドイベントの再発動にかかるインターバル
+    /// </summary>
+    [SerializeField]
+    private float m_CommandEventInterval;
 
 	private float shotDelay;
 
-	[SerializeField]
-	private Transform[] m_MainShotPosition;
+    public float GetCommandEventInterval()
+    {
+        return m_CommandEventInterval;
+    }
+
 
 	public override void OnUpdate()
 	{
@@ -18,26 +30,17 @@ public class HackerController : PlayerController
 		shotDelay += Time.deltaTime;
 	}
 
-	public override void ShotBullet()
+	public override void ShotBullet(InputManager.E_INPUT_STATE state)
 	{
-		
 		if (shotDelay >= m_ShotInterval)
 		{
 		    for (int i = 0; i < m_MainShotPosition.Length; i++)
 		    {
                 var shotParam = new BulletShotParam(this);
                 shotParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
-                shotParam.OrbitalIndex = 4;
                 BulletController.ShotBullet(shotParam);
 		    }
 		    shotDelay = 0;
 		}
-		 
-
-	}
-
-	public override void ShotBomb()
-	{
-		base.ShotBomb();
 	}
 }

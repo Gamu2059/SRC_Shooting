@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: PlayerStraightBullet
+  m_Name: CommandBulletParam
   m_EditorClassIdentifier: 
-  LifeTime: 4
+  LifeTime: 10
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
     DeltaScaleRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 20
+    Speed: 60
     SpeedRelative: 0
     Accel: 0
     AccelRelative: 0
@@ -94,53 +94,9 @@ MonoBehaviour:
     DeltaScaleRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 1
+    Speed: 50
     SpeedRelative: 0
-    Accel: 0
-    AccelRelative: 0
-    IsSearch: 0
-    Lerp: 0
-    LerpRelative: 0
-    OptionObjectParams: []
-    OptionValueParams: []
-  - Target: 0
-    Position: {x: 0, y: 0, z: 0}
-    PositionRelative: 0
-    Rotation: {x: 0, y: 0, z: 0}
-    RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
-    ScaleRelative: 0
-    DeltaRotation: {x: 0, y: 0, z: 0}
-    DeltaRotationRelative: 0
-    DeltaScale: {x: 0, y: 0, z: 0}
-    DeltaScaleRelative: 0
-    Damage: 0
-    DamageRelative: 0
-    Speed: 1
-    SpeedRelative: 0
-    Accel: 0
-    AccelRelative: 0
-    IsSearch: 0
-    Lerp: 0
-    LerpRelative: 0
-    OptionObjectParams: []
-    OptionValueParams: []
-  - Target: 0
-    Position: {x: 0, y: 0, z: 0}
-    PositionRelative: 0
-    Rotation: {x: 0, y: 0, z: 0}
-    RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
-    ScaleRelative: 0
-    DeltaRotation: {x: 0, y: 0, z: 0}
-    DeltaRotationRelative: 0
-    DeltaScale: {x: 0, y: 0, z: 0}
-    DeltaScaleRelative: 0
-    Damage: 0
-    DamageRelative: 0
-    Speed: 1
-    SpeedRelative: 0
-    Accel: 0
+    Accel: 100
     AccelRelative: 0
     IsSearch: 0
     Lerp: 0
