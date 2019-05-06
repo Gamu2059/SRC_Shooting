@@ -66,7 +66,7 @@ public class SmasherController : PlayerController
         m_ShotFlag = false;
     }
 
-    public override void ShotBullet()
+    public override void ShotBullet(InputManager.E_INPUT_STATE state)
     {
         if (shotDelay >= m_ShotInterval)
         {
@@ -75,7 +75,6 @@ public class SmasherController : PlayerController
             {
                 var shotParam = new BulletShotParam(this);
                 shotParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
-                shotParam.OrbitalIndex = 0;
                 BulletController.ShotBullet(shotParam);
             }
 

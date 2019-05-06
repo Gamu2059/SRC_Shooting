@@ -233,6 +233,11 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     /// </summary>
     public void OnInputChangeChara(float value)
     {
+        if (value == 0)
+        {
+            return;
+        }
+
         int charaNum = m_Controllers.Count;
         if (value > 0)
         {
@@ -251,7 +256,7 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     {
         if (m_CurrentController == null) return;
 
-        m_CurrentController.ShotBullet();
+        m_CurrentController.ShotBullet(state);
     }
 
     /// <summary>
@@ -261,6 +266,6 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     {
         if (m_CurrentController == null) return;
 
-        m_CurrentController.ShotBomb();
+        m_CurrentController.ShotBomb(state);
     }
 }

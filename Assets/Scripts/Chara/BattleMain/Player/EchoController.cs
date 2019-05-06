@@ -59,7 +59,7 @@ public class EchoController : PlayerController
         UpdateShotLevel(GetLevel());
     }
 
-    public override void ShotBullet()
+    public override void ShotBullet(InputManager.E_INPUT_STATE state)
     {
         if (shotDelay >= m_ShotInterval)
         {
@@ -67,18 +67,11 @@ public class EchoController : PlayerController
             {
                 var shotParam = new BulletShotParam(this);
                 shotParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
-                shotParam.OrbitalIndex = 2;
                 BulletController.ShotBullet(shotParam);
             }
 
             shotDelay = 0;
         }
-    }
-
-    public override void ShotBomb()
-    {
-
-        base.ShotBomb();
     }
 
     private void UpdateShotLevel(int level)
@@ -118,7 +111,7 @@ public class EchoController : PlayerController
                 shotParam.Position = new Vector3(centerLocalPosition.x + m_WaveRad * Mathf.Cos(currentTime), centerLocalPosition.y, centerLocalPosition.z + m_WaveRad * Mathf.Sin(currentTime));
                 shotParam.Rotation = new Vector3(0, yAngle + m_RotateOffset, 0);
                 shotParam.BulletIndex = 1;
-                shotParam.OrbitalIndex = 3;
+                shotParam.OrbitalIndex = 0;
                 var bullet = BulletController.ShotBullet(shotParam) as EchoBullet;
                 if (bullet != null)
                 {

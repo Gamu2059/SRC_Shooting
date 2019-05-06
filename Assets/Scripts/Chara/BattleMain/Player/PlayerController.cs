@@ -136,7 +136,7 @@ public class PlayerController : CharaController
     /// 通常弾を発射する。
     /// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
     /// </summary>
-    public virtual void ShotBullet()
+    public virtual void ShotBullet(InputManager.E_INPUT_STATE state)
 	{
 		// 何もオーバーロードしない場合は適当に弾を飛ばす
 		BulletController.ShotBullet( this );
@@ -145,7 +145,7 @@ public class PlayerController : CharaController
 	/// <summary>
 	/// ボムを使用する。
 	/// </summary>
-	public virtual void ShotBomb()
+	public virtual void ShotBomb(InputManager.E_INPUT_STATE state)
 	{
 
 	}
