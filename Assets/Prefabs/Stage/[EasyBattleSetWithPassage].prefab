@@ -2473,7 +2473,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 2871
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: deba4d7f7d8c1bc4ea11230fe1013bb9, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -3111,7 +3111,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 1024
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: b7ace2c2cb062a44885968bd171dd0d8, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -3529,16 +3529,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 264417890546111410}
     m_Modifications:
-    - target: {fileID: 1646127162359684529, guid: e7f5d4a06da86954eb4e981aefa2c65e,
-        type: 3}
-      propertyPath: m_Name
-      value: ug_passage
-      objectReference: {fileID: 0}
-    - target: {fileID: 1646127162359684529, guid: e7f5d4a06da86954eb4e981aefa2c65e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 691202083894582917, guid: e7f5d4a06da86954eb4e981aefa2c65e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3593,6 +3583,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646127162359684529, guid: e7f5d4a06da86954eb4e981aefa2c65e,
+        type: 3}
+      propertyPath: m_Name
+      value: ug_passage
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646127162359684529, guid: e7f5d4a06da86954eb4e981aefa2c65e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7f5d4a06da86954eb4e981aefa2c65e, type: 3}
@@ -21265,11 +21265,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7029974236223963618}
     m_Modifications:
-    - target: {fileID: 8736695430404477770, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Name
-      value: '[CommandStageHolderGroup]'
-      objectReference: {fileID: 0}
     - target: {fileID: 1815405351773788027, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21324,6 +21319,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8736695430404477770, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Name
+      value: '[CommandStageHolderGroup]'
       objectReference: {fileID: 0}
     - target: {fileID: 7471963990750039700, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
