@@ -108,6 +108,7 @@ public class SmasherController : PlayerController
 
     public void UpdateShotLevel(int level)
     {
+        
         if (level >= 3)
         {
             m_SubShotLv1CanShot = true;
@@ -137,9 +138,6 @@ public class SmasherController : PlayerController
             m_SubShotLv2Position[i].gameObject.SetActive(m_SubShotLv2CanShot);
         }
     }
-
-
-
 
     private void UpdateSubShot()
     {

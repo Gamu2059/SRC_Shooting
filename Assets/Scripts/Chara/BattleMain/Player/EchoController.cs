@@ -7,17 +7,27 @@ public class EchoController : PlayerController
 
     [Header("Echo専用 ショットに関するパラメータ")]
     [SerializeField, Range(0f, 1f)]
-    private float m_ShotInterval;
+    private float[] m_ShotInterval;
 
-    private float initialShotInterval;
+    private float ShotInterval;
 
-    [SerializeField]
-    private float m_ShotIntervalDecrease;
+    //[SerializeField]
+    //private float m_ShotIntervalDecrease;
 
     private float shotDelay;
 
     [SerializeField]
     private Transform[] m_MainShotPosition;
+
+    [SerializeField]
+    private Transform[] m_SubShotLv1Position;
+
+    private bool m_SubShotLv1CanShot;
+
+    [SerializeField]
+    private Transform[] m_SubShotLv2Position;
+
+    private bool m_SubShotLv2CanShot;
 
     [Header("Echo専用 衝撃波に関するパラメータ")]
     [SerializeField]
@@ -30,18 +40,21 @@ public class EchoController : PlayerController
     private float m_RotateOffset;
 
     [SerializeField]
-    private int m_MaxHitCount;
+    private int[] m_MaxHitCount;
+
+    private int maxHitCount;
 
     private Dictionary<int, int> RootBulletIndex;
 
     public int GetMaxHitCount()
     {
-        return m_MaxHitCount;
+        return maxHitCount;
     }
 
     protected override void Awake()
     {
-        initialShotInterval = m_ShotInterval;
+        ShotInterval = m_ShotInterval[GetLevel() - 1];
+        maxHitCount = m_MaxHitCount[GetLevel() - 1];
         RootBulletIndex = new Dictionary<int, int>();
         OnAwake();
     }
@@ -61,7 +74,7 @@ public class EchoController : PlayerController
 
     public override void ShotBullet(InputManager.E_INPUT_STATE state)
     {
-        if (shotDelay >= m_ShotInterval)
+        if (shotDelay >= ShotInterval)
         {
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
@@ -70,23 +83,65 @@ public class EchoController : PlayerController
                 BulletController.ShotBullet(shotParam);
             }
 
+            if (m_SubShotLv1CanShot)
+            {
+                //Debug.Log("Fire!@Lv1");
+                for(int i=0; i < m_SubShotLv1Position.Length; i++)
+                {
+                    var shotParam = new BulletShotParam(this);
+                    shotParam.Position = m_SubShotLv1Position[i].transform.position - transform.parent.position;
+                    shotParam.Rotation = m_SubShotLv1Position[i].transform.eulerAngles;
+                    BulletController.ShotBullet(shotParam);
+                }
+            }
+
+            if (m_SubShotLv2CanShot)
+            {
+                //Debug.Log("Fire!@Lv2");
+                for (int i=0; i < m_SubShotLv2Position.Length; i++)
+                {
+                    var shotParam = new BulletShotParam(this);
+                    shotParam.Position = m_SubShotLv2Position[i].transform.position - transform.parent.position;
+                    shotParam.Rotation = m_SubShotLv2Position[i].transform.eulerAngles;
+                    BulletController.ShotBullet(shotParam);
+                }
+            }
+
             shotDelay = 0;
         }
     }
 
     private void UpdateShotLevel(int level)
     {
+        //Debug.Log(level);
+
+        ShotInterval = m_ShotInterval[level - 1];
+        maxHitCount = m_MaxHitCount[level - 1];
+
         if (level >= 3)
         {
-            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease * 2;
+            m_SubShotLv1CanShot = true;
+            m_SubShotLv2CanShot = true;          
         }
         else if (level >= 2)
         {
-            m_ShotInterval = initialShotInterval - m_ShotIntervalDecrease;
+            m_SubShotLv1CanShot = true;
+            m_SubShotLv2CanShot = false;
         }
         else
         {
-            m_ShotInterval = initialShotInterval;
+            m_SubShotLv1CanShot = false;
+            m_SubShotLv2CanShot = false;
+        }
+
+        for(int i=0; i <m_SubShotLv1Position.Length; i++)
+        {
+            m_SubShotLv1Position[i].gameObject.SetActive(m_SubShotLv1CanShot);
+        }
+
+        for (int i = 0; i < m_SubShotLv2Position.Length; i++)
+        {
+            m_SubShotLv2Position[i].gameObject.SetActive(m_SubShotLv2CanShot);
         }
     }
 
@@ -101,7 +156,7 @@ public class EchoController : PlayerController
             UpdateIndex(index);
         }
 
-        if (GetRootBulletHitCount(index) < m_MaxHitCount)
+        if (GetRootBulletHitCount(index) < maxHitCount)
         {
             for (int i = 0; i < m_RadiateDirection; i++)
             {
