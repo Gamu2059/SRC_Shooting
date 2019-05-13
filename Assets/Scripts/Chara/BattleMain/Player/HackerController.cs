@@ -28,7 +28,24 @@ public class HackerController : PlayerController
 	{
 		base.OnUpdate();
 		shotDelay += Time.deltaTime;
+        UpdateShotLevel(GetLevel());
 	}
+
+    private void UpdateShotLevel(int level)
+    {
+        if(level >= 3)
+        {
+            m_CommandEventInterval = 3.0f;
+        }
+        else if (level >= 2)
+        {
+            m_CommandEventInterval = 4.0f;
+        }
+        else
+        {
+            m_CommandEventInterval = 5.0f;
+        }
+    } 
 
 	public override void ShotBullet(InputManager.E_INPUT_STATE state)
 	{
