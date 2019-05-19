@@ -40,6 +40,11 @@ public struct EventTriggerCondition
     }
 
     /// <summary>
+    /// 判定結果を逆にするかどうか。否定論理演算。
+    /// </summary>
+    public bool IsReverse;
+
+    /// <summary>
     /// 単体条件かどうか
     /// </summary>
     public bool IsSingleCondition;

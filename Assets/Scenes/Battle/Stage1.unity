@@ -112,6 +112,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &165757017 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4495592976806941034, guid: ddb516fef75da4f489af2312f1bc5a92,
+    type: 3}
+  m_PrefabInstance: {fileID: 2748188681156314123}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b996d3bced437f45b6674fb5b2dd0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1280916748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3639630139990858389, guid: ddb516fef75da4f489af2312f1bc5a92,
+    type: 3}
+  m_PrefabInstance: {fileID: 2748188681156314123}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1280916750
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280916748}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!320 &1280916751
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280916748}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 02a8836768e844a408d1cba0bb31995b, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114678152837776208, guid: 02a8836768e844a408d1cba0bb31995b, type: 2}
+    value: {fileID: 1280916750}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1001 &2748188681156314123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -271,6 +327,21 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3639630139990858388, guid: ddb516fef75da4f489af2312f1bc5a92,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639630139990858388, guid: ddb516fef75da4f489af2312f1bc5a92,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639630140125879417, guid: ddb516fef75da4f489af2312f1bc5a92,
+        type: 3}
+      propertyPath: m_BattleMainManagers.Array.data[1]
+      value: 
+      objectReference: {fileID: 165757017}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddb516fef75da4f489af2312f1bc5a92, type: 3}
 --- !u!1 &3639630139609118677 stripped

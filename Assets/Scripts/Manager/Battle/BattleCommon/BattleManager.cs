@@ -155,7 +155,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         for (int i = 0; i < 10; i++)
         {
-            Debug.Log(i);
             bool isEnd = false;
             var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, ()=> isEnd = true);
             BattleMainTimerManager.Instance.RegistTimer(timer);

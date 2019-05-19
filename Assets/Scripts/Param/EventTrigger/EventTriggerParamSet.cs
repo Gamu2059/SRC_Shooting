@@ -6,6 +6,7 @@ using System;
 /// <summary>
 /// イベントマネージャで使用するパラメータのセット。
 /// </summary>
+[System.Serializable, CreateAssetMenu(menuName = "Param/EventTriggerParamSet", fileName = "EventTriggerParamSet")]
 public class EventTriggerParamSet : ScriptableObject
 {
     [Serializable]
