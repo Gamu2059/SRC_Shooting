@@ -10,6 +10,12 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 {
     public const string HOLDER_NAME = "[EnemyCharaHolder]";
 
+    [SerializeField]
+    private StageEnemyParam m_StageEnemyParam;
+
+    [SerializeField]
+    private XL_StageEnemyParam m_XlStageEnemyParam;
+
     /// <summary>
     /// ステージ領域の左下に対するオフセット左下領域
     /// </summary>

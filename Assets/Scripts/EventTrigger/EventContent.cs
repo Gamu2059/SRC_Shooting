@@ -6,7 +6,7 @@ using UnityEngine;
 /// EventTriggerの実行内容。
 /// </summary>
 [System.Serializable]
-public class EventContent
+public struct EventContent
 {
     public enum E_EVENT_TYPE
     {
@@ -45,4 +45,29 @@ public class EventContent
         /// </summary>
         CALL_SCRIPT,
     }
+
+    public enum E_EXECUTE_TIMING
+    {
+        IMMEDIATE,
+        DELAY,
+    }
+
+    [Header("共通パラメータ")]
+
+    [Tooltip("イベントタイプ")]
+    public E_EVENT_TYPE EventType;
+
+    [Tooltip("イベントの実行タイミング")]
+    public E_EXECUTE_TIMING ExecuteTiming;
+
+    [Tooltip("実行タイミングをDELAYにしている場合、何秒後に実行するか")]
+    public float DelayExecuteTime;
+
+    [Tooltip("実行イベントに渡す引数")]
+    public ArgumentVariable[] m_Arguments;
+
+    [Header("APPER_ENEMYのパラメータ")]
+
+    [Tooltip("出現させる敵のリストでのインデックス")]
+    public int ApperEnemyIndex;
 }
