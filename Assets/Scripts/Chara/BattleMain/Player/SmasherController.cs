@@ -177,4 +177,9 @@ public class SmasherController : PlayerController
             e.enabled = isEnable;
         }
     }
+
+    public override void ShotBomb(InputManager.E_INPUT_STATE state)
+    {
+        Debug.Log(string.Format("{0}Bomb!!!@{1}", this.name, this.transform.position));
+    }
 }
