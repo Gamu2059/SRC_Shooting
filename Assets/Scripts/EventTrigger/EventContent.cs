@@ -70,4 +70,6 @@ public struct EventContent
 
     [Tooltip("出現させる敵のリストでのインデックス")]
     public int ApperEnemyIndex;
+
+    //[Header("CONTROL_CAMERAのパラメータ")]
 }

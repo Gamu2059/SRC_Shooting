@@ -397,6 +397,6 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
 
     private void ExecuteEvent(EventContent content)
     {
-        Debug.Log(111);
+
     }
 }
