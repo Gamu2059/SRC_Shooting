@@ -20,8 +20,6 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     [SerializeField]
     private List<BattleAnimationParam> m_Animations;
 
-    private float m_PreTime;
-
     private Vector3 m_InitPosition;
     private Vector3 m_InitRotation;
     private Vector3 m_InitLocalPosition;
@@ -65,8 +63,6 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
         m_InitLocalPosition = m_AnimationTarget.localPosition;
         m_InitLocalRotation = m_AnimationTarget.localEulerAngles;
         m_InitLocalScale = m_AnimationTarget.localScale;
-
-        m_PreTime = 0;
     }
 
     /// <summary>
@@ -75,7 +71,7 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        if (m_AnimationTarget == null || m_Animations == null || playable.GetPlayState() != PlayState.Playing)
+        if (m_AnimationTarget == null || m_Animations == null || playable.GetTime() <= 0)
         {
             return;
         }
@@ -126,13 +122,11 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
 
             if (anim.RelativeType == E_RELATIVE.RELATIVE)
             {
-                value -= anim.Animation.Evaluate(m_PreTime);
+                value += GetInitTargetValue(ref anim);
             }
 
             Animation(ref anim, value, false);
         }
-
-        m_PreTime = currentTime;
     }
 
     private void Animation(ref BattleAnimationParam anim, float value, bool isForceSet)
@@ -213,18 +207,18 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
         {
             case 0:
                 target.x = value;
-                if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
-                    target.x += origin.x;
+                //if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
+                //    target.x += origin.x;
                 break;
             case 1:
                 target.y = value;
-                if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
-                    target.y += origin.y;
+                //if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
+                //    target.y += origin.y;
                 break;
             case 2:
                 target.z = value;
-                if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
-                    target.z += origin.z;
+                //if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
+                //    target.z += origin.z;
                 break;
         }
 
