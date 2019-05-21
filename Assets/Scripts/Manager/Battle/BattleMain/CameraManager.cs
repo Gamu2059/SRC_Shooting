@@ -51,11 +51,6 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
 		//lookPos += m_TargetObject.right * m_TargetOffsetPos.x + m_TargetObject.up * m_TargetOffsetPos.y + m_TargetObject.forward * m_TargetOffsetPos.z;
 		//cameraT.LookAt( lookPos );
 
-        if (Input.GetKeyDown(KeyCode.G) && m_CameraParent != null)
-        {
-            var dir = m_Camera.GetComponent<PlayableDirector>();
-            dir.Play(m_Asset);
-        }
 	}
 
 	/// <summary>

@@ -35,10 +35,10 @@ public class DecelerationBullet : BulletController
 			return;
 		}
 
-		SetRotation( GetNowDeltaRotation() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
-		SetScale( GetNowDeltaScale() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetRotation( GetNowDeltaRotation() * Time.deltaTime, E_RELATIVE.RELATIVE );
+		SetScale( GetNowDeltaScale() * Time.deltaTime, E_RELATIVE.RELATIVE );
 
-		SetNowSpeed( GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetNowSpeed( GetNowAccel() * Time.deltaTime, E_RELATIVE.RELATIVE );
 
 		if( GetNowSpeed() < m_DecelerationThreshold )
 		{
@@ -52,9 +52,9 @@ public class DecelerationBullet : BulletController
 		}
 
 		var speed = GetNowSpeed() * Time.deltaTime;
-		SetPosition( transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetPosition( transform.forward * speed, E_RELATIVE.RELATIVE );
 
-		SetNowLifeTime( Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetNowLifeTime( Time.deltaTime, E_RELATIVE.RELATIVE );
 
 		if( GetNowLifeTime() > GetBulletParam().LifeTime )
 		{

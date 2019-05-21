@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public enum E_ATTACK_PARAM_RELATIVE
+public enum E_RELATIVE
 {
 	// 相対値として評価
 	RELATIVE,

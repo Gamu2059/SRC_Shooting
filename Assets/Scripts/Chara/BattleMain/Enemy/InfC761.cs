@@ -643,7 +643,7 @@ public class InfC761 : EnemyController
 		{
 			shotParam.OrbitalIndex = i;
 			var bullet = BulletController.ShotBullet( shotParam );
-			bullet.SetRotation( new Vector3( 0, deltaRotation, 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			bullet.SetRotation( new Vector3( 0, deltaRotation, 0 ), E_RELATIVE.RELATIVE );
 		}
 	}
 
@@ -674,8 +674,8 @@ public class InfC761 : EnemyController
 				var dir = new Vector3( Mathf.Sin( angle ), 0, Mathf.Cos( angle ) );
 				var bullet = BulletController.ShotBullet( shotParam );
 
-				bullet.SetRotation( new Vector3( 0, angle * Mathf.Rad2Deg, 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
-				bullet.SetPosition( dir * 5f, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+				bullet.SetRotation( new Vector3( 0, angle * Mathf.Rad2Deg, 0 ), E_RELATIVE.RELATIVE );
+				bullet.SetPosition( dir * 5f, E_RELATIVE.RELATIVE );
 			}
 		}
 	}
@@ -712,7 +712,7 @@ public class InfC761 : EnemyController
 			for( int j = 0; j < num; j++ )
 			{
 				var bullet = BulletController.ShotBullet( shotParam );
-				bullet.SetRotation( new Vector3( 0, spreadAngles[j], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+				bullet.SetRotation( new Vector3( 0, spreadAngles[j], 0 ), E_RELATIVE.RELATIVE );
 			}
 		}
 	}

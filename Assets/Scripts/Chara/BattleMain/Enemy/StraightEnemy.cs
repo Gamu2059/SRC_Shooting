@@ -100,7 +100,7 @@ public class StraightEnemy : EnemyController
 		for( int i = 0; i < num; i++ )
 		{
 			var bullet = BulletController.ShotBullet( shotParam );
-			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_RELATIVE.RELATIVE );
 		}
 	}
 
