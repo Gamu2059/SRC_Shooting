@@ -12,13 +12,20 @@ public abstract class TimerManagerBase<T> : SingletonMonoBehavior<T> where T : T
 
 	public override void OnInitialize()
 	{
+        base.OnInitialize();
 		m_TimerController = new TimerController();
 	}
 
-	/// <summary>
-	/// 1秒間に FixedTimeStep * TimeScale 回呼び出される。
-	/// </summary>
-	public override void OnFixedUpdate()
+    public override void OnFinalize()
+    {
+        m_TimerController = null;
+        base.OnFinalize();
+    }
+
+    /// <summary>
+    /// 1秒間に FixedTimeStep * TimeScale 回呼び出される。
+    /// </summary>
+    public override void OnFixedUpdate()
 	{
 		m_TimerController.OnFixedUpdate();
 	}

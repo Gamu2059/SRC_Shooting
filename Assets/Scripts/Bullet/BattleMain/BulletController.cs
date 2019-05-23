@@ -250,7 +250,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	protected void SetNowLifeTime( float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	protected void SetNowLifeTime( float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowLifeTime = GetRelativeValue( relative, GetNowLifeTime(), value );
 	}
@@ -268,7 +268,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetPosition( Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetPosition( Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		transform.localPosition = GetRelativeValue( relative, GetPosition(), value );
 	}
@@ -286,7 +286,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetRotation( Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetRotation( Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		transform.localEulerAngles = GetRelativeRotateValue( relative, GetRotation(), value );
 	}
@@ -304,7 +304,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetScale( Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetScale( Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		transform.localScale = GetRelativeValue( relative, GetScale(), value );
 	}
@@ -322,7 +322,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetNowDeltaRotation( Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetNowDeltaRotation( Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowDeltaRotation = GetRelativeValue( relative, GetNowDeltaRotation(), value );
 	}
@@ -340,7 +340,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetNowDeltaScale( Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetNowDeltaScale( Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowDeltaScale = GetRelativeValue( relative, GetNowDeltaScale(), value );
 	}
@@ -358,7 +358,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetNowDamage( float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetNowDamage( float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowDamage = GetRelativeValue( relative, GetNowDamage(), value );
 	}
@@ -376,7 +376,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetNowSpeed( float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetNowSpeed( float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowSpeed = GetRelativeValue( relative, GetNowSpeed(), value );
 	}
@@ -394,7 +394,7 @@ public class BulletController : BattleMainObjectBase
 	/// </summary>
 	/// <param name="value">設定する値</param>
 	/// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-	public void SetNowAccel( float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetNowAccel( float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowAccel = GetRelativeValue( relative, GetNowAccel(), value );
 	}
@@ -423,7 +423,7 @@ public class BulletController : BattleMainObjectBase
 	/// <summary>
 	/// この弾が1秒間にどれくらいターゲットに設定されているキャラを追従するかを設定する。
 	/// </summary>
-	public void SetNowLerp( float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE )
+	public void SetNowLerp( float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE )
 	{
 		m_NowLerp = GetRelativeValue( relative, GetNowLerp(), value );
 	}
@@ -726,9 +726,9 @@ public class BulletController : BattleMainObjectBase
 		}
 	}
 
-	protected Vector3 GetRelativeValue( E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
+	protected Vector3 GetRelativeValue( E_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
 	{
-		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
+		if( relative == E_RELATIVE.RELATIVE )
 		{
 			return baseValue + relativeValue;
 		}
@@ -738,9 +738,9 @@ public class BulletController : BattleMainObjectBase
 		}
 	}
 
-	protected Vector3 GetRelativeRotateValue( E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
+	protected Vector3 GetRelativeRotateValue( E_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue )
 	{
-		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
+		if( relative == E_RELATIVE.RELATIVE )
 		{
 			var value = baseValue + relativeValue;
 
@@ -761,9 +761,9 @@ public class BulletController : BattleMainObjectBase
 		}
 	}
 
-	protected float GetRelativeValue( E_ATTACK_PARAM_RELATIVE relative, float baseValue, float relativeValue )
+	protected float GetRelativeValue( E_RELATIVE relative, float baseValue, float relativeValue )
 	{
-		if( relative == E_ATTACK_PARAM_RELATIVE.RELATIVE )
+		if( relative == E_RELATIVE.RELATIVE )
 		{
 			return baseValue + relativeValue;
 		}
@@ -839,10 +839,10 @@ public class BulletController : BattleMainObjectBase
 			return;
 		}
 
-		SetRotation( GetNowDeltaRotation() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
-		SetScale( GetNowDeltaScale() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetRotation( GetNowDeltaRotation() * Time.deltaTime, E_RELATIVE.RELATIVE );
+		SetScale( GetNowDeltaScale() * Time.deltaTime, E_RELATIVE.RELATIVE );
 
-		SetNowSpeed( GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetNowSpeed( GetNowAccel() * Time.deltaTime, E_RELATIVE.RELATIVE );
 
 		if( m_Target != null )
 		{
@@ -851,9 +851,9 @@ public class BulletController : BattleMainObjectBase
 		}
 
 		var speed = GetNowSpeed() * Time.deltaTime;
-		SetPosition( transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetPosition( transform.forward * speed, E_RELATIVE.RELATIVE );
 
-		SetNowLifeTime( Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetNowLifeTime( Time.deltaTime, E_RELATIVE.RELATIVE );
 
 		if( GetNowLifeTime() > GetBulletParam().LifeTime )
 		{

@@ -147,6 +147,22 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             TransitionForceBattleCommand();
         }
+
+        CoroutineManager.Instance.RegistCoroutine(TestC());
+    }
+
+    private IEnumerator TestC()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            bool isEnd = false;
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, ()=> isEnd = true);
+            BattleMainTimerManager.Instance.RegistTimer(timer);
+            while(!isEnd)
+            {
+                yield return null;
+            }
+        }
     }
 
     /// <summary>

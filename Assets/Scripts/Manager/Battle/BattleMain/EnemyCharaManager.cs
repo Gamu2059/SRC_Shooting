@@ -10,6 +10,12 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 {
     public const string HOLDER_NAME = "[EnemyCharaHolder]";
 
+    [SerializeField, Tooltip("このステージで登場する敵データ")]
+    private StageEnemyParam m_StageEnemyParam;
+
+    [SerializeField, Tooltip("このステージで使用する敵出現データ")]
+    private XL_StageEnemyParam m_XlStageEnemyParam;
+
     /// <summary>
     /// ステージ領域の左下に対するオフセット左下領域
     /// </summary>
@@ -221,6 +227,10 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 		return RegistEnemy( controller );
 	}
 
+    /// <summary>
+    /// 敵キャラのプレハブから敵キャラを新規作成する。
+    /// パラメータを設定できる。
+    /// </summary>
 	public EnemyController CreateEnemy( EnemyController enemyPrefab, string paramString )
 	{
 		var enemy = CreateEnemy( enemyPrefab );
@@ -234,6 +244,39 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
 		return enemy;
 	}
+
+    /// <summary>
+    /// 敵リストから敵を新規作成する。
+    /// </summary>
+    public void CreateEnemyFromEnemyParam(int enemyListIndex)
+    {
+        int xlParamSize = m_XlStageEnemyParam.param.Count;
+
+        if (enemyListIndex < 0 || enemyListIndex >= xlParamSize)
+        {
+            return;
+        }
+
+        var paramData = m_XlStageEnemyParam.param[enemyListIndex];
+        var enemy = CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[paramData.EnemyMoveId], paramData.OtherParameters);
+
+        if (enemy == null)
+        {
+            return;
+        }
+
+        enemy.SetBulletSetParam(m_StageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
+
+        var pos = GetPositionFromFieldViewPortPosition(paramData.AppearViewportX, paramData.AppearViewportY);
+        pos.x += paramData.AppearOffsetX;
+        pos.y += paramData.AppearOffsetY;
+        pos.z += paramData.AppearOffsetZ;
+        enemy.transform.position = pos;
+
+        var rot = enemy.transform.eulerAngles;
+        rot.y = paramData.AppearRotateY;
+        enemy.transform.eulerAngles = rot;
+    }
 
 	/// <summary>
 	/// 敵キャラを破棄する。
