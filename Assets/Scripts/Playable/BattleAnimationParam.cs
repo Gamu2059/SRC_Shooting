@@ -8,42 +8,42 @@ using UnityEngine;
 [System.Serializable]
 public struct BattleAnimationParam
 {
-    public const int WORLD_ANIMATION_INDEX = (int)E_ANIMATION_TYPE.ROTATION_Z;
-
-    public enum E_ANIMATION_TYPE
+    [System.Serializable]
+    public struct FloatParam
     {
-        POSITION_X,
-        POSITION_Y,
-        POSITION_Z,
-        ROTATION_X,
-        ROTATION_Y,
-        ROTATION_Z,
-        L_POSITION_X,
-        L_POSITION_Y,
-        L_POSITION_Z,
-        L_ROTATION_X,
-        L_ROTATION_Y,
-        L_ROTATION_Z,
-        L_SCALE_X,
-        L_SCALE_Y,
-        L_SCALE_Z,
+        public bool Use;
+
+        public bool IsNormalized;
+
+        public E_RELATIVE RelativeType;
+
+        public AnimationCurve AnimationValue;
+
+        public float EndValue;
     }
 
-    [Tooltip("アニメーションのタイプ")]
-    public E_ANIMATION_TYPE AnimationType;
+    [System.Serializable]
+    public struct BattleAnimationVectorParam
+    {
+        [Tooltip("ワールド空間かローカル空間か ただし、Scaleは常にローカル")]
+        public Space SpaceType;
 
-    [Tooltip("アニメーションが絶対値か相対値か")]
-    public E_RELATIVE RelativeType;
+        public FloatParam XParam;
 
-    [Tooltip("アニメーション")]
-    public AnimationCurve Animation;
+        public FloatParam YParam;
 
-    [Tooltip("終了値を適用するかどうか")]
-    public bool UseEndValue;
+        public FloatParam ZParam;
+    }
 
-    [Tooltip("終了値")]
-    public float EndValue;
+    public bool UsePosition;
 
-    [Tooltip("")]
-    public float EndValueLerp;
+    public BattleAnimationVectorParam Position;
+
+    public bool UseRotation;
+
+    public BattleAnimationVectorParam Rotation;
+
+    public bool UseScale;
+
+    public BattleAnimationVectorParam Scale;
 }

@@ -15,10 +15,10 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     private Transform m_AnimationTarget;
 
     /// <summary>
-    /// アニメーション配列
+    /// アニメーションデータ
     /// </summary>
     [SerializeField]
-    private List<BattleAnimationParam> m_Animations;
+    private BattleAnimationParam m_AnimParam;
 
     private Vector3 m_InitPosition;
     private Vector3 m_InitRotation;
@@ -26,10 +26,29 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     private Vector3 m_InitLocalRotation;
     private Vector3 m_InitLocalScale;
 
-    public void SetArguments(Transform target, List<BattleAnimationParam> animations)
+    private BattleAnimationParam.BattleAnimationVectorParam m_AnimPosition;
+    private BattleAnimationParam.BattleAnimationVectorParam m_AnimRotation;
+    private BattleAnimationParam.BattleAnimationVectorParam m_AnimScale;
+
+    public void SetArguments(Transform target, BattleAnimationParam animParam)
     {
         m_AnimationTarget = target;
-        m_Animations = animations;
+        m_AnimParam = animParam;
+
+        if (m_AnimParam.UsePosition)
+        {
+            m_AnimPosition = m_AnimParam.Position;
+        }
+
+        if (m_AnimParam.UseRotation)
+        {
+            m_AnimRotation = m_AnimParam.Rotation;
+        }
+
+        if (m_AnimParam.UseScale)
+        {
+            m_AnimScale = m_AnimParam.Scale;
+        }
     }
 
     /// <summary>
@@ -53,7 +72,7 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-        if (m_AnimationTarget == null || m_Animations == null)
+        if (m_AnimationTarget == null)
         {
             return;
         }
@@ -71,28 +90,12 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        if (m_AnimationTarget == null || m_Animations == null || playable.GetTime() <= 0)
+        if (m_AnimationTarget == null || playable.GetTime() <= 0)
         {
             return;
         }
 
-        for (int i = 0; i < m_Animations.Count; i++)
-        {
-            var anim = m_Animations[i];
-            if (!anim.UseEndValue)
-            {
-                continue;
-            }
-
-            var value = anim.EndValue;
-
-            if (anim.RelativeType == E_RELATIVE.RELATIVE)
-            {
-                value += GetInitTargetValue(ref anim);
-            }
-
-            Animation(ref anim, value, true);
-        }
+        ApplyEndValue();
     }
 
     /// <summary>
@@ -108,222 +111,175 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
-        if (m_AnimationTarget == null || m_Animations == null)
+        if (m_AnimationTarget == null)
         {
             return;
         }
 
         var currentTime = (float)playable.GetTime();
+        var duration = (float)playable.GetDuration();
+        ApplyAnimation(currentTime, duration);
+    }
 
-        for (int i = 0; i < m_Animations.Count; i++)
+    private void ApplyAnimation(float currentTime, float duration)
+    {
+        if (m_AnimParam.UsePosition)
         {
-            var anim = m_Animations[i];
-            float value = anim.Animation.Evaluate(currentTime);
-
-            if (anim.RelativeType == E_RELATIVE.RELATIVE)
+            if (m_AnimPosition.SpaceType == Space.World)
             {
-                value += GetInitTargetValue(ref anim);
+                m_AnimationTarget.position = GetAnimVector(ref m_AnimPosition, currentTime, duration, ref m_InitPosition);
             }
+            else
+            {
+                m_AnimationTarget.localPosition = GetAnimVector(ref m_AnimPosition, currentTime, duration, ref m_InitLocalPosition);
+            }
+        }
 
-            Animation(ref anim, value, false);
+        if (m_AnimParam.UseRotation)
+        {
+            if (m_AnimRotation.SpaceType == Space.World)
+            {
+                m_AnimationTarget.eulerAngles = GetAnimVector(ref m_AnimRotation, currentTime, duration, ref m_InitRotation);
+            }
+            else
+            {
+                m_AnimationTarget.localEulerAngles = GetAnimVector(ref m_AnimRotation, currentTime, duration, ref m_InitLocalRotation);
+            }
+        }
+
+        if (m_AnimParam.UseScale)
+        {
+            m_AnimationTarget.localScale = GetAnimVector(ref m_AnimScale, currentTime, duration, ref m_InitLocalScale);
         }
     }
 
-    private void Animation(ref BattleAnimationParam anim, float value, bool isForceSet)
+    private void ApplyEndValue()
     {
-        var animType = anim.AnimationType;
-
-        if (IsPositionAnimation(animType) || IsLocalPositionAnimation(animType))
+        if (m_AnimParam.UsePosition)
         {
-            AnimationPosition(ref anim, value, isForceSet);
-        }
-        else if (IsRotationAnimation(animType) || IsLocalRotationAnimation(animType))
-        {
-            AnimationRotation(ref anim, value, isForceSet);
-        }
-        else
-        {
-            AnimationScale(ref anim, value, isForceSet);
-        }
-    }
-
-    private void AnimationPosition(ref BattleAnimationParam anim, float value, bool isForceSet)
-    {
-        Vector3 origin;
-
-        if (IsPositionAnimation(anim.AnimationType))
-            origin = m_AnimationTarget.position;
-        else if (IsLocalPositionAnimation(anim.AnimationType))
-            origin = m_AnimationTarget.localPosition;
-        else
-            return;
-
-        var target = GetAnimVector(ref anim, value, origin, isForceSet);
-
-        if (IsPositionAnimation(anim.AnimationType))
-            m_AnimationTarget.position = target;
-        else if (IsLocalPositionAnimation(anim.AnimationType))
-            m_AnimationTarget.localPosition = target;
-    }
-
-    private void AnimationRotation(ref BattleAnimationParam anim, float value, bool isForceSet)
-    {
-        Vector3 origin;
-
-        if (IsRotationAnimation(anim.AnimationType))
-            origin = m_AnimationTarget.eulerAngles;
-        else if (IsLocalRotationAnimation(anim.AnimationType))
-            origin = m_AnimationTarget.localEulerAngles;
-        else
-            return;
-
-        var target = GetAnimVector(ref anim, value, origin, isForceSet);
-
-        if (IsRotationAnimation(anim.AnimationType))
-            m_AnimationTarget.eulerAngles = target;
-        else if (IsLocalRotationAnimation(anim.AnimationType))
-            m_AnimationTarget.localEulerAngles = target;
-    }
-
-    private void AnimationScale(ref BattleAnimationParam anim, float value, bool isForceSet)
-    {
-        Vector3 origin;
-
-        if (IsLocalScaleAnimation(anim.AnimationType))
-            origin = m_AnimationTarget.localScale;
-        else
-            return;
-
-        var target = GetAnimVector(ref anim, value, origin, isForceSet);
-
-        m_AnimationTarget.localScale = target;
-    }
-
-    private Vector3 GetAnimVector(ref BattleAnimationParam anim, float value, Vector3 origin, bool isForceSet)
-    {
-        var target = origin;
-
-        switch ((int)anim.AnimationType % 3)
-        {
-            case 0:
-                target.x = value;
-                //if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
-                //    target.x += origin.x;
-                break;
-            case 1:
-                target.y = value;
-                //if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
-                //    target.y += origin.y;
-                break;
-            case 2:
-                target.z = value;
-                //if (anim.RelativeType == E_RELATIVE.RELATIVE && !isForceSet)
-                //    target.z += origin.z;
-                break;
+            if (m_AnimPosition.SpaceType == Space.World)
+            {
+                m_AnimationTarget.position = GetEndVector(ref m_AnimPosition, ref m_InitPosition);
+            }
+            else
+            {
+                m_AnimationTarget.localPosition = GetEndVector(ref m_AnimPosition, ref m_InitLocalPosition);
+            }
         }
 
-        return target;
-    }
-
-    private bool IsPositionAnimation(BattleAnimationParam.E_ANIMATION_TYPE type)
-    {
-        switch (type)
+        if (m_AnimParam.UseRotation)
         {
-            case BattleAnimationParam.E_ANIMATION_TYPE.POSITION_X:
-            case BattleAnimationParam.E_ANIMATION_TYPE.POSITION_Y:
-            case BattleAnimationParam.E_ANIMATION_TYPE.POSITION_Z:
-                return true;
-            default:
-                return false;
+            if (m_AnimRotation.SpaceType == Space.World)
+            {
+                m_AnimationTarget.eulerAngles = GetEndVector(ref m_AnimRotation, ref m_InitRotation);
+            }
+            else
+            {
+                m_AnimationTarget.localEulerAngles = GetEndVector(ref m_AnimRotation, ref m_InitLocalRotation);
+            }
+        }
+
+        if (m_AnimParam.UseScale)
+        {
+            m_AnimationTarget.localScale = GetEndVector(ref m_AnimScale, ref m_InitLocalScale);
         }
     }
 
-    private bool IsRotationAnimation(BattleAnimationParam.E_ANIMATION_TYPE type)
+    private Vector3 GetAnimVector(ref BattleAnimationParam.BattleAnimationVectorParam param, float currentTime, float duration, ref Vector3 initVector)
     {
-        switch (type)
+        var vector = initVector;
+
+        if (param.XParam.Use)
         {
-            case BattleAnimationParam.E_ANIMATION_TYPE.ROTATION_X:
-            case BattleAnimationParam.E_ANIMATION_TYPE.ROTATION_Y:
-            case BattleAnimationParam.E_ANIMATION_TYPE.ROTATION_Z:
-                return true;
-            default:
-                return false;
+            float time = param.XParam.IsNormalized ? (currentTime / duration) : currentTime;
+            float value = param.XParam.AnimationValue.Evaluate(time);
+
+            if (param.XParam.RelativeType == E_RELATIVE.RELATIVE)
+            {
+                vector.x += value;
+            } else
+            {
+                vector.x = value;
+            }
         }
+
+        if (param.YParam.Use)
+        {
+            float time = param.YParam.IsNormalized ? (currentTime / duration) : currentTime;
+            float value = param.YParam.AnimationValue.Evaluate(time);
+
+            if (param.YParam.RelativeType == E_RELATIVE.RELATIVE)
+            {
+                vector.y += value;
+            } else
+            {
+                vector.y = value;
+            }
+        }
+
+        if (param.ZParam.Use)
+        {
+            float time = param.ZParam.IsNormalized ? (currentTime / duration) : currentTime;
+            float value = param.ZParam.AnimationValue.Evaluate(time);
+
+            if (param.ZParam.RelativeType == E_RELATIVE.RELATIVE)
+            {
+                vector.z += value;
+            } else
+            {
+                vector.z = value;
+            }
+        }
+
+        return vector;
     }
 
-    private bool IsLocalPositionAnimation(BattleAnimationParam.E_ANIMATION_TYPE type)
+    private Vector3 GetEndVector(ref BattleAnimationParam.BattleAnimationVectorParam param, ref Vector3 initVector)
     {
-        switch (type)
-        {
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_POSITION_X:
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_POSITION_Y:
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_POSITION_Z:
-                return true;
-            default:
-                return false;
-        }
-    }
+        var vector = initVector;
 
-    private bool IsLocalRotationAnimation(BattleAnimationParam.E_ANIMATION_TYPE type)
-    {
-        switch (type)
+        if (param.XParam.Use)
         {
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_ROTATION_X:
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_ROTATION_Y:
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_ROTATION_Z:
-                return true;
-            default:
-                return false;
-        }
-    }
+            float value = param.XParam.EndValue;
 
-    private bool IsLocalScaleAnimation(BattleAnimationParam.E_ANIMATION_TYPE type)
-    {
-        switch (type)
-        {
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_SCALE_X:
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_SCALE_Y:
-            case BattleAnimationParam.E_ANIMATION_TYPE.L_SCALE_Z:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private float GetInitTargetValue(ref BattleAnimationParam anim)
-    {
-        var type = anim.AnimationType;
-        Vector3 origin = Vector3.zero;
-
-        switch (((int)type / 3) * 3)
-        {
-            case (int)BattleAnimationParam.E_ANIMATION_TYPE.POSITION_X:
-                origin = m_InitPosition;
-                break;
-            case (int)BattleAnimationParam.E_ANIMATION_TYPE.ROTATION_X:
-                origin = m_InitRotation;
-                break;
-            case (int)BattleAnimationParam.E_ANIMATION_TYPE.L_POSITION_X:
-                origin = m_InitLocalPosition;
-                break;
-            case (int)BattleAnimationParam.E_ANIMATION_TYPE.L_ROTATION_X:
-                origin = m_InitLocalRotation;
-                break;
-            case (int)BattleAnimationParam.E_ANIMATION_TYPE.L_SCALE_X:
-                origin = m_InitLocalScale;
-                break;
+            if (param.XParam.RelativeType == E_RELATIVE.RELATIVE)
+            {
+                vector.x += value;
+            }
+            else
+            {
+                vector.x = value;
+            }
         }
 
-        switch ((int)type % 3)
+        if (param.YParam.Use)
         {
-            case 0:
-                return origin.x;
-            case 1:
-                return origin.y;
-            case 2:
-                return origin.z;
+            float value = param.YParam.EndValue;
+
+            if (param.YParam.RelativeType == E_RELATIVE.RELATIVE)
+            {
+                vector.y += value;
+            }
+            else
+            {
+                vector.y = value;
+            }
         }
 
-        return 0;
+        if (param.ZParam.Use)
+        {
+            float value = param.ZParam.EndValue;
+
+            if (param.ZParam.RelativeType == E_RELATIVE.RELATIVE)
+            {
+                vector.z += value;
+            }
+            else
+            {
+                vector.z = value;
+            }
+        }
+
+        return vector;
     }
 }

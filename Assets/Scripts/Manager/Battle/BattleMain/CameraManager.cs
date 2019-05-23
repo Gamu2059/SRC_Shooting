@@ -25,7 +25,7 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
 	private Vector3 m_TargetOffsetPos;
 
     [SerializeField]
-    private TimelineAsset m_Asset;
+    private TimelineAsset m_CameraTimeline;
 
 
 	public Camera GetCamera()
@@ -37,20 +37,26 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
 	{
 		base.OnLateUpdate();
 
-		//if( m_Camera == null || m_TargetObject == null )
-		//{
-		//	return;
-		//}
 
-		//var cameraT = m_Camera.transform;
-		//cameraT.eulerAngles = m_TargetObject.eulerAngles;
-		//cameraT.position = m_TargetObject.position;
-		//cameraT.localPosition += m_TargetObject.right * m_CameraOffsetPos.x + m_TargetObject.up * m_CameraOffsetPos.y + m_TargetObject.forward * m_CameraOffsetPos.z;
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            //foreach(var root in m_CameraTimeline.GetRootTracks())
+            //{
+            //    Debug.Log("Root name " + root.name);
+            //    foreach(var clip in root.GetClips())
+            //    {
+            //        Debug.Log("Clip name " + clip.displayName +", asset "+ clip.asset.name);
+            //        if (clip.asset is BattleAnimationPlayableAsset battleAnimAsset)
+            //        {
+            //            battleAnimAsset.SetTarget(m_Camera.transform);
+            //        }
+            //    }
+            //}
 
-		//var lookPos = m_TargetObject.position;
-		//lookPos += m_TargetObject.right * m_TargetOffsetPos.x + m_TargetObject.up * m_TargetOffsetPos.y + m_TargetObject.forward * m_TargetOffsetPos.z;
-		//cameraT.LookAt( lookPos );
-
+            var dir = m_Camera.GetComponent<PlayableDirector>();
+            dir.playableAsset = m_CameraTimeline;
+            dir.Play();
+        }
 	}
 
 	/// <summary>

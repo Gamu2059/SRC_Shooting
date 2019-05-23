@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -526,13 +526,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260737156}
-  m_LocalRotation: {x: 0.6087614, y: 0, z: 0, w: 0.7933533}
+  m_LocalRotation: {x: 0.6087614, y: -0, z: -0, w: 0.7933533}
   m_LocalPosition: {x: 0, y: 1, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1360843892}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
 --- !u!114 &260737158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,9 +636,17 @@ PlayableDirector:
     m_References:
     - bb0502ab3341acc44a782e69f5927833: {fileID: 260737157}
     - 2b03e7cbaaa41844491609951ccd39e4: {fileID: 260737157}
+    - 26a2d7ddc623aad4894472fabc1234b4: {fileID: 260737157}
+    - 219c576293031134f8952338b353fa1e: {fileID: 260737157}
+    - 5fc12ee2f3df2c04c8d734cea786d6e5: {fileID: 260737157}
     - bf7831f626d4e0f429443805e60f32ea: {fileID: 260737157}
     - cf5ec4c3454a6754eb51b1689681aff1: {fileID: 260737157}
+    - 7d940889642cfb140a3a48d6e1f068b2: {fileID: 260737157}
     - 7849a12f6b6f6e245b0d34aad8901859: {fileID: 260737157}
+    - 59d275d29fd6c554ab39dcc6aee7283f: {fileID: 260737157}
+    - 15100af632f05e1478b54a94d6f25341: {fileID: 260737157}
+    - d3b90154b38f35046b9c154e5537ded6: {fileID: 260737157}
+    - f72889c367fcae8428f61efdafd98171: {fileID: 260737157}
     - a5ec7e5d18ea466429392ac1d6b84c37: {fileID: 260737157}
 --- !u!1 &291142386
 GameObject:
@@ -1740,6 +1748,12 @@ PrefabInstance:
       propertyPath: m_Asset
       value: 
       objectReference: {fileID: 11400000, guid: 47a991b64a9266c40986b9c46c64b543,
+        type: 2}
+    - target: {fileID: 4867682160774085349, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_CameraTimeline
+      value: 
+      objectReference: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
         type: 2}
     - target: {fileID: 1038783231578221413, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
