@@ -72,31 +72,31 @@ public class TestStageController : StageController
 	{
 		foreach( var data in m_StageEnemyAppearData )
 		{
-			if( data.Time >= m_BuildEnemyTimeCount )
-			{
-				continue;
-			}
+			//if( data.Time >= m_BuildEnemyTimeCount )
+			//{
+			//	continue;
+			//}
 
-			var enemy = EnemyCharaManager.Instance.CreateEnemy( m_StageEnemyParam.GetEnemyControllers()[data.EnemyMoveId], data.OtherParameters );
+			//var enemy = EnemyCharaManager.Instance.CreateEnemy( m_StageEnemyParam.GetEnemyControllers()[data.EnemyMoveId], data.OtherParameters );
 
-			if( enemy == null )
-			{
-				continue;
-			}
+			//if( enemy == null )
+			//{
+			//	continue;
+			//}
 
-			enemy.SetBulletSetParam( m_StageEnemyParam.GetBulletSets()[data.BulletSetId] );
+			//enemy.SetBulletSetParam( m_StageEnemyParam.GetBulletSets()[data.BulletSetId] );
 
-            var pos = EnemyCharaManager.Instance.GetPositionFromFieldViewPortPosition(data.AppearViewportX, data.AppearViewportY);
-			pos.x += data.AppearOffsetX;
-			pos.y += data.AppearOffsetY;
-			pos.z += data.AppearOffsetZ;
-			enemy.transform.position = pos;
+   //         var pos = EnemyCharaManager.Instance.GetPositionFromFieldViewPortPosition(data.AppearViewportX, data.AppearViewportY);
+			//pos.x += data.AppearOffsetX;
+			//pos.y += data.AppearOffsetY;
+			//pos.z += data.AppearOffsetZ;
+			//enemy.transform.position = pos;
 
-			var rot = enemy.transform.eulerAngles;
-			rot.y = data.AppearRotateY;
-			enemy.transform.eulerAngles = rot;
+			//var rot = enemy.transform.eulerAngles;
+			//rot.y = data.AppearRotateY;
+			//enemy.transform.eulerAngles = rot;
 
-			m_RemovingData.Add( data );
+			//m_RemovingData.Add( data );
 		}
 
 		RemoveEnemyAppearData();

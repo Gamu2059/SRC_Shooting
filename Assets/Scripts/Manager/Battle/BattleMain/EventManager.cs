@@ -121,9 +121,9 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         DestroyEventTrigger();
 
         // イベント実行
-        for(int i=0;i<m_WaitExecuteParams.Count;i++)
+        foreach(var param in m_WaitExecuteParams)
         {
-
+            ExecuteEvent(param);
         }
 
         m_WaitExecuteParams.Clear();
@@ -140,6 +140,26 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     }
 
 
+
+    /// <summary>
+    /// EventParamを追加する。
+    /// </summary>
+    public void AddEventParam(EventTriggerParamSet.EventTriggerParam param)
+    {
+        var condition = param.Condition;
+        if (!condition.IsSingleCondition && condition.Conditions == null)
+        {
+            return;
+        }
+
+        var contents = param.Contents;
+        if (contents == null || contents.Length < 1)
+        {
+            return;
+        }
+
+        m_EventParams.Add(param);
+    }
 
     /// <summary>
     /// int型イベント変数の値を取得する。
@@ -435,6 +455,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
                 BattleMainTimerManager.Instance.RegistTimer(timer);
             }
         }
+
     }
 
     /// <summary>
@@ -445,6 +466,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         switch(eventContent.EventType)
         {
             case EventContent.E_EVENT_TYPE.APPER_ENEMY:
+                EnemyCharaManager.Instance.CreateEnemyFromEnemyParam(eventContent.ApperEnemyIndex);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_CAMERA:
                 break;
@@ -459,7 +481,5 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
             case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
                 break;
         }
-
-        Debug.Log(eventContent.EventType);
     }
 }

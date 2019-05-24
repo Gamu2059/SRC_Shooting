@@ -7,9 +7,9 @@ using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 
-public class StageEnemyParam_importer : AssetPostprocessor
+public class StageEnemyEventParam_importer : AssetPostprocessor
 {
-    private static readonly string filePath = "Assets/ExcelData/Stage/StageEnemyParam.xlsx";
+    private static readonly string filePath = "Assets/ExcelData/Stage/StageEnemyEventParam.xlsx";
     private static readonly string[] sheetNames = { "Stage1_dummy","CommandEvent 1","Sheet1", };
     
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
@@ -58,17 +58,17 @@ public class StageEnemyParam_importer : AssetPostprocessor
                         
                         var p = new XL_StageEnemyParam.Param();
 			
-					cell = row.GetCell(0); p.Time = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(1); p.EnemyViewId = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(2); p.EnemyMoveId = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(3); p.BulletSetId = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(4); p.AppearViewportX = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(5); p.AppearViewportY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(6); p.AppearOffsetX = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(7); p.AppearOffsetZ = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(8); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(9); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(10); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(0); p.Conditions = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(1); p.EnemyId = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(2); p.BulletSetId = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(3); p.AppearViewportX = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(4); p.AppearViewportY = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(5); p.AppearOffsetX = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(6); p.AppearOffsetZ = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(7); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(8); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(9); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(10); p.Defeat = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(11); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
 
                         data.param.Add(p);

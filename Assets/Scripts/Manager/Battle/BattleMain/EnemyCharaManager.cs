@@ -128,6 +128,8 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 			obj.transform.position = Vector3.zero;
 			m_EnemyCharaHolder = obj.transform;
 		}
+
+        BuildEnemyAppearEvents();
 	}
 
 	public override void OnUpdate()
@@ -258,7 +260,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         }
 
         var paramData = m_XlStageEnemyParam.param[enemyListIndex];
-        var enemy = CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[paramData.EnemyMoveId], paramData.OtherParameters);
+        var enemy = CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[paramData.EnemyId], paramData.OtherParameters);
 
         if (enemy == null)
         {
@@ -350,5 +352,26 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
 
         return pos;
+    }
+
+    private void BuildEnemyAppearEvents()
+    {
+        for(int i=0;i<m_XlStageEnemyParam.param.Count;i++)
+        {
+            var param = m_XlStageEnemyParam.param[i];
+
+            EventTriggerCondition condition = EventParamTranslator.TranslateString(param.Conditions);
+
+            EventTriggerParamSet.EventTriggerParam eventParam = new EventTriggerParamSet.EventTriggerParam();
+            eventParam.Condition = condition;
+
+            EventContent content = new EventContent();
+            content.EventType = EventContent.E_EVENT_TYPE.APPER_ENEMY;
+            content.ApperEnemyIndex = i;
+
+            eventParam.Contents = new []{content};
+
+            EventManager.Instance.AddEventParam(eventParam);
+        }
     }
 }

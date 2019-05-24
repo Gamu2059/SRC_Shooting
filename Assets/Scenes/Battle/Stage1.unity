@@ -1960,7 +1960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ObjectsHolder: {fileID: 533081378}
   m_StageEnemyParam: {fileID: 11400000, guid: 73ed7abc23a089a4195bb004e611a8e9, type: 2}
-  m_StageEnemyList: {fileID: 11400000, guid: c54fcecd57e9a2746b622048b86f702c, type: 2}
+  m_StageEnemyList: {fileID: 0}
   m_ReferenceEnemyListIndex: 1
   m_MoveSpeed: 30
   m_ResetPositionPoint: 370
@@ -2206,6 +2206,18 @@ PrefabInstance:
       propertyPath: m_CanOutTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8621981717037409208, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_XlStageEnemyParam
+      value: 
+      objectReference: {fileID: 11400000, guid: fe6441c476dee7244b19779a8c1cf18e,
+        type: 2}
+    - target: {fileID: 8621981717037409208, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_StageEnemyParam
+      value: 
+      objectReference: {fileID: 11400000, guid: 994df26fe38afd243815b9e42cc29f73,
+        type: 2}
     - target: {fileID: 8190510489573558779, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
       propertyPath: m_ItemAttractRate
@@ -6773,7 +6785,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BattleMainManagers:
   - {fileID: 651226005}
-  - {fileID: 1062543250}
   m_BattleCommandManagers:
   - {fileID: 2126491540}
   - {fileID: 754276807}
