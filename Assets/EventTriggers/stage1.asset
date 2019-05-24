@@ -20,15 +20,76 @@ MonoBehaviour:
       IsSingleCondition: 1
       VariableType: 3
       VariableName: Game Start
-      CompareType: 5
+      CompareType: 3
       BoolCompareType: 0
-      CompareValue: 5
+      CompareValue: 3
       BoolCompareValue: 0
       MultiConditionType: 0
       Conditions: []
-    Content:
-      EventType: 0
+    Contents:
+    - EventType: 0
       ExecuteTiming: 0
       DelayExecuteTime: 0
       m_Arguments: []
       ApperEnemyIndex: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      UsePrefab: 0
+      ControllableObject: {fileID: 0}
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: 
+      ScriptArguments: []
+    - EventType: 6
+      ExecuteTiming: 1
+      DelayExecuteTime: 3
+      m_Arguments: []
+      ApperEnemyIndex: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      UsePrefab: 0
+      ControllableObject: {fileID: 0}
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: 
+      ScriptArguments: []
+  - Condition:
+      IsReverse: 0
+      IsSingleCondition: 1
+      VariableType: 3
+      VariableName: Game Start
+      CompareType: 5
+      BoolCompareType: 0
+      CompareValue: 10
+      BoolCompareValue: 0
+      MultiConditionType: 0
+      Conditions: []
+    Contents:
+    - EventType: 3
+      ExecuteTiming: 0
+      DelayExecuteTime: 0
+      m_Arguments: []
+      ApperEnemyIndex: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      UsePrefab: 0
+      ControllableObject: {fileID: 0}
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: 
+      ScriptArguments: []

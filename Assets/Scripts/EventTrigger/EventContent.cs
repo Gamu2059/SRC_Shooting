@@ -71,5 +71,33 @@ public struct EventContent
     [Tooltip("出現させる敵のリストでのインデックス")]
     public int ApperEnemyIndex;
 
-    //[Header("CONTROL_CAMERAのパラメータ")]
+    [Header("CONTROL_CAMERAのパラメータ")]
+
+    public TimelineParam CameraTimelineParam;
+
+    [Header("CONTROL_OBJECTのパラメータ")]
+
+    public bool UsePrefab;
+
+    public GameObject ControllableObject;
+
+    public TimelineParam ObjectTimelineParam;
+
+    [Header("CONTROL_BGM")]
+
+    public ControlBgmParam ControlBgmParam;
+
+    [Header("OPERATE_VARIABLE")]
+
+    public OperateVariableParam OperateVariableParam;
+
+    [Header("OPERATE_TIME_PERIOD")]
+
+    public OperateTimePeriodParam OperateTimePeriodParam;
+
+    [Header("CALL_SCRIPT")]
+
+    public string ScriptName;
+
+    public ArgumentVariable[] ScriptArguments;
 }
