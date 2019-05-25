@@ -39,7 +39,7 @@ public class FpsIndicator : MonoBehaviour
 
         if (time >= m_UpdateInterval)
         {
-            var fps = string.Format("Fps : {0}", (m_FrameCount / time).ToString("f2"));
+            var fps = string.Format("fps : {0}", (m_FrameCount / time).ToString("f2"));
             switch(m_IndicatorType)
             {
                 case IndicatorType.CONSOLE:

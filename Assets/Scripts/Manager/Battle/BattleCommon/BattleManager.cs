@@ -243,7 +243,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         BattleMainAudioManager.Instance.StopAllBGM();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
         });
         TimerManager.Instance.RegistTimer(timer);
     }
@@ -264,7 +264,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         BattleMainUiManager.Instance.ShowGameClear();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
         });
         TimerManager.Instance.RegistTimer(timer);
     }
@@ -381,7 +381,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         DetachBattleMainInputAction();
         DetachBattleCommandInputAction();
-        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.BATTLE);
+        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
     }
 
     /// <summary>
