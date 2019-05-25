@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct ControlBgmParam
 {
     public enum E_BGM_CONTROL_TYPE

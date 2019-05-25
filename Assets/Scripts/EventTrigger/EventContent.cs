@@ -63,9 +63,6 @@ public struct EventContent
     [Tooltip("実行タイミングをDELAYにしている場合、何秒後に実行するか")]
     public float DelayExecuteTime;
 
-    [Tooltip("実行イベントに渡す引数")]
-    public ArgumentVariable[] m_Arguments;
-
     [Header("APPER_ENEMYのパラメータ")]
 
     [Tooltip("出現させる敵のリストでのインデックス")]

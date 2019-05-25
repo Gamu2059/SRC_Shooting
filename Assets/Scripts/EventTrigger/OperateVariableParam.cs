@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct OperateVariableParam
 {
     public enum E_OPERAND_VALUE_TYPE

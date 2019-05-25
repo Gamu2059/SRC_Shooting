@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage1_dummy
   m_EditorClassIdentifier: 
   param:
-  - Conditions: TP:Game Start:2;
+  - Conditions: TP:Game Start:MOE:2;
     EnemyId: 0
     BulletSetId: 0
     AppearViewportX: 0.4
@@ -26,7 +26,7 @@ MonoBehaviour:
     Defeat: ' '
     OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
       F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
-  - Conditions: TP:Game Start:3;
+  - Conditions: TP:Game Start:MOR:3;
     EnemyId: 0
     BulletSetId: 0
     AppearViewportX: 0.4
@@ -39,7 +39,7 @@ MonoBehaviour:
     Defeat: 
     OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
       F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
-  - Conditions: TP:Game Start:4;
+  - Conditions: TP:Game Start:MOR:4;
     EnemyId: 0
     BulletSetId: 0
     AppearViewportX: 0.4
@@ -52,7 +52,7 @@ MonoBehaviour:
     Defeat: 
     OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
       F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
-  - Conditions: TP:Game Start:5;
+  - Conditions: TP:Game Start:MOR:5;
     EnemyId: 0
     BulletSetId: 0
     AppearViewportX: 0.4
@@ -65,7 +65,7 @@ MonoBehaviour:
     Defeat: 
     OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
       F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
-  - Conditions: TP:Game Start:6;
+  - Conditions: TP:Game Start:MOR:6;
     EnemyId: 0
     BulletSetId: 0
     AppearViewportX: 0.4
@@ -78,7 +78,7 @@ MonoBehaviour:
     Defeat: 
     OtherParameters: V3:RSMEP:(0,0,-0.5); F:SMS:0.5; V3:RCCP:(0.3,0,0); F:CMA:180;
       F:CMS:60; F:SBI:300; I:SBN:1; F:SBA:0; F:CBI:300; I:CBN:1; F:CBA:0; F:VOST:0;
-  - Conditions: TP:Game Start:10;
+  - Conditions: TP:Game Start:MOR:10;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
     IsBoss: 0
     Defeat: 
     OtherParameters: V3:MD:(10,0,3); F:MS:0.5; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
-  - Conditions: TP:Game Start:10.5;
+  - Conditions: TP:Game Start:MOR:10.5;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
     IsBoss: 0
     Defeat: 
     OtherParameters: V3:MD:(10,0,3); F:MS:0.5; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
-  - Conditions: TP:Game Start:11;
+  - Conditions: TP:Game Start:MOR:11;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
     IsBoss: 0
     Defeat: 
     OtherParameters: V3:MD:(10,0,3); F:MS:0.5; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
-  - Conditions: TP:Game Start:11.5;
+  - Conditions: TP:Game Start:MOR:11.5;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
     IsBoss: 0
     Defeat: 
     OtherParameters: V3:MD:(10,0,3); F:MS:0.5; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
-  - Conditions: TP:Game Start:12;
+  - Conditions: TP:Game Start:MOR:12;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
     IsBoss: 0
     Defeat: 
     OtherParameters: V3:MD:(10,0,3); F:MS:0.5; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
-  - Conditions: TP:Game Start:12.5;
+  - Conditions: TP:Game Start:MOR:12.5;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
     IsBoss: 0
     Defeat: 
     OtherParameters: V3:MD:(10,0,3); F:MS:0.5; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
-  - Conditions: TP:Game Start:13;
+  - Conditions: TP:Game Start:MOR:13;
     EnemyId: 2
     BulletSetId: 0
     AppearViewportX: 0

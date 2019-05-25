@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// BattleMainのイベントトリガを管理するマネージャ。
@@ -33,6 +34,10 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     private EventTriggerTimePeriod m_GameStartTimePeriod;
 
     private List<EventContent> m_WaitExecuteParams;
+
+    private List<EventControllableScript> m_UpdateScripts;
+
+    private List<EventControllableScript> m_GotoDestroyScripts;
 
     #endregion
 
@@ -82,6 +87,9 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         m_EventParams.AddRange(m_ParamSet.GetParams());
 
         m_WaitExecuteParams = new List<EventContent>();
+
+        m_UpdateScripts = new List<EventControllableScript>();
+        m_GotoDestroyScripts = new List<EventControllableScript>();
     }
 
     public override void OnFinalize()
@@ -127,6 +135,41 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         }
 
         m_WaitExecuteParams.Clear();
+
+        // スクリプト実行
+        foreach(var script in m_UpdateScripts)
+        {
+            if (script == null)
+            {
+                continue;
+            }
+
+            if (script.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                script.OnStart();
+                script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+            }
+
+            script.OnUpdate();
+        }
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        // スクリプト実行
+        foreach (var script in m_UpdateScripts)
+        {
+            if (script == null)
+            {
+                continue;
+            }
+
+            script.OnLateUpdate();
+        }
+
+        DestroyScript();
     }
 
     public override void OnFixedUpdate()
@@ -137,9 +180,18 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         {
             period.OnFixedUpdate();
         }
+
+        // スクリプト実行
+        foreach (var script in m_UpdateScripts)
+        {
+            if (script == null)
+            {
+                continue;
+            }
+
+            script.OnFixedUpdate();
+        }
     }
-
-
 
     /// <summary>
     /// EventParamを追加する。
@@ -463,6 +515,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// </summary>
     public void ExecuteEvent(EventContent eventContent)
     {
+        Debug.Log(eventContent.EventType);
         switch(eventContent.EventType)
         {
             case EventContent.E_EVENT_TYPE.APPER_ENEMY:
@@ -473,13 +526,64 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
             case EventContent.E_EVENT_TYPE.CONTROL_OBJECT:
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_BGM:
+                ExecuteControlBgm(eventContent.ControlBgmParam);
                 break;
             case EventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
                 break;
             case EventContent.E_EVENT_TYPE.OPERATE_TIME_PERIOD:
                 break;
             case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
+                ExecuteCallScript(eventContent.ScriptName, eventContent.ScriptArguments);
                 break;
         }
+    }
+
+    private void ExecuteControlBgm(ControlBgmParam param)
+    {
+        if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
+        {
+            FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
+        }
+        else
+        {
+            FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+        }
+    }
+
+    private void ExecuteCallScript(string scriptName, ArgumentVariable[] args)
+    {
+        Type type = Type.GetType(scriptName);
+
+        if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
+        {
+            return;
+        }
+
+        var script = (EventControllableScript)Activator.CreateInstance(type);
+        m_UpdateScripts.Add(script);
+        script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+        script.OnInitialize();
+    }
+
+    public void CheckDestroyScript(EventControllableScript script)
+    {
+        if (script == null || !m_UpdateScripts.Contains(script) || m_GotoDestroyScripts.Contains(script))
+        {
+            return;
+        }
+
+        m_GotoDestroyScripts.Add(script);
+        script.SetCycle(E_OBJECT_CYCLE.STANDBY_DESTROYED);
+    }
+
+    private void DestroyScript()
+    {
+        foreach(var script in m_GotoDestroyScripts)
+        {
+            m_UpdateScripts.Remove(script);
+            script.OnFinalize();
+        }
+
+        m_GotoDestroyScripts.Clear();
     }
 }

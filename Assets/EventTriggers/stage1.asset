@@ -20,17 +20,16 @@ MonoBehaviour:
       IsSingleCondition: 1
       VariableType: 3
       VariableName: Game Start
-      CompareType: 3
+      CompareType: 5
       BoolCompareType: 0
-      CompareValue: 3
+      CompareValue: 0
       BoolCompareValue: 0
       MultiConditionType: 0
       Conditions: []
     Contents:
-    - EventType: 0
+    - EventType: 3
       ExecuteTiming: 0
       DelayExecuteTime: 0
-      m_Arguments: []
       ApperEnemyIndex: 0
       CameraTimelineParam:
         TimelineAsset: {fileID: 0}
@@ -40,24 +39,21 @@ MonoBehaviour:
       ObjectTimelineParam:
         TimelineAsset: {fileID: 0}
         BindParams: []
-      OperateTimePeriodParam:
-        TimePeriodName: 
+      ControlBgmParam:
+        ControlType: 0
+        BgmClip: {fileID: 8300000, guid: 5174ecb4b8243c541b08c3d35376b18d, type: 3}
+        FadeOutDuration: 0
+        FadeInStartOffset: 0
+        FadeInDuration: 1
+      OperateVariableParam:
+        VariableType: 0
+        VariableName: 
         OperandType: 0
-      ScriptName: 
-      ScriptArguments: []
-    - EventType: 6
-      ExecuteTiming: 1
-      DelayExecuteTime: 3
-      m_Arguments: []
-      ApperEnemyIndex: 0
-      CameraTimelineParam:
-        TimelineAsset: {fileID: 0}
-        BindParams: []
-      UsePrefab: 0
-      ControllableObject: {fileID: 0}
-      ObjectTimelineParam:
-        TimelineAsset: {fileID: 0}
-        BindParams: []
+        BoolOperandType: 0
+        OperandValueType: 0
+        OperandValueName: 
+        OperandValue: 0
+        BoolOperandValue: 0
       OperateTimePeriodParam:
         TimePeriodName: 
         OperandType: 0
@@ -70,7 +66,7 @@ MonoBehaviour:
       VariableName: Game Start
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 10
+      CompareValue: 107
       BoolCompareValue: 0
       MultiConditionType: 0
       Conditions: []
@@ -78,7 +74,6 @@ MonoBehaviour:
     - EventType: 3
       ExecuteTiming: 0
       DelayExecuteTime: 0
-      m_Arguments: []
       ApperEnemyIndex: 0
       CameraTimelineParam:
         TimelineAsset: {fileID: 0}
@@ -88,8 +83,67 @@ MonoBehaviour:
       ObjectTimelineParam:
         TimelineAsset: {fileID: 0}
         BindParams: []
+      ControlBgmParam:
+        ControlType: 0
+        BgmClip: {fileID: 8300000, guid: f87f5cb327ebf9843be3c1cd14c42269, type: 3}
+        FadeOutDuration: 1
+        FadeInStartOffset: 0
+        FadeInDuration: 1
+      OperateVariableParam:
+        VariableType: 0
+        VariableName: 
+        OperandType: 0
+        BoolOperandType: 0
+        OperandValueType: 0
+        OperandValueName: 
+        OperandValue: 0
+        BoolOperandValue: 0
       OperateTimePeriodParam:
         TimePeriodName: 
         OperandType: 0
       ScriptName: 
+      ScriptArguments: []
+  - Condition:
+      IsReverse: 0
+      IsSingleCondition: 1
+      VariableType: 3
+      VariableName: Game Start
+      CompareType: 5
+      BoolCompareType: 0
+      CompareValue: 77
+      BoolCompareValue: 0
+      MultiConditionType: 0
+      Conditions: []
+    Contents:
+    - EventType: 6
+      ExecuteTiming: 0
+      DelayExecuteTime: 0
+      ApperEnemyIndex: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      UsePrefab: 0
+      ControllableObject: {fileID: 0}
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        BindParams: []
+      ControlBgmParam:
+        ControlType: 0
+        BgmClip: {fileID: 8300000, guid: f87f5cb327ebf9843be3c1cd14c42269, type: 3}
+        FadeOutDuration: 1
+        FadeInStartOffset: 0
+        FadeInDuration: 1
+      OperateVariableParam:
+        VariableType: 0
+        VariableName: 
+        OperandType: 0
+        BoolOperandType: 0
+        OperandValueType: 0
+        OperandValueName: 
+        OperandValue: 0
+        BoolOperandValue: 0
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: WhiteOutController
       ScriptArguments: []
