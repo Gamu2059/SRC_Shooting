@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 483381901461639940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 3132582967964783605}
   m_RootOrder: 1
@@ -55,7 +55,7 @@ Transform:
   m_GameObject: {fileID: 2942070232484594019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children: []
   m_Father: {fileID: 3132582967964783605}
   m_RootOrder: 0
@@ -86,7 +86,7 @@ Transform:
   m_GameObject: {fileID: 5574361202988821614}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.78125, y: 0.78125, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children: []
   m_Father: {fileID: 3132582967964783605}
   m_RootOrder: 2
@@ -128,12 +128,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5333c8eb75f70f04a9dd124508586f71, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d502622c3e17a85469f9a8bec82e8d99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 6971687322483501996}
   - component: {fileID: 6413526307181336518}
   m_Layer: 0
-  m_Name: SmallScoreItem
+  m_Name: SmallExpItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6686913163197522258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.56, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2981789380097075189}
@@ -243,6 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eacf9e3773901cd458dd674ba3fd946f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ItemType: 0
+  m_ItemType: 4
   m_Point: 100
-  m_LookCameraTransform: {fileID: 0}
+  m_ViewTransform: {fileID: 7748684817653182710}

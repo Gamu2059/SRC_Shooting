@@ -515,7 +515,6 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// </summary>
     public void ExecuteEvent(EventContent eventContent)
     {
-        Debug.Log(eventContent.EventType);
         switch(eventContent.EventType)
         {
             case EventContent.E_EVENT_TYPE.APPER_ENEMY:
