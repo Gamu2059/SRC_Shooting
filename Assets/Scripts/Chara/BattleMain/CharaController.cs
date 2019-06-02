@@ -80,10 +80,30 @@ public class CharaController : BattleMainObjectBase
 		return GetBulletSetParam().GetBulletParams()[bulletParamIndex];
 	}
 
-	/// <summary>
-	/// キャラが保持する弾プレハブの個数を取得する。
+    /// <summary>
+	/// 指定したインデックスのBombParamを取得する。
 	/// </summary>
-	public int GetBulletPrefabsCount()
+	public BulletParam GetBombParam(int bombParamIndex = 0)
+    {
+        int paramCount = GetBulletParamsCount();
+
+        if (GetBulletSetParam().GetBombParams() == null || paramCount < 1)
+        {
+            return null;
+        }
+
+        if (bombParamIndex < 0 || bombParamIndex >= paramCount)
+        {
+            bombParamIndex = 0;
+        }
+
+        return GetBulletSetParam().GetBombParams()[bombParamIndex];
+    }
+
+    /// <summary>
+    /// キャラが保持する弾プレハブの個数を取得する。
+    /// </summary>
+    public int GetBulletPrefabsCount()
 	{
 		if( GetBulletSetParam().GetBulletPrefabs() == null )
 		{
@@ -93,10 +113,23 @@ public class CharaController : BattleMainObjectBase
 		return GetBulletSetParam().GetBulletPrefabs().Length;
 	}
 
-	/// <summary>
-	/// 指定したインデックスの弾のプレハブを取得する。
+    /// <summary>
+	/// キャラが保持するボムプレハブの個数を取得する。
 	/// </summary>
-	public BulletController GetBulletPrefab( int bulletIndex = 0 )
+	public int GetBulletBombsCount()
+    {
+        if (GetBulletSetParam().GetBombPrefabs() == null)
+        {
+            return -1;
+        }
+
+        return GetBulletSetParam().GetBombPrefabs().Length;
+    }
+
+    /// <summary>
+    /// 指定したインデックスの弾のプレハブを取得する。
+    /// </summary>
+    public BulletController GetBulletPrefab( int bulletIndex = 0 )
 	{
 		int prefabCount = GetBulletPrefabsCount();
 
@@ -113,14 +146,34 @@ public class CharaController : BattleMainObjectBase
 		return GetBulletSetParam().GetBulletPrefabs()[bulletIndex];
 	}
 
-	#endregion
+    /// <summary>
+    /// 指定したインデックスのボムのプレハブを取得する。
+    /// </summary>
+    public BulletController GetBombPrefab(int bulletIndex = 0)
+    {
+        int prefabCount = GetBulletPrefabsCount();
+
+        if (GetBulletSetParam().GetBombPrefabs() == null || prefabCount < 1)
+        {
+            return null;
+        }
+
+        if (bulletIndex < 0 || bulletIndex >= prefabCount)
+        {
+            bulletIndex = 0;
+        }
+
+        return GetBulletSetParam().GetBombPrefabs()[bulletIndex];
+    }
+
+    #endregion
 
 
 
-	/// <summary>
-	/// このキャラを回復する。
-	/// </summary>
-	public virtual void Recover( int recover )
+    /// <summary>
+    /// このキャラを回復する。
+    /// </summary>
+    public virtual void Recover( int recover )
 	{
 		if( recover <= 0 )
 		{

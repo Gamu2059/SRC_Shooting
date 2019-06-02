@@ -49,7 +49,7 @@ public class SmasherController : PlayerController
     private int currentBombAmount;
 
     [SerializeField]
-    private float m_BombInterval;
+    private float m_BombInterval;       // ボムの演出の長さで適宜変えてね
 
     private float bombDelay;
 
@@ -197,6 +197,15 @@ public class SmasherController : PlayerController
         {
             currentBombAmount--;
             Debug.Log(string.Format("{0}Bomb!!!@{1}, Last{2}", this.name, this.transform.position, this.currentBombAmount));
+
+            for (int i = 0; i < m_SubShotLv1Position.Length; i++)
+            {
+                var bombParam = new BulletShotParam(this);
+                bombParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
+                var bomb = BulletController.ShotBomb(bombParam) as SmasherBomb;
+                bomb.SetOffset(m_MainShotPosition[i].transform.position - transform.parent.position);
+            }
+
             bombDelay = 0;
         }
     }

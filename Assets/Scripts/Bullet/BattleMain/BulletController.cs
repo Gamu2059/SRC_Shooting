@@ -606,6 +606,57 @@ public class BulletController : BattleMainObjectBase
 		return bullet;
 	}
 
+    /// <summary>
+	/// 指定したパラメータを用いてボムを生成する。
+	/// </summary>
+	/// <param name="shotParam">弾を発射させるパラメータ</param>
+	private static BulletController CreateBomb( BulletShotParam shotParam )
+	{
+		var bombOwner = shotParam.BulletOwner;
+
+		if( bombOwner == null )
+		{
+			return null;
+		}
+
+		// プレハブを取得
+		var bombPrefab = bombOwner.GetBombPrefab( shotParam.BulletIndex );
+
+		if( bombPrefab == null )
+		{
+			return null;
+		}
+
+		// プールから弾を取得
+		var bomb = BulletManager.Instance.GetPoolingBullet( bombPrefab );
+
+		if( bomb == null )
+		{
+			return null;
+		}
+
+		// 座標を設定
+		bomb.SetPosition( shotParam.Position != null ? ( Vector3 )shotParam.Position : bombOwner.transform.localPosition );
+
+		// 回転を設定
+		bomb.SetRotation( shotParam.Rotation != null ? ( Vector3 )shotParam.Rotation : bombOwner.transform.localEulerAngles );
+
+		// スケールを設定
+		bomb.SetScale( shotParam.Scale != null ? ( Vector3 )shotParam.Scale : bombPrefab.transform.localScale );
+
+		bomb.ResetBulletLifeTime();
+		bomb.ResetBulletParam();
+
+		bomb.m_BulletOwner = bombOwner;
+		bomb.SetTroop( bombOwner.GetTroop() );
+		bomb.m_BulletParam = null;
+		bomb.m_BulletIndex = 0;
+		bomb.m_BulletParamIndex = 0;
+		bomb.m_OrbitalParamIndex = -1;
+
+		return bomb;
+	}
+
 	/// <summary>
 	/// 指定したパラメータを用いて弾をBulletParamの指定なしで発射する。
 	/// 発射後はプログラムで制御しないと動かないので注意。
@@ -664,10 +715,45 @@ public class BulletController : BattleMainObjectBase
 		return bullet;
 	}
 
-	/// <summary>
-	/// この弾の軌道情報を上書きする。
+    /// <summary>
+	/// 指定したパラメータを用いて弾を発射する。
 	/// </summary>
-	public virtual void ChangeOrbital( BulletOrbitalParam orbitalParam )
+	/// <param name="shotParam">発射時のパラメータ</param>
+	/// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
+	public static BulletController ShotBomb(BulletShotParam shotParam, bool isCheck = true)
+    {
+        var bomb = CreateBomb(shotParam);
+
+        if (bomb == null)
+        {
+            return null;
+        }
+
+        // BulletParamを取得
+        var bombParam = shotParam.BulletOwner.GetBombParam(shotParam.BulletParamIndex);
+        bomb.m_BulletParamIndex = shotParam.BulletParamIndex;
+
+        if (bombParam != null)
+        {
+            // 軌道を設定
+            bomb.ChangeOrbital(bombParam.GetOrbitalParam(shotParam.OrbitalIndex));
+            bomb.m_OrbitalParamIndex = shotParam.OrbitalIndex;
+        }
+
+        bomb.m_BulletParam = bombParam;
+
+        if (isCheck)
+        {
+            BulletManager.Instance.CheckStandbyBullet(bomb);
+        }
+
+        return bomb;
+    }
+
+    /// <summary>
+    /// この弾の軌道情報を上書きする。
+    /// </summary>
+    public virtual void ChangeOrbital( BulletOrbitalParam orbitalParam )
 	{
 		m_OrbitalParam = orbitalParam;
 

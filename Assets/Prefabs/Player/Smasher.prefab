@@ -630,7 +630,9 @@ MonoBehaviour:
   m_MainShotPosition:
   - {fileID: 3525425804482647593}
   - {fileID: 5472185456029354525}
-  m_SubShotLv1Position: []
+  m_SubShotLv1Position:
+  - {fileID: 3525425804482647593}
+  - {fileID: 5472185456029354525}
   m_SubShotLv2Position: []
   m_SubShotLv2Radius: 5
   m_SubShotLv2Speed: 5

@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3660251104543743203}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5561842023448849907}
@@ -102,10 +102,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5561842023448849907}
   - component: {fileID: 2316275032712182763}
-  - component: {fileID: 4505914296954946076}
   - component: {fileID: 3868423955742073016}
+  - component: {fileID: 4831337950821029901}
   m_Layer: 0
-  m_Name: SmasherLv2
+  m_Name: SmasherBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,21 +142,6 @@ MonoBehaviour:
   - CollideName: 
     ColliderType: 1
     Transform: {fileID: 7255729895277175565}
---- !u!114 &4505914296954946076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3960369768292141601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34cd02e145dd23f4b9a9871db9710e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BulletGroupId: SmasherLv2
-  m_CanHitOtherBullet: 0
-  m_Cycle: 0
 --- !u!23 &3868423955742073016
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -194,3 +179,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4831337950821029901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960369768292141601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3cdf032af969b541948987206837e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BulletGroupId: SmasherBomb
+  m_CanHitOtherBullet: 0
+  m_Cycle: 0

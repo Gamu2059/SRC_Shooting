@@ -18,16 +18,33 @@ public class HackerController : PlayerController
 
 	private float shotDelay;
 
+    [SerializeField]
+    private int m_MaxBombAmount;
+
+    private int currentBombAmount;
+
+    [SerializeField]
+    private float m_BombInterval;       // ƒ{ƒ€‚Ì‰‰o‚Ì’·‚³‚Å“K‹X•Ï‚¦‚Ä‚Ë
+
+    private float bombDelay;
+
     public float GetCommandEventInterval()
     {
         return m_CommandEventInterval;
     }
 
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        currentBombAmount = m_MaxBombAmount;
+        bombDelay = m_BombInterval;
+    }
 
-	public override void OnUpdate()
+    public override void OnUpdate()
 	{
 		base.OnUpdate();
 		shotDelay += Time.deltaTime;
+        bombDelay += Time.deltaTime;
         UpdateShotLevel(GetLevel());
 	}
 
@@ -63,6 +80,11 @@ public class HackerController : PlayerController
 
     public override void ShotBomb(InputManager.E_INPUT_STATE state)
     {
-        Debug.Log(string.Format("{0}Bomb!!!@{1}", this.name, this.transform.position));
+        if (currentBombAmount > 0 && bombDelay >= m_BombInterval)
+        {
+            currentBombAmount--;
+            Debug.Log(string.Format("{0}Bomb!!!@{1}, Last{2}", this.name, this.transform.position, this.currentBombAmount));
+            bombDelay = 0;
+        }
     }
 }

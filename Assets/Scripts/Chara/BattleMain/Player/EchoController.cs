@@ -46,6 +46,16 @@ public class EchoController : PlayerController
 
     private Dictionary<int, int> RootBulletIndex;
 
+    [SerializeField]
+    private int m_MaxBombAmount;
+
+    private int currentBombAmount;
+
+    [SerializeField]
+    private float m_BombInterval;       // ボムの演出の長さで適宜変えてね
+
+    private float bombDelay;
+
     public int GetMaxHitCount()
     {
         return maxHitCount;
@@ -61,14 +71,16 @@ public class EchoController : PlayerController
 
     protected override void OnAwake()
     {
-
         base.OnAwake();
+        currentBombAmount = m_MaxBombAmount;
+        bombDelay = m_BombInterval;
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
+        bombDelay += Time.deltaTime;
         UpdateShotLevel(GetLevel());
     }
 
@@ -198,6 +210,11 @@ public class EchoController : PlayerController
 
     public override void ShotBomb(InputManager.E_INPUT_STATE state)
     {
-        Debug.Log(string.Format("{0}Bomb!!!@{1}", this.name, this.transform.position));
+        if (currentBombAmount > 0 && bombDelay >= m_BombInterval)
+        {
+            currentBombAmount--;
+            Debug.Log(string.Format("{0}Bomb!!!@{1}, Last{2}", this.name, this.transform.position, this.currentBombAmount));
+            bombDelay = 0;
+        }
     }
 }
