@@ -43,16 +43,29 @@ public class SmasherController : PlayerController
 
     private bool m_ShotFlag;
 
+    [SerializeField]
+    private int m_MaxBombAmount;
+
+    private int currentBombAmount;
+
+    [SerializeField]
+    private float m_BombInterval;
+
+    private float bombDelay;
+
     protected override void OnAwake()
     {
         base.OnAwake();
         initialShotInterval = m_ShotInterval;
+        currentBombAmount = m_MaxBombAmount;
+        bombDelay = m_BombInterval;
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
         shotDelay += Time.deltaTime;
+        bombDelay += Time.deltaTime;
 
         UpdateShotLevel(GetLevel());
         UpdateSubShot();
@@ -180,6 +193,11 @@ public class SmasherController : PlayerController
 
     public override void ShotBomb(InputManager.E_INPUT_STATE state)
     {
-        Debug.Log(string.Format("{0}Bomb!!!@{1}", this.name, this.transform.position));
+        if(currentBombAmount > 0 && bombDelay >= m_BombInterval)
+        {
+            currentBombAmount--;
+            Debug.Log(string.Format("{0}Bomb!!!@{1}, Last{2}", this.name, this.transform.position, this.currentBombAmount));
+            bombDelay = 0;
+        }
     }
 }
