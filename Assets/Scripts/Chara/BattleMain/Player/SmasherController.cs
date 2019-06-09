@@ -196,7 +196,7 @@ public class SmasherController : PlayerController
         if(currentBombAmount > 0 && bombDelay >= m_BombInterval)
         {
             currentBombAmount--;
-            Debug.Log(string.Format("{0}Bomb!!!@{1}, Last{2}", this.name, this.transform.position, this.currentBombAmount));
+            //Debug.Log(string.Format("{0}Bomb!!!@{1}, Last{2}", this.name, this.transform.position, this.currentBombAmount));
 
             for (int i = 0; i < m_SubShotLv1Position.Length; i++)
             {

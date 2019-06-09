@@ -33,4 +33,14 @@ public class SmasherBomb : LaserController
     {
         offset = v;
     }
+
+    public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    {
+        base.HitChara(targetChara, attackData, targetData);
+    }
+
+    public override void HitBullet(BulletController targetBullet, ColliderData attackData, ColliderData targetData)
+    {
+        base.HitBullet(targetBullet, attackData, targetData);
+    }
 }
