@@ -132,13 +132,13 @@ public class InfC761Skill1Laser : BulletController
 	{
 		if( GetScale().z < m_Param.m_MaxLength )
 		{
-			SetScale( GetNowDeltaScale() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			SetScale( GetNowDeltaScale() * Time.deltaTime, E_RELATIVE.RELATIVE );
 		}
 	}
 
 	private void OnThrowUpdate()
 	{
-		SetRotation( new Vector3( 0, m_Param.m_ThrowSpeed * Time.deltaTime, 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+		SetRotation( new Vector3( 0, m_Param.m_ThrowSpeed * Time.deltaTime, 0 ), E_RELATIVE.RELATIVE );
 
 		float nextAngle = GetRotation().y;
 
@@ -163,7 +163,7 @@ public class InfC761Skill1Laser : BulletController
 		foreach( var bullet in m_Bullets )
 		{
 			float randomAngle = Random.Range( -randomRangeAngle, randomRangeAngle );
-			bullet.SetRotation( new Vector3( 0, randomAngle, 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			bullet.SetRotation( new Vector3( 0, randomAngle, 0 ), E_RELATIVE.RELATIVE );
 			bullet.SetNowAccel( m_Param.m_SpreadBulletAccel );
 		}
 

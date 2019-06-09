@@ -10,7 +10,9 @@ public class Stage1Controller : StageController
     private enum Stage1Phase
     {
         // 最初浮上してくる
+        PLAYER_COME_UP,
         // キャラを軸に回転
+
         // 背景カメラが俯瞰位置に移動
         // バトルスタート
         // 直進1

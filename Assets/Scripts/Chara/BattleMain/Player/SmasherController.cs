@@ -202,7 +202,7 @@ public class SmasherController : PlayerController
             {
                 var bombParam = new BulletShotParam(this);
                 bombParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
-                var bomb = BulletController.ShotBomb(bombParam) as SmasherBomb;
+                var bomb = BulletController.ShotBullet(bombParam, true) as SmasherBomb;
                 bomb.SetOffset(m_MainShotPosition[i].transform.position - transform.parent.position);
             }
 

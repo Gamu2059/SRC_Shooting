@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmasherBomb : BulletController
+public class SmasherBomb : LaserController
 {
 
     private Vector3 offset;
@@ -11,10 +11,10 @@ public class SmasherBomb : BulletController
     public override void OnUpdate()
     {
         base.OnUpdate();
-        var bombOwner = GetBulletOwner();
-        Vector3 pos = bombOwner.transform.localPosition + offset;
-        pos.y = ParamDef.BASE_Y_POS;
-        SetPosition(pos);
+        //var bombOwner = GetBulletOwner();
+        //Vector3 pos = bombOwner.transform.localPosition + offset;
+        //pos.y = ParamDef.BASE_Y_POS;
+        //SetPosition(pos);
     }
 
     // Start is called before the first frame update

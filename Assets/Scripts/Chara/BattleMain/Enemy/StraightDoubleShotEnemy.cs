@@ -32,7 +32,7 @@ public class StraightDoubleShotEnemy : StraightEnemy
 		for( int i = 0; i < num; i++ )
 		{
 			var bullet = BulletController.ShotBullet( shotParam );
-			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_RELATIVE.RELATIVE );
 		}
 
 		var timer = Timer.CreateTimer( E_TIMER_TYPE.SCALED_TIMER, 0, m_DoubleShotInterval );
@@ -49,7 +49,7 @@ public class StraightDoubleShotEnemy : StraightEnemy
 			for( int i = 0; i < num; i++ )
 			{
 				var bullet = BulletController.ShotBullet( shotParam );
-				bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_ATTACK_PARAM_RELATIVE.RELATIVE );
+				bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_RELATIVE.RELATIVE );
 			}
 		} );
 
