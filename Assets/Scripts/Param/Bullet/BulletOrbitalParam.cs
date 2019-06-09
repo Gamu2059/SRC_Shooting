@@ -52,6 +52,9 @@ public struct BulletOrbitalParam
 	[Tooltip( "Damageの適用は絶対か相対か" )]
 	public E_RELATIVE DamageRelative;
 
+    [Tooltip("Damageの種類は一度か秒あたりか")]
+    public E_DAMAGE_TYPE DamageType;
+
 
 	[Space()]
 	[Header( "Speed" )]

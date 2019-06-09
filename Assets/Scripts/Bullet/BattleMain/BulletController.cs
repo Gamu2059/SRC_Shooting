@@ -98,6 +98,8 @@ public class BulletController : BattleMainObjectBase
     /// </summary>
     private float m_NowDamage;
 
+    private E_DAMAGE_TYPE m_DamageType;
+
     /// <summary>
     /// この弾が1秒間にどれくらい移動するか。
     /// </summary>
@@ -361,6 +363,23 @@ public class BulletController : BattleMainObjectBase
     public void SetNowDamage(float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         m_NowDamage = GetRelativeValue(relative, GetNowDamage(), value);
+    }
+
+    /// <summary>
+    /// この弾のダメージの種類を取得する。
+    /// </summary>
+    public E_DAMAGE_TYPE GetDamageType()
+    {
+        return m_DamageType;
+    }
+
+    /// <summary>
+    /// この弾のダメージの種類を設定する。
+    /// </summary>
+    /// <param name="damagetype">ダメージの種類を一度のダメージ量とするか、1秒間当たりの総ダメージ量とするか</param>
+    public void SetDamageType(E_DAMAGE_TYPE damagetype)
+    {
+        m_DamageType = damagetype;
     }
 
     /// <summary>
@@ -735,6 +754,7 @@ public class BulletController : BattleMainObjectBase
         SetNowDeltaRotation(m_OrbitalParam.DeltaRotation, m_OrbitalParam.DeltaRotationRelative);
         SetNowDeltaScale(m_OrbitalParam.DeltaScale, m_OrbitalParam.DeltaScaleRelative);
         SetNowDamage(m_OrbitalParam.Damage, m_OrbitalParam.DamageRelative);
+        SetDamageType(m_OrbitalParam.DamageType);
         SetNowSpeed(m_OrbitalParam.Speed, m_OrbitalParam.SpeedRelative);
         SetNowAccel(m_OrbitalParam.Accel, m_OrbitalParam.AccelRelative);
         SetSearch(m_OrbitalParam.IsSearch);

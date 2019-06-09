@@ -20,10 +20,10 @@ public class CharaController : BattleMainObjectBase
 	[Header( "キャラの基礎ステータス" )]
 
 	[SerializeField, Tooltip( "キャラの現在HP" )]
-	private int m_NowHp;
+	private float m_NowHp;
 
 	[SerializeField, Tooltip( "キャラの最大HP" )]
-	private int m_MaxHp;
+	private float m_MaxHp;
 
 	#endregion
 
@@ -54,7 +54,7 @@ public class CharaController : BattleMainObjectBase
 	/// <summary>
 	/// このキャラを回復する。
 	/// </summary>
-	public virtual void Recover( int recover )
+	public virtual void Recover( float recover )
 	{
 		if( recover <= 0 )
 		{
@@ -68,7 +68,7 @@ public class CharaController : BattleMainObjectBase
 	/// このキャラにダメージを与える。
 	/// HPが0になった場合は死ぬ。
 	/// </summary>
-	public virtual void Damage(int damage )
+	public virtual void Damage(float damage )
 	{
 		if( damage <= 0 )
 		{
@@ -76,6 +76,8 @@ public class CharaController : BattleMainObjectBase
 		}
 
 		m_NowHp = Mathf.Clamp( m_NowHp - damage, 0, m_MaxHp );
+
+        //Debug.Log(string.Format("NowHP={0}", m_NowHp));
 
 		if( m_NowHp == 0 )
 		{
@@ -99,7 +101,18 @@ public class CharaController : BattleMainObjectBase
     /// <param name="targetData">このキャラの衝突情報</param>
     public virtual void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
     {
-        Damage(1);
+        if(attackBullet.GetDamageType() == E_DAMAGE_TYPE.ONCE)
+        {
+            float dmg = attackBullet.GetNowDamage();
+            //Debug.Log(string.Format("Damage = {0}/ONCE!!!", dmg));
+            Damage(dmg);
+        }
+        else
+        {
+            float dmg = attackBullet.GetNowDamage() * Time.deltaTime;
+            //Debug.Log(string.Format("Damage = {0}/PER_SEC!!!", dmg));
+            Damage(dmg);
+        }
     }
 
     /// <summary>
