@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7385959050771993379}
   - component: {fileID: 7127802383861231407}
-  - component: {fileID: 1199024672658610663}
+  - component: {fileID: 7857057817741711144}
   m_Layer: 0
   m_Name: SmasherBombLaser
   m_TagString: Untagged
@@ -236,7 +236,7 @@ MonoBehaviour:
   - CollideName: 
     ColliderType: 0
     Transform: {fileID: 1934888808489311888}
---- !u!114 &1199024672658610663
+--- !u!114 &7857057817741711144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,10 +245,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7385959050771993383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d049a34de7cf5841a2a618384eaf3b7, type: 3}
+  m_Script: {fileID: 11500000, guid: b3cdf032af969b541948987206837e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletGroupId: SmasherLaser
+  m_BulletGroupId: SmasherBomb
   m_CanHitOtherBullet: 0
   m_Cycle: 0
 --- !u!1 &7849413727545317481
