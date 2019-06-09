@@ -13,7 +13,7 @@ public class EventTriggerParamSet : ScriptableObject
     public struct EventTriggerParam
     {
         public EventTriggerCondition Condition;
-        public EventContent Content;
+        public EventContent[] Contents;
     }
 
     /// <summary>

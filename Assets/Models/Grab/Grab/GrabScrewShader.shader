@@ -1,22 +1,22 @@
-﻿Shader "Custom/Grab/GrabScrewShader"
+﻿Shader "Custom/Grab/GravityShader"
 {
 	Properties
 	{
-		//_DistortionTex("Distortion Texture(RG)", 2D) = "grey" {}
-		_MixColor("MixColor",Color)=(1,1,1,1)
-		_ScrewPower("Screw Power", Float) = 0
+		_MixColor("MixColor", Color) = (1,1,1,1)
+		_BlackSize("BlackSize", Range(0,0.999)) = 0.1
+		_Screw("Screw", Range(-4,4)) = 0
 	}
 
-	SubShader
+		SubShader
 	{
-		Tags {"Queue" = "Transparent" "RenderType" = "Transparent" }
+		Tags {"Queue" = "Transparent+100" "RenderType" = "Transparent" }
 
 		Cull Back
-		ZWrite On
+		ZWrite Off
 		ZTest LEqual
 		ColorMask RGB
 
-		GrabPass { "_RenderTexture" }
+		GrabPass { "_GrabPassTexture" }
 
 		Pass {
 
@@ -34,50 +34,47 @@
 			struct v2f {
 				half4 vertex                : SV_POSITION;
 				half2 uv                    : TEXCOORD0;
-				half4 screenPos               : TEXCOORD1;
-				half4 centerPos               : TEXCOORD2;
+				half4 renderRect               : TEXCOORD2;
 			};
 
-			float4  _MixColor;
-			sampler2D _RenderTexture;
-			fixed4  _RenderTexture_TexelSize;
-			half _ScrewPower;
+			sampler2D _GrabPassTexture;
+			fixed4 _MixColor;
+			half _BlackSize;
+			half _Screw;
 
 			v2f vert(appdata v)
 			{
-				v2f o = (v2f)0;
+				v2f o;
 				o.uv = v.texcoord.xy;
 				float scaleX = length(float3(unity_ObjectToWorld[0].x, unity_ObjectToWorld[1].x, unity_ObjectToWorld[2].x));
-				o.vertex = mul(UNITY_MATRIX_P,mul(UNITY_MATRIX_MV, float4(0, 0, 0, 1)) + float4(o.uv-0.5, 0, 0)*scaleX);
-				o.screenPos = ComputeGrabScreenPos(o.vertex);
-				o.centerPos = ComputeGrabScreenPos(mul(UNITY_MATRIX_P, mul(UNITY_MATRIX_MV, float4(0, 0, 0, 1))));
+				half4 originPos = mul(UNITY_MATRIX_MV, float4(0, 0, 0, 1));
+				o.vertex = mul(UNITY_MATRIX_P, originPos + float4(o.uv - 0.5, 0, 0)*scaleX);
+
+				o.renderRect = half4(ComputeGrabScreenPos(mul(UNITY_MATRIX_P, originPos - float4(0.5, -0.5, 0, 0)*scaleX)).xy,
+										ComputeGrabScreenPos(mul(UNITY_MATRIX_P, originPos + float4(0.5, -0.5, 0, 0)*scaleX)).xy) / o.vertex.w;
+
 				return o;
 			}
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				const float TWO_PI = 3.14159;
-
-				// レンダ―画像の解像度計算(単位px
-				half2 pix = 1 / _RenderTexture_TexelSize.xy;
-				// 中心位置と描画点の座標を計算(単位px)
-				half2	center	= i.centerPos	*pix.xy / i.centerPos.w;
-				half2	dest	= i.screenPos		*pix.xy / i.screenPos.w;
+				half r = length(i.uv * 2 - 1);
+				half t = -atan2(i.uv.y * 2 - 1,i.uv.x * 2 - 1);
+				half mul = max(1 - r, 0);
+				t += mul * _Screw;
 
 
-				
-				half dist = max(1 - length(i.uv * 2 - half2(1, 1)), 0);
-				half rot =dist*_ScrewPower;
+				half a = -1 / (_BlackSize - 1);
+				half b = 1 - a;
 
-				half2 d = dest - center;
+				half r2 = min(max(a*r + b,0),r);
+				half t2 = t;
 
-				// 座標変換(単位px)
-				half2 pos = center + half2(d.x*cos(rot)-d.y*sin(rot),d.x*sin(rot)+d.y*cos(rot));
 
-				// 中心からの距離に応じで乗算色の強度を設定
-				fixed3 mixCol = _MixColor.xyz*dist + fixed3(1, 1, 1)*(1-dist);
+				half2 pos = (i.renderRect.zw + i.renderRect.xy) / 2 + half2(cos(t2), sin(t2)) * r2 * (i.renderRect.zw - i.renderRect.xy)*0.5;
 
-				return  tex2D(_RenderTexture, pos/ pix)*fixed4(mixCol,1);
+
+				return  fixed4(     tex2D(_GrabPassTexture, pos).xyz*(fixed3(1,1,1)*(1-mul)+_MixColor.xyz*mul)     *ceil(min(r2,1)),1);
 			}
 			ENDCG
 		}

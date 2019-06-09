@@ -18,7 +18,7 @@ public class ItemController : BattleMainObjectBase
     private int m_Point;
 
     [SerializeField]
-    private Transform m_LookCameraTransform;
+    private Transform m_ViewTransform;
 
 
 
@@ -258,12 +258,12 @@ public class ItemController : BattleMainObjectBase
             m_NowRotateAngle = 0;
         }
 
-        if (m_LookCameraTransform != null)
+        if (m_ViewTransform != null)
         {
-            var angle = m_LookCameraTransform.localEulerAngles;
-            angle.y = 180;
+            var angle = m_ViewTransform.localEulerAngles;
+            angle.y = 0;
             angle.z = m_NowRotateAngle;
-            m_LookCameraTransform.localEulerAngles = angle;
+            m_ViewTransform.localEulerAngles = angle;
         }
     }
 

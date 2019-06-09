@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// BattleMainのイベントトリガを管理するマネージャ。
@@ -31,6 +32,12 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     private List<EventTriggerParamSet.EventTriggerParam> m_GotoDestroyEventParams;
 
     private EventTriggerTimePeriod m_GameStartTimePeriod;
+
+    private List<EventContent> m_WaitExecuteParams;
+
+    private List<EventControllableScript> m_UpdateScripts;
+
+    private List<EventControllableScript> m_GotoDestroyScripts;
 
     #endregion
 
@@ -78,6 +85,11 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         m_EventParams = new List<EventTriggerParamSet.EventTriggerParam>();
         m_GotoDestroyEventParams = new List<EventTriggerParamSet.EventTriggerParam>();
         m_EventParams.AddRange(m_ParamSet.GetParams());
+
+        m_WaitExecuteParams = new List<EventContent>();
+
+        m_UpdateScripts = new List<EventControllableScript>();
+        m_GotoDestroyScripts = new List<EventControllableScript>();
     }
 
     public override void OnFinalize()
@@ -103,16 +115,61 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     {
         base.OnUpdate();
 
-        foreach (var param in m_EventParams)
+        // 条件判定
+        for (int i = 0; i < m_EventParams.Count; i++)
         {
-            if (IsMeetCondition(param.Condition))
+            var param = m_EventParams[i];
+            if (IsMeetCondition(ref param.Condition))
             {
-                ExecuteEvent(param.Content);
-                m_GotoDestroyEventParams.Add(param);
+                RegistEvent(param.Contents);
+                m_GotoDestroyEventParams.Add(m_EventParams[i]);
             }
         }
 
         DestroyEventTrigger();
+
+        // イベント実行
+        foreach(var param in m_WaitExecuteParams)
+        {
+            ExecuteEvent(param);
+        }
+
+        m_WaitExecuteParams.Clear();
+
+        // スクリプト実行
+        foreach(var script in m_UpdateScripts)
+        {
+            if (script == null)
+            {
+                continue;
+            }
+
+            if (script.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                script.OnStart();
+                script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+            }
+
+            script.OnUpdate();
+        }
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        // スクリプト実行
+        foreach (var script in m_UpdateScripts)
+        {
+            if (script == null)
+            {
+                continue;
+            }
+
+            script.OnLateUpdate();
+        }
+
+        DestroyScript();
     }
 
     public override void OnFixedUpdate()
@@ -123,9 +180,38 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         {
             period.OnFixedUpdate();
         }
+
+        // スクリプト実行
+        foreach (var script in m_UpdateScripts)
+        {
+            if (script == null)
+            {
+                continue;
+            }
+
+            script.OnFixedUpdate();
+        }
     }
 
+    /// <summary>
+    /// EventParamを追加する。
+    /// </summary>
+    public void AddEventParam(EventTriggerParamSet.EventTriggerParam param)
+    {
+        var condition = param.Condition;
+        if (!condition.IsSingleCondition && condition.Conditions == null)
+        {
+            return;
+        }
 
+        var contents = param.Contents;
+        if (contents == null || contents.Length < 1)
+        {
+            return;
+        }
+
+        m_EventParams.Add(param);
+    }
 
     /// <summary>
     /// int型イベント変数の値を取得する。
@@ -230,23 +316,23 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// <summary>
     /// 条件を満たしているかどうかを判定する。
     /// </summary>
-    private bool IsMeetCondition(EventTriggerCondition condition)
+    public bool IsMeetCondition(ref EventTriggerCondition condition)
     {
         bool result = false;
         if (condition.IsSingleCondition)
         {
             switch (condition.VariableType)
             {
-                case EventTriggerCondition.VARIABLE_TYPE.INT:
+                case EventTriggerCondition.E_VARIABLE_TYPE.INT:
                     result = CompareInt(condition);
                     break;
-                case EventTriggerCondition.VARIABLE_TYPE.FLOAT:
+                case EventTriggerCondition.E_VARIABLE_TYPE.FLOAT:
                     result = CompareFloat(condition);
                     break;
-                case EventTriggerCondition.VARIABLE_TYPE.BOOL:
+                case EventTriggerCondition.E_VARIABLE_TYPE.BOOL:
                     result = CompareBool(condition);
                     break;
-                case EventTriggerCondition.VARIABLE_TYPE.TIME_PERIOD:
+                case EventTriggerCondition.E_VARIABLE_TYPE.TIME_PERIOD:
                     result = CompareTimePeriod(condition);
                     break;
             }
@@ -254,17 +340,18 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         else
         {
             // 複数条件の時の初期値
-            result = condition.MultiConditionType == EventTriggerCondition.MULTI_CONDITION_TYPE.AND;
+            result = condition.MultiConditionType == EventTriggerCondition.E_MULTI_CONDITION_TYPE.AND;
 
-            foreach(var subCondition in condition.Conditions)
+            for (int i = 0; i < condition.Conditions.Length; i++)
             {
-                bool isMeet = IsMeetCondition(subCondition);
+                bool isMeet = IsMeetCondition(ref condition.Conditions[i]);
 
-                if (condition.MultiConditionType == EventTriggerCondition.MULTI_CONDITION_TYPE.OR && isMeet)
+                if (condition.MultiConditionType == EventTriggerCondition.E_MULTI_CONDITION_TYPE.OR && isMeet)
                 {
                     result = true;
                     break;
-                } else if (condition.MultiConditionType == EventTriggerCondition.MULTI_CONDITION_TYPE.AND && !isMeet)
+                }
+                else if (condition.MultiConditionType == EventTriggerCondition.E_MULTI_CONDITION_TYPE.AND && !isMeet)
                 {
                     result = false;
                     break;
@@ -294,17 +381,17 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
 
         switch (condition.CompareType)
         {
-            case EventTriggerCondition.COMPARE_TYPE.EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.EQUAL:
                 return value == condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.NOT_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.LESS_THAN:
+            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN:
                 return value < condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.LESS_THAN_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN_EQUAL:
                 return value <= condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.MORE_THAN:
+            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN:
                 return value > condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.MORE_THAN_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN_EQUAL:
                 return value >= condition.CompareValue;
         }
 
@@ -325,17 +412,17 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
 
         switch (condition.CompareType)
         {
-            case EventTriggerCondition.COMPARE_TYPE.EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.EQUAL:
                 return value == condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.NOT_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.LESS_THAN:
+            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN:
                 return value < condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.LESS_THAN_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN_EQUAL:
                 return value <= condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.MORE_THAN:
+            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN:
                 return value > condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.MORE_THAN_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN_EQUAL:
                 return value >= condition.CompareValue;
         }
 
@@ -356,9 +443,9 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
 
         switch (condition.BoolCompareType)
         {
-            case EventTriggerCondition.BOOL_COMPARE_TYPE.EQUAL:
+            case EventTriggerCondition.E_BOOL_COMPARE_TYPE.EQUAL:
                 return value == condition.BoolCompareValue;
-            case EventTriggerCondition.BOOL_COMPARE_TYPE.NOT_EQUAL:
+            case EventTriggerCondition.E_BOOL_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.BoolCompareValue;
         }
 
@@ -379,24 +466,123 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         var value = period.GetPeriod();
         switch (condition.CompareType)
         {
-            case EventTriggerCondition.COMPARE_TYPE.EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.EQUAL:
                 return value == condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.NOT_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.LESS_THAN:
+            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN:
                 return value < condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.LESS_THAN_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN_EQUAL:
                 return value <= condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.MORE_THAN:
+            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN:
                 return value > condition.CompareValue;
-            case EventTriggerCondition.COMPARE_TYPE.MORE_THAN_EQUAL:
+            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN_EQUAL:
                 return value >= condition.CompareValue;
         }
         return false;
     }
 
-    private void ExecuteEvent(EventContent content)
+    /// <summary>
+    /// イベントを登録する。
+    /// </summary>
+    private void RegistEvent(EventContent[] contents)
     {
+        if (contents == null)
+        {
+            return;
+        }
 
+        for(int i=0;i<contents.Length;i++)
+        {
+            var content = contents[i];
+            if (content.ExecuteTiming == EventContent.E_EXECUTE_TIMING.IMMEDIATE)
+            {
+                m_WaitExecuteParams.Add(content);
+            } else
+            {
+                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, ()=> {
+                    m_WaitExecuteParams.Add(content);
+                });
+
+                BattleMainTimerManager.Instance.RegistTimer(timer);
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// イベントを実行する。
+    /// </summary>
+    public void ExecuteEvent(EventContent eventContent)
+    {
+        switch(eventContent.EventType)
+        {
+            case EventContent.E_EVENT_TYPE.APPER_ENEMY:
+                EnemyCharaManager.Instance.CreateEnemyFromEnemyParam(eventContent.ApperEnemyIndex);
+                break;
+            case EventContent.E_EVENT_TYPE.CONTROL_CAMERA:
+                break;
+            case EventContent.E_EVENT_TYPE.CONTROL_OBJECT:
+                break;
+            case EventContent.E_EVENT_TYPE.CONTROL_BGM:
+                ExecuteControlBgm(eventContent.ControlBgmParam);
+                break;
+            case EventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
+                break;
+            case EventContent.E_EVENT_TYPE.OPERATE_TIME_PERIOD:
+                break;
+            case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
+                ExecuteCallScript(eventContent.ScriptName, eventContent.ScriptArguments);
+                break;
+        }
+    }
+
+    private void ExecuteControlBgm(ControlBgmParam param)
+    {
+        if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
+        {
+            FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
+        }
+        else
+        {
+            FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+        }
+    }
+
+    private void ExecuteCallScript(string scriptName, ArgumentVariable[] args)
+    {
+        Type type = Type.GetType(scriptName);
+
+        if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
+        {
+            return;
+        }
+
+        var script = (EventControllableScript)Activator.CreateInstance(type);
+        m_UpdateScripts.Add(script);
+        script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+        script.OnInitialize();
+    }
+
+    public void CheckDestroyScript(EventControllableScript script)
+    {
+        if (script == null || !m_UpdateScripts.Contains(script) || m_GotoDestroyScripts.Contains(script))
+        {
+            return;
+        }
+
+        m_GotoDestroyScripts.Add(script);
+        script.SetCycle(E_OBJECT_CYCLE.STANDBY_DESTROYED);
+    }
+
+    private void DestroyScript()
+    {
+        foreach(var script in m_GotoDestroyScripts)
+        {
+            m_UpdateScripts.Remove(script);
+            script.OnFinalize();
+        }
+
+        m_GotoDestroyScripts.Clear();
     }
 }

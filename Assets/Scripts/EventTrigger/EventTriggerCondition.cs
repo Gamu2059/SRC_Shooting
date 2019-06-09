@@ -9,7 +9,7 @@ using System;
 [Serializable]
 public struct EventTriggerCondition
 {
-    public enum VARIABLE_TYPE
+    public enum E_VARIABLE_TYPE
     {
         INT,
         FLOAT,
@@ -17,7 +17,7 @@ public struct EventTriggerCondition
         TIME_PERIOD,
     }
 
-    public enum COMPARE_TYPE
+    public enum E_COMPARE_TYPE
     {
         EQUAL,
         NOT_EQUAL,
@@ -27,13 +27,13 @@ public struct EventTriggerCondition
         MORE_THAN_EQUAL,
     }
 
-    public enum BOOL_COMPARE_TYPE
+    public enum E_BOOL_COMPARE_TYPE
     {
         EQUAL,
         NOT_EQUAL,
     }
 
-    public enum MULTI_CONDITION_TYPE
+    public enum E_MULTI_CONDITION_TYPE
     {
         OR,
         AND,
@@ -49,19 +49,19 @@ public struct EventTriggerCondition
     /// </summary>
     public bool IsSingleCondition;
 
-    public VARIABLE_TYPE VariableType;
+    public E_VARIABLE_TYPE VariableType;
 
     public string VariableName;
 
-    public COMPARE_TYPE CompareType;
+    public E_COMPARE_TYPE CompareType;
 
-    public BOOL_COMPARE_TYPE BoolCompareType;
+    public E_BOOL_COMPARE_TYPE BoolCompareType;
 
     public float CompareValue;
 
     public bool BoolCompareValue;
 
-    public MULTI_CONDITION_TYPE MultiConditionType;
+    public E_MULTI_CONDITION_TYPE MultiConditionType;
 
     public EventTriggerCondition[] Conditions;
 }

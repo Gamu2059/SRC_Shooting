@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Audio;
 using System.Linq;
+using DG.Tweening;
 
 #if UNITY_EDITOR
 	using UnityEditor;
