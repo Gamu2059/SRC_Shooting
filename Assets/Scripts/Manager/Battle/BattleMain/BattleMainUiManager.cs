@@ -31,7 +31,7 @@ public class BattleMainUiManager : BattleSingletonMonoBehavior<BattleMainUiManag
 
     private void SubscribeUiEvent()
     {
-        BattleManager.Instance.GetScorePoperty().Subscribe((x)=>UpdateScore(x));
+        //BattleManager.Instance.GetScorePoperty().Subscribe((x)=>UpdateScore(x));
     }
 
 	public void ShowGameOver()

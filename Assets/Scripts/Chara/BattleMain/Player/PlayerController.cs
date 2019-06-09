@@ -176,23 +176,25 @@ public class PlayerController : CharaController
         {
             case E_ITEM_TYPE.SMALL_SCORE:
             case E_ITEM_TYPE.BIG_SCORE:
-                BattleManager.Instance.AddScore(targetItem.GetPoint());
+                PlayerCharaManager.Instance.AddScore(targetItem.GetPoint());
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
             case E_ITEM_TYPE.BIG_SCORE_UP:
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
             case E_ITEM_TYPE.BIG_EXP:
+                PlayerCharaManager.Instance.AddExp(targetItem.GetPoint());
                 break;
             case E_ITEM_TYPE.SMALL_BOMB:
             case E_ITEM_TYPE.BIG_BOMB:
+                PlayerCharaManager.Instance.AddBombCharge(targetItem.GetPoint());
                 break;
         }
     }
 
     public int GetLevel()
 	{
-		return m_Lv;
+        return PlayerCharaManager.Instance.GetCurrentLevel().Value;
 	}
 
 	protected virtual void UpdateProtector()

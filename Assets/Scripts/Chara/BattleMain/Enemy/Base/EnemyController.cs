@@ -162,6 +162,7 @@ public class EnemyController : CharaController
 
         DestroyAllTimer();
         EnemyCharaManager.Instance.DestroyEnemy(this);
+
         ItemManager.Instance.CreateItem(transform.localPosition, m_ItemCreateParam);
     }
 }

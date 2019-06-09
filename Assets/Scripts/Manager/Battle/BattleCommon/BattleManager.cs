@@ -54,15 +54,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private E_BATTLE_STATUS m_BattleStatus;
 
     [SerializeField]
-    private IntReactiveProperty m_Score;
-
-    [SerializeField]
-    private IntReactiveProperty m_BestScore;
-
-    [SerializeField]
-    private BoolReactiveProperty m_IsBestScore;
-
-    [SerializeField]
     public bool m_PlayerNotDead;
 
     /// <summary>
@@ -89,20 +80,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     public List<BattleControllableMonoBehavior> GetBattleCommandManegers()
     {
         return m_BattleCommandManagers;
-    }
-
-
-    public IntReactiveProperty GetScorePoperty()
-    {
-        return m_Score;
-    }
-    public IntReactiveProperty GetBestScorePoperty()
-    {
-        return m_BestScore;
-    }
-    public BoolReactiveProperty GetIsBestScorePoperty()
-    {
-        return m_IsBestScore;
     }
 
     /// <summary>
@@ -255,47 +232,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         DetachBattleMainInputAction();
 
-        if (m_IsBestScore.Value)
-        {
-            PlayerPrefs.SetInt("BestScore", m_BestScore.Value);
-            PlayerPrefs.Save();
-        }
-
         BattleMainUiManager.Instance.ShowGameClear();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
             BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
         });
         TimerManager.Instance.RegistTimer(timer);
-    }
-
-    public void AddScore(int score)
-    {
-        m_Score.Value += score;
-
-        if (m_Score.Value > m_BestScore.Value)
-        {
-            if (!m_IsBestScore.Value)
-            {
-                m_IsBestScore.Value = true;
-            }
-
-            m_BestScore.Value = m_Score.Value;
-        }
-    }
-
-
-    private void InitReactiveProperty()
-    {
-        m_BestScore = new IntReactiveProperty(0);
-        m_Score = new IntReactiveProperty(0);
-        m_IsBestScore = new BoolReactiveProperty(false);
-    }
-
-    private void InitScore()
-    {
-        m_Score.Value = 0;
-        m_BestScore.Value = PlayerPrefs.GetInt("BestScore", 0);
     }
 
     /// <summary>
