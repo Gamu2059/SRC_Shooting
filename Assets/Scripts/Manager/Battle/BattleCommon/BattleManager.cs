@@ -33,6 +33,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         TRANSITION_MAIN,
     }
 
+    #region Field Inspector
+
     /// <summary>
     /// メインのバトル画面のマネージャーリスト。
     /// </summary>
@@ -56,6 +58,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     [SerializeField]
     public bool m_PlayerNotDead;
 
+    #endregion
+
+    #region Field
+
     /// <summary>
     /// 状態遷移のリクエストを受けたかどうか。
     /// </summary>
@@ -65,6 +71,20 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// リクエストされた遷移先状態。
     /// </summary>
     private E_BATTLE_STATUS m_RequestedBattleStatus;
+
+    /// <summary>
+    /// 全てのマネージャが初期化された後のコールバック
+    /// </summary>
+    public Action m_OnInitManagers;
+
+    /// <summary>
+    /// 全てのマネージャがスタートした後のコールバック
+    /// </summary>
+    public Action m_OnStartManagers;
+
+    #endregion
+
+    #region Get & Set
 
     /// <summary>
     /// メインのバトル画面のマネージャーリストを取得する。
@@ -82,16 +102,21 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         return m_BattleCommandManagers;
     }
 
+    #endregion
+
     /// <summary>
     /// シーン読み込み時に呼び出される。
     /// </summary>
-	public override void OnInitialize()
+    public override void OnInitialize()
     {
         base.OnInitialize();
 
         EchoBulletIndexGenerater.OnInitialize();
         m_BattleMainManagers.ForEach(m => m.OnInitialize());
         m_BattleCommandManagers.ForEach(m => m.OnInitialize());
+
+        EventUtility.SafeInvokeAction(m_OnInitManagers);
+        m_OnInitManagers = null;
     }
 
     /// <summary>
@@ -116,6 +141,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleMainManagers.ForEach(m => m.OnStart());
         m_BattleCommandManagers.ForEach(m => m.OnStart());
 
+        EventUtility.SafeInvokeAction(m_OnStartManagers);
+        m_OnStartManagers = null;
+
         if (m_InitMode == E_BATTLE_STATUS.MAIN || m_InitMode == E_BATTLE_STATUS.TRANSITION_MAIN)
         {
             TransitionForceBattleMain();
@@ -123,22 +151,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         else
         {
             TransitionForceBattleCommand();
-        }
-
-        CoroutineManager.Instance.RegistCoroutine(TestC());
-    }
-
-    private IEnumerator TestC()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            bool isEnd = false;
-            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, ()=> isEnd = true);
-            BattleMainTimerManager.Instance.RegistTimer(timer);
-            while(!isEnd)
-            {
-                yield return null;
-            }
         }
     }
 
@@ -208,6 +220,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
                 m_BattleCommandManagers.ForEach(m => m.OnFixedUpdate());
                 break;
         }
+    }
+
+    /// <summary>
+    /// ゲームを開始する。
+    /// </summary>
+    public void GameStart()
+    {
+
     }
 
     /// <summary>

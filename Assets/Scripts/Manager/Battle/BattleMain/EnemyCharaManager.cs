@@ -301,8 +301,12 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	/// </summary>
 	public void DestroyAllEnemy()
 	{
-		m_GotoDestroyEnemies.AddRange( m_UpdateEnemies );
-		m_UpdateEnemies.Clear();
+        foreach(var enemy in m_UpdateEnemies)
+        {
+            DestroyEnemy(enemy);
+        }
+
+        m_UpdateEnemies.Clear();
 	}
 
 	/// <summary>
@@ -366,8 +370,8 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
             eventParam.Condition = condition;
 
             EventContent content = new EventContent();
-            content.EventType = EventContent.E_EVENT_TYPE.APPER_ENEMY;
-            content.ApperEnemyIndex = i;
+            content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
+            content.AppearEnemyIndex = i;
 
             eventParam.Contents = new []{content};
 

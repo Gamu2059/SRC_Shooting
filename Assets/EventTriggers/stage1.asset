@@ -12,12 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a798c51e6790444418cfeda08c32862d, type: 3}
   m_Name: stage1
   m_EditorClassIdentifier: 
-  m_Variables:
-  - Type: 0
-    Name: 
-    IntInitValue: 0
-    FloatInitValue: 0
-    BoolInitValue: 0
+  m_Variables: []
   m_TimePeriodNames:
   - 
   m_Params:
@@ -25,7 +20,7 @@ MonoBehaviour:
       IsReverse: 0
       IsSingleCondition: 1
       VariableType: 3
-      VariableName: Game Start
+      VariableName: Battle Loaded
       CompareType: 5
       BoolCompareType: 0
       CompareValue: 0
@@ -36,18 +31,146 @@ MonoBehaviour:
     - EventType: 3
       ExecuteTiming: 0
       DelayExecuteTime: 0
-      ApperEnemyIndex: 0
+      AppearEnemyIndex: 0
+      CameraType: 0
       CameraTimelineParam:
         TimelineAsset: {fileID: 0}
-        BindParams: []
-      UsePrefab: 0
-      ControllableObject: {fileID: 0}
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
+      UsePlayableObjectPrefab: 0
+      PlayableObjectPrefab: {fileID: 0}
+      RegisteredPlayableName: 
       ObjectTimelineParam:
         TimelineAsset: {fileID: 0}
-        BindParams: []
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
       ControlBgmParam:
         ControlType: 0
         BgmClip: {fileID: 8300000, guid: 5174ecb4b8243c541b08c3d35376b18d, type: 3}
+        FadeOutDuration: 0
+        FadeInStartOffset: 0
+        FadeInDuration: 1
+      OperateVariableParam:
+        VariableType: 0
+        VariableName: 
+        OperandType: 0
+        BoolOperandType: 0
+        OperandValueType: 0
+        OperandValueName: 
+        OperandValue: 0
+        BoolOperandValue: 0
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: 
+      ScriptArguments: []
+    - EventType: 1
+      ExecuteTiming: 0
+      DelayExecuteTime: 0
+      AppearEnemyIndex: 0
+      CameraType: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 11400000, guid: cca94f87871e2e34f8823f0d05c9b1d4,
+          type: 2}
+        TrackBindParams: []
+        ReferenceBindParams:
+        - ReferenceName: BackEnd Camera
+          BindTargetName: BackEnd Camera
+          BindTargetComponentType: Transform
+        IsDestroyEndTimeline: 0
+      UsePlayableObjectPrefab: 0
+      PlayableObjectPrefab: {fileID: 0}
+      RegisteredPlayableName: 
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
+      ControlBgmParam:
+        ControlType: 0
+        BgmClip: {fileID: 0}
+        FadeOutDuration: 0
+        FadeInStartOffset: 0
+        FadeInDuration: 1
+      OperateVariableParam:
+        VariableType: 0
+        VariableName: 
+        OperandType: 0
+        BoolOperandType: 0
+        OperandValueType: 0
+        OperandValueName: 
+        OperandValue: 0
+        BoolOperandValue: 0
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: 
+      ScriptArguments: []
+    - EventType: 7
+      ExecuteTiming: 1
+      DelayExecuteTime: 2
+      AppearEnemyIndex: 0
+      CameraType: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 0}
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
+      UsePlayableObjectPrefab: 0
+      PlayableObjectPrefab: {fileID: 0}
+      RegisteredPlayableName: 
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
+      ControlBgmParam:
+        ControlType: 0
+        BgmClip: {fileID: 0}
+        FadeOutDuration: 0
+        FadeInStartOffset: 0
+        FadeInDuration: 1
+      OperateVariableParam:
+        VariableType: 0
+        VariableName: 
+        OperandType: 0
+        BoolOperandType: 0
+        OperandValueType: 0
+        OperandValueName: 
+        OperandValue: 0
+        BoolOperandValue: 0
+      OperateTimePeriodParam:
+        TimePeriodName: 
+        OperandType: 0
+      ScriptName: 
+      ScriptArguments: []
+    - EventType: 1
+      ExecuteTiming: 1
+      DelayExecuteTime: 2
+      AppearEnemyIndex: 0
+      CameraType: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
+          type: 2}
+        TrackBindParams: []
+        ReferenceBindParams:
+        - ReferenceName: BackEnd Camera
+          BindTargetName: BackEnd Camera
+          BindTargetComponentType: Transform
+        IsDestroyEndTimeline: 0
+      UsePlayableObjectPrefab: 0
+      PlayableObjectPrefab: {fileID: 0}
+      RegisteredPlayableName: 
+      ObjectTimelineParam:
+        TimelineAsset: {fileID: 0}
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
+      ControlBgmParam:
+        ControlType: 0
+        BgmClip: {fileID: 0}
         FadeOutDuration: 0
         FadeInStartOffset: 0
         FadeInDuration: 1
@@ -69,29 +192,39 @@ MonoBehaviour:
       IsReverse: 0
       IsSingleCondition: 1
       VariableType: 3
-      VariableName: Game Start
+      VariableName: Battle Loaded
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 12
+      CompareValue: 0
       BoolCompareValue: 0
       MultiConditionType: 0
       Conditions: []
     Contents:
-    - EventType: 3
+    - EventType: 1
       ExecuteTiming: 0
       DelayExecuteTime: 0
-      ApperEnemyIndex: 0
+      AppearEnemyIndex: 0
+      CameraType: 0
       CameraTimelineParam:
-        TimelineAsset: {fileID: 0}
-        BindParams: []
-      UsePrefab: 0
-      ControllableObject: {fileID: 0}
+        TimelineAsset: {fileID: 11400000, guid: cca94f87871e2e34f8823f0d05c9b1d4,
+          type: 2}
+        TrackBindParams: []
+        ReferenceBindParams:
+        - ReferenceName: BackEnd Camera
+          BindTargetName: BackEnd Camera
+          BindTargetComponentType: Transform
+        IsDestroyEndTimeline: 0
+      UsePlayableObjectPrefab: 0
+      PlayableObjectPrefab: {fileID: 0}
+      RegisteredPlayableName: 
       ObjectTimelineParam:
         TimelineAsset: {fileID: 0}
-        BindParams: []
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
       ControlBgmParam:
         ControlType: 0
-        BgmClip: {fileID: 8300000, guid: f87f5cb327ebf9843be3c1cd14c42269, type: 3}
+        BgmClip: {fileID: 0}
         FadeOutDuration: 1
         FadeInStartOffset: 0
         FadeInDuration: 1
@@ -124,15 +257,21 @@ MonoBehaviour:
     - EventType: 6
       ExecuteTiming: 0
       DelayExecuteTime: 0
-      ApperEnemyIndex: 0
+      AppearEnemyIndex: 0
+      CameraType: 0
       CameraTimelineParam:
         TimelineAsset: {fileID: 0}
-        BindParams: []
-      UsePrefab: 0
-      ControllableObject: {fileID: 0}
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
+      UsePlayableObjectPrefab: 0
+      PlayableObjectPrefab: {fileID: 0}
+      RegisteredPlayableName: 
       ObjectTimelineParam:
         TimelineAsset: {fileID: 0}
-        BindParams: []
+        TrackBindParams: []
+        ReferenceBindParams: []
+        IsDestroyEndTimeline: 0
       ControlBgmParam:
         ControlType: 0
         BgmClip: {fileID: 8300000, guid: f87f5cb327ebf9843be3c1cd14c42269, type: 3}

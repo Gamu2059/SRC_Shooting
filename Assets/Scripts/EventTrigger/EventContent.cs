@@ -13,7 +13,7 @@ public struct EventContent
         /// <summary>
         /// 敵の出現制御
         /// </summary>
-        APPER_ENEMY,
+        APPEAR_ENEMY,
 
         /// <summary>
         /// カメラ制御
@@ -44,11 +44,31 @@ public struct EventContent
         /// 任意のスクリプトの呼び出し
         /// </summary>
         CALL_SCRIPT,
+
+        /// <summary>
+        /// ゲーム開始
+        /// </summary>
+        GAME_START,
+
+        /// <summary>
+        /// ゲームクリア
+        /// </summary>
+        GAME_CLEAR,
     }
 
+    /// <summary>
+    /// 実行タイミング
+    /// </summary>
     public enum E_EXECUTE_TIMING
     {
+        /// <summary>
+        /// 遅延を待たずに即座に実行する
+        /// </summary>
         IMMEDIATE,
+
+        /// <summary>
+        /// 遅延を待つ
+        /// </summary>
         DELAY,
     }
 
@@ -63,21 +83,31 @@ public struct EventContent
     [Tooltip("実行タイミングをDELAYにしている場合、何秒後に実行するか")]
     public float DelayExecuteTime;
 
-    [Header("APPER_ENEMYのパラメータ")]
+    [Header("APPEAR_ENEMYのパラメータ")]
 
     [Tooltip("出現させる敵のリストでのインデックス")]
-    public int ApperEnemyIndex;
+    public int AppearEnemyIndex;
 
     [Header("CONTROL_CAMERAのパラメータ")]
 
+    [Tooltip("カメラタイプ")]
+    public E_CAMERA_TYPE CameraType;
+
+    [Tooltip("カメラのタイムラインパラメータ")]
     public TimelineParam CameraTimelineParam;
 
     [Header("CONTROL_OBJECTのパラメータ")]
 
-    public bool UsePrefab;
+    [Tooltip("プレハブを使うかどうか")]
+    public bool UsePlayableObjectPrefab;
 
-    public GameObject ControllableObject;
+    [Tooltip("プレハブ")]
+    public BattleMainPlayableBase PlayableObjectPrefab;
 
+    [Tooltip("EventManagerに登録されているオブジェクトの名前")]
+    public string RegisteredPlayableName;
+
+    [Tooltip("オブジェクトのタイムラインパラメータ")]
     public TimelineParam ObjectTimelineParam;
 
     [Header("CONTROL_BGM")]

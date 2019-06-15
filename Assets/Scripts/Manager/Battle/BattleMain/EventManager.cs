@@ -8,7 +8,9 @@ using System;
 /// </summary>
 public class EventManager : BattleSingletonMonoBehavior<EventManager>
 {
+    public const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     public const string GAME_START_TIME_PERIOD_NAME = "Game Start";
+    public const string GAME_CLEAR_TIME_PERIOD_NAME = "Game Clear";
 
     #region Field Inspector
 
@@ -31,7 +33,9 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     private List<EventTriggerParamSet.EventTriggerParam> m_EventParams;
     private List<EventTriggerParamSet.EventTriggerParam> m_GotoDestroyEventParams;
 
+    private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
     private EventTriggerTimePeriod m_GameStartTimePeriod;
+    private EventTriggerTimePeriod m_GameClearTimePeriod;
 
     private List<EventContent> m_WaitExecuteParams;
 
@@ -74,8 +78,12 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
             }
         }
 
+        m_BattleLoadedTimePeriod = new EventTriggerTimePeriod();
         m_GameStartTimePeriod = new EventTriggerTimePeriod();
+        m_GameClearTimePeriod = new EventTriggerTimePeriod();
+        m_TimePeriods.Add(BATTLE_LOADED_TIME_PRERIOD_NAME, m_BattleLoadedTimePeriod);
         m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, m_GameStartTimePeriod);
+        m_TimePeriods.Add(GAME_CLEAR_TIME_PERIOD_NAME, m_GameClearTimePeriod);
 
         foreach (var periodName in m_ParamSet.GetTimePeriodNames())
         {
@@ -108,7 +116,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     {
         base.OnStart();
 
-        m_GameStartTimePeriod.CountStart();
+        m_BattleLoadedTimePeriod.CountStart();
     }
 
     public override void OnUpdate()
@@ -129,7 +137,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         DestroyEventTrigger();
 
         // イベント実行
-        foreach(var param in m_WaitExecuteParams)
+        foreach (var param in m_WaitExecuteParams)
         {
             ExecuteEvent(param);
         }
@@ -137,7 +145,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         m_WaitExecuteParams.Clear();
 
         // スクリプト実行
-        foreach(var script in m_UpdateScripts)
+        foreach (var script in m_UpdateScripts)
         {
             if (script == null)
             {
@@ -492,15 +500,17 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
             return;
         }
 
-        for(int i=0;i<contents.Length;i++)
+        for (int i = 0; i < contents.Length; i++)
         {
             var content = contents[i];
             if (content.ExecuteTiming == EventContent.E_EXECUTE_TIMING.IMMEDIATE)
             {
                 m_WaitExecuteParams.Add(content);
-            } else
+            }
+            else
             {
-                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, ()=> {
+                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, () =>
+                {
                     m_WaitExecuteParams.Add(content);
                 });
 
@@ -515,14 +525,16 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// </summary>
     public void ExecuteEvent(EventContent eventContent)
     {
-        switch(eventContent.EventType)
+        switch (eventContent.EventType)
         {
-            case EventContent.E_EVENT_TYPE.APPER_ENEMY:
-                EnemyCharaManager.Instance.CreateEnemyFromEnemyParam(eventContent.ApperEnemyIndex);
+            case EventContent.E_EVENT_TYPE.APPEAR_ENEMY:
+                ExecuteApperEnemy(eventContent.AppearEnemyIndex);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_CAMERA:
+                ExecuteControlCamera(eventContent);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_OBJECT:
+                ExecuteControlObject(eventContent);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_BGM:
                 ExecuteControlBgm(eventContent.ControlBgmParam);
@@ -534,9 +546,60 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
             case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
                 ExecuteCallScript(eventContent.ScriptName, eventContent.ScriptArguments);
                 break;
+            case EventContent.E_EVENT_TYPE.GAME_START:
+                ExecuteGameStart();
+                break;
+            case EventContent.E_EVENT_TYPE.GAME_CLEAR:
+                ExecuteGameClear();
+                break;
         }
     }
 
+    /// <summary>
+    /// 敵を出現させる。
+    /// </summary>
+    private void ExecuteApperEnemy(int appearEnemyIndex)
+    {
+        EnemyCharaManager.Instance.CreateEnemyFromEnemyParam(appearEnemyIndex);
+    }
+
+    private void ExecuteControlCamera(EventContent eventContent)
+    {
+        var camera = CameraManager.Instance.GetCameraController(eventContent.CameraType);
+        if (camera != null)
+        {
+            camera.StartTimeline(eventContent.CameraTimelineParam);
+        }
+    }
+
+    /// <summary>
+    /// オブジェクトを制御する。
+    /// </summary>
+    private void ExecuteControlObject(EventContent eventContent)
+    {
+        if (eventContent.UsePlayableObjectPrefab)
+        {
+            var obj = Instantiate(eventContent.PlayableObjectPrefab);
+            PlayableManager.Instance.RegistObject(obj);
+            obj.StartTimeline(eventContent.ObjectTimelineParam);
+        }
+        else
+        {
+            var playables = PlayableManager.Instance.GetUpdateObjects();
+            foreach (var playable in playables)
+            {
+                if (playable.name == eventContent.RegisteredPlayableName)
+                {
+                    playable.StartTimeline(eventContent.ObjectTimelineParam);
+                    break;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// BGMを制御する。
+    /// </summary>
     private void ExecuteControlBgm(ControlBgmParam param)
     {
         if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
@@ -549,6 +612,11 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         }
     }
 
+    /// <summary>
+    /// 任意のスクリプトを実行する。
+    /// </summary>
+    /// <param name="scriptName">スクリプトのクラス名</param>
+    /// <param name="args">実行時引数</param>
     private void ExecuteCallScript(string scriptName, ArgumentVariable[] args)
     {
         Type type = Type.GetType(scriptName);
@@ -564,6 +632,10 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         script.OnInitialize();
     }
 
+    /// <summary>
+    /// スクリプトを破棄する。
+    /// </summary>
+    /// <param name="script"></param>
     public void CheckDestroyScript(EventControllableScript script)
     {
         if (script == null || !m_UpdateScripts.Contains(script) || m_GotoDestroyScripts.Contains(script))
@@ -577,12 +649,30 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
 
     private void DestroyScript()
     {
-        foreach(var script in m_GotoDestroyScripts)
+        foreach (var script in m_GotoDestroyScripts)
         {
             m_UpdateScripts.Remove(script);
             script.OnFinalize();
         }
 
         m_GotoDestroyScripts.Clear();
+    }
+
+    /// <summary>
+    /// ゲーム開始イベントを発行する。
+    /// </summary>
+    private void ExecuteGameStart()
+    {
+        m_GameStartTimePeriod.CountStart();
+        BattleManager.Instance.GameStart();
+    }
+
+    /// <summary>
+    /// ゲームクリアイベントを発行する。
+    /// </summary>
+    private void ExecuteGameClear()
+    {
+        m_GameClearTimePeriod.CountStart();
+        BattleManager.Instance.GameClear();
     }
 }
