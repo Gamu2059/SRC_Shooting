@@ -53,6 +53,9 @@ public class SmasherController : PlayerController
 
     private float bombDelay;
 
+    [SerializeField]
+    private float m_BombRotateAnglespeed;   // ボムの開く速度
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -204,6 +207,8 @@ public class SmasherController : PlayerController
                 bombParam.Position = m_MainShotPosition[i].transform.position - transform.parent.position;
                 var bomb = BulletController.ShotBullet(bombParam, true) as SmasherBomb;
                 bomb.SetOffset(m_MainShotPosition[i].transform.position - transform.parent.position);
+                bomb.SetBombRotateDir(i % 2 == 0? E_BOMB_ROTATE_DIR.LEFT:E_BOMB_ROTATE_DIR.RIGHT);
+                bomb.SetAngleSpeed(m_BombRotateAnglespeed);
             }
 
             bombDelay = 0;
