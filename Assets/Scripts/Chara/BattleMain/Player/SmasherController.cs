@@ -56,6 +56,9 @@ public class SmasherController : PlayerController
     [SerializeField]
     private float m_BombRotateAnglespeed;   // ボムの開く速度
 
+    [SerializeField]
+    private float m_MaxLaserOpenAngle; // レーザーの最大開き角
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -209,6 +212,7 @@ public class SmasherController : PlayerController
                 bomb.SetOffset(m_MainShotPosition[i].transform.position - transform.parent.position);
                 bomb.SetBombRotateDir(i % 2 == 0? E_BOMB_ROTATE_DIR.LEFT:E_BOMB_ROTATE_DIR.RIGHT);
                 bomb.SetAngleSpeed(m_BombRotateAnglespeed);
+                bomb.SetOpenAngle(m_MaxLaserOpenAngle / 2.0f);
             }
 
             bombDelay = 0;
