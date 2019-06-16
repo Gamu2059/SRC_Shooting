@@ -120,7 +120,7 @@ public struct EventContent
 
     [Header("OPERATE_TIME_PERIOD")]
 
-    public OperateTimePeriodParam OperateTimePeriodParam;
+    public string CountStartTimePeriodName;
 
     [Header("CALL_SCRIPT")]
 

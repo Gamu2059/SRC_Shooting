@@ -143,12 +143,9 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
     /// <summary>
     /// ビューポート上の座標からワールド座標に変換する。
     /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
-    public Vector3 GetViewportWorldPoint(float x, float y)
+    public Vector3 GetViewportWorldPoint(float x, float y, E_CAMERA_TYPE cameraType = E_CAMERA_TYPE.BACK_CAMERA)
     {
-        var camera = GetBackCamera();
+        var camera = GetCameraController(cameraType).GetCamera();
         Vector3 farPos = camera.ViewportToWorldPoint(new Vector3(x, y, camera.nearClipPlane));
         Vector3 originPos = camera.transform.position;
         Vector3 dir = (farPos - originPos).normalized;
@@ -158,9 +155,12 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
         return originPos + dir * (h - Vector3.Dot(axis, originPos)) / (Vector3.Dot(axis, dir));
     }
 
-    public Vector2 WorldToViewportPoint(Vector3 worldPosition)
+    /// <summary>
+    /// ワールド座標からビューポート上の座標に変換する。
+    /// </summary>
+    public Vector2 WorldToViewportPoint(Vector3 worldPosition, E_CAMERA_TYPE cameraType = E_CAMERA_TYPE.BACK_CAMERA)
     {
-        var camera = GetBackCamera();
+        var camera = GetCameraController(cameraType).GetCamera();
         return camera.WorldToViewportPoint(worldPosition);
     }
 }

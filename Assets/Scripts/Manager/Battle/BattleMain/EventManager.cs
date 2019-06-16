@@ -305,6 +305,120 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         m_BoolVariables[name] = value;
     }
 
+    /// <summary>
+    /// int型イベント変数を計算する。
+    /// 名前が存在しなければ無視する。
+    /// </summary>
+    public void CalcInt(string name, int value, E_OPERAND_TYPE operandType)
+    {
+        if (m_IntVariables == null || !m_IntVariables.ContainsKey(name))
+        {
+            return;
+        }
+
+        int v = GetInt(name);
+
+        switch (operandType)
+        {
+            case E_OPERAND_TYPE.ADD:
+                SetInt(name, v + value);
+                break;
+            case E_OPERAND_TYPE.SUB:
+                SetInt(name, v - value);
+                break;
+            case E_OPERAND_TYPE.MUL:
+                SetInt(name, v * value);
+                break;
+            case E_OPERAND_TYPE.DIV:
+                SetInt(name, v / value);
+                break;
+            case E_OPERAND_TYPE.MOD:
+                SetInt(name, v % value);
+                break;
+            case E_OPERAND_TYPE.SUBSTITUTE:
+                SetInt(name, value);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// float型イベント変数を計算する。
+    /// 名前が存在しなければ無視する。
+    /// </summary>
+    public void CalcFloat(string name, float value, E_OPERAND_TYPE operandType)
+    {
+        if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(name))
+        {
+            return;
+        }
+
+        float v = GetFloat(name);
+
+        switch (operandType)
+        {
+            case E_OPERAND_TYPE.ADD:
+                SetFloat(name, v + value);
+                break;
+            case E_OPERAND_TYPE.SUB:
+                SetFloat(name, v - value);
+                break;
+            case E_OPERAND_TYPE.MUL:
+                SetFloat(name, v * value);
+                break;
+            case E_OPERAND_TYPE.DIV:
+                SetFloat(name, v / value);
+                break;
+            case E_OPERAND_TYPE.MOD:
+                SetFloat(name, v % value);
+                break;
+            case E_OPERAND_TYPE.SUBSTITUTE:
+                SetFloat(name, value);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// bool型イベント変数を計算する。
+    /// 名前が存在しなければ無視する。
+    /// </summary>
+    public void CalcBool(string name, bool value, E_BOOL_OPERAND_TYPE operandType)
+    {
+        if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(name))
+        {
+            return;
+        }
+
+        bool v = GetBool(name);
+
+        switch (operandType)
+        {
+            case E_BOOL_OPERAND_TYPE.OR:
+                SetBool(name, v || value);
+                break;
+            case E_BOOL_OPERAND_TYPE.AND:
+                SetBool(name, v && value);
+                break;
+            case E_BOOL_OPERAND_TYPE.XOR:
+                SetBool(name, (v && !value) || (!v && value));
+                break;
+            case E_BOOL_OPERAND_TYPE.SUBSTITUTE:
+                SetBool(name, value);
+                break;
+            case E_BOOL_OPERAND_TYPE.NOR:
+                SetBool(name, !(v || value));
+                break;
+            case E_BOOL_OPERAND_TYPE.NAND:
+                SetBool(name, !(v && value));
+                break;
+            case E_BOOL_OPERAND_TYPE.XNOR:
+                SetBool(name, !((v && !value) || (!v && value)));
+                break;
+            case E_BOOL_OPERAND_TYPE.NOT:
+                SetBool(name, !v);
+                break;
+        }
+    }
+
     private void DestroyEventTrigger()
     {
         int count = m_GotoDestroyEventParams.Count;
@@ -523,7 +637,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// <summary>
     /// イベントを実行する。
     /// </summary>
-    public void ExecuteEvent(EventContent eventContent)
+    private void ExecuteEvent(EventContent eventContent)
     {
         switch (eventContent.EventType)
         {
@@ -540,8 +654,10 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
                 ExecuteControlBgm(eventContent.ControlBgmParam);
                 break;
             case EventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
+                ExecuteOperateVariable(eventContent.OperateVariableParam);
                 break;
             case EventContent.E_EVENT_TYPE.OPERATE_TIME_PERIOD:
+                ExecuteOperateTimePeriod(eventContent.CountStartTimePeriodName);
                 break;
             case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
                 ExecuteCallScript(eventContent.ScriptName, eventContent.ScriptArguments);
@@ -563,6 +679,9 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
         EnemyCharaManager.Instance.CreateEnemyFromEnemyParam(appearEnemyIndex);
     }
 
+    /// <summary>
+    /// カメラを制御する。
+    /// </summary>
     private void ExecuteControlCamera(EventContent eventContent)
     {
         var camera = CameraManager.Instance.GetCameraController(eventContent.CameraType);
@@ -613,6 +732,80 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     }
 
     /// <summary>
+    /// 変数を操作する。
+    /// </summary>
+    private void ExecuteOperateVariable(OperateVariableParam param)
+    {
+        switch (param.VariableType)
+        {
+            case E_EVENT_TRIGGER_VARIABLE_TYPE.INT:
+                if (m_IntVariables == null || !m_IntVariables.ContainsKey(param.VariableName))
+                {
+                    Debug.LogError("該当する変数がありません。 type : int, name : " + param.VariableName);
+                    break;
+                }
+
+                int intValue = (int)param.OperandValue;
+
+                if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                {
+                    intValue = GetInt(param.OperandValueName, (int)param.OperandValue);
+                }
+
+                CalcInt(param.VariableName, intValue, param.OperandType);
+                break;
+
+            case E_EVENT_TRIGGER_VARIABLE_TYPE.FLOAT:
+                if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(param.VariableName))
+                {
+                    Debug.LogError("該当する変数がありません。 type : float, name : " + param.VariableName);
+                    break;
+                }
+
+                float floatValue = param.OperandValue;
+
+                if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                {
+                    floatValue = GetFloat(param.OperandValueName, param.OperandValue);
+                }
+
+                CalcFloat(param.VariableName, floatValue, param.OperandType);
+                break;
+
+            case E_EVENT_TRIGGER_VARIABLE_TYPE.BOOL:
+                if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(param.VariableName))
+                {
+                    Debug.LogError("該当する変数がありません。 type : bool, name : " + param.VariableName);
+                    break;
+                }
+
+                bool boolValue = param.BoolOperandValue;
+
+                if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                {
+                    boolValue = GetBool(param.OperandValueName, param.BoolOperandValue);
+                }
+
+                CalcBool(param.VariableName, boolValue, param.BoolOperandType);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// タイムピリオドを操作する。
+    /// </summary>
+    private void ExecuteOperateTimePeriod(string timePeriodName)
+    {
+        if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(timePeriodName))
+        {
+            Debug.LogError("該当するタイムピリオドがありません。 TimePeriodName : " + timePeriodName);
+            return;
+        }
+
+        m_TimePeriods[timePeriodName].CountStart();
+    }
+
+    /// <summary>
     /// 任意のスクリプトを実行する。
     /// </summary>
     /// <param name="scriptName">スクリプトのクラス名</param>
@@ -635,7 +828,6 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// <summary>
     /// スクリプトを破棄する。
     /// </summary>
-    /// <param name="script"></param>
     public void CheckDestroyScript(EventControllableScript script)
     {
         if (script == null || !m_UpdateScripts.Contains(script) || m_GotoDestroyScripts.Contains(script))

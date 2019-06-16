@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Parent: {fileID: 11400000}
   m_Children: []
   m_Clips:
-  - m_Start: 33
+  - m_Start: 20
     m_ClipIn: 0
     m_Asset: {fileID: 114293723858745938}
     m_Duration: 7
@@ -90,7 +90,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: BattleAnimationPlayableAsset
     m_Version: 1
-  - m_Start: 60
+  - m_Start: 47
     m_ClipIn: 0
     m_Asset: {fileID: 114631851980852562}
     m_Duration: 7
@@ -162,7 +162,7 @@ MonoBehaviour:
   - m_Start: 0.016666666666666666
     m_ClipIn: 0
     m_Asset: {fileID: 114398907104126214}
-    m_Duration: 32.983333333333334
+    m_Duration: 19.983333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114068139044173516}
     m_EaseInDuration: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: BattleAnimationPlayableAsset
     m_Version: 1
-  - m_Start: 40
+  - m_Start: 27
     m_ClipIn: 0
     m_Asset: {fileID: 114375775032382930}
     m_Duration: 20
@@ -261,7 +261,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: BattleAnimationPlayableAsset
     m_Version: 1
-  - m_Start: 67
+  - m_Start: 54
     m_ClipIn: 0
     m_Asset: {fileID: 114567638192290624}
     m_Duration: 12
@@ -330,7 +330,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: BattleAnimationPlayableAsset
     m_Version: 1
-  - m_Start: 79
+  - m_Start: 66
     m_ClipIn: 0
     m_Asset: {fileID: 114257745056718988}
     m_Duration: 8
@@ -414,10 +414,10 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: BattleAnimationPlayableAsset
     m_Version: 1
-  - m_Start: 87
+  - m_Start: 74
     m_ClipIn: 0
     m_Asset: {fileID: 114361530723071120}
-    m_Duration: 20.5
+    m_Duration: 34
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114068139044173516}
     m_EaseInDuration: 0
@@ -496,9 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: 219c576293031134f8952338b353fa1e
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -746,9 +744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: 15100af632f05e1478b54a94d6f25341
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -915,9 +911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: 26a2d7ddc623aad4894472fabc1234b4
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -1093,9 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: 7d940889642cfb140a3a48d6e1f068b2
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -1253,9 +1245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: f72889c367fcae8428f61efdafd98171
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -1404,9 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: 59d275d29fd6c554ab39dcc6aee7283f
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -1555,9 +1543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: 5fc12ee2f3df2c04c8d734cea786d6e5
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:
@@ -1733,9 +1719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d06300f030e7649a5517e492b2d968, type: 3}
   m_Name: BattleAnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Target:
-    exposedName: d3b90154b38f35046b9c154e5537ded6
-    defaultValue: {fileID: 0}
+  m_ReferenceName: BackEnd Camera
   m_AnimParam:
     UsePosition: 1
     Position:

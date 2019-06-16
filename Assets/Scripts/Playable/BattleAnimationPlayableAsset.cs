@@ -13,7 +13,6 @@ public class BattleAnimationPlayableAsset : PlayableAsset
     [SerializeField]
     private BattleAnimationParam m_AnimParam;
 
-
     public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
     {
         var behaviour = new BattleAnimationPlayableBehaviour();

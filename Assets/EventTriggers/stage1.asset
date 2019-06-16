@@ -110,7 +110,7 @@ MonoBehaviour:
       ScriptArguments: []
     - EventType: 7
       ExecuteTiming: 1
-      DelayExecuteTime: 2
+      DelayExecuteTime: 11
       AppearEnemyIndex: 0
       CameraType: 0
       CameraTimelineParam:
@@ -148,7 +148,7 @@ MonoBehaviour:
       ScriptArguments: []
     - EventType: 1
       ExecuteTiming: 1
-      DelayExecuteTime: 2
+      DelayExecuteTime: 13
       AppearEnemyIndex: 0
       CameraType: 0
       CameraTimelineParam:
@@ -192,27 +192,23 @@ MonoBehaviour:
       IsReverse: 0
       IsSingleCondition: 1
       VariableType: 3
-      VariableName: Battle Loaded
+      VariableName: Game Start
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 0
+      CompareValue: 66
       BoolCompareValue: 0
       MultiConditionType: 0
       Conditions: []
     Contents:
-    - EventType: 1
+    - EventType: 6
       ExecuteTiming: 0
       DelayExecuteTime: 0
       AppearEnemyIndex: 0
       CameraType: 0
       CameraTimelineParam:
-        TimelineAsset: {fileID: 11400000, guid: cca94f87871e2e34f8823f0d05c9b1d4,
-          type: 2}
+        TimelineAsset: {fileID: 0}
         TrackBindParams: []
-        ReferenceBindParams:
-        - ReferenceName: BackEnd Camera
-          BindTargetName: BackEnd Camera
-          BindTargetComponentType: Transform
+        ReferenceBindParams: []
         IsDestroyEndTimeline: 0
       UsePlayableObjectPrefab: 0
       PlayableObjectPrefab: {fileID: 0}
@@ -240,7 +236,7 @@ MonoBehaviour:
       OperateTimePeriodParam:
         TimePeriodName: 
         OperandType: 0
-      ScriptName: 
+      ScriptName: WhiteOutController
       ScriptArguments: []
   - Condition:
       IsReverse: 0
@@ -249,12 +245,12 @@ MonoBehaviour:
       VariableName: Game Start
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 77
+      CompareValue: 110
       BoolCompareValue: 0
       MultiConditionType: 0
       Conditions: []
     Contents:
-    - EventType: 6
+    - EventType: 3
       ExecuteTiming: 0
       DelayExecuteTime: 0
       AppearEnemyIndex: 0

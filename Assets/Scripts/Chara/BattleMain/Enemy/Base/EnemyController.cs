@@ -135,7 +135,12 @@ public class EnemyController : CharaController
         if (IsSufferEchoBullet(attackBullet))
         {
             return;
-        }   
+        }
+
+        if (StageManager.Instance.IsOutOfField(attackBullet.transform))
+        {
+            return;
+        }
 
         if (m_OnHitInvincibleDuration <= 0)
         {

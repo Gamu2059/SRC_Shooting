@@ -101,10 +101,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  m_NowHp: 2
+  m_MaxHp: 2
   m_ItemCreateParam:
-    ItemSpreadParams: []
+    ItemSpreadParams:
+    - ItemType: 4
+      ItemNum: 2
+      SpreadRadius: 0.2
     CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
@@ -125,11 +128,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1568133437911121097}
     m_Modifications:
-    - target: {fileID: 6836997308711573767, guid: b97ca80b936faec489a2ae3634aab721,
-        type: 3}
-      propertyPath: m_Name
-      value: Mid_Paras
-      objectReference: {fileID: 0}
     - target: {fileID: 4044192080454033624, guid: b97ca80b936faec489a2ae3634aab721,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -184,6 +182,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836997308711573767, guid: b97ca80b936faec489a2ae3634aab721,
+        type: 3}
+      propertyPath: m_Name
+      value: Mid_Paras
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b97ca80b936faec489a2ae3634aab721, type: 3}
