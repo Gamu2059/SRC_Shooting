@@ -8,58 +8,12 @@ using System;
 /// </summary>
 public class Timer
 {
-	/// <summary>
-	/// タイマーの種類。
-	/// </summary>
-	public enum E_TIMER_TYPE
-	{
-		/// <summary>
-		/// このタイマーはTimeScaleに影響される。
-		/// ゲーム内の秒間隔に対するタイマーとなる。
-		/// </summary>
-		SCALED_TIMER,
-
-		/// <summary>
-		/// このタイマーはTimeScaleに影響されない。
-		/// 現実の秒間隔に対するタイマーとなる。
-		/// </summary>
-		UNSCALED_TIMER,
-	}
-
-	/// <summary>
-	/// タイマーのサイクル。
-	/// </summary>
-	public enum E_TIMER_CYCLE
-	{
-		/// <summary>
-		/// タイマーが始まる前の状態。
-		/// </summary>
-		STANDBY,
-
-		/// <summary>
-		/// タイマーが動いている状態。
-		/// </summary>
-		UPDATE,
-
-		/// <summary>
-		/// タイマーが一時停止している状態。
-		/// </summary>
-		PAUSE,
-
-		/// <summary>
-		/// タイマーが停止している状態。
-		/// </summary>
-		STOP,
-	}
-
-
-
 	#region Field
 
 	/// <summary>
-	/// このタイマーが登録されているTimeManager
+	/// このタイマーが登録されているTimeController
 	/// </summary>
-	private TimerManager m_RegistingTimerManager;
+	private TimerController m_RegistingTimerController;
 
 	/// <summary>
 	/// このタイマーのスケールの種類。
@@ -127,14 +81,14 @@ public class Timer
 
 	#region Getter & Setter
 
-	public TimerManager GetTimerManager()
+	public TimerController GetTimerController()
 	{
-		return m_RegistingTimerManager;
+		return m_RegistingTimerController;
 	}
 
-	public Timer SetTimerManager( TimerManager timerManager )
+	public Timer SetTimerController( TimerController controller )
 	{
-		m_RegistingTimerManager = timerManager;
+		m_RegistingTimerController = controller;
 		return this;
 	}
 
@@ -381,9 +335,9 @@ public class Timer
 			m_TimerCycle = E_TIMER_CYCLE.STOP;
 			EventUtility.SafeInvokeAction( m_TimeoutCallBack );
 
-			if( m_RegistingTimerManager != null )
+			if( m_RegistingTimerController != null )
 			{
-				m_RegistingTimerManager.RemoveTimer( this );
+				m_RegistingTimerController.RemoveTimer( this );
 			}
 		}
 	}
@@ -431,9 +385,17 @@ public class Timer
 		m_TimerCycle = E_TIMER_CYCLE.STOP;
 		EventUtility.SafeInvokeAction( m_OnStopCallBack );
 
-		if( m_RegistingTimerManager != null )
+		if( m_RegistingTimerController != null )
 		{
-			m_RegistingTimerManager.RemoveTimer( this );
+			m_RegistingTimerController.RemoveTimer( this );
 		}
+	}
+
+	/// <summary>
+	/// タイマーを完全停止させて破棄する。
+	/// </summary>
+	public void DestroyTimer()
+	{
+		m_RegistingTimerController.RemoveTimer( this );
 	}
 }

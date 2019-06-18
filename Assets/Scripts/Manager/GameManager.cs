@@ -9,16 +9,11 @@ using System.Linq;
 /// </summary>
 public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 {
-	[SerializeField, Tooltip( "起動した瞬間にいたシーンから始めるかどうか" )]
-	private bool m_IsStartFromBeginningScene;
-
-	[SerializeField, Tooltip( "PreLaunchシーンから最初に遷移するシーン" )]
-	private BaseSceneManager.E_SCENE m_StartScene;
-
 	/// <summary>
 	/// GameManagerでサイクルを管理するマネージャのリスト。
 	/// </summary>
-	private List<IControllableGameCycle> m_Managers;
+	[SerializeField]
+	private List<ControllableMonoBehavior> m_Managers;
 
 
 	protected override void OnAwake()
@@ -54,33 +49,19 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
 	public override void OnInitialize()
 	{
-		m_Managers = new List<IControllableGameCycle>();
-		m_Managers.Add( gameObject.GetComponent<TimerManager>() );
-		m_Managers.Add( gameObject.GetComponent<BaseSceneManager>() );
-
 		m_Managers.ForEach( ( m ) => m.OnInitialize() );
 	}
 
 	public override void OnFinalize()
 	{
 		m_Managers.ForEach( ( m ) => m.OnFinalize() );
-
-		m_Managers.Clear();
-		m_Managers = null;
 	}
 
 	public override void OnStart()
 	{
 		m_Managers.ForEach( ( m ) => m.OnStart() );
 
-		if( m_IsStartFromBeginningScene )
-		{
-			BaseSceneManager.Instance.LoadBeginScene();
-		}
-		else
-		{
-			BaseSceneManager.Instance.LoadScene( m_StartScene );
-		}
+		BaseSceneManager.Instance.LoadOnGameStart();
 	}
 
 	public override void OnUpdate()

@@ -8,6 +8,11 @@ using UnityEngine;
 [System.Serializable]
 public struct ColliderTransform
 {
+    /// <summary>
+    /// 衝突判定の名前。
+    /// </summary>
+    public string CollideName;
+
 	/// <summary>
 	/// 衝突判定に用いるトランスフォームの形状。
 	/// </summary>

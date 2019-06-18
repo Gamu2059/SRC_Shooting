@@ -171,56 +171,56 @@ public class CircleMoveEnemy : EnemyController
 
 
 
-    public override void OnSuffer(BulletController bullet, ColliderData colliderData)
+    //public override void OnSuffer(BulletController bullet, ColliderData colliderData)
 
-    {
+    //{
 
-        base.OnSuffer(bullet, colliderData);
-
-
-
-        m_Renderer.material = m_HitMate;
+    //    base.OnSuffer(bullet, colliderData);
 
 
 
-        if (hitTimer == null)
+    //    m_Renderer.material = m_HitMate;
 
-        {
 
-            hitTimer = Timer.CreateTimeoutTimer(Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
 
-            {
+    //    if (hitTimer == null)
 
-                m_Renderer.material = m_Normal;
+    //    {
 
-                hitTimer = null;
+    //        hitTimer = Timer.CreateTimeoutTimer(Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
 
-            });
+    //        {
 
-            TimerManager.Instance.RegistTimer(hitTimer);
+    //            m_Renderer.material = m_Normal;
 
-        }
+    //            hitTimer = null;
 
-        else
+    //        });
 
-        {
+    //        TimerManager.Instance.RegistTimer(hitTimer);
 
-            TimerManager.Instance.RemoveTimer(hitTimer);
+    //    }
 
-            hitTimer = Timer.CreateTimeoutTimer(Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
+    //    else
 
-            {
+    //    {
 
-                m_Renderer.material = m_Normal;
+    //        TimerManager.Instance.RemoveTimer(hitTimer);
 
-                hitTimer = null;
+    //        hitTimer = Timer.CreateTimeoutTimer(Timer.E_TIMER_TYPE.UNSCALED_TIMER, 0.1f, () =>
 
-            });
+    //        {
 
-            TimerManager.Instance.RegistTimer(hitTimer);
+    //            m_Renderer.material = m_Normal;
 
-        }
+    //            hitTimer = null;
 
-    }
+    //        });
+
+    //        TimerManager.Instance.RegistTimer(hitTimer);
+
+    //    }
+
+    //}
 
 }

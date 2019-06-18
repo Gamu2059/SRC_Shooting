@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// メインのバトル画面のステージを管理する。
+/// メインのバトル画面のオブジェクトを保持するためのマネージャ。
 /// </summary>
-public class StageManager : SingletonMonoBehavior<StageManager>
+public class StageManager : BattleSingletonMonoBehavior<StageManager>
 {
+    #region Inspector
+
+    [Header("Holder")]
+
 	/// <summary>
 	/// 動物体を保持するためのホルダー
 	/// </summary>
@@ -43,122 +47,81 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 	[SerializeField]
 	private GameObject m_BulletHolder;
 
-	[SerializeField]
-	private ControllableMonoBehaviour m_StageController;
+    /// <summary>
+    /// アイテムを保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private GameObject m_ItemHolder;
 
-	public override void OnInitialize()
+    [Header("Filed")]
+
+    [SerializeField]
+    private Vector2 m_MinLocalFieldPosition;
+
+    [SerializeField]
+    private Vector2 m_MaxLocalFieldPosition;
+
+    #endregion
+
+
+
+    #region Get
+
+    public GameObject GetMoveObjectHolder()
 	{
-		base.OnInitialize();
-		//m_StageController.OnInitialize();
+
+		return m_MoveObjectHolder;
+
+    }
+
+    public GameObject GetFixedObjectHolder()
+	{
+		return m_FixedObjectHolder;
 	}
 
-	public override void OnUpdate()
+	public GameObject GetStageObjectHolder()
 	{
-		base.OnUpdate();
-		//m_StageController.OnUpdate();
-
-		//if( m_MoveObjectHolder == null )
-		//{
-		//	return;
-		//}
-
-		//if( m_StageController != null )
-		//{
-		//	m_StageController.OnUpdate();
-		//}
-
-		//m_MoveObjectHolder.transform.Translate( m_Direction * m_Speed * Time.deltaTime, Space.World );
-
-		//if( m_MoveObjectHolder.transform.position.z > 448 )
-		//{
-		//	var pos = m_MoveObjectHolder.transform.position;
-		//	pos.z = 0;
-		//	m_MoveObjectHolder.transform.position = pos;
-		//}
+		return m_StageObjectHolder;
 	}
 
-	/// <summary>
-	/// 移動型オブジェクトホルダの子にする。
-	/// </summary>
-	public void AddMoveObjectHolder( Transform obj )
+	public GameObject GetPlayerCharaHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_MoveObjectHolder.transform );
+		return m_PlayerCharaHolder;
 	}
 
-	/// <summary>
-	/// 固定型オブジェクトホルダの子にする。
-	/// </summary>
-	public void AddFixedObjectHolder( Transform obj )
+	public GameObject GetEnemyCharaHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_FixedObjectHolder.transform );
+		return m_EnemyCharaHolder;
 	}
 
-	/// <summary>
-	/// ステージオブジェクトホルダの子にする。
-	/// </summary>
-	public void AddStageObjectHolder( Transform obj )
+	public GameObject GetBulletHolder()
 	{
-		if( obj == null )
-		{
-			return;
-		}
-
-		obj.SetParent( m_StageObjectHolder.transform );
+		return m_BulletHolder;
 	}
 
-	/// <summary>
-	/// プレイヤーキャラホルダの子にする。
-	/// </summary>
-	public void AddPlayerCharaHolder( Transform obj )
-	{
-		if( obj == null )
-		{
-			return;
-		}
+    public GameObject GetItemHolder()
+    {
+        return m_ItemHolder;
+    }
 
-		obj.SetParent( m_PlayerCharaHolder.transform );
-	}
+    public Vector2 GetMinLocalPositionField()
+    {
+        return m_MinLocalFieldPosition;
+    }
 
-	/// <summary>
-	/// 敵キャラホルダの子にする。
-	/// </summary>
-	public void AddEnemyCharaHolder( Transform obj )
-	{
-		if( obj == null )
-		{
-			return;
-		}
+    public Vector2 GetMaxLocalPositionField()
+    {
+        return m_MaxLocalFieldPosition;
+    }
 
-		obj.SetParent( m_EnemyCharaHolder.transform );
-	}
+    #endregion
 
-	/// <summary>
-	/// 弾ホルダの子にする。
-	/// </summary>
-	public void AddBulletHolder( Transform obj )
-	{
-		if( obj == null )
-		{
-			return;
-		}
 
-		obj.SetParent( m_BulletHolder.transform );
-	}
 
-	/// <summary>
-	/// MoveObjectHolderのピボットを基準にした座標に変換する。
-	/// </summary>
-	public Vector3 GetMoveObjectHolderBasePosition( Vector3 position )
+    /// <summary>
+    /// MoveObjectHolderのピボットを基準にした座標に変換する。
+    /// </summary>
+    public Vector3 GetMoveObjectHolderBasePosition( Vector3 position )
 	{
 		return position - m_MoveObjectHolder.transform.position;
 	}
@@ -170,4 +133,33 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 	{
 		return eulerAngles - m_MoveObjectHolder.transform.eulerAngles;
 	}
+
+    /// <summary>
+    /// 指定したオブジェクトの座標が、動体オブジェクトホルダーのフィールド領域の外にあるかどうかを判定する。
+    /// </summary>
+    public bool IsOutOfField(Transform movingObj)
+    {
+        var localPos = movingObj.localPosition;
+        return
+            localPos.x < m_MinLocalFieldPosition.x ||
+            localPos.x > m_MaxLocalFieldPosition.x ||
+            localPos.z < m_MinLocalFieldPosition.y ||
+            localPos.z > m_MaxLocalFieldPosition.y;
+    }
+
+    /// <summary>
+    /// 指定したオブジェクトの座標を動体オブジェクトホルダーのフィールド領域に入れ込む。
+    /// </summary>
+    public void ClampMovingObjectPosition(Transform movingObj)
+    {
+        if (!IsOutOfField(movingObj))
+        {
+            return;
+        }
+
+        var pos = movingObj.localPosition;
+        pos.x = Mathf.Clamp(pos.x, m_MinLocalFieldPosition.x, m_MaxLocalFieldPosition.x);
+        pos.z = Mathf.Clamp(pos.z, m_MinLocalFieldPosition.y, m_MaxLocalFieldPosition.y);
+        movingObj.localPosition = pos;
+    }
 }

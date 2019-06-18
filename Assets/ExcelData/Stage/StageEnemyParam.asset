@@ -15,294 +15,58 @@ MonoBehaviour:
   sheets:
   - name: Sheet1
     list:
-    - Time: 0.5
+    - Time: 2
       EnemyViewId: 0
       EnemyMoveId: 0
       BulletSetId: 0
       AppearViewportX: 0.4
       AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: 0
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: 180
+      AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: ' '
-    - Time: 0.7
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 3
       EnemyViewId: 0
       EnemyMoveId: 0
       BulletSetId: 0
-      AppearViewportX: 0.38
+      AppearViewportX: 0.4
       AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: 2
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: 180
+      AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: ' '
-    - Time: 0.9
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 4
       EnemyViewId: 0
       EnemyMoveId: 0
       BulletSetId: 0
-      AppearViewportX: 0.36
+      AppearViewportX: 0.4
       AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: 4
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: 180
+      AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: 
-    - Time: 1.1
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.34
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 6
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 1.3
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.32
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 8
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0.5
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.6
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 0
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0.7
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.62
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 2
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 0.9
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.64
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 4
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 1.1
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.66
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 6
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 1.3
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.68
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 8
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
     - Time: 5
       EnemyViewId: 0
       EnemyMoveId: 0
       BulletSetId: 0
-      AppearViewportX: 0.8
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.2
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.82
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.4
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.84
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.6
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.86
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.8
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.88
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 6
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
-      AppearViewportX: 0.9
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.1
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.2
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.3
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.18
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.5
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.16
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.7
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.14
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 5.9
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.12
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 6.1
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.1
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 8
-      EnemyViewId: 0
-      EnemyMoveId: 0
-      BulletSetId: 0
       AppearViewportX: 0.4
-      AppearViewportY: 0
+      AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: -10
+      AppearOffsetZ: 5
       AppearOffsetY: 0
       AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: 
-    - Time: 8.5
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.6
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: -10
-      AppearOffsetY: 0
-      AppearRotateY: 0
-      IsBoss: 0
-      OtherParameters: 
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
     - Time: 8
       EnemyViewId: 0
       EnemyMoveId: 0
@@ -310,68 +74,1284 @@ MonoBehaviour:
       AppearViewportX: 0.6
       AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: 10
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: 180
+      AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: 
-    - Time: 8.5
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.4
-      AppearViewportY: 1
-      AppearOffsetX: 0
-      AppearOffsetZ: 10
-      AppearOffsetY: 0
-      AppearRotateY: 180
-      IsBoss: 0
-      OtherParameters: 
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
     - Time: 9
       EnemyViewId: 0
       EnemyMoveId: 0
       BulletSetId: 0
-      AppearViewportX: 0.1
-      AppearViewportY: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: -10
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: 45
+      AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: 
-    - Time: 9.2
-      EnemyViewId: 0
-      EnemyMoveId: 1
-      BulletSetId: 0
-      AppearViewportX: 0.9
-      AppearViewportY: 0
-      AppearOffsetX: 0
-      AppearOffsetZ: -10
-      AppearOffsetY: 0
-      AppearRotateY: -45
-      IsBoss: 0
-      OtherParameters: 
-    - Time: 9.4
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 10
       EnemyViewId: 0
       EnemyMoveId: 0
       BulletSetId: 0
-      AppearViewportX: 0.9
+      AppearViewportX: 0.6
       AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: 10
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: -135
+      AppearRotateY: 0
       IsBoss: 0
-      OtherParameters: 
-    - Time: 9.6
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 11
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:3; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 15
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(40,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 16
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(40,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 17
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(40,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 18
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(40,0,0); F:CMA:135;
+        F:CMS:40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 21
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-40,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 22
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-40,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 23
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-40,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 24
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-15); F:SMS:25; V3:RCCP:(-40,0,0); F:CMA:135;
+        F:CMS:-40; F:SBI:300; I:SBN:3; F:SBA:5; F:CBI:2; I:CBN:1; F:CBA:0; F:VOST:0;
+    - Time: 27
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 28
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 29
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 30
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 31
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 32
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 35
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 36
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 37
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 38
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 39
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 40
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 43
       EnemyViewId: 0
       EnemyMoveId: 1
       BulletSetId: 0
-      AppearViewportX: 0.1
+      AppearViewportX: 0.4
       AppearViewportY: 1
       AppearOffsetX: 0
-      AppearOffsetZ: 10
+      AppearOffsetZ: 5
       AppearOffsetY: 0
-      AppearRotateY: 135
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.005; V3:RWMEP:(-80,
+        0, 10); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 45
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.005; V3:RWMEP:(80,
+        0, 10); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 47
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.005; V3:RWMEP:(-80,
+        0, 10); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 49
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.005; V3:RWMEP:(80,
+        0, 10); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 52
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 52.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 53
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 53.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 56.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 57.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 58
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 58.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 61.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 62.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 63.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 64.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 61.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 62.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 63.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 64.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(30,0,0); F:CMA:135;
+        F:CMS:60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 67.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 68.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 69.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 70.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:300; I:BN:1; F:BA:0; F:VOST:1;
+    - Time: 67.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 68.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 69.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 70.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(0,0,-20); F:SMS:25; V3:RCCP:(-30,0,0); F:CMA:135;
+        F:CMS:-60; F:SBI:2; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0;
+    - Time: 73.5
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 73.7
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 74.7
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 74.9
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 75.9
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 76.1
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 77.1
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 77.3
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        -50); F:WML:0.05; F:WWT:2; I:BN:1; F:BA:0;
+    - Time: 79
+      EnemyViewId: 0
+      EnemyMoveId: 6
+      BulletSetId: 1
+      AppearViewportX: 0.5
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(0, 0,
+        30); F:WML:0.01; F:WWT:10; I:BN:5; F:BA:10; F:RSI:0.5; F:RSPD:60;
+    - Time: 82
+      EnemyViewId: 0
+      EnemyMoveId: 6
+      BulletSetId: 1
+      AppearViewportX: 0.35
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(0, 0,
+        50); F:WML:0.01; F:WWT:10; I:BN:4; F:BA:20; F:RSI:0.5; F:RSPD:60;
+    - Time: 85
+      EnemyViewId: 0
+      EnemyMoveId: 6
+      BulletSetId: 1
+      AppearViewportX: 0.65
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(0, 0,
+        50); F:WML:0.01; F:WWT:10; I:BN:4; F:BA:20; F:RSI:0.5; F:RSPD:60;
+    - Time: 98
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180; F:CMS:60;
+        F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 98.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180; F:CMS:60;
+        F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 99
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180; F:CMS:60;
+        F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 99.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180; F:CMS:60;
+        F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 101.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(-30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180;
+        F:CMS:-60; F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 102
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(-30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180;
+        F:CMS:-60; F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 102.5
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(-30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180;
+        F:CMS:-60; F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 103
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:RSMEP:(-30,0,0); F:SMS:25; V3:RCCP:(0,0,20); F:CMA:180;
+        F:CMS:-60; F:SBI:1; I:SBN:3; F:SBA:5; F:CBI:1.5; I:CBN:3; F:CBA:5; F:VOST:0.1;
+    - Time: 106
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, 10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 106.5
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, 10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 107.5
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 108
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 109
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.35
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, 10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 109.5
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.4
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-80,
+        0, 10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 110.5
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.65
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 111
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.6
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: 5
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(80, 0,
+        10); F:WML:0.05; F:WWT:3; I:BN:3; F:BA:10;
+    - Time: 114
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.8
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(150,
+        0, 0); F:WML:0.05; F:WWT:0.8; I:BN:5; F:BA:5;
+    - Time: 114.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:2; I:BN:3; F:BA:10; F:VOST:0.1;
+    - Time: 115
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.6
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(-10,0,3); F:MS:20; F:BI:2; I:BN:3; F:BA:10; F:VOST:0.1;
+    - Time: 118
+      EnemyViewId: 0
+      EnemyMoveId: 1
+      BulletSetId: 0
+      AppearViewportX: 0.75
+      AppearViewportY: 0.8
+      AppearOffsetX: 5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(-150,
+        0, 0); F:WML:0.05; F:WWT:0.8; I:BN:5; F:BA:5;
+    - Time: 118.5
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:2; I:BN:3; F:BA:10; F:VOST:0.1;
+    - Time: 119
+      EnemyViewId: 0
+      EnemyMoveId: 2
+      BulletSetId: 0
+      AppearViewportX: 0.25
+      AppearViewportY: 0.6
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: V3:MD:(10,0,3); F:MS:20; F:BI:2; I:BN:3; F:BA:10; F:VOST:0.1;
+    - Time: 122
+      EnemyViewId: 0
+      EnemyMoveId: 7
+      BulletSetId: 2
+      AppearViewportX: 0.5
+      AppearViewportY: 1
+      AppearOffsetX: -5
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: B:AP:true; F:SMD:30; F:SML:0.05; F:LT:0.01; V3:RWMEP:(0, 0,
+        30); F:WML:0.01; F:WWT:10; I:BN:5; F:BA:10; F:RSI:0.5; F:RSPD:60;
+  - name: CommandEvent 1
+    list:
+    - Time: 2
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0.5
+      AppearViewportY: 1
+      AppearOffsetX: 0
+      AppearOffsetZ: -5
+      AppearOffsetY: 0
+      AppearRotateY: 180
+      IsBoss: 0
+      OtherParameters: ' '
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
+      IsBoss: 0
+      OtherParameters: 
+    - Time: 0
+      EnemyViewId: 0
+      EnemyMoveId: 0
+      BulletSetId: 0
+      AppearViewportX: 0
+      AppearViewportY: 0
+      AppearOffsetX: 0
+      AppearOffsetZ: 0
+      AppearOffsetY: 0
+      AppearRotateY: 0
       IsBoss: 0
       OtherParameters: 
