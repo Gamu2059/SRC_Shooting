@@ -13,9 +13,9 @@ public class UTurnDoubleShotEnemy : UTurnEnemy
 	[SerializeField]
 	private float m_DoubleShotInterval;
 
-	public override void SetStringParam( string param )
+	public override void SetArguments( string param )
 	{
-		base.SetStringParam( param );
+		base.SetArguments( param );
 
 		m_DoubleShotInterval = m_ParamSet.FloatParam["DSI"];
 	}

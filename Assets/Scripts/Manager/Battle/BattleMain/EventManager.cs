@@ -637,7 +637,7 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// <summary>
     /// イベントを実行する。
     /// </summary>
-    private void ExecuteEvent(EventContent eventContent)
+    public void ExecuteEvent(EventContent eventContent)
     {
         switch (eventContent.EventType)
         {
@@ -645,22 +645,22 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
                 ExecuteApperEnemy(eventContent.AppearEnemyIndex);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_CAMERA:
-                ExecuteControlCamera(eventContent);
+                ExecuteControlCamera(eventContent.ControlCameraParams);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_OBJECT:
-                ExecuteControlObject(eventContent);
+                ExecuteControlObject(eventContent.ControlObjectParams);
                 break;
             case EventContent.E_EVENT_TYPE.CONTROL_BGM:
-                ExecuteControlBgm(eventContent.ControlBgmParam);
+                ExecuteControlBgm(eventContent.ControlBgmParams);
                 break;
             case EventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
-                ExecuteOperateVariable(eventContent.OperateVariableParam);
+                ExecuteOperateVariable(eventContent.OperateVariableParams);
                 break;
             case EventContent.E_EVENT_TYPE.OPERATE_TIME_PERIOD:
-                ExecuteOperateTimePeriod(eventContent.CountStartTimePeriodName);
+                ExecuteOperateTimePeriod(eventContent.CountStartTimePeriodNames);
                 break;
             case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
-                ExecuteCallScript(eventContent.ScriptName, eventContent.ScriptArguments);
+                ExecuteCallScript(eventContent.CallScriptParams);
                 break;
             case EventContent.E_EVENT_TYPE.GAME_START:
                 ExecuteGameStart();
@@ -682,35 +682,41 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// <summary>
     /// カメラを制御する。
     /// </summary>
-    private void ExecuteControlCamera(EventContent eventContent)
+    private void ExecuteControlCamera(ControlCameraParam[] controlCameraParams)
     {
-        var camera = CameraManager.Instance.GetCameraController(eventContent.CameraType);
-        if (camera != null)
+        foreach (var param in controlCameraParams)
         {
-            camera.StartTimeline(eventContent.CameraTimelineParam);
+            var camera = CameraManager.Instance.GetCameraController(param.CameraType);
+            if (camera != null)
+            {
+                camera.StartTimeline(param.CameraTimelineParam);
+            }
         }
     }
 
     /// <summary>
     /// オブジェクトを制御する。
     /// </summary>
-    private void ExecuteControlObject(EventContent eventContent)
+    private void ExecuteControlObject(ControlObjectParam[] controlObjectParams)
     {
-        if (eventContent.UsePlayableObjectPrefab)
+        foreach (var param in controlObjectParams)
         {
-            var obj = Instantiate(eventContent.PlayableObjectPrefab);
-            PlayableManager.Instance.RegistObject(obj);
-            obj.StartTimeline(eventContent.ObjectTimelineParam);
-        }
-        else
-        {
-            var playables = PlayableManager.Instance.GetUpdateObjects();
-            foreach (var playable in playables)
+            if (param.UsePlayableObjectPrefab)
             {
-                if (playable.name == eventContent.RegisteredPlayableName)
+                var obj = Instantiate(param.PlayableObjectPrefab);
+                PlayableManager.Instance.RegistObject(obj);
+                obj.StartTimeline(param.ObjectTimelineParam);
+            }
+            else
+            {
+                var playables = PlayableManager.Instance.GetUpdateObjects();
+                foreach (var playable in playables)
                 {
-                    playable.StartTimeline(eventContent.ObjectTimelineParam);
-                    break;
+                    if (playable.name == param.RegisteredPlayableName)
+                    {
+                        playable.StartTimeline(param.ObjectTimelineParam);
+                        break;
+                    }
                 }
             }
         }
@@ -719,110 +725,122 @@ public class EventManager : BattleSingletonMonoBehavior<EventManager>
     /// <summary>
     /// BGMを制御する。
     /// </summary>
-    private void ExecuteControlBgm(ControlBgmParam param)
+    private void ExecuteControlBgm(ControlBgmParam[] controlBgmParams)
     {
-        if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
+        foreach (var param in controlBgmParams)
         {
-            FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
-        }
-        else
-        {
-            FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+            if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
+            {
+                FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
+            }
+            else
+            {
+                FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+            }
         }
     }
 
     /// <summary>
     /// 変数を操作する。
     /// </summary>
-    private void ExecuteOperateVariable(OperateVariableParam param)
+    private void ExecuteOperateVariable(OperateVariableParam[] operateVariableParams)
     {
-        switch (param.VariableType)
+        foreach (var param in operateVariableParams)
         {
-            case E_EVENT_TRIGGER_VARIABLE_TYPE.INT:
-                if (m_IntVariables == null || !m_IntVariables.ContainsKey(param.VariableName))
-                {
-                    Debug.LogError("該当する変数がありません。 type : int, name : " + param.VariableName);
+            switch (param.VariableType)
+            {
+                case E_EVENT_TRIGGER_VARIABLE_TYPE.INT:
+                    if (m_IntVariables == null || !m_IntVariables.ContainsKey(param.VariableName))
+                    {
+                        Debug.LogError("該当する変数がありません。 type : int, name : " + param.VariableName);
+                        break;
+                    }
+
+                    int intValue = (int)param.OperandValue;
+
+                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                    {
+                        intValue = GetInt(param.OperandValueName, (int)param.OperandValue);
+                    }
+
+                    CalcInt(param.VariableName, intValue, param.OperandType);
                     break;
-                }
 
-                int intValue = (int)param.OperandValue;
+                case E_EVENT_TRIGGER_VARIABLE_TYPE.FLOAT:
+                    if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(param.VariableName))
+                    {
+                        Debug.LogError("該当する変数がありません。 type : float, name : " + param.VariableName);
+                        break;
+                    }
 
-                if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
-                {
-                    intValue = GetInt(param.OperandValueName, (int)param.OperandValue);
-                }
+                    float floatValue = param.OperandValue;
 
-                CalcInt(param.VariableName, intValue, param.OperandType);
-                break;
+                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                    {
+                        floatValue = GetFloat(param.OperandValueName, param.OperandValue);
+                    }
 
-            case E_EVENT_TRIGGER_VARIABLE_TYPE.FLOAT:
-                if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(param.VariableName))
-                {
-                    Debug.LogError("該当する変数がありません。 type : float, name : " + param.VariableName);
+                    CalcFloat(param.VariableName, floatValue, param.OperandType);
                     break;
-                }
 
-                float floatValue = param.OperandValue;
+                case E_EVENT_TRIGGER_VARIABLE_TYPE.BOOL:
+                    if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(param.VariableName))
+                    {
+                        Debug.LogError("該当する変数がありません。 type : bool, name : " + param.VariableName);
+                        break;
+                    }
 
-                if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
-                {
-                    floatValue = GetFloat(param.OperandValueName, param.OperandValue);
-                }
+                    bool boolValue = param.BoolOperandValue;
 
-                CalcFloat(param.VariableName, floatValue, param.OperandType);
-                break;
+                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                    {
+                        boolValue = GetBool(param.OperandValueName, param.BoolOperandValue);
+                    }
 
-            case E_EVENT_TRIGGER_VARIABLE_TYPE.BOOL:
-                if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(param.VariableName))
-                {
-                    Debug.LogError("該当する変数がありません。 type : bool, name : " + param.VariableName);
+                    CalcBool(param.VariableName, boolValue, param.BoolOperandType);
                     break;
-                }
-
-                bool boolValue = param.BoolOperandValue;
-
-                if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
-                {
-                    boolValue = GetBool(param.OperandValueName, param.BoolOperandValue);
-                }
-
-                CalcBool(param.VariableName, boolValue, param.BoolOperandType);
-                break;
+            }
         }
     }
 
     /// <summary>
     /// タイムピリオドを操作する。
     /// </summary>
-    private void ExecuteOperateTimePeriod(string timePeriodName)
+    private void ExecuteOperateTimePeriod(string[] timePeriodNames)
     {
-        if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(timePeriodName))
+        foreach (var name in timePeriodNames)
         {
-            Debug.LogError("該当するタイムピリオドがありません。 TimePeriodName : " + timePeriodName);
-            return;
-        }
+            if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(name))
+            {
+                Debug.LogError("該当するタイムピリオドがありません。 TimePeriodName : " + name);
+                return;
+            }
 
-        m_TimePeriods[timePeriodName].CountStart();
+            m_TimePeriods[name].CountStart();
+        }
     }
 
     /// <summary>
     /// 任意のスクリプトを実行する。
     /// </summary>
-    /// <param name="scriptName">スクリプトのクラス名</param>
-    /// <param name="args">実行時引数</param>
-    private void ExecuteCallScript(string scriptName, ArgumentVariable[] args)
+    private void ExecuteCallScript(CallScriptParam[] callScriptParams)
     {
-        Type type = Type.GetType(scriptName);
-
-        if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
+        foreach (var param in callScriptParams)
         {
-            return;
-        }
 
-        var script = (EventControllableScript)Activator.CreateInstance(type);
-        m_UpdateScripts.Add(script);
-        script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
-        script.OnInitialize();
+            Type type = Type.GetType(param.ScriptName);
+
+            if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
+            {
+                return;
+            }
+
+            var script = (EventControllableScript)Activator.CreateInstance(type);
+            m_UpdateScripts.Add(script);
+            script.SetArguments(param.ScriptArguments);
+            script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+            script.OnInitialize();
+        }
     }
 
     /// <summary>

@@ -28,7 +28,7 @@ public class EnemyController : CharaController
     /// <summary>
     /// マスターデータから取得するパラメータセット
     /// </summary>
-    protected StringParamSet m_ParamSet;
+    protected ArgumentParamSet m_ParamSet;
 
     /// <summary>
     /// アイテムドロップパラメータ
@@ -54,7 +54,7 @@ public class EnemyController : CharaController
 
     #region Getter & Setter
 
-    public StringParamSet GetParamSet()
+    public ArgumentParamSet GetParamSet()
     {
         return m_ParamSet;
     }
@@ -91,11 +91,11 @@ public class EnemyController : CharaController
     }
 
     /// <summary>
-    /// StringParamをセットする
+    /// 引数をセットする
     /// </summary>
-    public virtual void SetStringParam(string param)
+    public virtual void SetArguments(string param)
     {
-        m_ParamSet = StringParamTranslator.TranslateString(param);
+        m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public class EnemyController : CharaController
     /// </summary>
     public void SetDropItemParam(string param)
     {
-
+        m_DropItemParam = ItemCreateParamTranslator.TranslateFromString(param);
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public class EnemyController : CharaController
     /// </summary>
     public void SetDefeatParam(string param)
     {
-
+        m_DefeatOperateVariableParams = OperateVariableParamTranslator.TranslateFromString(param);
     }
 
     protected virtual void OnBecameVisible()
@@ -205,5 +205,21 @@ public class EnemyController : CharaController
         EnemyCharaManager.Instance.DestroyEnemy(this);
 
         ItemManager.Instance.CreateItem(transform.localPosition, m_DropItemParam);
+
+
+    }
+
+    private void OperateEventVariable()
+    {
+        if (m_DefeatOperateVariableParams == null)
+        {
+            return;
+        }
+
+        var eventContent = new EventContent();
+        eventContent.ExecuteTiming = EventContent.E_EXECUTE_TIMING.IMMEDIATE;
+        eventContent.EventType = EventContent.E_EVENT_TYPE.OPERATE_VARIABLE;
+        eventContent.OperateVariableParams = m_DefeatOperateVariableParams;
+        EventManager.Instance.ExecuteEvent(eventContent);
     }
 }

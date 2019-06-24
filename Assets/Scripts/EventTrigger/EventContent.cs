@@ -83,48 +83,31 @@ public struct EventContent
     [Tooltip("実行タイミングをDELAYにしている場合、何秒後に実行するか")]
     public float DelayExecuteTime;
 
-    [Header("APPEAR_ENEMYのパラメータ")]
+    [Header("APPEAR_ENEMY")]
 
-    [Tooltip("出現させる敵のリストでのインデックス")]
     public int AppearEnemyIndex;
 
-    [Header("CONTROL_CAMERAのパラメータ")]
+    [Header("CONTROL_CAMERA")]
 
-    [Tooltip("カメラタイプ")]
-    public E_CAMERA_TYPE CameraType;
+    public ControlCameraParam[] ControlCameraParams;
 
-    [Tooltip("カメラのタイムラインパラメータ")]
-    public TimelineParam CameraTimelineParam;
+    [Header("CONTROL_OBJECT")]
 
-    [Header("CONTROL_OBJECTのパラメータ")]
-
-    [Tooltip("プレハブを使うかどうか")]
-    public bool UsePlayableObjectPrefab;
-
-    [Tooltip("プレハブ")]
-    public BattleMainPlayableBase PlayableObjectPrefab;
-
-    [Tooltip("EventManagerに登録されているオブジェクトの名前")]
-    public string RegisteredPlayableName;
-
-    [Tooltip("オブジェクトのタイムラインパラメータ")]
-    public TimelineParam ObjectTimelineParam;
+    public ControlObjectParam[] ControlObjectParams;
 
     [Header("CONTROL_BGM")]
 
-    public ControlBgmParam ControlBgmParam;
+    public ControlBgmParam[] ControlBgmParams;
 
     [Header("OPERATE_VARIABLE")]
 
-    public OperateVariableParam OperateVariableParam;
+    public OperateVariableParam[] OperateVariableParams;
 
     [Header("OPERATE_TIME_PERIOD")]
 
-    public string CountStartTimePeriodName;
+    public string[] CountStartTimePeriodNames;
 
     [Header("CALL_SCRIPT")]
 
-    public string ScriptName;
-
-    public ArgumentVariable[] ScriptArguments;
+    public CallScriptParam[] CallScriptParams;
 }

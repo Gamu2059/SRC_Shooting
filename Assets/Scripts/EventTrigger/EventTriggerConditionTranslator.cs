@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// 文字列をEventTriggerの条件式にするクラス。
 /// </summary>
-public class EventParamTranslator
+public class EventTriggerConditionTranslator
 {
     public static EventTriggerCondition TranslateString(string paramData)
     {

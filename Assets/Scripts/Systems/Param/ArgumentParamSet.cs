@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-public class StringParamSet
+/// <summary>
+/// 動的引数パラメータ
+/// </summary>
+public class ArgumentParamSet
 {
 	public Dictionary<string, int> IntParam;
 	public Dictionary<string, float> FloatParam;
-	public Dictionary<string, double> DoubleParam;
 	public Dictionary<string, bool> BoolParam;
+    public Dictionary<string, string> StringParam;
 	public Dictionary<string, Vector2> V2Param;
 	public Dictionary<string, Vector3> V3Param;
 
@@ -28,23 +31,23 @@ public class StringParamSet
 		}
 	}
 
-	public void ApplyDoubleParam( string key, ref double apply )
-	{
-		if( DoubleParam != null && DoubleParam.ContainsKey( key ) )
-		{
-			apply = DoubleParam[key];
-		}
-	}
-
 	public void ApplyBoolParam( string key, ref bool apply )
 	{
 		if( BoolParam != null && BoolParam.ContainsKey( key ) )
 		{
 			apply = BoolParam[key];
 		}
-	}
+    }
 
-	public void ApplyV2Param( string key, ref Vector2 apply )
+    public void ApplyStringParam(string key, ref string apply)
+    {
+        if (StringParam != null && StringParam.ContainsKey(key))
+        {
+            apply = StringParam[key];
+        }
+    }
+
+    public void ApplyV2Param( string key, ref Vector2 apply )
 	{
 		if( V2Param != null && V2Param.ContainsKey( key ) )
 		{
@@ -88,18 +91,6 @@ public class StringParamSet
 			builder.Append( "\n" );
 		}
 
-		if( DoubleParam != null )
-		{
-			builder.Append( "Double Param\n" );
-
-			foreach( var p in DoubleParam )
-			{
-				builder.AppendFormat( "{0} : {1}\n", p.Key, p.Value );
-			}
-
-			builder.Append( "\n" );
-		}
-
 		if( BoolParam != null )
 		{
 			builder.Append( "Bool Param\n" );
@@ -112,7 +103,19 @@ public class StringParamSet
 			builder.Append( "\n" );
 		}
 
-		if( V2Param != null )
+        if (StringParam != null)
+        {
+            builder.Append("String Param\n");
+
+            foreach (var p in StringParam)
+            {
+                builder.AppendFormat("{0} : {1}\n", p.Key, p.Value);
+            }
+
+            builder.Append("\n");
+        }
+
+        if ( V2Param != null )
 		{
 			builder.Append( "Vector2 Param\n" );
 
