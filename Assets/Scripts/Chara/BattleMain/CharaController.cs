@@ -20,10 +20,10 @@ public class CharaController : BattleMainObjectBase
 	[Header( "キャラの基礎ステータス" )]
 
 	[SerializeField, Tooltip( "キャラの現在HP" )]
-	private int m_NowHp;
+	private float m_NowHp;
 
 	[SerializeField, Tooltip( "キャラの最大HP" )]
-	private int m_MaxHp;
+	private float m_MaxHp;
 
 	#endregion
 
@@ -50,11 +50,19 @@ public class CharaController : BattleMainObjectBase
 	#endregion
 
 
+    /// <summary>
+    /// HPを初期化する
+    /// </summary>
+    /// <param name="hp">最大HP</param>
+    public void InitHp(float hp)
+    {
+        m_MaxHp = m_NowHp = hp;
+    }
 
 	/// <summary>
 	/// このキャラを回復する。
 	/// </summary>
-	public virtual void Recover( int recover )
+	public void Recover( float recover )
 	{
 		if( recover <= 0 )
 		{
@@ -68,7 +76,7 @@ public class CharaController : BattleMainObjectBase
 	/// このキャラにダメージを与える。
 	/// HPが0になった場合は死ぬ。
 	/// </summary>
-	public virtual void Damage(int damage )
+	public void Damage(float damage )
 	{
 		if( damage <= 0 )
 		{

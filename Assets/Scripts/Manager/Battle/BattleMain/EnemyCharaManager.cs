@@ -14,7 +14,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
     private StageEnemyParam m_StageEnemyParam;
 
     [SerializeField, Tooltip("このステージで使用する敵出現データ")]
-    private XL_StageEnemyParam m_XlStageEnemyParam;
+    private XlBattleMainEnemyParam m_EnemyParam;
 
     /// <summary>
     /// ステージ領域の左下に対するオフセット左下領域
@@ -230,37 +230,19 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 	}
 
     /// <summary>
-    /// 敵キャラのプレハブから敵キャラを新規作成する。
-    /// パラメータを設定できる。
-    /// </summary>
-	public EnemyController CreateEnemy( EnemyController enemyPrefab, string paramString )
-	{
-		var enemy = CreateEnemy( enemyPrefab );
-
-		if( enemy == null )
-		{
-			return null;
-		}
-
-		enemy.SetStringParam( paramString );
-
-		return enemy;
-	}
-
-    /// <summary>
     /// 敵リストから敵を新規作成する。
     /// </summary>
     public void CreateEnemyFromEnemyParam(int enemyListIndex)
     {
-        int xlParamSize = m_XlStageEnemyParam.param.Count;
+        int xlParamSize = m_EnemyParam.param.Count;
 
         if (enemyListIndex < 0 || enemyListIndex >= xlParamSize)
         {
             return;
         }
 
-        var paramData = m_XlStageEnemyParam.param[enemyListIndex];
-        var enemy = CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[paramData.EnemyId], paramData.OtherParameters);
+        var paramData = m_EnemyParam.param[enemyListIndex];
+        var enemy = CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[paramData.EnemyId]);
 
         if (enemy == null)
         {
@@ -268,6 +250,10 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         }
 
         enemy.SetBulletSetParam(m_StageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
+        enemy.SetStringParam(paramData.OtherParameters);
+        enemy.SetDropItemParam(paramData.Drop);
+        enemy.SetDefeatParam(paramData.Defeat);
+        enemy.InitHp(paramData.Hp);
 
         var pos = GetPositionFromFieldViewPortPosition(paramData.AppearViewportX, paramData.AppearViewportY);
         pos.x += paramData.AppearOffsetX;
@@ -358,11 +344,14 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         return pos;
     }
 
+    /// <summary>
+    /// 敵の生成イベントをEventManagerに投げる
+    /// </summary>
     private void BuildEnemyAppearEvents()
     {
-        for(int i=0;i<m_XlStageEnemyParam.param.Count;i++)
+        for(int i=0;i<m_EnemyParam.param.Count;i++)
         {
-            var param = m_XlStageEnemyParam.param[i];
+            var param = m_EnemyParam.param[i];
 
             EventTriggerCondition condition = EventParamTranslator.TranslateString(param.Conditions);
 

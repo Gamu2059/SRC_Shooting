@@ -7,10 +7,10 @@ using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 
-public class StageEnemyEventParam_importer : AssetPostprocessor
+public class BattleMainEnemyParam_importer : AssetPostprocessor
 {
-    private static readonly string filePath = "Assets/ExcelData/Stage/StageEnemyEventParam.xlsx";
-    private static readonly string[] sheetNames = { "Sheet1", };
+    private static readonly string filePath = "Assets/ExcelData/Stage/BattleMainEnemyParam.xlsx";
+    private static readonly string[] sheetNames = { "Stage1", };
     
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
@@ -33,10 +33,10 @@ public class StageEnemyEventParam_importer : AssetPostprocessor
                     var exportPath = "Assets/ExcelData/Stage/" + sheetName + ".asset";
                     
                     // check scriptable object
-                    var data = (XL_StageEnemyParam)AssetDatabase.LoadAssetAtPath(exportPath, typeof(XL_StageEnemyParam));
+                    var data = (XlBattleMainEnemyParam)AssetDatabase.LoadAssetAtPath(exportPath, typeof(XlBattleMainEnemyParam));
                     if (data == null)
                     {
-                        data = ScriptableObject.CreateInstance<XL_StageEnemyParam>();
+                        data = ScriptableObject.CreateInstance<XlBattleMainEnemyParam>();
                         AssetDatabase.CreateAsset((ScriptableObject)data, exportPath);
                         data.hideFlags = HideFlags.None;
                     }
@@ -56,7 +56,7 @@ public class StageEnemyEventParam_importer : AssetPostprocessor
                         IRow row = sheet.GetRow(i);
                         ICell cell = null;
                         
-                        var p = new XL_StageEnemyParam.Param();
+                        var p = new XlBattleMainEnemyParam.Param();
 			
 					cell = row.GetCell(0); p.Conditions = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(1); p.EnemyId = (int)(cell == null ? 0 : cell.NumericCellValue);
