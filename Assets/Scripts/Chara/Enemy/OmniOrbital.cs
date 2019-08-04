@@ -15,16 +15,23 @@ public class OmniOrbital : DanmakuAbstract
 
     // 弾の速さ
     [SerializeField]
-    private float m_BulletSpeed = 10;
+    private float m_BulletSpeed;
 
     // 弾の配列
-    private BulletController[] m_bullets;
+    [SerializeField]
+    private BulletController[] m_bullet;
 
     // それぞれの弾の経過時間
-    private float[] m_bulletLifeTimes;
+    [SerializeField]
+    private float[] m_bulletLifeTime;
 
     // それぞれの弾の大まかな進む角度
-    private float[] m_bulletRads;
+    [SerializeField]
+    private float[] m_bulletAngle;
+
+    // 次に発射する弾のインデックス
+    [SerializeField]
+    private int m_nextBulletIndex = 0;
 
 
     // 本体の位置とオイラー角を更新する
@@ -55,24 +62,54 @@ public class OmniOrbital : DanmakuAbstract
         float distance = m_BulletSpeed * dTime;
 
         // ランダムな角度
-        float rad0 = Random.Range(0, Mathf.PI * 2);
+        float randomAngle = Random.Range(0, Mathf.PI * 2);
 
         for (int i = 0; i < m_way; i++)
         {
-            // 1つの弾の角度
-            float rad = rad0 + Mathf.PI * 2 * i / m_way;
+            // wayによる角度変動
+            float wayRad = Mathf.PI * 2 * i / m_way;
+
+            // 1つの弾の発射角度
+            float launchAngle = randomAngle + wayRad;
 
             // その弾の発射角度
             Vector3 eulerAngles;
-            eulerAngles = CalcEulerAngles(rad);
+            eulerAngles = CalcEulerAngles(launchAngle);
 
             // 発射された弾の現在の位置
             Vector3 pos = transform.position;
-            pos += new Vector3(distance * Mathf.Cos(rad), 0, distance * Mathf.Sin(rad));
+            pos += new Vector3(distance * Mathf.Cos(launchAngle), 0, distance * Mathf.Sin(launchAngle));
 
             // 弾を撃つ
             BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
-            BulletController.ShotBulletWithoutBulletParam(bulletShotParam);
+            m_bullet[m_nextBulletIndex] = BulletController.ShotBulletWithoutBulletParam(bulletShotParam,true);
+
+            // 弾のパラメータを入力する
+            m_bulletLifeTime[m_nextBulletIndex] = Time.time - launchTime;
+            m_bulletAngle[m_nextBulletIndex] = launchAngle;
+
+            // 発射する弾のインデックスを進める
+            m_nextBulletIndex++;
+        }
+    }
+
+
+    protected override void Update()
+    {
+        base.Update();
+
+        // 弾の状態を更新する
+        for (int i = 0; i < m_bullet.Length; i++)
+        {
+            // 弾の経過時間進める
+            m_bulletLifeTime[i] += Time.deltaTime;
+
+            // 位置
+            Vector3 position = transform.position;
+            position += m_BulletSpeed * m_bulletLifeTime[i] * new Vector3(Mathf.Cos(m_bulletAngle[i]), 0, Mathf.Sin(m_bulletAngle[i]));
+
+            // 位置を代入
+            m_bullet[i].SetPosition(position);
         }
     }
 }

@@ -93,10 +93,10 @@ public class EnemyController : CharaController
     {
         if (BattleMainTimerManager.Instance != null)
         {
-            RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
-            {
-                m_CanOutDestroy = true;
-            }));
+            //RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
+            //{
+            //    m_CanOutDestroy = true;
+            //}));
         }
         else
         {

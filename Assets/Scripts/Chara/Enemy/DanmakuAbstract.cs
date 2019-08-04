@@ -17,7 +17,7 @@ public abstract class DanmakuAbstract : EnemyController
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
 
         // 本体の位置とオイラー角を更新する

@@ -81,6 +81,9 @@ public class LinearMishaguzi : EnemyController
 
                 // 弾を撃つ
                 //ShotBullet(0, 0, pos, tempAngle);
+                // 弾を撃つ
+                BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, tempAngle, transform.localScale);
+                BulletController.ShotBullet(bulletShotParam);
 
                 // 発射された弾の現在の位置
                 pos = launchPos + new Vector3(distance * Mathf.Cos(rad - Mathf.PI / 2), 0, distance * Mathf.Sin(rad - Mathf.PI / 2));
@@ -90,6 +93,9 @@ public class LinearMishaguzi : EnemyController
 
                 // 弾を撃つ
                 //ShotBullet(0, 0, pos, tempAngle);
+                // 弾を撃つ
+                bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, tempAngle, transform.localScale);
+                BulletController.ShotBullet(bulletShotParam);
             }
 
             ShotOrNot();

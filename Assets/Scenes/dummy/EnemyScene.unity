@@ -160,7 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!114 &20094351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,120 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae59efed1acde114689d4c2126990052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
-  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
-  m_NowHp: 1000
-  m_MaxHp: 1000
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
-  m_ShotPosition: {fileID: 20094349}
-  m_MoveTargetLocalPosition: {x: 0, y: 0, z: -10}
-  m_MoveTargetDuration: 2
-  m_WaitDuration: 2
-  m_WithdrawalXSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalZSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalYRotation:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalZRotation:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalDuration: 1
-  m_BulletShotInterval: 0.3
-  m_BulletShotNum: 6
-  m_BulletSpreadAngle: 30
-  m_IsSearchBullet: 1
-  m_MoveStatus: 1
 --- !u!65 &20094352
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -379,9 +264,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -465,6 +352,250 @@ Transform:
   m_Father: {fileID: 325481384}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &123351120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 123351121}
+  - component: {fileID: 123351126}
+  - component: {fileID: 123351125}
+  - component: {fileID: 123351124}
+  - component: {fileID: 123351123}
+  - component: {fileID: 123351122}
+  m_Layer: 0
+  m_Name: Enemy BossTestBezier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &123351121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123351120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 325481384}
+  m_RootOrder: 60
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &123351122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123351120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms: []
+--- !u!114 &123351123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123351120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a690af6878ddc4695f72ced10aae6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Troop: 1
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_IsBoss: 0
+  m_DeadEffect: {fileID: 0}
+  m_OnHitInvincibleDuration: 0
+  m_InitialPosition: {x: 0, y: 0, z: 0}
+  m_Bezier3Points:
+  - m_ControlPoint1: {x: 10, y: 0, z: 5.522847}
+    m_ControlPoint2: {x: 5.522847, y: 0, z: 10}
+    m_EndPoint: {x: 0, y: 0, z: 10}
+    m_Time: 1
+  - m_ControlPoint1: {x: -5.522847, y: 0, z: 10}
+    m_ControlPoint2: {x: -10, y: 0, z: 5.522847}
+    m_EndPoint: {x: -10, y: 0, z: 0}
+    m_Time: 1
+  - m_ControlPoint1: {x: -10, y: 0, z: -5.522847}
+    m_ControlPoint2: {x: -5.522847, y: 0, z: -10}
+    m_EndPoint: {x: 0, y: 0, z: -10}
+    m_Time: 1
+  - m_ControlPoint1: {x: 5.522847, y: 0, z: -10}
+    m_ControlPoint2: {x: 10, y: 0, z: -5.522847}
+    m_EndPoint: {x: 10, y: 0, z: 0}
+    m_Time: 1
+  m_SmasherBoss1Ser:
+    m_AttackNum: 0
+    m_Time: 0
+    m_AttackChange: 0
+    dKinOmn:
+      uDKin1:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        shotInterval: 0.03
+        way: 4
+        circleRadius: 3
+        angleSpeed: 0.5
+        bulletSpeed: 10
+      uDKin2:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        shotInterval: 0.03
+        way: 4
+        circleRadius: 3
+        angleSpeed: -0.5
+        bulletSpeed: 10
+      uDOmn:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        m_LaunchPosition: {x: 10, y: 0, z: 0}
+        m_ShotInterval: 3
+        m_Way: 30
+        m_BulletSpeed: 12
+    dLisJik:
+      uDLis:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        m_ShotInterval: 0
+        m_Way: 0
+        m_AmpX: 0
+        m_AngFreqX: 0
+        m_AmpY: 0
+        m_AngFreqY: 0
+        m_BulletSpeed: 10
+      uDJik:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        m_ShotInterval: 0
+        m_Way: 0
+        m_RadAWay: 0
+        m_BulletSpeeds: []
+    dAswAsw:
+      uDAsw1:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        shotInterval: 0
+        way: 0
+        angleSpeed: 0
+        circleRadiusPhaseSpeed: 0
+        circleRadiusMax: 0
+        bulletSpeed: 10
+      uDAsw2:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        shotInterval: 0
+        way: 0
+        angleSpeed: 0
+        circleRadiusPhaseSpeed: 0
+        circleRadiusMax: 0
+        bulletSpeed: 10
+      uDOmn:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        m_LaunchPosition: {x: 0, y: 0, z: 0}
+        m_ShotInterval: 0
+        m_Way: 0
+        m_BulletSpeed: 10
+    dSinOmn:
+      uDSin:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        SineshotInterval: 0
+        Sineway: 0
+        circleRadius: 0
+        angleSpeed: 0
+        SinebulletSpeed: 10
+      uDOmn:
+        m_BulletIndex: 
+        m_BulletParamIndex: 
+        m_Time: 0
+        m_LaunchPosition: {x: 0, y: 0, z: 0}
+        m_ShotInterval: 0
+        m_Way: 0
+        m_BulletSpeed: 10
+--- !u!65 &123351124
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123351120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &123351125
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123351120}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &123351126
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123351120}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &154803296
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,9 +630,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -617,9 +750,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -733,9 +868,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -851,9 +988,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -985,9 +1124,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 1000
   m_MaxHp: 1000
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1017,7 +1158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!65 &259908675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1163,6 +1303,10 @@ Transform:
   - {fileID: 2080180925}
   - {fileID: 1182073430}
   - {fileID: 259908672}
+  - {fileID: 123351121}
+  - {fileID: 891821773}
+  - {fileID: 1097273792}
+  - {fileID: 567257085}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1200,9 +1344,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1320,9 +1466,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1441,9 +1589,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1561,9 +1711,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1678,9 +1830,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -1904,9 +2058,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2036,9 +2192,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2174,9 +2332,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2259,6 +2419,241 @@ Transform:
   m_Father: {fileID: 325481384}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &567257084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567257085}
+  - component: {fileID: 567257090}
+  - component: {fileID: 567257089}
+  - component: {fileID: 567257088}
+  - component: {fileID: 567257087}
+  - component: {fileID: 567257086}
+  m_Layer: 0
+  m_Name: Enemy BossTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &567257085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567257084}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 325481384}
+  m_RootOrder: 63
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &567257086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567257084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms: []
+--- !u!114 &567257087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567257084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a690af6878ddc4695f72ced10aae6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Troop: 1
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_IsBoss: 0
+  m_DeadEffect: {fileID: 0}
+  m_OnHitInvincibleDuration: 0
+  m_InitialPosition: {x: 0, y: 0, z: 0}
+  m_Bezier3Points:
+  - m_ControlPoint1: {x: 0, y: 0, z: 0}
+    m_ControlPoint2: {x: 0, y: 0, z: 0}
+    m_EndPoint: {x: 0, y: 0, z: 0}
+    m_Time: 0
+  m_SmasherBoss1Ser:
+    m_AttackNum: 0
+    m_Time: 0
+    m_AttackChange: 0
+    dKinOmn:
+      uDKin1:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 00000000
+        m_Time: 0
+        shotInterval: 0.05
+        way: 4
+        circleRadius: 2
+        angleSpeed: 0.5
+        bulletSpeed: 10
+      uDKin2:
+        m_BulletIndex: 01000000
+        m_BulletParamIndex: 00000000
+        m_Time: 0
+        shotInterval: 0.05
+        way: 4
+        circleRadius: 2
+        angleSpeed: -0.5
+        bulletSpeed: 10
+      uDOmn:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 02000000
+        m_Time: 0
+        m_LaunchPosition: {x: 0, y: 0, z: 0}
+        m_ShotInterval: 3
+        m_Way: 30
+        m_BulletSpeed: 12
+    dLisJik:
+      uDLis:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 00000000
+        m_Time: 0
+        m_ShotInterval: 0.04
+        m_Way: 5
+        m_AmpX: 10
+        m_AngFreqX: 3
+        m_AmpY: 10
+        m_AngFreqY: 4.7
+        m_BulletSpeed: 10
+      uDJik:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 02000000
+        m_Time: 0
+        m_ShotInterval: 3
+        m_Way: 2
+        m_RadAWay: 0.2
+        m_BulletSpeeds:
+        - 10
+        - 8
+        - 12
+    dAswAsw:
+      uDAsw1:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 00000000
+        m_Time: 0
+        shotInterval: 0.1
+        way: 4
+        angleSpeed: 2
+        circleRadiusPhaseSpeed: 0.5
+        circleRadiusMax: 15
+        bulletSpeed: 8
+      uDAsw2:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 00000000
+        m_Time: 0
+        shotInterval: 0.1
+        way: 4
+        angleSpeed: -1.7
+        circleRadiusPhaseSpeed: 0.5
+        circleRadiusMax: 15
+        bulletSpeed: 10
+      uDOmn:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 02000000
+        m_Time: 0
+        m_LaunchPosition: {x: 0, y: 0, z: 0}
+        m_ShotInterval: 2
+        m_Way: 30
+        m_BulletSpeed: 10
+    dSinOmn:
+      uDSin:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 00000000
+        m_Time: 0
+        SineshotInterval: 0.1
+        Sineway: 8
+        circleRadius: 5
+        angleSpeed: 2
+        SinebulletSpeed: 10
+      uDOmn:
+        m_BulletIndex: 00000000
+        m_BulletParamIndex: 02000000
+        m_Time: 0
+        m_LaunchPosition: {x: 0, y: 0, z: 0}
+        m_ShotInterval: 1
+        m_Way: 30
+        m_BulletSpeed: 12
+--- !u!65 &567257088
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567257084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &567257089
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567257084}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &567257090
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567257084}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &571281795
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,7 +2702,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!114 &571281798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,18 +2714,3024 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01a9a744b6fab44a98ce524c2824de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 0
+  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 1
-  m_way: 0
+  m_way: 20
   m_BulletSpeed: 10
+  m_bullet:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_bulletLifeTime:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  m_bulletAngle:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  m_nextBulletIndex: 0
 --- !u!65 &571281800
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2424,9 +5824,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2559,7 +5961,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!114 &641161468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2574,9 +5975,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2643,18 +6046,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641161465}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &669387624 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9116061731419416957, guid: 13a49f352e7b812448d3584ce73352b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1670201093}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9aef99f28b71ed4e8ea847c789414bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &669387629 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2878423045518255913, guid: 13a49f352e7b812448d3584ce73352b3,
@@ -2695,9 +6086,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2812,9 +6205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -2932,9 +6327,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3030,8 +6427,8 @@ GameObject:
   - component: {fileID: 756696487}
   - component: {fileID: 756696486}
   - component: {fileID: 756696485}
-  - component: {fileID: 756696484}
   - component: {fileID: 756696483}
+  - component: {fileID: 756696484}
   m_Layer: 0
   m_Name: Enemy KinkoOrbital
   m_TagString: Untagged
@@ -3066,7 +6463,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!114 &756696484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,17 +6477,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  realShotNum: 0
-  m_ShotInterval: 0.05
+  m_ShotInterval: 0.1
   m_AngleSpeed: 1
-  m_RelativeLaunchPos: {x: 0, y: 0, z: 0}
   m_BulletSpeed: 10
+  m_BulletNum: 50
+  m_bullet: []
+  m_bulletLifeTime: []
+  m_bulletAngle: []
+  m_nextBulletIndex: 0
+  realShotNum: 0
 --- !u!65 &756696485
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3160,7 +6562,6 @@ GameObject:
   m_Component:
   - component: {fileID: 869704867}
   - component: {fileID: 869704866}
-  - component: {fileID: 869704868}
   m_Layer: 0
   m_Name: EnemyScene
   m_TagString: Untagged
@@ -3180,11 +6581,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b85f0e569f6d141af741cc7aad37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Scene: 5
+  m_Scene: 7
   m_SceneCycle: 0
   m_ManagerList:
-  - {fileID: 869704868}
-  - {fileID: 669387624}
+  - {fileID: 1659504811}
 --- !u!4 &869704867
 Transform:
   m_ObjectHideFlags: 0
@@ -3200,25 +6600,147 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &869704868
+--- !u!1 &891821772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 891821773}
+  - component: {fileID: 891821778}
+  - component: {fileID: 891821777}
+  - component: {fileID: 891821776}
+  - component: {fileID: 891821775}
+  - component: {fileID: 891821774}
+  m_Layer: 0
+  m_Name: Enemy SimpleOrbitalTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &891821773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891821772}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 325481384}
+  m_RootOrder: 61
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &891821774
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869704865}
+  m_GameObject: {fileID: 891821772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bce0e0c1f3342d146bf82cf9d983e4e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ad03d1e3637c7142806bda71cbd4a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveObjectHolder: {fileID: 529668062}
-  m_FixedObjectHolder: {fileID: 529668062}
-  m_StageObjectHolder: {fileID: 529668062}
-  m_PlayerCharaHolder: {fileID: 529668062}
-  m_EnemyCharaHolder: {fileID: 529668062}
-  m_BulletHolder: {fileID: 529668062}
-  m_StageController: {fileID: 0}
+  m_Troop: 1
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_IsBoss: 0
+  m_DeadEffect: {fileID: 0}
+  m_OnHitInvincibleDuration: 0
+  m_ShotInterval: 0.2
+  m_AngleSpeed: 1
+  m_BulletSpeed: 10
+  m_RealShotNum: -1
+  m_BulletIndex: 0
+  m_BulletNum: 100
+  m_Bullet: []
+  m_BulletLifeTime: []
+  m_BulletAngle: []
+  m_BulletMaxLifeTime: 5
+  m_Time: 0
+  m_ShotInterval_m_RealShotNum: 0
+  m_C: 0
+--- !u!114 &891821775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891821772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms: []
+--- !u!65 &891821776
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891821772}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &891821777
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891821772}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &891821778
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891821772}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &913544594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3253,9 +6775,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3381,10 +6905,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3463,10 +6989,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3523,9 +7051,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3630,9 +7160,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 1000
   m_MaxHp: 1000
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3755,9 +7287,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -3841,6 +7375,143 @@ Transform:
   m_Father: {fileID: 325481384}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1097273791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097273792}
+  - component: {fileID: 1097273797}
+  - component: {fileID: 1097273796}
+  - component: {fileID: 1097273795}
+  - component: {fileID: 1097273794}
+  - component: {fileID: 1097273793}
+  m_Layer: 0
+  m_Name: Enemy KinkoOrbitalTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1097273792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097273791}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 325481384}
+  m_RootOrder: 62
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1097273793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097273791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93db1a9237fc4ba45be350695240f75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Troop: 1
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_NowHp: 0
+  m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_IsBoss: 0
+  m_DeadEffect: {fileID: 0}
+  m_OnHitInvincibleDuration: 0
+  m_RealShotNum: -1
+  m_BulletNum: 100
+  m_Bullet: []
+  m_BulletLifeTime: []
+  m_BulletMaxLifeTime: 5
+  m_ShotInterval: 0.2
+  m_AngleSpeed: 1
+  m_BulletSpeed: 10
+  m_BulletAngle: []
+--- !u!114 &1097273794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097273791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderTransforms: []
+--- !u!65 &1097273795
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097273791}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1097273796
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097273791}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1097273797
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097273791}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1158471047
 GameObject:
   m_ObjectHideFlags: 0
@@ -3965,7 +7636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1182073430
 Transform:
   m_ObjectHideFlags: 0
@@ -3994,9 +7665,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4026,7 +7699,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!65 &1182073433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4119,9 +7791,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4244,9 +7918,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4364,9 +8040,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4482,9 +8160,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4604,9 +8284,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4794,9 +8476,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -4917,9 +8601,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -5033,9 +8719,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -5165,120 +8853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fbf3b5c1591ce4e8a4616be63425a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
-  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
-  m_ShotPosition: {fileID: 1495252789}
-  m_MoveTargetLocalPosition: {x: 0, y: 0, z: -10}
-  m_MoveTargetDuration: 2
-  m_WaitDuration: 2
-  m_WithdrawalXSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalZSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalYRotation:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalZRotation:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_WithdrawalDuration: 1
-  m_BulletShotInterval: 0.2
-  m_BulletShotNum: 6
-  m_BulletSpreadAngle: 30
-  m_IsSearchBullet: 1
-  m_MoveStatus: 1
 --- !u!114 &1495252791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5292,7 +8866,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!65 &1495252792
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5399,9 +8972,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -5504,9 +9079,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -5622,14 +9199,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  m_ShotInterval: 1000
+  m_ShotInterval: 1
   m_ShotTime: 0
   m_NowRad: 0
   m_BasePos: {x: 0, y: 0, z: 0}
@@ -5742,9 +9321,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -5861,9 +9442,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -5978,22 +9561,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
   realShotNum: 
-  SineshotInterval: 1000
-  Sineway: 10
+  SineshotInterval: 0.1
+  Sineway: 8
   circleRadius: 5
   angleSpeed: 2
   SinebulletSpeed: 10
-  omniShotInterval: 1000
+  omniShotInterval: 3
   omniWay: 30
-  omniBulletSpeed: 15
+  omniBulletSpeed: 10
 --- !u!65 &1575232361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6100,9 +9685,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6184,6 +9771,18 @@ Transform:
   m_Father: {fileID: 325481384}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1659504811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1038783231578221413, guid: 13a49f352e7b812448d3584ce73352b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1670201093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228644a5dab7a2e47ac2785f50a78666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1662238531
 GameObject:
   m_ObjectHideFlags: 0
@@ -6218,9 +9817,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6370,6 +9971,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1038783231578221413, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_BehaviorList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_MoveObjectHolder
+      value: 
+      objectReference: {fileID: 529668062}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_FixedObjectHolder
+      value: 
+      objectReference: {fileID: 529668062}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_StageObjectHolder
+      value: 
+      objectReference: {fileID: 529668062}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_PlayerCharaHolder
+      value: 
+      objectReference: {fileID: 529668062}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_EnemyCharaHolder
+      value: 
+      objectReference: {fileID: 529668062}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_BulletHolder
+      value: 
+      objectReference: {fileID: 529668062}
+    - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_ItemHolder
+      value: 
+      objectReference: {fileID: 529668062}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13a49f352e7b812448d3584ce73352b3, type: 3}
 --- !u!1 &1683370065
@@ -6406,9 +10047,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6526,9 +10169,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6643,9 +10288,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6776,9 +10423,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6883,10 +10532,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6907,10 +10558,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -6933,10 +10586,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7066,9 +10721,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7169,9 +10826,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7290,10 +10949,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7389,10 +11050,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7416,10 +11079,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Troop: 1
-  m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7461,9 +11126,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7581,9 +11248,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7786,9 +11455,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -7902,9 +11573,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -8033,9 +11706,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 0
   m_BulletSetParam: {fileID: 0}
-  m_Collider: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -8060,7 +11735,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms: []
-  m_CanHitOtherBullet: 0
 --- !u!65 &2080180928
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -85,7 +85,9 @@ public class SinCurveInheri : DanmakusAbstract
 
             eulerAngles = CalcEulerAngles(wayRad + Mathf.PI / 2);
 
-            //ShotBullet(0, 0, pos, eulerAngles);
+            // 弾を撃つ
+            BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
+            BulletController.ShotBullet(bulletShotParam);
 
             pos = transform.position;
             pos += new Vector3(circleRadius * phase * Mathf.Cos(wayRad), 0, circleRadius * phase * Mathf.Sin(wayRad));
@@ -93,7 +95,9 @@ public class SinCurveInheri : DanmakusAbstract
 
             eulerAngles = CalcEulerAngles(wayRad - Mathf.PI / 2);
 
-            //ShotBullet(0, 0, pos, eulerAngles);
+            // 弾を撃つ
+            bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
+            BulletController.ShotBullet(bulletShotParam);
         }
     }
 
@@ -135,7 +139,8 @@ public class SinCurveInheri : DanmakusAbstract
             pos += new Vector3(distance * Mathf.Cos(rad), 0, distance * Mathf.Sin(rad));
 
             // 弾を撃つ
-            //ShotBullet(0, 1, pos, eulerAngles);
+            BulletShotParam bulletShotParam = new BulletShotParam(this, 0, 0, 0, pos, eulerAngles, transform.localScale);
+            BulletController.ShotBullet(bulletShotParam);
         }
     }
 
