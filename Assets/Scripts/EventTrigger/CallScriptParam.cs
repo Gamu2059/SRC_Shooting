@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// スクリプト呼び出しのパラメータ
 /// </summary>
+[System.Serializable]
 public struct CallScriptParam
 {
     [Tooltip("スクリプト名")]
