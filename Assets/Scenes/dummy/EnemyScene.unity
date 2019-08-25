@@ -230,6 +230,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20094348}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &53482426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 53482427}
+  m_Layer: 0
+  m_Name: DanmakuTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &53482427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53482426}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 567257085}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &80380517
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,122 +453,10 @@ MonoBehaviour:
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_Bezier3Points:
-  - m_ControlPoint1: {x: 10, y: 0, z: 5.522847}
-    m_ControlPoint2: {x: 5.522847, y: 0, z: 10}
-    m_EndPoint: {x: 0, y: 0, z: 10}
-    m_Time: 1
-  - m_ControlPoint1: {x: -5.522847, y: 0, z: 10}
-    m_ControlPoint2: {x: -10, y: 0, z: 5.522847}
-    m_EndPoint: {x: -10, y: 0, z: 0}
-    m_Time: 1
-  - m_ControlPoint1: {x: -10, y: 0, z: -5.522847}
-    m_ControlPoint2: {x: -5.522847, y: 0, z: -10}
-    m_EndPoint: {x: 0, y: 0, z: -10}
-    m_Time: 1
-  - m_ControlPoint1: {x: 5.522847, y: 0, z: -10}
-    m_ControlPoint2: {x: 10, y: 0, z: -5.522847}
-    m_EndPoint: {x: 10, y: 0, z: 0}
-    m_Time: 1
-  m_SmasherBoss1Ser:
+  m_Danmaku:
     m_AttackNum: 0
-    m_Time: 0
     m_AttackChange: 0
-    dKinOmn:
-      uDKin1:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        shotInterval: 0.03
-        way: 4
-        circleRadius: 3
-        angleSpeed: 0.5
-        bulletSpeed: 10
-      uDKin2:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        shotInterval: 0.03
-        way: 4
-        circleRadius: 3
-        angleSpeed: -0.5
-        bulletSpeed: 10
-      uDOmn:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        m_LaunchPosition: {x: 10, y: 0, z: 0}
-        m_ShotInterval: 3
-        m_Way: 30
-        m_BulletSpeed: 12
-    dLisJik:
-      uDLis:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        m_ShotInterval: 0
-        m_Way: 0
-        m_AmpX: 0
-        m_AngFreqX: 0
-        m_AmpY: 0
-        m_AngFreqY: 0
-        m_BulletSpeed: 10
-      uDJik:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        m_ShotInterval: 0
-        m_Way: 0
-        m_RadAWay: 0
-        m_BulletSpeeds: []
-    dAswAsw:
-      uDAsw1:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        shotInterval: 0
-        way: 0
-        angleSpeed: 0
-        circleRadiusPhaseSpeed: 0
-        circleRadiusMax: 0
-        bulletSpeed: 10
-      uDAsw2:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        shotInterval: 0
-        way: 0
-        angleSpeed: 0
-        circleRadiusPhaseSpeed: 0
-        circleRadiusMax: 0
-        bulletSpeed: 10
-      uDOmn:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        m_LaunchPosition: {x: 0, y: 0, z: 0}
-        m_ShotInterval: 0
-        m_Way: 0
-        m_BulletSpeed: 10
-    dSinOmn:
-      uDSin:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        SineshotInterval: 0
-        Sineway: 0
-        circleRadius: 0
-        angleSpeed: 0
-        SinebulletSpeed: 10
-      uDOmn:
-        m_BulletIndex: 
-        m_BulletParamIndex: 
-        m_Time: 0
-        m_LaunchPosition: {x: 0, y: 0, z: 0}
-        m_ShotInterval: 0
-        m_Way: 0
-        m_BulletSpeed: 10
+    m_UDParamsArrayArray: []
 --- !u!65 &123351124
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,7 +1225,6 @@ Transform:
   - {fileID: 123351121}
   - {fileID: 891821773}
   - {fileID: 1097273792}
-  - {fileID: 567257085}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2434,7 +2352,7 @@ GameObject:
   - component: {fileID: 567257087}
   - component: {fileID: 567257086}
   m_Layer: 0
-  m_Name: Enemy BossTest
+  m_Name: Enemy DanmakuTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2447,12 +2365,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567257084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 325481384}
-  m_RootOrder: 63
+  m_Father: {fileID: 53482427}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &567257086
 MonoBehaviour:
@@ -2489,113 +2407,22 @@ MonoBehaviour:
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
-  m_InitialPosition: {x: 0, y: 0, z: 0}
-  m_Bezier3Points:
-  - m_ControlPoint1: {x: 0, y: 0, z: 0}
-    m_ControlPoint2: {x: 0, y: 0, z: 0}
-    m_EndPoint: {x: 0, y: 0, z: 0}
-    m_Time: 0
-  m_SmasherBoss1Ser:
+  m_Danmaku:
     m_AttackNum: 0
-    m_Time: 0
     m_AttackChange: 0
-    dKinOmn:
-      uDKin1:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 00000000
-        m_Time: 0
-        shotInterval: 0.05
-        way: 4
-        circleRadius: 2
-        angleSpeed: 0.5
-        bulletSpeed: 10
-      uDKin2:
-        m_BulletIndex: 01000000
-        m_BulletParamIndex: 00000000
-        m_Time: 0
-        shotInterval: 0.05
-        way: 4
-        circleRadius: 2
-        angleSpeed: -0.5
-        bulletSpeed: 10
-      uDOmn:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 02000000
-        m_Time: 0
-        m_LaunchPosition: {x: 0, y: 0, z: 0}
-        m_ShotInterval: 3
-        m_Way: 30
-        m_BulletSpeed: 12
-    dLisJik:
-      uDLis:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 00000000
-        m_Time: 0
-        m_ShotInterval: 0.04
-        m_Way: 5
-        m_AmpX: 10
-        m_AngFreqX: 3
-        m_AmpY: 10
-        m_AngFreqY: 4.7
-        m_BulletSpeed: 10
-      uDJik:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 02000000
-        m_Time: 0
-        m_ShotInterval: 3
-        m_Way: 2
-        m_RadAWay: 0.2
-        m_BulletSpeeds:
+    m_UDParamsArrayArray:
+    - m_UDParametersArray:
+      - m_EUD: 4
+        m_BoolParams: 0000
+        m_IntParams: 0000000010000000
+        m_FloatParams:
+        - 0.5
         - 10
-        - 8
-        - 12
-    dAswAsw:
-      uDAsw1:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 00000000
-        m_Time: 0
-        shotInterval: 0.1
-        way: 4
-        angleSpeed: 2
-        circleRadiusPhaseSpeed: 0.5
-        circleRadiusMax: 15
-        bulletSpeed: 8
-      uDAsw2:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 00000000
-        m_Time: 0
-        shotInterval: 0.1
-        way: 4
-        angleSpeed: -1.7
-        circleRadiusPhaseSpeed: 0.5
-        circleRadiusMax: 15
-        bulletSpeed: 10
-      uDOmn:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 02000000
-        m_Time: 0
-        m_LaunchPosition: {x: 0, y: 0, z: 0}
-        m_ShotInterval: 2
-        m_Way: 30
-        m_BulletSpeed: 10
-    dSinOmn:
-      uDSin:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 00000000
-        m_Time: 0
-        SineshotInterval: 0.1
-        Sineway: 8
-        circleRadius: 5
-        angleSpeed: 2
-        SinebulletSpeed: 10
-      uDOmn:
-        m_BulletIndex: 00000000
-        m_BulletParamIndex: 02000000
-        m_Time: 0
-        m_LaunchPosition: {x: 0, y: 0, z: 0}
-        m_ShotInterval: 1
-        m_Way: 30
-        m_BulletSpeed: 12
+        - 5
+        - 3
+        - 0
+        m_Vector3Params:
+        - {x: 0, y: 0, z: 0}
 --- !u!65 &567257088
 BoxCollider:
   m_ObjectHideFlags: 0

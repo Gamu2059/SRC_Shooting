@@ -15,17 +15,17 @@ public class BossTest : EnemyController
     //[SerializeField, Tooltip("現在は何形態目か")]
     private int m_NowPhase;
 
-    [SerializeField, Tooltip("初期位置")]
+    //[SerializeField, Tooltip("初期位置")]
     private Vector3 m_InitialPosition;
 
-    [SerializeField, Tooltip("ベジェ曲線の配列")]
+    //[SerializeField, Tooltip("ベジェ曲線の配列")]
     private Bezier3Points[] m_Bezier3Points;
 
     //[SerializeField, Tooltip("ベジェ曲線の配列")]
     //private Bezier1Point[] m_Bezier1Points;
 
     [SerializeField, Tooltip("弾幕")]
-    private Smasher1Boss1 m_SmasherBoss1Ser;
+    private Smasher1Boss1 m_Danmaku;
 
     // ループする攻撃用時刻
     private float m_AttackTime;
@@ -42,6 +42,8 @@ public class BossTest : EnemyController
         // 初期位置を代入する
         m_InitialPosition = transform.localPosition;
         //m_InitialPosition = new Vector3(10,0,0);
+
+        m_Danmaku.Awakes();
     }
 
 
@@ -50,29 +52,29 @@ public class BossTest : EnemyController
         // 経過時間を進める
         m_Time += Time.deltaTime;
 
-        if (m_Bezier3Points[m_NowPhase].m_Time < m_Time)
-        {
+        //if (m_Bezier3Points[m_NowPhase].m_Time < m_Time)
+        //{
 
-            // 経過時間を正しくする
-            m_Time -= m_Bezier3Points[m_NowPhase].m_Time;
+        //    // 経過時間を正しくする
+        //    m_Time -= m_Bezier3Points[m_NowPhase].m_Time;
 
-            // 形態を次のものにする
-            m_NowPhase++;
+        //    // 形態を次のものにする
+        //    m_NowPhase++;
 
-            // 形態が最後まで行っているか
-            if (m_NowPhase == m_Bezier3Points.Length)
-            {
-                m_InitialPosition = m_Bezier3Points[m_NowPhase - 1].m_EndPoint;
-                //m_InitialPosition = new Vector3(10, 0, 0);
+        //    // 形態が最後まで行っているか
+        //    if (m_NowPhase == m_Bezier3Points.Length)
+        //    {
+        //        m_InitialPosition = m_Bezier3Points[m_NowPhase - 1].m_EndPoint;
+        //        //m_InitialPosition = new Vector3(10, 0, 0);
 
-                m_NowPhase = 0;
-            }
-        }
+        //        m_NowPhase = 0;
+        //    }
+        //}
 
-        // 敵本体の状態を更新する
-        BezierPositionMoving();
+        //// 敵本体の状態を更新する
+        //BezierPositionMoving();
 
-        m_SmasherBoss1Ser.Updates(this, m_AttackTime);
+        m_Danmaku.Updates(this);
     }
 
 
