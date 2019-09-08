@@ -72,7 +72,6 @@ public class BattleMainEnemyParam_importer : AssetPostprocessor
 					cell = row.GetCell(11); p.Drop = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(12); p.Defeat = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(13); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
-					cell = row.GetCell(22); p. = (cell == null ? 0.0 : cell.NumericCellValue);
 
                         data.param.Add(p);
                     }
