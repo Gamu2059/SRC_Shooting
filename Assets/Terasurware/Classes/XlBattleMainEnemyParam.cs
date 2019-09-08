@@ -24,5 +24,6 @@ public class XlBattleMainEnemyParam : ScriptableObject
 		public string Drop;
 		public string Defeat;
 		public string OtherParameters;
+		public double ;
 	}
 }
