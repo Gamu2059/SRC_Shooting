@@ -325,9 +325,9 @@ public class InfC761 : EnemyController
 
 
 
-	public override void SetStringParam( string param )
+	public override void SetArguments( string param )
 	{
-		base.SetStringParam( param );
+		base.SetArguments( param );
 	}
 
 	public override void OnStart()

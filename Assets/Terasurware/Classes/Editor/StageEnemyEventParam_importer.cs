@@ -68,8 +68,10 @@ public class StageEnemyEventParam_importer : AssetPostprocessor
 					cell = row.GetCell(7); p.AppearOffsetY = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(8); p.AppearRotateY = (float)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(9); p.IsBoss = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(10); p.Defeat = (cell == null ? "" : cell.StringCellValue);
-					cell = row.GetCell(11); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(10); p.Hp = (float)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(11); p.Drop = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(12); p.Defeat = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(13); p.OtherParameters = (cell == null ? "" : cell.StringCellValue);
 
                         data.param.Add(p);
                     }

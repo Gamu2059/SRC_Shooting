@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyController : CharaController
 {
+    public const string CAN_OUT_DESTROY_TIMER_KEY = "CanOutDestroyTimer";
     public const string HIT_INVINCIBLE_TIMER_KEY = "HitInvincibleTimer";
 
     [Space()]
     [Header("敵専用 パラメータ")]
-
-    [SerializeField, Tooltip("アイテムの生成情報")]
-    private ItemCreateParam m_ItemCreateParam;
 
     [SerializeField, Tooltip("ボスかどうか")]
     private bool m_IsBoss;
@@ -22,24 +21,40 @@ public class EnemyController : CharaController
     private float m_OnHitInvincibleDuration;
 
     /// <summary>
-    /// マスターデータから取得するパラメータセット
-    /// </summary>
-    protected StringParamSet m_ParamSet;
-
-    /// <summary>
     /// 敵キャラのサイクル。
     /// </summary>
     private E_OBJECT_CYCLE m_Cycle;
 
-    private bool m_CanOutDestroy;
+    /// <summary>
+    /// マスターデータから取得するパラメータセット
+    /// </summary>
+    protected ArgumentParamSet m_ParamSet;
 
-    private bool m_OnBecameBeforeInitialize;
+    /// <summary>
+    /// アイテムドロップパラメータ
+    /// </summary>
+    protected ItemCreateParam m_DropItemParam;
+
+    /// <summary>
+    /// 撃破時の変数操作パラメータ
+    /// </summary>
+    protected OperateVariableParam[] m_DefeatOperateVariableParams;
+
+    /// <summary>
+    /// 初期化時のコールバック
+    /// </summary>
+    public Action m_OnInitialized;
+
+    /// <summary>
+    /// 画面外に出た時に破棄するかどうか
+    /// </summary>
+    private bool m_CanOutDestroy;
 
 
 
     #region Getter & Setter
 
-    public StringParamSet GetParamSet()
+    public ArgumentParamSet GetParamSet()
     {
         return m_ParamSet;
     }
@@ -72,35 +87,42 @@ public class EnemyController : CharaController
 
         m_CanOutDestroy = false;
 
-        if (m_OnBecameBeforeInitialize)
-        {
-            RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
-            {
-                m_CanOutDestroy = true;
-            }));
-        }
-        m_OnBecameBeforeInitialize = false;
+        EventUtility.SafeInvokeAction(m_OnInitialized);
     }
 
-    public virtual void SetStringParam(string param)
+    /// <summary>
+    /// 引数をセットする
+    /// </summary>
+    public virtual void SetArguments(string param)
     {
-        m_ParamSet = StringParamTranslator.TranslateString(param);
+        m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
     }
 
+    /// <summary>
+    /// 撃破時のドロップアイテムパラメータをセットする
+    /// </summary>
+    public void SetDropItemParam(string param)
+    {
+        m_DropItemParam = ItemCreateParamTranslator.TranslateFromString(param);
+    }
 
+    /// <summary>
+    /// 撃破時の変数操作パラメータをセットする
+    /// </summary>
+    public void SetDefeatParam(string param)
+    {
+        m_DefeatOperateVariableParams = OperateVariableParamTranslator.TranslateFromString(param);
+    }
 
     protected virtual void OnBecameVisible()
     {
         if (BattleMainTimerManager.Instance != null)
         {
-            RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
-            {
-                m_CanOutDestroy = true;
-            }));
+            SetCanOutDestroyTimer();
         }
         else
         {
-            m_OnBecameBeforeInitialize = true;
+            m_OnInitialized += () => SetCanOutDestroyTimer();
         }
     }
 
@@ -110,6 +132,20 @@ public class EnemyController : CharaController
         {
             EnemyCharaManager.Instance.DestroyEnemy(this);
         }
+    }
+
+    /// <summary>
+    /// 破棄可能フラグを立てるためのタイマーを設定する
+    /// </summary>
+    private void SetCanOutDestroyTimer()
+    {
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime());
+        timer.SetTimeoutCallBack(()=> {
+            timer = null;
+            m_CanOutDestroy = true;
+        });
+
+        RegistTimer(CAN_OUT_DESTROY_TIMER_KEY, timer);
     }
 
     /// <summary>
@@ -135,7 +171,12 @@ public class EnemyController : CharaController
         if (IsSufferEchoBullet(attackBullet))
         {
             return;
-        }   
+        }
+
+        if (StageManager.Instance.IsOutOfField(attackBullet.transform))
+        {
+            return;
+        }
 
         if (m_OnHitInvincibleDuration <= 0)
         {
@@ -163,6 +204,22 @@ public class EnemyController : CharaController
         DestroyAllTimer();
         EnemyCharaManager.Instance.DestroyEnemy(this);
 
-        ItemManager.Instance.CreateItem(transform.localPosition, m_ItemCreateParam);
+        ItemManager.Instance.CreateItem(transform.localPosition, m_DropItemParam);
+
+
+    }
+
+    private void OperateEventVariable()
+    {
+        if (m_DefeatOperateVariableParams == null)
+        {
+            return;
+        }
+
+        var eventContent = new EventContent();
+        eventContent.ExecuteTiming = EventContent.E_EXECUTE_TIMING.IMMEDIATE;
+        eventContent.EventType = EventContent.E_EVENT_TYPE.OPERATE_VARIABLE;
+        eventContent.OperateVariableParams = m_DefeatOperateVariableParams;
+        EventManager.Instance.ExecuteEvent(eventContent);
     }
 }

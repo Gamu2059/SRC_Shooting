@@ -20,6 +20,8 @@ public class XL_StageEnemyParam : ScriptableObject
 		public float AppearOffsetY;
 		public float AppearRotateY;
 		public int IsBoss;
+		public float Hp;
+		public string Drop;
 		public string Defeat;
 		public string OtherParameters;
 	}

@@ -101,14 +101,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 5
-  m_MaxHp: 5
+  m_NowHp: 2
+  m_MaxHp: 2
   m_ItemCreateParam:
     ItemSpreadParams:
-    - ItemType: 0
-      ItemNum: 2
-      SpreadRadius: 2
-    CenterCreateItemType: 1
+    - ItemType: 4
+      ItemNum: 1
+      SpreadRadius: 0
+    CenterCreateItemType: 4
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0

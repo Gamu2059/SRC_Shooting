@@ -7,7 +7,23 @@ using UnityEngine;
 /// </summary>
 public class EventControllableScript : IControllableGameCycle
 {
+    #region Field
+
+    /// <summary>
+    /// サイクル
+    /// </summary>
     private E_OBJECT_CYCLE m_Cycle;
+
+    /// <summary>
+    /// スクリプトの引数
+    /// </summary>
+    private ArgumentParamSet m_ParamSet;
+
+    #endregion
+
+
+
+    #region Get Set
 
     public E_OBJECT_CYCLE GetCycle()
     {
@@ -19,6 +35,15 @@ public class EventControllableScript : IControllableGameCycle
         m_Cycle = cycle;
     }
 
+    public ArgumentParamSet GetParamSet()
+    {
+        return m_ParamSet;
+    }
+
+    #endregion
+
+
+
     /// <summary>
     /// このスクリプトを破棄する。
     /// </summary>
@@ -26,6 +51,15 @@ public class EventControllableScript : IControllableGameCycle
     {
         EventManager.Instance.CheckDestroyScript(this);
     }
+
+    /// <summary>
+    /// スクリプトの引数をセットする
+    /// </summary>
+    public void SetArguments(ArgumentVariable[] argumentVariables)
+    {
+        m_ParamSet = ArgumentParamSetTranslator.TranslateFromArgumentVariables(argumentVariables);
+    }
+
     public virtual void OnInitialize()
     {
     }

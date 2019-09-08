@@ -80,9 +80,9 @@ public class UTurnEnemy : EnemyController
 
 
 
-	public override void SetStringParam( string param )
+	public override void SetArguments( string param )
 	{
-		base.SetStringParam( param );
+		base.SetArguments( param );
 
 		m_RelativeStraightMoveEndPosition = m_ParamSet.V3Param["RSMEP"];
 		m_StraightMoveSpeed = m_ParamSet.FloatParam["SMS"];

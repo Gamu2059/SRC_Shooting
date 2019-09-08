@@ -235,6 +235,12 @@ public class Timer
 		return timer;
 	}
 
+    public static Timer CreateTimeoutTimer(E_TIMER_TYPE timerType, float timeoutDuration)
+    {
+        var timer = CreateTimeoutTimer(timerType, timeoutDuration, null, null);
+        return timer;
+    }
+
 	/// <summary>
 	/// カウントダウンタイマーを作成する。
 	/// </summary>

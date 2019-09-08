@@ -37,9 +37,9 @@ public class StraightEnemy : EnemyController
 	protected Timer m_StartShotTimer;
 
 
-	public override void SetStringParam( string param )
+	public override void SetArguments( string param )
 	{
-		base.SetStringParam( param );
+		base.SetArguments( param );
 
 		m_MoveDirection = m_ParamSet.V3Param["MD"];
 		m_MoveSpeed = m_ParamSet.FloatParam["MS"];
