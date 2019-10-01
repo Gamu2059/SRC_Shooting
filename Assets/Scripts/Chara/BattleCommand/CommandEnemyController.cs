@@ -14,7 +14,7 @@ public class CommandEnemyController : CommandCharaController
     /// <summary>
     /// マスターデータから取得するパラメータセット
     /// </summary>
-    protected StringParamSet m_ParamSet;
+    protected ArgumentParamSet m_ParamSet;
 
     /// <summary>
     /// 敵キャラのサイクル。
@@ -34,7 +34,7 @@ public class CommandEnemyController : CommandCharaController
 
 
 
-    public StringParamSet GetParamSet()
+    public ArgumentParamSet GetParamSet()
     {
         return m_ParamSet;
     }
@@ -60,7 +60,7 @@ public class CommandEnemyController : CommandCharaController
 
     public virtual void SetStringParam(string param)
     {
-        m_ParamSet = StringParamTranslator.TranslateString(param);
+        m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
     }
 
 

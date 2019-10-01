@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 
 /// <summary>
 /// プレイヤーキャラの動作を制御するマネージャ。
@@ -34,6 +35,26 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     [SerializeField]
     private PlayerController m_CurrentController;
 
+    [Header("State")]
+
+    [SerializeField]
+    private PlayerState m_PlayerState;
+
+    [SerializeField]
+    private FloatReactiveProperty m_CurrentScore;
+
+    [SerializeField]
+    private IntReactiveProperty m_CurrentLevel;
+
+    [SerializeField]
+    private IntReactiveProperty m_CurrentExp;
+
+    [SerializeField]
+    private FloatReactiveProperty m_CurrentBombCharge;
+
+    [SerializeField]
+    private IntReactiveProperty m_CurrentBombNum;
+
     #endregion
 
 
@@ -56,6 +77,31 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     public PlayerController GetCurrentController()
     {
         return m_CurrentController;
+    }
+
+    public FloatReactiveProperty GetCurrentScore()
+    {
+        return m_CurrentScore;
+    }
+
+    public IntReactiveProperty GetCurrentLevel()
+    {
+        return m_CurrentLevel;
+    }
+
+    public IntReactiveProperty GetCurrentExp()
+    {
+        return m_CurrentExp;
+    }
+
+    public FloatReactiveProperty GetCurrentBombCharge()
+    {
+        return m_CurrentBombCharge;
+    }
+
+    public IntReactiveProperty GetCurrentBombNum()
+    {
+        return m_CurrentBombNum;
     }
 
     #endregion
@@ -108,6 +154,8 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
         }
 
         ChangeChara(m_InitSortieIndex);
+
+        InitPlayerState();
     }
 
     public override void OnUpdate()
@@ -141,6 +189,9 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
         m_CharaMoveDir = Vector3.zero;
     }
 
+    /// <summary>
+    /// 指定したインデックスのキャラに交代する。
+    /// </summary>
     private void ChangeChara(int index)
     {
         if (m_CharaIndex == index && m_CurrentController != null || m_WaitChangeTime > 0f)
@@ -167,6 +218,10 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
         m_WaitChangeTime = 1f;
     }
 
+    /// <summary>
+    /// プレイヤーキャラを登録する。
+    /// 後にprivateに変更する。
+    /// </summary>
     public void RegistChara(PlayerController controller)
     {
         if (controller == null || m_Controllers.Contains(controller))
@@ -180,6 +235,9 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
         controller.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// キャラの座標を動体フィールド領域に制限する。
+    /// </summary>
     public void RestrictCharaPosition()
     {
         var chara = GetCurrentController();
@@ -206,6 +264,64 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
         pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
+    }
+
+    /// <summary>
+    /// プレイヤーステートを初期化する。
+    /// </summary>
+    public void InitPlayerState()
+    {
+        m_CurrentScore = new FloatReactiveProperty(0);
+        m_CurrentLevel = new IntReactiveProperty(1);
+        m_CurrentExp = new IntReactiveProperty(0);
+        m_CurrentBombCharge = new FloatReactiveProperty(0f);
+        m_CurrentBombNum = new IntReactiveProperty(0);
+    }
+
+    /// <summary>
+    /// スコアを加算する。
+    /// </summary>
+    public void AddScore(float score)
+    {
+        m_CurrentScore.Value += score;
+    }
+
+    /// <summary>
+    /// 経験値を加算する。
+    /// </summary>
+    public void AddExp(int exp)
+    {
+        var currentExp = m_CurrentExp.Value;
+        currentExp += exp;
+
+        var currentLevel = m_CurrentLevel.Value - 1;
+        var needExp = m_PlayerState.NextNeedExpParams[currentLevel];
+
+        if (currentExp >= needExp)
+        {
+            m_CurrentLevel.Value++;
+            currentExp %= needExp;
+            // Call LevelUp Action
+        }
+
+        m_CurrentExp.Value = currentExp;
+    }
+
+    /// <summary>
+    /// ボムチャージを加算する。
+    /// </summary>
+    public void AddBombCharge(float charge)
+    {
+        var currentCharge = m_CurrentBombCharge.Value;
+        currentCharge += charge;
+
+        if (currentCharge >= m_PlayerState.BombCharge)
+        {
+            m_CurrentBombNum.Value++;
+            currentCharge %= m_PlayerState.BombCharge;
+        }
+
+        m_CurrentBombCharge.Value = currentCharge;
     }
 
     /// <summary>
@@ -266,6 +382,11 @@ public class PlayerCharaManager : BattleSingletonMonoBehavior<PlayerCharaManager
     {
         if (m_CurrentController == null) return;
 
+        if (state != InputManager.E_INPUT_STATE.DOWN) return;
+
+        if (m_CurrentBombNum.Value < 1) return;
+
+        m_CurrentBombNum.Value--;
         m_CurrentController.ShotBomb(state);
     }
 }

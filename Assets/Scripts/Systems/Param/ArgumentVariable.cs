@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 汎用引数
+/// </summary>
 [System.Serializable]
 public struct ArgumentVariable
 {

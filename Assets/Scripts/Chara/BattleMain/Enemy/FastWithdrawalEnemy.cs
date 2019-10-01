@@ -69,11 +69,13 @@ public class FastWithdrawalEnemy : EnemyController
 
 	protected Timer m_WithdrawalTimer;
 
+    protected float m_Interval;
 
 
-	public override void SetStringParam( string param )
+
+	public override void SetArguments( string param )
 	{
-		base.SetStringParam( param );
+		base.SetArguments( param );
 
 		m_ApproachPlayer = m_ParamSet.BoolParam["AP"];
 		m_StraightMoveDistance = m_ParamSet.FloatParam["SMD"];
@@ -85,6 +87,7 @@ public class FastWithdrawalEnemy : EnemyController
 
 		m_ShotParam.Num = m_ParamSet.IntParam["BN"];
 		m_ShotParam.Angle = m_ParamSet.FloatParam["BA"];
+        m_ShotParam.Interval = m_ParamSet.FloatParam["BI"];
 	}
 
 	public override void OnStart()
@@ -130,11 +133,20 @@ public class FastWithdrawalEnemy : EnemyController
 					BattleMainTimerManager.Instance.RegistTimer( m_WithdrawalTimer );
 
 					Shot();
+                    m_Interval = 0;
 				}
 
 				break;
 
 			case E_PHASE.WAIT_WITHDRAWAL:
+
+                m_Interval += Time.deltaTime;
+                if (m_Interval >= m_ShotParam.Interval)
+                {
+                    m_Interval = 0;
+                    Shot();
+                }
+
 				break;
 
 			case E_PHASE.WITHDRAWAL:

@@ -320,6 +320,11 @@ public class ItemManager : BattleSingletonMonoBehavior<ItemManager>
     /// <param name="param">アイテムの生成情報</param>
     public void CreateItem(Vector3 position, ItemCreateParam param)
     {
+        if (param.ItemSpreadParams == null || param.ItemSpreadParams.Length < 1)
+        {
+            return;
+        }
+
         foreach (var spreadParam in param.ItemSpreadParams)
         {
             var prefab = GetItemPrefabFromItemType(spreadParam.ItemType);

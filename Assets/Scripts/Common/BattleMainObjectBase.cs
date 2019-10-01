@@ -20,8 +20,8 @@ public class BattleMainObjectBase : BattleObjectBase
 
     public override void OnFinalize()
     {
-        base.OnFinalize();
         DestroyAllTimer();
+        base.OnFinalize();
     }
 
     /// <summary>

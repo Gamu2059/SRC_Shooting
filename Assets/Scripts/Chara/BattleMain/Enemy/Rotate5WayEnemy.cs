@@ -92,9 +92,9 @@ public class Rotate5WayEnemy : EnemyController
 	protected Timer m_WithdrawalTimer;
 
 
-	public override void SetStringParam( string param )
+	public override void SetArguments( string param )
 	{
-		base.SetStringParam( param );
+		base.SetArguments( param );
 
 		m_ApproachPlayer = m_ParamSet.BoolParam["AP"];
 		m_StraightMoveDistance = m_ParamSet.FloatParam["SMD"];

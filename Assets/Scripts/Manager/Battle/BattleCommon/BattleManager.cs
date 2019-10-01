@@ -33,6 +33,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         TRANSITION_MAIN,
     }
 
+    #region Field Inspector
+
     /// <summary>
     /// メインのバトル画面のマネージャーリスト。
     /// </summary>
@@ -54,16 +56,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private E_BATTLE_STATUS m_BattleStatus;
 
     [SerializeField]
-    private IntReactiveProperty m_Score;
-
-    [SerializeField]
-    private IntReactiveProperty m_BestScore;
-
-    [SerializeField]
-    private BoolReactiveProperty m_IsBestScore;
-
-    [SerializeField]
     public bool m_PlayerNotDead;
+
+    #endregion
+
+    #region Field
 
     /// <summary>
     /// 状態遷移のリクエストを受けたかどうか。
@@ -74,6 +71,20 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// リクエストされた遷移先状態。
     /// </summary>
     private E_BATTLE_STATUS m_RequestedBattleStatus;
+
+    /// <summary>
+    /// 全てのマネージャが初期化された後のコールバック
+    /// </summary>
+    public Action m_OnInitManagers;
+
+    /// <summary>
+    /// 全てのマネージャがスタートした後のコールバック
+    /// </summary>
+    public Action m_OnStartManagers;
+
+    #endregion
+
+    #region Get & Set
 
     /// <summary>
     /// メインのバトル画面のマネージャーリストを取得する。
@@ -91,30 +102,21 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         return m_BattleCommandManagers;
     }
 
-
-    public IntReactiveProperty GetScorePoperty()
-    {
-        return m_Score;
-    }
-    public IntReactiveProperty GetBestScorePoperty()
-    {
-        return m_BestScore;
-    }
-    public BoolReactiveProperty GetIsBestScorePoperty()
-    {
-        return m_IsBestScore;
-    }
+    #endregion
 
     /// <summary>
     /// シーン読み込み時に呼び出される。
     /// </summary>
-	public override void OnInitialize()
+    public override void OnInitialize()
     {
         base.OnInitialize();
 
         EchoBulletIndexGenerater.OnInitialize();
         m_BattleMainManagers.ForEach(m => m.OnInitialize());
         m_BattleCommandManagers.ForEach(m => m.OnInitialize());
+
+        EventUtility.SafeInvokeAction(m_OnInitManagers);
+        m_OnInitManagers = null;
     }
 
     /// <summary>
@@ -139,6 +141,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleMainManagers.ForEach(m => m.OnStart());
         m_BattleCommandManagers.ForEach(m => m.OnStart());
 
+        EventUtility.SafeInvokeAction(m_OnStartManagers);
+        m_OnStartManagers = null;
+
         if (m_InitMode == E_BATTLE_STATUS.MAIN || m_InitMode == E_BATTLE_STATUS.TRANSITION_MAIN)
         {
             TransitionForceBattleMain();
@@ -146,22 +151,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         else
         {
             TransitionForceBattleCommand();
-        }
-
-        CoroutineManager.Instance.RegistCoroutine(TestC());
-    }
-
-    private IEnumerator TestC()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            bool isEnd = false;
-            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, ()=> isEnd = true);
-            BattleMainTimerManager.Instance.RegistTimer(timer);
-            while(!isEnd)
-            {
-                yield return null;
-            }
         }
     }
 
@@ -234,6 +223,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     }
 
     /// <summary>
+    /// ゲームを開始する。
+    /// </summary>
+    public void GameStart()
+    {
+
+    }
+
+    /// <summary>
     /// ゲームオーバーにする。
     /// </summary>
 	public void GameOver()
@@ -243,7 +240,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         BattleMainAudioManager.Instance.StopAllBGM();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
         });
         TimerManager.Instance.RegistTimer(timer);
     }
@@ -255,47 +252,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         DetachBattleMainInputAction();
 
-        if (m_IsBestScore.Value)
-        {
-            PlayerPrefs.SetInt("BestScore", m_BestScore.Value);
-            PlayerPrefs.Save();
-        }
-
         BattleMainUiManager.Instance.ShowGameClear();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
         });
         TimerManager.Instance.RegistTimer(timer);
-    }
-
-    public void AddScore(int score)
-    {
-        m_Score.Value += score;
-
-        if (m_Score.Value > m_BestScore.Value)
-        {
-            if (!m_IsBestScore.Value)
-            {
-                m_IsBestScore.Value = true;
-            }
-
-            m_BestScore.Value = m_Score.Value;
-        }
-    }
-
-
-    private void InitReactiveProperty()
-    {
-        m_BestScore = new IntReactiveProperty(0);
-        m_Score = new IntReactiveProperty(0);
-        m_IsBestScore = new BoolReactiveProperty(false);
-    }
-
-    private void InitScore()
-    {
-        m_Score.Value = 0;
-        m_BestScore.Value = PlayerPrefs.GetInt("BestScore", 0);
     }
 
     /// <summary>
@@ -381,7 +343,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         DetachBattleMainInputAction();
         DetachBattleCommandInputAction();
-        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.BATTLE);
+        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
     }
 
     /// <summary>

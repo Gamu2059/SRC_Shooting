@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using DG.Tweening;
 
 /// <summary>
 /// 全てのグローバルなマネージャを管理するマネージャ。
@@ -67,6 +68,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	public override void OnUpdate()
 	{
 		m_Managers.ForEach( ( m ) => m.OnUpdate() );
+        DOTween.ManualUpdate(Time.deltaTime, Time.unscaledDeltaTime);
 	}
 
 	public override void OnLateUpdate()

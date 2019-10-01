@@ -7,25 +7,20 @@ using UnityEngine.Timeline;
 [System.Serializable]
 public class BattleAnimationPlayableAsset : PlayableAsset
 {
-
     [SerializeField]
-    private ExposedReference<Transform> m_Target;
+    private string m_ReferenceName;
 
     [SerializeField]
     private BattleAnimationParam m_AnimParam;
 
-    //private Transform m_Target;
-
-    //public void SetTarget(Transform target)
-    //{
-    //    m_Target = target;
-    //}
-
     public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
     {
         var behaviour = new BattleAnimationPlayableBehaviour();
-        behaviour.SetArguments(m_Target.Resolve(graph.GetResolver()), m_AnimParam);
-        //behaviour.SetArguments(m_Target, m_Animations);
+
+        bool result;
+        var target = graph.GetResolver().GetReferenceValue(m_ReferenceName, out result) as Transform;
+
+        behaviour.SetArguments(target, m_AnimParam);
         return ScriptPlayable<BattleAnimationPlayableBehaviour>.Create(graph, behaviour);
     }
 }

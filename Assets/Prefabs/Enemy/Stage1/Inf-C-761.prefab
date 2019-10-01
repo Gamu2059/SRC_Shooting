@@ -846,8 +846,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  m_NowHp: 1000
+  m_MaxHp: 1000
   m_ItemCreateParam:
     ItemSpreadParams: []
     CenterCreateItemType: 0
@@ -855,8 +855,8 @@ MonoBehaviour:
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
   m_ChangePhaseTime: 0
-  m_RightRailgunShotPosition: {fileID: 0}
-  m_LeftRailgunShotPosition: {fileID: 0}
+  m_RightRailgunShotPosition: {fileID: 8632024341212570359}
+  m_LeftRailgunShotPosition: {fileID: 1098624332122370652}
   m_NormalMoveTargetPositions: []
   m_NormalMinMoveInterval: 0
   m_NormalMaxMoveInterval: 0

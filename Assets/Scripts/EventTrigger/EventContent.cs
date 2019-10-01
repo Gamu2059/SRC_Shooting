@@ -13,7 +13,7 @@ public struct EventContent
         /// <summary>
         /// 敵の出現制御
         /// </summary>
-        APPER_ENEMY,
+        APPEAR_ENEMY,
 
         /// <summary>
         /// カメラ制御
@@ -44,11 +44,31 @@ public struct EventContent
         /// 任意のスクリプトの呼び出し
         /// </summary>
         CALL_SCRIPT,
+
+        /// <summary>
+        /// ゲーム開始
+        /// </summary>
+        GAME_START,
+
+        /// <summary>
+        /// ゲームクリア
+        /// </summary>
+        GAME_CLEAR,
     }
 
+    /// <summary>
+    /// 実行タイミング
+    /// </summary>
     public enum E_EXECUTE_TIMING
     {
+        /// <summary>
+        /// 遅延を待たずに即座に実行する
+        /// </summary>
         IMMEDIATE,
+
+        /// <summary>
+        /// 遅延を待つ
+        /// </summary>
         DELAY,
     }
 
@@ -63,13 +83,31 @@ public struct EventContent
     [Tooltip("実行タイミングをDELAYにしている場合、何秒後に実行するか")]
     public float DelayExecuteTime;
 
-    [Tooltip("実行イベントに渡す引数")]
-    public ArgumentVariable[] m_Arguments;
+    [Header("APPEAR_ENEMY")]
 
-    [Header("APPER_ENEMYのパラメータ")]
+    public int AppearEnemyIndex;
 
-    [Tooltip("出現させる敵のリストでのインデックス")]
-    public int ApperEnemyIndex;
+    [Header("CONTROL_CAMERA")]
 
-    //[Header("CONTROL_CAMERAのパラメータ")]
+    public ControlCameraParam[] ControlCameraParams;
+
+    [Header("CONTROL_OBJECT")]
+
+    public ControlObjectParam[] ControlObjectParams;
+
+    [Header("CONTROL_BGM")]
+
+    public ControlBgmParam[] ControlBgmParams;
+
+    [Header("OPERATE_VARIABLE")]
+
+    public OperateVariableParam[] OperateVariableParams;
+
+    [Header("OPERATE_TIME_PERIOD")]
+
+    public string[] CountStartTimePeriodNames;
+
+    [Header("CALL_SCRIPT")]
+
+    public CallScriptParam[] CallScriptParams;
 }

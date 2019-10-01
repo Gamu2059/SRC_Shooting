@@ -50,11 +50,19 @@ public class CharaController : BattleMainObjectBase
 	#endregion
 
 
+    /// <summary>
+    /// HPを初期化する
+    /// </summary>
+    /// <param name="hp">最大HP</param>
+    public void InitHp(float hp)
+    {
+        m_MaxHp = m_NowHp = hp;
+    }
 
 	/// <summary>
 	/// このキャラを回復する。
 	/// </summary>
-	public virtual void Recover( float recover )
+	public void Recover( float recover )
 	{
 		if( recover <= 0 )
 		{
@@ -68,7 +76,7 @@ public class CharaController : BattleMainObjectBase
 	/// このキャラにダメージを与える。
 	/// HPが0になった場合は死ぬ。
 	/// </summary>
-	public virtual void Damage(float damage )
+	public void Damage(float damage )
 	{
 		if( damage <= 0 )
 		{
