@@ -62,6 +62,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     #region Field
 
+    private BattleRealManager m_BattleRealManager;
+    private BattleHackingManager m_BattleHackingManager;
+
+
+
+
     /// <summary>
     /// 状態遷移のリクエストを受けたかどうか。
     /// </summary>
