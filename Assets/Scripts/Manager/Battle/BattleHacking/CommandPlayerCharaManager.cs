@@ -192,7 +192,7 @@ public class CommandPlayerCharaManager : BattleSingletonMonoBehavior<CommandPlay
     /// <summary>
     /// 弾を撃つコールバック。
     /// </summary>
-    public void OnInputShot(InputManager.E_INPUT_STATE state)
+    public void OnInputShot(InputExtension.E_INPUT_STATE state)
     {
         if (m_Controller == null) return;
 

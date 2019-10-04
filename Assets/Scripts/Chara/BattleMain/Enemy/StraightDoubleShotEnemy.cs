@@ -53,6 +53,6 @@ public class StraightDoubleShotEnemy : StraightEnemy
 			}
 		} );
 
-		BattleMainTimerManager.Instance.RegistTimer( timer );
+		//BattleRealTimerManager.Instance.RegistTimer( timer );
 	}
 }

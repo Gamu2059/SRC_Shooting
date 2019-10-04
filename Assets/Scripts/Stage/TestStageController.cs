@@ -30,42 +30,42 @@ public class TestStageController : StageController
 
 	protected override void ControlViewMoving()
 	{
-		var moveRoot = StageManager.Instance.GetMoveObjectHolder();
+		//var moveRoot = BattleRealStageManager.Instance.GetMoveObjectHolder();
 
-		switch( m_StageState )
-		{
-			case E_TEST_STAGE_STATE.FIRST_HALF:
-				moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
+		//switch( m_StageState )
+		//{
+		//	case E_TEST_STAGE_STATE.FIRST_HALF:
+		//		moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
 
-				if( m_BuildEnemyTimeCount >= 80 )
-				{
-					m_StageState = E_TEST_STAGE_STATE.SECOND_HALF;
-				}
+		//		if( m_BuildEnemyTimeCount >= 80 )
+		//		{
+		//			m_StageState = E_TEST_STAGE_STATE.SECOND_HALF;
+		//		}
 
 
-				break;
+		//		break;
 
-			case E_TEST_STAGE_STATE.SECOND_HALF:
-				moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
+		//	case E_TEST_STAGE_STATE.SECOND_HALF:
+		//		moveRoot.transform.Translate( Vector3.forward * m_MoveSpeed * Time.deltaTime );
 
-				if( m_BuildEnemyTimeCount >= 120 )
-				{
-					m_StageState = E_TEST_STAGE_STATE.BOSS;
-				}
+		//		if( m_BuildEnemyTimeCount >= 120 )
+		//		{
+		//			m_StageState = E_TEST_STAGE_STATE.BOSS;
+		//		}
 
-				break;
+		//		break;
 
-			case E_TEST_STAGE_STATE.BOSS:
-				var bgm = BattleMainAudioManagerKeyWord.Stage1Boss;
+		//	case E_TEST_STAGE_STATE.BOSS:
+		//		var bgm = BattleMainAudioManagerKeyWord.Stage1Boss;
 
-				if( !BattleMainAudioManager.Instance.IsPlayingBGM( bgm ) )
-				{
+		//		if( !BattleMainAudioManager.Instance.IsPlayingBGM( bgm ) )
+		//		{
 
-					BattleMainAudioManager.Instance.PlayBGM( bgm );
-				}
+		//			BattleMainAudioManager.Instance.PlayBGM( bgm );
+		//		}
 
-				break;
-		}
+		//		break;
+		//}
 	}
 
 	protected override void AppearEnemy()

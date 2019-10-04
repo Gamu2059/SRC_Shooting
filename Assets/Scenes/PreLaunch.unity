@@ -427,9 +427,6 @@ GameObject:
   - component: {fileID: 1379646824}
   - component: {fileID: 1379646823}
   - component: {fileID: 1379646827}
-  - component: {fileID: 1379646826}
-  - component: {fileID: 1379646829}
-  - component: {fileID: 1379646828}
   - component: {fileID: 1379646830}
   m_Layer: 0
   m_Name: '[GameManager]'
@@ -476,10 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Managers:
-  - {fileID: 1379646826}
-  - {fileID: 1379646829}
   - {fileID: 1379646827}
-  - {fileID: 1379646828}
   - {fileID: 1379646830}
   - {fileID: 1379646823}
 --- !u!4 &1379646825
@@ -498,18 +492,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1379646826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379646822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33528960fc62ef3468589000d4613203, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1379646827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,30 +505,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DefaultTransition: {fileID: 2135274159}
---- !u!114 &1379646828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379646822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edc2fd8d35d9e7b47b6b267c19e56a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1379646829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379646822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b044da3375dc8944a08ee90ed42787e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1379646830
 MonoBehaviour:
   m_ObjectHideFlags: 0

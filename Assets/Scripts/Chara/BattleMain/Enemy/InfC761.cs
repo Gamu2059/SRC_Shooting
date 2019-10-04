@@ -504,8 +504,8 @@ public class InfC761 : EnemyController
 			m_NormalShotInterval = float.MaxValue;
 		}
 
-		var target = PlayerCharaManager.Instance.GetCurrentController().transform;
-		transform.LookAt( target );
+		//var target = BattleRealPlayerManager.Instance.GetCurrentController().transform;
+		//transform.LookAt( target );
 	}
 
 	private void MoveSkill1()
@@ -523,9 +523,9 @@ public class InfC761 : EnemyController
 		{
 			case E_SKILL1_PHASE.WAIT_LEFT_LASER:
 			case E_SKILL1_PHASE.WAIT_RIGHT_LASER:
-				var target = PlayerCharaManager.Instance.GetCurrentController().transform;
-				var forward = Vector3.Lerp( transform.forward, ( target.position - transform.position ), m_SkillLookAtLerp );
-				transform.forward = forward;
+				//var target = BattleRealPlayerManager.Instance.GetCurrentController().transform;
+				//var forward = Vector3.Lerp( transform.forward, ( target.position - transform.position ), m_SkillLookAtLerp );
+				//transform.forward = forward;
 				break;
 		}
 	}
@@ -540,8 +540,8 @@ public class InfC761 : EnemyController
 			m_IsStay = true;
 		}
 
-		var target = PlayerCharaManager.Instance.GetCurrentController().transform;
-		transform.LookAt( target );
+		//var target = BattleRealPlayerManager.Instance.GetCurrentController().transform;
+		//transform.LookAt( target );
 	}
 
 	private void MoveSkill3()

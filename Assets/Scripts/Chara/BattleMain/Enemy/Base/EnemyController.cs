@@ -76,7 +76,7 @@ public class EnemyController : CharaController
     private void Start()
     {
         // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        EnemyCharaManager.Instance.RegistEnemy(this);
+        //BattleRealEnemyManager.Instance.RegistEnemy(this);
     }
 
 
@@ -116,21 +116,21 @@ public class EnemyController : CharaController
 
     protected virtual void OnBecameVisible()
     {
-        if (BattleMainTimerManager.Instance != null)
-        {
-            SetCanOutDestroyTimer();
-        }
-        else
-        {
-            m_OnInitialized += () => SetCanOutDestroyTimer();
-        }
+        //if (BattleRealTimerManager.Instance != null)
+        //{
+        //    SetCanOutDestroyTimer();
+        //}
+        //else
+        //{
+        //    m_OnInitialized += () => SetCanOutDestroyTimer();
+        //}
     }
 
     protected virtual void OnBecameInvisible()
     {
         if (m_CanOutDestroy)
         {
-            EnemyCharaManager.Instance.DestroyEnemy(this);
+            //BattleRealEnemyManager.Instance.DestroyEnemy(this);
         }
     }
 
@@ -139,13 +139,13 @@ public class EnemyController : CharaController
     /// </summary>
     private void SetCanOutDestroyTimer()
     {
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime());
-        timer.SetTimeoutCallBack(()=> {
-            timer = null;
-            m_CanOutDestroy = true;
-        });
+        //var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, BattleRealEnemyManager.Instance.GetCanOutTime());
+        //timer.SetTimeoutCallBack(()=> {
+        //    timer = null;
+        //    m_CanOutDestroy = true;
+        //});
 
-        RegistTimer(CAN_OUT_DESTROY_TIMER_KEY, timer);
+        //RegistTimer(CAN_OUT_DESTROY_TIMER_KEY, timer);
     }
 
     /// <summary>
@@ -173,10 +173,10 @@ public class EnemyController : CharaController
             return;
         }
 
-        if (StageManager.Instance.IsOutOfField(attackBullet.transform))
-        {
-            return;
-        }
+        //if (BattleRealStageManager.Instance.IsOutOfField(attackBullet.transform))
+        //{
+        //    return;
+        //}
 
         if (m_OnHitInvincibleDuration <= 0)
         {
@@ -201,10 +201,10 @@ public class EnemyController : CharaController
     {
         base.Dead();
 
-        DestroyAllTimer();
-        EnemyCharaManager.Instance.DestroyEnemy(this);
+        //DestroyAllTimer();
+        //BattleRealEnemyManager.Instance.DestroyEnemy(this);
 
-        ItemManager.Instance.CreateItem(transform.localPosition, m_DropItemParam);
+        //BattleRealItemManager.Instance.CreateItem(transform.localPosition, m_DropItemParam);
 
 
     }
@@ -216,10 +216,10 @@ public class EnemyController : CharaController
             return;
         }
 
-        var eventContent = new EventContent();
-        eventContent.ExecuteTiming = EventContent.E_EXECUTE_TIMING.IMMEDIATE;
-        eventContent.EventType = EventContent.E_EVENT_TYPE.OPERATE_VARIABLE;
-        eventContent.OperateVariableParams = m_DefeatOperateVariableParams;
-        EventManager.Instance.ExecuteEvent(eventContent);
+        //var eventContent = new EventContent();
+        //eventContent.ExecuteTiming = EventContent.E_EXECUTE_TIMING.IMMEDIATE;
+        //eventContent.EventType = EventContent.E_EVENT_TYPE.OPERATE_VARIABLE;
+        //eventContent.OperateVariableParams = m_DefeatOperateVariableParams;
+        //BattleRealEventManager.Instance.ExecuteEvent(eventContent);
     }
 }

@@ -53,6 +53,6 @@ public class FastWithdrawalDoubleShotEnemy : FastWithdrawalEnemy
 			}
 		} );
 
-		BattleMainTimerManager.Instance.RegistTimer( timer );
+		//BattleRealTimerManager.Instance.RegistTimer( timer );
 	}
 }

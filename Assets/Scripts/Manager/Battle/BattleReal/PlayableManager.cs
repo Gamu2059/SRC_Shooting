@@ -53,10 +53,10 @@ public class PlayableManager : BattleSingletonMonoBehavior<PlayableManager>
     {
         base.OnStart();
 
-        if (StageManager.Instance != null && StageManager.Instance.GetMoveObjectHolder() != null)
-        {
-            m_Holder = StageManager.Instance.GetMoveObjectHolder().transform;
-        }
+        //if (BattleRealStageManager.Instance != null && BattleRealStageManager.Instance.GetMoveObjectHolder() != null)
+        //{
+        //    m_Holder = BattleRealStageManager.Instance.GetMoveObjectHolder().transform;
+        //}
     }
 
     public override void OnUpdate()

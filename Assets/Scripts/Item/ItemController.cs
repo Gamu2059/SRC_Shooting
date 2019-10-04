@@ -244,12 +244,12 @@ public class ItemController : BattleMainObjectBase
             SetPosition(transform.forward * speed, E_RELATIVE.RELATIVE);
         } else
         {
-            var player = PlayerCharaManager.Instance.GetCurrentController();
-            if (player != null)
-            {
-                var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, ItemManager.Instance.GetItemAttractRate());
-                SetPosition(nextPos);
-            }
+            //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+            //if (player != null)
+            //{
+            //    var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, BattleRealItemManager.Instance.GetItemAttractRate());
+            //    SetPosition(nextPos);
+            //}
         }
 
         m_NowRotateAngle += GetNowDeltaRotation().z * Time.deltaTime;
@@ -350,7 +350,7 @@ public class ItemController : BattleMainObjectBase
     {
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            ItemManager.Instance.CheckPoolItem(this);
+            //BattleRealItemManager.Instance.CheckPoolItem(this);
         }
     }
 

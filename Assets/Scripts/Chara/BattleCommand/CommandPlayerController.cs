@@ -101,6 +101,6 @@ public class CommandPlayerController : CommandCharaController
         }
 
         base.Dead();
-        BattleManager.Instance.TransitionBattleMain();
+        //BattleManager.Instance.TransitionBattleMain();
     }
 }

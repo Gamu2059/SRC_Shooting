@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EchoController : PlayerController
+public class EchoController : BattleRealPlayerController
 {
 
     [Header("Echo専用 ショットに関するパラメータ")]
@@ -59,7 +59,7 @@ public class EchoController : PlayerController
         UpdateShotLevel(GetLevel());
     }
 
-    public override void ShotBullet(InputManager.E_INPUT_STATE state)
+    public override void ShotBullet(InputExtension.E_INPUT_STATE state)
     {
         if (shotDelay >= m_ShotInterval)
         {

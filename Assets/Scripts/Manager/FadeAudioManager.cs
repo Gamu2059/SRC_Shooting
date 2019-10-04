@@ -53,7 +53,7 @@ public class FadeAudioManager : SingletonMonoBehavior<FadeAudioManager>
             var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, playOffset, () => {
                 PlayBGM(source, clip, fadeInDuration);
             });
-            TimerManager.Instance.RegistTimer(timer);
+            //TimerManager.Instance.RegistTimer(timer);
         }
     }
 

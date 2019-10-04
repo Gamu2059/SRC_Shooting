@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmasherController : PlayerController
+public class SmasherController : BattleRealPlayerController
 {
     [SerializeField, Range(0f, 1f)]
     private float m_ShotInterval;
@@ -66,7 +66,7 @@ public class SmasherController : PlayerController
         m_ShotFlag = false;
     }
 
-    public override void ShotBullet(InputManager.E_INPUT_STATE state)
+    public override void ShotBullet(InputExtension.E_INPUT_STATE state)
     {
         if (shotDelay >= m_ShotInterval)
         {

@@ -121,8 +121,8 @@ public class Rotate5WayEnemy : EnemyController
 
 		if( m_ApproachPlayer )
 		{
-			var targetPos = PlayerCharaManager.Instance.GetCurrentController().transform.localPosition;
-			m_StraightMoveDirection = ( targetPos - startPos ).normalized;
+			//var targetPos = BattleRealPlayerManager.Instance.GetCurrentController().transform.localPosition;
+			//m_StraightMoveDirection = ( targetPos - startPos ).normalized;
 		}
 
 		// 直進時の行先を求める
@@ -158,7 +158,7 @@ public class Rotate5WayEnemy : EnemyController
 					                        null,
 					                        () => ShotRotatingGan(),
 					                        () => m_Phase = E_PHASE.WITHDRAWAL );
-					BattleMainTimerManager.Instance.RegistTimer( m_WithdrawalTimer );
+					//BattleRealTimerManager.Instance.RegistTimer( m_WithdrawalTimer );
 
 					Shot();
 				}
@@ -177,8 +177,8 @@ public class Rotate5WayEnemy : EnemyController
 				break;
 		}
 
-		var target = PlayerCharaManager.Instance.GetCurrentController().transform;
-		transform.LookAt( target );
+		//var target = BattleRealPlayerManager.Instance.GetCurrentController().transform;
+		//transform.LookAt( target );
 	}
 
 	protected virtual void Shot()

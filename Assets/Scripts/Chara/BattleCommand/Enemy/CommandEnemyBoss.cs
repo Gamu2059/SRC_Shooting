@@ -11,6 +11,6 @@ public class CommandEnemyBoss : CommandEnemyController
     public override void Dead()
     {
         base.Dead();
-        BattleManager.Instance.TransitionBattleMain();
+        //BattleManager.Instance.TransitionBattleMain();
     }
 }

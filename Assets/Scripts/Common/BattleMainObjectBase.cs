@@ -48,7 +48,7 @@ public class BattleMainObjectBase : BattleObjectBase
         }
 
         m_TimerDict.Add(key, timer);
-        BattleMainTimerManager.Instance.RegistTimer(timer);
+        //BattleRealTimerManager.Instance.RegistTimer(timer);
     }
 
     /// <summary>

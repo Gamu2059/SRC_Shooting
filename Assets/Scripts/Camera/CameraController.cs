@@ -22,7 +22,7 @@ public class CameraController : BattleMainPlayableBase
     {
         if (CameraManager.Instance == null)
         {
-            BattleManager.Instance.m_OnInitManagers += RegistCamera;
+            //BattleManager.Instance.m_OnInitManagers += RegistCamera;
         }
         else
         {

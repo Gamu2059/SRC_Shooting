@@ -67,10 +67,10 @@ public class CommandEnemyController : CommandCharaController
 
     protected virtual void OnBecameVisible()
     {
-        RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, EnemyCharaManager.Instance.GetCanOutTime(), () =>
-        {
-            m_CanOutDestroy = true;
-        }));
+        //RegistTimer("CanOutDestroy", Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, BattleRealEnemyManager.Instance.GetCanOutTime(), () =>
+        //{
+        //    m_CanOutDestroy = true;
+        //}));
     }
 
     protected virtual void OnBecameInvisible()
@@ -90,7 +90,7 @@ public class CommandEnemyController : CommandCharaController
 
         if (m_IsBoss)
         {
-            BattleManager.Instance.TransitionBattleMain();
+            //BattleManager.Instance.TransitionBattleMain();
         }
     }
 }

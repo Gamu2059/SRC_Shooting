@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 054c7bc45abe91d49b6179a6d1299be2, type: 3}
+  m_Name: stage1.battle_param_set
+  m_EditorClassIdentifier: 
+  m_BattleRealParamSet:
+    m_PlayerManagerParamSet:
+      m_PlayerPrefab: {fileID: 5472596545775235978, guid: 9a74acc37d5b21d47abf4fc973ab9687,
+        type: 3}
+      m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
+    m_EventTriggerParamSet: {fileID: 11400000, guid: ee278599230674a4880e20fb8bf387d4,
+      type: 2}
+  m_BattleHackingParamSet:
+    m_Hoge: 0

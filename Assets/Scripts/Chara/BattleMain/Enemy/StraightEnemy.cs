@@ -69,8 +69,8 @@ public class StraightEnemy : EnemyController
 
 		Shot();
 
-		var target = PlayerCharaManager.Instance.GetCurrentController().transform;
-		transform.LookAt( target );
+		//var target = BattleRealPlayerManager.Instance.GetCurrentController().transform;
+		//transform.LookAt( target );
 	}
 
 	protected virtual void Shot()
@@ -113,7 +113,7 @@ public class StraightEnemy : EnemyController
 			OnShot( m_ShotParam );
 		} );
 
-		BattleMainTimerManager.Instance.RegistTimer( m_StartShotTimer );
+		//BattleRealTimerManager.Instance.RegistTimer( m_StartShotTimer );
 	}
 
 	public override void Dead()

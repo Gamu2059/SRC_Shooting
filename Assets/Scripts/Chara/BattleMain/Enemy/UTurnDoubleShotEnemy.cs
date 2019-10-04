@@ -53,6 +53,6 @@ public class UTurnDoubleShotEnemy : UTurnEnemy
 			}
 		} );
 
-		BattleMainTimerManager.Instance.RegistTimer( timer );
+		//BattleRealTimerManager.Instance.RegistTimer( timer );
 	}
 }

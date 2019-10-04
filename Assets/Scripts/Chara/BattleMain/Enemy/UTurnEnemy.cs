@@ -169,7 +169,7 @@ public class UTurnEnemy : EnemyController
 				break;
 		}
 
-		transform.LookAt( PlayerCharaManager.Instance.GetCurrentController().transform );
+		//transform.LookAt( BattleRealPlayerManager.Instance.GetCurrentController().transform );
 	}
 
 	protected virtual void SetPositionOnCircle( float angle )
@@ -225,7 +225,7 @@ public class UTurnEnemy : EnemyController
 			OnShot( m_StraightMoveShotParam );
 		} );
 
-		BattleMainTimerManager.Instance.RegistTimer( m_StartShotTimer );
+		//BattleRealTimerManager.Instance.RegistTimer( m_StartShotTimer );
 	}
 
 	public override void Dead()

@@ -8,6 +8,6 @@ public class HackerBullet : BulletController
     {
         base.HitChara(targetChara, attackData, targetData);
         DestroyBullet();
-        BattleManager.Instance.TransitionBattleCommand();
+        //BattleManager.Instance.TransitionBattleCommand();
     }
 }

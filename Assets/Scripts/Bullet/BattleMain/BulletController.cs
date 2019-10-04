@@ -455,57 +455,59 @@ public class BulletController : BattleMainObjectBase
     /// <param name="isBomb">ボムかどうか</param>
     private static BulletController CreateBullet(CharaController owner, bool isBomb)
     {
-        if (owner == null)
-        {
-            return null;
-        }
+        //if (owner == null)
+        //{
+        //    return null;
+        //}
 
-        var bulletSetParam = owner.GetBulletSetParam();
+        //var bulletSetParam = owner.GetBulletSetParam();
 
-        // プレハブを取得
-        BulletController bulletPrefab;
-        if (isBomb)
-        {
-            bulletPrefab = bulletSetParam.GetBombPrefab();
-        }
-        else
-        {
-            bulletPrefab = bulletSetParam.GetBulletPrefab();
-        }
+        //// プレハブを取得
+        //BulletController bulletPrefab;
+        //if (isBomb)
+        //{
+        //    bulletPrefab = bulletSetParam.GetBombPrefab();
+        //}
+        //else
+        //{
+        //    bulletPrefab = bulletSetParam.GetBulletPrefab();
+        //}
 
-        if (bulletPrefab == null)
-        {
-            return null;
-        }
+        //if (bulletPrefab == null)
+        //{
+        //    return null;
+        //}
 
-        // プールから弾を取得
-        var bullet = BulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        //// プールから弾を取得
+        //var bullet = BattleRealBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        // 座標を設定
-        bullet.SetPosition(owner.transform.localPosition);
+        //// 座標を設定
+        //bullet.SetPosition(owner.transform.localPosition);
 
-        // 回転を設定
-        bullet.SetRotation(owner.transform.localEulerAngles);
+        //// 回転を設定
+        //bullet.SetRotation(owner.transform.localEulerAngles);
 
-        // スケールを設定
-        bullet.SetScale(bulletPrefab.transform.localScale);
+        //// スケールを設定
+        //bullet.SetScale(bulletPrefab.transform.localScale);
 
-        bullet.ResetBulletLifeTime();
-        bullet.ResetBulletParam();
+        //bullet.ResetBulletLifeTime();
+        //bullet.ResetBulletParam();
 
-        bullet.m_BulletOwner = owner;
-        bullet.SetTroop(owner.GetTroop());
-        bullet.m_BulletParam = null;
-        bullet.m_BulletIndex = 0;
-        bullet.m_BulletParamIndex = 0;
-        bullet.m_OrbitalParamIndex = -1;
+        //bullet.m_BulletOwner = owner;
+        //bullet.SetTroop(owner.GetTroop());
+        //bullet.m_BulletParam = null;
+        //bullet.m_BulletIndex = 0;
+        //bullet.m_BulletParamIndex = 0;
+        //bullet.m_OrbitalParamIndex = -1;
 
-        return bullet;
+        //return bullet;
+
+        return null;
     }
 
     /// <summary>
@@ -518,19 +520,21 @@ public class BulletController : BattleMainObjectBase
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
     public static BulletController ShotBulletWithoutBulletParam(CharaController owner, bool isBomb = false, bool isCheck = true)
     {
-        var bullet = CreateBullet(owner, isBomb);
+        //var bullet = CreateBullet(owner, isBomb);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        if (isCheck)
-        {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
-        }
+        //if (isCheck)
+        //{
+        //    BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
+        //}
 
-        return bullet;
+        //return bullet;
+
+        return null;
     }
 
     /// <summary>
@@ -542,40 +546,42 @@ public class BulletController : BattleMainObjectBase
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
     public static BulletController ShotBullet(CharaController owner, bool isBomb = false, bool isCheck = true)
     {
-        var bullet = CreateBullet(owner, isBomb);
+        //var bullet = CreateBullet(owner, isBomb);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        var bulletSetParam = owner.GetBulletSetParam();
+        //var bulletSetParam = owner.GetBulletSetParam();
 
-        // BulletParamを取得
-        BulletParam bulletParam;
-        if (isBomb)
-        {
-            bulletParam = bulletSetParam.GetBombParam();
-        }
-        else
-        {
-            bulletParam = bulletSetParam.GetBulletParam();
-        }
+        //// BulletParamを取得
+        //BulletParam bulletParam;
+        //if (isBomb)
+        //{
+        //    bulletParam = bulletSetParam.GetBombParam();
+        //}
+        //else
+        //{
+        //    bulletParam = bulletSetParam.GetBulletParam();
+        //}
 
-        if (bulletParam != null)
-        {
-            // 軌道を設定
-            bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
-        }
+        //if (bulletParam != null)
+        //{
+        //    // 軌道を設定
+        //    bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
+        //}
 
-        bullet.m_BulletParam = bulletParam;
+        //bullet.m_BulletParam = bulletParam;
 
-        if (isCheck)
-        {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
-        }
+        //if (isCheck)
+        //{
+        //    BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
+        //}
 
-        return bullet;
+        //return bullet;
+
+        return null;
     }
 
     /// <summary>
@@ -585,59 +591,61 @@ public class BulletController : BattleMainObjectBase
     /// <param name="isBomb">ボムかどうか</param>
     private static BulletController CreateBullet(BulletShotParam shotParam, bool isBomb)
     {
-        var owner = shotParam.BulletOwner;
+        //var owner = shotParam.BulletOwner;
 
-        if (owner == null)
-        {
-            return null;
-        }
+        //if (owner == null)
+        //{
+        //    return null;
+        //}
 
-        var bulletSetParam = owner.GetBulletSetParam();
+        //var bulletSetParam = owner.GetBulletSetParam();
 
-        // プレハブを取得
-        BulletController bulletPrefab;
-        if (isBomb)
-        {
-            bulletPrefab = bulletSetParam.GetBombPrefab(shotParam.BulletIndex);
-        }
-        else
-        {
-            bulletPrefab = bulletSetParam.GetBulletPrefab(shotParam.BulletIndex);
-        }
+        //// プレハブを取得
+        //BulletController bulletPrefab;
+        //if (isBomb)
+        //{
+        //    bulletPrefab = bulletSetParam.GetBombPrefab(shotParam.BulletIndex);
+        //}
+        //else
+        //{
+        //    bulletPrefab = bulletSetParam.GetBulletPrefab(shotParam.BulletIndex);
+        //}
 
-        if (bulletPrefab == null)
-        {
-            return null;
-        }
+        //if (bulletPrefab == null)
+        //{
+        //    return null;
+        //}
 
-        // プールから弾を取得
-        var bullet = BulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        //// プールから弾を取得
+        //var bullet = BattleRealBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        // 座標を設定
-        bullet.SetPosition(shotParam.Position != null ? (Vector3)shotParam.Position : owner.transform.localPosition);
+        //// 座標を設定
+        //bullet.SetPosition(shotParam.Position != null ? (Vector3)shotParam.Position : owner.transform.localPosition);
 
-        // 回転を設定
-        bullet.SetRotation(shotParam.Rotation != null ? (Vector3)shotParam.Rotation : owner.transform.localEulerAngles);
+        //// 回転を設定
+        //bullet.SetRotation(shotParam.Rotation != null ? (Vector3)shotParam.Rotation : owner.transform.localEulerAngles);
 
-        // スケールを設定
-        bullet.SetScale(shotParam.Scale != null ? (Vector3)shotParam.Scale : bulletPrefab.transform.localScale);
+        //// スケールを設定
+        //bullet.SetScale(shotParam.Scale != null ? (Vector3)shotParam.Scale : bulletPrefab.transform.localScale);
 
-        bullet.ResetBulletLifeTime();
-        bullet.ResetBulletParam();
+        //bullet.ResetBulletLifeTime();
+        //bullet.ResetBulletParam();
 
-        bullet.m_BulletOwner = owner;
-        bullet.SetTroop(owner.GetTroop());
-        bullet.m_BulletParam = null;
-        bullet.m_BulletIndex = 0;
-        bullet.m_BulletParamIndex = 0;
-        bullet.m_OrbitalParamIndex = -1;
+        //bullet.m_BulletOwner = owner;
+        //bullet.SetTroop(owner.GetTroop());
+        //bullet.m_BulletParam = null;
+        //bullet.m_BulletIndex = 0;
+        //bullet.m_BulletParamIndex = 0;
+        //bullet.m_OrbitalParamIndex = -1;
 
-        return bullet;
+        //return bullet;
+
+        return null;
     }
 
     /// <summary>
@@ -649,19 +657,21 @@ public class BulletController : BattleMainObjectBase
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
     public static BulletController ShotBulletWithoutBulletParam(BulletShotParam shotParam, bool isBomb = false, bool isCheck = true)
     {
-        var bullet = CreateBullet(shotParam, isBomb);
+        //var bullet = CreateBullet(shotParam, isBomb);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        if (isCheck)
-        {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
-        }
+        //if (isCheck)
+        //{
+        //    BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
+        //}
 
-        return bullet;
+        //return bullet;
+
+        return null;
     }
 
     /// <summary>
@@ -672,42 +682,44 @@ public class BulletController : BattleMainObjectBase
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
     public static BulletController ShotBullet(BulletShotParam shotParam, bool isBomb = false, bool isCheck = true)
     {
-        var bullet = CreateBullet(shotParam, isBomb);
+        //var bullet = CreateBullet(shotParam, isBomb);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        BulletSetParam bulletSetParam = shotParam.BulletOwner.GetBulletSetParam();
+        //BulletSetParam bulletSetParam = shotParam.BulletOwner.GetBulletSetParam();
 
-        // BulletParamを取得
-        BulletParam bulletParam;
-        if (isBomb)
-        {
-            bulletParam = bulletSetParam.GetBombParam(shotParam.BulletParamIndex);
-        } else
-        {
-            bulletParam = bulletSetParam.GetBulletParam(shotParam.BulletParamIndex);
-        }
+        //// BulletParamを取得
+        //BulletParam bulletParam;
+        //if (isBomb)
+        //{
+        //    bulletParam = bulletSetParam.GetBombParam(shotParam.BulletParamIndex);
+        //} else
+        //{
+        //    bulletParam = bulletSetParam.GetBulletParam(shotParam.BulletParamIndex);
+        //}
 
-        bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
+        //bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
 
-        if (bulletParam != null)
-        {
-            // 軌道を設定
-            bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
-            bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
-        }
+        //if (bulletParam != null)
+        //{
+        //    // 軌道を設定
+        //    bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
+        //    bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
+        //}
 
-        bullet.m_BulletParam = bulletParam;
+        //bullet.m_BulletParam = bulletParam;
 
-        if (isCheck)
-        {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
-        }
+        //if (isCheck)
+        //{
+        //    BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
+        //}
 
-        return bullet;
+        //return bullet;
+
+        return null;
     }
 
     /// <summary>
@@ -757,7 +769,7 @@ public class BulletController : BattleMainObjectBase
 
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            BulletManager.Instance.CheckPoolBullet(this);
+            //BattleRealBulletManager.Instance.CheckPoolBullet(this);
         }
     }
 
@@ -824,29 +836,31 @@ public class BulletController : BattleMainObjectBase
     /// </summary>
     public CharaController GetNearestEnemy()
     {
-        if (m_Troop == E_CHARA_TROOP.ENEMY)
-        {
-            return PlayerCharaManager.Instance.GetCurrentController();
-        }
-        else
-        {
-            List<EnemyController> enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
-            CharaController nearestEnemy = null;
-            float minSqrDist = float.MaxValue;
+        //if (m_Troop == E_CHARA_TROOP.ENEMY)
+        //{
+        //    return BattleRealPlayerManager.Instance.GetCurrentController();
+        //}
+        //else
+        //{
+        //    List<EnemyController> enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
+        //    CharaController nearestEnemy = null;
+        //    float minSqrDist = float.MaxValue;
 
-            foreach (var enemy in enemies)
-            {
-                float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
+        //    foreach (var enemy in enemies)
+        //    {
+        //        float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
 
-                if (sqrDist < minSqrDist)
-                {
-                    minSqrDist = sqrDist;
-                    nearestEnemy = enemy;
-                }
-            }
+        //        if (sqrDist < minSqrDist)
+        //        {
+        //            minSqrDist = sqrDist;
+        //            nearestEnemy = enemy;
+        //        }
+        //    }
 
-            return nearestEnemy;
-        }
+        //    return nearestEnemy;
+        //}
+
+        return null;
     }
 
     /// <summary>

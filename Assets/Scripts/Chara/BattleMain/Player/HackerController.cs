@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HackerController : PlayerController
+public class HackerController : BattleRealPlayerController
 {
 	[SerializeField]
 	private Transform[] m_MainShotPosition;
@@ -30,7 +30,7 @@ public class HackerController : PlayerController
 		shotDelay += Time.deltaTime;
 	}
 
-	public override void ShotBullet(InputManager.E_INPUT_STATE state)
+	public override void ShotBullet(InputExtension.E_INPUT_STATE state)
 	{
 		if (shotDelay >= m_ShotInterval)
 		{

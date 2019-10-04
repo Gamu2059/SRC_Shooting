@@ -18,15 +18,15 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
     /// </summary>
     public void UpdateColliderData()
     {
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
-        var bullets = BulletManager.Instance.GetUpdateBullets();
-        var items = ItemManager.Instance.GetUpdateItems();
+        //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+        //var enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
+        //var bullets = BattleRealBulletManager.Instance.GetUpdateBullets();
+        //var items = BattleRealItemManager.Instance.GetUpdateItems();
 
-        player.UpdateColliderData();
-        enemies.ForEach(e => e.UpdateColliderData());
-        bullets.ForEach(b => b.UpdateColliderData());
-        items.ForEach(i => i.UpdateColliderData());
+        //player.UpdateColliderData();
+        //enemies.ForEach(e => e.UpdateColliderData());
+        //bullets.ForEach(b => b.UpdateColliderData());
+        //items.ForEach(i => i.UpdateColliderData());
     }
 
     /// <summary>
@@ -45,42 +45,42 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
     /// </summary>
     private void CheckCollisionBulletToBullet()
     {
-        var bullets = BulletManager.Instance.GetUpdateBullets();
+        //var bullets = BattleRealBulletManager.Instance.GetUpdateBullets();
 
-        foreach (var bullet in bullets)
-        {
-            if (!bullet.CanHitBullet())
-            {
-                continue;
-            }
+        //foreach (var bullet in bullets)
+        //{
+        //    if (!bullet.CanHitBullet())
+        //    {
+        //        continue;
+        //    }
 
-            // UPDATE状態にないものは飛ばす
-            if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
-            {
-                continue;
-            }
+        //    // UPDATE状態にないものは飛ばす
+        //    if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+        //    {
+        //        continue;
+        //    }
 
-            foreach (var targetBullet in bullets)
-            {
+        //    foreach (var targetBullet in bullets)
+        //    {
 
-                if (bullet == targetBullet || bullet.GetTroop() == targetBullet.GetTroop())
-                {
-                    continue;
-                }
+        //        if (bullet == targetBullet || bullet.GetTroop() == targetBullet.GetTroop())
+        //        {
+        //            continue;
+        //        }
 
-                // UPDATE状態にないものは飛ばす
-                if (targetBullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
-                {
-                    continue;
-                }
+        //        // UPDATE状態にないものは飛ばす
+        //        if (targetBullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+        //        {
+        //            continue;
+        //        }
 
-                Collision.CheckCollide(bullet, targetBullet, (attackData, targetData) =>
-                {
-                    targetBullet.SufferBullet(bullet, attackData, targetData);
-                    bullet.HitBullet(targetBullet, attackData, targetData);
-                });
-            }
-        }
+        //        Collision.CheckCollide(bullet, targetBullet, (attackData, targetData) =>
+        //        {
+        //            targetBullet.SufferBullet(bullet, attackData, targetData);
+        //            bullet.HitBullet(targetBullet, attackData, targetData);
+        //        });
+        //    }
+        //}
     }
 
     /// <summary>
@@ -88,44 +88,44 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
     /// </summary>
     private void CheckCollisionBulletToChara()
     {
-        var bullets = BulletManager.Instance.GetUpdateBullets();
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
+        //var bullets = BattleRealBulletManager.Instance.GetUpdateBullets();
+        //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+        //var enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
 
-        foreach (var bullet in bullets)
-        {
-            // UPDATE状態にないものは飛ばす
-            if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
-            {
-                continue;
-            }
+        //foreach (var bullet in bullets)
+        //{
+        //    // UPDATE状態にないものは飛ばす
+        //    if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+        //    {
+        //        continue;
+        //    }
 
-            if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
-            {
-                Collision.CheckCollide(bullet, player, (attackData, targetData) =>
-                {
-                    player.SufferBullet(bullet, attackData, targetData);
-                    bullet.HitChara(player, attackData, targetData);
-                });
-            }
-            else
-            {
-                foreach (var enemy in enemies)
-                {
-                    // UPDATE状態にないものは飛ばす
-                    if (enemy.GetCycle() != E_OBJECT_CYCLE.UPDATE)
-                    {
-                        continue;
-                    }
+        //    if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
+        //    {
+        //        Collision.CheckCollide(bullet, player, (attackData, targetData) =>
+        //        {
+        //            player.SufferBullet(bullet, attackData, targetData);
+        //            bullet.HitChara(player, attackData, targetData);
+        //        });
+        //    }
+        //    else
+        //    {
+        //        foreach (var enemy in enemies)
+        //        {
+        //            // UPDATE状態にないものは飛ばす
+        //            if (enemy.GetCycle() != E_OBJECT_CYCLE.UPDATE)
+        //            {
+        //                continue;
+        //            }
 
-                    Collision.CheckCollide(bullet, enemy, (attackData, targetData) =>
-                    {
-                        enemy.SufferBullet(bullet, attackData, targetData);
-                        bullet.HitChara(enemy, attackData, targetData);
-                    });
-                }
-            }
-        }
+        //            Collision.CheckCollide(bullet, enemy, (attackData, targetData) =>
+        //            {
+        //                enemy.SufferBullet(bullet, attackData, targetData);
+        //                bullet.HitChara(enemy, attackData, targetData);
+        //            });
+        //        }
+        //    }
+        //}
     }
 
     /// <summary>
@@ -133,23 +133,23 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
     /// </summary>
     private void CheckCollisionEnemyToPlayer()
     {
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
+        //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+        //var enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
 
-        foreach (var enemy in enemies)
-        {
-            // UPDATE状態にないものは飛ばす
-            if (enemy.GetCycle() != E_OBJECT_CYCLE.UPDATE)
-            {
-                continue;
-            }
+        //foreach (var enemy in enemies)
+        //{
+        //    // UPDATE状態にないものは飛ばす
+        //    if (enemy.GetCycle() != E_OBJECT_CYCLE.UPDATE)
+        //    {
+        //        continue;
+        //    }
 
-            Collision.CheckCollide(enemy, player, (attackData, targetData) =>
-            {
-                player.SufferChara(enemy, attackData, targetData);
-                enemy.HitChara(player, attackData, targetData);
-            });
-        }
+        //    Collision.CheckCollide(enemy, player, (attackData, targetData) =>
+        //    {
+        //        player.SufferChara(enemy, attackData, targetData);
+        //        enemy.HitChara(player, attackData, targetData);
+        //    });
+        //}
     }
 
     /// <summary>
@@ -157,22 +157,22 @@ public class CollisionManager : BattleSingletonMonoBehavior<CollisionManager>
     /// </summary>
     private void CheckCollisionPlayerToItem()
     {
-        var player = PlayerCharaManager.Instance.GetCurrentController();
-        var items = ItemManager.Instance.GetUpdateItems();
+        //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+        //var items = BattleRealItemManager.Instance.GetUpdateItems();
 
-        foreach (var item in items)
-        {
-            // UPDATE状態にないものは飛ばす
-            if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
-            {
-                continue;
-            }
+        //foreach (var item in items)
+        //{
+        //    // UPDATE状態にないものは飛ばす
+        //    if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+        //    {
+        //        continue;
+        //    }
 
-            Collision.CheckCollide(player, item, (attackData, targetData) =>
-            {
-                item.SufferChara(player, attackData, targetData);
-                player.HitItem(item, attackData, targetData);
-            });
-        }
+        //    Collision.CheckCollide(player, item, (attackData, targetData) =>
+        //    {
+        //        item.SufferChara(player, attackData, targetData);
+        //        player.HitItem(item, attackData, targetData);
+        //    });
+        //}
     }
 }
