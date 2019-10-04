@@ -1,36 +1,78 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using E_INPUT_STATE = InputExtension.E_INPUT_STATE;
 
-public class BattleRealInputManager : ControllableObject
+public class BattleRealInputManager : InputManagerBase
 {
-    private const string SUBMIT = "Submit";
-    private const string CANCEL = "Cancel";
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
+    private const string SUBMIT = "Submit";
+    private const string CANCEL = "Cancel";
     private const string SHOT = "Shot";
-    private const string BOMB = "Bomb";
+    private const string SLOW = "Slow";
+    private const string CHANGE_WEAPON_TYPE = "ChangeWeaponType";
     private const string MENU = "Menu";
+
+    public static BattleRealInputManager Instance => BattleRealManager.Instance.InputManager;
 
     public Vector2 MoveDir { get; private set; }
 
-    public bool IsPushShot { get; private set; }
+    public E_INPUT_STATE Submit { get; private set; }
 
-    public bool IsPushChangeWeapon { get; private set; }
+    public E_INPUT_STATE Cancel { get; private set; }
 
-    public bool IsPushSlow { get; private set; }
+    public E_INPUT_STATE Shot { get; private set; }
+
+    public E_INPUT_STATE Slow { get; private set; }
+
+    public E_INPUT_STATE ChangeMode { get; private set; }
+
+    public E_INPUT_STATE Menu { get; private set; }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
 
-        var x = InputExtension.GetAxisAction(HORIZONTAL);
-        var y = InputExtension.GetAxisAction(VERTICAL);
-        MoveDir = new Vector2(x, y);
+        var x = GetAxis(HORIZONTAL);
+        var y = GetAxis(VERTICAL);
+        if (x == 0 && y == 0)
+        {
+            MoveDir = Vector2.zero;
+        }
+        else
+        {
+            MoveDir = new Vector2(x, y).normalized;
+        }
 
-        IsPushShot = InputExtension.GetButtonAction(SHOT) == E_INPUT_STATE.STAY;
-        IsPushChangeWeapon = InputExtension.GetButtonAction(BOMB) == E_INPUT_STATE.DOWN;
-        IsPushSlow = InputExtension.GetButtonAction(MENU) == E_INPUT_STATE.DOWN;
+        Submit = GetButton(SUBMIT);
+        Cancel = GetButton(CANCEL);
+        Shot = GetButton(SHOT);
+        Slow = GetButton(SLOW);
+        ChangeMode = GetButton(CHANGE_WEAPON_TYPE);
+        Menu = GetButton(MENU);
+    }
+
+    public void RegisterInput()
+    {
+        RegisterAxis(HORIZONTAL);
+        RegisterAxis(VERTICAL);
+        RegisterButton(SUBMIT);
+        RegisterButton(CANCEL);
+        RegisterButton(SHOT);
+        RegisterButton(SLOW);
+        RegisterButton(CHANGE_WEAPON_TYPE);
+        RegisterButton(MENU);
+    }
+
+    public void RemoveInput()
+    {
+        RemoveAxis(HORIZONTAL);
+        RemoveAxis(VERTICAL);
+        RemoveButton(SUBMIT);
+        RemoveButton(CANCEL);
+        RemoveButton(SHOT);
+        RemoveButton(SLOW);
+        RemoveButton(CHANGE_WEAPON_TYPE);
+        RemoveButton(MENU);
     }
 }

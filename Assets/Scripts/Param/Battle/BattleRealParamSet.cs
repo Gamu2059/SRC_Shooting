@@ -16,13 +16,21 @@ public class BattleRealParamSet
 }
 
 [Serializable]
-public struct BattleRealPlayerManagerParamSet
+public class BattleRealPlayerManagerParamSet
 {
-    [SerializeField]
+    [SerializeField, Tooltip("プレイヤーのプレハブ")]
     private BattleRealPlayerController m_PlayerPrefab;
     public BattleRealPlayerController PlayerPrefab => m_PlayerPrefab;
 
-    [SerializeField]
+    [SerializeField, Tooltip("ゲーム開始時のプレイヤーの最初の位置")]
     private Vector2 m_InitAppearViewportPosition;
     public Vector2 InitAppearViewportPosition => m_InitAppearViewportPosition;
+
+    [SerializeField, Tooltip("プレイヤーの基本移動速度")]
+    private float m_PlayerBaseMoveSpeed;
+    public float PlayerBaseMoveSpeed => m_PlayerBaseMoveSpeed;
+
+    [SerializeField, Tooltip("プレイヤーの低速移動速度")]
+    private float m_PlayerSlowMoveSpeed;
+    public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
 }

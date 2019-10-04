@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealTimerManager : TimerManager
+public class BattleRealTimerManager : TimerManagerBase
 {
 }

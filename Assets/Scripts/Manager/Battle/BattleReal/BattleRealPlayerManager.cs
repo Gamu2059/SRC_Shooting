@@ -51,6 +51,9 @@ public class BattleRealPlayerManager : ControllableObject
     private BattleRealPlayerController m_Player;
     public BattleRealPlayerController Player => m_Player;
 
+    public bool IsNormalWeapon { get; private set; }
+
+    public bool IsLaserType { get; private set; }
 
     #endregion
 
@@ -83,6 +86,7 @@ public class BattleRealPlayerManager : ControllableObject
 
     #endregion
 
+    public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
 
     public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
     {
@@ -91,7 +95,7 @@ public class BattleRealPlayerManager : ControllableObject
 
     /// <summary>
     /// プレイヤーキャラを登録する。
-    /// 後にprivateに変更する。
+    /// デバッグ用。
     /// </summary>
     public static void RegistPlayer(BattleRealPlayerController player)
     {
@@ -106,6 +110,9 @@ public class BattleRealPlayerManager : ControllableObject
     public override void OnInitialize()
     {
         base.OnInitialize();
+
+        IsLaserType = true;
+        IsNormalWeapon = true;
     }
 
     public override void OnFinalize()
@@ -117,7 +124,7 @@ public class BattleRealPlayerManager : ControllableObject
     {
         base.OnStart();
 
-        var stageManager = BattleManager.Instance.BattleRealStageManager;
+        var stageManager = BattleRealStageManager.Instance;
         if (stageManager != null && stageManager.PlayerCharaHolder != null)
         {
             m_PlayerCharaHolder = stageManager.PlayerCharaHolder;
@@ -135,7 +142,6 @@ public class BattleRealPlayerManager : ControllableObject
         }
         else
         {
-            Debug.LogError(11111);
             m_Player = GameObject.Instantiate(m_ParamSet.PlayerPrefab);
         }
 
@@ -145,8 +151,6 @@ public class BattleRealPlayerManager : ControllableObject
         m_Player.OnInitialize();
 
         InitPlayerState();
-
-        Debug.Log("PlayerManager");
     }
 
     public override void OnUpdate()
@@ -156,21 +160,75 @@ public class BattleRealPlayerManager : ControllableObject
             return;
         }
 
+        var input = BattleRealInputManager.Instance;
+
+        var moveDir = input.MoveDir;
+        if (moveDir.x != 0 || moveDir.y != 0)
+        {
+            float speed = 0;
+            if (input.Slow == E_INPUT_STATE.STAY)
+            {
+                speed = m_ParamSet.PlayerSlowMoveSpeed;
+            } else
+            {
+                speed = m_ParamSet.PlayerBaseMoveSpeed;
+            }
+
+            var move = moveDir.ToVector3XZ() * speed * Time.deltaTime;
+            m_Player.transform.Translate(move, Space.World);
+        }
+
+        if (IsNormalWeapon)
+        {
+            if (input.Shot == E_INPUT_STATE.STAY)
+            {
+                Debug.Log("Shot");
+            }
+        } else
+        {
+            if (input.Shot == E_INPUT_STATE.STAY)
+            {
+                if (IsLaserType)
+                {
+                    Debug.Log("Charging Laser...");
+                } else
+                {
+                    Debug.Log("Charging Bomb...");
+                }
+            } else if (input.Shot == E_INPUT_STATE.UP)
+            {
+                if (IsLaserType)
+                {
+                    Debug.Log("Shot Laser!");
+                }
+                else
+                {
+                    Debug.Log("Shot Bomb!");
+                }
+            }
+        }
+
+        if (input.ChangeMode == E_INPUT_STATE.DOWN)
+        {
+            Debug.Log("Change Weapon");
+            IsNormalWeapon = !IsNormalWeapon;
+        }
+
         m_Player.OnUpdate();
-        RestrictCharaPosition();
+        RestrictPlayerPosition();
     }
 
     /// <summary>
     /// キャラの座標を動体フィールド領域に制限する。
     /// </summary>
-    public void RestrictCharaPosition()
+    public void RestrictPlayerPosition()
     {
         if (m_Player == null)
         {
             return;
         }
 
-        var stageManager = BattleManager.Instance.BattleRealStageManager;
+        var stageManager = BattleRealStageManager.Instance;
         stageManager.ClampMovingObjectPosition(m_Player.transform);
     }
 
@@ -179,16 +237,17 @@ public class BattleRealPlayerManager : ControllableObject
     /// </summary>
     public Vector3 GetInitAppearPosition()
     {
-        //var minPos = StageManager.Instance.GetMinLocalPositionField();
-        //var maxPos = StageManager.Instance.GetMaxLocalPositionField();
+        var stageManager = BattleRealStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        var initViewPos = m_ParamSet.InitAppearViewportPosition;
 
-        //var factX = (maxPos.x - minPos.x) * m_InitAppearViewportPosition.x + minPos.x;
-        //var factZ = (maxPos.y - minPos.y) * m_InitAppearViewportPosition.y + minPos.y;
-        //var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
-        //pos += StageManager.Instance.GetMoveObjectHolder().transform.position;
+        var factX = (maxPos.x - minPos.x) * initViewPos.x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * initViewPos.y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+        pos += m_PlayerCharaHolder.position;
 
-        //return pos;
-        return Vector3.zero;
+        return pos;
     }
 
     /// <summary>
@@ -249,69 +308,5 @@ public class BattleRealPlayerManager : ControllableObject
         m_CurrentBombCharge.Value = currentCharge;
     }
 
-    /// <summary>
-    /// 横軸入力のコールバック。
-    /// </summary>
-    public void OnInputHorizontal(float value)
-    {
-        //if (m_CurrentController == null) return;
-
-        //m_CharaMoveDir += Vector3.right * value;
-    }
-
-    /// <summary>
-    /// 縦軸入力のコールバック。
-    /// </summary>
-    public void OnInputVertical(float value)
-    {
-        //if (m_CurrentController == null) return;
-
-        //m_CharaMoveDir += Vector3.forward * value;
-    }
-
-    /// <summary>
-    /// キャラ切替のコールバック。
-    /// </summary>
-    public void OnInputChangeChara(float value)
-    {
-        //if (value == 0)
-        //{
-        //    return;
-        //}
-
-        //int charaNum = m_Controllers.Count;
-        //if (value > 0)
-        //{
-        //    ChangeChara((m_CharaIndex + 1 + charaNum) % charaNum);
-        //}
-        //else if (value < 0)
-        //{
-        //    ChangeChara((m_CharaIndex - 1 + charaNum) % charaNum);
-        //}
-    }
-
-    /// <summary>
-    /// 弾を撃つコールバック。
-    /// </summary>
-    public void OnInputShot(InputExtension.E_INPUT_STATE state)
-    {
-        //if (m_CurrentController == null) return;
-
-        //m_CurrentController.ShotBullet(state);
-    }
-
-    /// <summary>
-    /// ボムを撃つコールバック。
-    /// </summary>
-    public void OnInputBomb(InputExtension.E_INPUT_STATE state)
-    {
-        //if (m_CurrentController == null) return;
-
-        //if (state != InputExtension.E_INPUT_STATE.DOWN) return;
-
-        //if (m_CurrentBombNum.Value < 1) return;
-
-        //m_CurrentBombNum.Value--;
-        //m_CurrentController.ShotBomb(state);
-    }
+    
 }

@@ -46,18 +46,6 @@ public class BattleRealPlayerController : CharaController
 	[SerializeField, Tooltip( "キャラのライフサイクル" )]
 	private E_PLAYER_LIFE_CYCLE m_LifeCycle;
 
-	[Space()]
-	[Header( "プレイヤーキャラ専用 プロテクタのパラメータ" )]
-
-	[SerializeField, Tooltip( "プロテクタのトランスフォーム配列" )]
-	protected Transform[] m_Protectors;
-
-	[SerializeField, Tooltip( "プロテクタの回転半径" )]
-	protected float m_ProtectorRadius;
-
-	[SerializeField, Tooltip( "プロテクタの回転速度" )]
-	protected float m_ProtectorSpeed;
-
 	#endregion
 
 	#region Field
@@ -132,14 +120,13 @@ public class BattleRealPlayerController : CharaController
     public override void OnUpdate()
     {
         base.OnUpdate();
-        UpdateProtector();
     }
 
     /// <summary>
     /// 通常弾を発射する。
     /// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
     /// </summary>
-    public virtual void ShotBullet(InputExtension.E_INPUT_STATE state)
+    public virtual void ShotBullet(E_INPUT_STATE state)
 	{
 		// 何もオーバーロードしない場合は適当に弾を飛ばす
 		BulletController.ShotBullet( this );
@@ -148,22 +135,9 @@ public class BattleRealPlayerController : CharaController
 	/// <summary>
 	/// ボムを使用する。
 	/// </summary>
-	public virtual void ShotBomb(InputExtension.E_INPUT_STATE state)
+	public virtual void ShotBomb(E_INPUT_STATE state)
 	{
 
-	}
-
-
-
-	/// <summary>
-	/// キャラを移動させる。
-	/// 移動速度はキャラに現在設定されているものとなる。
-	/// </summary>
-	/// <param name="moveDirection"> 移動方向 </param>
-	public virtual void Move( Vector3 moveDirection )
-	{
-		Vector3 move = moveDirection.normalized * m_MoveSpeed * Time.deltaTime;
-		transform.Translate( move, Space.World );
 	}
 
     public override void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
@@ -199,22 +173,6 @@ public class BattleRealPlayerController : CharaController
 	{
         //return BattleRealPlayerManager.Instance.GetCurrentLevel().Value;
         return 0;
-	}
-
-	protected virtual void UpdateProtector()
-	{
-		m_ProtectorRad += m_ProtectorSpeed * Time.deltaTime;
-		m_ProtectorRad %= Mathf.PI * 2;
-		float unitAngle = Mathf.PI * 2 / m_Protectors.Length;
-
-		for( int i = 0; i < m_Protectors.Length; i++ )
-		{
-			float angle = unitAngle * i + m_ProtectorRad;
-			float x = m_ProtectorRadius * Mathf.Cos( angle );
-			float z = m_ProtectorRadius * Mathf.Sin( angle );
-			m_Protectors[i].localPosition = new Vector3( x, 0, z );
-			m_Protectors[i].LookAt( transform );
-		}
 	}
 
 	public override void Dead()

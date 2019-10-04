@@ -10,11 +10,14 @@ using DG.Tweening;
 /// </summary>
 public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 {
-	/// <summary>
-	/// GameManagerでサイクルを管理するマネージャのリスト。
-	/// </summary>
-	[SerializeField]
-	private List<ControllableMonoBehavior> m_Managers;
+    private TimerManager m_TimerManager;
+    public TimerManager TimerManager => m_TimerManager;
+
+    [SerializeField]
+    private BaseSceneManager m_SceneManager;
+
+    [SerializeField]
+    private TransitionManager m_TransitionManager;
 
 
 	protected override void OnAwake()
@@ -50,34 +53,61 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
 	public override void OnInitialize()
 	{
-		m_Managers.ForEach( ( m ) => m.OnInitialize() );
+        base.OnInitialize();
+
+        m_TimerManager = new TimerManager();
+
+        m_TimerManager.OnInitialize();
+        m_TransitionManager.OnInitialize();
+        m_SceneManager.OnInitialize();
 	}
 
 	public override void OnFinalize()
 	{
-		m_Managers.ForEach( ( m ) => m.OnFinalize() );
+        m_SceneManager.OnFinalize();
+        m_TransitionManager.OnFinalize();
+        m_TimerManager.OnFinalize();
+
+        base.OnFinalize();
 	}
 
 	public override void OnStart()
 	{
-		m_Managers.ForEach( ( m ) => m.OnStart() );
+        base.OnStart();
+
+        m_TimerManager.OnStart();
+        m_TransitionManager.OnStart();
+        m_SceneManager.OnStart();
 
 		BaseSceneManager.Instance.LoadOnGameStart();
 	}
 
 	public override void OnUpdate()
 	{
-		m_Managers.ForEach( ( m ) => m.OnUpdate() );
+        base.OnUpdate();
+
+        m_TimerManager.OnUpdate();
+        m_TransitionManager.OnUpdate();
+        m_SceneManager.OnUpdate();
+
         DOTween.ManualUpdate(Time.deltaTime, Time.unscaledDeltaTime);
 	}
 
 	public override void OnLateUpdate()
 	{
-		m_Managers.ForEach( ( m ) => m.OnLateUpdate() );
+        base.OnLateUpdate();
+
+        m_TimerManager.OnLateUpdate();
+        m_TransitionManager.OnLateUpdate();
+        m_SceneManager.OnLateUpdate();
 	}
 
 	public override void OnFixedUpdate()
 	{
-		m_Managers.ForEach( ( m ) => m.OnFixedUpdate() );
+        base.OnFixedUpdate();
+
+        m_TimerManager.OnFixedUpdate();
+        m_TransitionManager.OnFixedUpdate();
+        m_SceneManager.OnFixedUpdate();
 	}
 }

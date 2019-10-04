@@ -45,7 +45,6 @@ public class BattleRealEventManager : ControllableObject
     {
         base.OnInitialize();
 
-        Debug.LogError(11123);
         m_IntVariables = new Dictionary<string, int>();
         m_FloatVariables = new Dictionary<string, float>();
         m_BoolVariables = new Dictionary<string, bool>();

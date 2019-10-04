@@ -11,6 +11,8 @@ public class BattleHackingManager : ControllableObject
 
     #endregion
 
+    public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
+
     public BattleHackingManager(BattleHackingParamSet paramSet)
     {
         m_ParamSet = paramSet;

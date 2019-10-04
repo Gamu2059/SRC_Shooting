@@ -339,22 +339,22 @@ public class BattleRealEnemyManager : ControllableObject
     /// </summary>
     private void BuildEnemyAppearEvents()
     {
-        for (int i = 0; i < m_EnemyParam.param.Count; i++)
-        {
-            var param = m_EnemyParam.param[i];
+        //for (int i = 0; i < m_EnemyParam.param.Count; i++)
+        //{
+        //    var param = m_EnemyParam.param[i];
 
-            EventTriggerCondition condition = EventTriggerConditionTranslator.TranslateString(param.Conditions);
+        //    EventTriggerCondition condition = EventTriggerConditionTranslator.TranslateString(param.Conditions);
 
-            EventTriggerParamSet.EventTriggerParam eventParam = new EventTriggerParamSet.EventTriggerParam();
-            eventParam.Condition = condition;
+        //    EventTriggerParamSet.EventTriggerParam eventParam = new EventTriggerParamSet.EventTriggerParam();
+        //    eventParam.Condition = condition;
 
-            EventContent content = new EventContent();
-            content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
-            content.AppearEnemyIndex = i;
+        //    EventContent content = new EventContent();
+        //    content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
+        //    content.AppearEnemyIndex = i;
 
-            eventParam.Contents = new[] { content };
+        //    eventParam.Contents = new[] { content };
 
-            //BattleRealEventManager.Instance.AddEventParam(eventParam);
-        }
+        //    //BattleRealEventManager.Instance.AddEventParam(eventParam);
+        //}
     }
 }

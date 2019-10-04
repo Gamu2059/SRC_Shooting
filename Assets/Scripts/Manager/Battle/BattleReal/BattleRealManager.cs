@@ -14,6 +14,7 @@ public class BattleRealManager : ControllableObject
         BEFORE_BEGIN_GAME_PERFORMANCE,
         BEGIN_GAME,
         GAME,
+        DEAD,
         BEFORE_BOSS_BATTLE_PERFORMANCE,
         TRANSITION_TO_HACKING,
         STAY_HACKING,
@@ -41,6 +42,8 @@ public class BattleRealManager : ControllableObject
 
     #endregion
 
+    public static BattleRealManager Instance => BattleManager.Instance.RealManager;
+
     public BattleRealManager(BattleRealParamSet paramSet)
     {
         m_ParamSet = paramSet;
@@ -58,6 +61,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnStart,
             OnUpdate = UpdateOnStart,
+            OnLateUpdate = LateUpdateOnStart,
+            OnFixedUpdate = FixedUpdateOnStart,
             OnEnd = EndOnStart,
         });
 
@@ -65,6 +70,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnBeforeBeginGame,
             OnUpdate = UpdateOnBeforeBeginGame,
+            OnLateUpdate = LateUpdateOnBeforeBeginGame,
+            OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
             OnEnd = EndOnBeforeBeginGame,
         });
 
@@ -72,6 +79,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnBeforeBeginGamePerformance,
             OnUpdate = UpdateOnBeforeBeginGamePerformance,
+            OnLateUpdate = LateUpdateOnBeforeBeginGamePerformance,
+            OnFixedUpdate = FixedUpdateOnBeforeBeginGamePerformance,
             OnEnd = EndOnBeforeBeginGamePerformance,
         });
 
@@ -79,6 +88,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnBeginGame,
             OnUpdate = UpdateOnBeginGame,
+            OnLateUpdate = LateUpdateOnBeginGame,
+            OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
             OnEnd = EndOnBeginGame,
         });
 
@@ -86,13 +97,26 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnGame,
             OnUpdate = UpdateOnGame,
+            OnLateUpdate = LateUpdateOnGame,
+            OnFixedUpdate = FixedUpdateOnGame,
             OnEnd = EndOnGame,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.DEAD)
+        {
+            OnStart = StartOnDead,
+            OnUpdate = UpdateOnDead,
+            OnLateUpdate = LateUpdateOnDead,
+            OnFixedUpdate = FixedUpdateOnDead,
+            OnEnd = EndOnDead,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE)
         {
             OnStart = StartOnBeforeBossBattlePerformance,
             OnUpdate = UpdateOnBeforeBossBattlePerformance,
+            OnLateUpdate = LateUpdateOnBeforeBossBattlePerformance,
+            OnFixedUpdate = FixedUpdateOnBeforeBossBattlePerformance,
             OnEnd = EndOnBeforeBossBattlePerformance,
         });
 
@@ -100,6 +124,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnTransitionToHacking,
             OnUpdate = UpdateOnTransitionToHacking,
+            OnLateUpdate = LateUpdateOnTransitionToHacking,
+            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
             OnEnd = EndOnTransitionToHacking,
         });
 
@@ -107,6 +133,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnStayHacking,
             OnUpdate = UpdateOnStayHacking,
+            OnLateUpdate = LateUpdateOnStayHacking,
+            OnFixedUpdate = FixedUpdateOnStayHacking,
             OnEnd = EndOnStayHacking,
         });
 
@@ -114,6 +142,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnTransitionFromHacking,
             OnUpdate = UpdateOnTransitionFromHacking,
+            OnLateUpdate = LateUpdateOnTransitionFromHacking,
+            OnFixedUpdate = FixedUpdateOnTransitionFromHacking,
             OnEnd = EndOnTransitionFromHacking,
         });
 
@@ -121,6 +151,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnBeforeGameClearPerformance,
             OnUpdate = UpdateOnBeforeGameClearPerformance,
+            OnLateUpdate = LateUpdateOnBeforeGameClearPerformance,
+            OnFixedUpdate = FixedUpdateOnBeforeGameClearPerformance,
             OnEnd = EndOnBeforeGameClearPerformance,
         });
 
@@ -128,6 +160,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnGameClear,
             OnUpdate = UpdateOnGameClear,
+            OnLateUpdate = LateUpdateOnGameClear,
+            OnFixedUpdate = FixedUpdateOnGameClear,
             OnEnd = EndOnGameClear,
         });
 
@@ -135,6 +169,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnGameOver,
             OnUpdate = UpdateOnGameOver,
+            OnLateUpdate = LateUpdateOnGameOver,
+            OnFixedUpdate = FixedUpdateOnGameOver,
             OnEnd = EndOnGameOver,
         });
 
@@ -142,6 +178,8 @@ public class BattleRealManager : ControllableObject
         {
             OnStart = StartOnEnd,
             OnUpdate = UpdateOnEnd,
+            OnLateUpdate = LateUpdateOnEnd,
+            OnFixedUpdate = FixedUpdateOnEnd,
             OnEnd = EndOnEnd,
         });
 
@@ -244,6 +282,16 @@ public class BattleRealManager : ControllableObject
 
     }
 
+    private void LateUpdateOnStart()
+    {
+
+    }
+
+    private void FixedUpdateOnStart()
+    {
+
+    }
+
     private void EndOnStart()
     {
 
@@ -256,10 +304,20 @@ public class BattleRealManager : ControllableObject
     private void StartOnBeforeBeginGame()
     {
         Debug.Log(2);
-        m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME);
+        m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME_PERFORMANCE);
     }
 
     private void UpdateOnBeforeBeginGame()
+    {
+
+    }
+
+    private void LateUpdateOnBeforeBeginGame()
+    {
+
+    }
+
+    private void FixedUpdateOnBeforeBeginGame()
     {
 
     }
@@ -276,10 +334,20 @@ public class BattleRealManager : ControllableObject
     private void StartOnBeforeBeginGamePerformance()
     {
         Debug.Log(3);
-        m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME_PERFORMANCE);
+        m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEGIN_GAME);
     }
 
     private void UpdateOnBeforeBeginGamePerformance()
+    {
+
+    }
+
+    private void LateUpdateOnBeforeBeginGamePerformance()
+    {
+
+    }
+
+    private void FixedUpdateOnBeforeBeginGamePerformance()
     {
 
     }
@@ -295,11 +363,20 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnBeginGame()
     {
-        Debug.Log(4);
-        m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEGIN_GAME);
+        m_StateMachine.Goto(E_BATTLE_REAL_STATE.GAME);
     }
 
     private void UpdateOnBeginGame()
+    {
+
+    }
+
+    private void LateUpdateOnBeginGame()
+    {
+
+    }
+
+    private void FixedUpdateOnBeginGame()
     {
 
     }
@@ -315,15 +392,55 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGame()
     {
-        Debug.Log(5);
+        InputManager.RegisterInput();
     }
 
     private void UpdateOnGame()
     {
-        Debug.Log(6);
+        InputManager.OnUpdate();
+        PlayerManager.OnUpdate();
+    }
+
+    private void LateUpdateOnGame()
+    {
+        PlayerManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnGame()
+    {
+        PlayerManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
+    {
+        InputManager.RemoveInput();
+    }
+
+    #endregion
+
+    #region Dead State
+
+    private void StartOnDead()
+    {
+
+    }
+
+    private void UpdateOnDead()
+    {
+
+    }
+
+    private void LateUpdateOnDead()
+    {
+
+    }
+
+    private void FixedUpdateOnDead()
+    {
+
+    }
+
+    private void EndOnDead()
     {
 
     }
@@ -338,6 +455,16 @@ public class BattleRealManager : ControllableObject
     }
 
     private void UpdateOnBeforeBossBattlePerformance()
+    {
+
+    }
+
+    private void LateUpdateOnBeforeBossBattlePerformance()
+    {
+
+    }
+
+    private void FixedUpdateOnBeforeBossBattlePerformance()
     {
 
     }
@@ -361,6 +488,16 @@ public class BattleRealManager : ControllableObject
 
     }
 
+    private void LateUpdateOnTransitionToHacking()
+    {
+
+    }
+
+    private void FixedUpdateOnTransitionToHacking()
+    {
+
+    }
+
     private void EndOnTransitionToHacking()
     {
 
@@ -376,6 +513,16 @@ public class BattleRealManager : ControllableObject
     }
 
     private void UpdateOnStayHacking()
+    {
+
+    }
+
+    private void LateUpdateOnStayHacking()
+    {
+
+    }
+
+    private void FixedUpdateOnStayHacking()
     {
 
     }
@@ -399,6 +546,16 @@ public class BattleRealManager : ControllableObject
 
     }
 
+    private void LateUpdateOnTransitionFromHacking()
+    {
+
+    }
+
+    private void FixedUpdateOnTransitionFromHacking()
+    {
+
+    }
+
     private void EndOnTransitionFromHacking()
     {
 
@@ -414,6 +571,16 @@ public class BattleRealManager : ControllableObject
     }
 
     private void UpdateOnBeforeGameClearPerformance()
+    {
+
+    }
+
+    private void LateUpdateOnBeforeGameClearPerformance()
+    {
+
+    }
+
+    private void FixedUpdateOnBeforeGameClearPerformance()
     {
 
     }
@@ -437,6 +604,16 @@ public class BattleRealManager : ControllableObject
 
     }
 
+    private void LateUpdateOnGameClear()
+    {
+
+    }
+
+    private void FixedUpdateOnGameClear()
+    {
+
+    }
+
     private void EndOnGameClear()
     {
 
@@ -456,6 +633,16 @@ public class BattleRealManager : ControllableObject
 
     }
 
+    private void LateUpdateOnGameOver()
+    {
+
+    }
+
+    private void FixedUpdateOnGameOver()
+    {
+
+    }
+
     private void EndOnGameOver()
     {
 
@@ -471,6 +658,16 @@ public class BattleRealManager : ControllableObject
     }
 
     private void UpdateOnEnd()
+    {
+
+    }
+
+    private void LateUpdateOnEnd()
+    {
+
+    }
+
+    private void FixedUpdateOnEnd()
     {
 
     }

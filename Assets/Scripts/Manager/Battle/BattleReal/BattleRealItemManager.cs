@@ -363,7 +363,7 @@ public class BattleRealItemManager : ControllableObject
         }
     }
 
-    public void OnAttractAction(InputExtension.E_INPUT_STATE state)
+    public void OnAttractAction(E_INPUT_STATE state)
     {
         AttractAllItem();
     }

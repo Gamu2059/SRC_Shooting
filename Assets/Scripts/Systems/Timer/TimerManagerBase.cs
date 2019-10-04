@@ -4,9 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// タイマーを管理する。
-/// ジェネリッククラスのため、継承して使用して下さい。
 /// </summary>
-public abstract class TimerManager : ControllableObject
+public abstract class TimerManagerBase : ControllableObject
 {
 	protected TimerController m_TimerController;
 
