@@ -23,3 +23,61 @@ MonoBehaviour:
       type: 2}
   m_BattleHackingParamSet:
     m_Hoge: 0
+  m_FadeOutParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.032244552
+      outSlope: -0.032244552
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.048309177
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0.031736024
+      outSlope: 0.031736024
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_FadeInParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_TransitionToHackingMovie: {fileID: 32900000, guid: 1ad0c4cc318325244935f976dcfc9df7,
+    type: 3}
+  m_TransitionToRealMovie: {fileID: 32900000, guid: 150c35aa09bb97e4c903325d9057ecac,
+    type: 3}
+  m_TransitionToHackingSe: {fileID: 8300000, guid: dc13cdadd4e3e904897a7cd17ff376e6,
+    type: 3}
+  m_TransitionToRealSe: {fileID: 8300000, guid: 4da1e6530537c5d49a97e423e1ed2d8e,
+    type: 3}
+  m_RealModeBgm: {fileID: 8300000, guid: 5122298e2e3d7d143bcb77ff1a4da118, type: 3}
+  m_HackingModeBgm: {fileID: 8300000, guid: 4fb136f5515a54b47b3ab98c8369a338, type: 3}

@@ -7,24 +7,6 @@ using UnityEngine;
 /// </summary>
 public class BattleRealManager : ControllableObject
 {
-    public enum E_BATTLE_REAL_STATE
-    {
-        START,
-        BEFORE_BEGIN_GAME,
-        BEFORE_BEGIN_GAME_PERFORMANCE,
-        BEGIN_GAME,
-        GAME,
-        DEAD,
-        BEFORE_BOSS_BATTLE_PERFORMANCE,
-        TRANSITION_TO_HACKING,
-        STAY_HACKING,
-        TRANSITION_FROM_HACKING,
-        BEFORE_GAME_CLEAR_PERFORMANCE,
-        GAME_CLEAR,
-        GAME_OVER,
-        END,
-    }
-
     #region Field
 
     private BattleRealParamSet m_ParamSet;
@@ -89,7 +71,7 @@ public class BattleRealManager : ControllableObject
             OnStart = StartOnBeginGame,
             OnUpdate = UpdateOnBeginGame,
             OnLateUpdate = LateUpdateOnBeginGame,
-            OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
+            OnFixedUpdate = FixedUpdateOnBeginGame,
             OnEnd = EndOnBeginGame,
         });
 
@@ -120,15 +102,6 @@ public class BattleRealManager : ControllableObject
             OnEnd = EndOnBeforeBossBattlePerformance,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING)
-        {
-            OnStart = StartOnTransitionToHacking,
-            OnUpdate = UpdateOnTransitionToHacking,
-            OnLateUpdate = LateUpdateOnTransitionToHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            OnEnd = EndOnTransitionToHacking,
-        });
-
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.STAY_HACKING)
         {
             OnStart = StartOnStayHacking,
@@ -136,15 +109,6 @@ public class BattleRealManager : ControllableObject
             OnLateUpdate = LateUpdateOnStayHacking,
             OnFixedUpdate = FixedUpdateOnStayHacking,
             OnEnd = EndOnStayHacking,
-        });
-
-        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_FROM_HACKING)
-        {
-            OnStart = StartOnTransitionFromHacking,
-            OnUpdate = UpdateOnTransitionFromHacking,
-            OnLateUpdate = LateUpdateOnTransitionFromHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionFromHacking,
-            OnEnd = EndOnTransitionFromHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_GAME_CLEAR_PERFORMANCE)
@@ -272,8 +236,6 @@ public class BattleRealManager : ControllableObject
         BulletManager.OnStart();
         ItemManager.OnStart();
 
-        Debug.Log(1);
-
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME);
     }
 
@@ -303,7 +265,6 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnBeforeBeginGame()
     {
-        Debug.Log(2);
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME_PERFORMANCE);
     }
 
@@ -333,7 +294,6 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnBeforeBeginGamePerformance()
     {
-        Debug.Log(3);
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEGIN_GAME);
     }
 
@@ -476,35 +436,6 @@ public class BattleRealManager : ControllableObject
 
     #endregion
 
-    #region Transition To Hacking State
-
-    private void StartOnTransitionToHacking()
-    {
-
-    }
-
-    private void UpdateOnTransitionToHacking()
-    {
-
-    }
-
-    private void LateUpdateOnTransitionToHacking()
-    {
-
-    }
-
-    private void FixedUpdateOnTransitionToHacking()
-    {
-
-    }
-
-    private void EndOnTransitionToHacking()
-    {
-
-    }
-
-    #endregion
-
     #region Stay Hacking State
 
     private void StartOnStayHacking()
@@ -528,35 +459,6 @@ public class BattleRealManager : ControllableObject
     }
 
     private void EndOnStayHacking()
-    {
-
-    }
-
-    #endregion
-
-    #region Transition From Hacking State
-
-    private void StartOnTransitionFromHacking()
-    {
-
-    }
-
-    private void UpdateOnTransitionFromHacking()
-    {
-
-    }
-
-    private void LateUpdateOnTransitionFromHacking()
-    {
-
-    }
-
-    private void FixedUpdateOnTransitionFromHacking()
-    {
-
-    }
-
-    private void EndOnTransitionFromHacking()
     {
 
     }
@@ -678,4 +580,14 @@ public class BattleRealManager : ControllableObject
     }
 
     #endregion
+
+    public void RequestChangeState(E_BATTLE_REAL_STATE state)
+    {
+        if (m_StateMachine == null)
+        {
+            return;
+        }
+
+        m_StateMachine.Goto(state);
+    }
 }

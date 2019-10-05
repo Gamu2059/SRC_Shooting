@@ -1,0 +1,18 @@
+﻿public enum E_BATTLE_STATE
+{
+    START,
+
+    REAL_MODE,
+
+    HACKING_MODE,
+
+    TRANSITION_TO_REAL,
+
+    TRANSITION_TO_HACKING,
+
+    GAME_CLEAR,
+
+    GAME_OVER,
+
+    END,
+}
