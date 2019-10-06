@@ -2,7 +2,7 @@
 {
     START,
     STAY_REAL,
-    BEGIN_GAME,
+    PREPARE_GAME,
     GAME,
     GAME_CLEAR,
     GAME_OVER,

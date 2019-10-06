@@ -13,6 +13,14 @@ public class BattleHackingManager : ControllableObject
 
     private StateMachine<E_BATTLE_HACKING_STATE> m_StateMachine;
 
+    public BattleHackingInputManager InputManager { get; private set; }
+
+    public BattleHackingTimerManager HackingTimerManager { get; private set; }
+
+
+
+    public BattleHackingPlayerManager PlayerManager { get; private set; }
+
     #endregion
 
     public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
@@ -48,13 +56,13 @@ public class BattleHackingManager : ControllableObject
             OnEnd = EndOnStayReal,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.BEGIN_GAME)
+        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.PREPARE_GAME)
         {
-            OnStart = StartOnBeginGame,
-            OnUpdate = UpdateOnBeginGame,
-            OnLateUpdate = LateUpdateOnBeginGame,
-            OnFixedUpdate = FixedUpdateOnBeginGame,
-            OnEnd = EndOnBeginGame,
+            OnStart = StartOnPrepareGame,
+            OnUpdate = UpdateOnPrepareGame,
+            OnLateUpdate = LateUpdateOnPrepareGame,
+            OnFixedUpdate = FixedUpdateOnPrepareGame,
+            OnEnd = EndOnPrepareGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME)
@@ -93,11 +101,19 @@ public class BattleHackingManager : ControllableObject
             OnEnd = EndOnEndGame,
         });
 
+        InputManager = new BattleHackingInputManager();
+        PlayerManager = new BattleHackingPlayerManager(m_ParamSet.PlayerManagerParamSet);
+
+        InputManager.OnInitialize();
+        PlayerManager.OnInitialize();
+
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        PlayerManager.OnFinalize();
+        InputManager.OnFinalize();
         m_StateMachine.OnFinalize();
         base.OnFinalize();
     }
@@ -129,6 +145,9 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnStart()
     {
+        InputManager.OnStart();
+        PlayerManager.OnStart();
+
         RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
     }
 
@@ -183,29 +202,29 @@ public class BattleHackingManager : ControllableObject
 
     #endregion
 
-    #region Begin Game State
+    #region Prepare Game State
 
-    private void StartOnBeginGame()
+    private void StartOnPrepareGame()
     {
-        RequestChangeState(E_BATTLE_HACKING_STATE.GAME);
+        PlayerManager.OnPrepare();
     }
 
-    private void UpdateOnBeginGame()
-    {
-
-    }
-
-    private void LateUpdateOnBeginGame()
+    private void UpdateOnPrepareGame()
     {
 
     }
 
-    private void FixedUpdateOnBeginGame()
+    private void LateUpdateOnPrepareGame()
     {
 
     }
 
-    private void EndOnBeginGame()
+    private void FixedUpdateOnPrepareGame()
+    {
+
+    }
+
+    private void EndOnPrepareGame()
     {
 
     }
@@ -216,28 +235,28 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGame()
     {
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5f);
-        timer.SetTimeoutCallBack(() =>
-        {
-            RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
-        });
-        TimerManager.Instance.RegistTimer(timer);
+        InputManager.RegisterInput();
     }
 
     private void UpdateOnGame()
     {
+        InputManager.OnUpdate();
+        PlayerManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
     {
+        PlayerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGame()
     {
+        PlayerManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
     {
+        InputManager.RemoveInput();
     }
 
     #endregion
@@ -304,6 +323,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnEndGame()
     {
+        PlayerManager.OnPutAway();
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 

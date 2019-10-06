@@ -79,16 +79,7 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
     {
         base.OnStart();
 
-        if (CommandStageManager.Instance != null && CommandStageManager.Instance.GetBulletHolder() != null)
-        {
-            m_BulletHolder = CommandStageManager.Instance.GetBulletHolder().transform;
-        }
-        else if (m_BulletHolder == null)
-        {
-            var obj = new GameObject(HOLDER_NAME);
-            obj.transform.position = Vector3.zero;
-            m_BulletHolder = obj.transform;
-        }
+        m_BulletHolder = BattleHackingStageManager.Instance.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.BULLET);
     }
 
     /// <summary>

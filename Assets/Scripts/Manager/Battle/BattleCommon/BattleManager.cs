@@ -170,15 +170,15 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         var audio = AudioManager.Instance;
         audio.SetPrimaryBgmVolume(0);
         audio.SetSecondaryBgmVolume(0);
-        audio.PlayPrimaryBgm(m_BattleParamSet.RealModeBgm);
-        audio.PlaySecondaryBgm(m_BattleParamSet.HackingModeBgm);
+        audio.PlayBossBgm(m_BattleParamSet.BossBgmParamSet);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
     }
 
     private void UpdateOnStart()
     {
-
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnStart()
@@ -202,13 +202,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void UpdateOnRealMode()
     {
-        RealManager.OnUpdate();
-
         if (m_IsStartHackingMode)
         {
             m_IsStartHackingMode = false;
             RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
+
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnRealMode()
@@ -232,6 +233,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void UpdateOnHackingMode()
     {
+        RealManager.OnUpdate();
         HackingManager.OnUpdate();
     }
 
@@ -247,7 +249,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnTransitionToHacking()
     {
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.STAY_HACKING);
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.BEGIN_GAME);
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.PREPARE_GAME);
 
         m_BattleHackingStageManager.gameObject.SetActive(true);
 
@@ -279,10 +281,15 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             RequestChangeState(E_BATTLE_STATE.HACKING_MODE);
         }
+
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnTransitionToHacking()
     {
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.GAME);
+
         m_BattleRealStageManager.gameObject.SetActive(false);
         m_VideoPlayer.gameObject.SetActive(false);
         m_VideoPlayer.Stop();
@@ -326,6 +333,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             RequestChangeState(E_BATTLE_STATE.REAL_MODE);
         }
+
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnTransitionToReal()
@@ -348,7 +358,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void UpdateOnGameClear()
     {
-
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnGameClear()
@@ -367,7 +378,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void UpdateOnGameOver()
     {
-
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnGameOver()
@@ -386,7 +398,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void UpdateOnEnd()
     {
-
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
     private void EndOnEnd()

@@ -87,16 +87,7 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     {
         base.OnStart();
 
-        if (CommandStageManager.Instance != null && CommandStageManager.Instance.GetEnemyCharaHolder() != null)
-        {
-            m_EnemyCharaHolder = CommandStageManager.Instance.GetEnemyCharaHolder().transform;
-        }
-        else if (m_EnemyCharaHolder == null)
-        {
-            var obj = new GameObject(HOLDER_NAME);
-            obj.transform.position = Vector3.zero;
-            m_EnemyCharaHolder = obj.transform;
-        }
+        m_EnemyCharaHolder = BattleHackingStageManager.Instance.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.ENEMY);
     }
 
     /// <summary>
@@ -288,8 +279,9 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
     /// <returns></returns>
     public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
     {
-        var minPos = CommandStageManager.Instance.GetMinLocalPositionField();
-        var maxPos = CommandStageManager.Instance.GetMaxLocalPositionField();
+        var stageManager = BattleHackingStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
         minPos += m_OffsetMinField;
         maxPos += m_OffsetMaxField;
 
@@ -297,8 +289,8 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
 
-        // コマンドイベントではMoveObjectHolderに入っているため補正を足す
-        pos += CommandStageManager.Instance.GetMoveObjectHolder().transform.position;
+        //// コマンドイベントではMoveObjectHolderに入っているため補正を足す
+        //pos += CommandStageManager.Instance.GetMoveObjectHolder().transform.position;
 
         return pos;
     }

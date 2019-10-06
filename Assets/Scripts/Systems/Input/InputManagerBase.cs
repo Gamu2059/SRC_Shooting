@@ -17,21 +17,11 @@ public abstract class InputManagerBase : ControllableObject
     private Dictionary<string, ButtonData> m_Buttons;
     private Dictionary<string, AxisData> m_Axises;
 
-    private LinkedList<string> m_RegisterButtons;
-    private LinkedList<string> m_RegisterAxises;
-
-    private LinkedList<string> m_RemoveButtons;
-    private LinkedList<string> m_RemoveAxises;
-
     public override void OnInitialize()
     {
         base.OnInitialize();
         m_Buttons = new Dictionary<string, ButtonData>();
         m_Axises = new Dictionary<string, AxisData>();
-        m_RegisterButtons = new LinkedList<string>();
-        m_RegisterAxises = new LinkedList<string>();
-        m_RemoveButtons = new LinkedList<string>();
-        m_RemoveAxises = new LinkedList<string>();
     }
 
     public override void OnFinalize()
@@ -53,17 +43,6 @@ public abstract class InputManagerBase : ControllableObject
     {
         base.OnUpdate();
 
-        foreach (var name in m_RegisterButtons)
-        {
-            m_Buttons.Add(name, new ButtonData());
-        }
-        foreach (var name in m_RegisterAxises)
-        {
-            m_Axises.Add(name, new AxisData());
-        }
-        m_RegisterButtons.Clear();
-        m_RegisterAxises.Clear();
-
         foreach (var name in m_Buttons.Keys)
         {
             m_Buttons[name].Value = GetButtonAction(name);
@@ -72,47 +51,22 @@ public abstract class InputManagerBase : ControllableObject
         {
             m_Axises[name].Value = GetAxisAction(name);
         }
+    }
 
-        foreach (var name in m_RemoveButtons)
+    protected void RegisterButton(string name)
+    {
+        if (m_Buttons != null && !m_Buttons.ContainsKey(name))
+        {
+            m_Buttons.Add(name, new ButtonData());
+        }
+    }
+
+    protected void RemoveButton(string name)
+    {
+        if (m_Buttons != null && m_Buttons.ContainsKey(name))
         {
             m_Buttons.Remove(name);
         }
-        foreach (var name in m_RemoveAxises)
-        {
-            m_Axises.Remove(name);
-        }
-        m_RemoveButtons.Clear();
-        m_RemoveAxises.Clear();
-    }
-
-    public void RegisterButton(string name)
-    {
-        if (m_Buttons == null || m_RegisterButtons == null)
-        {
-            return;
-        }
-
-        if (m_Buttons.ContainsKey(name) || m_RegisterButtons.Contains(name))
-        {
-            return;
-        }
-
-        m_RegisterButtons.AddLast(name);
-    }
-
-    public void RemoveButton(string name)
-    {
-        if (m_Buttons == null || m_RemoveButtons == null)
-        {
-            return;
-        }
-
-        if (!m_Buttons.ContainsKey(name) || m_RemoveButtons.Contains(name))
-        {
-            return;
-        }
-
-        m_RemoveButtons.AddLast(name);
     }
 
     public E_INPUT_STATE GetButton(string name)
@@ -125,34 +79,20 @@ public abstract class InputManagerBase : ControllableObject
         return m_Buttons[name].Value;
     }
 
-    public void RegisterAxis(string name)
+    protected void RegisterAxis(string name)
     {
-        if (m_Axises == null || m_RegisterAxises == null)
+        if (m_Axises != null && !m_Axises.ContainsKey(name))
         {
-            return;
+            m_Axises.Add(name, new AxisData());
         }
-
-        if (m_Axises.ContainsKey(name) || m_RegisterAxises.Contains(name))
-        {
-            return;
-        }
-
-        m_RegisterAxises.AddLast(name);
     }
 
-    public void RemoveAxis(string name)
+    protected void RemoveAxis(string name)
     {
-        if (m_Axises == null || m_RemoveAxises == null)
+        if (m_Axises != null && m_Axises.ContainsKey(name))
         {
-            return;
+            m_Axises.Remove(name);
         }
-
-        if (!m_Axises.ContainsKey(name) || m_RemoveAxises.Contains(name))
-        {
-            return;
-        }
-
-        m_RemoveAxises.AddLast(name);
     }
 
     public float GetAxis(string name)
@@ -165,7 +105,7 @@ public abstract class InputManagerBase : ControllableObject
         return m_Axises[name].Value;
     }
 
-    public E_INPUT_STATE GetButtonAction(string name)
+    private E_INPUT_STATE GetButtonAction(string name)
     {
         if (Input.GetButtonDown(name))
         {
@@ -183,7 +123,7 @@ public abstract class InputManagerBase : ControllableObject
         return E_INPUT_STATE.NONE;
     }
 
-    public float GetAxisAction(string name)
+    private float GetAxisAction(string name)
     {
         return Input.GetAxis(name);
     }

@@ -43,4 +43,18 @@ public class AudioManager : ControllableMonoBehavior
     {
         m_SecondaryBgmSource.volume = normalizedVolume;
     }
+
+    public void PlayBossBgm(BattleBossBgmParamSet bossBgmParamSet)
+    {
+        m_PrimaryBgmSource.Stop();
+        m_SecondaryBgmSource.Stop();
+
+        m_PrimaryBgmSource.PlayOneShot(bossBgmParamSet.RealModeIntro);
+        m_PrimaryBgmSource.clip = bossBgmParamSet.RealModeLoop;
+        m_PrimaryBgmSource.PlayDelayed(bossBgmParamSet.RealModeIntro.length);
+
+        m_SecondaryBgmSource.PlayOneShot(bossBgmParamSet.HackingModeIntro);
+        m_SecondaryBgmSource.clip = bossBgmParamSet.HackingModeLoop;
+        m_SecondaryBgmSource.PlayDelayed(bossBgmParamSet.HackingModeIntro.length);
+    }
 }

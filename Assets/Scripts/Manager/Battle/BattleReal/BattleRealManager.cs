@@ -14,8 +14,7 @@ public class BattleRealManager : ControllableObject
     private StateMachine<E_BATTLE_REAL_STATE> m_StateMachine;
 
     public BattleRealInputManager InputManager { get; private set; }
-
-    public BattleRealTimerManager TimerManager { get; private set; }
+    public BattleRealTimerManager RealTimerManager { get; private set; }
     public BattleRealEventManager EventManager { get; private set; }
     public BattleRealPlayerManager PlayerManager { get; private set; }
     public BattleRealEnemyManager EnemyManager { get; private set; }
@@ -148,7 +147,7 @@ public class BattleRealManager : ControllableObject
         });
 
         InputManager = new BattleRealInputManager();
-        TimerManager = new BattleRealTimerManager();
+        RealTimerManager = new BattleRealTimerManager();
         EventManager = new BattleRealEventManager(m_ParamSet.EventTriggerParamSet);
         PlayerManager = new BattleRealPlayerManager(m_ParamSet.PlayerManagerParamSet);
         EnemyManager = new BattleRealEnemyManager();
@@ -156,7 +155,7 @@ public class BattleRealManager : ControllableObject
         ItemManager = new BattleRealItemManager();
 
         InputManager.OnInitialize();
-        TimerManager.OnInitialize();
+        RealTimerManager.OnInitialize();
         EventManager.OnInitialize();
         PlayerManager.OnInitialize();
         EnemyManager.OnInitialize();
@@ -173,7 +172,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnFinalize();
         PlayerManager.OnFinalize();
         EventManager.OnFinalize();
-        TimerManager.OnFinalize();
+        RealTimerManager.OnFinalize();
         InputManager.OnFinalize();
 
         m_StateMachine.OnFinalize();
@@ -229,7 +228,7 @@ public class BattleRealManager : ControllableObject
     private void StartOnStart()
     {
         InputManager.OnStart();
-        TimerManager.OnStart();
+        RealTimerManager.OnStart();
         EventManager.OnStart();
         PlayerManager.OnStart();
         EnemyManager.OnStart();
@@ -241,7 +240,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnStart()
     {
-
     }
 
     private void LateUpdateOnStart()
@@ -270,7 +268,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBeginGame()
     {
-
     }
 
     private void LateUpdateOnBeforeBeginGame()
@@ -299,7 +296,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBeginGamePerformance()
     {
-
     }
 
     private void LateUpdateOnBeforeBeginGamePerformance()
@@ -328,7 +324,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeginGame()
     {
-
     }
 
     private void LateUpdateOnBeginGame()
@@ -387,7 +382,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnDead()
     {
-
     }
 
     private void LateUpdateOnDead()
@@ -416,7 +410,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBossBattlePerformance()
     {
-
     }
 
     private void LateUpdateOnBeforeBossBattlePerformance()
@@ -445,7 +438,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnStayHacking()
     {
-
     }
 
     private void LateUpdateOnStayHacking()
@@ -474,7 +466,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeGameClearPerformance()
     {
-
     }
 
     private void LateUpdateOnBeforeGameClearPerformance()
@@ -503,7 +494,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnGameClear()
     {
-
     }
 
     private void LateUpdateOnGameClear()
@@ -532,7 +522,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnGameOver()
     {
-
     }
 
     private void LateUpdateOnGameOver()
@@ -561,7 +550,6 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnEnd()
     {
-
     }
 
     private void LateUpdateOnEnd()

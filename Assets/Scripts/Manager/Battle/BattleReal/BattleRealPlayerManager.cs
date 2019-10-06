@@ -9,8 +9,6 @@ using UniRx;
 /// </summary>
 public class BattleRealPlayerManager : ControllableObject
 {
-    public const string HOLDER_NAME = "[PlayerCharaHolder]";
-
     #region Inspector
 
     [Header("Holder")]
@@ -124,17 +122,7 @@ public class BattleRealPlayerManager : ControllableObject
     {
         base.OnStart();
 
-        var stageManager = BattleRealStageManager.Instance;
-        if (stageManager != null && stageManager.PlayerCharaHolder != null)
-        {
-            m_PlayerCharaHolder = stageManager.PlayerCharaHolder;
-        }
-        else if (m_PlayerCharaHolder == null)
-        {
-            var obj = new GameObject(HOLDER_NAME);
-            obj.transform.position = Vector3.zero;
-            m_PlayerCharaHolder = obj.transform;
-        }
+        m_PlayerCharaHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.PLAYER);
 
         if (m_RegisterPlayer != null)
         {

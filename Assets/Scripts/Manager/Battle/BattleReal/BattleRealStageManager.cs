@@ -7,6 +7,21 @@ using UnityEngine;
 /// </summary>
 public class BattleRealStageManager : ControllableMonoBehavior
 {
+    public enum E_HOLDER_TYPE
+    {
+        STAGE_OBJECT,
+        PLAYER,
+        ENEMY,
+        BULLET,
+        ITEM,
+    }
+
+    public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
+    public const string PLAYER_HOLDER = "[PlayerCharaHolder]";
+    public const string ENEMY_HOLDER = "[EnemyCharaHolder]";
+    public const string BULLET_HOLDER = "[BulletHolder]";
+    public const string ITEM_HOLDER = "[ItemHolder]";
+
     #region Inspector
 
     [Header("Holder")]
@@ -87,5 +102,45 @@ public class BattleRealStageManager : ControllableMonoBehavior
         pos.x = Mathf.Clamp(pos.x, m_MinLocalFieldPosition.x, m_MaxLocalFieldPosition.x);
         pos.z = Mathf.Clamp(pos.z, m_MinLocalFieldPosition.y, m_MaxLocalFieldPosition.y);
         obj.localPosition = pos;
+    }
+
+    public Transform GetHolder(E_HOLDER_TYPE holderType)
+    {
+        Transform holder = null;
+        string holderName = null;
+
+        switch(holderType)
+        {
+            case E_HOLDER_TYPE.STAGE_OBJECT:
+                holder = StageObjectHolder;
+                holderName = STAGE_OBJECT_HOLDER;
+                break;
+            case E_HOLDER_TYPE.PLAYER:
+                holder = PlayerCharaHolder;
+                holderName = PLAYER_HOLDER;
+                break;
+            case E_HOLDER_TYPE.ENEMY:
+                holder = EnemyCharaHolder;
+                holderName = ENEMY_HOLDER;
+                break;
+            case E_HOLDER_TYPE.BULLET:
+                holder = BulletHolder;
+                holderName = BULLET_HOLDER;
+                break;
+            case E_HOLDER_TYPE.ITEM:
+                holder = ItemHolder;
+                holderName = ITEM_HOLDER;
+                break;
+        }
+
+        if (holder != null)
+        {
+            return holder;
+        }
+
+        holder = new GameObject(holderName).transform;
+        holder.SetParent(transform);
+        holder.position = Vector3.zero;
+        return holder;
     }
 }

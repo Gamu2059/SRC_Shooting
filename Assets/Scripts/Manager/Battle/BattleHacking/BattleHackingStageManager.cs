@@ -7,6 +7,19 @@ using UnityEngine;
 /// </summary>
 public class BattleHackingStageManager : ControllableMonoBehavior
 {
+    public enum E_HOLDER_TYPE
+    {
+        STAGE_OBJECT,
+        PLAYER,
+        ENEMY,
+        BULLET,
+    }
+
+    public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
+    public const string PLAYER_HOLDER = "[PlayerCharaHolder]";
+    public const string ENEMY_HOLDER = "[EnemyCharaHolder]";
+    public const string BULLET_HOLDER = "[BulletHolder]";
+
     #region Inspector
 
     [Header("Holder")]
@@ -51,7 +64,7 @@ public class BattleHackingStageManager : ControllableMonoBehavior
 
     #endregion
 
-    public static BattleRealStageManager Instance => BattleManager.Instance.BattleRealStageManager;
+    public static BattleHackingStageManager Instance => BattleManager.Instance.BattleHackingStageManager;
 
     /// <summary>
     /// 指定したオブジェクトの座標が、フィールド領域の外にあるかどうかを判定する。
@@ -80,5 +93,41 @@ public class BattleHackingStageManager : ControllableMonoBehavior
         pos.x = Mathf.Clamp(pos.x, m_MinLocalFieldPosition.x, m_MaxLocalFieldPosition.x);
         pos.z = Mathf.Clamp(pos.z, m_MinLocalFieldPosition.y, m_MaxLocalFieldPosition.y);
         obj.localPosition = pos;
+    }
+
+    public Transform GetHolder(E_HOLDER_TYPE holderType)
+    {
+        Transform holder = null;
+        string holderName = null;
+
+        switch (holderType)
+        {
+            case E_HOLDER_TYPE.STAGE_OBJECT:
+                holder = StageObjectHolder;
+                holderName = STAGE_OBJECT_HOLDER;
+                break;
+            case E_HOLDER_TYPE.PLAYER:
+                holder = PlayerCharaHolder;
+                holderName = PLAYER_HOLDER;
+                break;
+            case E_HOLDER_TYPE.ENEMY:
+                holder = EnemyCharaHolder;
+                holderName = ENEMY_HOLDER;
+                break;
+            case E_HOLDER_TYPE.BULLET:
+                holder = BulletHolder;
+                holderName = BULLET_HOLDER;
+                break;
+        }
+
+        if (holder != null)
+        {
+            return holder;
+        }
+
+        holder = new GameObject(holderName).transform;
+        holder.SetParent(transform);
+        holder.position = Vector3.zero;
+        return holder;
     }
 }

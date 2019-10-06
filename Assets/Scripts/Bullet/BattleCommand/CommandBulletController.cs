@@ -753,7 +753,7 @@ public class CommandBulletController : BattleCommandObjectBase
     {
         if (m_Troop == E_CHARA_TROOP.ENEMY)
         {
-            return CommandPlayerCharaManager.Instance.GetController();
+            return BattleHackingPlayerManager.Instance.Player;
         }
         else
         {
@@ -836,17 +836,6 @@ public class CommandBulletController : BattleCommandObjectBase
     {
         // 画面から見えなくなったら弾を破棄する
         DestroyBullet();
-    }
-
-    /// <summary>
-    /// 他の壁に当たった時の処理。
-    /// </summary>
-    /// <param name="targetWall">他の壁</param>
-    /// <param name="attackData">この弾の衝突情報</param>
-    /// <param name="targetData">他の壁の衝突情報</param>
-    public virtual void HitWall(CommandWallController targetWall, ColliderData attackData, ColliderData targetData)
-    {
-
     }
 
     /// <summary>

@@ -4,4 +4,5 @@ using UnityEngine;
 
 public class BattleHackingTimerManager : TimerManagerBase
 {
+    public static BattleHackingTimerManager Instance => BattleHackingManager.Instance.HackingTimerManager;
 }

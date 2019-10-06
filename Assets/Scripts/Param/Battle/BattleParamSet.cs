@@ -47,10 +47,26 @@ public class BattleParamSet : ScriptableObject
     [Header("BGM")]
 
     [SerializeField]
-    private AudioClip m_RealModeBgm;
-    public AudioClip RealModeBgm => m_RealModeBgm;
+    private BattleBossBgmParamSet m_BossBgmParamSet;
+    public BattleBossBgmParamSet BossBgmParamSet => m_BossBgmParamSet;
+}
+
+[Serializable]
+public class BattleBossBgmParamSet
+{
+    [SerializeField]
+    private AudioClip m_RealModeIntro;
+    public AudioClip RealModeIntro => m_RealModeIntro;
 
     [SerializeField]
-    private AudioClip m_HackingModeBgm;
-    public AudioClip HackingModeBgm => m_HackingModeBgm;
+    private AudioClip m_RealModeLoop;
+    public AudioClip RealModeLoop => m_RealModeLoop;
+
+    [SerializeField]
+    private AudioClip m_HackingModeIntro;
+    public AudioClip HackingModeIntro => m_HackingModeIntro;
+
+    [SerializeField]
+    private AudioClip m_HackingModeLoop;
+    public AudioClip HackingModeLoop => m_HackingModeLoop;
 }
