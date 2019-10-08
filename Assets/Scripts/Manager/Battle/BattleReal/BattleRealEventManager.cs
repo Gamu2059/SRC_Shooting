@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+using EventTriggerParam = BattleRealEventTriggerParamSet.EventTriggerParam;
+
 /// <summary>
 /// BattleRealのイベントトリガを管理するマネージャ。
 /// </summary>
@@ -23,8 +25,8 @@ public class BattleRealEventManager : ControllableObject
     private Dictionary<string, bool> m_BoolVariables;
     private Dictionary<string, EventTriggerTimePeriod> m_TimePeriods;
 
-    private List<BattleRealEventTriggerParamSet.EventTriggerParam> m_EventParams;
-    private List<BattleRealEventTriggerParamSet.EventTriggerParam> m_GotoDestroyEventParams;
+    private List<EventTriggerParam> m_EventParams;
+    private List<EventTriggerParam> m_GotoDestroyEventParams;
 
     private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
     private EventTriggerTimePeriod m_GameStartTimePeriod;
@@ -86,8 +88,8 @@ public class BattleRealEventManager : ControllableObject
             m_TimePeriods.Add(periodName, new EventTriggerTimePeriod());
         }
 
-        m_EventParams = new List<BattleRealEventTriggerParamSet.EventTriggerParam>();
-        m_GotoDestroyEventParams = new List<BattleRealEventTriggerParamSet.EventTriggerParam>();
+        m_EventParams = new List<EventTriggerParam>();
+        m_GotoDestroyEventParams = new List<EventTriggerParam>();
         m_EventParams.AddRange(m_ParamSet.Params);
 
         m_WaitExecuteParams = new List<EventContent>();
@@ -199,10 +201,10 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// EventParamを追加する。
     /// </summary>
-    public void AddEventParam(BattleRealEventTriggerParamSet.EventTriggerParam param)
+    public void AddEventParam(EventTriggerParam param)
     {
         var condition = param.Condition;
-        if (!condition.IsSingleCondition && condition.SubConditions == null)
+        if (condition.IsMultiCondition && condition.MultiConditions == null)
         {
             return;
         }
@@ -436,18 +438,18 @@ public class BattleRealEventManager : ControllableObject
     public bool IsMeetRootCondition(ref EventTriggerRootCondition rootCondition)
     {
         bool result = false;
-        if (rootCondition.IsSingleCondition)
+        if (!rootCondition.IsMultiCondition)
         {
-            result = IsMeetCondition(ref rootCondition.RootCondition);
+            result = IsMeetCondition(ref rootCondition.SingleCondition);
         }
         else
         {
             // 複数条件の時の初期値
             result = rootCondition.MultiConditionType == E_MULTI_CONDITION_TYPE.AND;
 
-            for (int i = 0; i < rootCondition.SubConditions.Length; i++)
+            for (int i = 0; i < rootCondition.MultiConditions.Length; i++)
             {
-                bool isMeet = IsMeetCondition(ref rootCondition.SubConditions[i]);
+                bool isMeet = IsMeetCondition(ref rootCondition.MultiConditions[i]);
 
                 if (rootCondition.MultiConditionType == E_MULTI_CONDITION_TYPE.OR && isMeet)
                 {
@@ -473,7 +475,6 @@ public class BattleRealEventManager : ControllableObject
     private bool IsMeetCondition(ref EventTriggerCondition condition)
     {
         bool result = false;
-
         switch (condition.VariableType)
         {
             case E_VARIABLE_TYPE.INT:
@@ -637,7 +638,7 @@ public class BattleRealEventManager : ControllableObject
                     m_WaitExecuteParams.Add(content);
                 });
 
-                //BattleRealTimerManager.Instance.RegistTimer(timer);
+                BattleRealTimerManager.Instance.RegistTimer(timer);
             }
         }
 

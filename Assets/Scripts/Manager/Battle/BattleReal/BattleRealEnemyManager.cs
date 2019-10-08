@@ -10,12 +10,6 @@ public class BattleRealEnemyManager : ControllableObject
 {
     public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
 
-    [SerializeField, Tooltip("このステージで登場する敵データ")]
-    private StageEnemyParam m_StageEnemyParam;
-
-    [SerializeField, Tooltip("このステージで使用する敵出現データ")]
-    private XlBattleMainEnemyParam m_EnemyParam;
-
     /// <summary>
     /// 消滅可能になるまでの最小時間
     /// </summary>
@@ -204,24 +198,24 @@ public class BattleRealEnemyManager : ControllableObject
     /// </summary>
     public void CreateEnemyFromEnemyParam(int enemyListIndex)
     {
-        var groupParam = m_ParamSet.Generator.GroupGenerateParamSets[enemyListIndex];
-
-        int xlParamSize = m_EnemyParam.param.Count;
+        var enemyParam = m_ParamSet.EnemyParam;
+        var stageEnemyParam = m_ParamSet.StageEnemyParam;
+        int xlParamSize = enemyParam.param.Count;
 
         if (enemyListIndex < 0 || enemyListIndex >= xlParamSize)
         {
             return;
         }
 
-        var paramData = m_EnemyParam.param[enemyListIndex];
-        var enemy = CreateEnemy(m_StageEnemyParam.GetEnemyControllers()[paramData.EnemyId]);
+        var paramData = enemyParam.param[enemyListIndex];
+        var enemy = CreateEnemy(stageEnemyParam.GetEnemyControllers()[paramData.EnemyId]);
 
         if (enemy == null)
         {
             return;
         }
 
-        enemy.SetBulletSetParam(m_StageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
+        enemy.SetBulletSetParam(stageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
         enemy.SetArguments(paramData.OtherParameters);
         enemy.SetDropItemParam(paramData.Drop);
         enemy.SetDefeatParam(paramData.Defeat);
@@ -321,6 +315,29 @@ public class BattleRealEnemyManager : ControllableObject
     /// 敵の生成イベントをEventManagerに投げる
     /// </summary>
     private void BuildEnemyAppearEvents()
+    {
+        var enemyParam = m_ParamSet.EnemyParam;
+        for (int i = 0; i < enemyParam.param.Count; i++)
+        {
+            var param = enemyParam.param[i];
+
+            BattleRealEventTriggerParamSet.EventTriggerParam eventParam = new BattleRealEventTriggerParamSet.EventTriggerParam();
+            eventParam.Condition = EventTriggerConditionTranslator.TranslateString(param.Conditions);
+
+            EventContent content = new EventContent();
+            content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
+            content.AppearEnemyIndex = i;
+
+            eventParam.Contents = new[] { content };
+
+            BattleRealEventManager.Instance.AddEventParam(eventParam);
+        }
+    }
+
+    /// <summary>
+    /// 敵の生成イベントをEventManagerに投げる
+    /// </summary>
+    private void BuildEnemyGroupAppearEvents()
     {
         //var groups = m_ParamSet.Generator.GroupGenerateParamSets;
         //for (int i = 0; i < groups.Length; i++)
