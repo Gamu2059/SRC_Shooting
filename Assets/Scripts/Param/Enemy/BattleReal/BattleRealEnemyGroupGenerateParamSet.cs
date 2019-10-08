@@ -6,12 +6,12 @@ using System;
 /// <summary>
 /// 敵グループの生成パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleRealEnemy/EnemyGroupGenerate", fileName = "param.battle_real_enemy_group_generate")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyGroupGenerate", fileName = "param.battle_real_enemy_group_generate.asset")]
 public class BattleRealEnemyGroupGenerateParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("敵グループの生成条件")]
-    private EventTriggerCondition m_Condition;
-    public EventTriggerCondition Condition => m_Condition;
+    private EventTriggerRootCondition m_Condition;
+    public EventTriggerRootCondition Condition => m_Condition;
 
     [SerializeField, Tooltip("敵グループの生成ビューポート座標")]
     private Vector2 m_ViewPortPos;

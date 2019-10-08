@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// リアルモードの敵の見た目のパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleRealEnemy/EnemyLook", fileName = "param.battle_real_enemy_look")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyLook", fileName = "param.battle_real_enemy_look.asset")]
 public class BattleRealEnemyLookParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("敵のプールID これの名前が同じならば、プールから取得するモデルを再利用できます")]

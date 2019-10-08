@@ -19,6 +19,10 @@ MonoBehaviour:
       m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
       m_PlayerBaseMoveSpeed: 1.5
       m_PlayerSlowMoveSpeed: 0.75
+    m_EnemyManagerParamSet:
+      m_MinOffsetFieldPosition: {x: 0, y: 0}
+      m_MaxOffsetFieldPosition: {x: 0, y: 0}
+      m_Generator: {fileID: 0}
     m_BulletManagerParamSet:
       m_MinOffsetFieldPosition: {x: 0, y: 0}
       m_MaxOffsetFieldPosition: {x: 0, y: 0}
@@ -31,6 +35,9 @@ MonoBehaviour:
       m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
       m_PlayerBaseMoveSpeed: 1.5
       m_PlayerSlowMoveSpeed: 0.75
+    m_BulletManagerParamSet:
+      m_MinOffsetFieldPosition: {x: 0, y: 0}
+      m_MaxOffsetFieldPosition: {x: 0, y: 0}
   m_FadeOutParam:
     serializedVersion: 2
     m_Curve:

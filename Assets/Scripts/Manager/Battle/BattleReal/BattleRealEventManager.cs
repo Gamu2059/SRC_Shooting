@@ -8,21 +8,23 @@ using System;
 /// </summary>
 public class BattleRealEventManager : ControllableObject
 {
+    public static BattleRealEventManager Instance => BattleRealManager.Instance.EventManager;
+
     public const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     public const string GAME_START_TIME_PERIOD_NAME = "Game Start";
     public const string GAME_CLEAR_TIME_PERIOD_NAME = "Game Clear";
 
     #region Field
 
-    private EventTriggerParamSet m_ParamSet;
+    private BattleRealEventTriggerParamSet m_ParamSet;
 
     private Dictionary<string, int> m_IntVariables;
     private Dictionary<string, float> m_FloatVariables;
     private Dictionary<string, bool> m_BoolVariables;
     private Dictionary<string, EventTriggerTimePeriod> m_TimePeriods;
 
-    private List<EventTriggerParamSet.EventTriggerParam> m_EventParams;
-    private List<EventTriggerParamSet.EventTriggerParam> m_GotoDestroyEventParams;
+    private List<BattleRealEventTriggerParamSet.EventTriggerParam> m_EventParams;
+    private List<BattleRealEventTriggerParamSet.EventTriggerParam> m_GotoDestroyEventParams;
 
     private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
     private EventTriggerTimePeriod m_GameStartTimePeriod;
@@ -36,7 +38,7 @@ public class BattleRealEventManager : ControllableObject
 
     #endregion
 
-    public BattleRealEventManager(EventTriggerParamSet paramSet)
+    public BattleRealEventManager(BattleRealEventTriggerParamSet paramSet)
     {
         m_ParamSet = paramSet;
     }
@@ -56,7 +58,7 @@ public class BattleRealEventManager : ControllableObject
             return;
         }
 
-        foreach (var variable in m_ParamSet.GetVariables())
+        foreach (var variable in m_ParamSet.Variables)
         {
             switch (variable.Type)
             {
@@ -79,14 +81,14 @@ public class BattleRealEventManager : ControllableObject
         m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, m_GameStartTimePeriod);
         m_TimePeriods.Add(GAME_CLEAR_TIME_PERIOD_NAME, m_GameClearTimePeriod);
 
-        foreach (var periodName in m_ParamSet.GetTimePeriodNames())
+        foreach (var periodName in m_ParamSet.TimePeriodNames)
         {
             m_TimePeriods.Add(periodName, new EventTriggerTimePeriod());
         }
 
-        m_EventParams = new List<EventTriggerParamSet.EventTriggerParam>();
-        m_GotoDestroyEventParams = new List<EventTriggerParamSet.EventTriggerParam>();
-        m_EventParams.AddRange(m_ParamSet.GetParams());
+        m_EventParams = new List<BattleRealEventTriggerParamSet.EventTriggerParam>();
+        m_GotoDestroyEventParams = new List<BattleRealEventTriggerParamSet.EventTriggerParam>();
+        m_EventParams.AddRange(m_ParamSet.Params);
 
         m_WaitExecuteParams = new List<EventContent>();
 
@@ -120,7 +122,7 @@ public class BattleRealEventManager : ControllableObject
         for (int i = 0; i < m_EventParams.Count; i++)
         {
             var param = m_EventParams[i];
-            if (IsMeetCondition(ref param.Condition))
+            if (IsMeetRootCondition(ref param.Condition))
             {
                 RegistEvent(param.Contents);
                 m_GotoDestroyEventParams.Add(m_EventParams[i]);
@@ -197,10 +199,10 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// EventParamを追加する。
     /// </summary>
-    public void AddEventParam(EventTriggerParamSet.EventTriggerParam param)
+    public void AddEventParam(BattleRealEventTriggerParamSet.EventTriggerParam param)
     {
         var condition = param.Condition;
-        if (!condition.IsSingleCondition && condition.Conditions == null)
+        if (!condition.IsSingleCondition && condition.SubConditions == null)
         {
             return;
         }
@@ -431,47 +433,61 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// 条件を満たしているかどうかを判定する。
     /// </summary>
-    public bool IsMeetCondition(ref EventTriggerCondition condition)
+    public bool IsMeetRootCondition(ref EventTriggerRootCondition rootCondition)
     {
         bool result = false;
-        if (condition.IsSingleCondition)
+        if (rootCondition.IsSingleCondition)
         {
-            switch (condition.VariableType)
-            {
-                case EventTriggerCondition.E_VARIABLE_TYPE.INT:
-                    result = CompareInt(condition);
-                    break;
-                case EventTriggerCondition.E_VARIABLE_TYPE.FLOAT:
-                    result = CompareFloat(condition);
-                    break;
-                case EventTriggerCondition.E_VARIABLE_TYPE.BOOL:
-                    result = CompareBool(condition);
-                    break;
-                case EventTriggerCondition.E_VARIABLE_TYPE.TIME_PERIOD:
-                    result = CompareTimePeriod(condition);
-                    break;
-            }
+            result = IsMeetCondition(ref rootCondition.RootCondition);
         }
         else
         {
             // 複数条件の時の初期値
-            result = condition.MultiConditionType == EventTriggerCondition.E_MULTI_CONDITION_TYPE.AND;
+            result = rootCondition.MultiConditionType == E_MULTI_CONDITION_TYPE.AND;
 
-            for (int i = 0; i < condition.Conditions.Length; i++)
+            for (int i = 0; i < rootCondition.SubConditions.Length; i++)
             {
-                bool isMeet = IsMeetCondition(ref condition.Conditions[i]);
+                bool isMeet = IsMeetCondition(ref rootCondition.SubConditions[i]);
 
-                if (condition.MultiConditionType == EventTriggerCondition.E_MULTI_CONDITION_TYPE.OR && isMeet)
+                if (rootCondition.MultiConditionType == E_MULTI_CONDITION_TYPE.OR && isMeet)
                 {
                     result = true;
                     break;
                 }
-                else if (condition.MultiConditionType == EventTriggerCondition.E_MULTI_CONDITION_TYPE.AND && !isMeet)
+                else if (rootCondition.MultiConditionType == E_MULTI_CONDITION_TYPE.AND && !isMeet)
                 {
                     result = false;
                     break;
                 }
             }
+        }
+
+        if (rootCondition.IsReverse)
+        {
+            result = !result;
+        }
+
+        return result;
+    }
+
+    private bool IsMeetCondition(ref EventTriggerCondition condition)
+    {
+        bool result = false;
+
+        switch (condition.VariableType)
+        {
+            case E_VARIABLE_TYPE.INT:
+                result = CompareInt(ref condition);
+                break;
+            case E_VARIABLE_TYPE.FLOAT:
+                result = CompareFloat(ref condition);
+                break;
+            case E_VARIABLE_TYPE.BOOL:
+                result = CompareBool(ref condition);
+                break;
+            case E_VARIABLE_TYPE.TIME_PERIOD:
+                result = CompareTimePeriod(ref condition);
+                break;
         }
 
         if (condition.IsReverse)
@@ -485,7 +501,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// int型の比較演算を行う。
     /// </summary>
-    private bool CompareInt(EventTriggerCondition condition)
+    private bool CompareInt(ref EventTriggerCondition condition)
     {
         if (m_IntVariables == null || !m_IntVariables.ContainsKey(condition.VariableName))
         {
@@ -496,17 +512,17 @@ public class BattleRealEventManager : ControllableObject
 
         switch (condition.CompareType)
         {
-            case EventTriggerCondition.E_COMPARE_TYPE.EQUAL:
+            case E_COMPARE_TYPE.EQUAL:
                 return value == condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.NOT_EQUAL:
+            case E_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN:
+            case E_COMPARE_TYPE.LESS_THAN:
                 return value < condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN_EQUAL:
+            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
                 return value <= condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN:
+            case E_COMPARE_TYPE.MORE_THAN:
                 return value > condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN_EQUAL:
+            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
                 return value >= condition.CompareValue;
         }
 
@@ -516,7 +532,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// float型の比較演算を行う。
     /// </summary>
-    private bool CompareFloat(EventTriggerCondition condition)
+    private bool CompareFloat(ref EventTriggerCondition condition)
     {
         if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(condition.VariableName))
         {
@@ -527,17 +543,17 @@ public class BattleRealEventManager : ControllableObject
 
         switch (condition.CompareType)
         {
-            case EventTriggerCondition.E_COMPARE_TYPE.EQUAL:
+            case E_COMPARE_TYPE.EQUAL:
                 return value == condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.NOT_EQUAL:
+            case E_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN:
+            case E_COMPARE_TYPE.LESS_THAN:
                 return value < condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN_EQUAL:
+            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
                 return value <= condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN:
+            case E_COMPARE_TYPE.MORE_THAN:
                 return value > condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN_EQUAL:
+            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
                 return value >= condition.CompareValue;
         }
 
@@ -547,7 +563,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// bool型の比較演算を行う。
     /// </summary>
-    private bool CompareBool(EventTriggerCondition condition)
+    private bool CompareBool(ref EventTriggerCondition condition)
     {
         if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(condition.VariableName))
         {
@@ -558,9 +574,9 @@ public class BattleRealEventManager : ControllableObject
 
         switch (condition.BoolCompareType)
         {
-            case EventTriggerCondition.E_BOOL_COMPARE_TYPE.EQUAL:
+            case E_BOOL_COMPARE_TYPE.EQUAL:
                 return value == condition.BoolCompareValue;
-            case EventTriggerCondition.E_BOOL_COMPARE_TYPE.NOT_EQUAL:
+            case E_BOOL_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.BoolCompareValue;
         }
 
@@ -570,7 +586,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// タイムピリオドの比較演算を行う。
     /// </summary>
-    private bool CompareTimePeriod(EventTriggerCondition condition)
+    private bool CompareTimePeriod(ref EventTriggerCondition condition)
     {
         if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(condition.VariableName))
         {
@@ -581,17 +597,17 @@ public class BattleRealEventManager : ControllableObject
         var value = period.GetPeriod();
         switch (condition.CompareType)
         {
-            case EventTriggerCondition.E_COMPARE_TYPE.EQUAL:
+            case E_COMPARE_TYPE.EQUAL:
                 return value == condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.NOT_EQUAL:
+            case E_COMPARE_TYPE.NOT_EQUAL:
                 return value != condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN:
+            case E_COMPARE_TYPE.LESS_THAN:
                 return value < condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.LESS_THAN_EQUAL:
+            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
                 return value <= condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN:
+            case E_COMPARE_TYPE.MORE_THAN:
                 return value > condition.CompareValue;
-            case EventTriggerCondition.E_COMPARE_TYPE.MORE_THAN_EQUAL:
+            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
                 return value >= condition.CompareValue;
         }
         return false;
@@ -669,7 +685,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteApperEnemy(int appearEnemyIndex)
     {
-        //BattleRealEnemyManager.Instance.CreateEnemyFromEnemyParam(appearEnemyIndex);
+        BattleRealEnemyManager.Instance.CreateEnemyFromEnemyParam(appearEnemyIndex);
     }
 
     /// <summary>

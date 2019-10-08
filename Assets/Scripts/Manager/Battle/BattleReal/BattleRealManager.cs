@@ -152,7 +152,7 @@ public class BattleRealManager : ControllableObject
         RealTimerManager = new BattleRealTimerManager();
         EventManager = new BattleRealEventManager(m_ParamSet.EventTriggerParamSet);
         PlayerManager = new BattleRealPlayerManager(m_ParamSet.PlayerManagerParamSet);
-        EnemyManager = new BattleRealEnemyManager();
+        EnemyManager = new BattleRealEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
         ItemManager = new BattleRealItemManager();
 

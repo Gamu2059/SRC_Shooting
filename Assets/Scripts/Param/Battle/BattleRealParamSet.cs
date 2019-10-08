@@ -11,12 +11,16 @@ public class BattleRealParamSet
     public BattleRealPlayerManagerParamSet PlayerManagerParamSet => m_PlayerManagerParamSet;
 
     [SerializeField]
+    private BattleRealEnemyManagerParamSet m_EnemyManagerParamSet;
+    public BattleRealEnemyManagerParamSet EnemyManagerParamSet => m_EnemyManagerParamSet;
+
+    [SerializeField]
     private BattleRealBulletManagerParamSet m_BulletManagerParamSet;
     public BattleRealBulletManagerParamSet BulletManagerParamSet => m_BulletManagerParamSet;
 
     [SerializeField]
-    private EventTriggerParamSet m_EventTriggerParamSet;
-    public EventTriggerParamSet EventTriggerParamSet => m_EventTriggerParamSet;
+    private BattleRealEventTriggerParamSet m_EventTriggerParamSet;
+    public BattleRealEventTriggerParamSet EventTriggerParamSet => m_EventTriggerParamSet;
 }
 
 [Serializable]
@@ -37,6 +41,22 @@ public class BattleRealPlayerManagerParamSet
     [SerializeField, Tooltip("プレイヤーの低速移動速度")]
     private float m_PlayerSlowMoveSpeed;
     public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
+}
+
+[Serializable]
+public class BattleRealEnemyManagerParamSet
+{
+    [SerializeField, Tooltip("左下のオフセットフィールド")]
+    private Vector2 m_MinOffsetFieldPosition;
+    public Vector2 MinOffsetFieldPosition => m_MinOffsetFieldPosition;
+
+    [SerializeField, Tooltip("右上のオフセットフィールド")]
+    private Vector2 m_MaxOffsetFieldPosition;
+    public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
+
+    [SerializeField, Tooltip("敵の生成パラメータ")]
+    private BattleRealEnemyGroupGenerator m_Generator;
+    public BattleRealEnemyGroupGenerator Generator => m_Generator;
 }
 
 [Serializable]

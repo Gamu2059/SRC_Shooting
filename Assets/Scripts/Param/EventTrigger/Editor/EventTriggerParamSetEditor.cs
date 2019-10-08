@@ -9,7 +9,7 @@ using System.Reflection;
 /// <summary>
 /// 参考 : Unity ReorderableList
 /// </summary>
-[CustomEditor( typeof( EventTriggerParamSet ) )]
+[CustomEditor( typeof( BattleRealEventTriggerParamSet ) )]
 public class EventTriggerParamSetEditor : Editor
 {
 	private List<ReorderableList> m_ListFields;

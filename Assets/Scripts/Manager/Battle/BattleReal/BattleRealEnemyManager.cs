@@ -17,18 +17,6 @@ public class BattleRealEnemyManager : ControllableObject
     private XlBattleMainEnemyParam m_EnemyParam;
 
     /// <summary>
-    /// ステージ領域の左下に対するオフセット左下領域
-    /// </summary>
-    [SerializeField]
-    private Vector2 m_OffsetMinField;
-
-    /// <summary>
-    /// ステージ領域の右上に対するオフセット右上領域
-    /// </summary>
-    [SerializeField]
-    private Vector2 m_OffsetMaxField;
-
-    /// <summary>
     /// 消滅可能になるまでの最小時間
     /// </summary>
     [SerializeField]
@@ -36,6 +24,8 @@ public class BattleRealEnemyManager : ControllableObject
 
 
     #region Field
+
+    private BattleRealEnemyManagerParamSet m_ParamSet;
 
     private Transform m_EnemyCharaHolder;
 
@@ -55,8 +45,6 @@ public class BattleRealEnemyManager : ControllableObject
     private List<EnemyController> m_BossControllers;
 
     #endregion
-
-
 
     #region Get Set
 
@@ -86,7 +74,10 @@ public class BattleRealEnemyManager : ControllableObject
 
     #endregion
 
-
+    public BattleRealEnemyManager(BattleRealEnemyManagerParamSet paramSet)
+    {
+        m_ParamSet = paramSet;
+    }
 
     public override void OnInitialize()
     {
@@ -209,10 +200,12 @@ public class BattleRealEnemyManager : ControllableObject
     }
 
     /// <summary>
-    /// 敵リストから敵を新規作成する。
+    /// 敵生成リストから敵を新規作成する。
     /// </summary>
     public void CreateEnemyFromEnemyParam(int enemyListIndex)
     {
+        var groupParam = m_ParamSet.Generator.GroupGenerateParamSets[enemyListIndex];
+
         int xlParamSize = m_EnemyParam.param.Count;
 
         if (enemyListIndex < 0 || enemyListIndex >= xlParamSize)
@@ -314,8 +307,8 @@ public class BattleRealEnemyManager : ControllableObject
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        minPos += m_OffsetMinField;
-        maxPos += m_OffsetMaxField;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
 
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
@@ -329,14 +322,13 @@ public class BattleRealEnemyManager : ControllableObject
     /// </summary>
     private void BuildEnemyAppearEvents()
     {
-        //for (int i = 0; i < m_EnemyParam.param.Count; i++)
+        //var groups = m_ParamSet.Generator.GroupGenerateParamSets;
+        //for (int i = 0; i < groups.Length; i++)
         //{
-        //    var param = m_EnemyParam.param[i];
+        //    var param = groups[i];
 
-        //    EventTriggerCondition condition = EventTriggerConditionTranslator.TranslateString(param.Conditions);
-
-        //    EventTriggerParamSet.EventTriggerParam eventParam = new EventTriggerParamSet.EventTriggerParam();
-        //    eventParam.Condition = condition;
+        //    BattleRealEventTriggerParamSet.EventTriggerParam eventParam = new BattleRealEventTriggerParamSet.EventTriggerParam();
+        //    eventParam.Condition = param.Condition;
 
         //    EventContent content = new EventContent();
         //    content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
@@ -344,7 +336,7 @@ public class BattleRealEnemyManager : ControllableObject
 
         //    eventParam.Contents = new[] { content };
 
-        //    //BattleRealEventManager.Instance.AddEventParam(eventParam);
+        //    BattleRealEventManager.Instance.AddEventParam(eventParam);
         //}
     }
 }

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b2ba784fcdb384ebd5c4dcd92dab6b, type: 3}
+  m_Name: param.battle_real_enemy_group_generate
+  m_EditorClassIdentifier: 
+  m_Condition:
+    IsReverse: 0
+    IsSingleCondition: 1
+    RootCondition:
+      IsReverse: 0
+      VariableType: 3
+      VariableName: GAME_START
+      CompareType: 5
+      BoolCompareType: 0
+      CompareValue: 2
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    SubConditions: []
+  m_ViewPortPos: {x: 0.5, y: 1}
+  m_OffsetPosFromViewPort: {x: 0, y: 0}
+  m_GenerateAngle: 0
+  m_EnemyGroupBehaviorParamSet: {fileID: 0}
+  m_IndividualGenerateParamSets:
+  - m_ViewPortPosRelative: 0
+    m_ViewPortPos: {x: 0, y: 0}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngleRelative: 0
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}

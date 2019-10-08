@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// リアルモードの敵の生成パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleRealEnemy/EnemyGenerate", fileName = "param.battle_real_enemy_generate")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyGenerate", fileName = "param.battle_real_enemy_generate.asset")]
 public class BattleRealEnemyGenerateParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("敵の体力")]
