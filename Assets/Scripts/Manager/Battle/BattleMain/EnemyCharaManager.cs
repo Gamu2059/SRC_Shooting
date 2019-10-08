@@ -232,13 +232,13 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
     /// <summary>
     /// 敵リストから敵を新規作成する。
     /// </summary>
-    public void CreateEnemyFromEnemyParam(int enemyListIndex)
+    public EnemyController CreateEnemyFromEnemyParam(int enemyListIndex)
     {
         int xlParamSize = m_EnemyParam.param.Count;
 
         if (enemyListIndex < 0 || enemyListIndex >= xlParamSize)
         {
-            return;
+            return null;
         }
 
         var paramData = m_EnemyParam.param[enemyListIndex];
@@ -246,7 +246,7 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
 
         if (enemy == null)
         {
-            return;
+            return null;
         }
 
         enemy.SetBulletSetParam(m_StageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
@@ -264,6 +264,8 @@ public class EnemyCharaManager : BattleSingletonMonoBehavior<EnemyCharaManager>
         var rot = enemy.transform.eulerAngles;
         rot.y = paramData.AppearRotateY;
         enemy.transform.eulerAngles = rot;
+
+        return enemy;
     }
 
     /// <summary>
