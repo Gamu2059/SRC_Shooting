@@ -81,7 +81,7 @@ public class BattleHackingPlayerManager : ControllableObject
 
         if (input.Shot == E_INPUT_STATE.STAY)
         {
-            Debug.Log("Shot");
+            Player.ShotBullet();
         }
 
         if (input.Cancel == E_INPUT_STATE.DOWN)

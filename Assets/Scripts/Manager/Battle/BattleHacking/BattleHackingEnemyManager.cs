@@ -6,9 +6,9 @@ using System.Linq;
 /// <summary>
 /// 敵の振る舞いの制御を行う。
 /// </summary>
-public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemyCharaManager>
+public class BattleHackingEnemyManager : ControllableObject
 {
-    public const string HOLDER_NAME = "[CommandEnemyCharaHolder]";
+    public static BattleHackingEnemyManager Instance => BattleHackingManager.Instance.EnemyManager;
 
     /// <summary>
     /// ステージ領域の左下に対するオフセット左下領域
@@ -90,22 +90,22 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
         m_EnemyCharaHolder = BattleHackingStageManager.Instance.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.ENEMY);
     }
 
-    /// <summary>
-    /// コマンドイベントが有効になった時に呼び出される。
-    /// </summary>
-    public override void OnEnableObject()
-    {
-        base.OnEnableObject();
-    }
+    ///// <summary>
+    ///// コマンドイベントが有効になった時に呼び出される。
+    ///// </summary>
+    //public override void OnEnableObject()
+    //{
+    //    base.OnEnableObject();
+    //}
 
-    /// <summary>
-    /// コマンドイベントが無効になった時に呼び出される。
-    /// </summary>
-    public override void OnDisableObject()
-    {
-        base.OnDisableObject();
-        DestroyAllEnemyImmediate();
-    }
+    ///// <summary>
+    ///// コマンドイベントが無効になった時に呼び出される。
+    ///// </summary>
+    //public override void OnDisableObject()
+    //{
+    //    base.OnDisableObject();
+    //    DestroyAllEnemyImmediate();
+    //}
 
     public override void OnUpdate()
     {
@@ -163,7 +163,7 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
             m_UpdateEnemies.Remove(enemy);
             enemy.SetCycle(E_OBJECT_CYCLE.DESTROYED);
             enemy.OnFinalize();
-            Destroy(enemy.gameObject);
+            GameObject.Destroy(enemy.gameObject);
         }
 
         m_GotoDestroyEnemies.Clear();
@@ -200,7 +200,7 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
             return null;
         }
 
-        CommandEnemyController controller = Instantiate(enemyPrefab);
+        CommandEnemyController controller = GameObject.Instantiate(enemyPrefab);
         return RegistEnemy(controller);
     }
 
@@ -254,7 +254,7 @@ public class CommandEnemyCharaManager : BattleSingletonMonoBehavior<CommandEnemy
         }
 
         controller.OnFinalize();
-        Destroy(controller.gameObject);
+        GameObject.Destroy(controller.gameObject);
     }
 
     /// <summary>

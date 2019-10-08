@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// バトルのハッキングモードの処理を管理する。
 /// </summary>
+[Serializable]
 public class BattleHackingManager : ControllableObject
 {
     #region Field
@@ -14,12 +16,10 @@ public class BattleHackingManager : ControllableObject
     private StateMachine<E_BATTLE_HACKING_STATE> m_StateMachine;
 
     public BattleHackingInputManager InputManager { get; private set; }
-
     public BattleHackingTimerManager HackingTimerManager { get; private set; }
-
-
-
     public BattleHackingPlayerManager PlayerManager { get; private set; }
+    public BattleHackingEnemyManager EnemyManager { get; private set; }
+    public BattleHackingBulletManager BulletManager { get; private set; }
 
     #endregion
 
@@ -102,17 +102,26 @@ public class BattleHackingManager : ControllableObject
         });
 
         InputManager = new BattleHackingInputManager();
+        HackingTimerManager = new BattleHackingTimerManager();
         PlayerManager = new BattleHackingPlayerManager(m_ParamSet.PlayerManagerParamSet);
+        EnemyManager = new BattleHackingEnemyManager();
+        BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
 
         InputManager.OnInitialize();
+        HackingTimerManager.OnInitialize();
         PlayerManager.OnInitialize();
+        EnemyManager.OnInitialize();
+        BulletManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        BulletManager.OnFinalize();
+        EnemyManager.OnFinalize();
         PlayerManager.OnFinalize();
+        HackingTimerManager.OnFinalize();
         InputManager.OnFinalize();
         m_StateMachine.OnFinalize();
         base.OnFinalize();
@@ -146,24 +155,27 @@ public class BattleHackingManager : ControllableObject
     private void StartOnStart()
     {
         InputManager.OnStart();
+        HackingTimerManager.OnStart();
         PlayerManager.OnStart();
+        EnemyManager.OnStart();
+        BulletManager.OnStart();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
     }
 
     private void UpdateOnStart()
     {
-
+        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnStart()
     {
-
+        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnStart()
     {
-
+        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnStart()
@@ -241,17 +253,23 @@ public class BattleHackingManager : ControllableObject
     private void UpdateOnGame()
     {
         InputManager.OnUpdate();
+        HackingTimerManager.OnUpdate();
         PlayerManager.OnUpdate();
+        BulletManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
     {
+        HackingTimerManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
+        BulletManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGame()
     {
+        HackingTimerManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
+        BulletManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
@@ -270,17 +288,17 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGameClear()
     {
-
+        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
-
+        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
-
+        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
@@ -299,17 +317,17 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGameOver()
     {
-
+        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnGameOver()
     {
-
+        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameOver()
     {
-
+        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnGameOver()
@@ -329,17 +347,17 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnEndGame()
     {
-
+        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnEndGame()
     {
-
+        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnEndGame()
     {
-
+        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnEndGame()

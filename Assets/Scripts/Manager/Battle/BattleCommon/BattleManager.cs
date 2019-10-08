@@ -47,6 +47,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private StateMachine<E_BATTLE_STATE> m_StateMachine;
 
     public BattleRealManager RealManager { get; private set; }
+
     public BattleHackingManager HackingManager { get; private set; }
 
     #endregion
@@ -63,6 +64,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnStart,
             OnUpdate = UpdateOnStart,
+            OnLateUpdate = LateUpdateOnStart,
+            OnFixedUpdate = FixedUpdateOnStart,
             OnEnd = EndOnStart,
         });
 
@@ -70,6 +73,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnRealMode,
             OnUpdate = UpdateOnRealMode,
+            OnLateUpdate = LateUpdateOnRealMode,
+            OnFixedUpdate = FixedUpdateOnRealMode,
             OnEnd = EndOnRealMode,
         });
 
@@ -77,6 +82,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnHackingMode,
             OnUpdate = UpdateOnHackingMode,
+            OnLateUpdate = LateUpdateOnHackingMode,
+            OnFixedUpdate = FixedUpdateOnHackingMode,
             OnEnd = EndOnHackingMode,
         });
 
@@ -84,6 +91,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnTransitionToReal,
             OnUpdate = UpdateOnTransitionToReal,
+            OnLateUpdate = LateUpdateOnTransitionToReal,
+            OnFixedUpdate = FixedUpdateOnTransitionToReal,
             OnEnd = EndOnTransitionToReal,
         });
 
@@ -91,6 +100,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnTransitionToHacking,
             OnUpdate = UpdateOnTransitionToHacking,
+            OnLateUpdate = LateUpdateOnTransitionToHacking,
+            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
             OnEnd = EndOnTransitionToHacking,
         });
 
@@ -98,6 +109,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnGameClear,
             OnUpdate = UpdateOnGameClear,
+            OnLateUpdate = LateUpdateOnGameClear,
+            OnFixedUpdate = FixedUpdateOnGameClear,
             OnEnd = EndOnGameClear,
         });
 
@@ -105,6 +118,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnGameOver,
             OnUpdate = UpdateOnGameOver,
+            OnLateUpdate = LateUpdateOnGameOver,
+            OnFixedUpdate = FixedUpdateOnGameOver,
             OnEnd = EndOnGameOver,
         });
 
@@ -112,6 +127,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             OnStart = StartOnEnd,
             OnUpdate = UpdateOnEnd,
+            OnLateUpdate = LateUpdateOnEnd,
+            OnFixedUpdate = FixedUpdateOnEnd,
             OnEnd = EndOnEnd,
         });
 
@@ -181,6 +198,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnUpdate();
     }
 
+    private void LateUpdateOnStart()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnStart()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
     private void EndOnStart()
     {
 
@@ -212,6 +241,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnUpdate();
     }
 
+    private void LateUpdateOnRealMode()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnRealMode()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
     private void EndOnRealMode()
     {
 
@@ -235,6 +276,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnHackingMode()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnHackingMode()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
     }
 
     private void EndOnHackingMode()
@@ -284,6 +337,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnTransitionToHacking()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnTransitionToHacking()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
     }
 
     private void EndOnTransitionToHacking()
@@ -338,6 +403,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnUpdate();
     }
 
+    private void LateUpdateOnTransitionToReal()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnTransitionToReal()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
     private void EndOnTransitionToReal()
     {
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME);
@@ -362,6 +439,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnUpdate();
     }
 
+    private void LateUpdateOnGameClear()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnGameClear()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
     private void EndOnGameClear()
     {
 
@@ -382,6 +471,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnUpdate();
     }
 
+    private void LateUpdateOnGameOver()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnGameOver()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
     private void EndOnGameOver()
     {
 
@@ -400,6 +501,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnEnd()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnEnd()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
     }
 
     private void EndOnEnd()

@@ -9,13 +9,9 @@ using UniRx;
 /// </summary>
 public class BattleRealPlayerManager : ControllableObject
 {
+    public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
+
     #region Inspector
-
-    [Header("Holder")]
-
-    [SerializeField]
-    private Transform m_PlayerCharaHolder;
-
 
     [Header("State")]
 
@@ -42,6 +38,8 @@ public class BattleRealPlayerManager : ControllableObject
     #region Field
 
     private BattleRealPlayerManagerParamSet m_ParamSet;
+
+    private Transform m_PlayerCharaHolder;
 
     // 事前にシーンに存在していたプレイヤー
     private static BattleRealPlayerController m_RegisterPlayer;
@@ -84,7 +82,6 @@ public class BattleRealPlayerManager : ControllableObject
 
     #endregion
 
-    public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
 
     public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
     {
@@ -157,7 +154,8 @@ public class BattleRealPlayerManager : ControllableObject
             if (input.Slow == E_INPUT_STATE.STAY)
             {
                 speed = m_ParamSet.PlayerSlowMoveSpeed;
-            } else
+            }
+            else
             {
                 speed = m_ParamSet.PlayerBaseMoveSpeed;
             }
@@ -170,20 +168,23 @@ public class BattleRealPlayerManager : ControllableObject
         {
             if (input.Shot == E_INPUT_STATE.STAY)
             {
-                Debug.Log("Shot");
+                Player.ShotBullet();
             }
-        } else
+        }
+        else
         {
             if (input.Shot == E_INPUT_STATE.STAY)
             {
                 if (IsLaserType)
                 {
                     Debug.Log("Charging Laser...");
-                } else
+                }
+                else
                 {
                     Debug.Log("Charging Bomb...");
                 }
-            } else if (input.Shot == E_INPUT_STATE.UP)
+            }
+            else if (input.Shot == E_INPUT_STATE.UP)
             {
                 if (IsLaserType)
                 {
@@ -302,5 +303,5 @@ public class BattleRealPlayerManager : ControllableObject
         m_CurrentBombCharge.Value = currentCharge;
     }
 
-    
+
 }

@@ -7,11 +7,14 @@ using System.Linq;
 /// <summary>
 /// コマンドイベントの全ての弾の制御を管理する。
 /// </summary>
-public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletManager>
+[Serializable]
+public class BattleHackingBulletManager : ControllableObject
 {
-    public const string HOLDER_NAME = "[CommandBulletHolder]";
+    public static BattleHackingBulletManager Instance => BattleHackingManager.Instance.BulletManager;
 
     #region Field
+
+    private BattleHackingBulletManagerParamSet m_ParamSet;
 
     private Transform m_BulletHolder;
 
@@ -49,6 +52,11 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
 
     #endregion
 
+    public BattleHackingBulletManager(BattleHackingBulletManagerParamSet paramSet)
+    {
+        m_ParamSet = paramSet;
+    }
+
     /// <summary>
     /// マネージャが初期化される時に呼び出される。
     /// </summary>
@@ -82,22 +90,22 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         m_BulletHolder = BattleHackingStageManager.Instance.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.BULLET);
     }
 
-    /// <summary>
-    /// コマンドイベントが有効になった時に呼び出される。
-    /// </summary>
-    public override void OnEnableObject()
-    {
-        base.OnEnableObject();
-    }
+    ///// <summary>
+    ///// コマンドイベントが有効になった時に呼び出される。
+    ///// </summary>
+    //public override void OnEnableObject()
+    //{
+    //    base.OnEnableObject();
+    //}
 
-    /// <summary>
-    /// コマンドイベントが無効になった時に呼び出される。
-    /// </summary>
-    public override void OnDisableObject()
-    {
-        base.OnDisableObject();
-        CheckPoolAllBulletImmediate();
-    }
+    ///// <summary>
+    ///// コマンドイベントが無効になった時に呼び出される。
+    ///// </summary>
+    //public override void OnDisableObject()
+    //{
+    //    base.OnDisableObject();
+    //    CheckPoolAllBulletImmediate();
+    //}
 
     public override void OnUpdate()
     {
@@ -248,7 +256,7 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
 
         if (bullet == null)
         {
-            bullet = Instantiate(bulletPrefab);
+            bullet = GameObject.Instantiate(bulletPrefab);
             bullet.transform.SetParent(m_BulletHolder);
             m_PoolBullets.Add(bullet);
         }
@@ -267,5 +275,26 @@ public class CommandBulletManager : BattleSingletonMonoBehavior<CommandBulletMan
         }
 
         GotoPoolFromUpdate();
+    }
+
+    /// <summary>
+    /// 弾が弾フィールドの範囲外に出ているかどうかを判定する。
+    /// </summary>
+    public bool IsOutOfBulletField(CommandBulletController bullet)
+    {
+        if (bullet == null)
+        {
+            return true;
+        }
+
+        var stageManager = BattleRealStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+
+        var pos = bullet.GetPosition();
+
+        return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
 }

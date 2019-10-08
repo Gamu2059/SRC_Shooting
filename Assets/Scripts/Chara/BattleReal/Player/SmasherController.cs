@@ -66,7 +66,7 @@ public class SmasherController : BattleRealPlayerController
         m_ShotFlag = false;
     }
 
-    public override void ShotBullet(E_INPUT_STATE state)
+    public override void ShotBullet()
     {
         if (shotDelay >= m_ShotInterval)
         {

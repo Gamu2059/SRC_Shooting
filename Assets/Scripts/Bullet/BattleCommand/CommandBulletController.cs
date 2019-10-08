@@ -441,7 +441,7 @@ public class CommandBulletController : BattleCommandObjectBase
         }
 
         // プールから弾を取得
-        var bullet = CommandBulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        var bullet = BattleHackingBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
         if (bullet == null)
         {
@@ -488,7 +488,7 @@ public class CommandBulletController : BattleCommandObjectBase
 
         if (isCheck)
         {
-            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -522,7 +522,7 @@ public class CommandBulletController : BattleCommandObjectBase
 
         if (isCheck)
         {
-            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -550,7 +550,7 @@ public class CommandBulletController : BattleCommandObjectBase
         }
 
         // プールから弾を取得
-        var bullet = CommandBulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        var bullet = BattleHackingBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
         if (bullet == null)
         {
@@ -596,7 +596,7 @@ public class CommandBulletController : BattleCommandObjectBase
 
         if (isCheck)
         {
-            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -631,7 +631,7 @@ public class CommandBulletController : BattleCommandObjectBase
 
         if (isCheck)
         {
-            CommandBulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -684,7 +684,7 @@ public class CommandBulletController : BattleCommandObjectBase
 
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            CommandBulletManager.Instance.CheckPoolBullet(this);
+            BattleHackingBulletManager.Instance.CheckPoolBullet(this);
         }
     }
 
@@ -757,7 +757,7 @@ public class CommandBulletController : BattleCommandObjectBase
         }
         else
         {
-            List<CommandEnemyController> enemies = CommandEnemyCharaManager.Instance.GetUpdateEnemies();
+            List<CommandEnemyController> enemies = BattleHackingEnemyManager.Instance.GetUpdateEnemies();
             CommandCharaController nearestEnemy = null;
             float minSqrDist = float.MaxValue;
 
@@ -832,10 +832,14 @@ public class CommandBulletController : BattleCommandObjectBase
         }
     }
 
-    protected virtual void OnBecameInvisible()
+    public override void OnLateUpdate()
     {
-        // 画面から見えなくなったら弾を破棄する
-        DestroyBullet();
+        base.OnLateUpdate();
+
+        if (BattleHackingBulletManager.Instance.IsOutOfBulletField(this))
+        {
+            DestroyBullet();
+        }
     }
 
     /// <summary>

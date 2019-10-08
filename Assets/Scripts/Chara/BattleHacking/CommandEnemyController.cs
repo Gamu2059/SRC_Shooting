@@ -77,7 +77,7 @@ public class CommandEnemyController : CommandCharaController
     {
         if (m_CanOutDestroy)
         {
-            CommandEnemyCharaManager.Instance.DestroyEnemy(this);
+            BattleHackingEnemyManager.Instance.DestroyEnemy(this);
         }
     }
 
@@ -86,7 +86,7 @@ public class CommandEnemyController : CommandCharaController
         base.Dead();
 
         DestroyAllTimer();
-        CommandEnemyCharaManager.Instance.DestroyEnemy(this);
+        BattleHackingEnemyManager.Instance.DestroyEnemy(this);
 
         if (m_IsBoss)
         {

@@ -19,18 +19,18 @@ MonoBehaviour:
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
-    ScaleRelative: 0
+    Scale: {x: 4, y: 4, z: 4}
+    ScaleRelative: 1
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
-    DeltaScale: {x: 0, y: 0, z: 0}
-    DeltaScaleRelative: 0
+    DeltaScale: {x: -10, y: -10, z: -10}
+    DeltaScaleRelative: 1
     Damage: 0
     DamageRelative: 0
-    Speed: 6
-    SpeedRelative: 0
-    Accel: 0
-    AccelRelative: 0
+    Speed: 2
+    SpeedRelative: 1
+    Accel: 60
+    AccelRelative: 1
     IsSearch: 0
     Lerp: 0
     LerpRelative: 0

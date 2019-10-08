@@ -29,87 +29,15 @@ public class BattleRealPlayerController : CharaController
 		DEAD,
 	}
 
-	#region Field Inspector
+    #region Field
 
-	[Space()]
-	[Header( "プレイヤーキャラ専用 基本ステータス" )]
+    private BattleRealPlayerParamSet m_ParamSet;
 
-	[SerializeField, Tooltip( "キャラのレベル" )]
-	private int m_Lv;
+    private int m_Level;
 
-	[SerializeField, Tooltip( "レベル上昇に必要な経験値" )]
-	private int m_Exp;
+    private float m_ShotRemainTime;
 
-	[SerializeField, Tooltip( "キャラの移動速度" )]
-	private float m_MoveSpeed = 5f;
-
-	[SerializeField, Tooltip( "キャラのライフサイクル" )]
-	private E_PLAYER_LIFE_CYCLE m_LifeCycle;
-
-	#endregion
-
-	#region Field
-
-	/// <summary>
-	/// プロテクタの回転の基準角度
-	/// </summary>
-	protected float m_ProtectorRad;
-
-	#endregion
-
-	#region Getter & Setter
-
-	public int GetLv()
-	{
-		return m_Lv;
-	}
-
-	public void SetLv( int lv )
-	{
-		m_Lv = lv;
-	}
-
-	public void AddLv( int lv )
-	{
-		m_Lv += lv;
-	}
-
-	public int GetExp()
-	{
-		return m_Exp;
-	}
-
-	public void SetExp( int exp )
-	{
-		m_Exp = exp;
-	}
-
-	public void AddExp( int exp )
-	{
-		m_Exp += exp;
-	}
-
-	public float GetMoveSpeed()
-	{
-		return m_MoveSpeed;
-	}
-
-	public void SetMoveSpeed( float moveSpeed )
-	{
-		m_MoveSpeed = moveSpeed;
-	}
-
-	public E_PLAYER_LIFE_CYCLE GetLifeCycle()
-	{
-		return m_LifeCycle;
-	}
-
-	public void SetLifeCycle( E_PLAYER_LIFE_CYCLE lifeCycle )
-	{
-		m_LifeCycle = lifeCycle;
-	}
-
-	#endregion
+    #endregion
 
 	private void Start()
 	{
@@ -117,28 +45,50 @@ public class BattleRealPlayerController : CharaController
         BattleRealPlayerManager.RegistPlayer(this);
     }
 
+    public override void OnStart()
+    {
+        base.OnStart();
+        m_ShotRemainTime = 0;
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
+        m_ShotRemainTime -= Time.deltaTime;
+    }
+
+    public void SetParamSet(BattleRealPlayerParamSet paramSet)
+    {
+        m_ParamSet = paramSet;
     }
 
     /// <summary>
     /// 通常弾を発射する。
-    /// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
     /// </summary>
-    public virtual void ShotBullet(E_INPUT_STATE state)
+    public virtual void ShotBullet()
 	{
-		// 何もオーバーロードしない場合は適当に弾を飛ばす
-		BulletController.ShotBullet( this );
+        
 	}
 
-	/// <summary>
-	/// ボムを使用する。
-	/// </summary>
-	public virtual void ShotBomb(E_INPUT_STATE state)
-	{
+    public void ChargeLaser()
+    {
 
-	}
+    }
+
+    public virtual void ShotLaser()
+    {
+
+    }
+
+    public void ChargeBomb()
+    {
+
+    }
+
+    public virtual void ShotBomb()
+    {
+
+    }
 
     public override void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
     {

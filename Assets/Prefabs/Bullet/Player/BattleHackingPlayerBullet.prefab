@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7855377339903371630}
   - component: {fileID: 2193793095639198469}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 676900740798004178}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.058}
-  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
+  m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
   m_Children: []
   m_Father: {fileID: 7292297653876647179}
   m_RootOrder: 0
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 65514efcd37b84349a86e9ec02a273b1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 12e67a7a0182fdb4da4325e849ebb107, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
@@ -90,9 +90,9 @@ GameObject:
   - component: {fileID: 7292297653876647179}
   - component: {fileID: 8573847447916207473}
   - component: {fileID: 1005732535283827408}
-  - component: {fileID: 7292297653876647175}
-  m_Layer: 11
-  m_Name: HackerBullet
+  - component: {fileID: 1510414784364258221}
+  m_Layer: 13
+  m_Name: BattleHackingPlayerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   - CollideName: 
     ColliderType: 0
     Transform: {fileID: 7898547469854246630}
---- !u!114 &7292297653876647175
+--- !u!114 &1510414784364258221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,11 +176,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7292297653876647168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7350afd888e114d8c5f30aafdaf9b8, type: 3}
+  m_Script: {fileID: 11500000, guid: cffeccce14488034f85f2ef2a318f6ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletGroupId: Hacker
-  m_CanHitOtherBullet: 0
   m_Cycle: 0
 --- !u!1 &8247850580784192478
 GameObject:
@@ -192,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7898547469854246630}
   - component: {fileID: 1588646135607202506}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

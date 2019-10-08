@@ -30,7 +30,7 @@ public class HackerController : BattleRealPlayerController
 		shotDelay += Time.deltaTime;
 	}
 
-	public override void ShotBullet(E_INPUT_STATE state)
+	public override void ShotBullet()
 	{
 		if (shotDelay >= m_ShotInterval)
 		{

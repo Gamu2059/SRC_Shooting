@@ -24,6 +24,11 @@ public class StateMachine<T>
 
     public void OnFinalize()
     {
+        foreach (var state in m_States.Values)
+        {
+            state.OnFinalize();
+        }
+
         m_States.Clear();
         m_States = null;
     }

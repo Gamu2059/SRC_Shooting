@@ -22,12 +22,17 @@ public class State<T>
         Key = key;
     }
 
-    ~State()
+    public void OnFinalize()
     {
         OnStart = null;
         OnUpdate = null;
         OnLateUpdate = null;
         OnFixedUpdate = null;
         OnEnd = null;
+    }
+
+    ~State()
+    {
+        OnFinalize();
     }
 }

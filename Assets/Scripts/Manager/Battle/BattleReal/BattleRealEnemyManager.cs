@@ -8,7 +8,7 @@ using System.Linq;
 /// </summary>
 public class BattleRealEnemyManager : ControllableObject
 {
-    public const string HOLDER_NAME = "[EnemyCharaHolder]";
+    public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
 
     [SerializeField, Tooltip("このステージで登場する敵データ")]
     private StageEnemyParam m_StageEnemyParam;
@@ -107,17 +107,7 @@ public class BattleRealEnemyManager : ControllableObject
     {
         base.OnStart();
 
-        //if (BattleRealStageManager.Instance != null && BattleRealStageManager.Instance.GetEnemyCharaHolder() != null)
-        //{
-        //    m_EnemyCharaHolder = BattleRealStageManager.Instance.GetEnemyCharaHolder().transform;
-        //}
-        //else if (m_EnemyCharaHolder == null)
-        //{
-        //    var obj = new GameObject(HOLDER_NAME);
-        //    obj.transform.position = Vector3.zero;
-        //    m_EnemyCharaHolder = obj.transform;
-        //}
-
+        m_EnemyCharaHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
         BuildEnemyAppearEvents();
     }
 
@@ -321,17 +311,17 @@ public class BattleRealEnemyManager : ControllableObject
     /// <returns></returns>
     public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
     {
-        //var minPos = BattleRealStageManager.Instance.GetMinLocalPositionField();
-        //var maxPos = BattleRealStageManager.Instance.GetMaxLocalPositionField();
-        //minPos += m_OffsetMinField;
-        //maxPos += m_OffsetMaxField;
+        var stageManager = BattleRealStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        minPos += m_OffsetMinField;
+        maxPos += m_OffsetMaxField;
 
-        //var factX = (maxPos.x - minPos.x) * x + minPos.x;
-        //var factZ = (maxPos.y - minPos.y) * y + minPos.y;
-        //var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+        var factX = (maxPos.x - minPos.x) * x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
 
-        //return pos;
-        return Vector3.zero;
+        return pos;
     }
 
     /// <summary>

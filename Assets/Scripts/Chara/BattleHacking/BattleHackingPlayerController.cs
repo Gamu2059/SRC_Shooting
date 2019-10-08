@@ -14,7 +14,7 @@ public class BattleHackingPlayerController : CommandCharaController
     private float m_ShotInterval;
 
     [SerializeField, Tooltip("弾を撃つ基準点")]
-    private Transform m_ShotPosition;
+    private Transform[] m_ShotPositions;
 
     private float m_ShotTimeCount;
 
@@ -38,19 +38,24 @@ public class BattleHackingPlayerController : CommandCharaController
     /// </summary>
     public virtual void ShotBullet()
     {
-        //if (m_ShotTimeCount > 0)
-        //{
-        //    return;
-        //}
+        if (m_ShotTimeCount > 0)
+        {
+            return;
+        }
 
-        //var shotParam = new CommandBulletShotParam(this);
-        //if (m_ShotPosition != null)
-        //{
-        //    shotParam.Position = m_ShotPosition.position - transform.parent.position;
-        //}
+        if (m_ShotPositions == null)
+        {
+            return;
+        }
 
-        //CommandBulletController.ShotBullet(shotParam);
-        //m_ShotTimeCount = m_ShotInterval;
+        var shotParam = new CommandBulletShotParam(this);
+        for (int i = 0; i < m_ShotPositions.Length; i++)
+        {
+            shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
+            CommandBulletController.ShotBullet(shotParam);
+        }
+
+        m_ShotTimeCount = m_ShotInterval;
     }
 
     public override void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)

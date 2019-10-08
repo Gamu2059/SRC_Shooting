@@ -7,11 +7,14 @@ using System.Linq;
 /// <summary>
 /// リアルモードの弾を管理する。
 /// </summary>
+[Serializable]
 public class BattleRealBulletManager : ControllableObject
 {
-    public const string HOLDER_NAME = "[BulletHolder]";
+    public static BattleRealBulletManager Instance => BattleRealManager.Instance.BulletManager;
 
     #region Field
+
+    private BattleRealBulletManagerParamSet m_ParamSet;
 
     private Transform m_BulletHolder;
 
@@ -37,17 +40,10 @@ public class BattleRealBulletManager : ControllableObject
 
     #endregion
 
-    #region Get
-
-    /// <summary>
-    /// UPDATE状態の弾を保持するリストを取得する。
-    /// </summary>
-    public List<BulletController> GetUpdateBullets()
+    public BattleRealBulletManager(BattleRealBulletManagerParamSet paramSet)
     {
-        return m_UpdateBullets;
+        m_ParamSet = paramSet;
     }
-
-    #endregion
 
     public override void OnInitialize()
     {
@@ -71,16 +67,7 @@ public class BattleRealBulletManager : ControllableObject
     {
         base.OnStart();
 
-        //if (BattleRealStageManager.Instance != null && BattleRealStageManager.Instance.GetBulletHolder() != null)
-        //{
-        //    m_BulletHolder = BattleRealStageManager.Instance.GetBulletHolder().transform;
-        //}
-        //else if (m_BulletHolder == null)
-        //{
-        //    var obj = new GameObject(HOLDER_NAME);
-        //    obj.transform.position = Vector3.zero;
-        //    m_BulletHolder = obj.transform;
-        //}
+        m_BulletHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.BULLET);
     }
 
     public override void OnUpdate()
@@ -238,5 +225,26 @@ public class BattleRealBulletManager : ControllableObject
         }
 
         return bullet;
+    }
+
+    /// <summary>
+    /// 弾が弾フィールドの範囲外に出ているかどうかを判定する。
+    /// </summary>
+    public bool IsOutOfBulletField(BulletController bullet)
+    {
+        if (bullet == null)
+        {
+            return true;
+        }
+
+        var stageManager = BattleRealStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+
+        var pos = bullet.GetPosition();
+
+        return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
 }
