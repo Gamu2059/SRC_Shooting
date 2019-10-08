@@ -61,17 +61,12 @@ public class EchoController : PlayerController
         return maxHitCount;
     }
 
-    protected override void Awake()
-    {
-        ShotInterval = m_ShotInterval[GetLevel() - 1];
-        maxHitCount = m_MaxHitCount[GetLevel() - 1];
-        RootBulletIndex = new Dictionary<int, int>();
-        OnAwake();
-    }
-
     protected override void OnAwake()
     {
         base.OnAwake();
+        ShotInterval = m_ShotInterval[GetLevel()];
+        maxHitCount = m_MaxHitCount[GetLevel()];
+        RootBulletIndex = new Dictionary<int, int>();
         currentBombAmount = m_MaxBombAmount;
         bombDelay = m_BombInterval;
     }
