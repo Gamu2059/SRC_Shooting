@@ -205,7 +205,6 @@ public class BattleRealPlayerManager : ControllableObject
 
         if (input.Cancel == E_INPUT_STATE.DOWN)
         {
-            Debug.Log("Cancel");
             BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
 

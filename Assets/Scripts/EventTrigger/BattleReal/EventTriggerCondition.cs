@@ -73,13 +73,13 @@ public struct EventTriggerRootCondition
     public bool IsReverse;
 
     /// <summary>
-    /// 単体条件かどうか
+    /// 複合条件かどうか
     /// </summary>
-    public bool IsSingleCondition;
+    public bool IsMultiCondition;
 
-    public EventTriggerCondition RootCondition;
+    public EventTriggerCondition SingleCondition;
 
     public E_MULTI_CONDITION_TYPE MultiConditionType;
 
-    public EventTriggerCondition[] SubConditions;
+    public EventTriggerCondition[] MultiConditions;
 }
