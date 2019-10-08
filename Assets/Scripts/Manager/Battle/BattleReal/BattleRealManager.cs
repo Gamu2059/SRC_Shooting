@@ -360,7 +360,9 @@ public class BattleRealManager : ControllableObject
     {
         InputManager.OnUpdate();
         RealTimerManager.OnUpdate();
+        EventManager.OnUpdate();
         PlayerManager.OnUpdate();
+        EnemyManager.OnUpdate();
 
         BulletManager.OnUpdate();
     }
@@ -368,16 +370,18 @@ public class BattleRealManager : ControllableObject
     private void LateUpdateOnGame()
     {
         RealTimerManager.OnLateUpdate();
+        EventManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
-
+        EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGame()
     {
         RealTimerManager.OnFixedUpdate();
+        EventManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
-
+        EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
     }
 

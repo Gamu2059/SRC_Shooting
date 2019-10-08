@@ -4,4 +4,5 @@ using UnityEngine;
 
 public class BattleRealTimerManager : TimerManagerBase
 {
+    public static BattleRealTimerManager Instance => BattleRealManager.Instance.RealTimerManager;
 }
