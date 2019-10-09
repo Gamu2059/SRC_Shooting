@@ -164,6 +164,9 @@ public class BattleRealPlayerManager : ControllableObject
             m_Player.transform.Translate(move, Space.World);
         }
 
+        // 移動直後に位置制限を掛ける
+        RestrictPlayerPosition();
+
         if (IsNormalWeapon)
         {
             if (input.Shot == E_INPUT_STATE.STAY)
@@ -209,13 +212,12 @@ public class BattleRealPlayerManager : ControllableObject
         }
 
         m_Player.OnUpdate();
-        RestrictPlayerPosition();
     }
 
     /// <summary>
     /// キャラの座標を動体フィールド領域に制限する。
     /// </summary>
-    public void RestrictPlayerPosition()
+    private void RestrictPlayerPosition()
     {
         if (m_Player == null)
         {

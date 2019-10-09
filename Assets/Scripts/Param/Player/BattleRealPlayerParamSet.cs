@@ -6,7 +6,8 @@ using System;
 /// <summary>
 /// リアルモードのプレイヤーのパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleRealPlayerParamSet", fileName = "param.battle_real_player_param_set")]
+[Serializable]
+//[Serializable, CreateAssetMenu(menuName = "Param/BattleRealPlayerParamSet", fileName = "param.battle_real_player_param_set")]
 public class BattleRealPlayerParamSet
 {
     [Serializable]

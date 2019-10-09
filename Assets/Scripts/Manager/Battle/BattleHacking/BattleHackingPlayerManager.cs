@@ -79,6 +79,9 @@ public class BattleHackingPlayerManager : ControllableObject
             Player.transform.Translate(move, Space.World);
         }
 
+        // 移動直後に位置制限を掛ける
+        RestrictPlayerPosition();
+
         if (input.Shot == E_INPUT_STATE.STAY)
         {
             Player.ShotBullet();
@@ -86,11 +89,11 @@ public class BattleHackingPlayerManager : ControllableObject
 
         if (input.Cancel == E_INPUT_STATE.DOWN)
         {
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+            // リアルモードと違って、暫定でハッキングモードをクリアしたことにする
+            BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
         }
 
         Player.OnUpdate();
-        RestrictPlayerPosition();
     }
 
     /// <summary>

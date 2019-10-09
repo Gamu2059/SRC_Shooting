@@ -104,6 +104,15 @@ public class BattleRealManager : ControllableObject
             OnEnd = EndOnBeforeBossBattlePerformance,
         });
 
+        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING)
+        {
+            OnStart = StartOnTransitionToHacking,
+            OnUpdate = UpdateOnTransitionToHacking,
+            OnLateUpdate = LateUpdateOnTransitionToHacking,
+            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            OnEnd = EndOnTransitionToHacking,
+        });
+
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.STAY_HACKING)
         {
             OnStart = StartOnStayHacking,
@@ -111,6 +120,15 @@ public class BattleRealManager : ControllableObject
             OnLateUpdate = LateUpdateOnStayHacking,
             OnFixedUpdate = FixedUpdateOnStayHacking,
             OnEnd = EndOnStayHacking,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_REAL)
+        {
+            OnStart = StartOnTransitionToReal,
+            OnUpdate = UpdateOnTransitionToReal,
+            OnLateUpdate = LateUpdateOnTransitionToReal,
+            OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            OnEnd = EndOnTransitionToReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_GAME_CLEAR_PERFORMANCE)
@@ -351,6 +369,7 @@ public class BattleRealManager : ControllableObject
 
         EnemyGroupManager.GotoPool();
         EnemyManager.GotoPool();
+        BulletManager.GotoPool();
     }
 
     private void FixedUpdateOnGame()
@@ -422,6 +441,34 @@ public class BattleRealManager : ControllableObject
 
     #endregion
 
+    #region Transition To Hacking State
+
+    private void StartOnTransitionToHacking()
+    {
+    }
+
+    private void UpdateOnTransitionToHacking()
+    {
+
+    }
+
+    private void LateUpdateOnTransitionToHacking()
+    {
+
+    }
+
+    private void FixedUpdateOnTransitionToHacking()
+    {
+
+    }
+
+    private void EndOnTransitionToHacking()
+    {
+
+    }
+
+    #endregion
+
     #region Stay Hacking State
 
     private void StartOnStayHacking()
@@ -444,6 +491,35 @@ public class BattleRealManager : ControllableObject
     }
 
     private void EndOnStayHacking()
+    {
+
+    }
+
+    #endregion
+
+    #region Transition To Real State
+
+    private void StartOnTransitionToReal()
+    {
+
+    }
+
+    private void UpdateOnTransitionToReal()
+    {
+
+    }
+
+    private void LateUpdateOnTransitionToReal()
+    {
+
+    }
+
+    private void FixedUpdateOnTransitionToReal()
+    {
+
+    }
+
+    private void EndOnTransitionToReal()
     {
 
     }

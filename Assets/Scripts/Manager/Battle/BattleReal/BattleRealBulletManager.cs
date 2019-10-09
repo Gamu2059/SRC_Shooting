@@ -45,6 +45,8 @@ public class BattleRealBulletManager : ControllableObject
         m_ParamSet = paramSet;
     }
 
+    #region Game Cycle
+
     public override void OnInitialize()
     {
         base.OnInitialize();
@@ -109,11 +111,17 @@ public class BattleRealBulletManager : ControllableObject
 
             bullet.OnLateUpdate();
         }
-
-        GotoPoolFromUpdate();
     }
 
+    #endregion
 
+    /// <summary>
+    /// 破棄フラグが立っているものをプールに戻す
+    /// </summary>
+    public void GotoPool()
+    {
+        GotoPoolFromUpdate();
+    }
 
     /// <summary>
     /// UPDATE状態にする。

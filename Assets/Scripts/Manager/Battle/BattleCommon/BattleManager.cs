@@ -301,8 +301,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void StartOnTransitionToHacking()
     {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.STAY_HACKING);
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.PREPARE_GAME);
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING);
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING);
 
         m_BattleHackingStageManager.gameObject.SetActive(true);
 
@@ -355,6 +355,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void EndOnTransitionToHacking()
     {
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.STAY_HACKING);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.GAME);
 
         m_BattleRealStageManager.gameObject.SetActive(false);
@@ -368,7 +369,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void StartOnTransitionToReal()
     {
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_REAL);
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL);
 
         m_BattleRealStageManager.gameObject.SetActive(true);
 
@@ -421,6 +423,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void EndOnTransitionToReal()
     {
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME);
 
         m_BattleHackingStageManager.gameObject.SetActive(false);

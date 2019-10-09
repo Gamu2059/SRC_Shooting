@@ -57,6 +57,8 @@ public class BattleHackingBulletManager : ControllableObject
         m_ParamSet = paramSet;
     }
 
+    #region Game Cycle
+
     /// <summary>
     /// マネージャが初期化される時に呼び出される。
     /// </summary>
@@ -76,7 +78,7 @@ public class BattleHackingBulletManager : ControllableObject
     public override void OnFinalize()
     {
         base.OnFinalize();
-        CheckPoolAllBulletImmediate();
+        CheckPoolAllBullet();
         m_StandbyBullets = null;
         m_UpdateBullets = null;
         m_PoolBullets = null;
@@ -89,23 +91,6 @@ public class BattleHackingBulletManager : ControllableObject
 
         m_BulletHolder = BattleHackingStageManager.Instance.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.BULLET);
     }
-
-    ///// <summary>
-    ///// コマンドイベントが有効になった時に呼び出される。
-    ///// </summary>
-    //public override void OnEnableObject()
-    //{
-    //    base.OnEnableObject();
-    //}
-
-    ///// <summary>
-    ///// コマンドイベントが無効になった時に呼び出される。
-    ///// </summary>
-    //public override void OnDisableObject()
-    //{
-    //    base.OnDisableObject();
-    //    CheckPoolAllBulletImmediate();
-    //}
 
     public override void OnUpdate()
     {
@@ -146,11 +131,25 @@ public class BattleHackingBulletManager : ControllableObject
 
             bullet.OnLateUpdate();
         }
-
-        GotoPoolFromUpdate();
     }
 
+    #endregion
 
+    /// <summary>
+    /// ハッキングモードの終了時の処理
+    /// </summary>
+    public void OnPutAway()
+    {
+        CheckPoolAllBullet();
+    }
+
+    /// <summary>
+    /// 破棄フラグが立っているものをプールに戻す
+    /// </summary>
+    public void GotoPool()
+    {
+        GotoPoolFromUpdate();
+    }
 
     /// <summary>
     /// UPDATE状態にする。
@@ -267,8 +266,14 @@ public class BattleHackingBulletManager : ControllableObject
     /// <summary>
     /// 全ての弾をプールに戻す。
     /// </summary>
-    private void CheckPoolAllBulletImmediate()
+    private void CheckPoolAllBullet()
     {
+        foreach (var bullet in m_StandbyBullets)
+        {
+            CheckPoolBullet(bullet);
+        }
+        m_StandbyBullets.Clear();
+
         foreach(var bullet in m_UpdateBullets)
         {
             CheckPoolBullet(bullet);

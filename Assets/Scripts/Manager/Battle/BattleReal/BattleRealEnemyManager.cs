@@ -123,7 +123,7 @@ public class BattleRealEnemyManager : ControllableObject
     #endregion
 
     /// <summary>
-    /// 削除フラグが立っているものをプールに戻す
+    /// 破棄フラグが立っているものをプールに戻す
     /// </summary>
     public void GotoPool()
     {

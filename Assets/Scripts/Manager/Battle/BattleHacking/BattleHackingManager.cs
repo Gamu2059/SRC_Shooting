@@ -38,6 +38,15 @@ public class BattleHackingManager : ControllableObject
 
         m_StateMachine = new StateMachine<E_BATTLE_HACKING_STATE>();
 
+        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL)
+        {
+            OnStart = StartOnTransitionToReal,
+            OnUpdate = UpdateOnTransitionToReal,
+            OnLateUpdate = LateUpdateOnTransitionToReal,
+            OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            OnEnd = EndOnTransitionToReal,
+        });
+
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.START)
         {
             OnStart = StartOnStart,
@@ -56,13 +65,13 @@ public class BattleHackingManager : ControllableObject
             OnEnd = EndOnStayReal,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.PREPARE_GAME)
+        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING)
         {
-            OnStart = StartOnPrepareGame,
-            OnUpdate = UpdateOnPrepareGame,
-            OnLateUpdate = LateUpdateOnPrepareGame,
-            OnFixedUpdate = FixedUpdateOnPrepareGame,
-            OnEnd = EndOnPrepareGame,
+            OnStart = StartOnTransitionToHacking,
+            OnUpdate = UpdateOnTransitionToHacking,
+            OnLateUpdate = LateUpdateOnTransitionToHacking,
+            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            OnEnd = EndOnTransitionToHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME)
@@ -165,22 +174,49 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnStart()
     {
-        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnStart()
     {
-        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnStart()
     {
-        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnStart()
     {
 
+    }
+
+    #endregion
+
+    #region Transition To Real State
+
+    private void StartOnTransitionToReal()
+    {
+
+    }
+
+    private void UpdateOnTransitionToReal()
+    {
+
+    }
+
+    private void LateUpdateOnTransitionToReal()
+    {
+
+    }
+
+    private void FixedUpdateOnTransitionToReal()
+    {
+
+    }
+
+    private void EndOnTransitionToReal()
+    {
+        PlayerManager.OnPutAway();
+        BulletManager.OnPutAway();
     }
 
     #endregion
@@ -214,29 +250,29 @@ public class BattleHackingManager : ControllableObject
 
     #endregion
 
-    #region Prepare Game State
+    #region Transition To Hacking State
 
-    private void StartOnPrepareGame()
+    private void StartOnTransitionToHacking()
     {
         PlayerManager.OnPrepare();
     }
 
-    private void UpdateOnPrepareGame()
+    private void UpdateOnTransitionToHacking()
     {
 
     }
 
-    private void LateUpdateOnPrepareGame()
+    private void LateUpdateOnTransitionToHacking()
     {
 
     }
 
-    private void FixedUpdateOnPrepareGame()
+    private void FixedUpdateOnTransitionToHacking()
     {
 
     }
 
-    private void EndOnPrepareGame()
+    private void EndOnTransitionToHacking()
     {
 
     }
@@ -263,6 +299,8 @@ public class BattleHackingManager : ControllableObject
         HackingTimerManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
+
+        BulletManager.GotoPool();
     }
 
     private void FixedUpdateOnGame()
@@ -288,17 +326,14 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGameClear()
     {
-        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
-        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
-        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
@@ -317,17 +352,14 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGameOver()
     {
-        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnGameOver()
     {
-        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameOver()
     {
-        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnGameOver()
@@ -341,28 +373,23 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnEndGame()
     {
-        PlayerManager.OnPutAway();
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
     private void UpdateOnEndGame()
     {
-        HackingTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnEndGame()
     {
-        HackingTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnEndGame()
     {
-        HackingTimerManager.OnFixedUpdate();
     }
 
     private void EndOnEndGame()
     {
-
     }
 
     #endregion
