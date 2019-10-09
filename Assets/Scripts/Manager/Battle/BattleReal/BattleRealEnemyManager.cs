@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 /// <summary>
 /// リアルモードの敵キャラを管理する。
@@ -16,55 +17,31 @@ public class BattleRealEnemyManager : ControllableObject
     [SerializeField]
     private float m_CanOutTime;
 
-
     #region Field
 
     private BattleRealEnemyManagerParamSet m_ParamSet;
 
-    private Transform m_EnemyCharaHolder;
+    private Transform m_EnemyEvacuationHolder;
+
+    //// <summary>
+    /// STANDBY状態の敵を保持するリスト。
+    /// </summary>
+    private List<BattleRealEnemyController> m_StandbyEnemies;
 
     /// <summary>
     /// UPDATE状態の敵を保持するリスト。
     /// </summary>
-    private List<EnemyController> m_UpdateEnemies;
+    private List<BattleRealEnemyController> m_UpdateEnemies;
 
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
     /// </summary>
-    private List<EnemyController> m_GotoDestroyEnemies;
+    private List<BattleRealEnemyController> m_GotoPoolEnemies;
 
     /// <summary>
-    /// ボスのオブジェクトのみを保持する。
+    /// POOL状態の敵のディクショナリ。
     /// </summary>
-    private List<EnemyController> m_BossControllers;
-
-    #endregion
-
-    #region Get Set
-
-    /// <summary>
-    /// ゲームサイクルに入っている敵を取得する。
-    /// </summary>
-    public List<EnemyController> GetUpdateEnemies()
-    {
-        return m_UpdateEnemies;
-    }
-
-    /// <summary>
-    /// ステージ上の全てのボス敵を取得する。
-    /// </summary>
-    public List<EnemyController> GetBossEnemies()
-    {
-        return m_BossControllers;
-    }
-
-    /// <summary>
-    /// 消滅可能になるまでの最小時間を取得する。
-    /// </summary>
-    public float GetCanOutTime()
-    {
-        return m_CanOutTime;
-    }
+    private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
 
     #endregion
 
@@ -73,44 +50,55 @@ public class BattleRealEnemyManager : ControllableObject
         m_ParamSet = paramSet;
     }
 
+    #region Game Cycle
+
     public override void OnInitialize()
     {
         base.OnInitialize();
-        m_UpdateEnemies = new List<EnemyController>();
-        m_GotoDestroyEnemies = new List<EnemyController>();
-        m_BossControllers = new List<EnemyController>();
+
+        m_StandbyEnemies = new List<BattleRealEnemyController>();
+        m_UpdateEnemies = new List<BattleRealEnemyController>();
+        m_GotoPoolEnemies = new List<BattleRealEnemyController>();
+        m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
     }
 
     public override void OnFinalize()
     {
+        DestroyAllEnemy();
         base.OnFinalize();
-
-        DestroyAllEnemyImmediate();
     }
 
     public override void OnStart()
     {
         base.OnStart();
 
-        m_EnemyCharaHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
-        BuildEnemyAppearEvents();
+        var stageManager = BattleRealStageManager.Instance;
+        m_EnemyEvacuationHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
     }
 
     public override void OnUpdate()
     {
+        // Start
+        foreach (var enemy in m_StandbyEnemies)
+        {
+            if (enemy == null)
+            {
+                CheckPoolEnemy(enemy);
+                continue;
+            }
+
+            enemy.OnStart();
+        }
+
+        GotoUpdateEnemy();
+
         // Update処理
         foreach (var enemy in m_UpdateEnemies)
         {
             if (enemy == null)
             {
-                m_GotoDestroyEnemies.Add(enemy);
+                CheckPoolEnemy(enemy);
                 continue;
-            }
-
-            if (enemy.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
-            {
-                enemy.OnStart();
-                enemy.SetCycle(E_OBJECT_CYCLE.UPDATE);
             }
 
             enemy.OnUpdate();
@@ -124,167 +112,246 @@ public class BattleRealEnemyManager : ControllableObject
         {
             if (enemy == null)
             {
-                m_GotoDestroyEnemies.Add(enemy);
+                CheckPoolEnemy(enemy);
                 continue;
             }
 
             enemy.OnLateUpdate();
         }
-
-        GotoDestroyFromUpdate();
     }
 
-    private void GotoDestroyFromUpdate()
+    #endregion
+
+    /// <summary>
+    /// 削除フラグが立っているものをプールに戻す
+    /// </summary>
+    public void GotoPool()
     {
-        int count = m_GotoDestroyEnemies.Count;
+        GotoPoolEnemy();
+    }
+
+    /// <summary>
+    /// UPDATE状態にする。
+    /// </summary>
+    private void GotoUpdateEnemy()
+    {
+        foreach (var enemy in m_StandbyEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+            else if (enemy.GetCycle() != E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                CheckPoolEnemy(enemy);
+            }
+
+            enemy.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            m_UpdateEnemies.Add(enemy);
+        }
+
+        m_StandbyEnemies.Clear();
+    }
+
+    /// <summary>
+    /// 削除フラグが立っている敵を一斉に削除する
+    /// </summary>
+    private void GotoPoolEnemy()
+    {
+        int count = m_GotoPoolEnemies.Count;
 
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var enemy = m_GotoDestroyEnemies[idx];
-
+            var enemy = m_GotoPoolEnemies[idx];
             if (enemy == null)
             {
                 continue;
             }
 
-            m_GotoDestroyEnemies.RemoveAt(idx);
+            enemy.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            m_GotoPoolEnemies.RemoveAt(idx);
             m_UpdateEnemies.Remove(enemy);
-            enemy.SetCycle(E_OBJECT_CYCLE.DESTROYED);
-            enemy.OnFinalize();
-            GameObject.Destroy(enemy.gameObject);
+
+            var poolId = enemy.GetLookId();
+            if (!m_PoolEnemies.ContainsKey(poolId))
+            {
+                m_PoolEnemies.Add(poolId, new LinkedList<GameObject>());
+            }
+            m_PoolEnemies[poolId].AddLast(enemy.gameObject);
+            GameObject.Destroy(enemy);
         }
 
-        m_GotoDestroyEnemies.Clear();
-
-        m_UpdateEnemies.RemoveAll((e) => e == null);
+        m_GotoPoolEnemies.Clear();
     }
 
-
     /// <summary>
-    /// 敵キャラを登録する。
-    /// いずれこのメソッドは外部から参照できなくする予定です。
+    /// プールから敵を取得する。
+    /// 足りなければ生成する。
     /// </summary>
-    public EnemyController RegistEnemy(EnemyController controller)
+    private GameObject GetPoolingEnemy(BattleRealEnemyGenerateParamSet enemyGenerateParamSet)
     {
-        if (controller == null || m_UpdateEnemies.Contains(controller) || m_GotoDestroyEnemies.Contains(controller))
+        if (enemyGenerateParamSet == null)
         {
             return null;
         }
 
-        controller.transform.SetParent(m_EnemyCharaHolder);
-        m_UpdateEnemies.Add(controller);
-        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
-        controller.OnInitialize();
-        return controller;
+        var lookParamSet = enemyGenerateParamSet.EnemyBehaviorParamSet.EnemyLookParamSet;
+        var poolId = lookParamSet.LookId;
+
+        GameObject enemyObj = null;
+
+        if (m_PoolEnemies.ContainsKey(poolId))
+        {
+            if (m_PoolEnemies[poolId].Count > 0)
+            {
+                var node = m_PoolEnemies[poolId].First;
+                enemyObj = node.Value;
+            }
+        }
+
+        if (enemyObj == null)
+        {
+            enemyObj = GameObject.Instantiate(lookParamSet.EnemyPrefab);
+            enemyObj.transform.SetParent(m_EnemyEvacuationHolder);
+
+            if (!m_PoolEnemies.ContainsKey(poolId))
+            {
+                m_PoolEnemies.Add(poolId, new LinkedList<GameObject>());
+            }
+            m_PoolEnemies[poolId].AddLast(enemyObj);
+        }
+
+        return enemyObj;
     }
 
     /// <summary>
-    /// 敵キャラのプレハブから敵キャラを新規作成する。
+    /// 敵をSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public EnemyController CreateEnemy(EnemyController enemyPrefab)
+    private void CheckStandByEnemy(BattleRealEnemyController enemy)
     {
-        if (enemyPrefab == null)
-        {
-            return null;
-        }
-
-        EnemyController controller = GameObject.Instantiate(enemyPrefab);
-        return RegistEnemy(controller);
-    }
-
-    /// <summary>
-    /// 敵生成リストから敵を新規作成する。
-    /// </summary>
-    public void CreateEnemyFromEnemyParam(int enemyListIndex)
-    {
-        var enemyParam = m_ParamSet.EnemyParam;
-        var stageEnemyParam = m_ParamSet.StageEnemyParam;
-        int xlParamSize = enemyParam.param.Count;
-
-        if (enemyListIndex < 0 || enemyListIndex >= xlParamSize)
-        {
-            return;
-        }
-
-        var paramData = enemyParam.param[enemyListIndex];
-        var enemy = CreateEnemy(stageEnemyParam.GetEnemyControllers()[paramData.EnemyId]);
-
         if (enemy == null)
         {
+            Debug.LogError("指定された敵を追加できませんでした。");
             return;
         }
 
-        enemy.SetBulletSetParam(stageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
-        enemy.SetArguments(paramData.OtherParameters);
-        enemy.SetDropItemParam(paramData.Drop);
-        enemy.SetDefeatParam(paramData.Defeat);
-        enemy.InitHp(paramData.Hp);
+        var poolId = enemy.GetLookId();
+        if (!m_PoolEnemies.ContainsKey(poolId))
+        {
+            Debug.LogError("指定された敵を追加できませんでした。");
+            return;
+        }
 
-        var pos = GetPositionFromFieldViewPortPosition(paramData.AppearViewportX, paramData.AppearViewportY);
-        pos.x += paramData.AppearOffsetX;
-        pos.y += paramData.AppearOffsetY;
-        pos.z += paramData.AppearOffsetZ;
-        enemy.transform.position = pos;
+        m_PoolEnemies[poolId].Remove(enemy.gameObject);
+        m_StandbyEnemies.Add(enemy);
+        enemy.gameObject.SetActive(true);
+        enemy.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
+        enemy.OnInitialize();
+    }
 
-        var rot = enemy.transform.eulerAngles;
-        rot.y = paramData.AppearRotateY;
-        enemy.transform.eulerAngles = rot;
+    /// <summary>
+    /// 指定した敵を制御から外すためにチェックする。
+    /// </summary>
+    private void CheckPoolEnemy(BattleRealEnemyController enemy)
+    {
+        if (enemy == null || m_GotoPoolEnemies.Contains(enemy))
+        {
+            Debug.LogError("指定した敵を削除できませんでした。");
+            return;
+        }
+
+        enemy.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
+        enemy.OnFinalize();
+        m_GotoPoolEnemies.Add(enemy);
+        enemy.gameObject.SetActive(false);
+        enemy.transform.SetParent(m_EnemyEvacuationHolder);
+    }
+
+    /// <summary>
+    /// 敵グループの生成リストから敵を新規作成する。
+    /// </summary>
+    public BattleRealEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet paramSet)
+    {
+        if (paramSet == null)
+        {
+            return null;
+        }
+
+        Type behaviorType = null;
+        try
+        {
+            behaviorType = Type.GetType(paramSet.EnemyBehaviorParamSet.BehaviorClass);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+
+        var enemyObj = GetPoolingEnemy(paramSet);
+        if (enemyObj == null)
+        {
+            return null;
+        }
+
+        var enemy = enemyObj.AddComponent(behaviorType) as BattleRealEnemyController;
+        if (enemy == null)
+        {
+            GameObject.Destroy(enemyObj);
+            return null;
+        }
+
+        var poolId = paramSet.EnemyBehaviorParamSet.EnemyLookParamSet.LookId;
+        enemy.SetLookId(poolId);
+        enemy.SetParamSet(paramSet);
+        CheckStandByEnemy(enemy);
+        return enemy;
+
+        //var enemyParam = m_ParamSet.EnemyParam;
+
+        //var paramData = enemyParam.param[enemyGroupIndex];
+        //var enemy = CreateEnemy(stageEnemyParam.GetEnemyControllers()[paramData.EnemyId]);
+
+        //if (enemy == null)
+        //{
+        //    return;
+        //}
+
+        //enemy.SetBulletSetParam(stageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
+        //enemy.SetArguments(paramData.OtherParameters);
+        //enemy.SetDropItemParam(paramData.Drop);
+        //enemy.SetDefeatParam(paramData.Defeat);
+        //enemy.InitHp(paramData.Hp);
+
+        //var pos = GetPositionFromFieldViewPortPosition(paramData.AppearViewportX, paramData.AppearViewportY);
+        //pos.x += paramData.AppearOffsetX;
+        //pos.y += paramData.AppearOffsetY;
+        //pos.z += paramData.AppearOffsetZ;
+        //enemy.transform.position = pos;
+
+        //var rot = enemy.transform.eulerAngles;
+        //rot.y = paramData.AppearRotateY;
+        //enemy.transform.eulerAngles = rot;
     }
 
     /// <summary>
     /// 敵キャラを破棄する。
-    /// これを呼び出したタイミングの次のLateUpdateで削除される。
+    /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>
-    public void DestroyEnemy(EnemyController controller)
+    public void DestroyEnemy(BattleRealEnemyController enemy)
     {
-        if (controller == null || !m_UpdateEnemies.Contains(controller))
-        {
-            return;
-        }
-
-        m_GotoDestroyEnemies.Add(controller);
-        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_DESTROYED);
+        CheckPoolEnemy(enemy);
     }
 
     /// <summary>
     /// 全ての敵キャラを破棄する。
-    /// これを呼び出したタイミングの次のLateUpdateで削除される。
+    /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>
     public void DestroyAllEnemy()
     {
         foreach (var enemy in m_UpdateEnemies)
         {
             DestroyEnemy(enemy);
-        }
-
-        m_UpdateEnemies.Clear();
-    }
-
-    /// <summary>
-    /// 敵キャラを破棄する。
-    /// これを呼び出したタイミングで即座に削除される。
-    /// </summary>
-    public void DestroyEnemyImmediate(EnemyController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnFinalize();
-        GameObject.Destroy(controller.gameObject);
-    }
-
-    /// <summary>
-    /// 全ての敵キャラを破棄する。
-    /// これを呼び出したタイミングで即座に削除される。
-    /// </summary>
-    public void DestroyAllEnemyImmediate()
-    {
-        foreach (var enemy in m_UpdateEnemies)
-        {
-            DestroyEnemyImmediate(enemy);
         }
 
         m_UpdateEnemies.Clear();
@@ -312,48 +379,23 @@ public class BattleRealEnemyManager : ControllableObject
     }
 
     /// <summary>
-    /// 敵の生成イベントをEventManagerに投げる
+    /// 敵が敵フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    private void BuildEnemyAppearEvents()
+    public bool IsOutOfEnemyField(BattleRealEnemyController enemy)
     {
-        var enemyParam = m_ParamSet.EnemyParam;
-        for (int i = 0; i < enemyParam.param.Count; i++)
+        if (enemy == null)
         {
-            var param = enemyParam.param[i];
-
-            BattleRealEventTriggerParamSet.EventTriggerParam eventParam = new BattleRealEventTriggerParamSet.EventTriggerParam();
-            eventParam.Condition = EventTriggerConditionTranslator.TranslateString(param.Conditions);
-
-            EventContent content = new EventContent();
-            content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
-            content.AppearEnemyIndex = i;
-
-            eventParam.Contents = new[] { content };
-
-            BattleRealEventManager.Instance.AddEventParam(eventParam);
+            return true;
         }
-    }
 
-    /// <summary>
-    /// 敵の生成イベントをEventManagerに投げる
-    /// </summary>
-    private void BuildEnemyGroupAppearEvents()
-    {
-        //var groups = m_ParamSet.Generator.GroupGenerateParamSets;
-        //for (int i = 0; i < groups.Length; i++)
-        //{
-        //    var param = groups[i];
+        var stageManager = BattleRealStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
 
-        //    BattleRealEventTriggerParamSet.EventTriggerParam eventParam = new BattleRealEventTriggerParamSet.EventTriggerParam();
-        //    eventParam.Condition = param.Condition;
+        var pos = enemy.transform.position;
 
-        //    EventContent content = new EventContent();
-        //    content.EventType = EventContent.E_EVENT_TYPE.APPEAR_ENEMY;
-        //    content.AppearEnemyIndex = i;
-
-        //    eventParam.Contents = new[] { content };
-
-        //    BattleRealEventManager.Instance.AddEventParam(eventParam);
-        //}
+        return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
 }

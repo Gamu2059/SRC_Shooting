@@ -32,7 +32,7 @@ public class BattleRealEventManager : ControllableObject
     private EventTriggerTimePeriod m_GameStartTimePeriod;
     private EventTriggerTimePeriod m_GameClearTimePeriod;
 
-    private List<EventContent> m_WaitExecuteParams;
+    private List<BattleRealEventContent> m_WaitExecuteParams;
 
     private List<EventControllableScript> m_UpdateScripts;
 
@@ -92,7 +92,7 @@ public class BattleRealEventManager : ControllableObject
         m_GotoDestroyEventParams = new List<EventTriggerParam>();
         m_EventParams.AddRange(m_ParamSet.Params);
 
-        m_WaitExecuteParams = new List<EventContent>();
+        m_WaitExecuteParams = new List<BattleRealEventContent>();
 
         m_UpdateScripts = new List<EventControllableScript>();
         m_GotoDestroyScripts = new List<EventControllableScript>();
@@ -617,7 +617,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// イベントを登録する。
     /// </summary>
-    private void RegistEvent(EventContent[] contents)
+    private void RegistEvent(BattleRealEventContent[] contents)
     {
         if (contents == null)
         {
@@ -627,7 +627,7 @@ public class BattleRealEventManager : ControllableObject
         for (int i = 0; i < contents.Length; i++)
         {
             var content = contents[i];
-            if (content.ExecuteTiming == EventContent.E_EXECUTE_TIMING.IMMEDIATE)
+            if (content.ExecuteTiming == BattleRealEventContent.E_EXECUTE_TIMING.IMMEDIATE)
             {
                 m_WaitExecuteParams.Add(content);
             }
@@ -647,35 +647,35 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// イベントを実行する。
     /// </summary>
-    public void ExecuteEvent(EventContent eventContent)
+    public void ExecuteEvent(BattleRealEventContent eventContent)
     {
         switch (eventContent.EventType)
         {
-            case EventContent.E_EVENT_TYPE.APPEAR_ENEMY:
-                ExecuteApperEnemy(eventContent.AppearEnemyIndex);
+            case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
+                ExecuteApperEnemyGroup(eventContent.AppearEnemyIndex);
                 break;
-            case EventContent.E_EVENT_TYPE.CONTROL_CAMERA:
+            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_CAMERA:
                 ExecuteControlCamera(eventContent.ControlCameraParams);
                 break;
-            case EventContent.E_EVENT_TYPE.CONTROL_OBJECT:
+            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
                 ExecuteControlObject(eventContent.ControlObjectParams);
                 break;
-            case EventContent.E_EVENT_TYPE.CONTROL_BGM:
+            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_BGM:
                 ExecuteControlBgm(eventContent.ControlBgmParams);
                 break;
-            case EventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
+            case BattleRealEventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
                 ExecuteOperateVariable(eventContent.OperateVariableParams);
                 break;
-            case EventContent.E_EVENT_TYPE.OPERATE_TIME_PERIOD:
+            case BattleRealEventContent.E_EVENT_TYPE.OPERATE_TIME_PERIOD:
                 ExecuteOperateTimePeriod(eventContent.CountStartTimePeriodNames);
                 break;
-            case EventContent.E_EVENT_TYPE.CALL_SCRIPT:
+            case BattleRealEventContent.E_EVENT_TYPE.CALL_SCRIPT:
                 ExecuteCallScript(eventContent.CallScriptParams);
                 break;
-            case EventContent.E_EVENT_TYPE.GAME_START:
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_START:
                 ExecuteGameStart();
                 break;
-            case EventContent.E_EVENT_TYPE.GAME_CLEAR:
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR:
                 ExecuteGameClear();
                 break;
         }
@@ -684,9 +684,9 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// 敵を出現させる。
     /// </summary>
-    private void ExecuteApperEnemy(int appearEnemyIndex)
+    private void ExecuteApperEnemyGroup(int appearEnemyGroupIndex)
     {
-        BattleRealEnemyManager.Instance.CreateEnemyFromEnemyParam(appearEnemyIndex);
+        BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(appearEnemyGroupIndex);
     }
 
     /// <summary>

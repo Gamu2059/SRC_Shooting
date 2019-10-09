@@ -44,7 +44,7 @@ public class BattleHackingInputManager : InputManagerBase
         Menu = GetButton(MENU);
     }
 
-    public void RegisterInput()
+    public void RegistInput()
     {
         RegisterAxis(HORIZONTAL);
         RegisterAxis(VERTICAL);

@@ -6,7 +6,7 @@ using UnityEngine;
 /// 5砲塔持つ敵のコントローラ
 /// ベースはFastWithdrawalEnemy
 /// </summary>
-public class Rotate5WayEnemy : EnemyController
+public class Rotate5WayEnemy : BattleRealEnemyController
 {
 	protected enum E_PHASE
 	{

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 直線移動する敵のコントローラ。
 /// </summary>
-public class StraightEnemy : EnemyController
+public class StraightEnemy : BattleRealEnemyController
 {
 	[Header( "Move Param" )]
 

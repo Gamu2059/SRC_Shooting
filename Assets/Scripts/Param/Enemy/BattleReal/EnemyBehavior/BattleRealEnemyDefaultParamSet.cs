@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable, CreateAssetMenu(menuName = "Param/Enemy/EnemyBehavior/Default", fileName = "behavior.battle_real_enemy_behavior_default.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyBehavior/Default", fileName = "behavior.battle_real_enemy_behavior_default.asset")]
 public class BattleRealEnemyDefaultParamSet : BattleRealEnemyBehaviorParamSet
 {
 }

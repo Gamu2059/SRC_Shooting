@@ -11,6 +11,10 @@ public class BattleRealParamSet
     public BattleRealPlayerManagerParamSet PlayerManagerParamSet => m_PlayerManagerParamSet;
 
     [SerializeField]
+    private BattleRealEnemyGroupManagerParamSet m_EnemyGroupManagerParamSet;
+    public BattleRealEnemyGroupManagerParamSet EnemyGroupManagerParamSet => m_EnemyGroupManagerParamSet;
+
+    [SerializeField]
     private BattleRealEnemyManagerParamSet m_EnemyManagerParamSet;
     public BattleRealEnemyManagerParamSet EnemyManagerParamSet => m_EnemyManagerParamSet;
 
@@ -44,6 +48,14 @@ public class BattleRealPlayerManagerParamSet
 }
 
 [Serializable]
+public class BattleRealEnemyGroupManagerParamSet
+{
+    [SerializeField, Tooltip("敵グループの生成パラメータ")]
+    private BattleRealEnemyGroupGenerator m_Generator;
+    public BattleRealEnemyGroupGenerator Generator => m_Generator;
+}
+
+[Serializable]
 public class BattleRealEnemyManagerParamSet
 {
     [SerializeField, Tooltip("左下のオフセットフィールド")]
@@ -53,18 +65,6 @@ public class BattleRealEnemyManagerParamSet
     [SerializeField, Tooltip("右上のオフセットフィールド")]
     private Vector2 m_MaxOffsetFieldPosition;
     public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
-
-    [SerializeField, Tooltip("敵グループの生成パラメータ")]
-    private BattleRealEnemyGroupGenerator m_Generator;
-    public BattleRealEnemyGroupGenerator Generator => m_Generator;
-
-    [SerializeField, Tooltip("このステージで登場する敵データ")]
-    private StageEnemyParam m_StageEnemyParam;
-    public StageEnemyParam StageEnemyParam => m_StageEnemyParam;
-
-    [SerializeField, Tooltip("このステージで使用する敵出現データ")]
-    private XlBattleMainEnemyParam m_EnemyParam;
-    public XlBattleMainEnemyParam EnemyParam => m_EnemyParam;
 }
 
 [Serializable]

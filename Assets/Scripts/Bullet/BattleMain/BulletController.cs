@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class BulletController : BattleMainObjectBase
+public class BulletController : BattleRealObjectBase
 {
     #region Field Inspector
 
@@ -831,22 +831,23 @@ public class BulletController : BattleMainObjectBase
         }
         else
         {
-            List<EnemyController> enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
-            CharaController nearestEnemy = null;
-            float minSqrDist = float.MaxValue;
+            //List<EnemyController> enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
+            //CharaController nearestEnemy = null;
+            //float minSqrDist = float.MaxValue;
 
-            foreach (var enemy in enemies)
-            {
-                float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
+            //foreach (var enemy in enemies)
+            //{
+            //    float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
 
-                if (sqrDist < minSqrDist)
-                {
-                    minSqrDist = sqrDist;
-                    nearestEnemy = enemy;
-                }
-            }
+            //    if (sqrDist < minSqrDist)
+            //    {
+            //        minSqrDist = sqrDist;
+            //        nearestEnemy = enemy;
+            //    }
+            //}
 
-            return nearestEnemy;
+            //return nearestEnemy;
+            return null;
         }
     }
 

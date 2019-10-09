@@ -19,6 +19,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealTimerManager RealTimerManager { get; private set; }
     public BattleRealEventManager EventManager { get; private set; }
     public BattleRealPlayerManager PlayerManager { get; private set; }
+    public BattleRealEnemyGroupManager EnemyGroupManager { get; private set; }
     public BattleRealEnemyManager EnemyManager { get; private set; }
     public BattleRealBulletManager BulletManager { get; private set; }
     public BattleRealItemManager ItemManager { get; private set; }
@@ -152,6 +153,7 @@ public class BattleRealManager : ControllableObject
         RealTimerManager = new BattleRealTimerManager();
         EventManager = new BattleRealEventManager(m_ParamSet.EventTriggerParamSet);
         PlayerManager = new BattleRealPlayerManager(m_ParamSet.PlayerManagerParamSet);
+        EnemyGroupManager = new BattleRealEnemyGroupManager(m_ParamSet.EnemyGroupManagerParamSet);
         EnemyManager = new BattleRealEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
         ItemManager = new BattleRealItemManager();
@@ -160,6 +162,7 @@ public class BattleRealManager : ControllableObject
         RealTimerManager.OnInitialize();
         EventManager.OnInitialize();
         PlayerManager.OnInitialize();
+        EnemyGroupManager.OnInitialize();
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
         ItemManager.OnInitialize();
@@ -172,6 +175,7 @@ public class BattleRealManager : ControllableObject
         ItemManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
+        EnemyGroupManager.OnFinalize();
         PlayerManager.OnFinalize();
         EventManager.OnFinalize();
         RealTimerManager.OnFinalize();
@@ -180,26 +184,6 @@ public class BattleRealManager : ControllableObject
         m_StateMachine.OnFinalize();
 
         base.OnFinalize();
-    }
-
-    public void OnEnableObject()
-    {
-        //TimerManager.OnEnableObject();
-        //EventManager.OnEnableObject();
-        //PlayerManager.OnEnableObject();
-        //EnemyManager.OnEnableObject();
-        //BulletManager.OnEnableObject();
-        //ItemManager.OnEnableObject();
-    }
-
-    public void OnDisableObject()
-    {
-        //ItemManager.OnDisableObject();
-        //BulletManager.OnDisableObject();
-        //EnemyManager.OnDisableObject();
-        //PlayerManager.OnDisableObject();
-        //EventManager.OnDisableObject();
-        //TimerManager.OnDisableObject();
     }
 
     public override void OnUpdate()
@@ -233,6 +217,7 @@ public class BattleRealManager : ControllableObject
         RealTimerManager.OnStart();
         EventManager.OnStart();
         PlayerManager.OnStart();
+        EnemyGroupManager.OnStart();
         EnemyManager.OnStart();
         BulletManager.OnStart();
         ItemManager.OnStart();
@@ -242,17 +227,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnStart()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnStart()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnStart()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnStart()
@@ -271,17 +253,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBeginGame()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnBeforeBeginGame()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeforeBeginGame()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnBeforeBeginGame()
@@ -300,17 +279,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBeginGamePerformance()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnBeforeBeginGamePerformance()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeforeBeginGamePerformance()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnBeforeBeginGamePerformance()
@@ -329,17 +305,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeginGame()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnBeginGame()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeginGame()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnBeginGame()
@@ -353,7 +326,7 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGame()
     {
-        InputManager.RegisterInput();
+        InputManager.RegistInput();
     }
 
     private void UpdateOnGame()
@@ -362,8 +335,8 @@ public class BattleRealManager : ControllableObject
         RealTimerManager.OnUpdate();
         EventManager.OnUpdate();
         PlayerManager.OnUpdate();
+        EnemyGroupManager.OnUpdate();
         EnemyManager.OnUpdate();
-
         BulletManager.OnUpdate();
     }
 
@@ -372,8 +345,12 @@ public class BattleRealManager : ControllableObject
         RealTimerManager.OnLateUpdate();
         EventManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
+        EnemyGroupManager.OnLateUpdate();
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
+
+        EnemyGroupManager.GotoPool();
+        EnemyManager.GotoPool();
     }
 
     private void FixedUpdateOnGame()
@@ -381,6 +358,7 @@ public class BattleRealManager : ControllableObject
         RealTimerManager.OnFixedUpdate();
         EventManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
+        EnemyGroupManager.OnFixedUpdate();
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
     }
@@ -401,17 +379,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnDead()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnDead()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnDead()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnDead()
@@ -430,17 +405,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBossBattlePerformance()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnBeforeBossBattlePerformance()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeforeBossBattlePerformance()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnBeforeBossBattlePerformance()
@@ -487,17 +459,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeGameClearPerformance()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnBeforeGameClearPerformance()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeforeGameClearPerformance()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnBeforeGameClearPerformance()
@@ -516,17 +485,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnGameClear()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
@@ -545,17 +511,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnGameOver()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnGameOver()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameOver()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnGameOver()
@@ -574,17 +537,14 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnEnd()
     {
-        RealTimerManager.OnUpdate();
     }
 
     private void LateUpdateOnEnd()
     {
-        RealTimerManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnEnd()
     {
-        RealTimerManager.OnFixedUpdate();
     }
 
     private void EndOnEnd()

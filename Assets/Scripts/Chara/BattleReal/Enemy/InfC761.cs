@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ステージ1のボスINF-C-761のコントローラ
 /// </summary>
-public class InfC761 : EnemyController
+public class InfC761 : BattleRealEnemyController
 {
 	private enum E_PHASE
 	{

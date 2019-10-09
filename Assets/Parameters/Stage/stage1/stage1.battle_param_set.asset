@@ -19,13 +19,11 @@ MonoBehaviour:
       m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
       m_PlayerBaseMoveSpeed: 1.5
       m_PlayerSlowMoveSpeed: 0.75
+    m_EnemyGroupManagerParamSet:
+      m_Generator: {fileID: 11400000, guid: 4442d9defde6f4b479d57a6f5ee653db, type: 2}
     m_EnemyManagerParamSet:
       m_MinOffsetFieldPosition: {x: 0, y: 0}
       m_MaxOffsetFieldPosition: {x: 0, y: 0}
-      m_Generator: {fileID: 11400000, guid: 4442d9defde6f4b479d57a6f5ee653db, type: 2}
-      m_StageEnemyParam: {fileID: 11400000, guid: 994df26fe38afd243815b9e42cc29f73,
-        type: 2}
-      m_EnemyParam: {fileID: 11400000, guid: b189af92c596e634aa845f480736f003, type: 2}
     m_BulletManagerParamSet:
       m_MinOffsetFieldPosition: {x: 0, y: 0}
       m_MaxOffsetFieldPosition: {x: 0, y: 0}
@@ -41,7 +39,7 @@ MonoBehaviour:
     m_BulletManagerParamSet:
       m_MinOffsetFieldPosition: {x: 0, y: 0}
       m_MaxOffsetFieldPosition: {x: 0, y: 0}
-  m_FadeOutParam:
+  m_FadeOutVideoParam:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -65,7 +63,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_FadeInParam:
+  m_FadeInVideoParam:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -89,13 +87,79 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_FadeOutBgmParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.032244552
+      outSlope: -0.032244552
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.048309177
+    - serializedVersion: 3
+      time: 0.2
+      value: 1
+      inSlope: -0
+      outSlope: -2.7061121
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.21739133
+      outWeight: 0.033816416
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.41161254
+      outSlope: 0.031736024
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.05676329
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_FadeInBgmParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8
+      value: 0
+      inSlope: -0
+      outSlope: 0.031002883
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.25120768
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.0316099
+      outSlope: -0.0316099
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04927534
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_TransitionToHackingMovie: {fileID: 32900000, guid: 1ad0c4cc318325244935f976dcfc9df7,
     type: 3}
   m_TransitionToRealMovie: {fileID: 32900000, guid: 150c35aa09bb97e4c903325d9057ecac,
     type: 3}
-  m_TransitionToHackingSe: {fileID: 8300000, guid: dc13cdadd4e3e904897a7cd17ff376e6,
+  m_TransitionToHackingSe: {fileID: 8300000, guid: eca7c28683a873749a8544031c678e87,
     type: 3}
-  m_TransitionToRealSe: {fileID: 8300000, guid: 4da1e6530537c5d49a97e423e1ed2d8e,
+  m_TransitionToRealSe: {fileID: 8300000, guid: 045fc74ee986c054d955945b3f824d7b,
     type: 3}
   m_BossBgmParamSet:
     m_RealModeIntro: {fileID: 8300000, guid: 2025ecde0e59dc440be9fdfe6a19152e, type: 3}

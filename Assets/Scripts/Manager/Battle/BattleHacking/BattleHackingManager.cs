@@ -247,7 +247,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGame()
     {
-        InputManager.RegisterInput();
+        InputManager.RegistInput();
     }
 
     private void UpdateOnGame()
