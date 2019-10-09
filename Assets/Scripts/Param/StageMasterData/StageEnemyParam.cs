@@ -14,7 +14,7 @@ public class StageEnemyParam : ScriptableObject
 	private GameObject[] m_EnemyPrefabs;
 
 	[SerializeField, Tooltip( "敵の動作の配列" )]
-	private EnemyController[] m_EnemyControllers;
+	private BattleRealEnemyController[] m_EnemyControllers;
 
 	[SerializeField, Tooltip( "敵が使う弾のパラメータセット配列" )]
 	private BulletSetParam[] m_BulletSets;
@@ -30,7 +30,7 @@ public class StageEnemyParam : ScriptableObject
 	/// <summary>
 	/// 敵の動作の配列を取得する。
 	/// </summary>
-	public EnemyController[] GetEnemyControllers()
+	public BattleRealEnemyController[] GetEnemyControllers()
 	{
 		return m_EnemyControllers;
 	}

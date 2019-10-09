@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 全てのアイテムオブジェクトの基礎クラス。
 /// </summary>
-public class ItemController : BattleMainObjectBase
+public class ItemController : BattleRealObjectBase
 {
     public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
     public const string GAIN_COLLIDE = "GAIN COLLIDE";

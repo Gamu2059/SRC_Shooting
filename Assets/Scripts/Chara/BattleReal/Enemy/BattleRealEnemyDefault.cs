@@ -5,6 +5,6 @@ using UnityEngine;
 /// <summary>
 /// リアルモードのデファルトの敵。
 /// </summary>
-public class BattleRealEnemyDefault : EnemyController
+public class BattleRealEnemyDefault : BattleRealEnemyController
 {
 }

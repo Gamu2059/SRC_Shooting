@@ -6,14 +6,14 @@ using UnityEngine;
 /// EventTriggerの実行内容。
 /// </summary>
 [System.Serializable]
-public struct EventContent
+public struct BattleRealEventContent
 {
     public enum E_EVENT_TYPE
     {
         /// <summary>
-        /// 敵の出現制御
+        /// 敵グループの出現制御
         /// </summary>
-        APPEAR_ENEMY,
+        APPEAR_ENEMY_GROUP,
 
         /// <summary>
         /// カメラ制御

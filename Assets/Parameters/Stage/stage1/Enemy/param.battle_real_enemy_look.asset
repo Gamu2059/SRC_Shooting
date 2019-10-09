@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
-  m_Name: param.battle_real_enemy_generate
+  m_Script: {fileID: 11500000, guid: 5464387e3c5b1f846987bb22ea26606c, type: 3}
+  m_Name: param.battle_real_enemy_look
   m_EditorClassIdentifier: 
-  m_Hp: 20
-  m_EnemyBehaviorParamSet: {fileID: 11400000, guid: d3fe16810369a0645938d803b1880647,
-    type: 2}
+  m_LookId: PARAS
+  m_EnemyPrefab: {fileID: 4433259954340433325, guid: fae1e445d0352b145a067d08b5b9ea5e,
+    type: 3}

@@ -320,15 +320,17 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             var movieTime = m_BattleParamSet.TransitionToHackingMovie.length;
             var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
 
-            var fadeOutValue = m_BattleParamSet.FadeOutParam.Evaluate(normalizedTime);
-            var fadeInValue = m_BattleParamSet.FadeInParam.Evaluate(normalizedTime);
+            var fadeOutVideoValue = m_BattleParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
+            var fadeInVideoValue = m_BattleParamSet.FadeInVideoParam.Evaluate(normalizedTime);
+            var fadeOutBgmValue = m_BattleParamSet.FadeOutBgmParam.Evaluate(normalizedTime);
+            var fadeInBgmValue = m_BattleParamSet.FadeInBgmParam.Evaluate(normalizedTime);
 
-            m_BattleRealUiManager.SetAlpha(fadeOutValue);
-            m_BattleHackingUiManager.SetAlpha(fadeInValue);
+            m_BattleRealUiManager.SetAlpha(fadeOutVideoValue);
+            m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
 
             var audio = AudioManager.Instance;
-            audio.SetPrimaryBgmVolume(fadeOutValue);
-            audio.SetSecondaryBgmVolume(fadeInValue);
+            audio.SetPrimaryBgmVolume(fadeOutBgmValue);
+            audio.SetSecondaryBgmVolume(fadeInBgmValue);
         }
         else
         {
@@ -384,15 +386,17 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             var movieTime = m_BattleParamSet.TransitionToRealMovie.length;
             var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
 
-            var fadeOutValue = m_BattleParamSet.FadeOutParam.Evaluate(normalizedTime);
-            var fadeInValue = m_BattleParamSet.FadeInParam.Evaluate(normalizedTime);
+            var fadeOutVideoValue = m_BattleParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
+            var fadeInVideoValue = m_BattleParamSet.FadeInVideoParam.Evaluate(normalizedTime);
+            var fadeOutBgmValue = m_BattleParamSet.FadeOutBgmParam.Evaluate(normalizedTime);
+            var fadeInBgmValue = m_BattleParamSet.FadeInBgmParam.Evaluate(normalizedTime);
 
-            m_BattleHackingUiManager.SetAlpha(fadeOutValue);
-            m_BattleRealUiManager.SetAlpha(fadeInValue);
+            m_BattleHackingUiManager.SetAlpha(fadeOutVideoValue);
+            m_BattleRealUiManager.SetAlpha(fadeInVideoValue);
 
             var audio = AudioManager.Instance;
-            audio.SetSecondaryBgmVolume(fadeOutValue);
-            audio.SetPrimaryBgmVolume(fadeInValue);
+            audio.SetSecondaryBgmVolume(fadeOutBgmValue);
+            audio.SetPrimaryBgmVolume(fadeInBgmValue);
         }
         else
         {

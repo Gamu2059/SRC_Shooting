@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ある円周を軌道として動く敵のコントローラ。
 /// </summary>
-public class UTurnEnemy : EnemyController
+public class UTurnEnemy : BattleRealEnemyController
 {
 	protected enum E_PHASE
 	{
@@ -14,7 +14,10 @@ public class UTurnEnemy : EnemyController
 		END_STRAIGHT,
 	}
 
-	[Header( "Move Param" )]
+    protected const string VISIBLE_SHOT_TIMER_KEY = "VisibleShotTimer";
+
+
+    [Header( "Move Param" )]
 
 	// 初期出現地点に対して、相対座標で直進終了地点を定める
 	[SerializeField]
@@ -78,30 +81,29 @@ public class UTurnEnemy : EnemyController
 
 	protected Timer m_StartShotTimer;
 
+    protected override void OnSetParamSet()
+    {
+        base.OnSetParamSet();
 
+        if (BehaviorParamSet is BattleRealEnemyUturnParamSet paramSet)
+        {
+            m_RelativeStraightMoveEndPosition = paramSet.RelativeStraightMoveEndPosition;
+            m_StraightMoveSpeed = paramSet.StraightMoveSpeed;
+            m_RelativeCircleCenterPosition = paramSet.RelativeCircleCenterPosition;
+            m_CircleMoveAngle = paramSet.CircleMoveAngle;
+            m_CircleMoveSpeed = paramSet.CircleMoveSpeed;
 
-	public override void SetArguments( string param )
-	{
-		base.SetArguments( param );
+            m_StraightMoveShotParam = paramSet.StraightMoveShotParam;
+            m_CircleMoveShotParam = paramSet.CircleMoveShotParam;
 
-		m_RelativeStraightMoveEndPosition = m_ParamSet.V3Param["RSMEP"];
-		m_StraightMoveSpeed = m_ParamSet.FloatParam["SMS"];
-		m_RelativeCircleCenterPosition = m_ParamSet.V3Param["RCCP"];
-		m_CircleMoveAngle = m_ParamSet.FloatParam["CMA"];
-		m_CircleMoveSpeed = m_ParamSet.FloatParam["CMS"];
+            m_VisibleOffsetShotTime = paramSet.VisibleOffsetShotTime;
+        } else
+        {
+            Debug.LogError("BehaviorParamSetが不適切です。");
+        }
+    }
 
-		m_StraightMoveShotParam.Interval = m_ParamSet.FloatParam["SBI"];
-		m_StraightMoveShotParam.Num = m_ParamSet.IntParam["SBN"];
-		m_StraightMoveShotParam.Angle = m_ParamSet.FloatParam["SBA"];
-
-		m_CircleMoveShotParam.Interval = m_ParamSet.FloatParam["CBI"];
-		m_CircleMoveShotParam.Num = m_ParamSet.IntParam["CBN"];
-		m_CircleMoveShotParam.Angle = m_ParamSet.FloatParam["CBA"];
-
-		m_VisibleOffsetShotTime = m_ParamSet.FloatParam["VOST"];
-	}
-
-	public override void OnStart()
+    public override void OnStart()
 	{
 		base.OnStart();
 		m_Phase = E_PHASE.BEGIN_STRAIGHT;
@@ -128,10 +130,24 @@ public class UTurnEnemy : EnemyController
 		base.OnUpdate();
 
 		Move();
-		Shot();
+		//Shot();
 	}
 
-	protected virtual void Move()
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        if (!IsOutOfEnemyField || m_StartShotTimer == null)
+        {
+            m_StartShotTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
+            {
+                //OnShot(m_StraightMoveShotParam);
+            });
+            RegistTimer(VISIBLE_SHOT_TIMER_KEY, m_StartShotTimer);
+        }
+    }
+
+    protected virtual void Move()
 	{
 		float deltaTime = Time.deltaTime;
 
@@ -213,29 +229,6 @@ public class UTurnEnemy : EnemyController
 		{
 			var bullet = BulletController.ShotBullet( shotParam );
 			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_RELATIVE.RELATIVE );
-		}
-	}
-
-	protected override void OnBecameVisible()
-	{
-		base.OnBecameVisible();
-
-		m_StartShotTimer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
-		{
-			OnShot( m_StraightMoveShotParam );
-		} );
-
-		//BattleRealTimerManager.Instance.RegistTimer( m_StartShotTimer );
-	}
-
-	public override void Dead()
-	{
-		base.Dead();
-
-		if( m_StartShotTimer != null )
-		{
-			m_StartShotTimer.StopTimer();
-			m_StartShotTimer = null;
 		}
 	}
 }

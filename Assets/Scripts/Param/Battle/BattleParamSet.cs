@@ -21,12 +21,20 @@ public class BattleParamSet : ScriptableObject
     [Header("Transition")]
 
     [SerializeField]
-    private AnimationCurve m_FadeOutParam;
-    public AnimationCurve FadeOutParam => m_FadeOutParam;
+    private AnimationCurve m_FadeOutVideoParam;
+    public AnimationCurve FadeOutVideoParam => m_FadeOutVideoParam;
 
     [SerializeField]
-    private AnimationCurve m_FadeInParam;
-    public AnimationCurve FadeInParam => m_FadeInParam;
+    private AnimationCurve m_FadeInVideoParam;
+    public AnimationCurve FadeInVideoParam => m_FadeInVideoParam;
+
+    [SerializeField]
+    private AnimationCurve m_FadeOutBgmParam;
+    public AnimationCurve FadeOutBgmParam => m_FadeOutBgmParam;
+
+    [SerializeField]
+    private AnimationCurve m_FadeInBgmParam;
+    public AnimationCurve FadeInBgmParam => m_FadeInBgmParam;
 
     [SerializeField]
     private VideoClip m_TransitionToHackingMovie;

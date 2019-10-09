@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// BattleMainにおけるオブジェクトの基底クラス。
 /// </summary>
-public class BattleMainObjectBase : BattleObjectBase
+public class BattleRealObjectBase : BattleObjectBase
 {
     /// <summary>
 	/// タイマーを保持するリスト。
@@ -48,7 +48,7 @@ public class BattleMainObjectBase : BattleObjectBase
         }
 
         m_TimerDict.Add(key, timer);
-        //BattleRealTimerManager.Instance.RegistTimer(timer);
+        BattleRealTimerManager.Instance.RegistTimer(timer);
     }
 
     /// <summary>

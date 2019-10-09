@@ -11,6 +11,7 @@ public class BattleRealStageManager : ControllableMonoBehavior
     {
         STAGE_OBJECT,
         PLAYER,
+        ENEMY_GROUP,
         ENEMY,
         BULLET,
         ITEM,
@@ -18,6 +19,7 @@ public class BattleRealStageManager : ControllableMonoBehavior
 
     public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
     public const string PLAYER_HOLDER = "[PlayerCharaHolder]";
+    public const string ENEMY_GROUP_HOLDER = "[EnemyGroupHolder]";
     public const string ENEMY_HOLDER = "[EnemyCharaHolder]";
     public const string BULLET_HOLDER = "[BulletHolder]";
     public const string ITEM_HOLDER = "[ItemHolder]";
@@ -31,35 +33,36 @@ public class BattleRealStageManager : ControllableMonoBehavior
 	/// </summary>
 	[SerializeField]
 	private Transform m_StageObjectHolder;
-    public Transform StageObjectHolder => m_StageObjectHolder;
 
 	/// <summary>
 	/// プレイヤーキャラを保持するためのホルダー
 	/// </summary>
 	[SerializeField]
 	private Transform m_PlayerCharaHolder;
-    public Transform PlayerCharaHolder => m_PlayerCharaHolder; 
+
+    /// <summary>
+    /// 敵グループを保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private Transform m_EnemyGroupHolder;
 
 	/// <summary>
-	/// 敵キャラを保持するためのホルダー
+	/// 敵キャラを退避するためのホルダー
 	/// </summary>
 	[SerializeField]
 	private Transform m_EnemyCharaHolder;
-    public Transform EnemyCharaHolder => m_EnemyCharaHolder;
 
 	/// <summary>
 	/// 弾を保持するためのホルダー
 	/// </summary>
 	[SerializeField]
 	private Transform m_BulletHolder;
-    public Transform BulletHolder => m_BulletHolder;
 
     /// <summary>
     /// アイテムを保持するためのホルダー
     /// </summary>
     [SerializeField]
     private Transform m_ItemHolder;
-    public Transform ItemHolder => m_ItemHolder;
 
     [Header("Filed")]
 
@@ -112,23 +115,27 @@ public class BattleRealStageManager : ControllableMonoBehavior
         switch(holderType)
         {
             case E_HOLDER_TYPE.STAGE_OBJECT:
-                holder = StageObjectHolder;
+                holder = m_StageObjectHolder;
                 holderName = STAGE_OBJECT_HOLDER;
                 break;
             case E_HOLDER_TYPE.PLAYER:
-                holder = PlayerCharaHolder;
+                holder = m_PlayerCharaHolder;
                 holderName = PLAYER_HOLDER;
                 break;
+            case E_HOLDER_TYPE.ENEMY_GROUP:
+                holder = m_EnemyGroupHolder;
+                holderName = ENEMY_GROUP_HOLDER;
+                break;
             case E_HOLDER_TYPE.ENEMY:
-                holder = EnemyCharaHolder;
+                holder = m_EnemyCharaHolder;
                 holderName = ENEMY_HOLDER;
                 break;
             case E_HOLDER_TYPE.BULLET:
-                holder = BulletHolder;
+                holder = m_BulletHolder;
                 holderName = BULLET_HOLDER;
                 break;
             case E_HOLDER_TYPE.ITEM:
-                holder = ItemHolder;
+                holder = m_ItemHolder;
                 holderName = ITEM_HOLDER;
                 break;
         }

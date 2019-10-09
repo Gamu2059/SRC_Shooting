@@ -10,10 +10,10 @@ using System;
 public class BattleRealEventTriggerParamSet : ScriptableObject
 {
     [Serializable]
-    public class EventTriggerParam
+    public struct EventTriggerParam
     {
         public EventTriggerRootCondition Condition;
-        public EventContent[] Contents;
+        public BattleRealEventContent[] Contents;
     }
 
     /// <summary>

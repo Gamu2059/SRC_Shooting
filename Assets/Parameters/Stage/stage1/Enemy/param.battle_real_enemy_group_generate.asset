@@ -14,26 +14,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Condition:
     IsReverse: 0
-    IsSingleCondition: 1
-    RootCondition:
+    IsMultiCondition: 0
+    SingleCondition:
       IsReverse: 0
       VariableType: 3
-      VariableName: GAME_START
+      VariableName: Game Start
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 2
+      CompareValue: 0
       BoolCompareValue: 0
     MultiConditionType: 0
-    SubConditions: []
-  m_ViewPortPos: {x: 0.5, y: 1}
+    MultiConditions: []
+  m_ViewPortPos: {x: 0.5, y: 0.6}
   m_OffsetPosFromViewPort: {x: 0, y: 0}
   m_GenerateAngle: 0
-  m_EnemyGroupBehaviorParamSet: {fileID: 0}
+  m_EnemyGroupBehaviorParamSet: {fileID: 11400000, guid: 882c0d3b7e0988b45a5221c887a24df5,
+    type: 2}
   m_IndividualGenerateParamSets:
-  - m_ViewPortPosRelative: 0
-    m_ViewPortPos: {x: 0, y: 0}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 0.5}
     m_OffsetPosFromViewPort: {x: 0, y: 0}
-    m_GenerateAngleRelative: 0
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+  - m_GenerateTime: 2
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 0.5}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+  - m_GenerateTime: 4
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 0.5}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+  - m_GenerateTime: 6
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 0.5}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+  - m_GenerateTime: 8
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 0.5}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
     m_GenerateAngle: 0
     m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
       type: 2}

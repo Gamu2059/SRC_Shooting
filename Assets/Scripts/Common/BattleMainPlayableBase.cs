@@ -9,7 +9,7 @@ using System;
 /// Timeline制御が可能なオブジェクトの基底クラス。
 /// </summary>
 [RequireComponent(typeof(PlayableDirector))]
-public class BattleMainPlayableBase : BattleMainObjectBase
+public class BattleMainPlayableBase : BattleRealObjectBase
 {
     protected PlayableDirector m_PlayableDirector;
 

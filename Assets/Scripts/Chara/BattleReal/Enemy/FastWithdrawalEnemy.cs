@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 出現してすぐに離脱する敵のコントローラ。
 /// </summary>
-public class FastWithdrawalEnemy : EnemyController
+public class FastWithdrawalEnemy : BattleRealEnemyController
 {
 	protected enum E_PHASE
 	{

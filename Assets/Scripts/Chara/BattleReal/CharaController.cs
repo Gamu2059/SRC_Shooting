@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラの制御を行うコンポーネント。
 /// </summary>
-public class CharaController : BattleMainObjectBase
+public class CharaController : BattleRealObjectBase
 {
 	#region Field Inspector
 

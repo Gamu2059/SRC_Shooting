@@ -42,7 +42,7 @@ public class BattleRealPlayerManager : ControllableObject
     private Transform m_PlayerCharaHolder;
 
     // 事前にシーンに存在していたプレイヤー
-    private static BattleRealPlayerController m_RegisterPlayer;
+    private static BattleRealPlayerController m_RegisteredPlayer;
 
     private BattleRealPlayerController m_Player;
     public BattleRealPlayerController Player => m_Player;
@@ -99,7 +99,7 @@ public class BattleRealPlayerManager : ControllableObject
             return;
         }
 
-        m_RegisterPlayer = player;
+        m_RegisteredPlayer = player;
     }
 
     public override void OnInitialize()
@@ -121,9 +121,9 @@ public class BattleRealPlayerManager : ControllableObject
 
         m_PlayerCharaHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.PLAYER);
 
-        if (m_RegisterPlayer != null)
+        if (m_RegisteredPlayer != null)
         {
-            m_Player = m_RegisterPlayer;
+            m_Player = m_RegisteredPlayer;
         }
         else
         {
