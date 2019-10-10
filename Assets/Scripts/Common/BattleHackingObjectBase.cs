@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// BattleCommandにおけるオブジェクトの基底クラス。
+/// ハッキングモードにおけるオブジェクトの基底クラス。
 /// </summary>
-public class BattleCommandObjectBase : BattleObjectBase
+public class BattleHackingObjectBase : BattleObjectBase
 {
     /// <summary>
 	/// タイマーを保持するリスト。
@@ -99,5 +99,35 @@ public class BattleCommandObjectBase : BattleObjectBase
         }
 
         m_TimerDict.Clear();
+    }
+
+    public override void OnRenderCollider()
+    {
+        if (BattleManager.Instance == null || BattleHackingStageManager.Instance == null)
+        {
+            return;
+        }
+
+        DrawCollider();
+    }
+
+    protected override Material GetCollisionMaterial()
+    {
+        if (BattleManager.Instance == null || BattleHackingCollisionManager.Instance == null)
+        {
+            return null;
+        }
+
+        return BattleHackingCollisionManager.Instance.CollisionMaterial;
+    }
+
+    protected override Vector2 CalcViewportPos(Vector2 worldPos)
+    {
+        if (BattleManager.Instance == null || BattleHackingStageManager.Instance == null)
+        {
+            return Vector2.one / 2f;
+        }
+
+        return BattleHackingStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
     }
 }

@@ -281,13 +281,13 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// </summary>
     public void CreateEnemyGroup(int enemyGroupIndex)
     {
-        var paramSets = m_ParamSet.Generator.GroupGenerateParamSets;
+        var paramSets = m_ParamSet.Generator.Contents;
         if (enemyGroupIndex < 0 || enemyGroupIndex >= paramSets.Length)
         {
             return;
         }
 
-        var groupParam = paramSets[enemyGroupIndex];
+        var groupParam = paramSets[enemyGroupIndex].GroupGenerateParamSet;
         var enemyGroup = GetPoolingEnemyGroup(groupParam);
         if (enemyGroup == null)
         {
@@ -326,13 +326,12 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// </summary>
     private void BuildEnemyGroupAppearEvents()
     {
-        var groups = m_ParamSet.Generator.GroupGenerateParamSets;
+        var groups = m_ParamSet.Generator.Contents;
         for (int i = 0; i < groups.Length; i++)
         {
             var param = groups[i];
             var eventParam = new BattleRealEventTriggerParamSet.EventTriggerParam();
             eventParam.Condition = param.Condition;
-
             var content = new BattleRealEventContent();
             content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;
             content.AppearEnemyIndex = i;
