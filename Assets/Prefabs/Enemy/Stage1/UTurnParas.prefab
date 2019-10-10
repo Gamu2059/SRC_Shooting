@@ -47,6 +47,8 @@ MonoBehaviour:
   m_ColliderTransforms:
   - CollideName: 
     ColliderType: 0
+    Direction: 0
+    ColliderColor: {r: 1, g: 0, b: 0, a: 0}
     Transform: {fileID: 1236175648723835641}
 --- !u!1001 &4908135511365774147
 PrefabInstance:
@@ -109,6 +111,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450966592019761992, guid: b97ca80b936faec489a2ae3634aab721,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6836997308711573767, guid: b97ca80b936faec489a2ae3634aab721,
         type: 3}

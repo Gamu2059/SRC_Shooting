@@ -171,6 +171,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_StateMachine.OnFixedUpdate();
     }
 
+    private void OnRenderObject()
+    {
+        
+    }
+
     #endregion
 
     #region Start State

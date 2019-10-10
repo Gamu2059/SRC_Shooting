@@ -38,12 +38,12 @@ public static class Collision
             //Debug.Log( 11 );
             return IsCollideRectAndRect(collider1, collider2);
         }
-        else if (collider1.ColliderType == E_COLLIDER_SHAPE.ELLIPSE && collider2.ColliderType == E_COLLIDER_SHAPE.ELLIPSE)
+        else if (collider1.ColliderType == E_COLLIDER_SHAPE.CIRCLE && collider2.ColliderType == E_COLLIDER_SHAPE.CIRCLE)
         {
             //Debug.Log( 22 );
             return IsCollideEllipseAndEllipse(collider1, collider2);
         }
-        else if (collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.ELLIPSE)
+        else if (collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.CIRCLE)
         {
             //Debug.Log(33);
             return IsCollideRectAndEllipse(collider1, collider2);

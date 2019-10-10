@@ -55,7 +55,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 		OnFixedUpdate();
 	}
 
-	public override void OnInitialize()
+    public override void OnInitialize()
 	{
         base.OnInitialize();
 

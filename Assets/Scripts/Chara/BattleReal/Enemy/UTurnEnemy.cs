@@ -185,8 +185,10 @@ public class UTurnEnemy : BattleRealEnemyController
 				break;
 		}
 
-		//transform.LookAt( BattleRealPlayerManager.Instance.GetCurrentController().transform );
-	}
+        var p = BattleRealPlayerManager.Instance.Player.transform.position;
+        p.y = transform.position.y;
+        transform.LookAt(p);
+    }
 
 	protected virtual void SetPositionOnCircle( float angle )
 	{

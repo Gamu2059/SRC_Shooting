@@ -218,6 +218,7 @@ Transform:
   - {fileID: 1649599693813289333}
   - {fileID: 334425927673741676}
   - {fileID: 1683198245100858012}
+  - {fileID: 898018377978578463}
   - {fileID: 1137498683827683280}
   m_Father: {fileID: 2102007538206738426}
   m_RootOrder: 0
@@ -385,9 +386,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: 
+  - CollideName: CRITICAL
     ColliderType: 1
+    Direction: 0
+    ColliderWidth: 5
+    ColliderColor: {r: 1, g: 0, b: 0, a: 0}
     Transform: {fileID: 1683198245100858012}
+  - CollideName: ITEM GAIN
+    ColliderType: 1
+    Direction: 0
+    ColliderWidth: 2
+    ColliderColor: {r: 1, g: 0.7112604, b: 0, a: 0}
+    Transform: {fileID: 898018377978578463}
 --- !u!114 &6915949984067917126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +460,6 @@ GameObject:
   - component: {fileID: 1683198245100858012}
   - component: {fileID: 7431610349746419147}
   - component: {fileID: 6128424283337703837}
-  - component: {fileID: 972626942573360452}
   m_Layer: 11
   m_Name: Critical Collider
   m_TagString: Untagged
@@ -467,7 +476,7 @@ Transform:
   m_GameObject: {fileID: 5308755557073816465}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 2259109913237877818}
   m_RootOrder: 2
@@ -517,20 +526,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &972626942573360452
-MeshCollider:
+--- !u!1 &5625135384502733608
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5308755557073816465}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 898018377978578463}
+  m_Layer: 11
+  m_Name: Item Gain Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &898018377978578463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5625135384502733608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_Children: []
+  m_Father: {fileID: 2259109913237877818}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7699946618402066567
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +587,7 @@ Transform:
   - {fileID: 6365466651730951782}
   - {fileID: 5766305770469280416}
   m_Father: {fileID: 2259109913237877818}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!1001 &3606368891690075308
 PrefabInstance:
@@ -571,16 +596,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1649599693813289333}
     m_Modifications:
-    - target: {fileID: 8847054781253681989, guid: d5b545e564f23514aa4cd2fa04bd48dc,
-        type: 3}
-      propertyPath: m_Name
-      value: C-a01(Hacker)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8847054781253681989, guid: d5b545e564f23514aa4cd2fa04bd48dc,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 5606161462837842811, guid: d5b545e564f23514aa4cd2fa04bd48dc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -650,6 +665,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847054781253681989, guid: d5b545e564f23514aa4cd2fa04bd48dc,
+        type: 3}
+      propertyPath: m_Name
+      value: C-a01(Hacker)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847054781253681989, guid: d5b545e564f23514aa4cd2fa04bd48dc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3809489051224574549, guid: d5b545e564f23514aa4cd2fa04bd48dc,
         type: 3}

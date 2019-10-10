@@ -197,6 +197,11 @@ public class BattleRealEnemyGroupController : BattleRealObjectBase
             angles.y = individualParamSet.GenerateAngle;
             enemyT.eulerAngles = angles;
         }
+
+        // あくまでY軸は基準に合わせる
+        pos = enemyT.position;
+        pos.y = ParamDef.BASE_Y_POS;
+        enemyT.position = pos;
     }
 
     public void Destory()
