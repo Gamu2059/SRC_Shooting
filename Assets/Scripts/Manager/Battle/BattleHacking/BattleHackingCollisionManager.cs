@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class BattleHackingCollisionManager : BattleCollisionManagerBase
 {
-    //public static BattleHackingCollisionManager Instance => BattleHackingManager.Instance.CollisionManager;
+    public static BattleHackingCollisionManager Instance => BattleHackingManager.Instance.CollisionManager;
 }

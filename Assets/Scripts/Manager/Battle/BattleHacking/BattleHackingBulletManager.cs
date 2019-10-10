@@ -8,7 +8,7 @@ using System.Linq;
 /// コマンドイベントの全ての弾の制御を管理する。
 /// </summary>
 [Serializable]
-public class BattleHackingBulletManager : ControllableObject
+public class BattleHackingBulletManager : ControllableObject, IRenderCollider
 {
     public static BattleHackingBulletManager Instance => BattleHackingManager.Instance.BulletManager;
 
@@ -130,6 +130,19 @@ public class BattleHackingBulletManager : ControllableObject
             }
 
             bullet.OnLateUpdate();
+        }
+    }
+
+    public void OnRenderCollider()
+    {
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            bullet.OnRenderCollider();
         }
     }
 
@@ -274,7 +287,7 @@ public class BattleHackingBulletManager : ControllableObject
         }
         m_StandbyBullets.Clear();
 
-        foreach(var bullet in m_UpdateBullets)
+        foreach (var bullet in m_UpdateBullets)
         {
             CheckPoolBullet(bullet);
         }

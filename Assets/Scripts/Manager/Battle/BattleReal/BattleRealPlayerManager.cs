@@ -7,7 +7,7 @@ using UniRx;
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
-public class BattleRealPlayerManager : ControllableObject
+public class BattleRealPlayerManager : ControllableObject, IRenderCollider
 {
     public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
 
@@ -212,6 +212,16 @@ public class BattleRealPlayerManager : ControllableObject
         }
 
         m_Player.OnUpdate();
+    }
+
+    public void OnRenderCollider()
+    {
+        if (Player == null)
+        {
+            return;
+        }
+
+        Player.OnRenderCollider();
     }
 
     /// <summary>

@@ -33,26 +33,149 @@ public static class Collision
     /// </summary>
     public static bool IsCollide(ColliderData collider1, ColliderData collider2)
     {
-        if (collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.RECT)
+        // 大雑把に衝突していそうかを事前に判定する
+        if (!IsCollideOutSide(collider1, collider2))
         {
-            //Debug.Log( 11 );
-            return IsCollideRectAndRect(collider1, collider2);
+            return false;
         }
-        else if (collider1.ColliderType == E_COLLIDER_SHAPE.CIRCLE && collider2.ColliderType == E_COLLIDER_SHAPE.CIRCLE)
+
+        var colType1 = collider1.ColliderType;
+        var colType2 = collider2.ColliderType;
+
+        if (colType1 == E_COLLIDER_SHAPE.RECT)
         {
-            //Debug.Log( 22 );
-            return IsCollideEllipseAndEllipse(collider1, collider2);
+            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            {
+                return IsCollideRectAndRect(collider1, collider2);
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.ELLIPSE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.RAY)
+            {
+
+            }
         }
-        else if (collider1.ColliderType == E_COLLIDER_SHAPE.RECT && collider2.ColliderType == E_COLLIDER_SHAPE.CIRCLE)
+
+        if (colType1 == E_COLLIDER_SHAPE.CIRCLE)
         {
-            //Debug.Log(33);
-            return IsCollideRectAndEllipse(collider1, collider2);
+            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            {
+                return IsCollideRectAndRect(collider1, collider2);
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.ELLIPSE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.RAY)
+            {
+
+            }
         }
-        else
+
+        if (colType1 == E_COLLIDER_SHAPE.CAPSULE)
         {
-            //Debug.Log( 44 );
-            return IsCollideRectAndEllipse(collider2, collider1);
+            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            {
+                return IsCollideRectAndRect(collider1, collider2);
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.ELLIPSE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.RAY)
+            {
+
+            }
         }
+
+        if (colType1 == E_COLLIDER_SHAPE.ELLIPSE)
+        {
+            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            {
+                return IsCollideRectAndRect(collider1, collider2);
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.ELLIPSE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.RAY)
+            {
+
+            }
+        }
+
+        if (colType1 == E_COLLIDER_SHAPE.RAY)
+        {
+            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            {
+                return IsCollideRectAndRect(collider1, collider2);
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.ELLIPSE)
+            {
+
+            }
+            if (colType2 == E_COLLIDER_SHAPE.RAY)
+            {
+
+            }
+        }
+
+        //if (colType1 == E_COLLIDER_SHAPE.CIRCLE && colType2 == E_COLLIDER_SHAPE.CIRCLE)
+        //{
+        //    //Debug.Log( 22 );
+        //    return IsCollideEllipseAndEllipse(collider1, collider2);
+        //}
+        //if (colType1 == E_COLLIDER_SHAPE.RECT && colType2 == E_COLLIDER_SHAPE.CIRCLE)
+        //{
+        //    //Debug.Log(33);
+        //    return IsCollideRectAndEllipse(collider1, collider2);
+        //}
+        ////Debug.Log( 44 );
+        //return IsCollideRectAndEllipse(collider2, collider1);
+
+        return false;
     }
 
     /// <summary>
@@ -60,16 +183,15 @@ public static class Collision
     /// </summary>
     private static bool IsCollideRectAndRect(ColliderData rect1, ColliderData rect2)
     {
-        Vector2[] corners1 = GetCornerPosFromRect(rect1);
-        Vector2[] corners2 = GetCornerPosFromRect(rect2);
-
-        if (IsCollideRectAndRect(corners1, corners2))
+        if (!IsCollideOutSide(rect1, rect2))
         {
-            return true;
+            return false;
         }
 
-        return IsCollideRectAndRect(corners2, corners1);
+        var corners1 = GetCornerPosFromRect(rect1);
+        var corners2 = GetCornerPosFromRect(rect2);
 
+        return IsCollideRectAndRect(corners1, corners2) || IsCollideRectAndRect(corners2, corners1);
     }
 
     /// <summary>
@@ -99,6 +221,14 @@ public static class Collision
             }
         }
 
+        return false;
+    }
+
+    /// <summary>
+    /// 矩形と真円の衝突判定。
+    /// </summary>
+    private static bool IsCollideRectAndCircle()
+    {
         return false;
     }
 
@@ -216,5 +346,42 @@ public static class Collision
         }
 
         return cornerPos;
+    }
+
+    /// <summary>
+    /// 衝突判定の外側の矩形を取得する。
+    /// </summary>
+    private static Rect GetOutSideCorner(ColliderData colliderData)
+    {
+        var corners = GetCornerPosFromRect(colliderData);
+        if (corners == null || corners.Length < 1)
+        {
+            return Rect.zero;
+        }
+
+        var rect = new Rect(corners[0], corners[0]);
+        for (int i = 1; i < corners.Length; i++)
+        {
+            rect.x = Mathf.Min(rect.x, corners[i].x);
+            rect.y = Mathf.Min(rect.y, corners[i].y);
+            rect.width = Mathf.Max(rect.width, corners[i].x);
+            rect.height = Mathf.Max(rect.height, corners[i].y);
+        }
+
+        return rect;
+    }
+
+    /// <summary>
+    /// 外側の矩形同士の衝突判定を取る。
+    /// </summary>
+    private static bool IsCollideOutSide(ColliderData collider1, ColliderData collider2)
+    {
+        var outSide1 = GetOutSideCorner(collider1);
+        var outSide2 = GetOutSideCorner(collider2);
+
+        var horizontal = (outSide2.x < outSide1.width) && (outSide1.x < outSide2.width);
+        var vertical = (outSide2.y < outSide1.height) && (outSide1.y < outSide2.height);
+
+        return horizontal && vertical;
     }
 }

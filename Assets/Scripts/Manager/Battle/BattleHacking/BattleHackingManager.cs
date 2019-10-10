@@ -20,6 +20,7 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingPlayerManager PlayerManager { get; private set; }
     public BattleHackingEnemyManager EnemyManager { get; private set; }
     public BattleHackingBulletManager BulletManager { get; private set; }
+    public BattleHackingCollisionManager CollisionManager { get; private set; }
 
     #endregion
 
@@ -115,18 +116,21 @@ public class BattleHackingManager : ControllableObject
         PlayerManager = new BattleHackingPlayerManager(m_ParamSet.PlayerManagerParamSet);
         EnemyManager = new BattleHackingEnemyManager();
         BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
+        CollisionManager = new BattleHackingCollisionManager();
 
         InputManager.OnInitialize();
         HackingTimerManager.OnInitialize();
         PlayerManager.OnInitialize();
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
+        CollisionManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        CollisionManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
         PlayerManager.OnFinalize();
@@ -157,6 +161,24 @@ public class BattleHackingManager : ControllableObject
         m_StateMachine.OnFixedUpdate();
     }
 
+    public void OnRenderObject()
+    {
+        if (m_StateMachine == null || m_StateMachine.CurrentState == null)
+        {
+            return;
+        }
+
+        var state = m_StateMachine.CurrentState;
+        switch (state.Key)
+        {
+            case E_BATTLE_HACKING_STATE.GAME:
+                RenderObjectOnGame();
+                break;
+            default:
+                break;
+        }
+    }
+
     #endregion
 
     #region Start State
@@ -168,6 +190,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnStart();
         EnemyManager.OnStart();
         BulletManager.OnStart();
+        CollisionManager.OnStart();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
     }
@@ -308,6 +331,11 @@ public class BattleHackingManager : ControllableObject
         HackingTimerManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
+    }
+
+    private void RenderObjectOnGame()
+    {
+        BulletManager.OnRenderCollider();
     }
 
     private void EndOnGame()

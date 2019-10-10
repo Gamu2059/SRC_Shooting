@@ -23,6 +23,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealEnemyManager EnemyManager { get; private set; }
     public BattleRealBulletManager BulletManager { get; private set; }
     public BattleRealItemManager ItemManager { get; private set; }
+    public BattleRealCollisionManager CollisionManager { get; private set; }
 
     #endregion
 
@@ -175,6 +176,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager = new BattleRealEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
         ItemManager = new BattleRealItemManager();
+        CollisionManager = new BattleRealCollisionManager();
 
         InputManager.OnInitialize();
         RealTimerManager.OnInitialize();
@@ -184,12 +186,14 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
         ItemManager.OnInitialize();
+        CollisionManager.OnInitialize();
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        CollisionManager.OnFinalize();
         ItemManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
@@ -225,6 +229,24 @@ public class BattleRealManager : ControllableObject
         m_StateMachine.OnFixedUpdate();
     }
 
+    public void OnRenderObject()
+    {
+        if (m_StateMachine == null || m_StateMachine.CurrentState == null)
+        {
+            return;
+        }
+
+        var state = m_StateMachine.CurrentState;
+        switch (state.Key)
+        {
+            case E_BATTLE_REAL_STATE.GAME:
+                RenderObjectOnGame();
+                break;
+            default:
+                break;
+        }
+    }
+
     #endregion
 
     #region Start State
@@ -239,6 +261,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnStart();
         BulletManager.OnStart();
         ItemManager.OnStart();
+        CollisionManager.OnStart();
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME);
     }
@@ -367,6 +390,10 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
 
+        CollisionManager.UpdateCollider();
+        CollisionManager.CheckCollision();
+
+        // 消滅の更新
         EnemyGroupManager.GotoPool();
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
@@ -380,6 +407,13 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnFixedUpdate();
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
+    }
+
+    private void RenderObjectOnGame()
+    {
+        PlayerManager.OnRenderCollider();
+        EnemyManager.OnRenderCollider();
+        BulletManager.OnRenderCollider();
     }
 
     private void EndOnGame()

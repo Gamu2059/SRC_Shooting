@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// コマンドイベントのキャラの制御コンポーネント。
 /// </summary>
-public class CommandCharaController : BattleCommandObjectBase
+public class CommandCharaController : BattleHackingObjectBase
 {
     #region Field Inspector
 

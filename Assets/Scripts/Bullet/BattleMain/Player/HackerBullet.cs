@@ -7,7 +7,7 @@ public class HackerBullet : BulletController
     public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
     {
         base.HitChara(targetChara, attackData, targetData);
-        DestroyBullet();
+        // DestroyBullet();
         //BattleManager.Instance.TransitionBattleCommand();
     }
 }
