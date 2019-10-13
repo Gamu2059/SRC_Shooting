@@ -9,15 +9,7 @@ using System;
 [Serializable]
 public class ColliderData
 {
-    /// <summary>
-    /// 衝突判定の名前。
-    /// </summary>
-    public string CollideName;
-
-    /// <summary>
-    /// 矩形か楕円か。
-    /// </summary>
-    public E_COLLIDER_SHAPE ColliderType;
+    public ColliderTransform Transform;
 
 	/// <summary>
 	/// 中心座標。

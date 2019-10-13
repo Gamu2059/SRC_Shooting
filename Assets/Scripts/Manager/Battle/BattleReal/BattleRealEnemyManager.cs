@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// リアルモードの敵キャラを管理する。
 /// </summary>
-public class BattleRealEnemyManager : ControllableObject, IUpdateCollider, IRenderCollider
+public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
 {
     public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
 
@@ -132,19 +132,6 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider, IRend
             }
 
             enemy.UpdateCollider();
-        }
-    }
-
-    public void OnRenderCollider()
-    {
-        foreach (var enemy in m_UpdateEnemies)
-        {
-            if (enemy == null)
-            {
-                continue;
-            }
-
-            enemy.OnRenderCollider();
         }
     }
 

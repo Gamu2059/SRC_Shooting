@@ -8,4 +8,5 @@ using UnityEngine;
 public class ParamDef
 {
 	public const float BASE_Y_POS = 20f;
+    public const float COLLIDER_Y_POS = 40f;
 }

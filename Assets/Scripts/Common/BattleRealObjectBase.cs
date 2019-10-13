@@ -100,34 +100,4 @@ public class BattleRealObjectBase : BattleObjectBase
 
         m_TimerDict.Clear();
     }
-
-    public override void OnRenderCollider()
-    {
-        if (BattleManager.Instance == null || BattleRealStageManager.Instance == null)
-        {
-            return;
-        }
-
-        DrawCollider();
-    }
-
-    protected override Material GetCollisionMaterial()
-    {
-        if (BattleManager.Instance == null || BattleRealCollisionManager.Instance == null)
-        {
-            return null;
-        }
-
-        return BattleRealCollisionManager.Instance.CollisionMaterial;
-    }
-
-    protected override Vector2 CalcViewportPos(Vector2 worldPos)
-    {
-        if (BattleManager.Instance == null || BattleRealStageManager.Instance == null)
-        {
-            return Vector2.one / 2f;
-        }
-
-        return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
-    }
 }

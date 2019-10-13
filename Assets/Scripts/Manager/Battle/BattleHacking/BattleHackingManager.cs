@@ -161,24 +161,6 @@ public class BattleHackingManager : ControllableObject
         m_StateMachine.OnFixedUpdate();
     }
 
-    public void OnRenderObject()
-    {
-        if (m_StateMachine == null || m_StateMachine.CurrentState == null)
-        {
-            return;
-        }
-
-        var state = m_StateMachine.CurrentState;
-        switch (state.Key)
-        {
-            case E_BATTLE_HACKING_STATE.GAME:
-                RenderObjectOnGame();
-                break;
-            default:
-                break;
-        }
-    }
-
     #endregion
 
     #region Start State
@@ -331,11 +313,6 @@ public class BattleHackingManager : ControllableObject
         HackingTimerManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
-    }
-
-    private void RenderObjectOnGame()
-    {
-        BulletManager.OnRenderCollider();
     }
 
     private void EndOnGame()

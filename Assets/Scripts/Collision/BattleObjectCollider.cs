@@ -27,11 +27,10 @@ public class BattleObjectCollider : MonoBehaviour
         {
             Transform t = m_ColliderTransforms[i].Transform;
             var c = new ColliderData();
-            c.CenterPos = new Vector2(t.position.x, t.position.z);
-            c.Size = new Vector2(t.lossyScale.x, t.lossyScale.z);
+            c.CenterPos = t.position.ToVector2XZ();
+            c.Size = t.lossyScale.ToVector2XZ();
             c.Angle = -t.eulerAngles.y;
-            c.ColliderType = m_ColliderTransforms[i].ColliderType;
-            c.CollideName = m_ColliderTransforms[i].CollideName;
+            c.Transform = m_ColliderTransforms[i];
 
             colliders[i] = c;
         }

@@ -7,7 +7,7 @@ using UniRx;
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
-public class BattleRealPlayerManager : ControllableObject, IRenderCollider
+public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
 {
     public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
 
@@ -214,16 +214,6 @@ public class BattleRealPlayerManager : ControllableObject, IRenderCollider
         m_Player.OnUpdate();
     }
 
-    public void OnRenderCollider()
-    {
-        if (Player == null)
-        {
-            return;
-        }
-
-        Player.OnRenderCollider();
-    }
-
     /// <summary>
     /// キャラの座標を動体フィールド領域に制限する。
     /// </summary>
@@ -314,5 +304,13 @@ public class BattleRealPlayerManager : ControllableObject, IRenderCollider
         m_CurrentBombCharge.Value = currentCharge;
     }
 
+    public void UpdateCollider()
+    {
+        if (Player == null)
+        {
+            return;
+        }
 
+        Player.UpdateCollider();
+    }
 }

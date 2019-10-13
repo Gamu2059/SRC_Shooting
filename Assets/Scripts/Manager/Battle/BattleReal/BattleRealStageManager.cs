@@ -28,17 +28,17 @@ public class BattleRealStageManager : ControllableMonoBehavior
 
     [Header("Holder")]
 
-	/// <summary>
-	/// ステージ上の背景オブジェクトを保持するためのホルダー
-	/// </summary>
-	[SerializeField]
-	private Transform m_StageObjectHolder;
+    /// <summary>
+    /// ステージ上の背景オブジェクトを保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private Transform m_StageObjectHolder;
 
-	/// <summary>
-	/// プレイヤーキャラを保持するためのホルダー
-	/// </summary>
-	[SerializeField]
-	private Transform m_PlayerCharaHolder;
+    /// <summary>
+    /// プレイヤーキャラを保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private Transform m_PlayerCharaHolder;
 
     /// <summary>
     /// 敵グループを保持するためのホルダー
@@ -46,17 +46,17 @@ public class BattleRealStageManager : ControllableMonoBehavior
     [SerializeField]
     private Transform m_EnemyGroupHolder;
 
-	/// <summary>
-	/// 敵キャラを退避するためのホルダー
-	/// </summary>
-	[SerializeField]
-	private Transform m_EnemyCharaHolder;
+    /// <summary>
+    /// 敵キャラを退避するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private Transform m_EnemyCharaHolder;
 
-	/// <summary>
-	/// 弾を保持するためのホルダー
-	/// </summary>
-	[SerializeField]
-	private Transform m_BulletHolder;
+    /// <summary>
+    /// 弾を保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private Transform m_BulletHolder;
 
     /// <summary>
     /// アイテムを保持するためのホルダー
@@ -115,8 +115,10 @@ public class BattleRealStageManager : ControllableMonoBehavior
     {
         var min = MinLocalFieldPosition;
         var max = MaxLocalFieldPosition;
-        var vX = Mathf.InverseLerp(min.x, max.x, x);
-        var vZ = Mathf.InverseLerp(min.y, max.y, z);
+        var vX = MathUtility.CalcRate(min.x, max.x, x) - 0.5f;
+        var vZ = MathUtility.CalcRate(min.y, max.y, z) - 0.5f;
+        vX *= (max.x - min.x) / 2;
+        vZ *= (max.y - min.y) / 2;
         return new Vector2(vX, vZ);
     }
 
@@ -125,7 +127,7 @@ public class BattleRealStageManager : ControllableMonoBehavior
         Transform holder = null;
         string holderName = null;
 
-        switch(holderType)
+        switch (holderType)
         {
             case E_HOLDER_TYPE.STAGE_OBJECT:
                 holder = m_StageObjectHolder;

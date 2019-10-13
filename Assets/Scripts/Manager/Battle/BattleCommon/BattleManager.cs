@@ -12,6 +12,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
     #region Field Inspector
 
+    public Material ColliderMaterial;
+
     [SerializeField]
     private BattleParamSet m_BattleParamSet;
 
@@ -39,6 +41,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     [SerializeField]
     public bool m_PlayerNotDead;
+
+    [SerializeField]
+    public bool m_IsDrawColliderArea;
+
+    [SerializeField]
+    public bool m_IsDrawOutSideColliderArea;
 
     #endregion
 
@@ -171,27 +179,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_StateMachine.OnFixedUpdate();
     }
 
-    //private void OnRenderObject()
-    //{
-    //    if (m_StateMachine == null || m_StateMachine.CurrentState == null)
-    //    {
-    //        return;
-    //    }
-
-    //    var state = m_StateMachine.CurrentState;
-    //    switch (state.Key)
-    //    {
-    //        case E_BATTLE_STATE.REAL_MODE:
-    //            RenderObjectOnRealMode();
-    //            break;
-    //        case E_BATTLE_STATE.HACKING_MODE:
-    //            RenderObjectOnHackingMode();
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
     #endregion
 
     #region Start State
@@ -274,11 +261,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnFixedUpdate();
     }
 
-    private void RenderObjectOnRealMode()
-    {
-        RealManager.OnRenderObject();
-    }
-
     private void EndOnRealMode()
     {
 
@@ -314,11 +296,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
-    }
-
-    private void RenderObjectOnHackingMode()
-    {
-        HackingManager.OnRenderObject();
     }
 
     private void EndOnHackingMode()

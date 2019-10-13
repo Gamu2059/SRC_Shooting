@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
   - CollideName: 
-    ColliderType: 0
+    ColliderType: 1
     Direction: 0
-    ColliderWidth: 5
-    ColliderColor: {r: 1, g: 0, b: 0, a: 0}
+    ColliderWidth: 10
+    ColliderColor: {r: 1, g: 1, b: 1, a: 0}
     Transform: {fileID: 1236175648723835641}
 --- !u!1001 &4908135511365774147
 PrefabInstance:
@@ -72,6 +72,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141489381602750906, guid: b97ca80b936faec489a2ae3634aab721,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141489381602750906, guid: b97ca80b936faec489a2ae3634aab721,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4044192080454033624, guid: b97ca80b936faec489a2ae3634aab721,
         type: 3}

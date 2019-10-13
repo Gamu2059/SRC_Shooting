@@ -103,8 +103,10 @@ public class BattleHackingStageManager : ControllableMonoBehavior
     {
         var min = MinLocalFieldPosition;
         var max = MaxLocalFieldPosition;
-        var vX = Mathf.InverseLerp(min.x, max.x, x);
-        var vZ = Mathf.InverseLerp(min.y, max.y, z);
+        var vX = MathUtility.CalcRate(min.x, max.x, x) - 0.5f;
+        var vZ = MathUtility.CalcRate(min.y, max.y, z) - 0.5f;
+        vX *= (max.x - min.x) / 2;
+        vZ *= (max.y - min.y) / 2;
         return new Vector2(vX, vZ);
     }
 
