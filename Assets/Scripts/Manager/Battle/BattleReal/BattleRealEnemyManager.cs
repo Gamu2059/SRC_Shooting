@@ -11,6 +11,7 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
 {
     public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
 
+
     /// <summary>
     /// 消滅可能になるまでの最小時間
     /// </summary>
@@ -44,6 +45,8 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
     /// </summary>
     private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
 
+    private static List<BattleRealEnemyController> m_ReservedRegisterEnemies = new List<BattleRealEnemyController>();
+
     #endregion
 
     public BattleRealEnemyManager(BattleRealEnemyManagerParamSet paramSet)
@@ -75,10 +78,19 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyEvacuationHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
+
     }
 
     public override void OnUpdate()
     {
+        // デバッグ用
+        foreach (var enemy in m_ReservedRegisterEnemies)
+        {
+            Register(enemy);
+        }
+
+        m_ReservedRegisterEnemies.Clear();
+
         // Start
         foreach (var enemy in m_StandbyEnemies)
         {
@@ -136,6 +148,36 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
     }
 
     #endregion
+
+    /// <summary>
+    /// 敵を登録する。
+    /// デバッグ専用。
+    /// </summary>
+    public static void RegisterEnemy(BattleRealEnemyController enemy)
+    {
+        if (enemy == null || m_ReservedRegisterEnemies.Contains(enemy))
+        {
+            return;
+        }
+
+        m_ReservedRegisterEnemies.Add(enemy);
+    }
+
+    private void Register(BattleRealEnemyController enemy)
+    {
+        if (enemy == null || m_StandbyEnemies.Contains(enemy) || m_UpdateEnemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
+        {
+            return;
+        }
+
+        var type = enemy.GetType().FullName;
+        if (!m_PoolEnemies.ContainsKey(type))
+        {
+            m_PoolEnemies.Add(type, new LinkedList<GameObject>());
+        }
+        enemy.SetLookId(type);
+        CheckStandByEnemy(enemy);
+    }
 
     /// <summary>
     /// 破棄フラグが立っているものをプールに戻す

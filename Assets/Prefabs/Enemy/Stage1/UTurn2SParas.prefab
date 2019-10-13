@@ -30,7 +30,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4341052546525459093}
+  - {fileID: 4699930643081966869}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -86,7 +86,10 @@ MonoBehaviour:
   m_ColliderTransforms:
   - CollideName: 
     ColliderType: 0
-    Transform: {fileID: 5844452966964044791}
+    Direction: 0
+    ColliderWidth: 5
+    ColliderColor: {r: 1, g: 0.8537342, b: 0.6745283, a: 0}
+    Transform: {fileID: 3178605980312495223}
 --- !u!114 &6381017154117207391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,12 +106,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 5
   m_MaxHp: 5
-  m_ItemCreateParam:
-    ItemSpreadParams:
-    - ItemType: 4
-      ItemNum: 3
-      SpreadRadius: 0.2
-    CenterCreateItemType: 0
   m_IsBoss: 0
   m_DeadEffect: {fileID: 0}
   m_OnHitInvincibleDuration: 0
@@ -117,7 +114,7 @@ MonoBehaviour:
   m_RelativeCircleCenterPosition: {x: 0, y: 0, z: 0}
   m_CircleMoveAngle: 0
   m_CircleMoveSpeed: 0
-  m_ShotPosition: {fileID: 2743140397363151836}
+  m_ShotPosition: {fileID: 0}
   m_VisibleOffsetShotTime: 0
   m_StraightMoveShotParam:
     Interval: 0
@@ -128,7 +125,7 @@ MonoBehaviour:
     Num: 0
     Angle: 0
   m_DoubleShotInterval: 0
---- !u!1001 &297623571299914317
+--- !u!1001 &8729763067291145677
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -197,21 +194,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b97ca80b936faec489a2ae3634aab721, type: 3}
---- !u!4 &4341052546525459093 stripped
+--- !u!4 &4699930643081966869 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4044192080454033624, guid: b97ca80b936faec489a2ae3634aab721,
     type: 3}
-  m_PrefabInstance: {fileID: 297623571299914317}
+  m_PrefabInstance: {fileID: 8729763067291145677}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5844452966964044791 stripped
+--- !u!4 &3178605980312495223 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6141489381602750906, guid: b97ca80b936faec489a2ae3634aab721,
     type: 3}
-  m_PrefabInstance: {fileID: 297623571299914317}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2743140397363151836 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2463689619880251793, guid: b97ca80b936faec489a2ae3634aab721,
-    type: 3}
-  m_PrefabInstance: {fileID: 297623571299914317}
+  m_PrefabInstance: {fileID: 8729763067291145677}
   m_PrefabAsset: {fileID: 0}

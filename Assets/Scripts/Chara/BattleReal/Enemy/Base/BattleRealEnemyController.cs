@@ -87,14 +87,17 @@ public class BattleRealEnemyController : CharaController
     private void Start()
     {
         // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        //BattleRealEnemyManager.Instance.RegistEnemy(this);
+        BattleRealEnemyManager.RegisterEnemy(this);
     }
 
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        InitHp(m_GenerateParamSet.Hp);
+        if (m_GenerateParamSet != null)
+        {
+            InitHp(m_GenerateParamSet.Hp);
+        }
     }
 
     public override void OnLateUpdate()
@@ -120,7 +123,7 @@ public class BattleRealEnemyController : CharaController
     {
         m_GenerateParamSet = paramSet;
         m_BehaviorParamSet = m_GenerateParamSet.EnemyBehaviorParamSet;
-        
+
         OnSetParamSet();
     }
 
