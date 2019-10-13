@@ -10,14 +10,14 @@ public class StateMachine<T>
 {
     private Dictionary<T, State<T>> m_States;
 
-    private State<T> m_CurrentState;
+    public State<T> CurrentState { get; private set; }
     private State<T> m_PreState;
     private State<T> m_NextState;
 
     public StateMachine()
     {
         m_States = new Dictionary<T, State<T>>();
-        m_CurrentState = null;
+        CurrentState = null;
         m_PreState = null;
         m_NextState = null;
     }
@@ -35,36 +35,31 @@ public class StateMachine<T>
 
     public void OnUpdate()
     {
-        if (m_CurrentState != m_NextState)
+        if (CurrentState != m_NextState)
         {
             ProcessChangeState();
         }
 
-        if (m_CurrentState != null)
+        if (CurrentState != null)
         {
-            EventUtility.SafeInvokeAction(m_CurrentState.OnUpdate);
+            EventUtility.SafeInvokeAction(CurrentState.OnUpdate);
         }
     }
 
     public void OnLateUpdate()
     {
-        if (m_CurrentState != null)
+        if (CurrentState != null)
         {
-            EventUtility.SafeInvokeAction(m_CurrentState.OnLateUpdate);
+            EventUtility.SafeInvokeAction(CurrentState.OnLateUpdate);
         }
     }
 
     public void OnFixedUpdate()
     {
-        if (m_CurrentState != null)
+        if (CurrentState != null)
         {
-            EventUtility.SafeInvokeAction(m_CurrentState.OnFixedUpdate);
+            EventUtility.SafeInvokeAction(CurrentState.OnFixedUpdate);
         }
-    }
-
-    public State<T> GetCurrentState()
-    {
-        return m_CurrentState;
     }
 
     public void AddState(State<T> state)
@@ -94,16 +89,16 @@ public class StateMachine<T>
 
     private void ProcessChangeState()
     {
-        if (m_CurrentState != null)
+        if (CurrentState != null)
         {
-            m_PreState = m_CurrentState;
+            m_PreState = CurrentState;
             EventUtility.SafeInvokeAction(m_PreState.OnEnd);
         }
 
         if (m_NextState != null)
         {
-            m_CurrentState = m_NextState;
-            EventUtility.SafeInvokeAction(m_CurrentState.OnStart);
+            CurrentState = m_NextState;
+            EventUtility.SafeInvokeAction(CurrentState.OnStart);
         }
     }
 }

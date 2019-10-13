@@ -94,10 +94,10 @@ public class BattleRealPlayerController : CharaController
     {
         base.HitItem(targetItem, attackData, targetData);
 
-        if (targetData.CollideName != ItemController.GAIN_COLLIDE)
-        {
-            return;
-        }
+        //if (targetData.CollideName != ItemController.GAIN_COLLIDE)
+        //{
+        //    return;
+        //}
 
         switch(targetItem.GetItemType())
         {

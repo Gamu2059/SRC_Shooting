@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a72dd4b98ed27b4c8a31fec168c05fa, type: 3}
   m_Name: behavior.battle_real_enemy_behavior_default
   m_EditorClassIdentifier: 
-  m_BehaviorClass: 
+  m_BehaviorClass: BattleRealEnemyDefault
   m_BulletSets:
   - Name: 
     Bullet: {fileID: 0}
-  m_EnemyLookParamSet: {fileID: 0}
+  m_EnemyLookParamSet: {fileID: 11400000, guid: d2ae2c5cb6bce0a419fe1dabc026cf9a,
+    type: 2}

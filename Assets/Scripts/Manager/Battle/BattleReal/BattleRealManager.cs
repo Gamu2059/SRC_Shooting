@@ -23,6 +23,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealEnemyManager EnemyManager { get; private set; }
     public BattleRealBulletManager BulletManager { get; private set; }
     public BattleRealItemManager ItemManager { get; private set; }
+    public BattleRealCollisionManager CollisionManager { get; private set; }
 
     #endregion
 
@@ -175,6 +176,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager = new BattleRealEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
         ItemManager = new BattleRealItemManager();
+        CollisionManager = new BattleRealCollisionManager();
 
         InputManager.OnInitialize();
         RealTimerManager.OnInitialize();
@@ -184,12 +186,14 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
         ItemManager.OnInitialize();
+        CollisionManager.OnInitialize();
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        CollisionManager.OnFinalize();
         ItemManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
@@ -239,6 +243,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnStart();
         BulletManager.OnStart();
         ItemManager.OnStart();
+        CollisionManager.OnStart();
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME);
     }
@@ -356,6 +361,7 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnUpdate();
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
+        CollisionManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
@@ -366,7 +372,13 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnLateUpdate();
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
+        CollisionManager.OnLateUpdate();
 
+        CollisionManager.UpdateCollider();
+        CollisionManager.CheckCollision();
+        CollisionManager.DrawCollider();
+        
+        // 消滅の更新
         EnemyGroupManager.GotoPool();
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
@@ -380,6 +392,7 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnFixedUpdate();
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
+        CollisionManager.OnFixedUpdate();
     }
 
     private void EndOnGame()

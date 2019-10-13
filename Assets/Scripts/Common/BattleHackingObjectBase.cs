@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// BattleCommandにおけるオブジェクトの基底クラス。
+/// ハッキングモードにおけるオブジェクトの基底クラス。
 /// </summary>
-public class BattleCommandObjectBase : BattleObjectBase
+public class BattleHackingObjectBase : BattleObjectBase
 {
     /// <summary>
 	/// タイマーを保持するリスト。

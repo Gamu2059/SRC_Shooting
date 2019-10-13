@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// コマンドイベントの全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class CommandBulletController : BattleCommandObjectBase
+public class CommandBulletController : BattleHackingObjectBase
 {
     #region Field Inspector
 

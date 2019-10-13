@@ -93,6 +93,8 @@ public class BattleRealEnemyController : CharaController
     public override void OnInitialize()
     {
         base.OnInitialize();
+
+        InitHp(m_GenerateParamSet.Hp);
     }
 
     public override void OnLateUpdate()
@@ -118,6 +120,7 @@ public class BattleRealEnemyController : CharaController
     {
         m_GenerateParamSet = paramSet;
         m_BehaviorParamSet = m_GenerateParamSet.EnemyBehaviorParamSet;
+        
         OnSetParamSet();
     }
 

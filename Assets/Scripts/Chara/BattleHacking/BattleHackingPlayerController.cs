@@ -60,18 +60,18 @@ public class BattleHackingPlayerController : CommandCharaController
 
     public override void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
     {
-        if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
-        {
-            base.SufferBullet(attackBullet, attackData, targetData);
-        }
+        //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
+        //{
+        //    base.SufferBullet(attackBullet, attackData, targetData);
+        //}
     }
 
     public override void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
     {
-        if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
-        {
-            base.SufferChara(attackChara, attackData, targetData);
-        }
+        //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
+        //{
+        //    base.SufferChara(attackChara, attackData, targetData);
+        //}
     }
 
     public override void Dead()

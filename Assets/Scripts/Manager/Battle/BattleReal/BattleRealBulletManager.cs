@@ -8,7 +8,7 @@ using System.Linq;
 /// リアルモードの弾を管理する。
 /// </summary>
 [Serializable]
-public class BattleRealBulletManager : ControllableObject
+public class BattleRealBulletManager : ControllableObject, IUpdateCollider
 {
     public static BattleRealBulletManager Instance => BattleRealManager.Instance.BulletManager;
 
@@ -27,6 +27,7 @@ public class BattleRealBulletManager : ControllableObject
     /// UPDATE状態の弾を保持するリスト。
     /// </summary>
     private List<BulletController> m_UpdateBullets;
+    public List<BulletController> Bullets => m_UpdateBullets;
 
     /// <summary>
     /// POOL状態の弾を保持するリスト。
@@ -110,6 +111,19 @@ public class BattleRealBulletManager : ControllableObject
             }
 
             bullet.OnLateUpdate();
+        }
+    }
+
+    public void UpdateCollider()
+    {
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            bullet.UpdateCollider();
         }
     }
 
