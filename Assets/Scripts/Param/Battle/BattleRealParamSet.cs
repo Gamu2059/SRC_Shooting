@@ -28,6 +28,11 @@ public class BattleRealParamSet
 }
 
 [Serializable]
+public class BattleRealPlayerExpParamSet{
+    public int NextLevelNecessaryExp;
+}
+
+[Serializable]
 public class BattleRealPlayerManagerParamSet
 {
     [SerializeField, Tooltip("プレイヤーのプレハブ")]
@@ -45,6 +50,10 @@ public class BattleRealPlayerManagerParamSet
     [SerializeField, Tooltip("プレイヤーの低速移動速度")]
     private float m_PlayerSlowMoveSpeed;
     public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
+
+    [SerializeField, Tooltip("次レベルまでに必要な経験値")]
+    private BattleRealPlayerExpParamSet[] m_BattleRealPlayerExpParamSets;
+    public BattleRealPlayerExpParamSet[] BattleRealPlayerExpParamSets => m_BattleRealPlayerExpParamSets;
 }
 
 [Serializable]
