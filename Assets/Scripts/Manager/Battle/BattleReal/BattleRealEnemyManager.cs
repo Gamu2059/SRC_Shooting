@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// リアルモードの敵キャラを管理する。
 /// </summary>
-public class BattleRealEnemyManager : ControllableObject
+public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
 {
     public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
 
@@ -32,6 +32,7 @@ public class BattleRealEnemyManager : ControllableObject
     /// UPDATE状態の敵を保持するリスト。
     /// </summary>
     private List<BattleRealEnemyController> m_UpdateEnemies;
+    public List<BattleRealEnemyController> Enemies => m_UpdateEnemies;
 
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
@@ -117,6 +118,20 @@ public class BattleRealEnemyManager : ControllableObject
             }
 
             enemy.OnLateUpdate();
+        }
+    }
+
+    public void UpdateCollider()
+    {
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                CheckPoolEnemy(enemy);
+                continue;
+            }
+
+            enemy.UpdateCollider();
         }
     }
 
@@ -306,32 +321,6 @@ public class BattleRealEnemyManager : ControllableObject
         enemy.SetParamSet(paramSet);
         CheckStandByEnemy(enemy);
         return enemy;
-
-        //var enemyParam = m_ParamSet.EnemyParam;
-
-        //var paramData = enemyParam.param[enemyGroupIndex];
-        //var enemy = CreateEnemy(stageEnemyParam.GetEnemyControllers()[paramData.EnemyId]);
-
-        //if (enemy == null)
-        //{
-        //    return;
-        //}
-
-        //enemy.SetBulletSetParam(stageEnemyParam.GetBulletSets()[paramData.BulletSetId]);
-        //enemy.SetArguments(paramData.OtherParameters);
-        //enemy.SetDropItemParam(paramData.Drop);
-        //enemy.SetDefeatParam(paramData.Defeat);
-        //enemy.InitHp(paramData.Hp);
-
-        //var pos = GetPositionFromFieldViewPortPosition(paramData.AppearViewportX, paramData.AppearViewportY);
-        //pos.x += paramData.AppearOffsetX;
-        //pos.y += paramData.AppearOffsetY;
-        //pos.z += paramData.AppearOffsetZ;
-        //enemy.transform.position = pos;
-
-        //var rot = enemy.transform.eulerAngles;
-        //rot.y = paramData.AppearRotateY;
-        //enemy.transform.eulerAngles = rot;
     }
 
     /// <summary>

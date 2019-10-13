@@ -95,6 +95,21 @@ public class BattleHackingStageManager : ControllableMonoBehavior
         obj.localPosition = pos;
     }
 
+    /// <summary>
+    /// 指定した座標から、このマネージャが疑似的に表現するビューポート座標へと変換する。
+    /// フロントオブジェクト専用。
+    /// </summary>
+    public Vector2 CalcViewportPosFromWorldPosition(float x, float z)
+    {
+        var min = MinLocalFieldPosition;
+        var max = MaxLocalFieldPosition;
+        var vX = MathUtility.CalcRate(min.x, max.x, x) - 0.5f;
+        var vZ = MathUtility.CalcRate(min.y, max.y, z) - 0.5f;
+        vX *= (max.x - min.x) / 2;
+        vZ *= (max.y - min.y) / 2;
+        return new Vector2(vX, vZ);
+    }
+
     public Transform GetHolder(E_HOLDER_TYPE holderType)
     {
         Transform holder = null;

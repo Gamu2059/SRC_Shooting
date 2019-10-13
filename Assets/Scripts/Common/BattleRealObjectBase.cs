@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// BattleMainにおけるオブジェクトの基底クラス。
+/// リアルモードにおけるオブジェクトの基底クラス。
 /// </summary>
 public class BattleRealObjectBase : BattleObjectBase
 {

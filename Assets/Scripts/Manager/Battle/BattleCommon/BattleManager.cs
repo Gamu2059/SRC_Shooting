@@ -12,6 +12,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
     #region Field Inspector
 
+    public Material ColliderMaterial;
+
     [SerializeField]
     private BattleParamSet m_BattleParamSet;
 
@@ -39,6 +41,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     [SerializeField]
     public bool m_PlayerNotDead;
+
+    [SerializeField]
+    public bool m_IsDrawColliderArea;
+
+    [SerializeField]
+    public bool m_IsDrawOutSideColliderArea;
 
     #endregion
 
@@ -169,11 +177,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         base.OnFixedUpdate();
         m_StateMachine.OnFixedUpdate();
-    }
-
-    private void OnRenderObject()
-    {
-        
     }
 
     #endregion

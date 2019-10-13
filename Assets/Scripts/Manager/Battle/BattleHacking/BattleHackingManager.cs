@@ -20,6 +20,7 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingPlayerManager PlayerManager { get; private set; }
     public BattleHackingEnemyManager EnemyManager { get; private set; }
     public BattleHackingBulletManager BulletManager { get; private set; }
+    public BattleHackingCollisionManager CollisionManager { get; private set; }
 
     #endregion
 
@@ -115,18 +116,21 @@ public class BattleHackingManager : ControllableObject
         PlayerManager = new BattleHackingPlayerManager(m_ParamSet.PlayerManagerParamSet);
         EnemyManager = new BattleHackingEnemyManager();
         BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
+        CollisionManager = new BattleHackingCollisionManager();
 
         InputManager.OnInitialize();
         HackingTimerManager.OnInitialize();
         PlayerManager.OnInitialize();
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
+        CollisionManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        CollisionManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
         PlayerManager.OnFinalize();
@@ -168,6 +172,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnStart();
         EnemyManager.OnStart();
         BulletManager.OnStart();
+        CollisionManager.OnStart();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
     }
@@ -292,6 +297,7 @@ public class BattleHackingManager : ControllableObject
         HackingTimerManager.OnUpdate();
         PlayerManager.OnUpdate();
         BulletManager.OnUpdate();
+        CollisionManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
@@ -299,6 +305,11 @@ public class BattleHackingManager : ControllableObject
         HackingTimerManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
+        CollisionManager.OnLateUpdate();
+
+        CollisionManager.UpdateCollider();
+        CollisionManager.CheckCollision();
+        CollisionManager.DrawCollider();
 
         BulletManager.GotoPool();
     }
@@ -308,6 +319,7 @@ public class BattleHackingManager : ControllableObject
         HackingTimerManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
+        CollisionManager.OnFixedUpdate();
     }
 
     private void EndOnGame()

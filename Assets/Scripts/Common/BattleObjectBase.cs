@@ -6,7 +6,7 @@ using UnityEngine;
 /// バトルにおけるオブジェクトの基底クラス。
 /// </summary>
 [RequireComponent(typeof(BattleObjectCollider))]
-public class BattleObjectBase : ControllableMonoBehavior, IColliderBase
+public abstract class BattleObjectBase : ControllableMonoBehavior, IColliderBase, IUpdateCollider
 {
     /// <summary>
     /// 衝突情報コンポーネント。
@@ -26,11 +26,14 @@ public class BattleObjectBase : ControllableMonoBehavior, IColliderBase
         return m_Collider;
     }
 
+    #region Game Cycle
+
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        if (m_Collider == null) {
+        if (m_Collider == null)
+        {
             m_Collider = GetComponent<BattleObjectCollider>();
         }
     }
@@ -40,17 +43,22 @@ public class BattleObjectBase : ControllableMonoBehavior, IColliderBase
         base.OnUpdate();
     }
 
-    /// <summary>
-	/// 衝突情報を取得する。
-	/// </summary>
-	public ColliderData[] GetColliderData()
-    {
-        return m_ColliderDatas;
-    }
+    #endregion
 
-    public void UpdateColliderData()
+    /// <summary>
+    /// 衝突情報を更新する。
+    /// </summary>
+    public void UpdateCollider()
     {
         m_ColliderDatas = m_Collider.CreateColliderData();
+    }
+
+    /// <summary>
+    /// 衝突情報を取得する。
+    /// </summary>
+    public ColliderData[] GetColliderData()
+    {
+        return m_ColliderDatas;
     }
 }
 

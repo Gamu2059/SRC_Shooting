@@ -14,11 +14,6 @@ public enum E_COLLIDER_SHAPE
 	CIRCLE,
 
     /// <summary>
-    /// 楕円
-    /// </summary>
-    ELLIPSE,
-
-    /// <summary>
     /// カプセル
     /// </summary>
     CAPSULE,
@@ -26,5 +21,5 @@ public enum E_COLLIDER_SHAPE
     /// <summary>
     /// 直線
     /// </summary>
-    RAY,
+    LINE,
 }

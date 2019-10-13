@@ -370,13 +370,13 @@ public class ItemController : BattleRealObjectBase
     /// <param name="targetData">このアイテムの衝突情報</param>
     public virtual void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData)
     {
-        if (targetData.CollideName == ATTRACT_COLLIDE)
-        {
-            AttractPlayer();
-        }
-        else if (targetData.CollideName == GAIN_COLLIDE)
-        {
-            DestroyItem();
-        }
+        //if (targetData.CollideName == ATTRACT_COLLIDE)
+        //{
+        //    AttractPlayer();
+        //}
+        //else if (targetData.CollideName == GAIN_COLLIDE)
+        //{
+        //    DestroyItem();
+        //}
     }
 }
