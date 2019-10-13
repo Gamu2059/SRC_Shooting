@@ -51,7 +51,7 @@ public abstract class DanmakuCountAbstract : System.Object
 
 
     // Update is called once per frame
-    public void Updates(EnemyController enemyController,float time)
+    public void Updates(BattleRealEnemyController enemyController,float time)
     {
 
         // 本体の位置とオイラー角を更新する
@@ -98,7 +98,7 @@ public abstract class DanmakuCountAbstract : System.Object
     }
 
 
-    public void ShotTouchokuBullet(EnemyController enemyController,int bulletIndex, Vector3 position,float velocityRad,float speed,float dTime)
+    public void ShotTouchokuBullet(BattleRealEnemyController enemyController,int bulletIndex, Vector3 position,float velocityRad,float speed,float dTime)
     {
         Vector3 realPosition = position + speed * dTime * new Vector3(Mathf.Cos(velocityRad), 0, Mathf.Sin(velocityRad));
 
@@ -119,7 +119,7 @@ public abstract class DanmakuCountAbstract : System.Object
     public abstract float CalcLaunchTime();
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public abstract void ShotBullets(EnemyController enemyController,float launchTime, float dTime);
+    public abstract void ShotBullets(BattleRealEnemyController enemyController,float launchTime, float dTime);
 
 
     // 角度からオイラー角を計算する

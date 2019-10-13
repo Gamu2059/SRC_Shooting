@@ -25,7 +25,7 @@ public class DAswAsw : System.Object
     private UDOmn2 uDOmn;
 
 
-    public void Updates(EnemyController enemyController,float time)
+    public void Updates(BattleRealEnemyController enemyController,float time)
     {
         //// 経過時間を進める
         //m_Time += Time.deltaTime;

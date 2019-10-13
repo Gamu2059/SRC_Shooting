@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public abstract class AbstractEnemyMove : EnemyController
+public abstract class AbstractEnemyMove : BattleRealEnemyController
 {
     // その形態になってからの経過時間// 起動してからの経過時間(時刻)
     protected float m_Time;
@@ -111,7 +111,7 @@ public abstract class AbstractEnemyMove : EnemyController
             // 全て終了しているか
             if (m_NowPhase == m_NumPhase)
             {
-                EnemyCharaManager.Instance.DestroyEnemy(this);
+                Destroy();
             }
 
             // 弾幕を出しているか

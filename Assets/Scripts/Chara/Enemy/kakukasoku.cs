@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kakukasoku : EnemyController
+public class kakukasoku : BattleRealEnemyController
 {
 
     // 発射間隔

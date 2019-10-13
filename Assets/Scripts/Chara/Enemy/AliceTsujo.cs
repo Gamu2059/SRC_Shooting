@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AliceTsujo : EnemyController
+public class AliceTsujo : BattleRealEnemyController
 {
 
     // 発射間隔

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SphericalWave : EnemyController
+public class SphericalWave : BattleRealEnemyController
 {
 
     // 発射間隔

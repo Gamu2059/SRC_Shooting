@@ -13,7 +13,7 @@ public class DSinOmn : System.Object
     private UDOmn2 uDOmn;
 
 
-    public void Updates(EnemyController enemyController, float time)
+    public void Updates(BattleRealEnemyController enemyController, float time)
     {
         uDSin.Updates(enemyController, time);
         uDOmn.Updates(enemyController, time);

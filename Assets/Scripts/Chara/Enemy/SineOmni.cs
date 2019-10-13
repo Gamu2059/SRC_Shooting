@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SineOmni : EnemyController
+public class SineOmni : BattleRealEnemyController
 {
 
     // 発射間隔

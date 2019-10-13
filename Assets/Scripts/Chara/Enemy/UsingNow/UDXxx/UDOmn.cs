@@ -55,7 +55,7 @@ public class UDOmn : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(EnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
     {
 
         Vector3 avePosition;
@@ -104,8 +104,9 @@ public class UDOmn : DanmakuCountAbstract
         {
             if (m_Bool[(int)Omn.BOOL.発射角度が自機依存かどうか])
             {
+                var player = BattleRealPlayerManager.Instance.Player;
                 rad0 = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Omn.VECTOR3.発射平均位置] + posRandomZure,
-                    PlayerCharaManager.Instance.GetCurrentController().transform.position);
+                    player.transform.position);
 
                 if (m_Bool[(int)Omn.BOOL.発射角度が自機狙いかどうか])
                 {

@@ -14,7 +14,7 @@ using UniRx;
 
 /// </summary>
 
-public class CircleMoveEnemy : EnemyController
+public class CircleMoveEnemy : BattleRealEnemyController
 
 {
 

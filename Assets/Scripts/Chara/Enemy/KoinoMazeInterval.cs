@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KoinoMazeInterval : EnemyController
+public class KoinoMazeInterval : BattleRealEnemyController
 {
 
     // 発射間隔

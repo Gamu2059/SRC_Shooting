@@ -18,7 +18,7 @@ public class DLisOmn : System.Object
     private UDOmn2 uDOmn;
 
 
-    public void Updates(EnemyController enemyController, float time)
+    public void Updates(BattleRealEnemyController enemyController, float time)
     {
         uDLis.Updates(enemyController, time);
         uDOmn.Updates(enemyController, time);

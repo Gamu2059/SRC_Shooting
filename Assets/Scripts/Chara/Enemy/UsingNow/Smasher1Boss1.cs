@@ -135,7 +135,7 @@ public class Smasher1Boss1 : System.Object
     }
 
 
-    public void Updates(EnemyController enemyController)
+    public void Updates(BattleRealEnemyController enemyController)
     {
         if (m_AttackChange)
         {

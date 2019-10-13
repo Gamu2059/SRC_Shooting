@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OmniCycle : EnemyController
+public class OmniCycle : BattleRealEnemyController
 {
 
     // 発射間隔

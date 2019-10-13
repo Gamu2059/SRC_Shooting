@@ -47,6 +47,16 @@ public class CharaController : BattleRealObjectBase
 		m_BulletSetParam = param;
 	}
 
+    public BulletParam GetBulletParam(int index = 0)
+    {
+        return m_BulletSetParam.GetBulletParam(index);
+    }
+
+    public int GetBulletPrefabsCount()
+    {
+        return m_BulletSetParam.GetBulletPrefabsCount();
+    }
+
 	#endregion
 
 

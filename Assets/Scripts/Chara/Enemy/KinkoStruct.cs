@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoStruct : EnemyController
+public class KinkoStruct : BattleRealEnemyController
 {
 
     // 発射

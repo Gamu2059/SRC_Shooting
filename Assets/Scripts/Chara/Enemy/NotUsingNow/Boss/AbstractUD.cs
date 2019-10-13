@@ -70,7 +70,7 @@ public abstract class AbstractUD : System.Object
 
 
     // Update is called once per frame
-    public void Updates(EnemyController enemyController, float time)
+    public void Updates(BattleRealEnemyController enemyController, float time)
     {
         Judge(time);
 
@@ -174,7 +174,7 @@ public abstract class AbstractUD : System.Object
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public abstract void ShotBullets(EnemyController enemyController, float launchTime, float dTime);
+    public abstract void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime);
 
 
     // 角度からオイラー角を計算する

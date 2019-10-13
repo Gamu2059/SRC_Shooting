@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircleBaramaki : EnemyController
+public class CircleBaramaki : BattleRealEnemyController
 {
 
     // 発射間隔

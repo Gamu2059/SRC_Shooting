@@ -16,7 +16,7 @@ public class DKinOmn : System.Object
     private UDOmn2 uDOmn;
 
 
-    public void Updates(EnemyController enemyController, float time)
+    public void Updates(BattleRealEnemyController enemyController, float time)
     {
         uDKin1.Updates(enemyController,time);
         uDKin2.Updates(enemyController, time);

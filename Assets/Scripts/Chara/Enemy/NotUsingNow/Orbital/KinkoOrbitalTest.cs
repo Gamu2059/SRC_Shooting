@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoOrbitalTest : EnemyController
+public class KinkoOrbitalTest : BattleRealEnemyController
 {
 
     // 発射間隔

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SpecialOrbitalAbstract : EnemyController
+public abstract class SpecialOrbitalAbstract : BattleRealEnemyController
 {
 
     // 実際の今までの発射回数

@@ -21,7 +21,7 @@ public class UDOmn1 : DanmakuCountAbstract
 
 
     // 発射位置を計算する
-    public virtual Vector3 CalcLaunchPosition(EnemyController enemyController, float time)
+    public virtual Vector3 CalcLaunchPosition(BattleRealEnemyController enemyController, float time)
     {
         return m_LaunchPosition;
     }
@@ -49,7 +49,7 @@ public class UDOmn1 : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(EnemyController enemyController,float launchTime, float dTime)
+    public override void ShotBullets(BattleRealEnemyController enemyController,float launchTime, float dTime)
     {
 
         float distance = m_BulletSpeed * dTime;

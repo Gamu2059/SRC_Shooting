@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SineCurve : EnemyController
+public class SineCurve : BattleRealEnemyController
 {
 
     // 発射間隔

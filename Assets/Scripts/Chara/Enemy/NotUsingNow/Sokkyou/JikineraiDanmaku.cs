@@ -43,7 +43,8 @@ public class JikineraiDanmaku : AbstractBezierMove
     {
 
         // 敵本体から見た自機の位置
-        Vector3 relativeVector = PlayerCharaManager.Instance.GetCurrentController().transform.position - transform.position;
+        var player = BattleRealPlayerManager.Instance.Player;
+        Vector3 relativeVector = player.transform.position - transform.position;
 
         // 敵本体から見た自機の角度
         float relativeRad = Mathf.Atan2(relativeVector.z, relativeVector.x);

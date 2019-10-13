@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // あるスマッシャーのボスのクラス。
-public class BossTest : EnemyController
+public class BossTest : BattleRealEnemyController
 {
     // 時刻を入力すると位置を返すデリゲート
     public delegate Vector3 PositionDelegate(float t);

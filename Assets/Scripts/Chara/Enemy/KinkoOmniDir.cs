@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoOmniDir : EnemyController
+public class KinkoOmniDir : BattleRealEnemyController
 {
 
     // 全方位弾の発射間隔

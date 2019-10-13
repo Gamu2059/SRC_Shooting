@@ -51,7 +51,7 @@ public class UDWay : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(EnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
     {
 
         Vector3 avePosition;
@@ -80,8 +80,9 @@ public class UDWay : DanmakuCountAbstract
 
         // これ以降で使うフィールドは、bool値によらず必ず使うものだけを使う。
 
+        var player = BattleRealPlayerManager.Instance.Player;
         float centerRad = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Way.VECTOR3.発射平均位置] + posRandomZure,
-            PlayerCharaManager.Instance.GetCurrentController().transform.position);
+            player.transform.position);
 
         for (int i = -(m_Int[(int)Way.INT.way数] - 1); i <= m_Int[(int)Way.INT.way数] - 1; i += 2)
         {

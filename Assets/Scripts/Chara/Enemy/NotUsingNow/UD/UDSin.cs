@@ -44,7 +44,7 @@ public class UDSin : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(EnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
     {
 
         float pastRad = m_Float[(int)FLOAT.角速度] * launchTime;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleShot : EnemyController
+public class SimpleShot : BattleRealEnemyController
 {
 
     // 発射間隔

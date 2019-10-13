@@ -13,7 +13,7 @@ public class DLisJik : System.Object
     private UDJik uDJik;
 
 
-    public void Updates(EnemyController enemyController,float time)
+    public void Updates(BattleRealEnemyController enemyController,float time)
     {
         uDLis.Updates(enemyController, time);
         uDJik.Updates(enemyController, time);

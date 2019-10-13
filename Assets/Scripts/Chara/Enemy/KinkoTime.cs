@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoTime : EnemyController
+public class KinkoTime : BattleRealEnemyController
 {
 
     // 発射間隔

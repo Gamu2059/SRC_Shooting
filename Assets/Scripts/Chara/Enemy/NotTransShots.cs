@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotTransShots : EnemyController
+public class NotTransShots : BattleRealEnemyController
 {
 
     // 発射間隔
