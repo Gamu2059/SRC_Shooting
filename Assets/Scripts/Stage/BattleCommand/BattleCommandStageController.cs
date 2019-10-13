@@ -37,12 +37,6 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
     private float m_ResetPositionPoint;
 
     /// <summary>
-    /// 壁のリスト。
-    /// </summary>
-    [SerializeField]
-    private CommandWallController[] m_WallControllers;
-
-    /// <summary>
     /// 壁の出現間隔。
     /// </summary>
     [SerializeField]
@@ -98,15 +92,15 @@ public class BattleCommandStageController : BattleControllableMonoBehavior
 
     private void ControlViewMoving()
     {
-        var moveRoot = CommandStageManager.Instance.GetMoveObjectHolder();
-        moveRoot.transform.Translate(Vector3.forward * m_MoveSpeed * Time.deltaTime);
+        //var moveRoot = CommandStageManager.Instance.GetMoveObjectHolder();
+        //moveRoot.transform.Translate(Vector3.forward * m_MoveSpeed * Time.deltaTime);
 
-        var pos = moveRoot.transform.position;
-        if (pos.z >= m_ResetPositionPoint)
-        {
-            pos.z = 0;
-            moveRoot.transform.position = pos;
-        }
+        //var pos = moveRoot.transform.position;
+        //if (pos.z >= m_ResetPositionPoint)
+        //{
+        //    pos.z = 0;
+        //    moveRoot.transform.position = pos;
+        //}
     }
 
     private void AppearWall()

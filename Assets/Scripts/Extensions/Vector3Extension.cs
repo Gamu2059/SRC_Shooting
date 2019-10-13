@@ -8,14 +8,4 @@ public static class Vector3Extension
 	{
 		return new Vector2( v.x, v.z );
 	}
-
-	public static Vector3 ToMoveObjectHolderBasePosition( this Vector3 position )
-	{
-		return StageManager.Instance.GetMoveObjectHolderBasePosition( position );
-	}
-
-	public static Vector3 ToMoveObjectHolderBaseEulerAngles( this Vector3 eulerAngles )
-	{
-		return StageManager.Instance.GetMoveObjectHolderBaseEulerAngles( eulerAngles );
-	}
 }

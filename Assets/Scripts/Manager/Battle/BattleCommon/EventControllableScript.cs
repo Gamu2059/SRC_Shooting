@@ -49,7 +49,7 @@ public class EventControllableScript : IControllableGameCycle
     /// </summary>
     protected void DestroyScript()
     {
-        EventManager.Instance.CheckDestroyScript(this);
+        //BattleRealEventManager.Instance.CheckDestroyScript(this);
     }
 
     /// <summary>

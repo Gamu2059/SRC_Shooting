@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class BulletController : BattleMainObjectBase
+public class BulletController : BattleRealObjectBase
 {
     #region Field Inspector
 
@@ -479,7 +479,7 @@ public class BulletController : BattleMainObjectBase
         }
 
         // プールから弾を取得
-        var bullet = BulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        var bullet = BattleRealBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
         if (bullet == null)
         {
@@ -527,7 +527,7 @@ public class BulletController : BattleMainObjectBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -572,7 +572,7 @@ public class BulletController : BattleMainObjectBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -611,7 +611,7 @@ public class BulletController : BattleMainObjectBase
         }
 
         // プールから弾を取得
-        var bullet = BulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        var bullet = BattleRealBulletManager.Instance.GetPoolingBullet(bulletPrefab);
 
         if (bullet == null)
         {
@@ -658,7 +658,7 @@ public class BulletController : BattleMainObjectBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -686,7 +686,8 @@ public class BulletController : BattleMainObjectBase
         if (isBomb)
         {
             bulletParam = bulletSetParam.GetBombParam(shotParam.BulletParamIndex);
-        } else
+        }
+        else
         {
             bulletParam = bulletSetParam.GetBulletParam(shotParam.BulletParamIndex);
         }
@@ -704,7 +705,7 @@ public class BulletController : BattleMainObjectBase
 
         if (isCheck)
         {
-            BulletManager.Instance.CheckStandbyBullet(bullet);
+            BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
         return bullet;
@@ -757,7 +758,7 @@ public class BulletController : BattleMainObjectBase
 
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            BulletManager.Instance.CheckPoolBullet(this);
+            BattleRealBulletManager.Instance.CheckPoolBullet(this);
         }
     }
 
@@ -826,26 +827,27 @@ public class BulletController : BattleMainObjectBase
     {
         if (m_Troop == E_CHARA_TROOP.ENEMY)
         {
-            return PlayerCharaManager.Instance.GetCurrentController();
+            return BattleRealPlayerManager.Instance.Player;
         }
         else
         {
-            List<EnemyController> enemies = EnemyCharaManager.Instance.GetUpdateEnemies();
-            CharaController nearestEnemy = null;
-            float minSqrDist = float.MaxValue;
+            //List<EnemyController> enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
+            //CharaController nearestEnemy = null;
+            //float minSqrDist = float.MaxValue;
 
-            foreach (var enemy in enemies)
-            {
-                float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
+            //foreach (var enemy in enemies)
+            //{
+            //    float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
 
-                if (sqrDist < minSqrDist)
-                {
-                    minSqrDist = sqrDist;
-                    nearestEnemy = enemy;
-                }
-            }
+            //    if (sqrDist < minSqrDist)
+            //    {
+            //        minSqrDist = sqrDist;
+            //        nearestEnemy = enemy;
+            //    }
+            //}
 
-            return nearestEnemy;
+            //return nearestEnemy;
+            return null;
         }
     }
 
@@ -907,10 +909,14 @@ public class BulletController : BattleMainObjectBase
         }
     }
 
-    protected virtual void OnBecameInvisible()
+    public override void OnLateUpdate()
     {
-        // 画面から見えなくなったら弾を破棄する
-        DestroyBullet();
+        base.OnLateUpdate();
+
+        if (BattleRealBulletManager.Instance.IsOutOfBulletField(this))
+        {
+            DestroyBullet();
+        }
     }
 
     /// <summary>

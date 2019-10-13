@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UniRx;
+using UnityEngine.Video;
 
 /// <summary>
 /// バトル画面のマネージャーを管理する上位マネージャ。
@@ -10,217 +10,543 @@ using UniRx;
 /// </summary>
 public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
-    public enum E_BATTLE_STATUS
-    {
-        /// <summary>
-        /// 現在、BattleMainの状態であることを示す。
-        /// </summary>
-		MAIN,
-
-        /// <summary>
-        /// 現在、BattleCommandの状態であることを示す。
-        /// </summary>
-		COMMAND,
-
-        /// <summary>
-        /// BattleCommandへの遷移中であることを示す。
-        /// </summary>
-        TRANSITION_COMMAND,
-
-        /// <summary>
-        /// BattleMainへの遷移中であることを示す。
-        /// </summary>
-        TRANSITION_MAIN,
-    }
-
     #region Field Inspector
 
-    /// <summary>
-    /// メインのバトル画面のマネージャーリスト。
-    /// </summary>
-    [SerializeField]
-    private List<BattleControllableMonoBehavior> m_BattleMainManagers;
-
-    /// <summary>
-    /// コマンドイベント画面のマネージャーリスト。
-    /// </summary>
-    [SerializeField]
-    private List<BattleControllableMonoBehavior> m_BattleCommandManagers;
+    public Material ColliderMaterial;
 
     [SerializeField]
-    private E_BATTLE_STATUS m_InitMode;
-
-    [Header("Game Progress")]
+    private BattleParamSet m_BattleParamSet;
 
     [SerializeField]
-    private E_BATTLE_STATUS m_BattleStatus;
+    private BattleRealStageManager m_BattleRealStageManager;
+    public BattleRealStageManager BattleRealStageManager => m_BattleRealStageManager;
+
+    [SerializeField]
+    private BattleRealUiManager m_BattleRealUiManager;
+    public BattleRealUiManager BattleRealUiManager => m_BattleRealUiManager;
+
+    [SerializeField]
+    private BattleHackingStageManager m_BattleHackingStageManager;
+    public BattleHackingStageManager BattleHackingStageManager => m_BattleHackingStageManager;
+
+    [SerializeField]
+    private BattleHackingUiManager m_BattleHackingUiManager;
+    public BattleHackingUiManager BattleHackingUiManager => m_BattleHackingUiManager;
+
+    [SerializeField]
+    private VideoPlayer m_VideoPlayer;
+
+    [SerializeField]
+    private bool m_IsStartHackingMode;
 
     [SerializeField]
     public bool m_PlayerNotDead;
+
+    [SerializeField]
+    public bool m_IsDrawColliderArea;
+
+    [SerializeField]
+    public bool m_IsDrawOutSideColliderArea;
 
     #endregion
 
     #region Field
 
-    /// <summary>
-    /// 状態遷移のリクエストを受けたかどうか。
-    /// </summary>
-    private bool m_IsRequestedTransition;
+    private StateMachine<E_BATTLE_STATE> m_StateMachine;
 
-    /// <summary>
-    /// リクエストされた遷移先状態。
-    /// </summary>
-    private E_BATTLE_STATUS m_RequestedBattleStatus;
+    public BattleRealManager RealManager { get; private set; }
 
-    /// <summary>
-    /// 全てのマネージャが初期化された後のコールバック
-    /// </summary>
-    public Action m_OnInitManagers;
-
-    /// <summary>
-    /// 全てのマネージャがスタートした後のコールバック
-    /// </summary>
-    public Action m_OnStartManagers;
+    public BattleHackingManager HackingManager { get; private set; }
 
     #endregion
 
-    #region Get & Set
+    #region Game Cycle
 
-    /// <summary>
-    /// メインのバトル画面のマネージャーリストを取得する。
-    /// </summary>
-    public List<BattleControllableMonoBehavior> GetBattleMainManegers()
-    {
-        return m_BattleMainManagers;
-    }
-
-    /// <summary>
-    /// コマンドイベント画面のマネージャーリストを取得する。
-    /// </summary>
-    public List<BattleControllableMonoBehavior> GetBattleCommandManegers()
-    {
-        return m_BattleCommandManagers;
-    }
-
-    #endregion
-
-    /// <summary>
-    /// シーン読み込み時に呼び出される。
-    /// </summary>
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        EchoBulletIndexGenerater.OnInitialize();
-        m_BattleMainManagers.ForEach(m => m.OnInitialize());
-        m_BattleCommandManagers.ForEach(m => m.OnInitialize());
+        m_StateMachine = new StateMachine<E_BATTLE_STATE>();
 
-        EventUtility.SafeInvokeAction(m_OnInitManagers);
-        m_OnInitManagers = null;
-    }
-
-    /// <summary>
-    /// シーン破棄時に呼び出される。
-    /// </summary>
-	public override void OnFinalize()
-    {
-        base.OnFinalize();
-
-        m_BattleMainManagers.ForEach(m => m.OnFinalize());
-        m_BattleCommandManagers.ForEach(m => m.OnFinalize());
-        EchoBulletIndexGenerater.OnFinalize();
-    }
-
-    /// <summary>
-    /// シーン読み込み時の一度だけ呼び出される。
-    /// </summary>
-	public override void OnStart()
-    {
-        base.OnStart();
-
-        m_BattleMainManagers.ForEach(m => m.OnStart());
-        m_BattleCommandManagers.ForEach(m => m.OnStart());
-
-        EventUtility.SafeInvokeAction(m_OnStartManagers);
-        m_OnStartManagers = null;
-
-        if (m_InitMode == E_BATTLE_STATUS.MAIN || m_InitMode == E_BATTLE_STATUS.TRANSITION_MAIN)
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.START)
         {
-            TransitionForceBattleMain();
+            OnStart = StartOnStart,
+            OnUpdate = UpdateOnStart,
+            OnLateUpdate = LateUpdateOnStart,
+            OnFixedUpdate = FixedUpdateOnStart,
+            OnEnd = EndOnStart,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.REAL_MODE)
+        {
+            OnStart = StartOnRealMode,
+            OnUpdate = UpdateOnRealMode,
+            OnLateUpdate = LateUpdateOnRealMode,
+            OnFixedUpdate = FixedUpdateOnRealMode,
+            OnEnd = EndOnRealMode,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.HACKING_MODE)
+        {
+            OnStart = StartOnHackingMode,
+            OnUpdate = UpdateOnHackingMode,
+            OnLateUpdate = LateUpdateOnHackingMode,
+            OnFixedUpdate = FixedUpdateOnHackingMode,
+            OnEnd = EndOnHackingMode,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_REAL)
+        {
+            OnStart = StartOnTransitionToReal,
+            OnUpdate = UpdateOnTransitionToReal,
+            OnLateUpdate = LateUpdateOnTransitionToReal,
+            OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            OnEnd = EndOnTransitionToReal,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_HACKING)
+        {
+            OnStart = StartOnTransitionToHacking,
+            OnUpdate = UpdateOnTransitionToHacking,
+            OnLateUpdate = LateUpdateOnTransitionToHacking,
+            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            OnEnd = EndOnTransitionToHacking,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_CLEAR)
+        {
+            OnStart = StartOnGameClear,
+            OnUpdate = UpdateOnGameClear,
+            OnLateUpdate = LateUpdateOnGameClear,
+            OnFixedUpdate = FixedUpdateOnGameClear,
+            OnEnd = EndOnGameClear,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_OVER)
+        {
+            OnStart = StartOnGameOver,
+            OnUpdate = UpdateOnGameOver,
+            OnLateUpdate = LateUpdateOnGameOver,
+            OnFixedUpdate = FixedUpdateOnGameOver,
+            OnEnd = EndOnGameOver,
+        });
+
+        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.END)
+        {
+            OnStart = StartOnEnd,
+            OnUpdate = UpdateOnEnd,
+            OnLateUpdate = LateUpdateOnEnd,
+            OnFixedUpdate = FixedUpdateOnEnd,
+            OnEnd = EndOnEnd,
+        });
+
+        m_BattleRealStageManager.OnInitialize();
+
+        RealManager = new BattleRealManager(m_BattleParamSet.BattleRealParamSet);
+        HackingManager = new BattleHackingManager(m_BattleParamSet.BattleHackingParamSet);
+
+        RealManager.OnInitialize();
+        HackingManager.OnInitialize();
+
+        RequestChangeState(E_BATTLE_STATE.START);
+    }
+
+    public override void OnFinalize()
+    {
+        HackingManager.OnFinalize();
+        RealManager.OnFinalize();
+
+        m_BattleRealStageManager.OnFinalize();
+
+        base.OnFinalize();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        m_StateMachine.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+        m_StateMachine.OnLateUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+        m_StateMachine.OnFixedUpdate();
+    }
+
+    #endregion
+
+    #region Start State
+
+    private void StartOnStart()
+    {
+        RealManager.OnStart();
+        HackingManager.OnStart();
+
+        m_BattleRealStageManager.gameObject.SetActive(true);
+        m_BattleHackingStageManager.gameObject.SetActive(false);
+        m_VideoPlayer.gameObject.SetActive(false);
+
+        var audio = AudioManager.Instance;
+        audio.SetPrimaryBgmVolume(0);
+        audio.SetSecondaryBgmVolume(0);
+        audio.PlayBossBgm(m_BattleParamSet.BossBgmParamSet);
+
+        RequestChangeState(E_BATTLE_STATE.REAL_MODE);
+    }
+
+    private void UpdateOnStart()
+    {
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnStart()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnStart()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnStart()
+    {
+
+    }
+
+    #endregion
+
+    #region Real Mode State
+
+    private void StartOnRealMode()
+    {
+        var audio = AudioManager.Instance;
+        audio.SetPrimaryBgmVolume(1);
+        audio.SetSecondaryBgmVolume(0);
+
+        m_BattleRealUiManager.SetAlpha(1);
+        m_BattleHackingUiManager.SetAlpha(0);
+    }
+
+    private void UpdateOnRealMode()
+    {
+        if (m_IsStartHackingMode)
+        {
+            m_IsStartHackingMode = false;
+            RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+        }
+
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnRealMode()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnRealMode()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnRealMode()
+    {
+
+    }
+
+    #endregion
+
+    #region Hacking Mode State
+
+    private void StartOnHackingMode()
+    {
+        var audio = AudioManager.Instance;
+        audio.SetPrimaryBgmVolume(0);
+        audio.SetSecondaryBgmVolume(1);
+
+        m_BattleHackingUiManager.SetAlpha(1);
+        m_BattleRealUiManager.SetAlpha(0);
+    }
+
+    private void UpdateOnHackingMode()
+    {
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnHackingMode()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnHackingMode()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnHackingMode()
+    {
+
+    }
+
+    #endregion
+
+    #region Transition To Hacking State
+
+    private void StartOnTransitionToHacking()
+    {
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING);
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING);
+
+        m_BattleHackingStageManager.gameObject.SetActive(true);
+
+        m_VideoPlayer.clip = m_BattleParamSet.TransitionToHackingMovie;
+        m_VideoPlayer.Play();
+        m_VideoPlayer.gameObject.SetActive(true);
+
+        AudioManager.Instance.PlaySe(m_BattleParamSet.TransitionToHackingSe);
+    }
+
+    private void UpdateOnTransitionToHacking()
+    {
+        if (m_VideoPlayer.isPlaying)
+        {
+            var movieTime = m_BattleParamSet.TransitionToHackingMovie.length;
+            var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
+
+            var fadeOutVideoValue = m_BattleParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
+            var fadeInVideoValue = m_BattleParamSet.FadeInVideoParam.Evaluate(normalizedTime);
+            var fadeOutBgmValue = m_BattleParamSet.FadeOutBgmParam.Evaluate(normalizedTime);
+            var fadeInBgmValue = m_BattleParamSet.FadeInBgmParam.Evaluate(normalizedTime);
+
+            m_BattleRealUiManager.SetAlpha(fadeOutVideoValue);
+            m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
+
+            var audio = AudioManager.Instance;
+            audio.SetPrimaryBgmVolume(fadeOutBgmValue);
+            audio.SetSecondaryBgmVolume(fadeInBgmValue);
         }
         else
         {
-            TransitionForceBattleCommand();
+            RequestChangeState(E_BATTLE_STATE.HACKING_MODE);
         }
+
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
     }
 
-    /// <summary>
-    /// シーン読み込み後、毎フレーム呼び出される。
-    /// </summary>
-	public override void OnUpdate()
+    private void LateUpdateOnTransitionToHacking()
     {
-        base.OnUpdate();
-
-        switch (m_BattleStatus)
-        {
-            case E_BATTLE_STATUS.MAIN:
-                m_BattleMainManagers.ForEach(m => m.OnUpdate());
-                break;
-            case E_BATTLE_STATUS.COMMAND:
-                m_BattleCommandManagers.ForEach(m => m.OnUpdate());
-                break;
-        }
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
     }
 
-    /// <summary>
-    /// シーン読み込み後、OnUpdateの後に毎フレーム呼び出される。
-    /// </summary>
-	public override void OnLateUpdate()
+    private void FixedUpdateOnTransitionToHacking()
     {
-        base.OnLateUpdate();
-
-        switch (m_BattleStatus)
-        {
-            case E_BATTLE_STATUS.MAIN:
-                m_BattleMainManagers.ForEach(m => m.OnLateUpdate());
-                break;
-            case E_BATTLE_STATUS.COMMAND:
-                m_BattleCommandManagers.ForEach(m => m.OnLateUpdate());
-                break;
-        }
-
-        if (m_IsRequestedTransition)
-        {
-            if (m_RequestedBattleStatus == E_BATTLE_STATUS.MAIN)
-            {
-                ProcessTransitionBattleMain();
-            }
-            else if (m_RequestedBattleStatus == E_BATTLE_STATUS.COMMAND)
-            {
-                ProcessTransitionBattleCommand();
-            }
-
-            m_IsRequestedTransition = false;
-        }
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
     }
 
-    /// <summary>
-    /// シーン読み込み後、固定間隔で呼び出される。
-    /// </summary>
-	public override void OnFixedUpdate()
+    private void EndOnTransitionToHacking()
     {
-        base.OnFixedUpdate();
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.STAY_HACKING);
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.GAME);
 
-        switch (m_BattleStatus)
-        {
-            case E_BATTLE_STATUS.MAIN:
-                m_BattleMainManagers.ForEach(m => m.OnFixedUpdate());
-                break;
-            case E_BATTLE_STATUS.COMMAND:
-                m_BattleCommandManagers.ForEach(m => m.OnFixedUpdate());
-                break;
-        }
+        m_BattleRealStageManager.gameObject.SetActive(false);
+        m_VideoPlayer.gameObject.SetActive(false);
+        m_VideoPlayer.Stop();
     }
+
+    #endregion
+
+    #region Transition To Real State
+
+    private void StartOnTransitionToReal()
+    {
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_REAL);
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL);
+
+        m_BattleRealStageManager.gameObject.SetActive(true);
+
+        m_VideoPlayer.clip = m_BattleParamSet.TransitionToRealMovie;
+        m_VideoPlayer.Play();
+        m_VideoPlayer.gameObject.SetActive(true);
+
+        AudioManager.Instance.PlaySe(m_BattleParamSet.TransitionToRealSe);
+    }
+
+    private void UpdateOnTransitionToReal()
+    {
+        if (m_VideoPlayer.isPlaying)
+        {
+            var movieTime = m_BattleParamSet.TransitionToRealMovie.length;
+            var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
+
+            var fadeOutVideoValue = m_BattleParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
+            var fadeInVideoValue = m_BattleParamSet.FadeInVideoParam.Evaluate(normalizedTime);
+            var fadeOutBgmValue = m_BattleParamSet.FadeOutBgmParam.Evaluate(normalizedTime);
+            var fadeInBgmValue = m_BattleParamSet.FadeInBgmParam.Evaluate(normalizedTime);
+
+            m_BattleHackingUiManager.SetAlpha(fadeOutVideoValue);
+            m_BattleRealUiManager.SetAlpha(fadeInVideoValue);
+
+            var audio = AudioManager.Instance;
+            audio.SetSecondaryBgmVolume(fadeOutBgmValue);
+            audio.SetPrimaryBgmVolume(fadeInBgmValue);
+        }
+        else
+        {
+            RequestChangeState(E_BATTLE_STATE.REAL_MODE);
+        }
+
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnTransitionToReal()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnTransitionToReal()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnTransitionToReal()
+    {
+        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+
+        m_BattleHackingStageManager.gameObject.SetActive(false);
+        m_VideoPlayer.gameObject.SetActive(false);
+        m_VideoPlayer.Stop();
+    }
+
+    #endregion
+
+    #region Game Clear State
+
+    private void StartOnGameClear()
+    {
+
+    }
+
+    private void UpdateOnGameClear()
+    {
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnGameClear()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnGameClear()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnGameClear()
+    {
+
+    }
+
+    #endregion
+
+    #region Game Over State
+
+    private void StartOnGameOver()
+    {
+
+    }
+
+    private void UpdateOnGameOver()
+    {
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnGameOver()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnGameOver()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnGameOver()
+    {
+
+    }
+
+    #endregion
+
+    #region End State
+
+    private void StartOnEnd()
+    {
+
+    }
+
+    private void UpdateOnEnd()
+    {
+        RealManager.OnUpdate();
+        HackingManager.OnUpdate();
+    }
+
+    private void LateUpdateOnEnd()
+    {
+        RealManager.OnLateUpdate();
+        HackingManager.OnLateUpdate();
+    }
+
+    private void FixedUpdateOnEnd()
+    {
+        RealManager.OnFixedUpdate();
+        HackingManager.OnFixedUpdate();
+    }
+
+    private void EndOnEnd()
+    {
+
+    }
+
+    #endregion
+
+    public void RequestChangeState(E_BATTLE_STATE state)
+    {
+        if (m_StateMachine == null)
+        {
+            return;
+        }
+
+        m_StateMachine.Goto(state);
+    }
+
 
     /// <summary>
     /// ゲームを開始する。
@@ -235,14 +561,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
 	public void GameOver()
     {
-        DetachBattleMainInputAction();
-        BattleMainUiManager.Instance.ShowGameOver();
-        BattleMainAudioManager.Instance.StopAllBGM();
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-        {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
-        });
-        TimerManager.Instance.RegistTimer(timer);
+        //DetachBattleMainInputAction();
+        //BattleMainUiManager.Instance.ShowGameOver();
+        //BattleMainAudioManager.Instance.StopAllBGM();
+        //var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
+        //{
+        //    BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
+        //});
+        //TimerManager.Instance.RegistTimer(timer);
     }
 
     /// <summary>
@@ -250,183 +576,13 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
 	public void GameClear()
     {
-        DetachBattleMainInputAction();
+        //DetachBattleMainInputAction();
 
-        BattleMainUiManager.Instance.ShowGameClear();
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-        {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
-        });
-        TimerManager.Instance.RegistTimer(timer);
-    }
-
-    /// <summary>
-    /// BattleCommandからBattleMainへと遷移する。
-    /// </summary>
-    public void TransitionBattleMain()
-    {
-        if (m_BattleStatus != E_BATTLE_STATUS.COMMAND || m_IsRequestedTransition)
-        {
-            return;
-        }
-
-        TransitionForceBattleMain();
-    }
-
-    /// <summary>
-    /// BattleMainからBattleCommandへと遷移する。
-    /// </summary>
-    public void TransitionBattleCommand()
-    {
-        if (m_BattleStatus != E_BATTLE_STATUS.MAIN || m_IsRequestedTransition)
-        {
-            return;
-        }
-
-        TransitionForceBattleCommand();
-    }
-
-    /// <summary>
-    /// 強制的にBattleMainへと遷移する。
-    /// </summary>
-    private void TransitionForceBattleMain()
-    {
-        m_IsRequestedTransition = true;
-        m_RequestedBattleStatus = E_BATTLE_STATUS.MAIN;
-    }
-
-    /// <summary>
-    /// 強制的にBattleCommandへと遷移する。
-    /// </summary>
-    private void TransitionForceBattleCommand()
-    {
-        m_IsRequestedTransition = true;
-        m_RequestedBattleStatus = E_BATTLE_STATUS.COMMAND;
-    }
-
-    /// <summary>
-    /// 実際にBattleMainに状態遷移する処理を行う。
-    /// </summary>
-    private void ProcessTransitionBattleMain()
-    {
-        m_BattleStatus = E_BATTLE_STATUS.TRANSITION_MAIN;
-
-        DetachBattleCommandInputAction();
-        m_BattleCommandManagers.ForEach(m => m.OnDisableObject());
-        m_BattleMainManagers.ForEach(m => m.OnEnableObject());
-        AttachBattleMainInputAction();
-
-        m_BattleStatus = E_BATTLE_STATUS.MAIN;
-    }
-
-    /// <summary>
-    /// 実際にBattleCommandに状態遷移する処理を行う。
-    /// </summary>
-    private void ProcessTransitionBattleCommand()
-    {
-        m_BattleStatus = E_BATTLE_STATUS.TRANSITION_COMMAND;
-
-        DetachBattleMainInputAction();
-        m_BattleMainManagers.ForEach(m => m.OnDisableObject());
-        m_BattleCommandManagers.ForEach(m => m.OnEnableObject());
-        AttachBattleCommandInputAction();
-
-        m_BattleStatus = E_BATTLE_STATUS.COMMAND;
-    }
-
-    private void TransitionMode(InputManager.E_INPUT_STATE state)
-    {
-        if (state != InputManager.E_INPUT_STATE.DOWN)
-        {
-            return;
-        }
-
-        DetachBattleMainInputAction();
-        DetachBattleCommandInputAction();
-        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
-    }
-
-    /// <summary>
-    /// Main画面で必要な入力アクションを付与する。
-    /// </summary>
-    private void AttachBattleMainInputAction()
-    {
-        try
-        {
-            InputManager.Instance.HorizontalAction += PlayerCharaManager.Instance.OnInputHorizontal;
-            InputManager.Instance.VerticalAction += PlayerCharaManager.Instance.OnInputVertical;
-            InputManager.Instance.ChangeCharaAction += PlayerCharaManager.Instance.OnInputChangeChara;
-            InputManager.Instance.ShotAction += PlayerCharaManager.Instance.OnInputShot;
-            InputManager.Instance.BombAction += PlayerCharaManager.Instance.OnInputBomb;
-            InputManager.Instance.MenuAction += TransitionMode;
-            //InputManager.Instance.MenuAction += ItemManager.Instance.OnAttractAction;
-            //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-    }
-
-    /// <summary>
-    /// Main画面で必要な入力アクションを外す。
-    /// </summary>
-    private void DetachBattleMainInputAction()
-    {
-        // 何も無い時にイベントを減算すると例外が発生するので適当に例外処理を挟む
-        try
-        {
-            InputManager.Instance.HorizontalAction -= PlayerCharaManager.Instance.OnInputHorizontal;
-            InputManager.Instance.VerticalAction -= PlayerCharaManager.Instance.OnInputVertical;
-            InputManager.Instance.ChangeCharaAction -= PlayerCharaManager.Instance.OnInputChangeChara;
-            InputManager.Instance.ShotAction -= PlayerCharaManager.Instance.OnInputShot;
-            InputManager.Instance.BombAction -= PlayerCharaManager.Instance.OnInputBomb;
-            InputManager.Instance.MenuAction -= TransitionMode;
-            //InputManager.Instance.MenuAction -= ItemManager.Instance.OnAttractAction;
-            //InputManager.Instance.MenuAction -= PlayerCharaManager.Instance.OnInputMenu;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-    }
-
-    /// <summary>
-    /// Command画面で必要な入力アクションを付与する。
-    /// </summary>
-    private void AttachBattleCommandInputAction()
-    {
-        try
-        {
-            InputManager.Instance.HorizontalAction += CommandPlayerCharaManager.Instance.OnInputHorizontal;
-            InputManager.Instance.VerticalAction += CommandPlayerCharaManager.Instance.OnInputVertical;
-            InputManager.Instance.ShotAction += CommandPlayerCharaManager.Instance.OnInputShot;
-            InputManager.Instance.MenuAction += TransitionMode;
-            //InputManager.Instance.MenuAction += PlayerCharaManager.Instance.OnInputMenu;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-    }
-
-    /// <summary>
-    /// Command画面で必要な入力アクションを外す。
-    /// </summary>
-    private void DetachBattleCommandInputAction()
-    {
-        // 何も無い時にイベントを減算すると例外が発生するので適当に例外処理を挟む
-        try
-        {
-            InputManager.Instance.HorizontalAction -= CommandPlayerCharaManager.Instance.OnInputHorizontal;
-            InputManager.Instance.VerticalAction -= CommandPlayerCharaManager.Instance.OnInputVertical;
-            InputManager.Instance.ShotAction -= CommandPlayerCharaManager.Instance.OnInputShot;
-            InputManager.Instance.MenuAction -= TransitionMode;
-            //InputManager.Instance.MenuAction -= PlayerCharaManager.Instance.OnInputMenu;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
+        //BattleMainUiManager.Instance.ShowGameClear();
+        //var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
+        //{
+        //    BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
+        //});
+        //TimerManager.Instance.RegistTimer(timer);
     }
 }

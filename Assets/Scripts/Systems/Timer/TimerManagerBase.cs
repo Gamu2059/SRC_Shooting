@@ -4,9 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// タイマーを管理する。
-/// ジェネリッククラスのため、継承して使用して下さい。
 /// </summary>
-public abstract class TimerManagerBase<T> : SingletonMonoBehavior<T> where T : TimerManagerBase<T>
+public abstract class TimerManagerBase : ControllableObject
 {
 	protected TimerController m_TimerController;
 

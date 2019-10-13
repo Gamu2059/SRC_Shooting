@@ -17,6 +17,10 @@ public abstract class BattleRealEnemyBehaviorParamSet : ScriptableObject
     }
 
     [SerializeField]
+    private string m_BehaviorClass;
+    public string BehaviorClass => m_BehaviorClass;
+
+    [SerializeField]
     private List<BulletSet> m_BulletSets;
     public List<BulletSet> BulletSets => m_BulletSets;
 

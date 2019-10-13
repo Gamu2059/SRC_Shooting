@@ -8,4 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class BattleRealEnemyGroupBehaviorParamSet : ScriptableObject
 {
+    [SerializeField]
+    private string m_BehaviorClass;
+    public string BehaviorClass => m_BehaviorClass;
 }

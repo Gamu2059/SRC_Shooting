@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 全てのアイテムオブジェクトの基礎クラス。
 /// </summary>
-public class ItemController : BattleMainObjectBase
+public class ItemController : BattleRealObjectBase
 {
     public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
     public const string GAIN_COLLIDE = "GAIN COLLIDE";
@@ -244,12 +244,12 @@ public class ItemController : BattleMainObjectBase
             SetPosition(transform.forward * speed, E_RELATIVE.RELATIVE);
         } else
         {
-            var player = PlayerCharaManager.Instance.GetCurrentController();
-            if (player != null)
-            {
-                var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, ItemManager.Instance.GetItemAttractRate());
-                SetPosition(nextPos);
-            }
+            //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+            //if (player != null)
+            //{
+            //    var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, BattleRealItemManager.Instance.GetItemAttractRate());
+            //    SetPosition(nextPos);
+            //}
         }
 
         m_NowRotateAngle += GetNowDeltaRotation().z * Time.deltaTime;
@@ -350,7 +350,7 @@ public class ItemController : BattleMainObjectBase
     {
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            ItemManager.Instance.CheckPoolItem(this);
+            //BattleRealItemManager.Instance.CheckPoolItem(this);
         }
     }
 
@@ -370,13 +370,13 @@ public class ItemController : BattleMainObjectBase
     /// <param name="targetData">このアイテムの衝突情報</param>
     public virtual void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData)
     {
-        if (targetData.CollideName == ATTRACT_COLLIDE)
-        {
-            AttractPlayer();
-        }
-        else if (targetData.CollideName == GAIN_COLLIDE)
-        {
-            DestroyItem();
-        }
+        //if (targetData.CollideName == ATTRACT_COLLIDE)
+        //{
+        //    AttractPlayer();
+        //}
+        //else if (targetData.CollideName == GAIN_COLLIDE)
+        //{
+        //    DestroyItem();
+        //}
     }
 }

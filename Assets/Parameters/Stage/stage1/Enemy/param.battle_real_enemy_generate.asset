@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
+  m_Name: param.battle_real_enemy_generate
+  m_EditorClassIdentifier: 
+  m_Hp: 10000000
+  m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 1d0fd25c3d32718408a9887729484ca0,
+    type: 2}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7855377339903371630}
   - component: {fileID: 2193793095639198469}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676900740798004178}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.058}
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_Children: []
   m_Father: {fileID: 7292297653876647179}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 8573847447916207473}
   - component: {fileID: 1005732535283827408}
   - component: {fileID: 7292297653876647175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HackerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +166,9 @@ MonoBehaviour:
   m_ColliderTransforms:
   - CollideName: 
     ColliderType: 0
+    Direction: 0
+    ColliderWidth: 5
+    ColliderColor: {r: 0, g: 0.91761637, b: 1, a: 0}
     Transform: {fileID: 7898547469854246630}
 --- !u!114 &7292297653876647175
 MonoBehaviour:
@@ -192,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7898547469854246630}
   - component: {fileID: 1588646135607202506}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,8 +210,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8247850580784192478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.03}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.06}
+  m_LocalPosition: {x: 0, y: 0, z: 0.06}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.12}
   m_Children: []
   m_Father: {fileID: 7292297653876647179}
   m_RootOrder: 1
