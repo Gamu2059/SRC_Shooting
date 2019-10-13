@@ -194,7 +194,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1454753643
+--- !u!1 &679448636
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,43 +202,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1454753645}
-  - component: {fileID: 1454753644}
+  - component: {fileID: 679448638}
+  - component: {fileID: 679448637}
+  - component: {fileID: 679448639}
   m_Layer: 0
-  m_Name: Music48k(CriAtomSource)
+  m_Name: BGM_Boss01(CriAtomSource)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1454753644
+--- !u!114 &679448637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1454753643}
+  m_GameObject: {fileID: 679448636}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _cueName: Music48k
-  _cueSheet: CueSheet_0
+  _playOnStart: 0
+  _cueName: BGM_Boss01
+  _cueSheet: BGM
   _use3dPositioning: 1
   _loop: 0
   _volume: 1
   _pitch: 0
   _androidUseLowLatencyVoicePool: 0
   need_to_player_update_all: 1
---- !u!4 &1454753645
+--- !u!4 &679448638
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1454753643}
+  m_GameObject: {fileID: 679448636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -246,6 +247,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &679448639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679448636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c230029c9c4a98f41bcb1a4e1c7bc6be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CriAtomSource: {fileID: 679448637}
+  m_AiSAC: 0
 --- !u!1 &1543818125
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDebugPrintOnTerminal: 0
   enableForceCrashOnError: 0
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
 --- !u!4 &1543818127
 Transform:
   m_ObjectHideFlags: 0
@@ -390,11 +405,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f529aa944b914449d62b8c40f188fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acfFile: TutorialProject.acf
+  acfFile: RoundTrip.acf
   cueSheets:
-  - name: CueSheet_0
-    acbFile: CueSheet_0.acb
-    awbFile: CueSheet_0.awd
+  - name: BGM
+    acbFile: BGM.acb
+    awbFile: BGM.awb
+    loaderStatus: 0
+  - name: SE_Global
+    acbFile: SE_Global.acb
+    awbFile: 
     loaderStatus: 0
   dspBusSetting: 
   dontDestroyOnLoad: 0
@@ -488,8 +507,8 @@ MonoBehaviour:
   manaConfig:
     numberOfDecoders: 8
     numberOfMaxEntries: 4
-  dontInitializeOnAwake: 1
-  dontDestroyOnLoad: 1
+  dontInitializeOnAwake: 0
+  dontDestroyOnLoad: 0
 --- !u!4 &2117108781
 Transform:
   m_ObjectHideFlags: 0

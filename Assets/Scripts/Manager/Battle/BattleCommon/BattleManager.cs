@@ -193,9 +193,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(false);
 
         var audio = AudioManager.Instance;
-        audio.SetPrimaryBgmVolume(0);
-        audio.SetSecondaryBgmVolume(0);
-        audio.PlayBossBgm(m_BattleParamSet.BossBgmParamSet);
+        audio.PlayBossBgmAdx2();
+        //audio.SetPrimaryBgmVolume(0);
+        //audio.SetSecondaryBgmVolume(0);
+        //audio.PlayBossBgm(m_BattleParamSet.BossBgmParamSet);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
     }
@@ -230,8 +231,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnRealMode()
     {
         var audio = AudioManager.Instance;
-        audio.SetPrimaryBgmVolume(1);
-        audio.SetSecondaryBgmVolume(0);
+        //audio.SetPrimaryBgmVolume(1);
+        //audio.SetSecondaryBgmVolume(0);
+        audio.SetAisac(0);
 
         m_BattleRealUiManager.SetAlpha(1);
         m_BattleHackingUiManager.SetAlpha(0);
@@ -273,8 +275,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnHackingMode()
     {
         var audio = AudioManager.Instance;
-        audio.SetPrimaryBgmVolume(0);
-        audio.SetSecondaryBgmVolume(1);
+        //audio.SetPrimaryBgmVolume(0);
+        //audio.SetSecondaryBgmVolume(1);
+        audio.SetAisac(1);
 
         m_BattleHackingUiManager.SetAlpha(1);
         m_BattleRealUiManager.SetAlpha(0);
@@ -318,7 +321,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.Play();
         m_VideoPlayer.gameObject.SetActive(true);
 
-        AudioManager.Instance.PlaySe(m_BattleParamSet.TransitionToHackingSe);
+        //AudioManager.Instance.PlaySe(m_BattleParamSet.TransitionToHackingSe);
+        AudioManager.Instance.PlaySeAdx2(m_BattleParamSet.TransitionToHackingSeName);
     }
 
     private void UpdateOnTransitionToHacking()
@@ -337,8 +341,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
 
             var audio = AudioManager.Instance;
-            audio.SetPrimaryBgmVolume(fadeOutBgmValue);
-            audio.SetSecondaryBgmVolume(fadeInBgmValue);
+            //audio.SetPrimaryBgmVolume(fadeOutBgmValue);
+            //audio.SetSecondaryBgmVolume(fadeInBgmValue);
+            audio.SetAisac(normalizedTime);
         }
         else
         {
@@ -386,7 +391,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.Play();
         m_VideoPlayer.gameObject.SetActive(true);
 
-        AudioManager.Instance.PlaySe(m_BattleParamSet.TransitionToRealSe);
+        //AudioManager.Instance.PlaySe(m_BattleParamSet.TransitionToRealSe);
+        AudioManager.Instance.PlaySeAdx2(m_BattleParamSet.TransitionToRealSeName);
     }
 
     private void UpdateOnTransitionToReal()
@@ -405,8 +411,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_BattleRealUiManager.SetAlpha(fadeInVideoValue);
 
             var audio = AudioManager.Instance;
-            audio.SetSecondaryBgmVolume(fadeOutBgmValue);
-            audio.SetPrimaryBgmVolume(fadeInBgmValue);
+            //audio.SetSecondaryBgmVolume(fadeOutBgmValue);
+            //audio.SetPrimaryBgmVolume(fadeInBgmValue);
+            audio.SetAisac(normalizedTime);
         }
         else
         {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BattleRealParamSet:
     m_PlayerManagerParamSet:
-      m_PlayerPrefab: {fileID: 6915949984067917126, guid: ebef49eadb94bd04195621177871e6c9,
+      m_PlayerPrefab: {fileID: 6915949984067917126, guid: 3dec3a8ae114e2647ae9211630c4814b,
         type: 3}
       m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
       m_PlayerBaseMoveSpeed: 1.5
@@ -161,6 +161,8 @@ MonoBehaviour:
     type: 3}
   m_TransitionToRealSe: {fileID: 8300000, guid: 045fc74ee986c054d955945b3f824d7b,
     type: 3}
+  m_TransitionToHackingSeName: SE_Hack_Start
+  m_TransitionToRealSeName: SE_Hack_End
   m_BossBgmParamSet:
     m_RealModeIntro: {fileID: 8300000, guid: 2025ecde0e59dc440be9fdfe6a19152e, type: 3}
     m_RealModeLoop: {fileID: 8300000, guid: 18ce0d403f67e564e905ca64c0dd04b7, type: 3}

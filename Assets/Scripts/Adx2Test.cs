@@ -5,20 +5,60 @@ using UnityEngine;
 public class Adx2Test : MonoBehaviour
 {
     [SerializeField]
-    private CriWareInitializer m_Initializer;
+    private CriAtomSource m_CriAtomSource;
 
-    [SerializeField]
-    private CriAtomSource criAtomSource;
+    [SerializeField, Range(0, 1)]
+    private float m_AiSAC;
 
-    // Start is called before the first frame update
-    void Start()
+    private Coroutine coroutine;
+    private bool toHacking = false;
+
+    private void Start()
     {
-        m_Initializer.Initialize();
+        m_CriAtomSource.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            coroutine = StartCoroutine(Aisac());
+        }
+    }
+
+    private IEnumerator Aisac()
+    {
+        if (coroutine != null)
+        {
+            yield break;
+        }
+
+        toHacking = !toHacking;
+        var duration = 1.4f;
+        var nomalized = toHacking ? 0f : 1f;
+        var time = 0f;
+        while (true)
+        {
+            time += Time.deltaTime;
+            if (toHacking)
+            {
+                nomalized = time / duration;
+            } else
+            {
+                nomalized = 1 - time / duration;
+            }
+
+            m_CriAtomSource.SetAisacControl("BGM_FadeControll", nomalized);
+
+            if (time / duration > 1)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        coroutine = null;
     }
 }

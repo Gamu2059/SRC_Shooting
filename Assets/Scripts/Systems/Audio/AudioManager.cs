@@ -18,7 +18,7 @@ using DG.Tweening;
 public class AudioManager<T> : SingletonMonoBehavior<T> where T : MonoBehaviour
 {
 
-	#region Field Inspector
+    #region Field Inspector
 
 	[SerializeField]
 	private AudioMixerGroup m_BgmMixer = null;
