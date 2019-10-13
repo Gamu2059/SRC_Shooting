@@ -8,34 +8,33 @@ using System;
 /// </summary>
 public class BattleObjectCollider : MonoBehaviour
 {
-	/// <summary>
-	/// 衝突情報トランスフォームを保持する。
-	/// </summary>
-	[SerializeField]
-	private ColliderTransform[] m_ColliderTransforms;
+    /// <summary>
+    /// 衝突情報トランスフォームを保持する。
+    /// </summary>
+    [SerializeField]
+    private ColliderTransform[] m_ColliderTransforms;
+    public ColliderTransform[] ColliderTransforms => m_ColliderTransforms;
 
     /// <summary>
-    /// コライダーデータを生成する。
+    /// 衝突情報をを生成する。
     /// </summary>
-    /// <returns></returns>
 	public ColliderData[] CreateColliderData()
-	{
-		int hitNum = m_ColliderTransforms.Length;
-		var colliders = new ColliderData[hitNum];
+    {
+        int hitNum = m_ColliderTransforms.Length;
+        var colliders = new ColliderData[hitNum];
 
-		for( int i = 0; i < hitNum; i++ )
-		{
-			Transform t = m_ColliderTransforms[i].Transform;
-			var c = new ColliderData();
-			c.CenterPos = new Vector2( t.position.x, t.position.z );
-			c.Size = new Vector2( t.lossyScale.x, t.lossyScale.z );
-			c.Angle = -t.eulerAngles.y;
-			c.ColliderType = m_ColliderTransforms[i].ColliderType;
-            c.CollideName = m_ColliderTransforms[i].CollideName;
+        for (int i = 0; i < hitNum; i++)
+        {
+            Transform t = m_ColliderTransforms[i].Transform;
+            var c = new ColliderData();
+            c.CenterPos = t.position.ToVector2XZ();
+            c.Size = t.lossyScale.ToVector2XZ();
+            c.Angle = -t.eulerAngles.y;
+            c.Transform = m_ColliderTransforms[i];
 
-			colliders[i] = c;
-		}
+            colliders[i] = c;
+        }
 
-		return colliders;
-	}
+        return colliders;
+    }
 }

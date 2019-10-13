@@ -18,15 +18,14 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 	{
 		DEFAULT = -1,
 		PRE_LAUNCH = 0,
-		MAIN = 1,
-		CHARA_TEST = 2,
-		STAGE_TEST = 3,
+		CHARA_TEST = 1,
 
-		BATTLE = 4,
-		TITLE = 5,
-        COMMAND_TEST = 6,
-        ENEMY_TEST = 7,
-    }
+		BATTLE = 2,
+		TITLE = 3,
+        COMMAND_TEST = 4,
+
+        STAGE1 = 5,
+	}
 
     /// <summary>
     /// BaseSceneのサイクル。

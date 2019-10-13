@@ -64,9 +64,4 @@ public class InfC761Skill2FireBullet : BulletController
 
 		DestroyBullet();
 	}
-
-	protected override void OnBecameInvisible()
-	{
-		// 通常は場外に行ったら破棄するが、この弾は場外に行っても残るようにするため何もしない
-	}
 }

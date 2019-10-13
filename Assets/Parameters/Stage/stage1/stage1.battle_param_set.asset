@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 054c7bc45abe91d49b6179a6d1299be2, type: 3}
+  m_Name: stage1.battle_param_set
+  m_EditorClassIdentifier: 
+  m_BattleRealParamSet:
+    m_PlayerManagerParamSet:
+      m_PlayerPrefab: {fileID: 6915949984067917126, guid: ebef49eadb94bd04195621177871e6c9,
+        type: 3}
+      m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
+      m_PlayerBaseMoveSpeed: 1.5
+      m_PlayerSlowMoveSpeed: 0.75
+    m_EnemyGroupManagerParamSet:
+      m_Generator: {fileID: 11400000, guid: 4e880cd4155435d4faf21d2c2df6d90d, type: 2}
+    m_EnemyManagerParamSet:
+      m_MinOffsetFieldPosition: {x: 0, y: 0}
+      m_MaxOffsetFieldPosition: {x: 0, y: 0}
+    m_BulletManagerParamSet:
+      m_MinOffsetFieldPosition: {x: 0, y: 0}
+      m_MaxOffsetFieldPosition: {x: 0, y: 0}
+    m_EventTriggerParamSet: {fileID: 11400000, guid: ee278599230674a4880e20fb8bf387d4,
+      type: 2}
+  m_BattleHackingParamSet:
+    m_PlayerManagerParamSet:
+      m_PlayerPrefab: {fileID: 1645588137266032981, guid: c836889e166907f46b5739eb8bf0fb12,
+        type: 3}
+      m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
+      m_PlayerBaseMoveSpeed: 1.5
+      m_PlayerSlowMoveSpeed: 0.75
+    m_BulletManagerParamSet:
+      m_MinOffsetFieldPosition: {x: 0, y: 0}
+      m_MaxOffsetFieldPosition: {x: 0, y: 0}
+  m_FadeOutVideoParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.032244552
+      outSlope: -0.032244552
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.048309177
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0.031736024
+      outSlope: 0.031736024
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_FadeInVideoParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_FadeOutBgmParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.032244552
+      outSlope: -0.032244552
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.048309177
+    - serializedVersion: 3
+      time: 0.2
+      value: 1
+      inSlope: -0
+      outSlope: -2.7061121
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.21739133
+      outWeight: 0.033816416
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.41161254
+      outSlope: 0.031736024
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.05676329
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_FadeInBgmParam:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8
+      value: 0
+      inSlope: -0
+      outSlope: 0.031002883
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.25120768
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.0316099
+      outSlope: -0.0316099
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04927534
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_TransitionToHackingMovie: {fileID: 32900000, guid: 1ad0c4cc318325244935f976dcfc9df7,
+    type: 3}
+  m_TransitionToRealMovie: {fileID: 32900000, guid: 150c35aa09bb97e4c903325d9057ecac,
+    type: 3}
+  m_TransitionToHackingSe: {fileID: 8300000, guid: eca7c28683a873749a8544031c678e87,
+    type: 3}
+  m_TransitionToRealSe: {fileID: 8300000, guid: 045fc74ee986c054d955945b3f824d7b,
+    type: 3}
+  m_BossBgmParamSet:
+    m_RealModeIntro: {fileID: 8300000, guid: 2025ecde0e59dc440be9fdfe6a19152e, type: 3}
+    m_RealModeLoop: {fileID: 8300000, guid: 18ce0d403f67e564e905ca64c0dd04b7, type: 3}
+    m_HackingModeIntro: {fileID: 8300000, guid: f01bf7d6d59cd4f49b49c1f337949bf0,
+      type: 3}
+    m_HackingModeLoop: {fileID: 8300000, guid: 57605c91215fbf942a1be08d464f42c2, type: 3}

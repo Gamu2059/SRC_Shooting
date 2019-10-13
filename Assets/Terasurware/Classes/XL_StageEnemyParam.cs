@@ -4,22 +4,14 @@ using System.Collections.Generic;
 
 public class XL_StageEnemyParam : ScriptableObject
 {	
-	public List<Sheet> sheets = new List<Sheet> ();
-
-	[System.SerializableAttribute]
-	public class Sheet
-	{
-		public string name = string.Empty;
-		public List<Param> list = new List<Param>();
-	}
+	public List<Param> param = new List<Param> ();
 
 	[System.SerializableAttribute]
 	public class Param
 	{
 		
-		public float Time;
-		public int EnemyViewId;
-		public int EnemyMoveId;
+		public string Conditions;
+		public int EnemyId;
 		public int BulletSetId;
 		public float AppearViewportX;
 		public float AppearViewportY;
@@ -28,7 +20,9 @@ public class XL_StageEnemyParam : ScriptableObject
 		public float AppearOffsetY;
 		public float AppearRotateY;
 		public int IsBoss;
+		public float Hp;
+		public string Drop;
+		public string Defeat;
 		public string OtherParameters;
 	}
 }
-

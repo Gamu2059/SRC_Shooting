@@ -9,7 +9,17 @@ public enum E_COLLIDER_SHAPE
 	RECT,
 
 	/// <summary>
-	/// 楕円
+	/// 真円
 	/// </summary>
-	ELLIPSE
+	CIRCLE,
+
+    /// <summary>
+    /// カプセル
+    /// </summary>
+    CAPSULE,
+
+    /// <summary>
+    /// 直線
+    /// </summary>
+    LINE,
 }

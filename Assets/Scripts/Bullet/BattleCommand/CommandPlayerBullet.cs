@@ -7,9 +7,4 @@ using UnityEngine;
 /// </summary>
 public class CommandPlayerBullet : CommandBulletController
 {
-    public override void HitWall(CommandWallController targetWall, ColliderData attackData, ColliderData targetData)
-    {
-        base.HitWall(targetWall, attackData, targetData);
-        DestroyBullet();
-    }
 }

@@ -38,7 +38,7 @@ public class $ExportTemplate$ : AssetPostprocessor
                     {
                         data = ScriptableObject.CreateInstance<$ExcelData$>();
                         AssetDatabase.CreateAsset((ScriptableObject)data, exportPath);
-                        data.hideFlags = HideFlags.NotEditable;
+                        data.hideFlags = HideFlags.None;
                     }
                     data.param.Clear();
 

@@ -235,6 +235,12 @@ public class Timer
 		return timer;
 	}
 
+    public static Timer CreateTimeoutTimer(E_TIMER_TYPE timerType, float timeoutDuration)
+    {
+        var timer = CreateTimeoutTimer(timerType, timeoutDuration, null, null);
+        return timer;
+    }
+
 	/// <summary>
 	/// カウントダウンタイマーを作成する。
 	/// </summary>
@@ -296,24 +302,24 @@ public class Timer
 
 		if( m_TimerType == E_TIMER_TYPE.SCALED_TIMER )
 		{
-			if( m_TimeoutDuration > 0 )
+			if( m_TimeoutDuration >= 0 )
 			{
 				m_TimeoutCount += Time.fixedDeltaTime;
 			}
 
-			if( m_IntervalDuration > 0 )
+			if( m_IntervalDuration >= 0 )
 			{
 				m_IntervalCount += Time.fixedDeltaTime;
 			}
 		}
 		else
 		{
-			if( m_TimeoutDuration > 0 )
+			if( m_TimeoutDuration >= 0 )
 			{
 				m_TimeoutCount += Time.fixedUnscaledDeltaTime;
 			}
 
-			if( m_IntervalDuration > 0 )
+			if( m_IntervalDuration >= 0 )
 			{
 				m_IntervalCount += Time.fixedUnscaledDeltaTime;
 			}
@@ -323,14 +329,14 @@ public class Timer
 		EventUtility.SafeInvokeAction( m_StepCallBack );
 
 		// インターバルコールバック
-		if( m_IntervalDuration > 0 && m_IntervalCount >= m_IntervalDuration )
+		if( m_IntervalDuration >= 0 && m_IntervalCount >= m_IntervalDuration )
 		{
 			EventUtility.SafeInvokeAction( m_IntervalCallBack );
 			m_IntervalCount = 0;
 		}
 
 		// タイムアウトコールバック
-		if( m_TimeoutDuration > 0 && m_TimeoutCount >= m_TimeoutDuration )
+		if( m_TimeoutDuration >= 0 && m_TimeoutCount >= m_TimeoutDuration )
 		{
 			m_TimerCycle = E_TIMER_CYCLE.STOP;
 			EventUtility.SafeInvokeAction( m_TimeoutCallBack );

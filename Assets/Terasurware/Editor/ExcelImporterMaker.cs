@@ -320,7 +320,7 @@ public class ExcelImporterMaker : EditorWindow
 		}
 
 		importerTemplate = importerTemplate.Replace ("$IMPORT_PATH$", filePath);
-		importerTemplate = importerTemplate.Replace ("$ExportAssetDirectry$", Path.GetDirectoryName (filePath));
+		importerTemplate = importerTemplate.Replace ("$ExportAssetDirectry$", Path.GetDirectoryName (filePath).Replace(@"\", "/"));
 		importerTemplate = importerTemplate.Replace ("$EXPORT_PATH$", Path.ChangeExtension (filePath, ".asset"));
 		importerTemplate = importerTemplate.Replace ("$ExcelData$", className);
 		importerTemplate = importerTemplate.Replace ("$SheetList$", sheetListbuilder.ToString ());

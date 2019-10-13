@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 全てのアイテムオブジェクトの基礎クラス。
 /// </summary>
-public class ItemController : BattleMainObjectBase
+public class ItemController : BattleRealObjectBase
 {
     public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
     public const string GAIN_COLLIDE = "GAIN COLLIDE";
@@ -18,7 +18,7 @@ public class ItemController : BattleMainObjectBase
     private int m_Point;
 
     [SerializeField]
-    private Transform m_LookCameraTransform;
+    private Transform m_ViewTransform;
 
 
 
@@ -124,7 +124,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     /// <param name="value">設定する値</param>
     /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    public void SetPosition(Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
+    public void SetPosition(Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         transform.localPosition = GetRelativeValue(relative, GetPosition(), value);
     }
@@ -142,7 +142,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     /// <param name="value">設定する値</param>
     /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    public void SetRotation(Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
+    public void SetRotation(Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         transform.localEulerAngles = GetRelativeRotateValue(relative, GetRotation(), value);
     }
@@ -160,7 +160,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     /// <param name="value">設定する値</param>
     /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    public void SetScale(Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
+    public void SetScale(Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         transform.localScale = GetRelativeValue(relative, GetScale(), value);
     }
@@ -178,7 +178,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     /// <param name="value">設定する値</param>
     /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    public void SetNowDeltaRotation(Vector3 value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
+    public void SetNowDeltaRotation(Vector3 value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         m_NowDeltaRotation = GetRelativeValue(relative, GetNowDeltaRotation(), value);
     }
@@ -196,7 +196,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     /// <param name="value">設定する値</param>
     /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    public void SetNowSpeed(float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
+    public void SetNowSpeed(float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         m_NowSpeed = GetRelativeValue(relative, GetNowSpeed(), value);
     }
@@ -214,7 +214,7 @@ public class ItemController : BattleMainObjectBase
     /// </summary>
     /// <param name="value">設定する値</param>
     /// <param name="relative">値を絶対値として設定するか、相対値として設定するか</param>
-    public void SetNowAccel(float value, E_ATTACK_PARAM_RELATIVE relative = E_ATTACK_PARAM_RELATIVE.ABSOLUTE)
+    public void SetNowAccel(float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         m_NowAccel = GetRelativeValue(relative, GetNowAccel(), value);
     }
@@ -240,16 +240,16 @@ public class ItemController : BattleMainObjectBase
         var speed = GetNowSpeed() * Time.deltaTime;
 
         if (!m_IsAttract) {
-            SetNowSpeed(GetNowAccel() * Time.deltaTime, E_ATTACK_PARAM_RELATIVE.RELATIVE);
-            SetPosition(transform.forward * speed, E_ATTACK_PARAM_RELATIVE.RELATIVE);
+            SetNowSpeed(GetNowAccel() * Time.deltaTime, E_RELATIVE.RELATIVE);
+            SetPosition(transform.forward * speed, E_RELATIVE.RELATIVE);
         } else
         {
-            var player = PlayerCharaManager.Instance.GetCurrentController();
-            if (player != null)
-            {
-                var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, ItemManager.Instance.GetItemAttractRate());
-                SetPosition(nextPos);
-            }
+            //var player = BattleRealPlayerManager.Instance.GetCurrentController();
+            //if (player != null)
+            //{
+            //    var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, BattleRealItemManager.Instance.GetItemAttractRate());
+            //    SetPosition(nextPos);
+            //}
         }
 
         m_NowRotateAngle += GetNowDeltaRotation().z * Time.deltaTime;
@@ -258,12 +258,12 @@ public class ItemController : BattleMainObjectBase
             m_NowRotateAngle = 0;
         }
 
-        if (m_LookCameraTransform != null)
+        if (m_ViewTransform != null)
         {
-            var angle = m_LookCameraTransform.localEulerAngles;
-            angle.y = 180;
+            var angle = m_ViewTransform.localEulerAngles;
+            angle.y = 0;
             angle.z = m_NowRotateAngle;
-            m_LookCameraTransform.localEulerAngles = angle;
+            m_ViewTransform.localEulerAngles = angle;
         }
     }
 
@@ -280,9 +280,9 @@ public class ItemController : BattleMainObjectBase
         }
     }
 
-    protected Vector3 GetRelativeValue(E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue)
+    protected Vector3 GetRelativeValue(E_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue)
     {
-        if (relative == E_ATTACK_PARAM_RELATIVE.RELATIVE)
+        if (relative == E_RELATIVE.RELATIVE)
         {
             return baseValue + relativeValue;
         }
@@ -292,9 +292,9 @@ public class ItemController : BattleMainObjectBase
         }
     }
 
-    protected Vector3 GetRelativeRotateValue(E_ATTACK_PARAM_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue)
+    protected Vector3 GetRelativeRotateValue(E_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue)
     {
-        if (relative == E_ATTACK_PARAM_RELATIVE.RELATIVE)
+        if (relative == E_RELATIVE.RELATIVE)
         {
             var value = baseValue + relativeValue;
 
@@ -315,9 +315,9 @@ public class ItemController : BattleMainObjectBase
         }
     }
 
-    protected float GetRelativeValue(E_ATTACK_PARAM_RELATIVE relative, float baseValue, float relativeValue)
+    protected float GetRelativeValue(E_RELATIVE relative, float baseValue, float relativeValue)
     {
-        if (relative == E_ATTACK_PARAM_RELATIVE.RELATIVE)
+        if (relative == E_RELATIVE.RELATIVE)
         {
             return baseValue + relativeValue;
         }
@@ -350,7 +350,7 @@ public class ItemController : BattleMainObjectBase
     {
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            ItemManager.Instance.CheckPoolItem(this);
+            //BattleRealItemManager.Instance.CheckPoolItem(this);
         }
     }
 
@@ -370,13 +370,13 @@ public class ItemController : BattleMainObjectBase
     /// <param name="targetData">このアイテムの衝突情報</param>
     public virtual void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData)
     {
-        if (targetData.CollideName == ATTRACT_COLLIDE)
-        {
-            AttractPlayer();
-        }
-        else if (targetData.CollideName == GAIN_COLLIDE)
-        {
-            DestroyItem();
-        }
+        //if (targetData.CollideName == ATTRACT_COLLIDE)
+        //{
+        //    AttractPlayer();
+        //}
+        //else if (targetData.CollideName == GAIN_COLLIDE)
+        //{
+        //    DestroyItem();
+        //}
     }
 }
