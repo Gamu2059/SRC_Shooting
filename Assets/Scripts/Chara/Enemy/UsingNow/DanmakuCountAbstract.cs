@@ -44,6 +44,12 @@ public abstract class DanmakuCountAbstract : System.Object
     }
 
 
+    public virtual void Awakes(UDField uDField)
+    {
+
+    }
+
+
     // Update is called once per frame
     public void Updates(EnemyController enemyController,float time)
     {

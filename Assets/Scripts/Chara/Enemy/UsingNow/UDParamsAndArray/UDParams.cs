@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Param/Danmaku/UD Params", fileName = "UD Params", order = 0)]
+//[CreateAssetMenu(menuName = "Param/Danmaku/UD Params", fileName = "UD Params", order = 0)]
 [System.Serializable]
-public class UDParams : ScriptableObject
+public class UDParams : Object
 {
 
     [SerializeField, Tooltip("単位弾幕の種類")]
@@ -22,6 +22,16 @@ public class UDParams : ScriptableObject
 
     [SerializeField, Tooltip("Vector3型のパラメータの配列")]
     public Vector3[] m_Vector3Params;
+
+
+    public UDParams(E_U_D eUD,bool[] boolParams, int[] intParams, float[] floatParams, Vector3[] Vector3Params)
+    {
+        m_EUD = eUD;
+        m_BoolParams = boolParams;
+        m_IntParams = intParams;
+        m_FloatParams = floatParams;
+        m_Vector3Params = Vector3Params;
+    }
 
 
     //intパラメータを代入する

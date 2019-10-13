@@ -41,6 +41,10 @@ public class Smasher1Boss1 : System.Object
     private UDParamsArrayArray m_UDParamsArrayArray;
 
 
+    [SerializeField, Tooltip("全単位弾幕フィールド配列の配列")]
+    private AllUDFieldArrayArray m_AllUDFieldArrayArray;
+
+
     public void Awakes()
     {
         m_FormChangeArrayArray = new int[m_FormChangeArray.Length][];
@@ -61,17 +65,35 @@ public class Smasher1Boss1 : System.Object
             }
         }
 
-        m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract[m_UDParamsArrayArray.m_UDParametersArrayArray.Length][];
 
-        for (int i = 0;i < m_UDParamsArrayArray.m_UDParametersArrayArray.Length;i++)
+        //m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract[m_UDParamsArrayArray.m_UDParametersArrayArray.Length][];
+
+        //for (int i = 0;i < m_UDParamsArrayArray.m_UDParametersArrayArray.Length;i++)
+        //{
+        //    m_DanmakuCountAbstractArrayArray[i] = new DanmakuCountAbstract[m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray.Length];
+
+        //    for (int j = 0;j < m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray.Length;j++)
+        //    {
+        //        m_DanmakuCountAbstractArrayArray[i][j] = EUDToUDObject(m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray[j].m_EUD);
+
+        //        m_DanmakuCountAbstractArrayArray[i][j].Awakes(m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray[j]);
+        //    }
+        //}
+
+
+        m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract[m_AllUDFieldArrayArray.m_AllUDFieldArrayArray.Length][];
+
+        UDParams[][] uDParamsArrayArray = m_AllUDFieldArrayArray.GetAllUDParams();
+
+        for (int i = 0; i < m_AllUDFieldArrayArray.m_AllUDFieldArrayArray.Length; i++)
         {
-            m_DanmakuCountAbstractArrayArray[i] = new DanmakuCountAbstract[m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray.Length];
+            m_DanmakuCountAbstractArrayArray[i] = new DanmakuCountAbstract[uDParamsArrayArray[i].Length];
 
-            for (int j = 0;j < m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray.Length;j++)
+            for (int j = 0; j < uDParamsArrayArray[i].Length; j++)
             {
-                m_DanmakuCountAbstractArrayArray[i][j] = EUDToUDObject(m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray[j].m_EUD);
+                m_DanmakuCountAbstractArrayArray[i][j] = EUDToUDObject(uDParamsArrayArray[i][j].m_EUD);
 
-                m_DanmakuCountAbstractArrayArray[i][j].Awakes(m_UDParamsArrayArray.m_UDParametersArrayArray[i].m_UDParametersArray[j]);
+                m_DanmakuCountAbstractArrayArray[i][j].Awakes(uDParamsArrayArray[i][j]);
             }
         }
     }
@@ -82,33 +104,33 @@ public class Smasher1Boss1 : System.Object
     {
         switch (eUD)
         {
-            case E_U_D.ASW:
-                return new UDAsw();
+            //case E_U_D.ASW:
+            //    return new UDAsw();
 
-            case E_U_D.JIK:
-                return new UDJik();
+            //case E_U_D.JIK:
+            //    return new UDJik();
 
-            case E_U_D.KIN:
-                return new UDKin();
+            //case E_U_D.KIN:
+            //    return new UDKin();
 
-            case E_U_D.LIS:
-                return new UDLis();
+            //case E_U_D.LIS:
+            //    return new UDLis();
 
             case E_U_D.OMN:
                 return new UDOmn();
 
-            case E_U_D.SIN:
-                return new UDSin();
+            //case E_U_D.SIN:
+            //    return new UDSin();
 
-            case E_U_D.CRS:
-                return new UDOmn2();
+            //case E_U_D.CRS:
+            //    return new UDOmn2();
 
             case E_U_D.WAY:
                 return new UDWay();
 
             // 追加しやすいようにしている（この部分は変えない）
             default:
-                return new UDAsw();
+                return new UDOmn();
         }
     }
 
@@ -131,37 +153,39 @@ public class Smasher1Boss1 : System.Object
             m_AttackFormNum++;
         }
 
-        // もし現在撃っている弾幕が形態変化するなら
-        if (m_UDParamsArrayArray.m_UDParametersArrayArray[m_AttackNum].m_IsFormChangable)
+        //// もし現在撃っている弾幕が形態変化するなら
+        //if (m_UDParamsArrayArray.m_UDParametersArrayArray[m_AttackNum].m_IsFormChangable)
+        //{
+        //    for (int i = 0; i <= m_AttackFormNum; i++)
+        //    {
+        //        m_Times[i] += Time.deltaTime;
+        //    }
+
+        //    for (int i = 0; i <= m_AttackFormNum; i++)
+        //    {
+        //        // 2次元配列内のi番目の配列
+        //        int[] indexArray = m_FormChangeArrayArray[i];
+
+        //        for (int j = 0; j < indexArray.Length; j++)
+        //        {
+        //            // 2次元配列内のi番目の配列内のj番目の整数
+        //            int index = indexArray[j];
+
+        //            m_DanmakuCountAbstractArrayArray[m_AttackNum][index].Updates(enemyController, m_Times[i]);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+            
+        //}
+
+        //時間を進める
+        m_Time += Time.deltaTime;
+
+        foreach (DanmakuCountAbstract danmakuCountAbstract in m_DanmakuCountAbstractArrayArray[m_AttackNum])
         {
-            for (int i = 0; i <= m_AttackFormNum; i++)
-            {
-                m_Times[i] += Time.deltaTime;
-            }
-
-            for (int i = 0; i <= m_AttackFormNum; i++)
-            {
-                // 2次元配列内のi番目の配列
-                int[] indexArray = m_FormChangeArrayArray[i];
-
-                for (int j = 0; j < indexArray.Length; j++)
-                {
-                    // 2次元配列内のi番目の配列内のj番目の整数
-                    int index = indexArray[j];
-
-                    m_DanmakuCountAbstractArrayArray[m_AttackNum][index].Updates(enemyController, m_Times[i]);
-                }
-            }
-        }
-        else
-        {
-            //時間を進める
-            m_Time += Time.deltaTime;
-
-            foreach (DanmakuCountAbstract danmakuCountAbstract in m_DanmakuCountAbstractArrayArray[m_AttackNum])
-            {
-                danmakuCountAbstract.Updates(enemyController, m_Time);
-            }
+            danmakuCountAbstract.Updates(enemyController, m_Time);
         }
     }
 }

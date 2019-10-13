@@ -6,47 +6,47 @@ using UnityEngine;
 public class UDWay : DanmakuCountAbstract
 {
 
-    private enum BOOL
-    {
-        発射平均位置を指定するかどうか,
-        発射中心位置を円内にブレさせるかどうか,
-    }
+    //private enum BOOL
+    //{
+    //    発射平均位置を指定するかどうか,
+    //    発射中心位置を円内にブレさせるかどうか,
+    //}
 
 
-    private enum INT
-    {
-        何番目の弾か,
-        way数,
-    }
+    //private enum INT
+    //{
+    //    何番目の弾か,
+    //    way数,
+    //}
 
 
-    private enum FLOAT
-    {
-        発射間隔,
-        弾速,
-        角度差,
-        弾源円半径,
-        発射位置のブレ範囲の円の半径,
-    }
+    //private enum FLOAT
+    //{
+    //    発射間隔,
+    //    弾速,
+    //    角度差,
+    //    弾源円半径,
+    //    発射位置のブレ範囲の円の半径,
+    //}
 
 
-    private enum VECTOR3
-    {
-        発射平均位置,
-    }
+    //private enum VECTOR3
+    //{
+    //    発射平均位置,
+    //}
 
 
     // 現在のあるべき発射回数を計算する(小数)
     public override float CalcNowShotNum(float time)
     {
-        return time / m_Float[(int)FLOAT.発射間隔];
+        return time / m_Float[(int)Way.FLOAT.発射間隔];
     }
 
 
     // 発射時刻を計算する
     public override float CalcLaunchTime()
     {
-        return m_Float[(int)FLOAT.発射間隔] * m_RealShotNum;
+        return m_Float[(int)Way.FLOAT.発射間隔] * m_RealShotNum;
     }
 
 
@@ -56,9 +56,9 @@ public class UDWay : DanmakuCountAbstract
 
         Vector3 avePosition;
 
-        if (m_Bool[(int)BOOL.発射平均位置を指定するかどうか])
+        if (m_Bool[(int)Way.BOOL.発射平均位置を指定するかどうか])
         {
-            avePosition = m_Vector3[(int)VECTOR3.発射平均位置];
+            avePosition = m_Vector3[(int)Way.VECTOR3.発射平均位置];
         }
         else
         {
@@ -68,9 +68,9 @@ public class UDWay : DanmakuCountAbstract
 
         Vector3 posRandomZure;
 
-        if (m_Bool[(int)BOOL.発射中心位置を円内にブレさせるかどうか])
+        if (m_Bool[(int)Way.BOOL.発射中心位置を円内にブレさせるかどうか])
         {
-            posRandomZure = RandomCircleInsideToV3(m_Float[(int)FLOAT.発射位置のブレ範囲の円の半径]);
+            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Way.FLOAT.発射位置のブレ範囲の円の半径]);
         }
         else
         {
@@ -80,22 +80,22 @@ public class UDWay : DanmakuCountAbstract
 
         // これ以降で使うフィールドは、bool値によらず必ず使うものだけを使う。
 
-        float centerRad = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)VECTOR3.発射平均位置] + posRandomZure,
+        float centerRad = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Way.VECTOR3.発射平均位置] + posRandomZure,
             PlayerCharaManager.Instance.GetCurrentController().transform.position);
 
-        for (int i = -(m_Int[(int)INT.way数] - 1); i <= m_Int[(int)INT.way数] - 1; i += 2)
+        for (int i = -(m_Int[(int)Way.INT.way数] - 1); i <= m_Int[(int)Way.INT.way数] - 1; i += 2)
         {
             // 1つの弾の角度
-            float rad = centerRad + Mathf.PI * 2 * i * m_Float[(int)FLOAT.角度差] / 2;
+            float rad = centerRad + Mathf.PI * 2 * i * m_Float[(int)Way.FLOAT.角度差] / 2;
 
             // 発射された弾の現在の位置
             Vector3 pos;
             pos = enemyController.transform.position;
             pos += avePosition;
             pos += posRandomZure;
-            pos += RThetaToVector3(m_Float[(int)FLOAT.弾源円半径], rad);
+            pos += RThetaToVector3(m_Float[(int)Way.FLOAT.弾源円半径], rad);
 
-            ShotTouchokuBullet(enemyController, m_Int[(int)INT.何番目の弾か], pos, rad, m_Float[(int)FLOAT.弾速], dTime);
+            ShotTouchokuBullet(enemyController, m_Int[(int)Way.INT.何番目の弾か], pos, rad, m_Float[(int)Way.FLOAT.弾速], dTime);
         }
     }
 }
