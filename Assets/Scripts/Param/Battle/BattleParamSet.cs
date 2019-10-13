@@ -52,6 +52,14 @@ public class BattleParamSet : ScriptableObject
     private AudioClip m_TransitionToRealSe;
     public AudioClip TransitionToRealSe => m_TransitionToRealSe;
 
+    [SerializeField]
+    private string m_TransitionToHackingSeName;
+    public string TransitionToHackingSeName => m_TransitionToHackingSeName;
+
+    [SerializeField]
+    private string m_TransitionToRealSeName;
+    public string TransitionToRealSeName => m_TransitionToRealSeName;
+
     [Header("BGM")]
 
     [SerializeField]
