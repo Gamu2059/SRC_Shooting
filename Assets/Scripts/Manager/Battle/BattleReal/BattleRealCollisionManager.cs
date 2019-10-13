@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealCollisionManager : BattleCollisionManagerBase, IUpdateCollider
+public class BattleRealCollisionManager : BattleCollisionManagerBase
 {
     public static BattleRealCollisionManager Instance => BattleRealManager.Instance.CollisionManager;
 
@@ -11,7 +11,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase, IUpdateCol
         base.OnInitialize();
     }
 
-    public void UpdateCollider()
+    public override void UpdateCollider()
     {
         BattleRealPlayerManager.Instance.UpdateCollider();
         BattleRealEnemyManager.Instance.UpdateCollider();
@@ -21,7 +21,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase, IUpdateCol
     /// <summary>
     /// 衝突をチェックする。
     /// </summary>
-    public void CheckCollision()
+    public override void CheckCollision()
     {
         CheckCollisionBulletToChara();
         CheckEnemyToPlayer();
@@ -30,7 +30,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase, IUpdateCol
     /// <summary>
     /// 衝突情報を描画する。
     /// </summary>
-    public void DrawCollider()
+    public override void DrawCollider()
     {
         if (!BattleManager.Instance.m_IsDrawColliderArea)
         {

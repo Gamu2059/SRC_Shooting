@@ -6,7 +6,34 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
 {
     public static BattleHackingCollisionManager Instance => BattleHackingManager.Instance.CollisionManager;
 
+    public override void UpdateCollider()
+    {
+        BattleHackingBulletManager.Instance.UpdateCollider();
+    }
 
+    /// <summary>
+    /// 衝突をチェックする。
+    /// </summary>
+    public override void CheckCollision()
+    {
+    }
+
+    /// <summary>
+    /// 衝突情報を描画する。
+    /// </summary>
+    public override void DrawCollider()
+    {
+        if (!BattleManager.Instance.m_IsDrawColliderArea)
+        {
+            return;
+        }
+
+        var bullets = BattleHackingBulletManager.Instance.Bullets;
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            DrawCollider(bullets[i]);
+        }
+    }
 
     protected override Vector2 CalcViewportPos(Vector2 worldPos)
     {

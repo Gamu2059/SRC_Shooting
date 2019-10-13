@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 衝突処理を管理する基底クラス。
 /// </summary>
-public abstract class BattleCollisionManagerBase : ControllableObject
+public abstract class BattleCollisionManagerBase : ControllableObject, IUpdateCollider
 {
     private Material m_CollisionMaterial;
     private MaterialPropertyBlock m_PropertyBlock;
@@ -19,6 +19,12 @@ public abstract class BattleCollisionManagerBase : ControllableObject
         m_PropertyBlock = new MaterialPropertyBlock();
         m_ColorId = Shader.PropertyToID("_Color");
     }
+
+    public abstract void UpdateCollider();
+
+    public abstract void CheckCollision();
+
+    public abstract void DrawCollider();
 
     protected void DrawCollider(BattleObjectBase battleObject)
     {

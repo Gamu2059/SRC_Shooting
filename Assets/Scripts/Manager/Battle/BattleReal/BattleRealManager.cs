@@ -361,7 +361,6 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnUpdate();
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
-
         CollisionManager.OnUpdate();
     }
 
@@ -373,6 +372,7 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnLateUpdate();
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
+        CollisionManager.OnLateUpdate();
 
         CollisionManager.UpdateCollider();
         CollisionManager.CheckCollision();
@@ -392,6 +392,7 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnFixedUpdate();
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
+        CollisionManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
