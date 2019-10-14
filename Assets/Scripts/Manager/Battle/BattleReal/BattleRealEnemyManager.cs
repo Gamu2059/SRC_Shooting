@@ -7,9 +7,10 @@ using System;
 /// <summary>
 /// リアルモードの敵キャラを管理する。
 /// </summary>
-public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
+public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 {
     public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
+
 
     /// <summary>
     /// 消滅可能になるまでの最小時間
@@ -44,6 +45,8 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
     /// </summary>
     private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
 
+    private static List<BattleRealEnemyController> m_ReservedRegisterEnemies = new List<BattleRealEnemyController>();
+
     #endregion
 
     public BattleRealEnemyManager(BattleRealEnemyManagerParamSet paramSet)
@@ -75,16 +78,25 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyEvacuationHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
+
     }
 
     public override void OnUpdate()
     {
+        // デバッグ用
+        foreach (var enemy in m_ReservedRegisterEnemies)
+        {
+            Register(enemy);
+        }
+
+        m_ReservedRegisterEnemies.Clear();
+
         // Start
         foreach (var enemy in m_StandbyEnemies)
         {
             if (enemy == null)
             {
-                CheckPoolEnemy(enemy);
+                //CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -98,7 +110,7 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
         {
             if (enemy == null)
             {
-                CheckPoolEnemy(enemy);
+                //CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -113,11 +125,29 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
         {
             if (enemy == null)
             {
-                CheckPoolEnemy(enemy);
+                //CheckPoolEnemy(enemy);
                 continue;
             }
 
             enemy.OnLateUpdate();
+        }
+    }
+
+    #endregion
+
+
+    #region Impl IColliderProcess
+
+    public void ClearColliderFlag()
+    {
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.ClearColliderFlag();
         }
     }
 
@@ -127,7 +157,6 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
         {
             if (enemy == null)
             {
-                CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -135,7 +164,50 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
         }
     }
 
+    public void ProcessCollision()
+    {
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.ProcessCollision();
+        }
+    }
+
     #endregion
+
+    /// <summary>
+    /// 敵を登録する。
+    /// デバッグ専用。
+    /// </summary>
+    public static void RegisterEnemy(BattleRealEnemyController enemy)
+    {
+        if (enemy == null || m_ReservedRegisterEnemies.Contains(enemy))
+        {
+            return;
+        }
+
+        m_ReservedRegisterEnemies.Add(enemy);
+    }
+
+    private void Register(BattleRealEnemyController enemy)
+    {
+        if (enemy == null || m_StandbyEnemies.Contains(enemy) || m_UpdateEnemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
+        {
+            return;
+        }
+
+        var type = enemy.GetType().FullName;
+        if (!m_PoolEnemies.ContainsKey(type))
+        {
+            m_PoolEnemies.Add(type, new LinkedList<GameObject>());
+        }
+        enemy.SetLookId(type);
+        CheckStandByEnemy(enemy);
+    }
 
     /// <summary>
     /// 破棄フラグが立っているものをプールに戻す
@@ -184,7 +256,11 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
                 continue;
             }
 
+            enemy.OnFinalize();
             enemy.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            enemy.gameObject.SetActive(false);
+            enemy.transform.SetParent(m_EnemyEvacuationHolder);
+
             m_GotoPoolEnemies.RemoveAt(idx);
             m_UpdateEnemies.Remove(enemy);
 
@@ -277,10 +353,7 @@ public class BattleRealEnemyManager : ControllableObject, IUpdateCollider
         }
 
         enemy.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        enemy.OnFinalize();
         m_GotoPoolEnemies.Add(enemy);
-        enemy.gameObject.SetActive(false);
-        enemy.transform.SetParent(m_EnemyEvacuationHolder);
     }
 
     /// <summary>

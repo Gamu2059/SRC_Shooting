@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class BattleRealEnemyGroupController : BattleRealObjectBase
+public class BattleRealEnemyGroupController : ControllableMonoBehavior
 {
     #region Field
 

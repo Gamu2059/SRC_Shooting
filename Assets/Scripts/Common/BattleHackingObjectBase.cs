@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ハッキングモードにおけるオブジェクトの基底クラス。
 /// </summary>
-public class BattleHackingObjectBase : BattleObjectBase
+public abstract class BattleHackingObjectBase : BattleObjectBase
 {
     /// <summary>
 	/// タイマーを保持するリスト。

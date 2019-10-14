@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// リアルモードにおけるオブジェクトの基底クラス。
 /// </summary>
-public class BattleRealObjectBase : BattleObjectBase
+public abstract class BattleRealObjectBase : BattleObjectBase
 {
     /// <summary>
 	/// タイマーを保持するリスト。

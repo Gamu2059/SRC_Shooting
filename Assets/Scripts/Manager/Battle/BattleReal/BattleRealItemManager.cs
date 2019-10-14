@@ -198,11 +198,13 @@ public class BattleRealItemManager : ControllableObject
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var bullet = m_GotoPoolItems[idx];
-            bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            var item = m_GotoPoolItems[idx];
+            item.OnFinalize();
+            item.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            item.gameObject.SetActive(false);
             m_GotoPoolItems.RemoveAt(idx);
-            m_UpdateItems.Remove(bullet);
-            m_PoolItems.Add(bullet);
+            m_UpdateItems.Remove(item);
+            m_PoolItems.Add(item);
         }
 
         m_GotoPoolItems.Clear();
@@ -238,9 +240,7 @@ public class BattleRealItemManager : ControllableObject
         }
 
         item.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        item.OnFinalize();
         m_GotoPoolItems.Add(item);
-        item.gameObject.SetActive(false);
     }
 
     /// <summary>

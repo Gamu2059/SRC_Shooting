@@ -39,10 +39,22 @@ public class BattleRealPlayerController : CharaController
 
     #endregion
 
-	private void Start()
+    #region Game Cycle
+
+    private void Start()
 	{
         // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        BattleRealPlayerManager.RegistPlayer(this);
+        BattleRealPlayerManager.RegisterPlayer(this);
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+    }
+
+    public override void OnFinalize()
+    {
+        base.OnFinalize();
     }
 
     public override void OnStart()
@@ -56,6 +68,8 @@ public class BattleRealPlayerController : CharaController
         base.OnUpdate();
         m_ShotRemainTime -= Time.deltaTime;
     }
+
+    #endregion
 
     public void SetParamSet(BattleRealPlayerParamSet paramSet)
     {
@@ -90,34 +104,56 @@ public class BattleRealPlayerController : CharaController
 
     }
 
-    public override void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
+    protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
-        base.HitItem(targetItem, attackData, targetData);
+        base.OnEnterSufferBullet(sufferData);
 
-        //if (targetData.CollideName != ItemController.GAIN_COLLIDE)
-        //{
-        //    return;
-        //}
-
-        switch(targetItem.GetItemType())
+        var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
+        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
         {
-            case E_ITEM_TYPE.SMALL_SCORE:
-            case E_ITEM_TYPE.BIG_SCORE:
-                //BattleRealPlayerManager.Instance.AddScore(targetItem.GetPoint());
-                break;
-            case E_ITEM_TYPE.SMALL_SCORE_UP:
-            case E_ITEM_TYPE.BIG_SCORE_UP:
-                break;
-            case E_ITEM_TYPE.SMALL_EXP:
-            case E_ITEM_TYPE.BIG_EXP:
-                //BattleRealPlayerManager.Instance.AddExp(targetItem.GetPoint());
-                break;
-            case E_ITEM_TYPE.SMALL_BOMB:
-            case E_ITEM_TYPE.BIG_BOMB:
-                //BattleRealPlayerManager.Instance.AddBombCharge(targetItem.GetPoint());
-                break;
+            Damage(1);
         }
     }
+
+    protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    {
+        base.OnEnterSufferChara(sufferData);
+
+        var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
+        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+        {
+            Damage(1);
+        }
+    }
+
+    //public override void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
+    //{
+    //    base.HitItem(targetItem, attackData, targetData);
+
+    //    //if (targetData.CollideName != ItemController.GAIN_COLLIDE)
+    //    //{
+    //    //    return;
+    //    //}
+
+    //    switch(targetItem.GetItemType())
+    //    {
+    //        case E_ITEM_TYPE.SMALL_SCORE:
+    //        case E_ITEM_TYPE.BIG_SCORE:
+    //            //BattleRealPlayerManager.Instance.AddScore(targetItem.GetPoint());
+    //            break;
+    //        case E_ITEM_TYPE.SMALL_SCORE_UP:
+    //        case E_ITEM_TYPE.BIG_SCORE_UP:
+    //            break;
+    //        case E_ITEM_TYPE.SMALL_EXP:
+    //        case E_ITEM_TYPE.BIG_EXP:
+    //            //BattleRealPlayerManager.Instance.AddExp(targetItem.GetPoint());
+    //            break;
+    //        case E_ITEM_TYPE.SMALL_BOMB:
+    //        case E_ITEM_TYPE.BIG_BOMB:
+    //            //BattleRealPlayerManager.Instance.AddBombCharge(targetItem.GetPoint());
+    //            break;
+    //    }
+    //}
 
     public int GetLevel()
 	{

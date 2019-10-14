@@ -6,7 +6,7 @@ using UnityEngine;
 /// バトルにおけるオブジェクトの基底クラス。
 /// </summary>
 [RequireComponent(typeof(BattleObjectCollider))]
-public abstract class BattleObjectBase : ControllableMonoBehavior, IColliderBase, IUpdateCollider
+public abstract class BattleObjectBase : ControllableMonoBehavior, IColliderBase, IColliderProcess
 {
     /// <summary>
     /// 衝突情報コンポーネント。
@@ -46,12 +46,22 @@ public abstract class BattleObjectBase : ControllableMonoBehavior, IColliderBase
     #endregion
 
     /// <summary>
+    /// 衝突フラグをクリアする。
+    /// </summary>
+    public abstract void ClearColliderFlag();
+
+    /// <summary>
     /// 衝突情報を更新する。
     /// </summary>
     public void UpdateCollider()
     {
         m_ColliderDatas = m_Collider.CreateColliderData();
     }
+
+    /// <summary>
+    /// 実際の衝突処理を行う。
+    /// </summary>
+    public abstract void ProcessCollision();
 
     /// <summary>
     /// 衝突情報を取得する。
