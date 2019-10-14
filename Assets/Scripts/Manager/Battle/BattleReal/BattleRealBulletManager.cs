@@ -51,7 +51,6 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     public override void OnInitialize()
     {
         base.OnInitialize();
-
         m_StandbyBullets = new List<BulletController>();
         m_UpdateBullets = new List<BulletController>();
         m_PoolBullets = new List<BulletController>();
@@ -60,10 +59,10 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
 
     public override void OnFinalize()
     {
-        base.OnFinalize();
         m_StandbyBullets.Clear();
         m_UpdateBullets.Clear();
         m_PoolBullets.Clear();
+        base.OnFinalize();
     }
 
     public override void OnStart()
@@ -115,7 +114,6 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     }
 
     #endregion
-
 
     #region Impl IColliderProcess
 
@@ -283,7 +281,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 弾が弾フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    public bool IsOutOfBulletField(BulletController bullet)
+    public bool IsOutOfField(BulletController bullet)
     {
         if (bullet == null)
         {

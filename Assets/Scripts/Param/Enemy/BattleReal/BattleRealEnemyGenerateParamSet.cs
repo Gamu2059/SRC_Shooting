@@ -13,7 +13,9 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     private int m_Hp;
     public int Hp => m_Hp;
 
-    // ドロップアイテム
+    [SerializeField, Tooltip("ドロップアイテム")]
+    private ItemCreateParam m_ItemCreateParam;
+    public ItemCreateParam ItemCreateParam => m_ItemCreateParam;
 
     // 撃破時イベント
 

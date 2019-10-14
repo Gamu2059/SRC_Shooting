@@ -18,6 +18,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
     {
         CheckCollisionBulletToChara();
         CheckEnemyToPlayer();
+        CheckPlayerToItem();
     }
 
     /// <summary>
@@ -44,6 +45,12 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         {
             DrawCollider(bullets[i]);
         }
+
+        var items = BattleRealItemManager.Instance.Items;
+        for (int i = 0; i < items.Count; i++)
+        {
+            DrawCollider(items[i]);
+        }
     }
 
     protected override Vector2 CalcViewportPos(Vector2 worldPos)
@@ -55,8 +62,6 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
 
         return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
     }
-
-
 
     /// <summary>
     /// 弾からキャラへの衝突判定を行う。
@@ -134,6 +139,34 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
                 targetData.IsCollide = true;
                 player.SufferChara(player, attackData, targetData, hitPosList);
                 enemy.HitChara(enemy, attackData, targetData, hitPosList);
+            });
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーからアイテムへの衝突判定を行う。
+    /// </summary>
+    private void CheckPlayerToItem()
+    {
+        var items = BattleRealItemManager.Instance.Items;
+        var player = BattleRealPlayerManager.Instance.Player;
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            var item = items[i];
+
+            // UPDATE状態にないものは飛ばす
+            if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                return;
+            }
+
+            Collision.CheckCollide(player, item, (attackData, targetData, hitPosList) =>
+            {
+                attackData.IsCollide = true;
+                targetData.IsCollide = true;
+                item.SufferChara(player, attackData, targetData, hitPosList);
+                player.HitItem(item, attackData, targetData, hitPosList);
             });
         }
     }

@@ -963,7 +963,7 @@ public class BulletController : BattleRealObjectBase
     {
         base.OnLateUpdate();
 
-        if (BattleRealBulletManager.Instance.IsOutOfBulletField(this))
+        if (BattleRealBulletManager.Instance.IsOutOfField(this))
         {
             DestroyBullet();
         }

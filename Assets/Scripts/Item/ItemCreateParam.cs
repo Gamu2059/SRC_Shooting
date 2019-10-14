@@ -18,12 +18,17 @@ public struct ItemCreateParam
         /// <summary>
         /// この生成情報で生成するアイテムの種類
         /// </summary>
-        public E_ITEM_TYPE ItemType;
+        public E_ITEM_TYPE Type;
 
         /// <summary>
         /// アイテムの生成個数
         /// </summary>
-        public int ItemNum;
+        public int Num;
+
+        /// <summary>
+        /// アイテムのポイント
+        /// </summary>
+        public int Point;
 
         /// <summary>
         /// アイテムの生成半径
