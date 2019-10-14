@@ -47,11 +47,6 @@ public class BattleRealEnemyController : CharaController
     protected ArgumentParamSet m_ParamSet;
 
     /// <summary>
-    /// アイテムドロップパラメータ
-    /// </summary>
-    protected ItemCreateParam m_DropItemParam;
-
-    /// <summary>
     /// 撃破時の変数操作パラメータ
     /// </summary>
     protected OperateVariableParam[] m_DefeatOperateVariableParams;
@@ -111,7 +106,7 @@ public class BattleRealEnemyController : CharaController
     {
         base.OnLateUpdate();
 
-        IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfEnemyField(this);
+        IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfField(this);
         if (IsOutOfEnemyField)
         {
             if (m_IsShowFirst)
@@ -202,9 +197,10 @@ public class BattleRealEnemyController : CharaController
     {
         base.Dead();
 
-        //DestroyAllTimer();
-
-        //BattleRealItemManager.Instance.CreateItem(transform.localPosition, m_DropItemParam);
+        if (m_GenerateParamSet != null)
+        {
+            BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
+        }
 
         Destroy();
     }

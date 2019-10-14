@@ -10,35 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 054c7bc45abe91d49b6179a6d1299be2, type: 3}
-  m_Name: stage1.battle_param_set
+  m_Name: stage1.battle
   m_EditorClassIdentifier: 
-  m_BattleRealParamSet:
-    m_PlayerManagerParamSet:
-      m_PlayerPrefab: {fileID: 6915949984067917126, guid: 3dec3a8ae114e2647ae9211630c4814b,
-        type: 3}
-      m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
-      m_PlayerBaseMoveSpeed: 1.5
-      m_PlayerSlowMoveSpeed: 0.75
-    m_EnemyGroupManagerParamSet:
-      m_Generator: {fileID: 11400000, guid: 4442d9defde6f4b479d57a6f5ee653db, type: 2}
-    m_EnemyManagerParamSet:
-      m_MinOffsetFieldPosition: {x: 0, y: 0}
-      m_MaxOffsetFieldPosition: {x: 0, y: 0}
-    m_BulletManagerParamSet:
-      m_MinOffsetFieldPosition: {x: 0, y: 0}
-      m_MaxOffsetFieldPosition: {x: 0, y: 0}
-    m_EventTriggerParamSet: {fileID: 11400000, guid: ee278599230674a4880e20fb8bf387d4,
-      type: 2}
-  m_BattleHackingParamSet:
-    m_PlayerManagerParamSet:
-      m_PlayerPrefab: {fileID: 1645588137266032981, guid: c836889e166907f46b5739eb8bf0fb12,
-        type: 3}
-      m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
-      m_PlayerBaseMoveSpeed: 1.5
-      m_PlayerSlowMoveSpeed: 0.75
-    m_BulletManagerParamSet:
-      m_MinOffsetFieldPosition: {x: 0, y: 0}
-      m_MaxOffsetFieldPosition: {x: 0, y: 0}
+  m_BattleRealParamSet: {fileID: 11400000, guid: cdd5c87540917ff42aae01b921324a9c,
+    type: 2}
+  m_BattleHackingParamSet: {fileID: 11400000, guid: 39d70b5bdb4422b47a4b5674a802fd15,
+    type: 2}
   m_FadeOutVideoParam:
     serializedVersion: 2
     m_Curve:

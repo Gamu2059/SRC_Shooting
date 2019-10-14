@@ -443,7 +443,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 敵が敵フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    public bool IsOutOfEnemyField(BattleRealEnemyController enemy)
+    public bool IsOutOfField(BattleRealEnemyController enemy)
     {
         if (enemy == null)
         {

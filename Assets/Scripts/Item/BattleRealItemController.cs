@@ -4,19 +4,10 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// 全てのアイテムオブジェクトの基礎クラス。
+/// リアルモードの全てのアイテムオブジェクトの基礎クラス。
 /// </summary>
-public class ItemController : BattleRealObjectBase
+public class BattleRealItemController : BattleRealObjectBase
 {
-    public const string ATTRACT_COLLIDE = "ATTRACT COLLIDE";
-    public const string GAIN_COLLIDE = "GAIN COLLIDE";
-
-    [SerializeField]
-    private E_ITEM_TYPE m_ItemType;
-
-    [SerializeField]
-    private int m_Point;
-
     [SerializeField]
     private Transform m_ViewTransform;
 
@@ -53,28 +44,23 @@ public class ItemController : BattleRealObjectBase
     private float m_NowRotateAngle;
 
     /// <summary>
-    /// 非表示になって破棄されるかどうか。
+    /// 出現して以降、画面に映ったかどうか
     /// </summary>
-    private bool m_CanOutDestroy;
+    private bool m_IsShowFirst;
 
-    /// <summary>
-    /// 引き寄せられるかどうか。
-    /// </summary>
     private bool m_IsAttract;
+
+    private float m_AttractRate;
+
+    public E_ITEM_TYPE ItemType { get; private set; }
+
+    public int ItemPoint { get; private set; }
 
     private HitSufferController<CharaController> m_CharaSuffer;
 
     #endregion
 
-    #region Get Set
-
-    /// <summary>
-    /// このアイテムの種類を取得する。
-    /// </summary>
-    public E_ITEM_TYPE GetItemType()
-    {
-        return m_ItemType;
-    }
+    #region Get &  Set
 
     /// <summary>
     /// このアイテムのサイクルを取得する。
@@ -90,22 +76,6 @@ public class ItemController : BattleRealObjectBase
     public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
     {
         m_Cycle = cycle;
-    }
-
-    /// <summary>
-    /// このアイテムのポイントを取得する。
-    /// </summary>
-    public int GetPoint()
-    {
-        return m_Point;
-    }
-
-    /// <summary>
-    /// このアイテムのOrbialParam。
-    /// </summary>
-    public BulletOrbitalParam GetOrbitalParam()
-    {
-        return m_OrbitalParam;
     }
 
     /// <summary>
@@ -243,7 +213,7 @@ public class ItemController : BattleRealObjectBase
         m_CharaSuffer.OnExit = OnExitSufferChara;
 
         m_NowRotateAngle = 0;
-        m_CanOutDestroy = false;
+        m_IsShowFirst = false;
         m_IsAttract = false;
     }
 
@@ -257,17 +227,19 @@ public class ItemController : BattleRealObjectBase
     {
         var speed = GetNowSpeed() * Time.deltaTime;
 
-        if (!m_IsAttract) {
+        if (!m_IsAttract)
+        {
             SetNowSpeed(GetNowAccel() * Time.deltaTime, E_RELATIVE.RELATIVE);
             SetPosition(transform.forward * speed, E_RELATIVE.RELATIVE);
-        } else
+        }
+        else
         {
-            //var player = BattleRealPlayerManager.Instance.GetCurrentController();
-            //if (player != null)
-            //{
-            //    var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, BattleRealItemManager.Instance.GetItemAttractRate());
-            //    SetPosition(nextPos);
-            //}
+            var player = BattleRealPlayerManager.Instance.Player;
+            if (player != null)
+            {
+                var nextPos = Vector3.Lerp(GetPosition(), player.transform.localPosition, m_AttractRate);
+                SetPosition(nextPos);
+            }
         }
 
         m_NowRotateAngle += GetNowDeltaRotation().z * Time.deltaTime;
@@ -282,6 +254,30 @@ public class ItemController : BattleRealObjectBase
             angle.y = 0;
             angle.z = m_NowRotateAngle;
             m_ViewTransform.localEulerAngles = angle;
+        }
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        // 上方に移動している間は場外判定を行わない
+        if (GetNowSpeed() >= 0)
+        {
+            return;
+        }
+
+        var isOutOfField = BattleRealItemManager.Instance.IsOutOfField(this);
+        if (isOutOfField)
+        {
+            if (m_IsShowFirst)
+            {
+                Destroy();
+            }
+        }
+        else
+        {
+            m_IsShowFirst = true;
         }
     }
 
@@ -334,10 +330,18 @@ public class ItemController : BattleRealObjectBase
         }
     }
 
+    public void SetParam(Vector3 worldPos, E_ITEM_TYPE type, int point, float attractRate)
+    {
+        ItemType = type;
+        ItemPoint = point;
+        m_AttractRate = attractRate;
+        transform.position = worldPos;
+    }
+
     /// <summary>
     /// このアイテムの軌道情報を上書きする。
     /// </summary>
-    public virtual void ChangeOrbital(BulletOrbitalParam orbitalParam)
+    public void ChangeOrbital(BulletOrbitalParam orbitalParam)
     {
         m_OrbitalParam = orbitalParam;
 
@@ -348,17 +352,6 @@ public class ItemController : BattleRealObjectBase
         SetNowDeltaRotation(m_OrbitalParam.DeltaRotation, m_OrbitalParam.DeltaRotationRelative);
         SetNowSpeed(m_OrbitalParam.Speed, m_OrbitalParam.SpeedRelative);
         SetNowAccel(m_OrbitalParam.Accel, m_OrbitalParam.AccelRelative);
-    }
-
-    /// <summary>
-    /// このアイテムを破棄する。
-    /// </summary>
-    public virtual void DestroyItem()
-    {
-        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
-        {
-            //BattleRealItemManager.Instance.CheckPoolItem(this);
-        }
     }
 
     /// <summary>
@@ -399,7 +392,11 @@ public class ItemController : BattleRealObjectBase
 
     protected virtual void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
     {
-
+        var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
+        if (selfColliderType == E_COLLIDER_TYPE.ITEM_GAIN)
+        {
+            Destroy();
+        }
     }
 
     protected virtual void OnStaySufferChara(HitSufferData<CharaController> sufferData)
@@ -413,4 +410,15 @@ public class ItemController : BattleRealObjectBase
     }
 
     #endregion
+
+    /// <summary>
+    /// このアイテムを破棄する。
+    /// </summary>
+    public void Destroy()
+    {
+        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+        {
+            BattleRealItemManager.Instance.CheckPoolItem(this);
+        }
+    }
 }

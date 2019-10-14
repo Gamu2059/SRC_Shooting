@@ -7,7 +7,7 @@ using UnityEngine.Video;
 /// <summary>
 /// バトルで使用するパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleParamSet", fileName = "param.battle_param_set")]
+[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/Battle", fileName = "param.battle.asset")]
 public class BattleParamSet : ScriptableObject
 {
     [SerializeField]

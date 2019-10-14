@@ -32,7 +32,7 @@ public class CharaController : BattleRealObjectBase
     private HitSufferController<BulletController> m_BulletSuffer;
     private HitSufferController<CharaController> m_CharaSuffer;
     private HitSufferController<CharaController> m_CharaHit;
-    private HitSufferController<ItemController> m_ItemHit;
+    private HitSufferController<BattleRealItemController> m_ItemHit;
 
     #endregion
 
@@ -65,7 +65,7 @@ public class CharaController : BattleRealObjectBase
         m_BulletSuffer = new HitSufferController<BulletController>();
         m_CharaSuffer = new HitSufferController<CharaController>();
         m_CharaHit = new HitSufferController<CharaController>();
-        m_ItemHit = new HitSufferController<ItemController>();
+        m_ItemHit = new HitSufferController<BattleRealItemController>();
     }
 
     protected override void OnDestroyed()
@@ -281,22 +281,22 @@ public class CharaController : BattleRealObjectBase
     /// <param name="attackData">このキャラの衝突情報</param>
     /// <param name="targetData">他のアイテムの衝突情報</param>
     /// <param name="hitPosList">衝突座標リスト</param>
-    public void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    public void HitItem(BattleRealItemController targetItem, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
         m_ItemHit.Put(targetItem, attackData, targetData, hitPosList);
     }
 
-    protected virtual void OnEnterHitItem(HitSufferData<ItemController> hitData)
+    protected virtual void OnEnterHitItem(HitSufferData<BattleRealItemController> hitData)
     {
 
     }
 
-    protected virtual void OnStayHitItem(HitSufferData<ItemController> hitData)
+    protected virtual void OnStayHitItem(HitSufferData<BattleRealItemController> hitData)
     {
 
     }
 
-    protected virtual void OnExitHitItem(HitSufferData<ItemController> hitData)
+    protected virtual void OnExitHitItem(HitSufferData<BattleRealItemController> hitData)
     {
 
     }

@@ -7,27 +7,27 @@ using UnityEngine;
 /// </summary>
 public class BattleRealPlayerController : CharaController
 {
-	/// <summary>
-	/// プレイヤーキャラのライフサイクル
-	/// </summary>
-	[System.Serializable]
-	public enum E_PLAYER_LIFE_CYCLE
-	{
-		/// <summary>
-		/// 戦闘画面には出ていない
-		/// </summary>
-		AHEAD,
+    /// <summary>
+    /// プレイヤーキャラのライフサイクル
+    /// </summary>
+    [System.Serializable]
+    public enum E_PLAYER_LIFE_CYCLE
+    {
+        /// <summary>
+        /// 戦闘画面には出ていない
+        /// </summary>
+        AHEAD,
 
-		/// <summary>
-		/// 現在戦闘中
-		/// </summary>
-		SORTIE,
+        /// <summary>
+        /// 現在戦闘中
+        /// </summary>
+        SORTIE,
 
-		/// <summary>
-		/// 死亡により戦闘画面から退場
-		/// </summary>
-		DEAD,
-	}
+        /// <summary>
+        /// 死亡により戦闘画面から退場
+        /// </summary>
+        DEAD,
+    }
 
     #region Field
 
@@ -42,7 +42,7 @@ public class BattleRealPlayerController : CharaController
     #region Game Cycle
 
     private void Start()
-	{
+    {
         // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
         BattleRealPlayerManager.RegisterPlayer(this);
     }
@@ -80,9 +80,9 @@ public class BattleRealPlayerController : CharaController
     /// 通常弾を発射する。
     /// </summary>
     public virtual void ShotBullet()
-	{
-        
-	}
+    {
+
+    }
 
     public void ChargeLaser()
     {
@@ -126,51 +126,67 @@ public class BattleRealPlayerController : CharaController
         }
     }
 
-    //public override void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
-    //{
-    //    base.HitItem(targetItem, attackData, targetData);
+    protected override void OnEnterHitItem(HitSufferData<BattleRealItemController> hitData)
+    {
+        base.OnEnterHitItem(hitData);
 
-    //    //if (targetData.CollideName != ItemController.GAIN_COLLIDE)
-    //    //{
-    //    //    return;
-    //    //}
+        var itemColliderType = hitData.SufferCollider.Transform.ColliderType;
+        switch (itemColliderType)
+        {
+            case E_COLLIDER_TYPE.ITEM_ATTRACT:
+                hitData.OpponentObject.AttractPlayer();
+                break;
+            case E_COLLIDER_TYPE.ITEM_GAIN:
+                GetItem(hitData.OpponentObject);
+                break;
+            default:
+                break;
+        }
+    }
 
-    //    switch(targetItem.GetItemType())
-    //    {
-    //        case E_ITEM_TYPE.SMALL_SCORE:
-    //        case E_ITEM_TYPE.BIG_SCORE:
-    //            //BattleRealPlayerManager.Instance.AddScore(targetItem.GetPoint());
-    //            break;
-    //        case E_ITEM_TYPE.SMALL_SCORE_UP:
-    //        case E_ITEM_TYPE.BIG_SCORE_UP:
-    //            break;
-    //        case E_ITEM_TYPE.SMALL_EXP:
-    //        case E_ITEM_TYPE.BIG_EXP:
-    //            //BattleRealPlayerManager.Instance.AddExp(targetItem.GetPoint());
-    //            break;
-    //        case E_ITEM_TYPE.SMALL_BOMB:
-    //        case E_ITEM_TYPE.BIG_BOMB:
-    //            //BattleRealPlayerManager.Instance.AddBombCharge(targetItem.GetPoint());
-    //            break;
-    //    }
-    //}
+    private void GetItem(BattleRealItemController item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        switch (item.ItemType)
+        {
+            case E_ITEM_TYPE.SMALL_SCORE:
+            case E_ITEM_TYPE.BIG_SCORE:
+                //BattleRealPlayerManager.Instance.AddScore(targetItem.GetPoint());
+                break;
+            case E_ITEM_TYPE.SMALL_SCORE_UP:
+            case E_ITEM_TYPE.BIG_SCORE_UP:
+                break;
+            case E_ITEM_TYPE.SMALL_EXP:
+            case E_ITEM_TYPE.BIG_EXP:
+                //BattleRealPlayerManager.Instance.AddExp(targetItem.GetPoint());
+                break;
+            case E_ITEM_TYPE.SMALL_BOMB:
+            case E_ITEM_TYPE.BIG_BOMB:
+                //BattleRealPlayerManager.Instance.AddBombCharge(targetItem.GetPoint());
+                break;
+        }
+    }
 
     public int GetLevel()
-	{
+    {
         //return BattleRealPlayerManager.Instance.GetCurrentLevel().Value;
         return 0;
-	}
+    }
 
-	public override void Dead()
-	{
-		if( BattleManager.Instance.m_PlayerNotDead )
-		{
-			return;
-		}
+    public override void Dead()
+    {
+        if (BattleManager.Instance.m_PlayerNotDead)
+        {
+            return;
+        }
 
-		base.Dead();
+        base.Dead();
 
-		gameObject.SetActive( false );
-		BattleManager.Instance.GameOver();
-	}
+        gameObject.SetActive(false);
+        BattleManager.Instance.GameOver();
+    }
 }
