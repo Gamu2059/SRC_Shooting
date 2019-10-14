@@ -350,10 +350,16 @@ public class BattleRealManager : ControllableObject
     private void StartOnGame()
     {
         InputManager.RegistInput();
+        PlayerManager.ResetShotFlag();
     }
 
     private void UpdateOnGame()
     {
+        // 消滅の更新
+        EnemyGroupManager.GotoPool();
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+
         InputManager.OnUpdate();
         RealTimerManager.OnUpdate();
         EventManager.OnUpdate();
@@ -361,7 +367,6 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnUpdate();
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
-        CollisionManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
@@ -372,16 +377,25 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnLateUpdate();
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
-        CollisionManager.OnLateUpdate();
 
-        CollisionManager.UpdateCollider();
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
+        BulletManager.ClearColliderFlag();
+
+        // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
+        BulletManager.UpdateCollider();
+
+        // 衝突判定処理
         CollisionManager.CheckCollision();
         CollisionManager.DrawCollider();
-        
-        // 消滅の更新
-        EnemyGroupManager.GotoPool();
-        EnemyManager.GotoPool();
-        BulletManager.GotoPool();
+
+        // 衝突処理
+        PlayerManager.ProcessCollision();
+        EnemyManager.ProcessCollision();
+        BulletManager.ProcessCollision();
     }
 
     private void FixedUpdateOnGame()
@@ -392,12 +406,12 @@ public class BattleRealManager : ControllableObject
         EnemyGroupManager.OnFixedUpdate();
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
-        CollisionManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
     {
         InputManager.RemoveInput();
+        AudioManager.Instance.StopSeAdx2(AudioManager.E_SE_GROUP.PLAYER);
     }
 
     #endregion

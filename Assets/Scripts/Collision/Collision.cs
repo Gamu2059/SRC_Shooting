@@ -47,8 +47,8 @@ public static class Collision
             return false;
         }
 
-        var colType1 = collider1.Transform.ColliderType;
-        var colType2 = collider2.Transform.ColliderType;
+        var colType1 = collider1.Transform.ColliderShape;
+        var colType2 = collider2.Transform.ColliderShape;
 
         if (colType1 == E_COLLIDER_SHAPE.LINE)
         {

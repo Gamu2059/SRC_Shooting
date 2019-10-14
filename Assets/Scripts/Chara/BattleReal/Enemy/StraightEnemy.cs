@@ -104,18 +104,6 @@ public class StraightEnemy : BattleRealEnemyController
 		}
 	}
 
-	protected override void OnBecameVisible()
-	{
-		base.OnBecameVisible();
-
-		m_StartShotTimer = Timer.CreateTimeoutTimer( E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
-		{
-			OnShot( m_ShotParam );
-		} );
-
-		//BattleRealTimerManager.Instance.RegistTimer( m_StartShotTimer );
-	}
-
 	public override void Dead()
 	{
 		base.Dead();

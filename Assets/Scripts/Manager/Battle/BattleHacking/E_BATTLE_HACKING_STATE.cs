@@ -7,5 +7,5 @@
     GAME,
     GAME_CLEAR,
     GAME_OVER,
-    END_GAME,
+    END,
 }

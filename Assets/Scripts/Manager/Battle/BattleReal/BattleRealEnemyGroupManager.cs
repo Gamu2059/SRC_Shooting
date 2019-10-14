@@ -173,7 +173,10 @@ public class BattleRealEnemyGroupManager : ControllableObject
                 continue;
             }
 
+            enemyGroup.OnFinalize();
             enemyGroup.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            enemyGroup.gameObject.SetActive(false);
+
             m_GotoPoolEnemyGroups.RemoveAt(idx);
             m_UpdateEnemyGroups.Remove(enemyGroup);
             m_PoolEnemyGroups.Add(enemyGroup);
@@ -271,9 +274,7 @@ public class BattleRealEnemyGroupManager : ControllableObject
         }
 
         enemyGroup.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        enemyGroup.OnFinalize();
         m_GotoPoolEnemyGroups.Add(enemyGroup);
-        enemyGroup.gameObject.SetActive(false);
     }
 
     /// <summary>

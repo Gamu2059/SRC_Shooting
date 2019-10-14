@@ -20,9 +20,6 @@ public class ItemController : BattleRealObjectBase
     [SerializeField]
     private Transform m_ViewTransform;
 
-
-
-
     #region Field
 
     /// <summary>
@@ -65,9 +62,9 @@ public class ItemController : BattleRealObjectBase
     /// </summary>
     private bool m_IsAttract;
 
+    private HitSufferController<CharaController> m_CharaSuffer;
+
     #endregion
-
-
 
     #region Get Set
 
@@ -220,19 +217,40 @@ public class ItemController : BattleRealObjectBase
     }
 
     #endregion
-    
 
+    #region Game Cycle
 
-    /// <summary>
-    /// このアイテムが生成された瞬間に呼び出される処理。
-    /// </summary>
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+
+        m_CharaSuffer = new HitSufferController<CharaController>();
+    }
+
+    protected override void OnDestroyed()
+    {
+        m_CharaSuffer.OnFinalize();
+        m_CharaSuffer = null;
+        base.OnDestroyed();
+    }
+
     public override void OnInitialize()
     {
         base.OnInitialize();
 
+        m_CharaSuffer.OnEnter = OnEnterSufferChara;
+        m_CharaSuffer.OnStay = OnStaySufferChara;
+        m_CharaSuffer.OnExit = OnExitSufferChara;
+
         m_NowRotateAngle = 0;
         m_CanOutDestroy = false;
         m_IsAttract = false;
+    }
+
+    public override void OnFixedUpdate()
+    {
+        m_CharaSuffer.OnFinalize();
+        base.OnFixedUpdate();
     }
 
     public override void OnUpdate()
@@ -267,18 +285,7 @@ public class ItemController : BattleRealObjectBase
         }
     }
 
-    protected virtual void OnBecameVisible()
-    {
-        m_CanOutDestroy = true;
-    }
-
-    protected virtual void OnBecameInvisible()
-    {
-        if (m_CanOutDestroy)
-        {
-            DestroyItem();
-        }
-    }
+    #endregion
 
     protected Vector3 GetRelativeValue(E_RELATIVE relative, Vector3 baseValue, Vector3 relativeValue)
     {
@@ -362,21 +369,48 @@ public class ItemController : BattleRealObjectBase
         m_IsAttract = true;
     }
 
+    #region Impl IColliderProcess
+
+    public override void ClearColliderFlag()
+    {
+        m_CharaSuffer.ClearUpdateFlag();
+    }
+
+    public override void ProcessCollision()
+    {
+        m_CharaSuffer.ProcessCollision();
+    }
+
+    #endregion
+
+    #region Suffer Chara
+
     /// <summary>
     /// 他のキャラから当てられた時の処理。
     /// </summary>
     /// <param name="attackChara">他のキャラ</param>
     /// <param name="attackData">他のキャラの衝突情報</param>
-    /// <param name="targetData">このアイテムの衝突情報</param>
-    public virtual void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="targetData">このキャラの衝突情報</param>
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
-        //if (targetData.CollideName == ATTRACT_COLLIDE)
-        //{
-        //    AttractPlayer();
-        //}
-        //else if (targetData.CollideName == GAIN_COLLIDE)
-        //{
-        //    DestroyItem();
-        //}
+        m_CharaSuffer.Put(attackChara, attackData, targetData, hitPosList);
     }
+
+    protected virtual void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnStaySufferChara(HitSufferData<CharaController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnExitSufferChara(HitSufferData<CharaController> sufferData)
+    {
+
+    }
+
+    #endregion
 }

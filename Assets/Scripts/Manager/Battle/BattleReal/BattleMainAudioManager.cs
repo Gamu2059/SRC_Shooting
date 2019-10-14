@@ -6,7 +6,7 @@ using UnityEngine;
 	using UnityEditor;
 #endif
 
-public class BattleMainAudioManager : AudioManager<BattleMainAudioManager>
+public class BattleMainAudioManager : AudioManagerBase<BattleMainAudioManager>
 {
 #if UNITY_EDITOR
 	[CustomEditor( typeof( BattleMainAudioManager ) )]

@@ -27,7 +27,13 @@ public class CommandCharaController : BattleHackingObjectBase
 
     #endregion
 
+    #region Field
 
+    private HitSufferController<CommandBulletController> m_BulletSuffer;
+    private HitSufferController<CommandCharaController> m_CharaSuffer;
+    private HitSufferController<CommandCharaController> m_CharaHit;
+
+    #endregion
 
     #region Getter & Setter
 
@@ -114,6 +120,54 @@ public class CommandCharaController : BattleHackingObjectBase
 
     #endregion
 
+    #region Game Cycle
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+
+        m_BulletSuffer = new HitSufferController<CommandBulletController>();
+        m_CharaSuffer = new HitSufferController<CommandCharaController>();
+        m_CharaHit = new HitSufferController<CommandCharaController>();
+    }
+
+    protected override void OnDestroyed()
+    {
+        m_CharaHit.OnFinalize();
+        m_CharaSuffer.OnFinalize();
+        m_BulletSuffer.OnFinalize();
+        m_CharaHit = null;
+        m_CharaSuffer = null;
+        m_BulletSuffer = null;
+        base.OnDestroyed();
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        m_BulletSuffer.OnEnter = OnEnterSufferBullet;
+        m_BulletSuffer.OnStay = OnStaySufferBullet;
+        m_BulletSuffer.OnExit = OnExitSufferBullet;
+
+        m_CharaSuffer.OnEnter = OnEnterSufferChara;
+        m_CharaSuffer.OnStay = OnStaySufferChara;
+        m_CharaSuffer.OnExit = OnExitSufferChara;
+
+        m_CharaHit.OnEnter = OnEnterHitChara;
+        m_CharaHit.OnStay = OnStayHitChara;
+        m_CharaHit.OnExit = OnExitHitChara;
+    }
+
+    public override void OnFinalize()
+    {
+        m_CharaHit.OnFinalize();
+        m_CharaSuffer.OnFinalize();
+        m_BulletSuffer.OnFinalize();
+        base.OnFinalize();
+    }
+
+    #endregion
 
 
     /// <summary>
@@ -158,16 +212,57 @@ public class CommandCharaController : BattleHackingObjectBase
 
 
 
+
+    #region Impl IColliderProcess
+
+    public override void ClearColliderFlag()
+    {
+        m_BulletSuffer.ClearUpdateFlag();
+        m_CharaSuffer.ClearUpdateFlag();
+        m_CharaHit.ClearUpdateFlag();
+    }
+
+    public override void ProcessCollision()
+    {
+        m_BulletSuffer.ProcessCollision();
+        m_CharaSuffer.ProcessCollision();
+        m_CharaHit.ProcessCollision();
+    }
+
+    #endregion
+
+    #region Suffer Bullet
+
     /// <summary>
     /// 他の弾から当てられた時の処理。
     /// </summary>
     /// <param name="attackBullet">他の弾</param>
     /// <param name="attackData">他の弾の衝突情報</param>
     /// <param name="targetData">このキャラの衝突情報</param>
-    public virtual void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
-        Damage(1);
+        m_BulletSuffer.Put(attackBullet, attackData, targetData, hitPosList);
     }
+
+    protected virtual void OnEnterSufferBullet(HitSufferData<CommandBulletController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnStaySufferBullet(HitSufferData<CommandBulletController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnExitSufferBullet(HitSufferData<CommandBulletController> sufferData)
+    {
+
+    }
+
+    #endregion
+
+    #region Suffer Chara
 
     /// <summary>
     /// 他のキャラから当てられた時の処理。
@@ -175,10 +270,30 @@ public class CommandCharaController : BattleHackingObjectBase
     /// <param name="attackChara">他のキャラ</param>
     /// <param name="attackData">他のキャラの衝突情報</param>
     /// <param name="targetData">このキャラの衝突情報</param>
-    public virtual void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
-        Damage(1);
+        m_CharaSuffer.Put(attackChara, attackData, targetData, hitPosList);
     }
+
+    protected virtual void OnEnterSufferChara(HitSufferData<CommandCharaController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnStaySufferChara(HitSufferData<CommandCharaController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnExitSufferChara(HitSufferData<CommandCharaController> sufferData)
+    {
+
+    }
+
+    #endregion
+
+    #region Hit Chara
 
     /// <summary>
     /// 他のキャラに当たった時の処理。
@@ -186,10 +301,28 @@ public class CommandCharaController : BattleHackingObjectBase
     /// <param name="targetChara">他のキャラ</param>
     /// <param name="attackData">このキャラの衝突情報</param>
     /// <param name="targetData">他のキャラの衝突情報</param>
-    public virtual void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterHitChara(HitSufferData<CommandCharaController> hitData)
     {
 
     }
+
+    protected virtual void OnStayHitChara(HitSufferData<CommandCharaController> hitData)
+    {
+
+    }
+
+    protected virtual void OnExitHitChara(HitSufferData<CommandCharaController> hitData)
+    {
+
+    }
+
+    #endregion
 
     /// <summary>
     /// 複数の弾を拡散させたい時の拡散角度のリストを取得する。

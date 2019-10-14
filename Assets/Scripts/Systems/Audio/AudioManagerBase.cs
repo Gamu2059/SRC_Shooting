@@ -15,7 +15,7 @@ using DG.Tweening;
 /// オーディオの再生などを管理する。
 /// 一点からの再生になるため、スマホアプリ用。
 /// </summary>
-public class AudioManager<T> : SingletonMonoBehavior<T> where T : MonoBehaviour
+public class AudioManagerBase<T> : SingletonMonoBehavior<T> where T : MonoBehaviour
 {
 
     #region Field Inspector
@@ -430,7 +430,7 @@ public class AudioManager<T> : SingletonMonoBehavior<T> where T : MonoBehaviour
 					return;
 				}
 
-				var editor = target as AudioManager<T>;
+				var editor = target as AudioManagerBase<T>;
 
 				if( GenerateScript( editor.AudioInfos ) )
 				{
