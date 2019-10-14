@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a798c51e6790444418cfeda08c32862d, type: 3}
   m_Name: stage1
   m_EditorClassIdentifier: 
-  m_Variables: []
+  m_Variables:
+  - Type: 0
+    Name: Clear Count
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
   m_TimePeriodNames: []
   m_Params:
   - Condition:
@@ -30,6 +35,30 @@ MonoBehaviour:
       MultiConditions: []
     Contents:
     - EventType: 7
+      ExecuteTiming: 0
+      DelayExecuteTime: 0
+      AppearEnemyIndex: 0
+      ControlCameraParams: []
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams: []
+  - Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 0
+        VariableName: Clear Count
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 8
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    Contents:
+    - EventType: 8
       ExecuteTiming: 0
       DelayExecuteTime: 0
       AppearEnemyIndex: 0
