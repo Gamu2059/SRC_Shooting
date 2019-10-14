@@ -66,7 +66,10 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
     public override void OnFinalize()
     {
-        DestroyAllEnemyGroup();
+        m_GotoPoolEnemyGroups.Clear();
+        m_PoolEnemyGroups.Clear();
+        m_UpdateEnemyGroups.Clear();
+        m_StandbyEnemyGroups.Clear();
 
         base.OnFinalize();
     }

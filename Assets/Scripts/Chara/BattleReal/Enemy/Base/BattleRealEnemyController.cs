@@ -5,20 +5,15 @@ using System;
 
 public class BattleRealEnemyController : CharaController
 {
-    public const string CAN_OUT_DESTROY_TIMER_KEY = "CanOutDestroyTimer";
     public const string HIT_INVINCIBLE_TIMER_KEY = "HitInvincibleTimer";
 
     [Space()]
     [Header("敵専用 パラメータ")]
 
-    [SerializeField, Tooltip("ボスかどうか")]
-    private bool m_IsBoss;
-
-    [SerializeField, Tooltip("死亡時エフェクト")]
-    private GameObject m_DeadEffect;
-
     [SerializeField, Tooltip("被弾直後の無敵時間")]
     private float m_OnHitInvincibleDuration;
+
+    #region Field
 
     private string m_LookId;
 
@@ -28,10 +23,6 @@ public class BattleRealEnemyController : CharaController
     private BattleRealEnemyBehaviorParamSet m_BehaviorParamSet;
     protected BattleRealEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
 
-
-    /// <summary>
-    /// 敵キャラのサイクル。
-    /// </summary>
     private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
@@ -41,17 +32,9 @@ public class BattleRealEnemyController : CharaController
 
     public bool IsOutOfEnemyField { get; private set; }
 
-    /// <summary>
-    /// マスターデータから取得するパラメータセット
-    /// </summary>
     protected ArgumentParamSet m_ParamSet;
 
-    /// <summary>
-    /// 撃破時の変数操作パラメータ
-    /// </summary>
-    protected OperateVariableParam[] m_DefeatOperateVariableParams;
-
-
+    #endregion
 
     #region Get & Set
 
@@ -63,11 +46,6 @@ public class BattleRealEnemyController : CharaController
     public void SetLookId(string id)
     {
         m_LookId = id;
-    }
-
-    public ArgumentParamSet GetParamSet()
-    {
-        return m_ParamSet;
     }
 
     public E_POOLED_OBJECT_CYCLE GetCycle()
@@ -82,7 +60,7 @@ public class BattleRealEnemyController : CharaController
 
     #endregion
 
-
+    #region Game Cycle
 
     private void Start()
     {
@@ -119,6 +97,8 @@ public class BattleRealEnemyController : CharaController
             m_IsShowFirst = true;
         }
     }
+
+    #endregion
 
     /// <summary>
     /// 引数をセットする
@@ -200,23 +180,18 @@ public class BattleRealEnemyController : CharaController
         if (m_GenerateParamSet != null)
         {
             BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
+
+            var events = m_GenerateParamSet.DefeatEvents;
+            if (events != null)
+            {
+                for (int i = 0; i < events.Length; i++)
+                {
+                    BattleRealEventManager.Instance.ExecuteEvent(events[i]);
+                }
+            }
         }
 
         Destroy();
-    }
-
-    private void OperateEventVariable()
-    {
-        if (m_DefeatOperateVariableParams == null)
-        {
-            return;
-        }
-
-        //var eventContent = new EventContent();
-        //eventContent.ExecuteTiming = EventContent.E_EXECUTE_TIMING.IMMEDIATE;
-        //eventContent.EventType = EventContent.E_EVENT_TYPE.OPERATE_VARIABLE;
-        //eventContent.OperateVariableParams = m_DefeatOperateVariableParams;
-        //BattleRealEventManager.Instance.ExecuteEvent(eventContent);
     }
 
     public void Destroy()
