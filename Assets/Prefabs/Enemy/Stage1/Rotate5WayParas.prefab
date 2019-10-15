@@ -423,8 +423,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: 
-    ColliderType: 0
+  - ColliderType: 0
+    ColliderShape: 0
+    Direction: 0
+    ColliderWidth: 5
+    ColliderColor: {r: 0, g: 0, b: 0, a: 0}
     Transform: {fileID: 3058343278721961186}
 --- !u!114 &4472141183221129230
 MonoBehaviour:
@@ -442,14 +445,7 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 60
   m_MaxHp: 60
-  m_ItemCreateParam:
-    ItemSpreadParams:
-    - ItemType: 4
-      ItemNum: 5
-      SpreadRadius: 0.5
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_GanArray:
   - {fileID: 8543638834103284065}

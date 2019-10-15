@@ -13,6 +13,10 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     private int m_Hp;
     public int Hp => m_Hp;
 
+    [SerializeField, Tooltip("撃破時の獲得スコア")]
+    private int m_Score;
+    public int Score => m_Score;
+
     [SerializeField, Tooltip("ドロップアイテム")]
     private ItemCreateParam m_ItemCreateParam;
     public ItemCreateParam ItemCreateParam => m_ItemCreateParam;

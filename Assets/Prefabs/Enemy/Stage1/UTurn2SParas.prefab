@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: 
-    ColliderType: 0
+  - ColliderType: 0
+    ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 1, g: 0.8537342, b: 0.6745283, a: 0}
@@ -106,8 +106,7 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 5
   m_MaxHp: 5
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_RelativeStraightMoveEndPosition: {x: 0, y: 0, z: 0}
   m_StraightMoveSpeed: 0
