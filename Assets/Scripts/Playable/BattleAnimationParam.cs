@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// BattleAnimationトラックで用いるデータ。
 /// </summary>
-[System.Serializable]
+[Serializable]
 public struct BattleAnimationParam
 {
-    [System.Serializable]
+    [Serializable]
     public struct FloatParam
     {
         public bool Use;
@@ -22,7 +23,7 @@ public struct BattleAnimationParam
         public float EndValue;
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct BattleAnimationVectorParam
     {
         [Tooltip("ワールド空間かローカル空間か ただし、Scaleは常にローカル")]

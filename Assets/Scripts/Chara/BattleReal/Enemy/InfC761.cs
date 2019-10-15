@@ -413,7 +413,7 @@ public class InfC761 : BattleRealEnemyController
 		int posNum = targetPositions.Pos.Length;
 		var viewPos = targetPositions.Pos[Random.Range( 0, posNum )];
 
-		m_FactNormalMoveTargetPos = CameraManager.Instance.GetViewportWorldPoint( viewPos.x, viewPos.z ) - transform.parent.position;
+		m_FactNormalMoveTargetPos = BattleRealCameraManager.Instance.GetViewportWorldPoint( viewPos.x, viewPos.z ) - transform.parent.position;
 
 		if( m_NormalMoveCurrentPosIndex < 1 )
 		{
@@ -437,7 +437,7 @@ public class InfC761 : BattleRealEnemyController
 		int posNum = targetPositions.Pos.Length;
 		var viewPos = targetPositions.Pos[Random.Range( 0, posNum )];
 
-		m_FactNormalMoveTargetPos = CameraManager.Instance.GetViewportWorldPoint( viewPos.x, viewPos.z ) - transform.parent.position;
+		m_FactNormalMoveTargetPos = BattleRealCameraManager.Instance.GetViewportWorldPoint( viewPos.x, viewPos.z ) - transform.parent.position;
 
 		if( m_NormalMoveCurrentPosIndex < 1 )
 		{
@@ -451,7 +451,7 @@ public class InfC761 : BattleRealEnemyController
 
 	private void DeceideSkill3TargetPos()
 	{
-		m_FactNormalMoveTargetPos = CameraManager.Instance.GetViewportWorldPoint( m_Skill3EndPosition.x, m_Skill3EndPosition.y ) - transform.parent.position;
+		m_FactNormalMoveTargetPos = BattleRealCameraManager.Instance.GetViewportWorldPoint( m_Skill3EndPosition.x, m_Skill3EndPosition.y ) - transform.parent.position;
 	}
 
 	#region Move Method
