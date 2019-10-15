@@ -5,6 +5,20 @@ using System;
 
 public class AudioManager : ControllableMonoBehavior
 {
+    [Serializable]
+    public enum E_SE_GROUP
+    {
+        GLOBAL,
+        PLAYER,
+    }
+
+    [Serializable]
+    private struct SeGroup
+    {
+        public E_SE_GROUP Group;
+        public CriAtomSource Source;
+    }
+
     public static AudioManager Instance => GameManager.Instance.AudioManager;
 
     [SerializeField]
@@ -14,16 +28,7 @@ public class AudioManager : ControllableMonoBehavior
     private CriAtomSource m_CriAtomBgmSource;
 
     [SerializeField]
-    private CriAtomSource m_CriAtomSeSource;
-
-    [SerializeField]
-    private AudioSource m_PrimaryBgmSource;
-
-    [SerializeField]
-    private AudioSource m_SecondaryBgmSource;
-
-    [SerializeField]
-    private AudioSource m_SeSource;
+    private SeGroup[] m_SeGroups;
 
     public override void OnInitialize()
     {
@@ -32,62 +37,54 @@ public class AudioManager : ControllableMonoBehavior
         m_CriWareInitializer.Initialize();
     }
 
-    public void PlaySeAdx2(string name)
+    private CriAtomSource GetSeSource(E_SE_GROUP group)
     {
-        m_CriAtomSeSource.cueName = name;
-        m_CriAtomSeSource.Play();
+        for (int i = 0; i < m_SeGroups.Length; i++)
+        {
+            var g = m_SeGroups[i];
+            if (g.Group == group)
+            {
+                return g.Source;
+            }
+        }
+
+        return null;
     }
 
-    //public void PlaySe(AudioClip seClip)
-    //{
-    //    m_SeSource.PlayOneShot(seClip);
-    //}
-
-    //public void PlayPrimaryBgm(AudioClip bgmClip)
-    //{
-    //    m_PrimaryBgmSource.Stop();
-    //    m_PrimaryBgmSource.clip = bgmClip;
-    //    m_PrimaryBgmSource.Play();
-    //}
-
-    //public void PlaySecondaryBgm(AudioClip bgmClip)
-    //{
-    //    m_SecondaryBgmSource.Stop();
-    //    m_SecondaryBgmSource.clip = bgmClip;
-    //    m_SecondaryBgmSource.Play();
-    //}
-
-    //public void SetPrimaryBgmVolume(float normalizedVolume)
-    //{
-    //    m_PrimaryBgmSource.volume = normalizedVolume;
-    //}
-
-    //public void SetSecondaryBgmVolume(float normalizedVolume)
-    //{
-    //    m_SecondaryBgmSource.volume = normalizedVolume;
-    //}
-
-    //public void PlayBossBgm(BattleBossBgmParamSet bossBgmParamSet)
-    //{
-    //    m_PrimaryBgmSource.Stop();
-    //    m_SecondaryBgmSource.Stop();
-
-    //    m_PrimaryBgmSource.PlayOneShot(bossBgmParamSet.RealModeIntro);
-    //    m_PrimaryBgmSource.clip = bossBgmParamSet.RealModeLoop;
-    //    m_PrimaryBgmSource.PlayDelayed(bossBgmParamSet.RealModeIntro.length);
-
-    //    m_SecondaryBgmSource.PlayOneShot(bossBgmParamSet.HackingModeIntro);
-    //    m_SecondaryBgmSource.clip = bossBgmParamSet.HackingModeLoop;
-    //    m_SecondaryBgmSource.PlayDelayed(bossBgmParamSet.HackingModeIntro.length);
-    //}
-
-    public void PlayBossBgmAdx2()
+    public void PlaySeAdx2(E_SE_GROUP group, string name)
     {
+        var source = GetSeSource(group);
+        if (source == null)
+        {
+            return;
+        }
+
+        source.cueName = name;
+        source.Play();
+    }
+
+    public void StopSeAdx2(E_SE_GROUP group)
+    {
+        var source = GetSeSource(group);
+        if (source != null)
+        {
+            source.Stop();
+        }
+    }
+
+    public void PlayBgmAdx2(string name)
+    {
+        m_CriAtomBgmSource.cueName = name;
         m_CriAtomBgmSource.Play();
+    }
+
+    public void StopBgmAdx2()
+    {
+        m_CriAtomBgmSource.Stop();
     }
 
     public void SetAisac(float value)
     {
-        m_CriAtomBgmSource.SetAisacControl("BGM_FadeControll", value);
+        m_CriAtomBgmSource.SetAisacControl("BGM_FadeControl", value);
     }
 }

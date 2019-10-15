@@ -7,48 +7,111 @@ using UnityEngine;
 /// </summary>
 public class CharaController : BattleRealObjectBase
 {
-	#region Field Inspector
+    #region Field Inspector
 
-	[Header( "キャラの基礎パラメータ" )]
+    [Header("キャラの基礎パラメータ")]
 
-	[SerializeField, Tooltip( "キャラの所属" )]
-	private E_CHARA_TROOP m_Troop;
+    [SerializeField, Tooltip("キャラの所属")]
+    private E_CHARA_TROOP m_Troop;
 
-	[SerializeField, Tooltip( "キャラが用いる弾の組み合わせ" )]
-	private BulletSetParam m_BulletSetParam;
+    [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
+    private BulletSetParam m_BulletSetParam;
 
-	[Header( "キャラの基礎ステータス" )]
+    [Header("キャラの基礎ステータス")]
 
-	[SerializeField, Tooltip( "キャラの現在HP" )]
-	private float m_NowHp;
+    [SerializeField, Tooltip("キャラの現在HP")]
+    private float m_NowHp;
 
-	[SerializeField, Tooltip( "キャラの最大HP" )]
-	private float m_MaxHp;
+    [SerializeField, Tooltip("キャラの最大HP")]
+    private float m_MaxHp;
 
-	#endregion
+    #endregion
+
+    #region Field
+
+    private HitSufferController<BulletController> m_BulletSuffer;
+    private HitSufferController<CharaController> m_CharaSuffer;
+    private HitSufferController<CharaController> m_CharaHit;
+    private HitSufferController<BattleRealItemController> m_ItemHit;
+
+    #endregion
+
+    #region Getter & Setter
 
 
+    public E_CHARA_TROOP GetTroop()
+    {
+        return m_Troop;
+    }
 
-	#region Getter & Setter
+    public BulletSetParam GetBulletSetParam()
+    {
+        return m_BulletSetParam;
+    }
 
+    public void SetBulletSetParam(BulletSetParam param)
+    {
+        m_BulletSetParam = param;
+    }
 
-	public E_CHARA_TROOP GetTroop()
-	{
-		return m_Troop;
-	}
+    #endregion
 
-	public BulletSetParam GetBulletSetParam()
-	{
-		return m_BulletSetParam;
-	}
+    #region Game Cycle
 
-	public void SetBulletSetParam( BulletSetParam param )
-	{
-		m_BulletSetParam = param;
-	}
+    protected override void OnAwake()
+    {
+        base.OnAwake();
 
-	#endregion
+        m_BulletSuffer = new HitSufferController<BulletController>();
+        m_CharaSuffer = new HitSufferController<CharaController>();
+        m_CharaHit = new HitSufferController<CharaController>();
+        m_ItemHit = new HitSufferController<BattleRealItemController>();
+    }
 
+    protected override void OnDestroyed()
+    {
+        m_ItemHit.OnFinalize();
+        m_CharaHit.OnFinalize();
+        m_CharaSuffer.OnFinalize();
+        m_BulletSuffer.OnFinalize();
+        m_ItemHit = null;
+        m_CharaHit = null;
+        m_CharaSuffer = null;
+        m_BulletSuffer = null;
+        base.OnDestroyed();
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        m_BulletSuffer.OnEnter = OnEnterSufferBullet;
+        m_BulletSuffer.OnStay = OnStaySufferBullet;
+        m_BulletSuffer.OnExit = OnExitSufferBullet;
+
+        m_CharaSuffer.OnEnter = OnEnterSufferChara;
+        m_CharaSuffer.OnStay = OnStaySufferChara;
+        m_CharaSuffer.OnExit = OnExitSufferChara;
+
+        m_CharaHit.OnEnter = OnEnterHitChara;
+        m_CharaHit.OnStay = OnStayHitChara;
+        m_CharaHit.OnExit = OnExitHitChara;
+
+        m_ItemHit.OnEnter = OnEnterHitItem;
+        m_ItemHit.OnStay = OnStayHitItem;
+        m_ItemHit.OnExit = OnExitHitItem;
+    }
+
+    public override void OnFinalize()
+    {
+        m_ItemHit.OnFinalize();
+        m_CharaHit.OnFinalize();
+        m_CharaSuffer.OnFinalize();
+        m_BulletSuffer.OnFinalize();
+        base.OnFinalize();
+    }
+
+    #endregion
 
     /// <summary>
     /// HPを初期化する
@@ -59,45 +122,67 @@ public class CharaController : BattleRealObjectBase
         m_MaxHp = m_NowHp = hp;
     }
 
-	/// <summary>
-	/// このキャラを回復する。
-	/// </summary>
-	public void Recover( float recover )
-	{
-		if( recover <= 0 )
-		{
-			return;
-		}
+    /// <summary>
+    /// このキャラを回復する。
+    /// </summary>
+    public void Recover(float recover)
+    {
+        if (recover <= 0)
+        {
+            return;
+        }
 
-		m_NowHp = Mathf.Clamp( m_NowHp + recover, 0, m_MaxHp );
-	}
+        m_NowHp = Mathf.Clamp(m_NowHp + recover, 0, m_MaxHp);
+    }
 
-	/// <summary>
-	/// このキャラにダメージを与える。
-	/// HPが0になった場合は死ぬ。
-	/// </summary>
-	public void Damage(float damage )
-	{
-		if( damage <= 0 )
-		{
-			return;
-		}
+    /// <summary>
+    /// このキャラにダメージを与える。
+    /// HPが0になった場合は死ぬ。
+    /// </summary>
+    public void Damage(float damage)
+    {
+        if (damage <= 0)
+        {
+            return;
+        }
 
-		m_NowHp = Mathf.Clamp( m_NowHp - damage, 0, m_MaxHp );
+        m_NowHp = Mathf.Clamp(m_NowHp - damage, 0, m_MaxHp);
 
-		if( m_NowHp == 0 )
-		{
-			Dead();
-		}
-	}
+        if (m_NowHp == 0)
+        {
+            Dead();
+        }
+    }
 
-	/// <summary>
-	/// このキャラを死亡させる。
-	/// </summary>
-	public virtual void Dead()
-	{
+    /// <summary>
+    /// このキャラを死亡させる。
+    /// </summary>
+    public virtual void Dead()
+    {
 
-	}
+    }
+
+    #region Impl IColliderProcess
+
+    public override void ClearColliderFlag()
+    {
+        m_BulletSuffer.ClearUpdateFlag();
+        m_CharaSuffer.ClearUpdateFlag();
+        m_CharaHit.ClearUpdateFlag();
+        m_ItemHit.ClearUpdateFlag();
+    }
+
+    public override void ProcessCollision()
+    {
+        m_BulletSuffer.ProcessCollision();
+        m_CharaSuffer.ProcessCollision();
+        m_CharaHit.ProcessCollision();
+        m_ItemHit.ProcessCollision();
+    }
+
+    #endregion
+
+    #region Suffer Bullet
 
     /// <summary>
     /// 他の弾から当てられた時の処理。
@@ -105,10 +190,30 @@ public class CharaController : BattleRealObjectBase
     /// <param name="attackBullet">他の弾</param>
     /// <param name="attackData">他の弾の衝突情報</param>
     /// <param name="targetData">このキャラの衝突情報</param>
-    public virtual void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
-        Damage(1);
+        m_BulletSuffer.Put(attackBullet, attackData, targetData, hitPosList);
     }
+
+    protected virtual void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnStaySufferBullet(HitSufferData<BulletController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnExitSufferBullet(HitSufferData<BulletController> sufferData)
+    {
+
+    }
+
+    #endregion
+
+    #region Suffer Chara
 
     /// <summary>
     /// 他のキャラから当てられた時の処理。
@@ -116,10 +221,27 @@ public class CharaController : BattleRealObjectBase
     /// <param name="attackChara">他のキャラ</param>
     /// <param name="attackData">他のキャラの衝突情報</param>
     /// <param name="targetData">このキャラの衝突情報</param>
-    public virtual void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
-        Damage(1);
+        m_CharaSuffer.Put(attackChara, attackData, targetData, hitPosList);
     }
+
+    protected virtual void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    {
+    }
+
+    protected virtual void OnStaySufferChara(HitSufferData<CharaController> sufferData)
+    {
+    }
+
+    protected virtual void OnExitSufferChara(HitSufferData<CharaController> sufferData)
+    {
+    }
+
+    #endregion
+
+    #region Hit Chara
 
     /// <summary>
     /// 他のキャラに当たった時の処理。
@@ -127,10 +249,30 @@ public class CharaController : BattleRealObjectBase
     /// <param name="targetChara">他のキャラ</param>
     /// <param name="attackData">このキャラの衝突情報</param>
     /// <param name="targetData">他のキャラの衝突情報</param>
-    public virtual void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterHitChara(HitSufferData<CharaController> hitData)
     {
 
     }
+
+    protected virtual void OnStayHitChara(HitSufferData<CharaController> hitData)
+    {
+
+    }
+
+    protected virtual void OnExitHitChara(HitSufferData<CharaController> hitData)
+    {
+
+    }
+
+    #endregion
+
+    #region Hit Item
 
     /// <summary>
     /// 他のアイテムに当たった時の処理。
@@ -138,39 +280,57 @@ public class CharaController : BattleRealObjectBase
     /// <param name="targetItem">他のアイテム</param>
     /// <param name="attackData">このキャラの衝突情報</param>
     /// <param name="targetData">他のアイテムの衝突情報</param>
-    public virtual void HitItem(ItemController targetItem, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void HitItem(BattleRealItemController targetItem, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_ItemHit.Put(targetItem, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterHitItem(HitSufferData<BattleRealItemController> hitData)
     {
 
     }
 
-	/// <summary>
-	/// 複数の弾を拡散させたい時の拡散角度のリストを取得する。
-	/// </summary>
-	/// <param name="bulletNum">弾の個数</param>
-	/// <param name="spreadAngle">弾同士の角度間隔</param>
-	protected static List<float> GetBulletSpreadAngles( int bulletNum, float spreadAngle )
-	{
-		List<float> spreadAngles = new List<float>();
+    protected virtual void OnStayHitItem(HitSufferData<BattleRealItemController> hitData)
+    {
 
-		if( bulletNum % 2 == 1 )
-		{
-			spreadAngles.Add( 0f );
+    }
 
-			for( int i = 0; i < ( bulletNum - 1 ) / 2; i++ )
-			{
-				spreadAngles.Add( spreadAngle * ( i + 1f ) );
-				spreadAngles.Add( spreadAngle * -( i + 1f ) );
-			}
-		}
-		else
-		{
-			for( int i = 0; i < bulletNum / 2; i++ )
-			{
-				spreadAngles.Add( spreadAngle * ( i + 0.5f ) );
-				spreadAngles.Add( spreadAngle * -( i + 0.5f ) );
-			}
-		}
+    protected virtual void OnExitHitItem(HitSufferData<BattleRealItemController> hitData)
+    {
 
-		return spreadAngles;
-	}
+    }
+
+    #endregion
+
+    /// <summary>
+    /// 複数の弾を拡散させたい時の拡散角度のリストを取得する。
+    /// </summary>
+    /// <param name="bulletNum">弾の個数</param>
+    /// <param name="spreadAngle">弾同士の角度間隔</param>
+    protected static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
+    {
+        List<float> spreadAngles = new List<float>();
+
+        if (bulletNum % 2 == 1)
+        {
+            spreadAngles.Add(0f);
+
+            for (int i = 0; i < (bulletNum - 1) / 2; i++)
+            {
+                spreadAngles.Add(spreadAngle * (i + 1f));
+                spreadAngles.Add(spreadAngle * -(i + 1f));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < bulletNum / 2; i++)
+            {
+                spreadAngles.Add(spreadAngle * (i + 0.5f));
+                spreadAngles.Add(spreadAngle * -(i + 0.5f));
+            }
+        }
+
+        return spreadAngles;
+    }
 }

@@ -7,16 +7,13 @@ using UniRx;
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
-public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
+public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 {
     public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
 
     #region Inspector
 
     [Header("State")]
-
-    [SerializeField]
-    private PlayerState m_PlayerState;
 
     [SerializeField]
     private FloatReactiveProperty m_CurrentScore;
@@ -50,6 +47,8 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
     public bool IsNormalWeapon { get; private set; }
 
     public bool IsLaserType { get; private set; }
+
+    private bool m_IsShotNormal;
 
     #endregion
 
@@ -92,7 +91,7 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
     /// プレイヤーキャラを登録する。
     /// デバッグ用。
     /// </summary>
-    public static void RegistPlayer(BattleRealPlayerController player)
+    public static void RegisterPlayer(BattleRealPlayerController player)
     {
         if (player == null)
         {
@@ -169,9 +168,24 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
 
         if (IsNormalWeapon)
         {
-            if (input.Shot == E_INPUT_STATE.STAY)
+            switch (input.Shot)
             {
-                Player.ShotBullet();
+                case E_INPUT_STATE.DOWN:
+                    break;
+                case E_INPUT_STATE.STAY:
+                    if (!m_IsShotNormal)
+                    {
+                        m_IsShotNormal = true;
+                        AudioManager.Instance.PlaySeAdx2(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot01");
+                    }
+                    Player.ShotBullet();
+                    break;
+                case E_INPUT_STATE.UP:
+                    m_IsShotNormal = false;
+                    AudioManager.Instance.StopSeAdx2(AudioManager.E_SE_GROUP.PLAYER);
+                    break;
+                case E_INPUT_STATE.NONE:
+                    break;
             }
         }
         else
@@ -275,14 +289,13 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
         currentExp += exp;
 
         var currentLevel = m_CurrentLevel.Value - 1;
-        var needExp = m_PlayerState.NextNeedExpParams[currentLevel];
 
-        if (currentExp >= needExp)
-        {
-            m_CurrentLevel.Value++;
-            currentExp %= needExp;
-            // Call LevelUp Action
-        }
+        //if (currentExp >= needExp)
+        //{
+        //    m_CurrentLevel.Value++;
+        //    currentExp %= needExp;
+        //    // Call LevelUp Action
+        //}
 
         m_CurrentExp.Value = currentExp;
     }
@@ -295,22 +308,35 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider
         var currentCharge = m_CurrentBombCharge.Value;
         currentCharge += charge;
 
-        if (currentCharge >= m_PlayerState.BombCharge)
-        {
-            m_CurrentBombNum.Value++;
-            currentCharge %= m_PlayerState.BombCharge;
-        }
-
         m_CurrentBombCharge.Value = currentCharge;
+    }
+
+    public void ClearColliderFlag()
+    {
+        if (Player != null)
+        {
+            Player.ClearColliderFlag();
+        }
     }
 
     public void UpdateCollider()
     {
-        if (Player == null)
+        if (Player != null)
         {
-            return;
+            Player.UpdateCollider();
         }
+    }
 
-        Player.UpdateCollider();
+    public void ProcessCollision()
+    {
+        if (Player != null)
+        {
+            Player.ProcessCollision();
+        }
+    }
+
+    public void ResetShotFlag()
+    {
+        m_IsShotNormal = false;
     }
 }

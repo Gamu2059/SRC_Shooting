@@ -152,7 +152,7 @@ public class BattleRealEventManager : ControllableObject
             if (script.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
             {
                 script.OnStart();
-                script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+                script.SetCycle(E_OBJECT_CYCLE.UPDATE);
             }
 
             script.OnUpdate();
@@ -595,6 +595,11 @@ public class BattleRealEventManager : ControllableObject
         }
 
         var period = m_TimePeriods[condition.VariableName];
+        if (period == null || !period.IsStart)
+        {
+            return false;
+        }
+
         var value = period.GetPeriod();
         switch (condition.CompareType)
         {
@@ -696,7 +701,7 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlCameraParams)
         {
-            var camera = CameraManager.Instance.GetCameraController(param.CameraType);
+            var camera = BattleRealCameraManager.Instance.GetCameraController(param.CameraType);
             if (camera != null)
             {
                 camera.StartTimeline(param.CameraTimelineParam);
@@ -741,11 +746,11 @@ public class BattleRealEventManager : ControllableObject
         {
             if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
             {
-                FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
+                //FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
             }
             else
             {
-                FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+                //FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
             }
         }
     }

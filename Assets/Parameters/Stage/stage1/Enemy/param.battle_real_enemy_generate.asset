@@ -12,6 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
   m_Name: param.battle_real_enemy_generate
   m_EditorClassIdentifier: 
-  m_Hp: 10000000
-  m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 1d0fd25c3d32718408a9887729484ca0,
+  m_Hp: 10
+  m_ItemCreateParam:
+    ItemSpreadParams:
+    - Type: 0
+      Num: 2
+      Point: 100
+      SpreadRadius: 0.1
+    CenterCreateItemType: 7
+  m_DefeatEvents:
+  - EventType: 4
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Clear Count
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  m_EnemyBehaviorParamSet: {fileID: 11400000, guid: d3fe16810369a0645938d803b1880647,
     type: 2}

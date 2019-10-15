@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a798c51e6790444418cfeda08c32862d, type: 3}
+  m_Name: stage1.event
+  m_EditorClassIdentifier: 
+  m_Variables:
+  - Type: 0
+    Name: Clear Count
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  m_TimePeriodNames: []
+  m_Params:
+  - Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        VariableName: Battle Loaded
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    Contents:
+    - EventType: 7
+      ExecuteTiming: 1
+      DelayExecuteTime: 2
+      AppearEnemyIndex: 0
+      ControlCameraParams: []
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams: []
+    - EventType: 1
+      ExecuteTiming: 0
+      DelayExecuteTime: 0
+      AppearEnemyIndex: 0
+      ControlCameraParams:
+      - CameraType: 0
+        CameraTimelineParam:
+          TimelineAsset: {fileID: 11400000, guid: cca94f87871e2e34f8823f0d05c9b1d4,
+            type: 2}
+          TrackBindParams: []
+          ReferenceBindParams:
+          - ReferenceName: BackEnd Camera
+            BindTargetName: BackCamera
+            BindTargetComponentType: Transform
+          IsDestroyEndTimeline: 0
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams: []
+    - EventType: 1
+      ExecuteTiming: 1
+      DelayExecuteTime: 12
+      AppearEnemyIndex: 0
+      ControlCameraParams:
+      - CameraType: 0
+        CameraTimelineParam:
+          TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
+            type: 2}
+          TrackBindParams: []
+          ReferenceBindParams:
+          - ReferenceName: BackEnd Camera
+            BindTargetName: BackCamera
+            BindTargetComponentType: Transform
+          IsDestroyEndTimeline: 0
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams: []
+    - EventType: 6
+      ExecuteTiming: 1
+      DelayExecuteTime: 78
+      AppearEnemyIndex: 0
+      ControlCameraParams:
+      - CameraType: 0
+        CameraTimelineParam:
+          TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
+            type: 2}
+          TrackBindParams: []
+          ReferenceBindParams:
+          - ReferenceName: BackEnd Camera
+            BindTargetName: BackCamera
+            BindTargetComponentType: Transform
+          IsDestroyEndTimeline: 0
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams:
+      - ScriptName: WhiteOutController
+        ScriptArguments:
+        - Type: 1
+          Name: Duration
+          IntValue: 0
+          FloatValue: 0.5
+          BoolValue: 0
+          StringValue: 
+          Vector2Value: {x: 0, y: 0}
+          Vector3Value: {x: 0, y: 0, z: 0}
+  - Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 0
+        VariableName: Clear Count
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 8
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    Contents:
+    - EventType: 8
+      ExecuteTiming: 0
+      DelayExecuteTime: 0
+      AppearEnemyIndex: 0
+      ControlCameraParams: []
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams: []

@@ -5,20 +5,15 @@ using System;
 
 public class BattleRealEnemyController : CharaController
 {
-    public const string CAN_OUT_DESTROY_TIMER_KEY = "CanOutDestroyTimer";
     public const string HIT_INVINCIBLE_TIMER_KEY = "HitInvincibleTimer";
 
     [Space()]
     [Header("敵専用 パラメータ")]
 
-    [SerializeField, Tooltip("ボスかどうか")]
-    private bool m_IsBoss;
-
-    [SerializeField, Tooltip("死亡時エフェクト")]
-    private GameObject m_DeadEffect;
-
     [SerializeField, Tooltip("被弾直後の無敵時間")]
     private float m_OnHitInvincibleDuration;
+
+    #region Field
 
     private string m_LookId;
 
@@ -28,30 +23,18 @@ public class BattleRealEnemyController : CharaController
     private BattleRealEnemyBehaviorParamSet m_BehaviorParamSet;
     protected BattleRealEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
 
+    private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
-    /// 敵キャラのサイクル。
+    /// 出現して以降、画面に映ったかどうか
     /// </summary>
-    private E_POOLED_OBJECT_CYCLE m_Cycle;
+    private bool m_IsShowFirst;
 
     public bool IsOutOfEnemyField { get; private set; }
 
-    /// <summary>
-    /// マスターデータから取得するパラメータセット
-    /// </summary>
     protected ArgumentParamSet m_ParamSet;
 
-    /// <summary>
-    /// アイテムドロップパラメータ
-    /// </summary>
-    protected ItemCreateParam m_DropItemParam;
-
-    /// <summary>
-    /// 撃破時の変数操作パラメータ
-    /// </summary>
-    protected OperateVariableParam[] m_DefeatOperateVariableParams;
-
-
+    #endregion
 
     #region Get & Set
 
@@ -63,11 +46,6 @@ public class BattleRealEnemyController : CharaController
     public void SetLookId(string id)
     {
         m_LookId = id;
-    }
-
-    public ArgumentParamSet GetParamSet()
-    {
-        return m_ParamSet;
     }
 
     public E_POOLED_OBJECT_CYCLE GetCycle()
@@ -82,31 +60,45 @@ public class BattleRealEnemyController : CharaController
 
     #endregion
 
-
+    #region Game Cycle
 
     private void Start()
     {
         // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        //BattleRealEnemyManager.Instance.RegistEnemy(this);
+        BattleRealEnemyManager.RegisterEnemy(this);
     }
 
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        InitHp(m_GenerateParamSet.Hp);
+        if (m_GenerateParamSet != null)
+        {
+            InitHp(m_GenerateParamSet.Hp);
+        }
+
+        m_IsShowFirst = false;
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
 
-        IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfEnemyField(this);
+        IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfField(this);
         if (IsOutOfEnemyField)
         {
-            Destroy();
+            if (m_IsShowFirst)
+            {
+                Destroy();
+            }
+        }
+        else
+        {
+            m_IsShowFirst = true;
         }
     }
+
+    #endregion
 
     /// <summary>
     /// 引数をセットする
@@ -120,25 +112,13 @@ public class BattleRealEnemyController : CharaController
     {
         m_GenerateParamSet = paramSet;
         m_BehaviorParamSet = m_GenerateParamSet.EnemyBehaviorParamSet;
-        
+
         OnSetParamSet();
     }
 
     protected virtual void OnSetParamSet()
     {
 
-    }
-
-    protected virtual void OnBecameVisible()
-    {
-        //if (BattleRealTimerManager.Instance != null)
-        //{
-        //    SetCanOutDestroyTimer();
-        //}
-        //else
-        //{
-        //    m_OnInitialized += () => SetCanOutDestroyTimer();
-        //}
     }
 
     /// <summary>
@@ -159,21 +139,24 @@ public class BattleRealEnemyController : CharaController
         return false;
     }
 
-    public override void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
-        if (IsSufferEchoBullet(attackBullet))
+        base.OnEnterSufferBullet(sufferData);
+
+        var bullet = sufferData.OpponentObject;
+        if (IsSufferEchoBullet(bullet))
         {
             return;
         }
 
-        //if (BattleRealStageManager.Instance.IsOutOfField(attackBullet.transform))
-        //{
-        //    return;
-        //}
+        if (BattleRealStageManager.Instance.IsOutOfField(bullet.transform))
+        {
+            return;
+        }
 
         if (m_OnHitInvincibleDuration <= 0)
         {
-            base.SufferBullet(attackBullet, attackData, targetData);
+            Damage(1);
             return;
         }
 
@@ -186,7 +169,7 @@ public class BattleRealEnemyController : CharaController
                 timer = null;
             });
             RegistTimer(HIT_INVINCIBLE_TIMER_KEY, timer);
-            base.SufferBullet(attackBullet, attackData, targetData);
+            Damage(1);
         }
     }
 
@@ -194,25 +177,21 @@ public class BattleRealEnemyController : CharaController
     {
         base.Dead();
 
-        //DestroyAllTimer();
-
-        //BattleRealItemManager.Instance.CreateItem(transform.localPosition, m_DropItemParam);
-
-        Destroy();
-    }
-
-    private void OperateEventVariable()
-    {
-        if (m_DefeatOperateVariableParams == null)
+        if (m_GenerateParamSet != null)
         {
-            return;
+            BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
+
+            var events = m_GenerateParamSet.DefeatEvents;
+            if (events != null)
+            {
+                for (int i = 0; i < events.Length; i++)
+                {
+                    BattleRealEventManager.Instance.ExecuteEvent(events[i]);
+                }
+            }
         }
 
-        //var eventContent = new EventContent();
-        //eventContent.ExecuteTiming = EventContent.E_EXECUTE_TIMING.IMMEDIATE;
-        //eventContent.EventType = EventContent.E_EVENT_TYPE.OPERATE_VARIABLE;
-        //eventContent.OperateVariableParams = m_DefeatOperateVariableParams;
-        //BattleRealEventManager.Instance.ExecuteEvent(eventContent);
+        Destroy();
     }
 
     public void Destroy()

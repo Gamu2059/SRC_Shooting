@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable]
-public class BattleRealParamSet
+/// <summary>
+/// リアルモードで使用するパラメータのセット。
+/// </summary>
+[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/BattleReal", fileName = "param.battle_real.asset")]
+public class BattleRealParamSet : ScriptableObject
 {
     [SerializeField]
     private BattleRealPlayerManagerParamSet m_PlayerManagerParamSet;
@@ -23,58 +26,10 @@ public class BattleRealParamSet
     public BattleRealBulletManagerParamSet BulletManagerParamSet => m_BulletManagerParamSet;
 
     [SerializeField]
+    private BattleRealItemManagerParamSet m_ItemManagerParamSet;
+    public BattleRealItemManagerParamSet ItemManagerParamSet => m_ItemManagerParamSet;
+
+    [SerializeField]
     private BattleRealEventTriggerParamSet m_EventTriggerParamSet;
     public BattleRealEventTriggerParamSet EventTriggerParamSet => m_EventTriggerParamSet;
-}
-
-[Serializable]
-public class BattleRealPlayerManagerParamSet
-{
-    [SerializeField, Tooltip("プレイヤーのプレハブ")]
-    private BattleRealPlayerController m_PlayerPrefab;
-    public BattleRealPlayerController PlayerPrefab => m_PlayerPrefab;
-
-    [SerializeField, Tooltip("ゲーム開始時のプレイヤーの最初の位置")]
-    private Vector2 m_InitAppearViewportPosition;
-    public Vector2 InitAppearViewportPosition => m_InitAppearViewportPosition;
-
-    [SerializeField, Tooltip("プレイヤーの基本移動速度")]
-    private float m_PlayerBaseMoveSpeed;
-    public float PlayerBaseMoveSpeed => m_PlayerBaseMoveSpeed;
-
-    [SerializeField, Tooltip("プレイヤーの低速移動速度")]
-    private float m_PlayerSlowMoveSpeed;
-    public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
-}
-
-[Serializable]
-public class BattleRealEnemyGroupManagerParamSet
-{
-    [SerializeField, Tooltip("敵グループの生成パラメータ")]
-    private BattleRealEnemyGroupGenerator m_Generator;
-    public BattleRealEnemyGroupGenerator Generator => m_Generator;
-}
-
-[Serializable]
-public class BattleRealEnemyManagerParamSet
-{
-    [SerializeField, Tooltip("左下のオフセットフィールド")]
-    private Vector2 m_MinOffsetFieldPosition;
-    public Vector2 MinOffsetFieldPosition => m_MinOffsetFieldPosition;
-
-    [SerializeField, Tooltip("右上のオフセットフィールド")]
-    private Vector2 m_MaxOffsetFieldPosition;
-    public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
-}
-
-[Serializable]
-public class BattleRealBulletManagerParamSet
-{
-    [SerializeField, Tooltip("左下のオフセットフィールド")]
-    private Vector2 m_MinOffsetFieldPosition;
-    public Vector2 MinOffsetFieldPosition => m_MinOffsetFieldPosition;
-
-    [SerializeField, Tooltip("右上のオフセットフィールド")]
-    private Vector2 m_MaxOffsetFieldPosition;
-    public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
 }
