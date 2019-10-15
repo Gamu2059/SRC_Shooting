@@ -30,6 +30,10 @@ public class BattleRealEnemyUturnParamSet : BattleRealEnemyBehaviorParamSet
 
     [Header("Shot Param")]
 
+    [SerializeField, Tooltip("発射座標")]
+    private Vector3 m_ShotPosition;
+    public Vector3 ShotPosition => m_ShotPosition;
+
     [SerializeField, Tooltip("画面の見える位置に入ってから何秒後に発射するか")]
     private float m_VisibleOffsetShotTime;
     public float VisibleOffsetShotTime => m_VisibleOffsetShotTime;

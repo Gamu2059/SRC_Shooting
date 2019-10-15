@@ -503,7 +503,7 @@ public class BulletController : BattleRealObjectBase
         bullet.ResetBulletParam();
 
         bullet.m_BulletOwner = owner;
-        bullet.SetTroop(owner.GetTroop());
+        bullet.SetTroop(owner.Troop);
         bullet.m_BulletParam = null;
         bullet.m_BulletIndex = 0;
         bullet.m_BulletParamIndex = 0;
@@ -635,7 +635,7 @@ public class BulletController : BattleRealObjectBase
         bullet.ResetBulletParam();
 
         bullet.m_BulletOwner = owner;
-        bullet.SetTroop(owner.GetTroop());
+        bullet.SetTroop(owner.Troop);
         bullet.m_BulletParam = null;
         bullet.m_BulletIndex = 0;
         bullet.m_BulletParamIndex = 0;

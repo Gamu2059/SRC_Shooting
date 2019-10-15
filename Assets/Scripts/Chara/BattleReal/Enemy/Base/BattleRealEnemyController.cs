@@ -28,7 +28,7 @@ public class BattleRealEnemyController : CharaController
     /// <summary>
     /// 出現して以降、画面に映ったかどうか
     /// </summary>
-    private bool m_IsShowFirst;
+    protected bool IsShowFirst { get; private set; }
 
     public bool IsOutOfEnemyField { get; private set; }
 
@@ -72,12 +72,13 @@ public class BattleRealEnemyController : CharaController
     {
         base.OnInitialize();
 
+        Troop = E_CHARA_TROOP.ENEMY;
+        IsShowFirst = false;
+
         if (m_GenerateParamSet != null)
         {
             InitHp(m_GenerateParamSet.Hp);
         }
-
-        m_IsShowFirst = false;
     }
 
     public override void OnLateUpdate()
@@ -87,14 +88,14 @@ public class BattleRealEnemyController : CharaController
         IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfField(this);
         if (IsOutOfEnemyField)
         {
-            if (m_IsShowFirst)
+            if (IsShowFirst)
             {
                 Destroy();
             }
         }
         else
         {
-            m_IsShowFirst = true;
+            IsShowFirst = true;
         }
     }
 
@@ -112,6 +113,8 @@ public class BattleRealEnemyController : CharaController
     {
         m_GenerateParamSet = paramSet;
         m_BehaviorParamSet = m_GenerateParamSet.EnemyBehaviorParamSet;
+
+        SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
 
         OnSetParamSet();
     }

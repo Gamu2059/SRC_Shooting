@@ -27,7 +27,7 @@ public class UTurnDoubleShotEnemy : UTurnEnemy
 		float angle = param.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
 		var shotParam = new BulletShotParam( this );
-		shotParam.Position = m_ShotPosition.position - transform.parent.position;
+		shotParam.Position = m_ShotPosition + transform.position;
 
 		for( int i = 0; i < num; i++ )
 		{
@@ -43,7 +43,7 @@ public class UTurnDoubleShotEnemy : UTurnEnemy
 			angle = param.Angle;
 			spreadAngles = GetBulletSpreadAngles( num, angle );
 			shotParam = new BulletShotParam( this );
-			shotParam.Position = m_ShotPosition.position - transform.parent.position;
+			shotParam.Position = m_ShotPosition + transform.position;
 			shotParam.OrbitalIndex = 0;
 
 			for( int i = 0; i < num; i++ )
