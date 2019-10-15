@@ -979,7 +979,6 @@ GameObject:
   - component: {fileID: 235440765}
   - component: {fileID: 235440764}
   - component: {fileID: 235440768}
-  - component: {fileID: 235440767}
   - component: {fileID: 235440766}
   m_Layer: 0
   m_Name: FrontCamera
@@ -1069,20 +1068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0b9005506fa4f920d3073235f4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CameraType: 1
---- !u!114 &235440767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 235440762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
 --- !u!320 &235440768
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -1187,7 +1172,6 @@ GameObject:
   - component: {fileID: 260737158}
   - component: {fileID: 260737162}
   - component: {fileID: 260737161}
-  - component: {fileID: 260737164}
   - component: {fileID: 260737163}
   m_Layer: 0
   m_Name: BackCamera
@@ -1276,7 +1260,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -1294,9 +1278,9 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
-  m_DirectorUpdateMode: 1
+  m_DirectorUpdateMode: 3
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: 114068139044173516, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f, type: 2}
@@ -1337,20 +1321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0b9005506fa4f920d3073235f4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CameraType: 0
---- !u!114 &260737164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260737156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
 --- !u!1 &291142386
 GameObject:
   m_ObjectHideFlags: 0
@@ -6740,6 +6710,8 @@ MonoBehaviour:
   m_BattleRealUiManager: {fileID: 1630913269}
   m_BattleHackingStageManager: {fileID: 1183653724}
   m_BattleHackingUiManager: {fileID: 221366189}
+  m_BattleRealFrontCamera: {fileID: 235440766}
+  m_BattleRealBackCamera: {fileID: 260737163}
   m_VideoPlayer: {fileID: 2009328465}
   m_IsStartHackingMode: 0
   m_PlayerNotDead: 0

@@ -24,6 +24,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealBulletManager BulletManager { get; private set; }
     public BattleRealItemManager ItemManager { get; private set; }
     public BattleRealCollisionManager CollisionManager { get; private set; }
+    public BattleRealCameraManager CameraManager { get; private set; }
 
     #endregion
 
@@ -177,6 +178,7 @@ public class BattleRealManager : ControllableObject
         BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
         ItemManager = new BattleRealItemManager(m_ParamSet.ItemManagerParamSet);
         CollisionManager = new BattleRealCollisionManager();
+        CameraManager = new BattleRealCameraManager();
 
         InputManager.OnInitialize();
         RealTimerManager.OnInitialize();
@@ -187,12 +189,14 @@ public class BattleRealManager : ControllableObject
         BulletManager.OnInitialize();
         ItemManager.OnInitialize();
         CollisionManager.OnInitialize();
+        CameraManager.OnInitialize();
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        CameraManager.OnFinalize();
         CollisionManager.OnFinalize();
         ItemManager.OnFinalize();
         BulletManager.OnFinalize();
@@ -244,6 +248,10 @@ public class BattleRealManager : ControllableObject
         BulletManager.OnStart();
         ItemManager.OnStart();
         CollisionManager.OnStart();
+        CameraManager.OnStart();
+
+        CameraManager.RegisterCamera(BattleManager.Instance.BattleRealBackCamera, E_CAMERA_TYPE.BACK_CAMERA);
+        CameraManager.RegisterCamera(BattleManager.Instance.BattleRealFrontCamera, E_CAMERA_TYPE.FRONT_CAMERA);
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME);
     }
@@ -369,6 +377,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
         ItemManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
@@ -380,6 +389,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
         ItemManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
 
         // 衝突フラグクリア
         PlayerManager.ClearColliderFlag();
@@ -413,6 +423,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
         ItemManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
@@ -479,6 +490,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnTransitionToHacking()
     {
+        CameraManager.PauseCamera(E_CAMERA_TYPE.BACK_CAMERA);
+        CameraManager.PauseCamera(E_CAMERA_TYPE.FRONT_CAMERA);
     }
 
     private void UpdateOnTransitionToHacking()
@@ -555,7 +568,8 @@ public class BattleRealManager : ControllableObject
 
     private void EndOnTransitionToReal()
     {
-
+        CameraManager.ResumeCamera(E_CAMERA_TYPE.BACK_CAMERA);
+        CameraManager.ResumeCamera(E_CAMERA_TYPE.FRONT_CAMERA);
     }
 
     #endregion

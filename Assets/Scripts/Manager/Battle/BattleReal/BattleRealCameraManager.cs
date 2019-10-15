@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
+using System;
 
 /// <summary>
-/// メイン画面のカメラの管理をする。
+/// リアルモードのカメラの管理をする。
 /// </summary>
-public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
+[Serializable]
+public class BattleRealCameraManager : ControllableObject
 {
+    public static BattleRealCameraManager Instance => BattleRealManager.Instance.CameraManager;
 
-    [SerializeField]
-    private CameraController m_BackCamera;
-
-    [SerializeField]
-    private CameraController m_FrontCamera;
+    private BattleRealCameraController m_BackCamera;
+    private BattleRealCameraController m_FrontCamera;
 
     #region Get Set
 
@@ -22,7 +22,7 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
     {
         if (m_BackCamera != null)
         {
-            return m_BackCamera.GetCamera();
+            return m_BackCamera.Camera;
         }
 
         return null;
@@ -32,13 +32,15 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
     {
         if (m_FrontCamera != null)
         {
-            return m_FrontCamera.GetCamera();
+            return m_FrontCamera.Camera;
         }
 
         return null;
     }
 
     #endregion
+
+    #region Game Cycle
 
     public override void OnInitialize()
     {
@@ -69,30 +71,52 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
         LateUpdateCamera(m_FrontCamera);
     }
 
+    #endregion
+
     /// <summary>
     /// カメラを登録する。
     /// </summary>
-    public void RegistCameraController(CameraController controller, E_CAMERA_TYPE cameraType)
+    public void RegisterCamera(BattleRealCameraController camera, E_CAMERA_TYPE cameraType)
     {
-        if (controller == null)
+        if (camera == null)
         {
             return;
         }
 
-        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
-        controller.OnInitialize();
+        camera.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+        camera.OnInitialize();
 
         if (cameraType == E_CAMERA_TYPE.BACK_CAMERA)
         {
-            m_BackCamera = controller;
+            m_BackCamera = camera;
         }
         else
         {
-            m_FrontCamera = controller;
+            m_FrontCamera = camera;
         }
     }
 
-    private void UpdateCamera(CameraController controller)
+    public void PauseCamera(E_CAMERA_TYPE cameraType)
+    {
+        var camera = GetCameraController(cameraType);
+        if (camera == null)
+        {
+            return;
+        }
+
+        camera.PauseTimeline();
+    }
+
+    public void ResumeCamera(E_CAMERA_TYPE cameraType)
+    {
+        var camera = GetCameraController(cameraType);
+        if (camera == null)
+        {
+            return;
+        }
+    }
+
+    private void UpdateCamera(BattleRealCameraController controller)
     {
         if (controller == null)
         {
@@ -108,7 +132,7 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
         controller.OnUpdate();
     }
 
-    private void LateUpdateCamera(CameraController controller)
+    private void LateUpdateCamera(BattleRealCameraController controller)
     {
         if (controller == null)
         {
@@ -118,7 +142,17 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
         controller.OnLateUpdate();
     }
 
-    private void DestroyCamera(CameraController controller)
+    private void FixedUpdateCamera(BattleRealCameraController controller)
+    {
+        if (controller == null)
+        {
+            return;
+        }
+
+        controller.OnFixedUpdate();
+    }
+
+    private void DestroyCamera(BattleRealCameraController controller)
     {
         if (controller == null)
         {
@@ -129,13 +163,14 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
         controller.OnFinalize();
     }
 
-    public CameraController GetCameraController(E_CAMERA_TYPE cameraType)
+    public BattleRealCameraController GetCameraController(E_CAMERA_TYPE cameraType)
     {
         if (cameraType == E_CAMERA_TYPE.BACK_CAMERA)
         {
             return m_BackCamera;
         }
-        else{
+        else
+        {
             return m_FrontCamera;
         }
     }
@@ -145,7 +180,7 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
     /// </summary>
     public Vector3 GetViewportWorldPoint(float x, float y, E_CAMERA_TYPE cameraType = E_CAMERA_TYPE.BACK_CAMERA)
     {
-        var camera = GetCameraController(cameraType).GetCamera();
+        var camera = GetCameraController(cameraType).Camera;
         Vector3 farPos = camera.ViewportToWorldPoint(new Vector3(x, y, camera.nearClipPlane));
         Vector3 originPos = camera.transform.position;
         Vector3 dir = (farPos - originPos).normalized;
@@ -160,7 +195,7 @@ public class CameraManager : BattleSingletonMonoBehavior<CameraManager>
     /// </summary>
     public Vector2 WorldToViewportPoint(Vector3 worldPosition, E_CAMERA_TYPE cameraType = E_CAMERA_TYPE.BACK_CAMERA)
     {
-        var camera = GetCameraController(cameraType).GetCamera();
+        var camera = GetCameraController(cameraType).Camera;
         return camera.WorldToViewportPoint(worldPosition);
     }
 }

@@ -16,9 +16,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     [Header("State")]
 
     [SerializeField]
-    private PlayerState m_PlayerState;
-
-    [SerializeField]
     private FloatReactiveProperty m_CurrentScore;
 
     [SerializeField]
@@ -292,14 +289,13 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         currentExp += exp;
 
         var currentLevel = m_CurrentLevel.Value - 1;
-        var needExp = m_PlayerState.NextNeedExpParams[currentLevel];
 
-        if (currentExp >= needExp)
-        {
-            m_CurrentLevel.Value++;
-            currentExp %= needExp;
-            // Call LevelUp Action
-        }
+        //if (currentExp >= needExp)
+        //{
+        //    m_CurrentLevel.Value++;
+        //    currentExp %= needExp;
+        //    // Call LevelUp Action
+        //}
 
         m_CurrentExp.Value = currentExp;
     }
@@ -311,12 +307,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     {
         var currentCharge = m_CurrentBombCharge.Value;
         currentCharge += charge;
-
-        if (currentCharge >= m_PlayerState.BombCharge)
-        {
-            m_CurrentBombNum.Value++;
-            currentCharge %= m_PlayerState.BombCharge;
-        }
 
         m_CurrentBombCharge.Value = currentCharge;
     }

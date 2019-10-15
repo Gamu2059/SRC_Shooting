@@ -6,19 +6,28 @@ using System.Linq;
 using System;
 
 /// <summary>
-/// Timeline制御が可能なオブジェクトの基底クラス。
+/// リアルモードのTimeline制御が可能なオブジェクトの基底クラス。
 /// </summary>
 [RequireComponent(typeof(PlayableDirector))]
-public class BattleMainPlayableBase : ControllableMonoBehavior
+public class BattleRealPlayableBase : ControllableMonoBehavior
 {
+    #region Field
+
     protected PlayableDirector m_PlayableDirector;
 
     protected TimelineParam m_TimelineParam;
 
-    /// <summary>
-    /// サイクル
-    /// </summary>
     protected E_OBJECT_CYCLE m_Cycle;
+
+    public bool IsPaused { get; private set; }
+
+    public Vector3 RecordedPosition { get; private set; }
+    public Vector3 RecordedRotation { get; private set; }
+    public Vector3 RecordedLocalPosition { get; private set; }
+    public Vector3 RecordedLocalRotation { get; private set; }
+    public Vector3 RecordedLocalScale { get; private set; }
+
+    #endregion
 
     #region Get & Set
     public E_OBJECT_CYCLE GetCycle()
@@ -33,6 +42,7 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
 
     #endregion
 
+    #region Game Cycle
 
     public override void OnInitialize()
     {
@@ -41,6 +51,7 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
         m_PlayableDirector = GetComponent<PlayableDirector>();
         m_PlayableDirector.playOnAwake = false;
         m_PlayableDirector.timeUpdateMode = DirectorUpdateMode.Manual;
+        IsPaused = false;
     }
 
     public override void OnUpdate()
@@ -56,8 +67,10 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
         }
     }
 
+    #endregion
+
     /// <summary>
-    /// PlayableManagerに登録する。
+    /// BattleRealPlayableManagerに登録する。
     /// </summary>
     protected void RegistPlayable()
     {
@@ -67,6 +80,9 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
         }
     }
 
+    /// <summary>
+    /// BattleRealPlayableManagerから外す。
+    /// </summary>
     public void DestroyPlayable()
     {
         if (PlayableManager.Instance != null)
@@ -78,7 +94,6 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
     /// <summary>
     /// Timelineによる制御を開始する。
     /// </summary>
-    /// <param name="timelineParam"></param>
     public void StartTimeline(TimelineParam timelineParam)
     {
         if (m_PlayableDirector == null)
@@ -90,6 +105,7 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
 
         m_PlayableDirector.Stop();
         m_PlayableDirector.playableAsset = m_TimelineParam.TimelineAsset;
+        m_PlayableDirector.initialTime = 0;
 
         var outputs = m_PlayableDirector.playableAsset.outputs;
 
@@ -107,7 +123,7 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
         }
 
         // 参照をバインドする
-        foreach(var referenceBindParam in m_TimelineParam.ReferenceBindParams)
+        foreach (var referenceBindParam in m_TimelineParam.ReferenceBindParams)
         {
             var target = transform.Find(referenceBindParam.BindTargetName, false);
             if (target == null)
@@ -118,10 +134,12 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
             if (referenceBindParam.BindTargetComponentType == "GameObject")
             {
                 m_PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, target.gameObject);
-            } else if (referenceBindParam.BindTargetComponentType == "Transform")
+            }
+            else if (referenceBindParam.BindTargetComponentType == "Transform")
             {
                 m_PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, target);
-            } else
+            }
+            else
             {
                 var type = Type.GetType(referenceBindParam.BindTargetComponentType);
                 if (type != null)
@@ -133,6 +151,8 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
                     }
                 }
             }
+
+            m_PlayableDirector.SetReferenceValue(BattleAnimationPlayableAsset.PLAYABLE_OBJECT, this);
         }
 
         m_PlayableDirector.Play();
@@ -140,12 +160,13 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
 
     public void PauseTimeline()
     {
-        m_PlayableDirector.Pause();
+        IsPaused = true;
+        m_PlayableDirector.initialTime = m_PlayableDirector.time;
     }
 
     public void ResumeTimeline()
     {
-        m_PlayableDirector.Resume();
+        IsPaused = false;
     }
 
     public void StopTimeline()
@@ -156,5 +177,14 @@ public class BattleMainPlayableBase : ControllableMonoBehavior
         {
             DestroyPlayable();
         }
+    }
+
+    public void RecordTransform()
+    {
+        RecordedPosition = transform.position;
+        RecordedRotation = transform.eulerAngles;
+        RecordedLocalPosition = transform.localPosition;
+        RecordedLocalRotation = transform.localEulerAngles;
+        RecordedLocalScale = transform.localScale;
     }
 }

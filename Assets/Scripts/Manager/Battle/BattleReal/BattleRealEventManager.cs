@@ -152,7 +152,7 @@ public class BattleRealEventManager : ControllableObject
             if (script.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
             {
                 script.OnStart();
-                script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+                script.SetCycle(E_OBJECT_CYCLE.UPDATE);
             }
 
             script.OnUpdate();
@@ -701,7 +701,7 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlCameraParams)
         {
-            var camera = CameraManager.Instance.GetCameraController(param.CameraType);
+            var camera = BattleRealCameraManager.Instance.GetCameraController(param.CameraType);
             if (camera != null)
             {
                 camera.StartTimeline(param.CameraTimelineParam);

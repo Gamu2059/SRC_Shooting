@@ -14,18 +14,18 @@ public class PlayableManager : BattleSingletonMonoBehavior<PlayableManager>
     /// <summary>
     /// UPDATE状態のオブジェクトを保持するリスト。
     /// </summary>
-    private List<BattleMainPlayableBase> m_UpdateObjects;
+    private List<BattleRealPlayableBase> m_UpdateObjects;
 
     /// <summary>
     /// 破棄状態に遷移するオブジェクトのリスト。
     /// </summary>
-    private List<BattleMainPlayableBase> m_GotoDestroyObjects;
+    private List<BattleRealPlayableBase> m_GotoDestroyObjects;
 
     #endregion
 
     #region Get Set
 
-    public List<BattleMainPlayableBase> GetUpdateObjects()
+    public List<BattleRealPlayableBase> GetUpdateObjects()
     {
         return m_UpdateObjects;
     }
@@ -38,8 +38,8 @@ public class PlayableManager : BattleSingletonMonoBehavior<PlayableManager>
     {
         base.OnAwake();
 
-        m_UpdateObjects = new List<BattleMainPlayableBase>();
-        m_GotoDestroyObjects = new List<BattleMainPlayableBase>();
+        m_UpdateObjects = new List<BattleRealPlayableBase>();
+        m_GotoDestroyObjects = new List<BattleRealPlayableBase>();
     }
 
     public override void OnFinalize()
@@ -126,7 +126,7 @@ public class PlayableManager : BattleSingletonMonoBehavior<PlayableManager>
     /// <summary>
     /// オブジェクトを登録する。
     /// </summary>
-    public BattleMainPlayableBase RegistObject(BattleMainPlayableBase playable)
+    public BattleRealPlayableBase RegistObject(BattleRealPlayableBase playable)
     {
         if (playable == null || m_UpdateObjects.Contains(playable) || m_GotoDestroyObjects.Contains(playable))
         {
@@ -143,7 +143,7 @@ public class PlayableManager : BattleSingletonMonoBehavior<PlayableManager>
     /// <summary>
     /// オブジェクトを破棄する。
     /// </summary>
-    public void DestroyObject(BattleMainPlayableBase playable)
+    public void DestroyObject(BattleRealPlayableBase playable)
     {
         if (playable == null || !m_UpdateObjects.Contains(playable))
         {
@@ -171,7 +171,7 @@ public class PlayableManager : BattleSingletonMonoBehavior<PlayableManager>
     /// オブジェクトを破棄する。
     /// これを呼び出したタイミングで即座に削除される。
     /// </summary>
-    public void DestroyObjectImmediate(BattleMainPlayableBase playable)
+    public void DestroyObjectImmediate(BattleRealPlayableBase playable)
     {
         if (playable == null)
         {

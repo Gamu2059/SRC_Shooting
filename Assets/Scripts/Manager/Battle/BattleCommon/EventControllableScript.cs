@@ -17,7 +17,7 @@ public class EventControllableScript : IControllableGameCycle
     /// <summary>
     /// スクリプトの引数
     /// </summary>
-    private ArgumentParamSet m_ParamSet;
+    protected ArgumentParamSet m_ParamSet;
 
     #endregion
 
@@ -49,7 +49,7 @@ public class EventControllableScript : IControllableGameCycle
     /// </summary>
     protected void DestroyScript()
     {
-        //BattleRealEventManager.Instance.CheckDestroyScript(this);
+        BattleRealEventManager.Instance.CheckDestroyScript(this);
     }
 
     /// <summary>

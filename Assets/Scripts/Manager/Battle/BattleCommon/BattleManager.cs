@@ -33,8 +33,22 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private BattleHackingUiManager m_BattleHackingUiManager;
     public BattleHackingUiManager BattleHackingUiManager => m_BattleHackingUiManager;
 
+    [Header("Camera")]
+
+    [SerializeField]
+    private BattleRealCameraController m_BattleRealFrontCamera;
+    public BattleRealCameraController BattleRealFrontCamera => m_BattleRealFrontCamera;
+
+    [SerializeField]
+    private BattleRealCameraController m_BattleRealBackCamera;
+    public BattleRealCameraController BattleRealBackCamera => m_BattleRealBackCamera;
+
+    [Header("Video")]
+
     [SerializeField]
     private VideoPlayer m_VideoPlayer;
+
+    [Header("Debug")]
 
     [SerializeField]
     private bool m_IsStartHackingMode;
