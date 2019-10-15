@@ -16,44 +16,24 @@ public class UTurnEnemy : BattleRealEnemyController
 
     protected const string VISIBLE_SHOT_TIMER_KEY = "VisibleShotTimer";
 
-
-    [Header( "Move Param" )]
-
 	// 初期出現地点に対して、相対座標で直進終了地点を定める
-	[SerializeField]
 	protected Vector3 m_RelativeStraightMoveEndPosition;
 
 	// 直進時の移動速度
-	[SerializeField]
 	protected float m_StraightMoveSpeed;
 
 	// 直進終点の相対座標で円の中心点を定める
-	[SerializeField]
 	protected Vector3 m_RelativeCircleCenterPosition;
 
 	// 直進から切り替わった時に円周上をどのくらいの角度移動するか(Degree)
-	[SerializeField]
 	protected float m_CircleMoveAngle;
 
 	// 円周移動時の移動角速度
-	[SerializeField]
 	protected float m_CircleMoveSpeed;
 
-	[Header( "Shot Param" )]
-
-	[SerializeField]
-	protected Transform m_ShotPosition;
-
-	[SerializeField]
 	protected float m_VisibleOffsetShotTime;
-
-	[SerializeField]
 	protected EnemyShotParam m_StraightMoveShotParam;
-
-	[SerializeField]
 	protected EnemyShotParam m_CircleMoveShotParam;
-
-
 
 	// 処理分けを行うためのデータ
 	protected E_PHASE m_Phase;
@@ -79,7 +59,7 @@ public class UTurnEnemy : BattleRealEnemyController
 	// 弾発射間隔のカウンター
 	protected float m_ShotTimeCount;
 
-	protected Timer m_StartShotTimer;
+    protected Vector3 m_ShotPosition;
 
     protected override void OnSetParamSet()
     {
@@ -97,6 +77,8 @@ public class UTurnEnemy : BattleRealEnemyController
             m_CircleMoveShotParam = paramSet.CircleMoveShotParam;
 
             m_VisibleOffsetShotTime = paramSet.VisibleOffsetShotTime;
+
+            m_ShotPosition = paramSet.ShotPosition;
         } else
         {
             Debug.LogError("BehaviorParamSetが不適切です。");
@@ -130,20 +112,22 @@ public class UTurnEnemy : BattleRealEnemyController
 		base.OnUpdate();
 
 		Move();
-		//Shot();
-	}
+        Shot();
+    }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
 
-        if (!IsOutOfEnemyField || m_StartShotTimer == null)
+        var isOutOfField = BattleRealStageManager.Instance.IsOutOfField(transform);
+
+        if (!isOutOfField)
         {
-            m_StartShotTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, m_VisibleOffsetShotTime, () =>
             {
-                //OnShot(m_StraightMoveShotParam);
+                OnShot(m_StraightMoveShotParam);
             });
-            RegistTimer(VISIBLE_SHOT_TIMER_KEY, m_StartShotTimer);
+            RegistTimer(VISIBLE_SHOT_TIMER_KEY, timer);
         }
     }
 
@@ -225,9 +209,9 @@ public class UTurnEnemy : BattleRealEnemyController
 		float angle = param.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
 		var shotParam = new BulletShotParam( this );
-		shotParam.Position = m_ShotPosition.position - transform.parent.position;
+        shotParam.Position = m_ShotPosition + transform.position;
 
-		for( int i = 0; i < num; i++ )
+        for ( int i = 0; i < num; i++ )
 		{
 			var bullet = BulletController.ShotBullet( shotParam );
 			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_RELATIVE.RELATIVE );

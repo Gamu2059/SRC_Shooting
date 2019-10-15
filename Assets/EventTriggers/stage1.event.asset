@@ -114,6 +114,36 @@ MonoBehaviour:
           StringValue: 
           Vector2Value: {x: 0, y: 0}
           Vector3Value: {x: 0, y: 0, z: 0}
+    - EventType: 9
+      ExecuteTiming: 1
+      DelayExecuteTime: 100
+      AppearEnemyIndex: 0
+      ControlCameraParams:
+      - CameraType: 0
+        CameraTimelineParam:
+          TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
+            type: 2}
+          TrackBindParams: []
+          ReferenceBindParams:
+          - ReferenceName: BackEnd Camera
+            BindTargetName: BackCamera
+            BindTargetComponentType: Transform
+          IsDestroyEndTimeline: 0
+      ControlObjectParams: []
+      ControlBgmParams: []
+      OperateVariableParams: []
+      CountStartTimePeriodNames: []
+      CallScriptParams:
+      - ScriptName: WhiteOutController
+        ScriptArguments:
+        - Type: 1
+          Name: Duration
+          IntValue: 0
+          FloatValue: 0.5
+          BoolValue: 0
+          StringValue: 
+          Vector2Value: {x: 0, y: 0}
+          Vector3Value: {x: 0, y: 0, z: 0}
   - Condition:
       IsReverse: 0
       IsMultiCondition: 0
@@ -123,7 +153,7 @@ MonoBehaviour:
         VariableName: Clear Count
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 8
+        CompareValue: 12
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []

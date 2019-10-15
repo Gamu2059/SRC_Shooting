@@ -9,10 +9,6 @@ public class CharaController : BattleRealObjectBase
 {
     #region Field Inspector
 
-    [Header("キャラの基礎パラメータ")]
-
-    [SerializeField, Tooltip("キャラの所属")]
-    private E_CHARA_TROOP m_Troop;
 
     [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
     private BulletSetParam m_BulletSetParam;
@@ -28,6 +24,7 @@ public class CharaController : BattleRealObjectBase
     #endregion
 
     #region Field
+    public E_CHARA_TROOP Troop { get; protected set; }
 
     private HitSufferController<BulletController> m_BulletSuffer;
     private HitSufferController<CharaController> m_CharaSuffer;
@@ -36,19 +33,17 @@ public class CharaController : BattleRealObjectBase
 
     #endregion
 
-    #region Getter & Setter
-
-
-    public E_CHARA_TROOP GetTroop()
-    {
-        return m_Troop;
-    }
+    #region Get Set
 
     public BulletSetParam GetBulletSetParam()
     {
         return m_BulletSetParam;
     }
 
+    /// <summary>
+    /// いずれ消す
+    /// </summary>
+    /// <param name="param"></param>
     public void SetBulletSetParam(BulletSetParam param)
     {
         m_BulletSetParam = param;
