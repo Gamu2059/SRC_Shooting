@@ -676,6 +676,9 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.GAME_START:
                 ExecuteGameStart();
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.GOTO_BOSS_EVENT:
+                ExecuteGotoBossEvent();
+                break;
             case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR:
                 ExecuteGameClear();
                 break;
@@ -743,13 +746,23 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlBgmParams)
         {
-            if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
+            switch (param.ControlType)
             {
-                //FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
-            }
-            else
-            {
-                //FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY:
+                    AudioManager.Instance.PlayBgm(param.PlayBgmName, param.FadeDuration, param.FadeOutCurve, param.FadeInCurve);
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY_IMMEDIATE:
+                    AudioManager.Instance.PlayBgmImmediate(param.PlayBgmName);
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP:
+                    AudioManager.Instance.StopBgm(param.FadeDuration, param.FadeOutCurve);
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP_IMMEDIATE:
+                    AudioManager.Instance.StopBgmImmediate();
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.CONTROL_AISAC:
+                    AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);
+                    break;
             }
         }
     }
@@ -892,6 +905,14 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
+    /// ボスイベントに入る。
+    /// </summary>
+    private void ExecuteGotoBossEvent()
+    {
+        BattleManager.Instance.GotoBossEvent();
+    }
+
+    /// <summary>
     /// ゲームクリアイベントを発行する。
     /// </summary>
     private void ExecuteGameClear()
@@ -899,6 +920,9 @@ public class BattleRealEventManager : ControllableObject
         BattleManager.Instance.GameClear();
     }
 
+    /// <summary>
+    /// ゲームオーバーイベントを発行する。
+    /// </summary>
     private void ExecuteGameOver()
     {
         BattleManager.Instance.GameOver();

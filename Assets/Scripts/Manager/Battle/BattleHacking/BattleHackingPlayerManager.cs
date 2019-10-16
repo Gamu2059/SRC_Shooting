@@ -92,13 +92,13 @@ public class BattleHackingPlayerManager : ControllableObject
                 if (!m_IsShotNormal)
                 {
                     m_IsShotNormal = true;
-                    AudioManager.Instance.PlaySeAdx2(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot02");
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot02");
                 }
                 Player.ShotBullet();
                 break;
             case E_INPUT_STATE.UP:
                 m_IsShotNormal = false;
-                AudioManager.Instance.StopSeAdx2(AudioManager.E_SE_GROUP.PLAYER);
+                AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
                 break;
             case E_INPUT_STATE.NONE:
                 break;

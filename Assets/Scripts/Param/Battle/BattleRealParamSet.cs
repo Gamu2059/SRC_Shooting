@@ -9,6 +9,8 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/BattleReal", fileName = "param.battle_real.asset")]
 public class BattleRealParamSet : ScriptableObject
 {
+    [Header("Param Set")]
+
     [SerializeField]
     private BattleRealPlayerManagerParamSet m_PlayerManagerParamSet;
     public BattleRealPlayerManagerParamSet PlayerManagerParamSet => m_PlayerManagerParamSet;
@@ -32,4 +34,10 @@ public class BattleRealParamSet : ScriptableObject
     [SerializeField]
     private BattleRealEventTriggerParamSet m_EventTriggerParamSet;
     public BattleRealEventTriggerParamSet EventTriggerParamSet => m_EventTriggerParamSet;
+
+    [Header("Boss Change")]
+
+    [SerializeField]
+    private ControlBgmParam m_ControlBgmParam;
+    public ControlBgmParam ControlBgmParam => m_ControlBgmParam;
 }

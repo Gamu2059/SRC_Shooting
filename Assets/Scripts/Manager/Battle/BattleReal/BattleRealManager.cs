@@ -429,7 +429,7 @@ public class BattleRealManager : ControllableObject
     private void EndOnGame()
     {
         InputManager.RemoveInput();
-        AudioManager.Instance.StopSeAdx2(AudioManager.E_SE_GROUP.PLAYER);
+        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
     }
 
     #endregion
@@ -464,7 +464,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnBeforeBossBattlePerformance()
     {
-
+        AudioManager.Instance.StopBgmImmediate();
+        RequestChangeState(E_BATTLE_REAL_STATE.GAME);
     }
 
     private void UpdateOnBeforeBossBattlePerformance()
@@ -481,7 +482,8 @@ public class BattleRealManager : ControllableObject
 
     private void EndOnBeforeBossBattlePerformance()
     {
-
+        var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
+        AudioManager.Instance.PlayBgmImmediate(bossBgmName);
     }
 
     #endregion
