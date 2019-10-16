@@ -13,20 +13,21 @@ MonoBehaviour:
   m_Name: behavior.battle_real_enemy_uturn
   m_EditorClassIdentifier: 
   m_BehaviorClass: UTurnEnemy
-  m_BulletSets: []
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_EnemyLookParamSet: {fileID: 11400000, guid: d2ae2c5cb6bce0a419fe1dabc026cf9a,
     type: 2}
-  m_RelativeStraightMoveEndPosition: {x: 0, y: 0, z: -0.5}
+  m_RelativeStraightMoveEndPosition: {x: 0, y: 0, z: -0.7}
   m_StraightMoveSpeed: 0.5
   m_RelativeCircleCenterPosition: {x: 0.3, y: 0, z: 0}
   m_CircleMoveAngle: 180
   m_CircleMoveSpeed: 60
-  m_VisibleOffsetShotTime: 0.1
+  m_ShotPosition: {x: 0, y: 0, z: 0}
+  m_VisibleOffsetShotTime: 1
   m_StraightMoveShotParam:
     Interval: 300
     Num: 1
     Angle: 0
   m_CircleMoveShotParam:
-    Interval: 300
-    Num: 1
-    Angle: 0
+    Interval: 1.5
+    Num: 2
+    Angle: 20

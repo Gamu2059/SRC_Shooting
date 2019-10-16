@@ -9,20 +9,13 @@ using System;
 /// </summary>
 public abstract class BattleRealEnemyBehaviorParamSet : ScriptableObject
 {
-    [Serializable]
-    public class BulletSet
-    {
-        public string Name;
-        public BulletController Bullet;
-    }
-
     [SerializeField]
     private string m_BehaviorClass;
     public string BehaviorClass => m_BehaviorClass;
 
     [SerializeField]
-    private List<BulletSet> m_BulletSets;
-    public List<BulletSet> BulletSets => m_BulletSets;
+    private BulletSetParam m_BulletSetParam;
+    public BulletSetParam BulletSetParam => m_BulletSetParam;
 
     [SerializeField]
     private BattleRealEnemyLookParamSet m_EnemyLookParamSet;
