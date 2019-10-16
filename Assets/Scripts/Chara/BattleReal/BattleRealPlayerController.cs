@@ -152,22 +152,34 @@ public class BattleRealPlayerController : CharaController
             return;
         }
 
+        /* デバッグ用 */
+        Debug.Log("You got " + item.ItemType + "! : " + item.ItemPoint + "pts!");
+
         switch (item.ItemType)
         {
             case E_ITEM_TYPE.SMALL_SCORE:
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                break;
             case E_ITEM_TYPE.BIG_SCORE:
-                //BattleRealPlayerManager.Instance.AddScore(targetItem.GetPoint());
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                break;
             case E_ITEM_TYPE.BIG_SCORE_UP:
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                break;
             case E_ITEM_TYPE.BIG_EXP:
-                //BattleRealPlayerManager.Instance.AddExp(targetItem.GetPoint());
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_BOMB:
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                break;
             case E_ITEM_TYPE.BIG_BOMB:
-                //BattleRealPlayerManager.Instance.AddBombCharge(targetItem.GetPoint());
+                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
                 break;
         }
     }

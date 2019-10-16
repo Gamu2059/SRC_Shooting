@@ -9,6 +9,8 @@ public class BattleRealEnemyController : CharaController
 
     [Space()]
     [Header("敵専用 パラメータ")]
+    [SerializeField, Tooltip("撃破時の獲得スコア")]
+    private int m_Score;
 
     [SerializeField, Tooltip("被弾直後の無敵時間")]
     private float m_OnHitInvincibleDuration;
@@ -78,6 +80,7 @@ public class BattleRealEnemyController : CharaController
         if (m_GenerateParamSet != null)
         {
             InitHp(m_GenerateParamSet.Hp);
+            SetScore(m_GenerateParamSet.Score);
         }
     }
 
@@ -107,6 +110,14 @@ public class BattleRealEnemyController : CharaController
     public virtual void SetArguments(string param)
     {
         m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
+    }
+
+    /// <summary>
+    /// 撃破時スコアをセットする
+    /// </summary>
+    public void SetScore(int score)
+    {
+        m_Score = score;
     }
 
     public void SetParamSet(BattleRealEnemyGenerateParamSet paramSet)
@@ -189,6 +200,10 @@ public class BattleRealEnemyController : CharaController
             {
                 for (int i = 0; i < events.Length; i++)
                 {
+                    /* デバッグ用 */
+                    Debug.Log(gameObject + ".m_Score = " + m_Score);
+
+                    BattleRealPlayerManager.Instance.AddScore(m_Score);
                     BattleRealEventManager.Instance.ExecuteEvent(events[i]);
                 }
             }

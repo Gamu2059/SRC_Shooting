@@ -10,6 +10,8 @@ public class CommandEnemyController : CommandCharaController
     [SerializeField, Tooltip("被弾直後の無敵時間")]
     private float m_OnHitInvincibleDuration;
 
+    [SerializeField, Tooltip("撃破時の獲得スコア")]
+    private int m_Score;
 
     /// <summary>
     /// マスターデータから取得するパラメータセット
@@ -92,5 +94,7 @@ public class CommandEnemyController : CommandCharaController
         {
             //BattleManager.Instance.TransitionBattleMain();
         }
+
+        BattleRealPlayerManager.Instance.AddScore(m_Score);
     }
 }

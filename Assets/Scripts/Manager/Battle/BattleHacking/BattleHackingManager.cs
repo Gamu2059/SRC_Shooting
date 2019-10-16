@@ -125,7 +125,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnInitialize();
         CollisionManager.OnInitialize();
 
-        RequestChangeState(E_BATTLE_HACKING_STATE.START);
+        RequestChangeState(E_BATTLE_HACKING_STATE.START);        
     }
 
     public override void OnFinalize()
