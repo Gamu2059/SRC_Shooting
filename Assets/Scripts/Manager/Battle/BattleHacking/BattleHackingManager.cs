@@ -335,7 +335,7 @@ public class BattleHackingManager : ControllableObject
     private void EndOnGame()
     {
         InputManager.RemoveInput();
-        AudioManager.Instance.StopSeAdx2(AudioManager.E_SE_GROUP.PLAYER);
+        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
     }
 
     #endregion

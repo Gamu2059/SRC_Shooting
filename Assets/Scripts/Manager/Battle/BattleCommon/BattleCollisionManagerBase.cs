@@ -15,7 +15,7 @@ public abstract class BattleCollisionManagerBase : ControllableObject
     {
         base.OnInitialize();
 
-        m_CollisionMaterial = BattleManager.Instance.ColliderMaterial;
+        m_CollisionMaterial = BattleManager.Instance.ParamSet.ColliderMaterial;
         m_PropertyBlock = new MaterialPropertyBlock();
         m_ColorId = Shader.PropertyToID("_Color");
     }

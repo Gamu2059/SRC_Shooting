@@ -18,6 +18,10 @@ public class BattleParamSet : ScriptableObject
     private BattleHackingParamSet m_BattleHackingParamSet;
     public BattleHackingParamSet BattleHackingParamSet => m_BattleHackingParamSet;
 
+    [SerializeField]
+    private Material m_ColliderMaterial;
+    public Material ColliderMaterial => m_ColliderMaterial;
+
     [Header("Transition")]
 
     [SerializeField]
@@ -47,13 +51,17 @@ public class BattleParamSet : ScriptableObject
     [Header("BGM")]
 
     [SerializeField]
-    private BattleBgmParamSet m_BossBgmParamSet;
-    public BattleBgmParamSet BossBgmParamSet => m_BossBgmParamSet;
+    private BattleBgmParamSet m_BgmParamSet;
+    public BattleBgmParamSet BgmParamSet => m_BgmParamSet;
 }
 
 [Serializable]
 public class BattleBgmParamSet
 {
+    [SerializeField]
+    private string m_StageBgmName;
+    public string StageBgmName => m_StageBgmName;
+
     [SerializeField]
     private string m_BossBgmName;
     public string BossBgmName => m_BossBgmName;

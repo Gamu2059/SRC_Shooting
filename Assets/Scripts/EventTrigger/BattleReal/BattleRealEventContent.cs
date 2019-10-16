@@ -51,6 +51,11 @@ public struct BattleRealEventContent
         GAME_START,
 
         /// <summary>
+        /// ボスイベントへ遷移する
+        /// </summary>
+        GOTO_BOSS_EVENT,
+
+        /// <summary>
         /// ゲームクリア
         /// </summary>
         GAME_CLEAR,

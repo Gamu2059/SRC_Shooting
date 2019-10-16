@@ -176,13 +176,13 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
                     if (!m_IsShotNormal)
                     {
                         m_IsShotNormal = true;
-                        AudioManager.Instance.PlaySeAdx2(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot01");
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot01");
                     }
                     Player.ShotBullet();
                     break;
                 case E_INPUT_STATE.UP:
                     m_IsShotNormal = false;
-                    AudioManager.Instance.StopSeAdx2(AudioManager.E_SE_GROUP.PLAYER);
+                    AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
                     break;
                 case E_INPUT_STATE.NONE:
                     break;
@@ -226,7 +226,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         }
 
         /* デバッグ用 */
-        Debug.Log("CurrentScore = " + m_CurrentScore);
+        //Debug.Log("CurrentScore = " + m_CurrentScore);
 
         m_Player.OnUpdate();
     }

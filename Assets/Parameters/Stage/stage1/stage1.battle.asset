@@ -16,6 +16,7 @@ MonoBehaviour:
     type: 2}
   m_BattleHackingParamSet: {fileID: 11400000, guid: 39d70b5bdb4422b47a4b5674a802fd15,
     type: 2}
+  m_ColliderMaterial: {fileID: 2100000, guid: da5a8fa657aff5d40a3991eb63cd03ba, type: 2}
   m_FadeOutVideoParam:
     serializedVersion: 2
     m_Curve:
@@ -70,5 +71,6 @@ MonoBehaviour:
     type: 3}
   m_TransitionToHackingSeName: SE_Hack_Start
   m_TransitionToRealSeName: SE_Hack_End
-  m_BossBgmParamSet:
+  m_BgmParamSet:
+    m_StageBgmName: BGM_Stage01
     m_BossBgmName: BGM_Boss01
