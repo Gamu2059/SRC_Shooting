@@ -9,8 +9,8 @@ public class BattleRealEnemyController : CharaController
 
     [Space()]
     [Header("敵専用 パラメータ")]
-    [SerializeField]
-    protected int m_Score;
+    [SerializeField, Tooltip("撃破時の獲得スコア")]
+    private int m_Score;
 
     [SerializeField, Tooltip("被弾直後の無敵時間")]
     private float m_OnHitInvincibleDuration;
