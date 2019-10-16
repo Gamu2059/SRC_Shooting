@@ -50,6 +50,7 @@ public class BattleRealPlayerController : CharaController
     public override void OnInitialize()
     {
         base.OnInitialize();
+        Troop = E_CHARA_TROOP.PLAYER;
     }
 
     public override void OnFinalize()

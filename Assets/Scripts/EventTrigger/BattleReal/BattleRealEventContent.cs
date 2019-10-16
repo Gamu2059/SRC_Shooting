@@ -54,6 +54,11 @@ public struct BattleRealEventContent
         /// ゲームクリア
         /// </summary>
         GAME_CLEAR,
+
+        /// <summary>
+        /// ゲームオーバー
+        /// </summary>
+        GAME_OVER,
     }
 
     /// <summary>
