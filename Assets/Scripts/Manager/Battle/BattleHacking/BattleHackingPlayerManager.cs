@@ -107,13 +107,18 @@ public class BattleHackingPlayerManager : ControllableObject
         if (input.Cancel == E_INPUT_STATE.DOWN)
         {
             // リアルモードと違って、暫定でハッキングモードをクリアしたことにする
-            Debug.Log("Hacking succeed!");
+            BattleHackingManager.Instance.IncreaseHackingSucceedCount();
+            Debug.Log("Hacking succeed! : " + BattleHackingManager.Instance.HackingSucceedCount);
+            if(BattleHackingManager.Instance.HackingSucceedCount >= 1){
+                BattleRealPlayerManager.Instance.AddScore(1000 * BattleHackingManager.Instance.HackingSucceedCount);
+            }
             BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
         }
 
         if(input.Slow == E_INPUT_STATE.DOWN){
             // 暫定でハッキングモードに失敗したことにする
-            Debug.Log("Hacking failed...");
+            BattleHackingManager.Instance.ResetHackingSucceedCount();
+            Debug.Log("Hacking failed... : " + BattleHackingManager.Instance.HackingSucceedCount);
             BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
         }
 

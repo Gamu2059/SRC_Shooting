@@ -22,6 +22,8 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingBulletManager BulletManager { get; private set; }
     public BattleHackingCollisionManager CollisionManager { get; private set; }
 
+    public int HackingSucceedCount {get; private set;}
+
     #endregion
 
     public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
@@ -126,6 +128,8 @@ public class BattleHackingManager : ControllableObject
         CollisionManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
+
+        
     }
 
     public override void OnFinalize()
@@ -424,5 +428,13 @@ public class BattleHackingManager : ControllableObject
         }
 
         m_StateMachine.Goto(state);
+    }
+
+    public void ResetHackingSucceedCount(){
+        HackingSucceedCount = 0;
+    }
+
+    public void IncreaseHackingSucceedCount(){
+        HackingSucceedCount++;
     }
 }
