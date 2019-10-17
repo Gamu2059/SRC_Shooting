@@ -34,7 +34,8 @@ MonoBehaviour:
       MultiConditionType: 0
       MultiConditions: []
     Contents:
-    - EventType: 7
+    - IsPassExecute: 0
+      EventType: 7
       ExecuteTiming: 1
       DelayExecuteTime: 2
       AppearEnemyIndex: 0
@@ -44,7 +45,8 @@ MonoBehaviour:
       OperateVariableParams: []
       CountStartTimePeriodNames: []
       CallScriptParams: []
-    - EventType: 1
+    - IsPassExecute: 0
+      EventType: 1
       ExecuteTiming: 0
       DelayExecuteTime: 0
       AppearEnemyIndex: 0
@@ -64,7 +66,8 @@ MonoBehaviour:
       OperateVariableParams: []
       CountStartTimePeriodNames: []
       CallScriptParams: []
-    - EventType: 1
+    - IsPassExecute: 0
+      EventType: 1
       ExecuteTiming: 1
       DelayExecuteTime: 12
       AppearEnemyIndex: 0
@@ -84,7 +87,8 @@ MonoBehaviour:
       OperateVariableParams: []
       CountStartTimePeriodNames: []
       CallScriptParams: []
-    - EventType: 6
+    - IsPassExecute: 0
+      EventType: 6
       ExecuteTiming: 1
       DelayExecuteTime: 78
       AppearEnemyIndex: 0
@@ -104,7 +108,7 @@ MonoBehaviour:
       OperateVariableParams: []
       CountStartTimePeriodNames: []
       CallScriptParams:
-      - ScriptName: WhiteOutController
+      - ScriptName: Stage1.WhiteOutController
         ScriptArguments:
         - Type: 1
           Name: Duration
@@ -114,7 +118,8 @@ MonoBehaviour:
           StringValue: 
           Vector2Value: {x: 0, y: 0}
           Vector3Value: {x: 0, y: 0, z: 0}
-    - EventType: 10
+    - IsPassExecute: 1
+      EventType: 10
       ExecuteTiming: 1
       DelayExecuteTime: 100
       AppearEnemyIndex: 0
@@ -144,9 +149,10 @@ MonoBehaviour:
           StringValue: 
           Vector2Value: {x: 0, y: 0}
           Vector3Value: {x: 0, y: 0, z: 0}
-    - EventType: 8
+    - IsPassExecute: 0
+      EventType: 6
       ExecuteTiming: 1
-      DelayExecuteTime: 10
+      DelayExecuteTime: 78
       AppearEnemyIndex: 0
       ControlCameraParams:
       - CameraType: 0
@@ -164,16 +170,8 @@ MonoBehaviour:
       OperateVariableParams: []
       CountStartTimePeriodNames: []
       CallScriptParams:
-      - ScriptName: WhiteOutController
-        ScriptArguments:
-        - Type: 1
-          Name: Duration
-          IntValue: 0
-          FloatValue: 0.5
-          BoolValue: 0
-          StringValue: 
-          Vector2Value: {x: 0, y: 0}
-          Vector3Value: {x: 0, y: 0, z: 0}
+      - ScriptName: Stage1.MotherColonyViewController
+        ScriptArguments: []
   - Condition:
       IsReverse: 0
       IsMultiCondition: 0
@@ -188,7 +186,8 @@ MonoBehaviour:
       MultiConditionType: 0
       MultiConditions: []
     Contents:
-    - EventType: 9
+    - IsPassExecute: 0
+      EventType: 9
       ExecuteTiming: 0
       DelayExecuteTime: 0
       AppearEnemyIndex: 0

@@ -50,6 +50,27 @@ public class BattleRealInputManager : InputManagerBase
         Slow = GetButton(SLOW);
         ChangeMode = GetButton(CHANGE_WEAPON_TYPE);
         Menu = GetButton(MENU);
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Time.timeScale = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Time.timeScale = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Time.timeScale = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            Time.timeScale = 4;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Time.timeScale = 5;
+        }
     }
 
     public void RegistInput()
