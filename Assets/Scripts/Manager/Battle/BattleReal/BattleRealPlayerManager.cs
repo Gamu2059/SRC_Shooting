@@ -105,8 +105,8 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     {
         base.OnInitialize();
 
-        IsLaserType = true;
-        IsNormalWeapon = true;
+        IsLaserType = m_ParamSet.IsLaserType;
+        IsNormalWeapon = m_ParamSet.IsNormalWeapon;
     }
 
     public override void OnFinalize()
@@ -194,29 +194,28 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             {
                 if (IsLaserType)
                 {
-                    Debug.Log("Charging Laser...");
+                    Player.ChargeLaser();
                 }
                 else
                 {
-                    Debug.Log("Charging Bomb...");
+                    Player.ChargeBomb();
                 }
             }
             else if (input.Shot == E_INPUT_STATE.UP)
             {
                 if (IsLaserType)
                 {
-                    Debug.Log("Shot Laser!");
+                    Player.ShotLaser();
                 }
                 else
                 {
-                    Debug.Log("Shot Bomb!");
+                    Player.ShotBomb();
                 }
             }
         }
 
         if (input.ChangeMode == E_INPUT_STATE.DOWN)
         {
-            Debug.Log("Change Weapon");
             IsNormalWeapon = !IsNormalWeapon;
         }
 

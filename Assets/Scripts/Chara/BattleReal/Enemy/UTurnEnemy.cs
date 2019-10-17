@@ -205,6 +205,7 @@ public class UTurnEnemy : BattleRealEnemyController
 
 	protected virtual void OnShot( EnemyShotParam param )
 	{
+        return;
 		int num = param.Num;
 		float angle = param.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
