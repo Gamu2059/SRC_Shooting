@@ -187,6 +187,17 @@ public class BattleRealEnemyController : CharaController
         }
     }
 
+    protected override void OnStaySufferBullet(HitSufferData<BulletController> sufferData)
+    {
+        base.OnStaySufferBullet(sufferData);
+
+        var hitCollider = sufferData.HitCollider;
+        if (hitCollider.Transform.ColliderType == E_COLLIDER_TYPE.PLAYER_LASER)
+        {
+            Damage(1);
+        }
+    }
+
     public override void Dead()
     {
         base.Dead();

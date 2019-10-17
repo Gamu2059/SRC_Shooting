@@ -8,4 +8,5 @@ public enum E_COLLIDER_TYPE
     CRITICAL,
     ITEM_GAIN,
     ITEM_ATTRACT,
+    PLAYER_LASER,
 }

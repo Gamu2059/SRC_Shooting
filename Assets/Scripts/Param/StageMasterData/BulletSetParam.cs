@@ -166,6 +166,6 @@ public class BulletSetParam : ScriptableObject
         }
 
         bombParamIndex = Mathf.Clamp(bombParamIndex, 0, count);
-        return m_BulletParams[bombParamIndex];
+        return m_BombParams[bombParamIndex];
     }
 }
