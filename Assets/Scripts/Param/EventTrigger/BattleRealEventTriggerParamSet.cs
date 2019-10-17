@@ -9,13 +9,6 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/EventTrigger", fileName = "param.battle_real_event.asset")]
 public class BattleRealEventTriggerParamSet : ScriptableObject
 {
-    [Serializable]
-    public struct EventTriggerParam
-    {
-        public EventTriggerRootCondition Condition;
-        public BattleRealEventContent[] Contents;
-    }
-
     /// <summary>
     /// イベント変数の配列
     /// </summary>
@@ -34,6 +27,6 @@ public class BattleRealEventTriggerParamSet : ScriptableObject
     /// イベントの発動条件とその内容の配列
     /// </summary>
     [SerializeField]
-    private EventTriggerParam[] m_Params;
-    public EventTriggerParam[] Params => m_Params;
+    private BattleRealEventTriggerParam[] m_Params;
+    public BattleRealEventTriggerParam[] Params => m_Params;
 }

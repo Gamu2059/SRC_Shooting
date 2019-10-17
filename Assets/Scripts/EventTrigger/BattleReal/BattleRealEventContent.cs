@@ -84,6 +84,9 @@ public struct BattleRealEventContent
 
     [Header("共通パラメータ")]
 
+    [Tooltip("実行をパスするかどうか")]
+    public bool IsPassExecute;
+
     [Tooltip("イベントタイプ")]
     public E_EVENT_TYPE EventType;
 

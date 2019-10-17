@@ -120,10 +120,7 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        var currentTime = playable.GetTime();
-        var duration = playable.GetDuration();
-        var normalizedTime = currentTime / duration;
-        if (m_AnimationTarget == null || playable.GetTime() <= 0 || normalizedTime < 1)
+        if (m_AnimationTarget == null || playable.GetTime() <= 0 || m_Playable.IsPaused)
         {
             return;
         }

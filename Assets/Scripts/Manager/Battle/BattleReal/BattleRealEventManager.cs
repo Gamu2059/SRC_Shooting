@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-using EventTriggerParam = BattleRealEventTriggerParamSet.EventTriggerParam;
-
 /// <summary>
 /// BattleRealのイベントトリガを管理するマネージャ。
 /// </summary>
@@ -24,8 +22,8 @@ public class BattleRealEventManager : ControllableObject
     private Dictionary<string, bool> m_BoolVariables;
     private Dictionary<string, EventTriggerTimePeriod> m_TimePeriods;
 
-    private List<EventTriggerParam> m_EventParams;
-    private List<EventTriggerParam> m_GotoDestroyEventParams;
+    private List<BattleRealEventTriggerParam> m_EventParams;
+    private List<BattleRealEventTriggerParam> m_GotoDestroyEventParams;
 
     private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
     private EventTriggerTimePeriod m_GameStartTimePeriod;
@@ -84,8 +82,8 @@ public class BattleRealEventManager : ControllableObject
             m_TimePeriods.Add(periodName, new EventTriggerTimePeriod());
         }
 
-        m_EventParams = new List<EventTriggerParam>();
-        m_GotoDestroyEventParams = new List<EventTriggerParam>();
+        m_EventParams = new List<BattleRealEventTriggerParam>();
+        m_GotoDestroyEventParams = new List<BattleRealEventTriggerParam>();
         m_EventParams.AddRange(m_ParamSet.Params);
 
         m_WaitExecuteParams = new List<BattleRealEventContent>();
@@ -132,6 +130,11 @@ public class BattleRealEventManager : ControllableObject
         // イベント実行
         foreach (var param in m_WaitExecuteParams)
         {
+            if (param.IsPassExecute)
+            {
+                continue;
+            }
+
             ExecuteEvent(param);
         }
 
@@ -197,7 +200,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// EventParamを追加する。
     /// </summary>
-    public void AddEventParam(EventTriggerParam param)
+    public void AddEventParam(BattleRealEventTriggerParam param)
     {
         var condition = param.Condition;
         if (condition.IsMultiCondition && condition.MultiConditions == null)
@@ -854,7 +857,6 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in callScriptParams)
         {
-
             Type type = Type.GetType(param.ScriptName);
 
             if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
