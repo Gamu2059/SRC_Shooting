@@ -76,12 +76,16 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     public int HackingSucceedCount {get; private set;}
 
+    public float BestScore{get; private set;}
+
     #endregion
 
     #region Game Cycle
 
     public override void OnInitialize()
     {
+        Debug.Log("Initialize!");
+        
         base.OnInitialize();
 
         m_StateMachine = new StateMachine<E_BATTLE_STATE>();
@@ -169,6 +173,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RequestChangeState(E_BATTLE_STATE.START);
 
         ResetHackingSucceedCount();
+
+        ResetBestScore();
     }
 
     public override void OnFinalize()
@@ -586,6 +592,15 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     public void IncreaseHackingSucceedCount(){
         HackingSucceedCount++;
+    }
+
+    public void ResetBestScore(){
+        //Debug.Log("reset!");
+        BestScore = 1000.0f;
+    }
+
+    public void UpdateBestScore(float score){
+        BestScore = score;
     }
 
     public void RequestChangeState(E_BATTLE_STATE state)

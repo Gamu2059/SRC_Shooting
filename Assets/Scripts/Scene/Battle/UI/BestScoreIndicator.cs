@@ -12,16 +12,12 @@ public class BestScoreIndicator : MonoBehaviour
 	[SerializeField]
 	private Text m_OutText;
 
-	private float m_BestScore;
-
 	private FloatReactiveProperty m_DisplayedBestScore;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		m_BestScore = 0.0f;
-
-		if (BattleRealPlayerManager.Instance != null){
+		if (BattleRealPlayerManager.Instance != null && BattleManager.Instance != null){
             RegisterBestScore();
         } else {
             BattleRealPlayerManager.OnStartAction += RegisterBestScore;
@@ -31,7 +27,7 @@ public class BestScoreIndicator : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(BattleRealPlayerManager.Instance == null){
+		if(BattleRealPlayerManager.Instance == null || BattleManager.Instance == null){
 			return;
 		}
 
@@ -39,16 +35,16 @@ public class BestScoreIndicator : MonoBehaviour
 		
 		if(currentScore != null){
 			var currentScoreValue = currentScore.Value;
-			if(currentScoreValue >= m_BestScore){
-				m_BestScore = currentScoreValue;
-				m_DisplayedBestScore.SetValueAndForceNotify(m_BestScore);
+			
+			if(currentScoreValue >= BattleManager.Instance.BestScore){
+				BattleManager.Instance.UpdateBestScore(currentScoreValue);
+				m_DisplayedBestScore.SetValueAndForceNotify(BattleManager.Instance.BestScore);
 			}
 		}
 	}
 
 	private void RegisterBestScore(){
-		// Initialize using the saved score when the save function is implemented
-		m_DisplayedBestScore = new FloatReactiveProperty(0.0f);
+		m_DisplayedBestScore = new FloatReactiveProperty(BattleManager.Instance.BestScore);
 		m_DisplayedBestScore.SubscribeToText(m_OutText);
 	}
 }
