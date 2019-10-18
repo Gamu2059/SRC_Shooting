@@ -55,7 +55,7 @@
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
-				float time = _Time * _WaveSpeed;
+				float time = _Time.y * _WaveSpeed;
 				float offsetY = sin((o.vertex.x- o.vertex.y) * _WaveFrequency) + sin((o.vertex.x + o.vertex.y) * _WaveFrequency);
 				offsetY *= sin(time)*_WaveLevel;
 				o.vertex.y += offsetY;

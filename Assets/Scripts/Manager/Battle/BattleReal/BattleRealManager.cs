@@ -26,6 +26,9 @@ public class BattleRealManager : ControllableObject
     public BattleRealCollisionManager CollisionManager { get; private set; }
     public BattleRealCameraManager CameraManager { get; private set; }
 
+    public Action OnTransitionToHacking;
+    public Action OnTransitionToReal;
+
     #endregion
 
     public static BattleRealManager Instance => BattleManager.Instance.RealManager;
@@ -494,6 +497,7 @@ public class BattleRealManager : ControllableObject
     {
         CameraManager.PauseCamera(E_CAMERA_TYPE.BACK_CAMERA);
         CameraManager.PauseCamera(E_CAMERA_TYPE.FRONT_CAMERA);
+        OnTransitionToHacking?.Invoke();
     }
 
     private void UpdateOnTransitionToHacking()
@@ -572,6 +576,7 @@ public class BattleRealManager : ControllableObject
     {
         CameraManager.ResumeCamera(E_CAMERA_TYPE.BACK_CAMERA);
         CameraManager.ResumeCamera(E_CAMERA_TYPE.FRONT_CAMERA);
+        OnTransitionToReal?.Invoke();
     }
 
     #endregion
