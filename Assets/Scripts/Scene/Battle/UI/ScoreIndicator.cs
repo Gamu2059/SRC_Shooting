@@ -46,13 +46,13 @@ public class ScoreIndicator : MonoBehaviour
                 return;
             }
 
-            Debug.Log(string.Format("Score : {0}", m_Score.Value));
+            Debug.Log(string.Format("{0}", m_Score.Value));
         }
     }
 
     private void RegisterScore()
     {
         m_Score = BattleRealPlayerManager.Instance.GetCurrentScore();
-        m_Score.SubscribeToText(m_OutText, x => m_OutText.text = string.Format("Score : {0}", m_Score.Value));
+        m_Score.SubscribeToText(m_OutText);
     }
 }
