@@ -47,6 +47,7 @@ public class BestScoreIndicator : MonoBehaviour
 	}
 
 	private void RegisterBestScore(){
+		// Initialize using the saved score when the save function is implemented
 		m_DisplayedBestScore = new FloatReactiveProperty(0.0f);
 		m_DisplayedBestScore.SubscribeToText(m_OutText);
 	}
