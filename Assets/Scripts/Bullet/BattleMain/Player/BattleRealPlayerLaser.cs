@@ -16,13 +16,19 @@ public class BattleRealPlayerLaser : BulletController
     private Vector3 m_InitDeltaPosition;
     private Vector3 m_InitDeltaRotation;
 
-    private float m_Time;
+    private float m_AnimationNormalizedTime;
+    private float m_ParticleTime;
 
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        m_Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        BattleRealManager.Instance.OnTransitionToHacking += OnPause;
+        BattleRealManager.Instance.OnTransitionToReal += OnResume;
+
+        m_Animator.updateMode = AnimatorUpdateMode.Normal;
+        m_Animator.enabled = false;
+        m_Animator.speed = 1;
 
         var ownerTransform = GetBulletOwner().transform;
         m_OwnerPosition = ownerTransform.localPosition;
@@ -31,13 +37,16 @@ public class BattleRealPlayerLaser : BulletController
         m_InitDeltaPosition = transform.localPosition - m_OwnerPosition;
         m_InitDeltaRotation = transform.localEulerAngles - m_OwnerRotation;
 
-        m_Time = 0;
-
+        m_AnimationNormalizedTime = 0;
+        m_ParticleTime = 0;
         m_Animator.Play("player_laser_lv1");
     }
 
     public override void OnFinalize()
     {
+        BattleRealManager.Instance.OnTransitionToHacking -= OnPause;
+        BattleRealManager.Instance.OnTransitionToReal -= OnResume;
+
         base.OnFinalize();
     }
 
@@ -48,8 +57,28 @@ public class BattleRealPlayerLaser : BulletController
         ownerPosition.y = 10;
         SetPosition(ownerPosition);
 
-        //m_Animator.Update(Time.deltaTime);
-        //m_Particle.Simulate(m_Time, true, true);
-        m_Time += Time.deltaTime;
+        m_Animator.Update(Time.deltaTime);
+        m_ParticleTime += Time.deltaTime;
+    }
+
+    private void OnPause()
+    {
+        SetParticleSpeed(0f);
+        m_Particle.Pause();
+        m_AnimationNormalizedTime = m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+
+    private void OnResume()
+    {
+        m_Particle.Simulate(0.0f, true, true);
+        m_Particle.Play();
+        SetParticleSpeed(1f);
+        m_Animator.Play("player_laser_lv1", 0, m_AnimationNormalizedTime);
+    }
+
+    private void SetParticleSpeed(float value)
+    {
+        var pMain = m_Particle.main;
+        pMain.simulationSpeed = value;
     }
 }
