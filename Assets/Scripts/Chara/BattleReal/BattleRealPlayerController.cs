@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒŠƒAƒ‹ƒ‚[ƒh‚ÌƒvƒŒƒCƒ„[ƒRƒ“ƒgƒ[ƒ‰
+/// ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hï¿½Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½
 /// </summary>
 public class BattleRealPlayerController : CharaController
 {
     /// <summary>
-    /// ƒvƒŒƒCƒ„[ƒLƒƒƒ‰‚Ìƒ‰ƒCƒtƒTƒCƒNƒ‹
+    /// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½tï¿½Tï¿½Cï¿½Nï¿½ï¿½
     /// </summary>
     [System.Serializable]
     public enum E_PLAYER_LIFE_CYCLE
     {
         /// <summary>
-        /// í“¬‰æ–Ê‚É‚Ío‚Ä‚¢‚È‚¢
+        /// ï¿½í“¬ï¿½ï¿½Ê‚É‚Íoï¿½Ä‚ï¿½ï¿½È‚ï¿½
         /// </summary>
         AHEAD,
 
         /// <summary>
-        /// Œ»İí“¬’†
+        /// ï¿½ï¿½ï¿½İí“¬ï¿½ï¿½
         /// </summary>
         SORTIE,
 
         /// <summary>
-        /// €–S‚É‚æ‚èí“¬‰æ–Ê‚©‚ç‘Şê
+        /// ï¿½ï¿½ï¿½Sï¿½É‚ï¿½ï¿½í“¬ï¿½ï¿½Ê‚ï¿½ï¿½ï¿½Şï¿½
         /// </summary>
         DEAD,
     }
@@ -43,7 +43,7 @@ public class BattleRealPlayerController : CharaController
 
     private void Start()
     {
-        // ŠJ”­ê—p‚ÅA©“®“I‚Éƒ}ƒl[ƒWƒƒ‚ÉƒLƒƒƒ‰‚ğ’Ç‰Á‚·‚é‚½‚ß‚ÉUnity‚ÌStart‚ğ—p‚¢‚Ä‚¢‚Ü‚·
+        // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ÅAï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Éƒ}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½ÉƒLï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ï¿½Unityï¿½ï¿½Startï¿½ï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½
         BattleRealPlayerManager.RegisterPlayer(this);
     }
 
@@ -78,7 +78,7 @@ public class BattleRealPlayerController : CharaController
     }
 
     /// <summary>
-    /// ’Êí’e‚ğ”­Ë‚·‚éB
+    /// ï¿½Êï¿½eï¿½ğ”­Ë‚ï¿½ï¿½ï¿½B
     /// </summary>
     public virtual void ShotBullet()
     {
@@ -151,9 +151,6 @@ public class BattleRealPlayerController : CharaController
         {
             return;
         }
-
-        /* ƒfƒoƒbƒO—p */
-        Debug.Log("You got " + item.ItemType + "! : " + item.ItemPoint + "pts!");
 
         switch (item.ItemType)
         {

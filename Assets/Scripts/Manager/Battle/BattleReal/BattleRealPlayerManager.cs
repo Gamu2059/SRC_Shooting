@@ -9,7 +9,18 @@ using UniRx;
 /// </summary>
 public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 {
-    public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
+    public static BattleRealPlayerManager Instance
+    {
+        get
+        {
+            if (BattleRealManager.Instance == null)
+            {
+                return null;
+            }
+
+            return BattleRealManager.Instance.PlayerManager;
+        }
+    }
 
     #region Inspector
 
@@ -49,6 +60,8 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     public bool IsLaserType { get; private set; }
 
     private bool m_IsShotNormal;
+
+    public static Action OnStartAction;
 
     #endregion
 
@@ -135,6 +148,9 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         m_Player.OnInitialize();
 
         InitPlayerState();
+
+        OnStartAction?.Invoke();
+        OnStartAction = null;
     }
 
     public override void OnUpdate()

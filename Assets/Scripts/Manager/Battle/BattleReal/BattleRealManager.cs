@@ -31,7 +31,17 @@ public class BattleRealManager : ControllableObject
 
     #endregion
 
-    public static BattleRealManager Instance => BattleManager.Instance.RealManager;
+    public static BattleRealManager Instance
+    {
+        get
+        {
+            if (BattleManager.Instance == null)
+            {
+                return null;
+            }
+            return BattleManager.Instance.RealManager;
+        }
+    }
 
     public BattleRealManager(BattleRealParamSet paramSet)
     {
