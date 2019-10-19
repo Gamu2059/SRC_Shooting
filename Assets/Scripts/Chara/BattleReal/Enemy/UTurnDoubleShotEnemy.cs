@@ -20,7 +20,7 @@ public class UTurnDoubleShotEnemy : UTurnEnemy
 		m_DoubleShotInterval = m_ParamSet.FloatParam["DSI"];
 	}
 
-	protected override void OnShot( EnemyShotParam param )
+	protected override void OnShot( EnemyShotParam param, bool isPlayerLook = true )
 	{
 		// 最初
 		int num = param.Num;
@@ -53,6 +53,6 @@ public class UTurnDoubleShotEnemy : UTurnEnemy
 			}
 		} );
 
-		//BattleRealTimerManager.Instance.RegistTimer( timer );
-	}
+        RegistTimer("Double Shot", timer);
+    }
 }

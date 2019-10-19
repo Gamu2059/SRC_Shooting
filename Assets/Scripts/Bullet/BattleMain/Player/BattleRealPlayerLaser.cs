@@ -23,6 +23,8 @@ public class BattleRealPlayerLaser : BulletController
     {
         base.OnInitialize();
 
+        m_IsLookMoveDir = false;
+
         BattleRealManager.Instance.OnTransitionToHacking += OnPause;
         BattleRealManager.Instance.OnTransitionToReal += OnResume;
 
@@ -64,14 +66,11 @@ public class BattleRealPlayerLaser : BulletController
     private void OnPause()
     {
         SetParticleSpeed(0f);
-        m_Particle.Pause();
         m_AnimationNormalizedTime = m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
     private void OnResume()
     {
-        m_Particle.Simulate(0.0f, true, true);
-        m_Particle.Play();
         SetParticleSpeed(1f);
         m_Animator.Play("player_laser_lv1", 0, m_AnimationNormalizedTime);
     }

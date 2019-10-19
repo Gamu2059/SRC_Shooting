@@ -21,6 +21,12 @@ namespace Stage1
             m_ParamSet.ApplyFloatParam("Duration", ref m_Duration);
         }
 
+        public override void OnFinalize()
+        {
+            GameObject.Destroy(m_WhiteOut);
+            base.OnFinalize();
+        }
+
         public override void OnStart()
         {
             base.OnStart();

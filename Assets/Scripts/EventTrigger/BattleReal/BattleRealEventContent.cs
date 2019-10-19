@@ -82,6 +82,8 @@ public struct BattleRealEventContent
         DELAY,
     }
 
+    public string ContentName;
+
     [Header("共通パラメータ")]
 
     [Tooltip("実行をパスするかどうか")]

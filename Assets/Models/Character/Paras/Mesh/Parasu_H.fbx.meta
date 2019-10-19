@@ -1,0 +1,200 @@
+fileFormatVersion: 2
+guid: 619b9c94266c41d4fb7ce219d6f6de58
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Body
+    100004: Body_LOD0
+    100006: Foot1_1
+    100008: Foot1_2
+    100010: Foot1_3
+    100012: Foot1_3_end
+    100014: Foot1_IK
+    100016: Foot1_IK_end
+    100018: Foot2_1
+    100020: Foot2_2
+    100022: Foot2_3
+    100024: Foot2_3_end
+    100026: Foot2_IK
+    100028: Foot2_IK_end
+    100030: Foot3_1
+    100032: Foot3_2
+    100034: Foot3_3
+    100036: Foot3_3_end
+    100038: Foot3_IK
+    100040: Foot3_IK_end
+    100042: Foot4_1
+    100044: Foot4_2
+    100046: Foot4_3
+    100048: Foot4_3_end
+    100050: Foot4_IK
+    100052: Foot4_IK_end
+    100054: Foot5_1
+    100056: Foot5_2
+    100058: Foot5_3
+    100060: Foot5_3_end
+    100062: Foot5_IK
+    100064: Foot5_IK_end
+    100066: Foot6_1
+    100068: Foot6_2
+    100070: Foot6_3
+    100072: Foot6_3_end
+    100074: Foot6_IK
+    100076: Foot6_IK_end
+    100078: Gun
+    100080: Gun_LOD0
+    100082: //RootNode
+    100084: Root
+    400000: Armature
+    400002: Body
+    400004: Body_LOD0
+    400006: Foot1_1
+    400008: Foot1_2
+    400010: Foot1_3
+    400012: Foot1_3_end
+    400014: Foot1_IK
+    400016: Foot1_IK_end
+    400018: Foot2_1
+    400020: Foot2_2
+    400022: Foot2_3
+    400024: Foot2_3_end
+    400026: Foot2_IK
+    400028: Foot2_IK_end
+    400030: Foot3_1
+    400032: Foot3_2
+    400034: Foot3_3
+    400036: Foot3_3_end
+    400038: Foot3_IK
+    400040: Foot3_IK_end
+    400042: Foot4_1
+    400044: Foot4_2
+    400046: Foot4_3
+    400048: Foot4_3_end
+    400050: Foot4_IK
+    400052: Foot4_IK_end
+    400054: Foot5_1
+    400056: Foot5_2
+    400058: Foot5_3
+    400060: Foot5_3_end
+    400062: Foot5_IK
+    400064: Foot5_IK_end
+    400066: Foot6_1
+    400068: Foot6_2
+    400070: Foot6_3
+    400072: Foot6_3_end
+    400074: Foot6_IK
+    400076: Foot6_IK_end
+    400078: Gun
+    400080: Gun_LOD0
+    400082: //RootNode
+    400084: Root
+    2100000: Parasu_LOD0
+    2300000: Gun_LOD0
+    3300000: Gun_LOD0
+    4300000: Gun_LOD0
+    4300002: Body_LOD0
+    7400000: Idle
+    7400002: MoveL
+    7400004: MoveR
+    7400006: MoveB
+    7400008: MoveF
+    7400010: Armature|Def
+    7400012: Armature|Idle
+    7400014: Armature|MoveB
+    7400016: Armature|MoveF
+    7400018: Armature|MoveL
+    7400020: Armature|MoveR
+    9500000: //RootNode
+    13700000: Body_LOD0
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Parasu_LOD0
+    second: {fileID: 2100000, guid: c3d563fc557be654e9e03a1d407aa0e7, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
