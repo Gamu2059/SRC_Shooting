@@ -21,6 +21,10 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     private ItemCreateParam m_ItemCreateParam;
     public ItemCreateParam ItemCreateParam => m_ItemCreateParam;
 
+    [SerializeField, Tooltip("いつHPゲージを出現させるか")]
+    private E_HP_DISPLAY_TYPE m_HpDisplayType;
+    public E_HP_DISPLAY_TYPE HpDisplayType => m_HpDisplayType;
+
     [SerializeField, Tooltip("撃破時のイベント")]
     private BattleRealEventContent[] m_DefeatEvents;
     public BattleRealEventContent[] DefeatEvents => m_DefeatEvents;

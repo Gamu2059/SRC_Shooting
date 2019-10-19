@@ -15,6 +15,9 @@ public class BattleRealEnemyController : CharaController
     [SerializeField, Tooltip("被弾直後の無敵時間")]
     private float m_OnHitInvincibleDuration;
 
+    [SerializeField, Tooltip("HPゲージの表示タイプ")]
+    private E_HP_DISPLAY_TYPE m_HpDisplayType;
+
     #region Field
 
     private string m_LookId;
@@ -81,6 +84,7 @@ public class BattleRealEnemyController : CharaController
         {
             InitHp(m_GenerateParamSet.Hp);
             SetScore(m_GenerateParamSet.Score);
+            SetHpDisplayType(m_GenerateParamSet.HpDisplayType);
         }
     }
 
@@ -118,6 +122,10 @@ public class BattleRealEnemyController : CharaController
     public void SetScore(int score)
     {
         m_Score = score;
+    }
+
+    public void SetHpDisplayType(E_HP_DISPLAY_TYPE type){
+        m_HpDisplayType = type;
     }
 
     public void SetParamSet(BattleRealEnemyGenerateParamSet paramSet)

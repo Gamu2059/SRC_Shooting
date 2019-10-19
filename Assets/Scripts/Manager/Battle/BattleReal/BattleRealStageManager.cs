@@ -15,6 +15,7 @@ public class BattleRealStageManager : ControllableMonoBehavior
         ENEMY,
         BULLET,
         ITEM,
+        HP_INDICATOR,
     }
 
     public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
@@ -23,6 +24,7 @@ public class BattleRealStageManager : ControllableMonoBehavior
     public const string ENEMY_HOLDER = "[EnemyCharaHolder]";
     public const string BULLET_HOLDER = "[BulletHolder]";
     public const string ITEM_HOLDER = "[ItemHolder]";
+    public const string HP_INDICATOR = "[HpIndicator]";
 
     #region Inspector
 
@@ -63,6 +65,9 @@ public class BattleRealStageManager : ControllableMonoBehavior
     /// </summary>
     [SerializeField]
     private Transform m_ItemHolder;
+
+    [SerializeField]
+    private Transform m_HpIndicatorHolder;
 
     [Header("Filed")]
 
@@ -122,6 +127,10 @@ public class BattleRealStageManager : ControllableMonoBehavior
         return new Vector2(vX, vZ);
     }
 
+    public Vector2 CalcViewportPosFromWorldPosition(Vector3 pos){
+        return CalcViewportPosFromWorldPosition(pos.x, pos.z);
+    }
+
     public Transform GetHolder(E_HOLDER_TYPE holderType)
     {
         Transform holder = null;
@@ -152,6 +161,10 @@ public class BattleRealStageManager : ControllableMonoBehavior
             case E_HOLDER_TYPE.ITEM:
                 holder = m_ItemHolder;
                 holderName = ITEM_HOLDER;
+                break;
+            case E_HOLDER_TYPE.HP_INDICATOR:
+                holder = m_HpIndicatorHolder;
+                holderName = HP_INDICATOR;
                 break;
         }
 
