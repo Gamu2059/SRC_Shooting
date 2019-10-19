@@ -25,7 +25,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
 	public float m_BestScore{get; private set;}
 
-
+	public int m_HackingSucceedCount{get; private set;}
 
 	protected override void OnAwake()
 	{
@@ -132,5 +132,13 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
     public void UpdateBestScore(float score){
         m_BestScore = score;
+    }
+
+	public void ResetHackingSucceedCount(){
+        m_HackingSucceedCount = 0;
+    }
+
+    public void IncreaseHackingSucceedCount(){
+        m_HackingSucceedCount++;
     }
 }

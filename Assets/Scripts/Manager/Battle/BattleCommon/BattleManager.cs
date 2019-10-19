@@ -74,8 +74,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     public BattleHackingManager HackingManager { get; private set; }
 
-    public int HackingSucceedCount {get; private set;}
-
     #endregion
 
     #region Game Cycle
@@ -168,7 +166,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         RequestChangeState(E_BATTLE_STATE.START);
 
-        ResetHackingSucceedCount();
+        GameManager.Instance.ResetHackingSucceedCount();
     }
 
     public override void OnFinalize()
@@ -579,14 +577,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     }
 
     #endregion
-
-    public void ResetHackingSucceedCount(){
-        HackingSucceedCount = 0;
-    }
-
-    public void IncreaseHackingSucceedCount(){
-        HackingSucceedCount++;
-    }
 
     public void RequestChangeState(E_BATTLE_STATE state)
     {
