@@ -71,7 +71,7 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams:
-    - ScriptName: Stage1.WhiteOutController
+    - ScriptName: Stage1.MotherColonyViewController
       ScriptArguments:
       - Type: 1
         Name: Duration
@@ -81,5 +81,3 @@ MonoBehaviour:
         StringValue: 
         Vector2Value: {x: 0, y: 0}
         Vector3Value: {x: 0, y: 0, z: 0}
-    - ScriptName: Stage1.MotherColonyViewController
-      ScriptArguments: []
