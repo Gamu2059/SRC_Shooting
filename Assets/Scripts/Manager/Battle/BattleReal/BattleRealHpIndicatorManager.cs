@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BattleRealHpIndicatorManager : ControllableObject
 {
-    public static BattleRealHpIndicatorManager Instance => BattleRealManager.Instance.RealHpIndicatorManager;
+    public static BattleRealHpIndicatorManager Instance => BattleRealUiManager.Instance.BattleRealHpIndicatorManager;
 
     #region Field
 

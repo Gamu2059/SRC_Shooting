@@ -25,8 +25,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealItemManager ItemManager { get; private set; }
     public BattleRealCollisionManager CollisionManager { get; private set; }
     public BattleRealCameraManager CameraManager { get; private set; }
-
-    public BattleRealHpIndicatorManager RealHpIndicatorManager {get; private set;}
+    public BattleRealUiManager BattleRealUiManager{get; private set;}
 
     public Action OnTransitionToHacking;
     public Action OnTransitionToReal;
@@ -194,7 +193,7 @@ public class BattleRealManager : ControllableObject
         ItemManager = new BattleRealItemManager(m_ParamSet.ItemManagerParamSet);
         CollisionManager = new BattleRealCollisionManager();
         CameraManager = new BattleRealCameraManager();
-        RealHpIndicatorManager = new BattleRealHpIndicatorManager();
+        BattleRealUiManager = new BattleRealUiManager();
 
         InputManager.OnInitialize();
         RealTimerManager.OnInitialize();
