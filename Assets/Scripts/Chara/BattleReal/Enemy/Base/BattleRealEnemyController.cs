@@ -230,9 +230,6 @@ public class BattleRealEnemyController : CharaController
             {
                 for (int i = 0; i < events.Length; i++)
                 {
-                    /* デバッグ用 */
-                    Debug.Log(gameObject + ".m_Score = " + m_Score);
-
                     BattleRealPlayerManager.Instance.AddScore(m_Score);
                     BattleRealEventManager.Instance.ExecuteEvent(events[i]);
                 }
