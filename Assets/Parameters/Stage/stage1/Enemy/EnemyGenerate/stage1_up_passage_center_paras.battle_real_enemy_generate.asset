@@ -21,4 +21,24 @@ MonoBehaviour:
       Point: 100
       SpreadRadius: 0.2
     CenterCreateItemType: 7
-  m_DefeatEvents: []
+  m_DefeatEvents:
+  - ContentName: 
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Clear Count
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
