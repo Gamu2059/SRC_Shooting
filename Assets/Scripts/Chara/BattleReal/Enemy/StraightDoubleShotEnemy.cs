@@ -20,14 +20,13 @@ public class StraightDoubleShotEnemy : StraightEnemy
 		m_DoubleShotInterval = m_ParamSet.FloatParam["DSI"];
 	}
 
-	protected override void OnShot( EnemyShotParam param )
+	protected override void OnShot( EnemyShotParam param, bool isLookPlayer = true )
 	{
 		// 最初
 		int num = param.Num;
 		float angle = param.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
 		var shotParam = new BulletShotParam( this );
-		shotParam.Position = m_ShotPosition.position - transform.parent.position;
 
 		for( int i = 0; i < num; i++ )
 		{
@@ -43,7 +42,6 @@ public class StraightDoubleShotEnemy : StraightEnemy
 			angle = param.Angle;
 			spreadAngles = GetBulletSpreadAngles( num, angle );
 			shotParam = new BulletShotParam( this );
-			shotParam.Position = m_ShotPosition.position - transform.parent.position;
 			shotParam.OrbitalIndex = 0;
 
 			for( int i = 0; i < num; i++ )
@@ -53,6 +51,6 @@ public class StraightDoubleShotEnemy : StraightEnemy
 			}
 		} );
 
-		//BattleRealTimerManager.Instance.RegistTimer( timer );
-	}
+        RegistTimer("Double", timer);
+    }
 }

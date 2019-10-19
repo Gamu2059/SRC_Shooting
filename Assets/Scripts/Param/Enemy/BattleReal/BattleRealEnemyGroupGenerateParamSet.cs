@@ -59,4 +59,8 @@ public class EnemyIndividualGenerateParamSet
     [SerializeField]
     private BattleRealEnemyGenerateParamSet m_EnemyGenerateParamSet;
     public BattleRealEnemyGenerateParamSet EnemyGenerateParamSet => m_EnemyGenerateParamSet;
+
+    [SerializeField]
+    private BattleRealEnemyBehaviorParamSet m_EnemyBehaviorParamSet;
+    public BattleRealEnemyBehaviorParamSet EnemyBehaviorParamSet => m_EnemyBehaviorParamSet;
 }

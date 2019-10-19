@@ -25,8 +25,6 @@ public class BulletController : BattleRealObjectBase
 
     #endregion
 
-
-
     #region Field
 
     /// <summary>
@@ -118,18 +116,17 @@ public class BulletController : BattleRealObjectBase
     /// </summary>
     private float m_NowLerp;
 
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうか。
-    /// </summary>
-    private bool m_IsReverseHacked;
+    protected Vector2 PrePosition { get; private set; }
+
+    protected Vector2 MoveDir { get; private set; }
+
+    protected bool m_IsLookMoveDir;
 
     private HitSufferController<BulletController> m_BulletSuffer;
     private HitSufferController<BulletController> m_BulletHit;
     private HitSufferController<CharaController> m_CharaHit;
 
     #endregion
-
-
 
     #region Getter & Setter
 
@@ -430,22 +427,6 @@ public class BulletController : BattleRealObjectBase
     public void SetNowLerp(float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         m_NowLerp = GetRelativeValue(relative, GetNowLerp(), value);
-    }
-
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうかを取得する。
-    /// </summary>
-    public bool IsReverseHacked()
-    {
-        return m_IsReverseHacked;
-    }
-
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうかを設定する。
-    /// </summary>
-    public void SetReverseHacked(bool value)
-    {
-        m_IsReverseHacked = value;
     }
 
     #endregion
@@ -877,8 +858,6 @@ public class BulletController : BattleRealObjectBase
 
         m_IsSearch = false;
         m_NowLerp = 0;
-
-        m_IsReverseHacked = false;
     }
 
     #region Game Cycle
@@ -918,6 +897,8 @@ public class BulletController : BattleRealObjectBase
         m_CharaHit.OnEnter = OnEnterHitChara;
         m_CharaHit.OnStay = OnStayHitChara;
         m_CharaHit.OnExit = OnExitHitChara;
+
+        m_IsLookMoveDir = true;
     }
 
     public override void OnFinalize()
@@ -963,10 +944,18 @@ public class BulletController : BattleRealObjectBase
     {
         base.OnLateUpdate();
 
+        //var pos = transform.position.ToVector2XZ();
+        //MoveDir = pos - PrePosition;
+        //PrePosition = pos;
+        //if (m_IsLookMoveDir) {
+        //    transform.LookAt(transform.position + MoveDir.ToVector3XZ());
+        //}
+
         if (BattleRealBulletManager.Instance.IsOutOfField(this))
         {
             DestroyBullet();
         }
+
     }
 
     #endregion
