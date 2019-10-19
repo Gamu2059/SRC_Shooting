@@ -27,7 +27,7 @@ public class BestScoreIndicator : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(BattleRealPlayerManager.Instance == null || BattleManager.Instance == null){
+		if(BattleRealPlayerManager.Instance == null || GameManager.Instance == null){
 			return;
 		}
 
@@ -36,15 +36,15 @@ public class BestScoreIndicator : MonoBehaviour
 		if(currentScore != null){
 			var currentScoreValue = currentScore.Value;
 			
-			if(currentScoreValue >= BattleManager.Instance.BestScore){
-				BattleManager.Instance.UpdateBestScore(currentScoreValue);
-				m_DisplayedBestScore.SetValueAndForceNotify(BattleManager.Instance.BestScore);
+			if(currentScoreValue >= GameManager.Instance.m_BestScore){
+				GameManager.Instance.UpdateBestScore(currentScoreValue);
+				m_DisplayedBestScore.SetValueAndForceNotify(GameManager.Instance.m_BestScore);
 			}
 		}
 	}
 
 	private void RegisterBestScore(){
-		m_DisplayedBestScore = new FloatReactiveProperty(BattleManager.Instance.BestScore);
+		m_DisplayedBestScore = new FloatReactiveProperty(GameManager.Instance.m_BestScore);
 		m_DisplayedBestScore.SubscribeToText(m_OutText);
 	}
 }
