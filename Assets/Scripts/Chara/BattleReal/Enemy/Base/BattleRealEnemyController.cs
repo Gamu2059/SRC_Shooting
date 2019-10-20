@@ -232,4 +232,8 @@ public class BattleRealEnemyController : CharaController
     {
         BattleRealEnemyManager.Instance.DestroyEnemy(this);
     }
+
+    public E_HP_DISPLAY_TYPE GetHpDisplayType(){
+        return m_HpDisplayType;
+    }
 }

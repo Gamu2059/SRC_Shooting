@@ -20,5 +20,5 @@ public enum E_HP_DISPLAY_TYPE
     /// <summary>
     /// 表示されない
     /// <summary>
-    DISABLED,
+    DISABLE,
 }

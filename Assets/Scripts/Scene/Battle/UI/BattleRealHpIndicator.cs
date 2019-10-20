@@ -13,6 +13,8 @@ public class BattleRealHpIndicator : BattleRealObjectBase
     /// <summary>
     E_POOLED_OBJECT_CYCLE m_Cycle;
 
+    BattleRealEnemyController m_AssignedEnemyController;
+
     [SerializeField]
     private Text m_HPText;
 
@@ -47,7 +49,8 @@ public class BattleRealHpIndicator : BattleRealObjectBase
     }
 
     public override void OnUpdate(){
-
+        this.m_HPText.rectTransform.position = m_AssignedEnemyController.transform.position;
+        this.m_HPText.text = string.Format("{0}/{1}", m_AssignedEnemyController.GetNowHP(), m_AssignedEnemyController.GetMaxHP());
     }
 
     public override void OnLateUpdate(){
@@ -66,4 +69,18 @@ public class BattleRealHpIndicator : BattleRealObjectBase
     }
     
     #endregion
+
+    public void SetParam(Vector2 vpos, BattleRealEnemyController enemyController){
+        m_HPText.rectTransform.position = BattleRealEnemyManager.Instance.GetPositionFromFieldViewPortPosition(vpos.x, vpos.y);
+        m_AssignedEnemyController = enemyController;
+        if(enemyController.GetHpDisplayType() == E_HP_DISPLAY_TYPE.FROM_BEGIN){
+            ChangeDisplayActive(true);
+        }else{
+            ChangeDisplayActive(false);
+        }
+    }
+
+    public void ChangeDisplayActive(bool isActive){
+        this.gameObject.SetActive(isActive);
+    }
 }

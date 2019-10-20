@@ -226,7 +226,6 @@ public class BattleRealHpIndicatorManager : ControllableObject
     /// </summary>
     /// <param name="enemyController"></param>
     public void CreateHpIndicator(BattleRealEnemyController enemyController){
-        
         if(enemyController == null){
             return;
         }

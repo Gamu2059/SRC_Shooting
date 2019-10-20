@@ -328,4 +328,12 @@ public class CharaController : BattleRealObjectBase
 
         return spreadAngles;
     }
+
+    public float GetNowHP(){
+        return m_NowHp;
+    }
+
+    public float GetMaxHP(){
+        return m_MaxHp;
+    }
 }
