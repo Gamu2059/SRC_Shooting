@@ -112,6 +112,8 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     private float m_NowLerp;
 
+    private HitSufferController<CommandCharaController> m_CharaHit;
+
     #endregion
 
 
@@ -802,6 +804,35 @@ public class CommandBulletController : BattleHackingObjectBase
     }
 
 
+    #region Game Cycle
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        m_CharaHit = new HitSufferController<CommandCharaController>();
+    }
+
+    protected override void OnDestroyed()
+    {
+        m_CharaHit.OnFinalize();
+        m_CharaHit = null;
+        base.OnDestroyed();
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        m_CharaHit.OnEnter = OnEnterHitChara;
+        m_CharaHit.OnStay = OnStayHitChara;
+        m_CharaHit.OnExit = OnExitHitChara;
+    }
+
+    public override void OnFinalize()
+    {
+        m_CharaHit.OnFinalize();
+        base.OnFinalize();
+    }
 
     public override void OnUpdate()
     {
@@ -842,14 +873,50 @@ public class CommandBulletController : BattleHackingObjectBase
         }
     }
 
+    #endregion
+
+    #region Impl IColliderProcess
+
+    public override void ClearColliderFlag()
+    {
+        m_CharaHit.ClearUpdateFlag();
+    }
+
+    public override void ProcessCollision()
+    {
+        m_CharaHit.ProcessCollision();
+    }
+
+    #endregion
+
+    #region Hit Chara
+
     /// <summary>
     /// 他のキャラに当たった時の処理。
     /// </summary>
     /// <param name="targetChara">他のキャラ</param>
     /// <param name="attackData">この弾の衝突情報</param>
     /// <param name="targetData">他のキャラの衝突情報</param>
-    public virtual void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterHitChara(HitSufferData<CommandCharaController> hitData)
     {
 
     }
+
+    protected virtual void OnStayHitChara(HitSufferData<CommandCharaController> hitData)
+    {
+
+    }
+
+    protected virtual void OnExitHitChara(HitSufferData<CommandCharaController> hitData)
+    {
+
+    }
+
+    #endregion
 }

@@ -13,11 +13,15 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     private int m_Hp;
     public int Hp => m_Hp;
 
-    // ドロップアイテム
+    [SerializeField, Tooltip("撃破時の獲得スコア")]
+    private int m_Score;
+    public int Score => m_Score;
 
-    // 撃破時イベント
+    [SerializeField, Tooltip("ドロップアイテム")]
+    private ItemCreateParam m_ItemCreateParam;
+    public ItemCreateParam ItemCreateParam => m_ItemCreateParam;
 
-    [SerializeField, Tooltip("敵の振る舞いパラメータのセット")]
-    private BattleRealEnemyBehaviorParamSet m_EnemyBehaviorParamSet;
-    public BattleRealEnemyBehaviorParamSet EnemyBehaviorParamSet => m_EnemyBehaviorParamSet;
+    [SerializeField, Tooltip("撃破時のイベント")]
+    private BattleRealEventContent[] m_DefeatEvents;
+    public BattleRealEventContent[] DefeatEvents => m_DefeatEvents;
 }

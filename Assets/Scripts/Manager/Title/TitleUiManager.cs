@@ -27,6 +27,6 @@ public class TitleUiManager : SingletonMonoBehavior<TitleUiManager>
 
 	private void GotoMenu()
 	{
-		BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.BATTLE );
+		BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.STAGE1 );
 	}
 }

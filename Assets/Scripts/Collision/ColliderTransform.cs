@@ -17,14 +17,14 @@ public class ColliderTransform
     }
 
     /// <summary>
-    /// 衝突判定の名前。
+    /// 衝突判定の種類。
     /// </summary>
-    public string CollideName;
+    public E_COLLIDER_TYPE ColliderType;
 
 	/// <summary>
 	/// 衝突判定に用いるトランスフォームの形状。
 	/// </summary>
-	public E_COLLIDER_SHAPE ColliderType;
+	public E_COLLIDER_SHAPE ColliderShape;
 
     /// <summary>
     /// 基準にする向き

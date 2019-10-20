@@ -10,7 +10,7 @@ public class EventTriggerTimePeriod
     /// <summary>
     /// タイムピリオドのカウントが開始しているかどうか
     /// </summary>
-    private bool m_IsStart;
+    public bool IsStart { get; private set; }
 
     /// <summary>
     /// カウント開始からの秒数
@@ -19,15 +19,7 @@ public class EventTriggerTimePeriod
 
     public EventTriggerTimePeriod()
     {
-        m_IsStart = false;
-    }
-
-    /// <summary>
-    /// カウントを開始しているかを取得する。
-    /// </summary>
-    public bool IsStart()
-    {
-        return m_IsStart;
+        IsStart = false;
     }
 
     /// <summary>
@@ -43,12 +35,12 @@ public class EventTriggerTimePeriod
     /// </summary>
     public void CountStart()
     {
-        m_IsStart = true;
+        IsStart = true;
     }
 
     public void OnFixedUpdate()
     {
-        if (!m_IsStart)
+        if (!IsStart)
         {
             return;
         }

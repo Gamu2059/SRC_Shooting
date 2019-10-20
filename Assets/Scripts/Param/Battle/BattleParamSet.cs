@@ -7,7 +7,7 @@ using UnityEngine.Video;
 /// <summary>
 /// バトルで使用するパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleParamSet", fileName = "param.battle_param_set")]
+[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/Battle", fileName = "param.battle.asset")]
 public class BattleParamSet : ScriptableObject
 {
     [SerializeField]
@@ -17,6 +17,10 @@ public class BattleParamSet : ScriptableObject
     [SerializeField]
     private BattleHackingParamSet m_BattleHackingParamSet;
     public BattleHackingParamSet BattleHackingParamSet => m_BattleHackingParamSet;
+
+    [SerializeField]
+    private Material m_ColliderMaterial;
+    public Material ColliderMaterial => m_ColliderMaterial;
 
     [Header("Transition")]
 
@@ -29,28 +33,12 @@ public class BattleParamSet : ScriptableObject
     public AnimationCurve FadeInVideoParam => m_FadeInVideoParam;
 
     [SerializeField]
-    private AnimationCurve m_FadeOutBgmParam;
-    public AnimationCurve FadeOutBgmParam => m_FadeOutBgmParam;
-
-    [SerializeField]
-    private AnimationCurve m_FadeInBgmParam;
-    public AnimationCurve FadeInBgmParam => m_FadeInBgmParam;
-
-    [SerializeField]
     private VideoClip m_TransitionToHackingMovie;
     public VideoClip TransitionToHackingMovie => m_TransitionToHackingMovie;
 
     [SerializeField]
     private VideoClip m_TransitionToRealMovie;
     public VideoClip TransitionToRealMovie => m_TransitionToRealMovie;
-
-    [SerializeField]
-    private AudioClip m_TransitionToHackingSe;
-    public AudioClip TransitionToHackingSe => m_TransitionToHackingSe;
-
-    [SerializeField]
-    private AudioClip m_TransitionToRealSe;
-    public AudioClip TransitionToRealSe => m_TransitionToRealSe;
 
     [SerializeField]
     private string m_TransitionToHackingSeName;
@@ -63,26 +51,18 @@ public class BattleParamSet : ScriptableObject
     [Header("BGM")]
 
     [SerializeField]
-    private BattleBossBgmParamSet m_BossBgmParamSet;
-    public BattleBossBgmParamSet BossBgmParamSet => m_BossBgmParamSet;
+    private BattleBgmParamSet m_BgmParamSet;
+    public BattleBgmParamSet BgmParamSet => m_BgmParamSet;
 }
 
 [Serializable]
-public class BattleBossBgmParamSet
+public class BattleBgmParamSet
 {
     [SerializeField]
-    private AudioClip m_RealModeIntro;
-    public AudioClip RealModeIntro => m_RealModeIntro;
+    private string m_StageBgmName;
+    public string StageBgmName => m_StageBgmName;
 
     [SerializeField]
-    private AudioClip m_RealModeLoop;
-    public AudioClip RealModeLoop => m_RealModeLoop;
-
-    [SerializeField]
-    private AudioClip m_HackingModeIntro;
-    public AudioClip HackingModeIntro => m_HackingModeIntro;
-
-    [SerializeField]
-    private AudioClip m_HackingModeLoop;
-    public AudioClip HackingModeLoop => m_HackingModeLoop;
+    private string m_BossBgmName;
+    public string BossBgmName => m_BossBgmName;
 }

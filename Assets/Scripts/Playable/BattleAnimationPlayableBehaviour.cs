@@ -8,6 +8,8 @@ using UnityEngine.Playables;
 /// </summary>
 public class BattleAnimationPlayableBehaviour : PlayableBehaviour
 {
+    private const string INIT_POSITION_KEY = "InitPosition";
+
     /// <summary>
     /// アニメーションのターゲット
     /// </summary>
@@ -30,10 +32,14 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     private BattleAnimationParam.BattleAnimationVectorParam m_AnimRotation;
     private BattleAnimationParam.BattleAnimationVectorParam m_AnimScale;
 
-    public void SetArguments(Transform target, BattleAnimationParam animParam)
+    private BattleRealPlayableBase m_Playable;
+    private bool m_IsGraphStart;
+
+    public void SetArguments(Transform target, BattleAnimationParam animParam, BattleRealPlayableBase playable)
     {
         m_AnimationTarget = target;
         m_AnimParam = animParam;
+        m_Playable = playable;
 
         if (m_AnimParam.UsePosition)
         {
@@ -49,6 +55,8 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
         {
             m_AnimScale = m_AnimParam.Scale;
         }
+
+        m_IsGraphStart = true;
     }
 
     /// <summary>
@@ -77,11 +85,33 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
             return;
         }
 
-        m_InitPosition = m_AnimationTarget.position;
-        m_InitRotation = m_AnimationTarget.eulerAngles;
-        m_InitLocalPosition = m_AnimationTarget.localPosition;
-        m_InitLocalRotation = m_AnimationTarget.localEulerAngles;
-        m_InitLocalScale = m_AnimationTarget.localScale;
+        // 止まっていたものを再開させた時の処理
+        if (m_Playable.IsPaused)
+        {
+            if (m_IsGraphStart)
+            {
+                // 無効化状態から戻ってきた時の1回目のフロー
+                // SetArgumentsが一度だけ呼ばれることを利用してフローが2回あることを識別
+                m_IsGraphStart = false;
+            }
+            else
+            {
+                // 無効化状態から戻ってきた時の2回目のフロー
+                // PlayableBaseを再開状態にする
+                m_Playable.ResumeTimeline();
+            }
+        }
+        else
+        {
+            // 普通にタイムラインが流れてきた場合のみトランスフォームをキャッシュする
+            m_Playable.RecordTransform();
+        }
+
+        m_InitPosition = m_Playable.RecordedPosition;
+        m_InitRotation = m_Playable.RecordedRotation;
+        m_InitLocalPosition = m_Playable.RecordedLocalPosition;
+        m_InitLocalRotation = m_Playable.RecordedLocalRotation;
+        m_InitLocalScale = m_Playable.RecordedLocalScale;
     }
 
     /// <summary>
@@ -90,7 +120,7 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        if (m_AnimationTarget == null || playable.GetTime() <= 0)
+        if (m_AnimationTarget == null || playable.GetTime() <= 0 || m_Playable.IsPaused)
         {
             return;
         }
@@ -103,7 +133,6 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
     /// </summary>
     public override void PrepareFrame(Playable playable, FrameData info)
     {
-
     }
 
     /// <summary>
@@ -197,7 +226,8 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
             if (param.XParam.RelativeType == E_RELATIVE.RELATIVE)
             {
                 vector.x += value;
-            } else
+            }
+            else
             {
                 vector.x = value;
             }
@@ -211,7 +241,8 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
             if (param.YParam.RelativeType == E_RELATIVE.RELATIVE)
             {
                 vector.y += value;
-            } else
+            }
+            else
             {
                 vector.y = value;
             }
@@ -225,7 +256,8 @@ public class BattleAnimationPlayableBehaviour : PlayableBehaviour
             if (param.ZParam.RelativeType == E_RELATIVE.RELATIVE)
             {
                 vector.z += value;
-            } else
+            }
+            else
             {
                 vector.z = value;
             }

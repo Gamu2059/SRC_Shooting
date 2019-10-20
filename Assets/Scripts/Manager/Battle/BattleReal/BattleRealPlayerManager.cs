@@ -7,15 +7,24 @@ using UnityEngine;
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
-public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
-    public static BattleRealPlayerManager Instance => BattleRealManager.Instance.PlayerManager;
+public class BattleRealPlayerManager : ControllableObject, IColliderProcess
+{
+    public static BattleRealPlayerManager Instance
+    {
+        get
+        {
+            if (BattleRealManager.Instance == null)
+            {
+                return null;
+            }
+
+            return BattleRealManager.Instance.PlayerManager;
+        }
+    }
 
     #region Inspector
 
     [Header ("State")]
-
-    [SerializeField]
-    private PlayerState m_PlayerState;
 
     [SerializeField]
     private FloatReactiveProperty m_CurrentScore;
@@ -49,6 +58,10 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
     public bool IsNormalWeapon { get; private set; }
 
     public bool IsLaserType { get; private set; }
+
+    private bool m_IsShotNormal;
+
+    public static Action OnStartAction;
 
     #endregion
 
@@ -84,8 +97,10 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
     /// プレイヤーキャラを登録する。
     /// デバッグ用。
     /// </summary>
-    public static void RegistPlayer (BattleRealPlayerController player) {
-        if (player == null) {
+    public static void RegisterPlayer(BattleRealPlayerController player)
+    {
+        if (player == null)
+        {
             return;
         }
 
@@ -95,8 +110,8 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
     public override void OnInitialize () {
         base.OnInitialize ();
 
-        IsLaserType = true;
-        IsNormalWeapon = true;
+        IsLaserType = m_ParamSet.IsLaserType;
+        IsNormalWeapon = m_ParamSet.IsNormalWeapon;
     }
 
     public override void OnFinalize () {
@@ -119,7 +134,10 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
         m_Player.transform.position = pos;
         m_Player.OnInitialize ();
 
-        InitPlayerState ();
+        InitPlayerState();
+
+        OnStartAction?.Invoke();
+        OnStartAction = null;
     }
 
     public override void OnUpdate () {
@@ -145,28 +163,56 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
         // 移動直後に位置制限を掛ける
         RestrictPlayerPosition ();
 
-        if (IsNormalWeapon) {
-            if (input.Shot == E_INPUT_STATE.STAY) {
-                Player.ShotBullet ();
+        if (IsNormalWeapon)
+        {
+            switch (input.Shot)
+            {
+                case E_INPUT_STATE.DOWN:
+                    break;
+                case E_INPUT_STATE.STAY:
+                    if (!m_IsShotNormal)
+                    {
+                        m_IsShotNormal = true;
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot01");
+                    }
+                    Player.ShotBullet();
+                    break;
+                case E_INPUT_STATE.UP:
+                    m_IsShotNormal = false;
+                    AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
+                    break;
+                case E_INPUT_STATE.NONE:
+                    break;
             }
-        } else {
-            if (input.Shot == E_INPUT_STATE.STAY) {
-                if (IsLaserType) {
-                    Debug.Log ("Charging Laser...");
-                } else {
-                    Debug.Log ("Charging Bomb...");
+        }
+        else
+        {
+            if (input.Shot == E_INPUT_STATE.STAY)
+            {
+                if (IsLaserType)
+                {
+                    Player.ChargeLaser();
                 }
-            } else if (input.Shot == E_INPUT_STATE.UP) {
-                if (IsLaserType) {
-                    Debug.Log ("Shot Laser!");
-                } else {
-                    Debug.Log ("Shot Bomb!");
+                else
+                {
+                    Player.ChargeBomb();
+                }
+            }
+            else if (input.Shot == E_INPUT_STATE.UP)
+            {
+                if (IsLaserType)
+                {
+                    Player.ShotLaser();
+                }
+                else
+                {
+                    Player.ShotBomb();
                 }
             }
         }
 
-        if (input.ChangeMode == E_INPUT_STATE.DOWN) {
-            Debug.Log ("Change Weapon");
+        if (input.ChangeMode == E_INPUT_STATE.DOWN)
+        {
             IsNormalWeapon = !IsNormalWeapon;
         }
 
@@ -174,7 +220,10 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
             BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
 
-        m_Player.OnUpdate ();
+        /* デバッグ用 */
+        //Debug.Log("CurrentScore = " + m_CurrentScore);
+
+        m_Player.OnUpdate();
     }
 
     /// <summary>
@@ -259,15 +308,34 @@ public class BattleRealPlayerManager : ControllableObject, IUpdateCollider {
             m_CurrentBombNum.Value++;
             currentCharge %= m_PlayerState.BombCharge;
         }
-
-        m_CurrentBombCharge.Value = currentCharge;
     }
 
-    public void UpdateCollider () {
-        if (Player == null) {
-            return;
+    public void ClearColliderFlag()
+    {
+        if (Player != null)
+        {
+            Player.ClearColliderFlag();
         }
+    }
 
-        Player.UpdateCollider ();
+    public void UpdateCollider()
+    {
+        if (Player != null)
+        {
+            Player.UpdateCollider();
+        }
+    }
+
+    public void ProcessCollision()
+    {
+        if (Player != null)
+        {
+            Player.ProcessCollision();
+        }
+    }
+
+    public void ResetShotFlag()
+    {
+        m_IsShotNormal = false;
     }
 }

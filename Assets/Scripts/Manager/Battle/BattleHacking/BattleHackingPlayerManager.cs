@@ -17,6 +17,8 @@ public class BattleHackingPlayerManager : ControllableObject
 
     public BattleHackingPlayerController Player { get; private set; }
 
+    private bool m_IsShotNormal;
+
     #endregion
 
     public static BattleHackingPlayerManager Instance => BattleHackingManager.Instance.PlayerManager;
@@ -82,15 +84,40 @@ public class BattleHackingPlayerManager : ControllableObject
         // 移動直後に位置制限を掛ける
         RestrictPlayerPosition();
 
-        if (input.Shot == E_INPUT_STATE.STAY)
+        switch (input.Shot)
         {
-            Player.ShotBullet();
+            case E_INPUT_STATE.DOWN:
+                break;
+            case E_INPUT_STATE.STAY:
+                if (!m_IsShotNormal)
+                {
+                    m_IsShotNormal = true;
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot02");
+                }
+                Player.ShotBullet();
+                break;
+            case E_INPUT_STATE.UP:
+                m_IsShotNormal = false;
+                AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
+                break;
+            case E_INPUT_STATE.NONE:
+                break;
         }
 
         if (input.Cancel == E_INPUT_STATE.DOWN)
         {
             // リアルモードと違って、暫定でハッキングモードをクリアしたことにする
+            GameManager.Instance.IncreaseHackingSucceedCount();
+            if(GameManager.Instance.m_HackingSucceedCount >= 1){
+                BattleRealPlayerManager.Instance.AddScore(1000 * GameManager.Instance.m_HackingSucceedCount);
+            }
             BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+        }
+
+        if(input.Slow == E_INPUT_STATE.DOWN){
+            // 暫定でハッキングモードに失敗したことにする
+            GameManager.Instance.ResetHackingSucceedCount();
+            //Debug.Log("Hacking failed... : " + GameManager.Instance.m_HackingSucceedCount);
         }
 
         Player.OnUpdate();
@@ -145,5 +172,10 @@ public class BattleHackingPlayerManager : ControllableObject
         {
             Player.gameObject.SetActive(false);
         }
+    }
+
+    public void ResetShotFlag()
+    {
+        m_IsShotNormal = false;
     }
 }

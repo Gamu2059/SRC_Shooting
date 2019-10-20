@@ -11,13 +11,6 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         base.OnInitialize();
     }
 
-    public override void UpdateCollider()
-    {
-        BattleRealPlayerManager.Instance.UpdateCollider();
-        BattleRealEnemyManager.Instance.UpdateCollider();
-        BattleRealBulletManager.Instance.UpdateCollider();
-    }
-
     /// <summary>
     /// 衝突をチェックする。
     /// </summary>
@@ -25,6 +18,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
     {
         CheckCollisionBulletToChara();
         CheckEnemyToPlayer();
+        CheckPlayerToItem();
     }
 
     /// <summary>
@@ -51,6 +45,12 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         {
             DrawCollider(bullets[i]);
         }
+
+        var items = BattleRealItemManager.Instance.Items;
+        for (int i = 0; i < items.Count; i++)
+        {
+            DrawCollider(items[i]);
+        }
     }
 
     protected override Vector2 CalcViewportPos(Vector2 worldPos)
@@ -62,8 +62,6 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
 
         return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
     }
-
-
 
     /// <summary>
     /// 弾からキャラへの衝突判定を行う。
@@ -88,8 +86,10 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
             {
                 Collision.CheckCollide(bullet, player, (attackData, targetData, hitPosList) =>
                 {
-                    player.SufferBullet(bullet, attackData, targetData);
-                    bullet.HitChara(player, attackData, targetData);
+                    attackData.IsCollide = true;
+                    targetData.IsCollide = true;
+                    player.SufferBullet(bullet, attackData, targetData, hitPosList);
+                    bullet.HitChara(player, attackData, targetData, hitPosList);
                 });
             }
             else
@@ -108,8 +108,8 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
                     {
                         attackData.IsCollide = true;
                         targetData.IsCollide = true;
-                        enemy.SufferBullet(bullet, attackData, targetData);
-                        bullet.HitChara(enemy, attackData, targetData);
+                        enemy.SufferBullet(bullet, attackData, targetData, hitPosList);
+                        bullet.HitChara(enemy, attackData, targetData, hitPosList);
                     });
                 }
             }
@@ -137,8 +137,36 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
             {
                 attackData.IsCollide = true;
                 targetData.IsCollide = true;
-                enemy.SufferChara(player, attackData, targetData);
-                player.HitChara(enemy, attackData, targetData);
+                player.SufferChara(player, attackData, targetData, hitPosList);
+                enemy.HitChara(enemy, attackData, targetData, hitPosList);
+            });
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーからアイテムへの衝突判定を行う。
+    /// </summary>
+    private void CheckPlayerToItem()
+    {
+        var items = BattleRealItemManager.Instance.Items;
+        var player = BattleRealPlayerManager.Instance.Player;
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            var item = items[i];
+
+            // UPDATE状態にないものは飛ばす
+            if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                return;
+            }
+
+            Collision.CheckCollide(player, item, (attackData, targetData, hitPosList) =>
+            {
+                attackData.IsCollide = true;
+                targetData.IsCollide = true;
+                item.SufferChara(player, attackData, targetData, hitPosList);
+                player.HitItem(item, attackData, targetData, hitPosList);
             });
         }
     }
