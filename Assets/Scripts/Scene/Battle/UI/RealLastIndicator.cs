@@ -34,7 +34,7 @@ public class RealLastIndicator : MonoBehaviour
     }
 
     private void RegisterScore(){
-        m_Last = new IntReactiveProperty(0);
+        m_Last = new IntReactiveProperty(GameManager.Instance.PlayerData.m_Last);
         m_Last.SubscribeToText(m_OutText);
     }
 }
