@@ -13365,7 +13365,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d13b4e804447a46b167565493c4887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ColliderTransforms: []
+  m_ColliderTransforms:
+  - ColliderType: 0
+    ColliderShape: 0
+    Direction: 0
+    ColliderWidth: 0
+    ColliderColor: {r: 0, g: 0, b: 0, a: 0}
+    Transform: {fileID: 1911625333}
 --- !u!114 &1911625335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13379,8 +13385,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  m_NowHp: 5000
+  m_MaxHp: 5000
   m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_Danmaku:
