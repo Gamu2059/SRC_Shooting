@@ -653,7 +653,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void ExecuteEvent(BattleRealEventContent eventContent)
     {
-        Debug.Log(eventContent.EventType);
+        //Debug.Log(eventContent.EventType);
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
