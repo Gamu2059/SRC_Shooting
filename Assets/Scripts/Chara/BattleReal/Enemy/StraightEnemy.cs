@@ -7,57 +7,32 @@ using UnityEngine;
 /// </summary>
 public class StraightEnemy : BattleRealEnemyController
 {
-	[Header( "Move Param" )]
-
-	// 移動方向
-	[SerializeField]
 	protected Vector3 m_MoveDirection;
-
-	// 移動速度
-	[SerializeField]
 	protected float m_MoveSpeed;
-
-	[Header( "Shot Param" )]
-
-	[SerializeField]
-	protected Transform m_ShotPosition;
-
-	[SerializeField]
-	protected float m_VisibleOffsetShotTime;
-
-	[SerializeField]
 	protected EnemyShotParam m_ShotParam;
-
-
-
 	protected Vector3 m_NormalizedMoveDirection;
-
 	protected float m_ShotTimeCount;
 
-	protected Timer m_StartShotTimer;
+    protected override void OnSetParamSet()
+    {
+        base.OnSetParamSet();
 
+        if (BehaviorParamSet is BattleRealEnemyStraightParamSet paramSet)
+        {
+            m_MoveDirection = paramSet.MoveDirection;
+            m_MoveSpeed = paramSet.MoveSpeed;
+            m_ShotParam = paramSet.ShotParam;
+        }
+    }
 
-	public override void SetArguments( string param )
-	{
-		base.SetArguments( param );
-
-		m_MoveDirection = m_ParamSet.V3Param["MD"];
-		m_MoveSpeed = m_ParamSet.FloatParam["MS"];
-		m_ShotParam.Interval = m_ParamSet.FloatParam["BI"];
-		m_ShotParam.Num = m_ParamSet.IntParam["BN"];
-		m_ShotParam.Angle = m_ParamSet.FloatParam["BA"];
-
-		m_VisibleOffsetShotTime = m_ParamSet.FloatParam["VOST"];
-	}
-
-	public override void OnStart()
+    public override void OnStart()
 	{
 		base.OnStart();
 
 		// 直進の方向を求める
 		m_NormalizedMoveDirection = m_MoveDirection.normalized;
 
-		m_ShotTimeCount = 0f;
+        m_ShotTimeCount = m_ShotParam.Interval;
 	}
 
 	public override void OnUpdate()
@@ -68,9 +43,6 @@ public class StraightEnemy : BattleRealEnemyController
 		transform.localPosition += deltaPos;
 
 		Shot();
-
-		//var target = BattleRealPlayerManager.Instance.GetCurrentController().transform;
-		//transform.LookAt( target );
 	}
 
 	protected virtual void Shot()
@@ -84,34 +56,25 @@ public class StraightEnemy : BattleRealEnemyController
 		}
 	}
 
-	protected virtual void OnShot( EnemyShotParam param )
+	protected virtual void OnShot( EnemyShotParam param, bool isLookPlayer = true )
 	{
-		if( m_ShotPosition == null )
-		{
-			return;
-		}
-
 		int num = param.Num;
 		float angle = param.Angle;
 		var spreadAngles = GetBulletSpreadAngles( num, angle );
 		var shotParam = new BulletShotParam( this );
-		shotParam.Position = m_ShotPosition.position - transform.parent.position;
 
-		for( int i = 0; i < num; i++ )
+        var correctAngle = 0f;
+        if (isLookPlayer)
+        {
+            var player = BattleRealPlayerManager.Instance.Player;
+            var delta = player.transform.position - transform.position;
+            correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg + 180;
+        }
+
+        for ( int i = 0; i < num; i++ )
 		{
 			var bullet = BulletController.ShotBullet( shotParam );
-			bullet.SetRotation( new Vector3( 0, spreadAngles[i], 0 ), E_RELATIVE.RELATIVE );
-		}
-	}
-
-	public override void Dead()
-	{
-		base.Dead();
-
-		if( m_StartShotTimer != null )
-		{
-			m_StartShotTimer.StopTimer();
-			m_StartShotTimer = null;
+			bullet.SetRotation( new Vector3( 0, spreadAngles[i] + correctAngle, 0 ), E_RELATIVE.RELATIVE );
 		}
 	}
 }

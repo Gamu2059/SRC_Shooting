@@ -24,8 +24,4 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     [SerializeField, Tooltip("撃破時のイベント")]
     private BattleRealEventContent[] m_DefeatEvents;
     public BattleRealEventContent[] DefeatEvents => m_DefeatEvents;
-
-    [SerializeField, Tooltip("敵の振る舞いパラメータのセット")]
-    private BattleRealEnemyBehaviorParamSet m_EnemyBehaviorParamSet;
-    public BattleRealEnemyBehaviorParamSet EnemyBehaviorParamSet => m_EnemyBehaviorParamSet;
 }

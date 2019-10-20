@@ -27,6 +27,15 @@ public class BattleRealEnemyController : CharaController
 
     private E_POOLED_OBJECT_CYCLE m_Cycle;
 
+    protected Vector2 PrePosition { get; private set; }
+
+    protected Vector2 MoveDir { get; private set; }
+
+    /// <summary>
+    /// 移動方向を常に正面とするかどうか
+    /// </summary>
+    protected bool m_IsLookMoveDir;
+
     /// <summary>
     /// 出現して以降、画面に映ったかどうか
     /// </summary>
@@ -76,6 +85,7 @@ public class BattleRealEnemyController : CharaController
 
         Troop = E_CHARA_TROOP.ENEMY;
         IsShowFirst = false;
+        m_IsLookMoveDir = true;
 
         if (m_GenerateParamSet != null)
         {
@@ -87,6 +97,14 @@ public class BattleRealEnemyController : CharaController
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
+
+        var pos = transform.position.ToVector2XZ();
+        MoveDir = pos - PrePosition;
+        PrePosition = pos;
+        if (m_IsLookMoveDir)
+        {
+            transform.LookAt(transform.position + 100 * MoveDir.ToVector3XZ());
+        }
 
         IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfField(this);
         if (IsOutOfEnemyField)
@@ -100,6 +118,7 @@ public class BattleRealEnemyController : CharaController
         {
             IsShowFirst = true;
         }
+
     }
 
     #endregion
@@ -120,10 +139,10 @@ public class BattleRealEnemyController : CharaController
         m_Score = score;
     }
 
-    public void SetParamSet(BattleRealEnemyGenerateParamSet paramSet)
+    public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
-        m_GenerateParamSet = paramSet;
-        m_BehaviorParamSet = m_GenerateParamSet.EnemyBehaviorParamSet;
+        m_GenerateParamSet = generateParamSet;
+        m_BehaviorParamSet = behaviorParamSet;
 
         SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
 

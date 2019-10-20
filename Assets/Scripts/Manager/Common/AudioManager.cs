@@ -339,4 +339,15 @@ public class AudioManager : ControllableMonoBehavior
         var type = m_AisacDict[controlType];
         current.SetAisacControl(type, value);
     }
+
+    public void SetPitch(float pitch)
+    {
+        var current = GetCurrentBgmSource();
+        if (current == null)
+        {
+            return;
+        }
+
+        current.pitch = pitch;
+    }
 }

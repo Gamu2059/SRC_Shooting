@@ -596,12 +596,12 @@ public static class Collision
         return horizontal && vertical;
     }
 
-    private static float Dot(Vector2 v1, Vector2 v2)
+    public static float Dot(Vector2 v1, Vector2 v2)
     {
         return v1.x * v2.x + v1.y * v2.y;
     }
 
-    private static float Cross(Vector2 v1, Vector2 v2)
+    public static float Cross(Vector2 v1, Vector2 v2)
     {
         return v1.x * v2.y - v1.y * v2.x;
     }
@@ -664,7 +664,7 @@ public static class Collision
     /// <summary>
     /// 線分同士の衝突を行う。
     /// </summary>
-    private static bool IsCollideLineToLine(CollisionLine l1, CollisionLine l2, out List<Vector2> result)
+    public static bool IsCollideLineToLine(CollisionLine l1, CollisionLine l2, out List<Vector2> result)
     {
         result = null;
 

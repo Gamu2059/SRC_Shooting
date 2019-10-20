@@ -168,7 +168,8 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
         }
 
         var generateParamSet = individualParamSet.EnemyGenerateParamSet;
-        var enemy = BattleRealEnemyManager.Instance.CreateEnemy(generateParamSet);
+        var behaviorParamSet = individualParamSet.EnemyBehaviorParamSet;
+        var enemy = BattleRealEnemyManager.Instance.CreateEnemy(generateParamSet, behaviorParamSet);
         if (enemy == null)
         {
             return;

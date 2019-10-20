@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: eb2cafe65ae0f024fa8308f25fc38992, type: 3}
+        m_Texture: {fileID: 2800000, guid: 78b9cd3047f9e8f408e749e78441a71c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: 6e1bacb35a8977446a06e336d8efe8a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 20ffafd1899e54c4987f2a0389949841, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: 043a80c86a4c67f439b494794f711f78, type: 3}
+        m_Texture: {fileID: 2800000, guid: 081bb09db341b7b44901c541fa1e29c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -68,12 +68,12 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FlashBrightness: 0.2
-    - _FlashSpeed: 2
+    - _FlashBrightness: 1
+    - _FlashSpeed: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -86,4 +86,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _EmitColor: {r: 1.7772316, g: 0.24311191, b: 1.2390851, a: 1}
+    - _EmitColor: {r: 1, g: 0.023584902, b: 0.7321669, a: 1}

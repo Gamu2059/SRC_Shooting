@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fffcd50188e9eec43aad61df9872212c, type: 3}
+  m_Name: stage1_cross_passage2_left.battle_real_enemy_uturn
+  m_EditorClassIdentifier: 
+  m_BehaviorClass: UTurnEnemy
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_EnemyLookParamSet: {fileID: 11400000, guid: d4f8a97b56ebbb048b7a0512a512257e,
+    type: 2}
+  m_RelativeStraightMoveEndPosition: {x: 0.3, y: 0, z: -0.1}
+  m_StraightMoveSpeed: 0.5
+  m_RelativeCircleCenterPosition: {x: -1.2, y: 0, z: -1.5}
+  m_CircleMoveAngle: 180
+  m_CircleMoveSpeed: -20
+  m_ShotPosition: {x: 0, y: 0, z: 0}
+  m_VisibleOffsetShotTime: 1
+  m_StraightMoveShotParam:
+    Interval: 300
+    Num: 3
+    Angle: 10
+  m_CircleMoveShotParam:
+    Interval: 300
+    Num: 0
+    Angle: 0

@@ -334,7 +334,7 @@ public class BattleRealEnemyGroupManager : ControllableObject
         for (int i = 0; i < groups.Length; i++)
         {
             var param = groups[i];
-            var eventParam = new BattleRealEventTriggerParam();
+            var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();
             eventParam.Condition = param.Condition;
             var content = new BattleRealEventContent();
             content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;

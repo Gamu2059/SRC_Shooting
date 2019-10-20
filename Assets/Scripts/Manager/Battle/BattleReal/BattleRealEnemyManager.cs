@@ -280,14 +280,14 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// プールから敵を取得する。
     /// 足りなければ生成する。
     /// </summary>
-    private GameObject GetPoolingEnemy(BattleRealEnemyGenerateParamSet enemyGenerateParamSet)
+    private GameObject GetPoolingEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
-        if (enemyGenerateParamSet == null)
+        if (generateParamSet == null || behaviorParamSet == null)
         {
             return null;
         }
 
-        var lookParamSet = enemyGenerateParamSet.EnemyBehaviorParamSet.EnemyLookParamSet;
+        var lookParamSet = behaviorParamSet.EnemyLookParamSet;
         var poolId = lookParamSet.LookId;
 
         GameObject enemyObj = null;
@@ -359,9 +359,9 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public BattleRealEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet paramSet)
+    public BattleRealEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
-        if (paramSet == null)
+        if (generateParamSet == null || behaviorParamSet == null)
         {
             return null;
         }
@@ -369,14 +369,14 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         Type behaviorType = null;
         try
         {
-            behaviorType = Type.GetType(paramSet.EnemyBehaviorParamSet.BehaviorClass);
+            behaviorType = Type.GetType(behaviorParamSet.BehaviorClass);
         }
         catch (Exception)
         {
             return null;
         }
 
-        var enemyObj = GetPoolingEnemy(paramSet);
+        var enemyObj = GetPoolingEnemy(generateParamSet, behaviorParamSet);
         if (enemyObj == null)
         {
             return null;
@@ -389,9 +389,9 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
             return null;
         }
 
-        var poolId = paramSet.EnemyBehaviorParamSet.EnemyLookParamSet.LookId;
+        var poolId = behaviorParamSet.EnemyLookParamSet.LookId;
         enemy.SetLookId(poolId);
-        enemy.SetParamSet(paramSet);
+        enemy.SetParamSet(generateParamSet, behaviorParamSet);
         CheckStandByEnemy(enemy);
         return enemy;
     }

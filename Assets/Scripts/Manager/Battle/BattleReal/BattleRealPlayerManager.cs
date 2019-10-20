@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using UniRx;
+using UnityEngine;
 
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
@@ -24,7 +24,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     #region Inspector
 
-    [Header("State")]
+    [Header ("State")]
 
     [SerializeField]
     private FloatReactiveProperty m_CurrentScore;
@@ -67,36 +67,29 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     #region Get Set
 
-    public FloatReactiveProperty GetCurrentScore()
-    {
+    public FloatReactiveProperty GetCurrentScore () {
         return m_CurrentScore;
     }
 
-    public IntReactiveProperty GetCurrentLevel()
-    {
+    public IntReactiveProperty GetCurrentLevel () {
         return m_CurrentLevel;
     }
 
-    public IntReactiveProperty GetCurrentExp()
-    {
+    public IntReactiveProperty GetCurrentExp () {
         return m_CurrentExp;
     }
 
-    public FloatReactiveProperty GetCurrentBombCharge()
-    {
+    public FloatReactiveProperty GetCurrentBombCharge () {
         return m_CurrentBombCharge;
     }
 
-    public IntReactiveProperty GetCurrentBombNum()
-    {
+    public IntReactiveProperty GetCurrentBombNum () {
         return m_CurrentBombNum;
     }
 
     #endregion
 
-
-    public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
-    {
+    public BattleRealPlayerManager (BattleRealPlayerManagerParamSet paramSet) {
         m_ParamSet = paramSet;
     }
 
@@ -114,38 +107,32 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         m_RegisteredPlayer = player;
     }
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
+    public override void OnInitialize () {
+        base.OnInitialize ();
 
         IsLaserType = m_ParamSet.IsLaserType;
         IsNormalWeapon = m_ParamSet.IsNormalWeapon;
     }
 
-    public override void OnFinalize()
-    {
-        base.OnFinalize();
+    public override void OnFinalize () {
+        base.OnFinalize ();
     }
 
-    public override void OnStart()
-    {
-        base.OnStart();
+    public override void OnStart () {
+        base.OnStart ();
 
-        m_PlayerCharaHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.PLAYER);
+        m_PlayerCharaHolder = BattleRealStageManager.Instance.GetHolder (BattleRealStageManager.E_HOLDER_TYPE.PLAYER);
 
-        if (m_RegisteredPlayer != null)
-        {
+        if (m_RegisteredPlayer != null) {
             m_Player = m_RegisteredPlayer;
-        }
-        else
-        {
-            m_Player = GameObject.Instantiate(m_ParamSet.PlayerPrefab);
+        } else {
+            m_Player = GameObject.Instantiate (m_ParamSet.PlayerPrefab);
         }
 
-        var pos = GetInitAppearPosition();
-        m_Player.transform.SetParent(m_PlayerCharaHolder);
+        var pos = GetInitAppearPosition ();
+        m_Player.transform.SetParent (m_PlayerCharaHolder);
         m_Player.transform.position = pos;
-        m_Player.OnInitialize();
+        m_Player.OnInitialize ();
 
         InitPlayerState();
 
@@ -153,34 +140,28 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         OnStartAction = null;
     }
 
-    public override void OnUpdate()
-    {
-        if (m_Player == null)
-        {
+    public override void OnUpdate () {
+        if (m_Player == null) {
             return;
         }
 
         var input = BattleRealInputManager.Instance;
 
         var moveDir = input.MoveDir;
-        if (moveDir.x != 0 || moveDir.y != 0)
-        {
+        if (moveDir.x != 0 || moveDir.y != 0) {
             float speed = 0;
-            if (input.Slow == E_INPUT_STATE.STAY)
-            {
+            if (input.Slow == E_INPUT_STATE.STAY) {
                 speed = m_ParamSet.PlayerSlowMoveSpeed;
-            }
-            else
-            {
+            } else {
                 speed = m_ParamSet.PlayerBaseMoveSpeed;
             }
 
-            var move = moveDir.ToVector3XZ() * speed * Time.deltaTime;
-            m_Player.transform.Translate(move, Space.World);
+            var move = moveDir.ToVector3XZ () * speed * Time.deltaTime;
+            m_Player.transform.Translate (move, Space.World);
         }
 
         // 移動直後に位置制限を掛ける
-        RestrictPlayerPosition();
+        RestrictPlayerPosition ();
 
         if (IsNormalWeapon)
         {
@@ -235,9 +216,8 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             IsNormalWeapon = !IsNormalWeapon;
         }
 
-        if (input.Cancel == E_INPUT_STATE.DOWN)
-        {
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+        if (input.Cancel == E_INPUT_STATE.DOWN) {
+            BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
 
         /* デバッグ用 */
@@ -250,22 +230,19 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     /// <summary>
     /// キャラの座標を動体フィールド領域に制限する。
     /// </summary>
-    private void RestrictPlayerPosition()
-    {
-        if (m_Player == null)
-        {
+    private void RestrictPlayerPosition () {
+        if (m_Player == null) {
             return;
         }
 
         var stageManager = BattleRealStageManager.Instance;
-        stageManager.ClampMovingObjectPosition(m_Player.transform);
+        stageManager.ClampMovingObjectPosition (m_Player.transform);
     }
 
     /// <summary>
     /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
     /// </summary>
-    public Vector3 GetInitAppearPosition()
-    {
+    public Vector3 GetInitAppearPosition () {
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
@@ -273,7 +250,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
         var factX = (maxPos.x - minPos.x) * initViewPos.x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * initViewPos.y + minPos.y;
-        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+        var pos = new Vector3 (factX, ParamDef.BASE_Y_POS, factZ);
         pos += m_PlayerCharaHolder.position;
 
         return pos;
@@ -282,52 +259,56 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     /// <summary>
     /// プレイヤーステートを初期化する。
     /// </summary>
-    public void InitPlayerState()
-    {
-        m_CurrentScore = new FloatReactiveProperty(0);
-        m_CurrentLevel = new IntReactiveProperty(1);
-        m_CurrentExp = new IntReactiveProperty(0);
-        m_CurrentBombCharge = new FloatReactiveProperty(0f);
-        m_CurrentBombNum = new IntReactiveProperty(0);
+    public void InitPlayerState () {
+        m_CurrentScore = new FloatReactiveProperty (0);
+        m_CurrentLevel = new IntReactiveProperty (1);
+        m_CurrentExp = new IntReactiveProperty (0);
+        m_CurrentBombCharge = new FloatReactiveProperty (0f);
+        m_CurrentBombNum = new IntReactiveProperty (0);
     }
 
     /// <summary>
     /// スコアを加算する。
     /// </summary>
-    public void AddScore(float score)
-    {
+    public void AddScore (float score) {
         m_CurrentScore.Value += score;
     }
 
     /// <summary>
     /// 経験値を加算する。
     /// </summary>
-    public void AddExp(int exp)
-    {
+    public void AddExp (int exp) {
         var currentExp = m_CurrentExp.Value;
-        currentExp += exp;
-
         var currentLevel = m_CurrentLevel.Value - 1;
 
-        //if (currentExp >= needExp)
-        //{
-        //    m_CurrentLevel.Value++;
-        //    currentExp %= needExp;
-        //    // Call LevelUp Action
-        //}
+        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length) {
+            // スコア増加(レベルMAXの時)
+            AddScore(exp * 1.0f);
+        } else {
+            // Exp増加(レベルMaxではない時)
+            currentExp += exp;
+            var expParamSet = m_ParamSet.BattleRealPlayerExpParamSets[currentLevel];
 
-        m_CurrentExp.Value = currentExp;
+            if (currentExp >= expParamSet.NextLevelNecessaryExp) {
+                m_CurrentLevel.Value++;
+                currentExp %= expParamSet.NextLevelNecessaryExp;
+            }
+            
+            m_CurrentExp.Value = currentExp;
+        }
     }
 
     /// <summary>
     /// ボムチャージを加算する。
     /// </summary>
-    public void AddBombCharge(float charge)
-    {
+    public void AddBombCharge (float charge) {
         var currentCharge = m_CurrentBombCharge.Value;
         currentCharge += charge;
 
-        m_CurrentBombCharge.Value = currentCharge;
+        if (currentCharge >= m_PlayerState.BombCharge) {
+            m_CurrentBombNum.Value++;
+            currentCharge %= m_PlayerState.BombCharge;
+        }
     }
 
     public void ClearColliderFlag()
