@@ -285,7 +285,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         var currentExp = m_CurrentExp.Value;
         var currentLevel = m_CurrentLevel.Value - 1;
 
-        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length) {
+        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length - 1) {
             // スコア増加(レベルMAXの時)
             AddScore(exp * 1.0f);
         } else {

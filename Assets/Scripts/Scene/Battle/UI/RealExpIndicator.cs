@@ -32,9 +32,14 @@ public class RealExpIndicator : MonoBehaviour
     private void RegisterExp(){
         m_CurrentExp = BattleRealPlayerManager.Instance.GetCurrentExp();
         m_CurrentExp.SubscribeToText(m_OutText, _ =>{
-            int currentExp = m_CurrentExp.Value;
-            int needExp = BattleRealPlayerManager.Instance.GetRealPlayerExpParamSet()[BattleRealPlayerManager.Instance.GetCurrentLevel().Value - 1].NextLevelNecessaryExp;
-            return string.Format("{0}/{1}", currentExp, needExp);
+            int currentLv = BattleRealPlayerManager.Instance.GetCurrentLevel().Value;
+            var expParamSet = BattleRealPlayerManager.Instance.GetRealPlayerExpParamSet();
+
+            if(currentLv == expParamSet.Length){
+                return "Full Power Mode!";
+            }else{
+                return string.Format("{0}/{1}", m_CurrentExp.Value, expParamSet[currentLv - 1].NextLevelNecessaryExp);    
+            }
         });
     }
 }
