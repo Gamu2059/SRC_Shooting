@@ -33,6 +33,7 @@ public class BossTest : BattleRealEnemyController
 
     protected override void OnAwake()
     {
+
         // 時刻をゼロにする
         m_Time = 0;
 
@@ -49,6 +50,9 @@ public class BossTest : BattleRealEnemyController
 
     public override void OnUpdate()
     {
+
+        Debug.Log("c");
+
         // 経過時間を進める
         m_Time += Time.deltaTime;
 
@@ -73,6 +77,8 @@ public class BossTest : BattleRealEnemyController
 
         //// 敵本体の状態を更新する
         //BezierPositionMoving();
+
+        
 
         m_Danmaku.Updates(this);
     }
