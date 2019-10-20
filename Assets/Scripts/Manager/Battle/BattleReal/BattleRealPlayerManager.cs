@@ -242,6 +242,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
         /* デバッグ用 */
         //Debug.Log("CurrentScore = " + m_CurrentScore);
+        //Debug.Log("CurrentExp = " + m_CurrentExp);
 
         m_Player.OnUpdate();
     }

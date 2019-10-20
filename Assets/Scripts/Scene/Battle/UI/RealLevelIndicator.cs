@@ -4,24 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 
-/// <summary>
-/// リアルモードのプレイヤーの残機を表示する
-/// (今のところは数字で)
-/// </summary>
-public class RealLastIndicator : MonoBehaviour
+public class RealLevelIndicator : MonoBehaviour
 {
     [SerializeField]
     private Text m_OutText;
 
-    private IntReactiveProperty m_Last;
+    private IntReactiveProperty m_Level;
 
     // Start is called before the first frame update
     void Start()
     {
         if(BattleRealPlayerManager.Instance != null){
-            RegisterLast();
+            RegisterLevel();
         }else{
-            BattleRealPlayerManager.OnStartAction += RegisterLast;
+            BattleRealPlayerManager.OnStartAction += RegisterLevel;
         }
     }
 
@@ -33,8 +29,8 @@ public class RealLastIndicator : MonoBehaviour
         }
     }
 
-    private void RegisterLast(){
-        m_Last = new IntReactiveProperty(GameManager.Instance.PlayerData.m_Last);
-        m_Last.SubscribeToText(m_OutText);
+    private void RegisterLevel(){
+        m_Level = BattleRealPlayerManager.Instance.GetCurrentLevel();
+        m_Level.SubscribeToText(m_OutText);
     }
 }

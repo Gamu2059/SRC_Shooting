@@ -72,7 +72,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
 
-        m_PlayerData = new PlayerData(3);
+        m_PlayerData = new PlayerData();
 		ResetBestScore();
 	}
 
