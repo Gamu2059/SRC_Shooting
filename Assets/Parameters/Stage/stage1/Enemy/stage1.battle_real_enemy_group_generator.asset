@@ -178,3 +178,18 @@ MonoBehaviour:
       MultiConditions: []
     m_GroupGenerateParamSet: {fileID: 11400000, guid: 70882956936d6ca4aa4cd6070ce5812c,
       type: 2}
+  - m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        VariableName: Game Start
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_GroupGenerateParamSet: {fileID: 11400000, guid: 1bb7405b8571d2149a90524ae7dd473d,
+      type: 2}

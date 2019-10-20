@@ -58,128 +58,128 @@ public class BattleRealManager : ControllableObject
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.START)
         {
-            OnStart = StartOnStart,
-            OnUpdate = UpdateOnStart,
-            OnLateUpdate = LateUpdateOnStart,
-            OnFixedUpdate = FixedUpdateOnStart,
-            OnEnd = EndOnStart,
+            m_OnStart = StartOnStart,
+            m_OnUpdate = UpdateOnStart,
+            m_OnLateUpdate = LateUpdateOnStart,
+            m_OnFixedUpdate = FixedUpdateOnStart,
+            m_OnEnd = EndOnStart,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME)
         {
-            OnStart = StartOnBeforeBeginGame,
-            OnUpdate = UpdateOnBeforeBeginGame,
-            OnLateUpdate = LateUpdateOnBeforeBeginGame,
-            OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
-            OnEnd = EndOnBeforeBeginGame,
+            m_OnStart = StartOnBeforeBeginGame,
+            m_OnUpdate = UpdateOnBeforeBeginGame,
+            m_OnLateUpdate = LateUpdateOnBeforeBeginGame,
+            m_OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
+            m_OnEnd = EndOnBeforeBeginGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME_PERFORMANCE)
         {
-            OnStart = StartOnBeforeBeginGamePerformance,
-            OnUpdate = UpdateOnBeforeBeginGamePerformance,
-            OnLateUpdate = LateUpdateOnBeforeBeginGamePerformance,
-            OnFixedUpdate = FixedUpdateOnBeforeBeginGamePerformance,
-            OnEnd = EndOnBeforeBeginGamePerformance,
+            m_OnStart = StartOnBeforeBeginGamePerformance,
+            m_OnUpdate = UpdateOnBeforeBeginGamePerformance,
+            m_OnLateUpdate = LateUpdateOnBeforeBeginGamePerformance,
+            m_OnFixedUpdate = FixedUpdateOnBeforeBeginGamePerformance,
+            m_OnEnd = EndOnBeforeBeginGamePerformance,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEGIN_GAME)
         {
-            OnStart = StartOnBeginGame,
-            OnUpdate = UpdateOnBeginGame,
-            OnLateUpdate = LateUpdateOnBeginGame,
-            OnFixedUpdate = FixedUpdateOnBeginGame,
-            OnEnd = EndOnBeginGame,
+            m_OnStart = StartOnBeginGame,
+            m_OnUpdate = UpdateOnBeginGame,
+            m_OnLateUpdate = LateUpdateOnBeginGame,
+            m_OnFixedUpdate = FixedUpdateOnBeginGame,
+            m_OnEnd = EndOnBeginGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME)
         {
-            OnStart = StartOnGame,
-            OnUpdate = UpdateOnGame,
-            OnLateUpdate = LateUpdateOnGame,
-            OnFixedUpdate = FixedUpdateOnGame,
-            OnEnd = EndOnGame,
+            m_OnStart = StartOnGame,
+            m_OnUpdate = UpdateOnGame,
+            m_OnLateUpdate = LateUpdateOnGame,
+            m_OnFixedUpdate = FixedUpdateOnGame,
+            m_OnEnd = EndOnGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.DEAD)
         {
-            OnStart = StartOnDead,
-            OnUpdate = UpdateOnDead,
-            OnLateUpdate = LateUpdateOnDead,
-            OnFixedUpdate = FixedUpdateOnDead,
-            OnEnd = EndOnDead,
+            m_OnStart = StartOnDead,
+            m_OnUpdate = UpdateOnDead,
+            m_OnLateUpdate = LateUpdateOnDead,
+            m_OnFixedUpdate = FixedUpdateOnDead,
+            m_OnEnd = EndOnDead,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE)
         {
-            OnStart = StartOnBeforeBossBattlePerformance,
-            OnUpdate = UpdateOnBeforeBossBattlePerformance,
-            OnLateUpdate = LateUpdateOnBeforeBossBattlePerformance,
-            OnFixedUpdate = FixedUpdateOnBeforeBossBattlePerformance,
-            OnEnd = EndOnBeforeBossBattlePerformance,
+            m_OnStart = StartOnBeforeBossBattlePerformance,
+            m_OnUpdate = UpdateOnBeforeBossBattlePerformance,
+            m_OnLateUpdate = LateUpdateOnBeforeBossBattlePerformance,
+            m_OnFixedUpdate = FixedUpdateOnBeforeBossBattlePerformance,
+            m_OnEnd = EndOnBeforeBossBattlePerformance,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING)
         {
-            OnStart = StartOnTransitionToHacking,
-            OnUpdate = UpdateOnTransitionToHacking,
-            OnLateUpdate = LateUpdateOnTransitionToHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            OnEnd = EndOnTransitionToHacking,
+            m_OnStart = StartOnTransitionToHacking,
+            m_OnUpdate = UpdateOnTransitionToHacking,
+            m_OnLateUpdate = LateUpdateOnTransitionToHacking,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            m_OnEnd = EndOnTransitionToHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.STAY_HACKING)
         {
-            OnStart = StartOnStayHacking,
-            OnUpdate = UpdateOnStayHacking,
-            OnLateUpdate = LateUpdateOnStayHacking,
-            OnFixedUpdate = FixedUpdateOnStayHacking,
-            OnEnd = EndOnStayHacking,
+            m_OnStart = StartOnStayHacking,
+            m_OnUpdate = UpdateOnStayHacking,
+            m_OnLateUpdate = LateUpdateOnStayHacking,
+            m_OnFixedUpdate = FixedUpdateOnStayHacking,
+            m_OnEnd = EndOnStayHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_REAL)
         {
-            OnStart = StartOnTransitionToReal,
-            OnUpdate = UpdateOnTransitionToReal,
-            OnLateUpdate = LateUpdateOnTransitionToReal,
-            OnFixedUpdate = FixedUpdateOnTransitionToReal,
-            OnEnd = EndOnTransitionToReal,
+            m_OnStart = StartOnTransitionToReal,
+            m_OnUpdate = UpdateOnTransitionToReal,
+            m_OnLateUpdate = LateUpdateOnTransitionToReal,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            m_OnEnd = EndOnTransitionToReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_GAME_CLEAR_PERFORMANCE)
         {
-            OnStart = StartOnBeforeGameClearPerformance,
-            OnUpdate = UpdateOnBeforeGameClearPerformance,
-            OnLateUpdate = LateUpdateOnBeforeGameClearPerformance,
-            OnFixedUpdate = FixedUpdateOnBeforeGameClearPerformance,
-            OnEnd = EndOnBeforeGameClearPerformance,
+            m_OnStart = StartOnBeforeGameClearPerformance,
+            m_OnUpdate = UpdateOnBeforeGameClearPerformance,
+            m_OnLateUpdate = LateUpdateOnBeforeGameClearPerformance,
+            m_OnFixedUpdate = FixedUpdateOnBeforeGameClearPerformance,
+            m_OnEnd = EndOnBeforeGameClearPerformance,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME_CLEAR)
         {
-            OnStart = StartOnGameClear,
-            OnUpdate = UpdateOnGameClear,
-            OnLateUpdate = LateUpdateOnGameClear,
-            OnFixedUpdate = FixedUpdateOnGameClear,
-            OnEnd = EndOnGameClear,
+            m_OnStart = StartOnGameClear,
+            m_OnUpdate = UpdateOnGameClear,
+            m_OnLateUpdate = LateUpdateOnGameClear,
+            m_OnFixedUpdate = FixedUpdateOnGameClear,
+            m_OnEnd = EndOnGameClear,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME_OVER)
         {
-            OnStart = StartOnGameOver,
-            OnUpdate = UpdateOnGameOver,
-            OnLateUpdate = LateUpdateOnGameOver,
-            OnFixedUpdate = FixedUpdateOnGameOver,
-            OnEnd = EndOnGameOver,
+            m_OnStart = StartOnGameOver,
+            m_OnUpdate = UpdateOnGameOver,
+            m_OnLateUpdate = LateUpdateOnGameOver,
+            m_OnFixedUpdate = FixedUpdateOnGameOver,
+            m_OnEnd = EndOnGameOver,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.END)
         {
-            OnStart = StartOnEnd,
-            OnUpdate = UpdateOnEnd,
-            OnLateUpdate = LateUpdateOnEnd,
-            OnFixedUpdate = FixedUpdateOnEnd,
-            OnEnd = EndOnEnd,
+            m_OnStart = StartOnEnd,
+            m_OnUpdate = UpdateOnEnd,
+            m_OnLateUpdate = LateUpdateOnEnd,
+            m_OnFixedUpdate = FixedUpdateOnEnd,
+            m_OnEnd = EndOnEnd,
         });
 
         InputManager = new BattleRealInputManager();

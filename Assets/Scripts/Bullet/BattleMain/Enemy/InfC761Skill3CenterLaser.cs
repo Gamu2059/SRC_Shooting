@@ -104,7 +104,7 @@ public class InfC761Skill3CenterLaser : BulletController
 
 	private void CreateBullet()
 	{
-		var infC761 = GetBulletOwner() as InfC761;
+		var infC761 = GetBulletOwner() as InfC761_;
 
 		if( infC761 == null )
 		{

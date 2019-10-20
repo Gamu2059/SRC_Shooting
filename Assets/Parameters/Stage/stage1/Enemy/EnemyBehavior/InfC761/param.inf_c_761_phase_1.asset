@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ab5bf3837ecf34c82b4d07f1c66d0e, type: 3}
+  m_Name: param.inf_c_761_phase_1
+  m_EditorClassIdentifier: 
+  m_BehaviorClass: InfC761Phase1
+  m_BasePos: {x: 0, y: 0.3}
+  m_Amplitude: 1
+  m_NormalizedRate:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_NextMoveWaitTime: 0
