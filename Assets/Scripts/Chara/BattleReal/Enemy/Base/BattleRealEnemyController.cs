@@ -37,6 +37,11 @@ public class BattleRealEnemyController : CharaController
     protected bool m_IsLookMoveDir;
 
     /// <summary>
+    /// 画面外に出た時に自動的に破棄するかどうか
+    /// </summary>
+    protected bool m_WillDestroyOnOutOfEnemyField;
+
+    /// <summary>
     /// 出現して以降、画面に映ったかどうか
     /// </summary>
     protected bool IsShowFirst { get; private set; }
@@ -86,6 +91,7 @@ public class BattleRealEnemyController : CharaController
         Troop = E_CHARA_TROOP.ENEMY;
         IsShowFirst = false;
         m_IsLookMoveDir = true;
+        m_WillDestroyOnOutOfEnemyField = true;
 
         if (m_GenerateParamSet != null)
         {
@@ -230,7 +236,7 @@ public class BattleRealEnemyController : CharaController
                 for (int i = 0; i < events.Length; i++)
                 {
                     BattleRealPlayerManager.Instance.AddScore(m_Score);
-                    BattleRealEventManager.Instance.ExecuteEvent(events[i]);
+                    BattleRealEventManager.Instance.AddEvent(events[i]);
                 }
             }
         }

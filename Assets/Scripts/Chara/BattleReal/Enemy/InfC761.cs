@@ -56,6 +56,9 @@ public class InfC761 : BattleRealEnemyController
     {
         base.OnInitialize();
 
+        m_IsLookMoveDir = false;
+        m_WillDestroyOnOutOfEnemyField = false;
+
         m_AttackBehaviors = new List<BattleRealBossBehavior>();
         m_DownBehaviors = new List<BattleRealBossBehavior>();
 

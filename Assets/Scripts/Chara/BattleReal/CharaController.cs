@@ -303,7 +303,7 @@ public class CharaController : BattleRealObjectBase
     /// </summary>
     /// <param name="bulletNum">弾の個数</param>
     /// <param name="spreadAngle">弾同士の角度間隔</param>
-    protected static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
+    public static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
     {
         List<float> spreadAngles = new List<float>();
 

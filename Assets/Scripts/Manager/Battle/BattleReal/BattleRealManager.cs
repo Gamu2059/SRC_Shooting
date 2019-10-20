@@ -381,6 +381,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
         ItemManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
 
         InputManager.OnUpdate();
         RealTimerManager.OnUpdate();
@@ -477,7 +478,7 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnBeforeBossBattlePerformance()
     {
-        AudioManager.Instance.StopBgmImmediate();
+        EnemyGroupManager.CreateBossGroup();
         RequestChangeState(E_BATTLE_REAL_STATE.GAME);
     }
 

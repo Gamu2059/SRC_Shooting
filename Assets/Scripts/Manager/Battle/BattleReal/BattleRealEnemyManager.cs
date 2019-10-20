@@ -95,7 +95,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         {
             if (enemy == null)
             {
-                //CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -109,7 +108,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         {
             if (enemy == null)
             {
-                //CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -124,11 +122,24 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         {
             if (enemy == null)
             {
-                //CheckPoolEnemy(enemy);
                 continue;
             }
 
             enemy.OnLateUpdate();
+        }
+    }
+
+    public override void OnFixedUpdate()
+    {
+        // FixedUpdate処理
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.OnFixedUpdate();
         }
     }
 

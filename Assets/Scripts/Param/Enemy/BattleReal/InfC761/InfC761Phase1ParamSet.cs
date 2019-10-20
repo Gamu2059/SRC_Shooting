@@ -10,8 +10,8 @@ using System;
 public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
 {
     [SerializeField]
-    private Vector2 m_BasePos;
-    public Vector2 BasePos => m_BasePos;
+    private Vector3 m_BasePos;
+    public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
     private float m_Amplitude;
@@ -24,4 +24,26 @@ public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
     [SerializeField]
     private float m_NextMoveWaitTime;
     public float NextMoveWaitTime => m_NextMoveWaitTime;
+
+    [SerializeField]
+    private float m_StartDuration;
+    public float StartDuration => m_StartDuration;
+
+    [SerializeField]
+    private float m_MoveDuration;
+    public float MoveDuration => m_MoveDuration;
+
+    [Header("Shot Param")]
+
+    [SerializeField]
+    private EnemyShotParam m_ShotParam;
+    public EnemyShotParam ShotParam => m_ShotParam;
+
+    [SerializeField]
+    private Vector3 m_LeftShotOffset;
+    public Vector3 LeftShotOffset => m_LeftShotOffset;
+
+    [SerializeField]
+    private Vector3 m_RightShotOffset;
+    public Vector3 RigthShotOffset => m_RightShotOffset;
 }

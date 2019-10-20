@@ -13,12 +13,38 @@ MonoBehaviour:
   m_Name: param.inf_c_761_phase_1
   m_EditorClassIdentifier: 
   m_BehaviorClass: InfC761Phase1
-  m_BasePos: {x: 0, y: 0.3}
+  m_BasePos: {x: 0, y: 0, z: 0.8}
   m_Amplitude: 1
   m_NormalizedRate:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_NextMoveWaitTime: 0
+  m_NextMoveWaitTime: 0.5
+  m_StartDuration: 0.5
+  m_MoveDuration: 2
+  m_ShotParam:
+    Interval: 0.3
+    Num: 10
+    Angle: 30
+  m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
+  m_RightShotOffset: {x: 0.1, y: 0, z: 0}
