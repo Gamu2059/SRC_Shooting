@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b2ba784fcdb384ebd5c4dcd92dab6b, type: 3}
+  m_Name: stage1_up_passage.battle_real_enemy_group_generate
+  m_EditorClassIdentifier: 
+  m_ViewPortPos: {x: 0.5, y: 0.5}
+  m_OffsetPosFromViewPort: {x: 0, y: 0}
+  m_GenerateAngle: 0
+  m_EnemyGroupBehaviorParamSet: {fileID: 11400000, guid: 882c0d3b7e0988b45a5221c887a24df5,
+    type: 2}
+  m_IndividualGenerateParamSets:
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.3, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 0.8
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.3, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 1.6
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.3, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 2.4
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.3, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.7, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 0.8
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.7, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 1.6
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.7, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 2.4
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.7, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0.1}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 88a8342d4aef5ba4cb4158f03a7026e4,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 7198dc3ade4a672409a353ae38270b63,
+      type: 2}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 039eb9e55825ba24ea2a4f1f5c86c00b,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 94cc2b9b13839de49845ddf90eb37022,
+      type: 2}

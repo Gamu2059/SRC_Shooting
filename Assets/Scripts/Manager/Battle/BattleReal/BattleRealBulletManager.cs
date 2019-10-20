@@ -8,7 +8,7 @@ using System.Linq;
 /// リアルモードの弾を管理する。
 /// </summary>
 [Serializable]
-public class BattleRealBulletManager : ControllableObject, IUpdateCollider
+public class BattleRealBulletManager : ControllableObject, IColliderProcess
 {
     public static BattleRealBulletManager Instance => BattleRealManager.Instance.BulletManager;
 
@@ -51,7 +51,6 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
     public override void OnInitialize()
     {
         base.OnInitialize();
-
         m_StandbyBullets = new List<BulletController>();
         m_UpdateBullets = new List<BulletController>();
         m_PoolBullets = new List<BulletController>();
@@ -60,10 +59,10 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
 
     public override void OnFinalize()
     {
-        base.OnFinalize();
         m_StandbyBullets.Clear();
         m_UpdateBullets.Clear();
         m_PoolBullets.Clear();
+        base.OnFinalize();
     }
 
     public override void OnStart()
@@ -114,6 +113,23 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
         }
     }
 
+    #endregion
+
+    #region Impl IColliderProcess
+
+    public void ClearColliderFlag()
+    {
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            bullet.ClearColliderFlag();
+        }
+    }
+
     public void UpdateCollider()
     {
         foreach (var bullet in m_UpdateBullets)
@@ -124,6 +140,19 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
             }
 
             bullet.UpdateCollider();
+        }
+    }
+
+    public void ProcessCollision()
+    {
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            bullet.ProcessCollision();
         }
     }
 
@@ -171,7 +200,9 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
         {
             int idx = count - i - 1;
             var bullet = m_GotoPoolBullets[idx];
+            bullet.OnFinalize();
             bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            bullet.gameObject.SetActive(false);
             m_GotoPoolBullets.RemoveAt(idx);
             m_UpdateBullets.Remove(bullet);
             m_PoolBullets.Add(bullet);
@@ -210,9 +241,7 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
         }
 
         bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        bullet.OnFinalize();
         m_GotoPoolBullets.Add(bullet);
-        bullet.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -252,7 +281,7 @@ public class BattleRealBulletManager : ControllableObject, IUpdateCollider
     /// <summary>
     /// 弾が弾フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    public bool IsOutOfBulletField(BulletController bullet)
+    public bool IsOutOfField(BulletController bullet)
     {
         if (bullet == null)
         {

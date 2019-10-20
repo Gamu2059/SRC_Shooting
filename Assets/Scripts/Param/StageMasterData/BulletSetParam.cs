@@ -6,8 +6,7 @@ using System;
 /// <summary>
 /// 弾と弾道パラメータをリスト保持するパラメータアセット。
 /// </summary>
-[CreateAssetMenu( menuName = "Param/Stage Param/Bullet Set Param", fileName = "BulletSetParam", order = 0 )]
-[Serializable]
+[Serializable, CreateAssetMenu( menuName = "Param/ParamSet/BulletSet", fileName = "param.bullet_set")]
 public class BulletSetParam : ScriptableObject
 {
 	[SerializeField, Tooltip( "弾のプレハブの配列" )]
@@ -167,6 +166,6 @@ public class BulletSetParam : ScriptableObject
         }
 
         bombParamIndex = Mathf.Clamp(bombParamIndex, 0, count);
-        return m_BulletParams[bombParamIndex];
+        return m_BombParams[bombParamIndex];
     }
 }

@@ -13,6 +13,20 @@ public class BattleRealInputManager : InputManagerBase
     private const string CHANGE_WEAPON_TYPE = "ChangeWeaponType";
     private const string MENU = "Menu";
 
+    private KeyCode[] m_DebugKey = new KeyCode[]
+    {
+        KeyCode.Alpha0,
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+        KeyCode.Alpha6,
+        KeyCode.Alpha7,
+        KeyCode.Alpha8,
+        KeyCode.Alpha9,
+    };
+
     public static BattleRealInputManager Instance => BattleRealManager.Instance.InputManager;
 
     public Vector2 MoveDir { get; private set; }
@@ -50,6 +64,14 @@ public class BattleRealInputManager : InputManagerBase
         Slow = GetButton(SLOW);
         ChangeMode = GetButton(CHANGE_WEAPON_TYPE);
         Menu = GetButton(MENU);
+
+        for (int i=0;i<m_DebugKey.Length;i++)
+        {
+            if (Input.GetKeyDown(m_DebugKey[i]))
+            {
+                Time.timeScale = i;
+            }
+        }
     }
 
     public void RegistInput()

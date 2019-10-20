@@ -65,7 +65,7 @@
 				// Metallic and smoothness come from slider variables
 				o.Metallic = m.r*_Metallic;
 				o.Smoothness = m.g*_Smoothness;
-				o.Emission = _EmitColor * m.b +m.a*sin(_FlashSpeed*_Time.x*32.0)*_FlashBrightness;
+				o.Emission = _EmitColor * (m.b +max(m.a-0.05,0)*sin(_FlashSpeed*_Time.x*32.0)*_FlashBrightness);
 
 				o.Normal = UnpackNormal(tex2D(_NormalTex, IN.uv_MainTex));
 			}

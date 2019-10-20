@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427135, b: 0.5645232, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -349,12 +349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f274bb037c66ec741aac84e6b5896fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 1
@@ -478,12 +476,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d145a12dff914289527d666b03096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 1
@@ -688,12 +684,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9c119c21e1e994a9a07a37bd98d4d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 1
@@ -806,12 +800,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1632f41225b2741a2128bdfa46b816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -998,12 +990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad03d1e3637c7142806bda71cbd4a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 0.2
   m_AngleSpeed: 1
@@ -1135,12 +1125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007c0806cc2d84698e71ae7ab57d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -1254,12 +1242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc6949c5a2be3c49a9c775969be6483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.1
@@ -1633,7 +1619,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0b9005506fa4f920d3073235f4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CameraType: 1
 --- !u!114 &235440767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1910,7 +1895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0b9005506fa4f920d3073235f4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CameraType: 0
 --- !u!114 &260737164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2049,12 +2033,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2377ba84354fb64dbaa4c5c68623a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -2167,12 +2149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d225a43ee1b471643b135fe8fee7d557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 1
@@ -2398,12 +2378,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b172d2996cff3c040bf557e1142bd988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -2520,12 +2498,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a877b3a4c5c72974fac9d99ef4df5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -2650,12 +2626,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e848b595d4defda479c0a928ac56b2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -2769,12 +2743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb24df8cc4a4e94889e3076fb0c6c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   shotNum: 0
@@ -2916,12 +2888,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae8b7152931b9e488cfc279ba715ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -3123,12 +3093,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a690af6878ddc4695f72ced10aae6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_Danmaku:
     m_AttackNum: 0
@@ -3451,12 +3419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d145a12dff914289527d666b03096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 3
@@ -3474,12 +3440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b83ef10652dc24b92cde445c7e042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.04
@@ -3499,12 +3463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b83ef10652dc24b92cde445c7e042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.04
@@ -3654,12 +3616,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01a9a744b6fab44a98ce524c2824de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 1
@@ -6903,12 +6863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58827905e90255546be9fb998a3849da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 1000
   m_MaxHp: 1000
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_PhaseTime:
   - 8
@@ -7040,12 +6998,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9dabe54b22e2445b8881abbb6a09da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 1000
@@ -7192,12 +7148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7a27be28eb39a42a769d5376e8e520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.03
@@ -7509,12 +7463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48382e194992ad74fa703566005b3348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   realShotNum: 0
@@ -7624,12 +7576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e6f6addd8aeb4ab2fc058dfa00df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -7744,12 +7694,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41081600bce0466498a48da8c93d611a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -7937,12 +7885,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9abf1cc20047345809320ec8f71a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.01
@@ -8119,12 +8065,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339de9fa005782c4b9455c7ef7169640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -8202,102 +8146,157 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7043884349179657839, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7043884349179657839, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7043884349287054006, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7043884349287054006, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7471963990750039700, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581745268156962115, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581745268156962115, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471963990878571085, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8450095000116729317, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 6581745268304368026, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8450095000116729317, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 6581745268304368026, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8450095000275538236, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450095000275538236, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450095000776371655, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450095000776371655, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450095000891238686, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450095000891238686, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450094999162046170, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450094999162046170, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450094999284122115, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8450094999284122115, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8524121521512932515, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 38131622751840664, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8524121521679179898, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 4350980095639630415, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095639630415, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38131622891777345, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095760692886, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095760692886, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38131623391860067, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095335927476, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095335927476, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38131623258116538, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095191698029, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980095191698029, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38131621768248958, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980096950314409, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980096950314409, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 38131621660850855, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980096798876016, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350980096798876016, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442096761809093138, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947019397646997957, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947019397646997957, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442096761931171531, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947019397783756060, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947019397783756060, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936174842484464437, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -8311,6 +8310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936174842601332716, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8675728418086110267, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
@@ -8327,21 +8331,21 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4781699921354144845, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781699921354144845, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9131808436770235203, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4781699921354144845, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781699921354144845, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4781699921494079636, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -8352,42 +8356,22 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4936174842484464437, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 8524121521679179898, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4936174842601332716, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 5381083049834527661, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
+      propertyPath: m_havePropertiesChanged
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5305932485944401165, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 5381083049834527661, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5305932486081157588, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5305932484320720400, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5305932484483822281, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5305932484921462322, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5305932485023648491, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 8524121521512932515, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -8402,62 +8386,17 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5381083049834527661, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5381083049834527661, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6581745268156962115, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6581745268156962115, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6581745268304368026, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6581745268304368026, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712147559742793144, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 3356503682118446567, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 6712147559894229345, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947019397646997957, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 1329128734728779312, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2947019397646997957, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947019397783756060, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2947019397783756060, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 1329128734728779312, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -8467,20 +8406,135 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 3356503682118446567, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549800770936743752, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 1329128734619120361, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3549800770936743752, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 1329128734619120361, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000275538236, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000275538236, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305932484921462322, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000116729317, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000116729317, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305932484320720400, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000776371655, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000776371655, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305932484483822281, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000891238686, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450095000891238686, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305932485944401165, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450094999162046170, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450094999162046170, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305932486081157588, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450094999284122115, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450094999284122115, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712147559894229345, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043884349287054006, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043884349287054006, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712147559742793144, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043884349179657839, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043884349179657839, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 983435241066526790, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3549800771068289937, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
@@ -8488,156 +8542,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3549800771068289937, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4008131778765488176, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4008131778924299497, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980096798876016, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980096798876016, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980096950314409, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980096950314409, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095191698029, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095191698029, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095335927476, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095335927476, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095639630415, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095639630415, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095760692886, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350980095760692886, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4570817882328154889, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4570817882456655824, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 38131622751840664, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 38131622891777345, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 38131623258116538, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 38131623391860067, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 38131621660850855, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 38131621768248958, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 254593566219458782, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 254593566219458782, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 254593566366833671, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 254593566366833671, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 826708806698638311, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 826708806698638311, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 826708806800826174, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 826708806800826174, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -8647,37 +8551,77 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 983435241066526790, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1329128734619120361, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 3549800770936743752, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1329128734619120361, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 3549800770936743752, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1329128734728779312, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1329128734728779312, guid: a4fdc3d07023b844a817507a1a9e34d6,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1442096761809093138, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 4008131778924299497, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1442096761931171531, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    - target: {fileID: 826708806800826174, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 826708806800826174, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008131778765488176, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 826708806698638311, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 826708806698638311, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4570817882328154889, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 254593566219458782, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 254593566219458782, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4570817882456655824, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 254593566366833671, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 254593566366833671, guid: a4fdc3d07023b844a817507a1a9e34d6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305932485023648491, guid: a4fdc3d07023b844a817507a1a9e34d6,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -8810,12 +8754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa69501d7e4aad40885f06a5a3f5cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   shotInterval: 1000
   shotTime: 0
@@ -9026,12 +8968,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5a5d7565e089b48828faa6bd273baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   shotInterval: 1000
   shotTime: 0
@@ -9145,12 +9085,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de5a1460d21f9046bb136a7c8989407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -9262,12 +9200,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5522ee3493aeb47439ed31ab018674a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.05
@@ -9379,12 +9315,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a50d2854115a4049a9af0af5c3af5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 0.1
   m_AngleSpeed: 1
@@ -9641,12 +9575,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_Normal: {fileID: 0}
   m_HitMate: {fileID: 0}
@@ -9988,12 +9920,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a228cb3c86b24c869118fd6ea1f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_BulletSpeed: 10
@@ -10279,12 +10209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007c0806cc2d84698e71ae7ab57d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -10584,12 +10512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a422fc6931c01c47a66bc94c32c2467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -10701,12 +10627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347e2cdd72343da44aa9f15a4764d9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.05
@@ -10820,12 +10744,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096e6752d31a478439ff98da58da2da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -10903,11 +10825,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1360843892}
     m_Modifications:
-    - target: {fileID: 7071806974053814475, guid: dd972c705f691794281cf03ea9915c3d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6600833958053083298, guid: dd972c705f691794281cf03ea9915c3d,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -10927,6 +10844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071806974053814475, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd972c705f691794281cf03ea9915c3d, type: 3}
@@ -10976,12 +10898,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af66f9f2ea2026409a5da37de2fa757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.1
@@ -11095,12 +11015,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05425c9adcd45ef4c87757bf7cf2bfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 0
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_PhaseTime: []
   m_DanmakuPhase: 0
@@ -11227,12 +11145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7598e6776a5c24daa99ca82c84fc90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_OmniShotInterval: 1000
   m_KinkoShotInterval: 1000
@@ -11353,12 +11269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 1000
   m_MaxHp: 1000
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_Normal: {fileID: 0}
   m_HitMate: {fileID: 0}
@@ -11552,12 +11466,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08715528c2d619448b7fbdb0f49156d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_PhaseTime:
   - 5
@@ -11689,12 +11601,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526d7d9ffade81a4f8a79f7f4b67d048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -11890,6 +11800,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CanvasGroup: {fileID: 1630913268}
+  m_GameOver: {fileID: 768187896}
+  m_GameClear: {fileID: 636927708}
 --- !u!4 &1637613260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7071806974053814476, guid: dd972c705f691794281cf03ea9915c3d,
@@ -11942,12 +11854,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e6f6addd8aeb4ab2fc058dfa00df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -12062,12 +11972,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7f1e63d16bca8408fd1854b65730d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -12180,12 +12088,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f274bb037c66ec741aac84e6b5896fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 10
@@ -12327,12 +12233,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007c0806cc2d84698e71ae7ab57d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -12499,12 +12403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af92e0e9af163cb41a23d4c78bcce52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -12623,12 +12525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6d02b5c6ac79c4a98a08927a92b063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1
   m_ShotTime: 0
@@ -12741,12 +12641,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe43c83e6d384344a88da7b6bb2fc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -12859,12 +12757,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1302cae170a3fc4f840d5bc916d7ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -13070,12 +12966,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d145a12dff914289527d666b03096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 3
@@ -13093,12 +12987,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b07e6991e621b4dbeb219ad428c688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.1
@@ -13119,12 +13011,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b07e6991e621b4dbeb219ad428c688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.1
@@ -13237,12 +13127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e848b595d4defda479c0a928ac56b2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 0.1
   m_ShotTime: 0
@@ -13356,12 +13244,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b172d2996cff3c040bf557e1142bd988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -13492,12 +13378,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a690af6878ddc4695f72ced10aae6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_Danmaku:
     m_AttackNum: 0
@@ -13692,12 +13576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafc9fb3deea1548901c795fde9495c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -14026,12 +13908,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c293fb768278d974e8967f9935bba09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   kinkoShotInterval: 0.1
@@ -14217,12 +14097,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93db1a9237fc4ba45be350695240f75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_RealShotNum: -1
   m_BulletNum: 100
@@ -14350,12 +14228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72748ee617664e4c99738bf70c47a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 
   SineshotInterval: 0.1
@@ -14536,12 +14412,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21149309047b0443aaf09bf39f10144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
@@ -14841,12 +14715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5522ee3493aeb47439ed31ab018674a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.05
@@ -14865,12 +14737,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4f7cf4a5eca9a45a2675d0935f111a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
+  m_Score: 0
   m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.015
@@ -15038,12 +14908,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColliderMaterial: {fileID: 2100000, guid: da5a8fa657aff5d40a3991eb63cd03ba, type: 2}
-  m_BattleParamSet: {fileID: 11400000, guid: 8923ff4c713ea784b8e87ab8cfde4005, type: 2}
+  m_ParamSet: {fileID: 11400000, guid: 547331156a18dbd49a174ed2b1cd9b81, type: 2}
   m_BattleRealStageManager: {fileID: 1771546480}
   m_BattleRealUiManager: {fileID: 1630913269}
   m_BattleHackingStageManager: {fileID: 1183653724}
   m_BattleHackingUiManager: {fileID: 221366189}
+  m_BattleRealFrontCamera: {fileID: 0}
+  m_BattleRealBackCamera: {fileID: 0}
   m_VideoPlayer: {fileID: 2009328465}
   m_IsStartHackingMode: 0
   m_PlayerNotDead: 1

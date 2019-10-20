@@ -12,7 +12,7 @@ public struct ControlObjectParam
     public bool UsePlayableObjectPrefab;
 
     [Tooltip("プレハブ")]
-    public BattleMainPlayableBase PlayableObjectPrefab;
+    public BattleRealPlayableBase PlayableObjectPrefab;
 
     [Tooltip("EventManagerに登録されているオブジェクトの名前")]
     public string RegisteredPlayableName;

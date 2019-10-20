@@ -54,23 +54,23 @@ public class EchoBullet : BulletController
         }
     }
 
-    public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
-    {
-        if (m_IsRoot)
-        {
-            m_Index = EchoBulletIndexGenerater.Instance.GenerateBulletIndex();
-        }
+    //public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    //{
+    //    if (m_IsRoot)
+    //    {
+    //        m_Index = EchoBulletIndexGenerater.Instance.GenerateBulletIndex();
+    //    }
 
-        if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(m_Index, targetChara))
-        {
-            return;
-        }
+    //    if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(m_Index, targetChara))
+    //    {
+    //        return;
+    //    }
 
-        EchoBulletIndexGenerater.Instance.RegisterHitChara(m_Index, targetChara);
-        var controller = (EchoController)GetBulletOwner();
-        controller.ShotWaveBullet(m_Index, targetChara.transform.localPosition);
-        DestroyBullet();
-    }
+    //    EchoBulletIndexGenerater.Instance.RegisterHitChara(m_Index, targetChara);
+    //    var controller = (EchoController)GetBulletOwner();
+    //    controller.ShotWaveBullet(m_Index, targetChara.transform.localPosition);
+    //    DestroyBullet();
+    //}
 
     public void SetIndex(int n)
     {

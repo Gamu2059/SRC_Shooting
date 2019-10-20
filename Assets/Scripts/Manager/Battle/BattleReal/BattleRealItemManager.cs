@@ -4,126 +4,91 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// アイテムを管理するマネージャ。
+/// リアルモードのアイテムを管理するマネージャ。
 /// </summary>
-public class BattleRealItemManager : ControllableObject
+public class BattleRealItemManager : ControllableObject, IColliderProcess
 {
-    public const string HOLDER_NAME = "[ItemHolder]";
-
-    #region Field Inspector
-
-    /// <summary>
-    /// アイテムのプレハブ群。
-    /// </summary>
-    [SerializeField]
-    private ItemController[] m_ItemPrefabs;
-
-    /// <summary>
-    /// アイテムに適用する軌道パラメータ。
-    /// </summary>
-    [SerializeField]
-    private BulletOrbitalParam m_ItemOrbitalParam;
-
-    /// <summary>
-    /// アイテムの吸引強度。
-    /// </summary>
-    [SerializeField]
-    private float m_ItemAttractRate;
-
-    #endregion
+    public static BattleRealItemManager Instance => BattleRealManager.Instance.ItemManager;
 
     #region Field
 
-    /// <summary>
-    /// アイテムオブジェクトを保持する。
-    /// </summary>
+    private BattleRealItemManagerParamSet m_ParamSet;
+
     private Transform m_ItemHolder;
 
     /// <summary>
     /// STANDBY状態のアイテムを保持するリスト。
     /// </summary>
-    private List<ItemController> m_StandbyItems;
+    private List<BattleRealItemController> m_StandbyItems;
 
     /// <summary>
     /// UPDATE状態のアイテムを保持するリスト。
     /// </summary>
-    private List<ItemController> m_UpdateItems;
+    private List<BattleRealItemController> m_UpdateItems;
+    public List<BattleRealItemController> Items => m_UpdateItems;
 
     /// <summary>
     /// POOL状態のアイテムを保持するリスト。
     /// </summary>
-    private List<ItemController> m_PoolItems;
+    private List<BattleRealItemController> m_PoolItems;
 
     /// <summary>
     /// POOL状態に遷移するアイテムのリスト。
     /// </summary>
-    private List<ItemController> m_GotoPoolItems;
+    private List<BattleRealItemController> m_GotoPoolItems;
+
+    /// <summary>
+    /// プレハブの対応ディクショナリ。
+    /// </summary>
+    private Dictionary<E_ITEM_TYPE, BattleRealItemController> m_ItemPrefabs;
 
     #endregion
 
-    private Dictionary<E_ITEM_TYPE, ItemController> m_ItemPrefabCache;
 
-
-    #region Get
-
-    /// <summary>
-    /// アイテムの吸引強度を取得する。
-    /// </summary>
-    public float GetItemAttractRate()
+    public BattleRealItemManager(BattleRealItemManagerParamSet paramSet)
     {
-        return m_ItemAttractRate;
+        m_ParamSet = paramSet;
     }
 
-    /// <summary>
-    /// UPDATE状態のアイテムを保持するリストを取得する。
-    /// </summary>
-    public List<ItemController> GetUpdateItems()
-    {
-        return m_UpdateItems;
-    }
-
-    #endregion
+    #region Game Cycle
 
     public override void OnInitialize()
     {
         base.OnInitialize();
+        m_StandbyItems = new List<BattleRealItemController>();
+        m_UpdateItems = new List<BattleRealItemController>();
+        m_PoolItems = new List<BattleRealItemController>();
+        m_GotoPoolItems = new List<BattleRealItemController>();
 
-        m_StandbyItems = new List<ItemController>();
-        m_UpdateItems = new List<ItemController>();
-        m_PoolItems = new List<ItemController>();
-        m_GotoPoolItems = new List<ItemController>();
-
-        m_ItemPrefabCache = new Dictionary<E_ITEM_TYPE, ItemController>(); ;
+        m_ItemPrefabs = new Dictionary<E_ITEM_TYPE, BattleRealItemController>();
+        if (m_ParamSet != null)
+        {
+            foreach (var set in m_ParamSet.ItemPrefabSets)
+            {
+                m_ItemPrefabs.Add(set.ItemType, set.ItemPrefab);
+            }
+        }
     }
 
     public override void OnFinalize()
     {
-        base.OnFinalize();
         m_StandbyItems.Clear();
         m_UpdateItems.Clear();
         m_PoolItems.Clear();
+        base.OnFinalize();
     }
 
     public override void OnStart()
     {
         base.OnStart();
 
-        //if (BattleRealStageManager.Instance != null && BattleRealStageManager.Instance.GetItemHolder() != null)
-        //{
-        //    m_ItemHolder = BattleRealStageManager.Instance.GetItemHolder().transform;
-        //}
-        //else if (m_ItemHolder == null)
-        //{
-        //    var obj = new GameObject(HOLDER_NAME);
-        //    obj.transform.position = Vector3.zero;
-        //    m_ItemHolder = obj.transform;
-        //}
+        m_ItemHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ITEM);
     }
 
     public override void OnUpdate()
     {
         // Start処理
-        foreach (var item in m_UpdateItems)
+        foreach (var item in m_StandbyItems)
         {
             if (item == null)
             {
@@ -159,11 +124,60 @@ public class BattleRealItemManager : ControllableObject
 
             item.OnLateUpdate();
         }
-
-        GotoPoolFromUpdate();
     }
 
+    #endregion
 
+    #region Impl IColliderProcess
+
+    public void ClearColliderFlag()
+    {
+        foreach (var item in m_UpdateItems)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            item.ClearColliderFlag();
+        }
+    }
+
+    public void UpdateCollider()
+    {
+        foreach (var item in m_UpdateItems)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            item.UpdateCollider();
+        }
+    }
+
+    public void ProcessCollision()
+    {
+        foreach (var item in m_UpdateItems)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            item.ProcessCollision();
+        }
+    }
+
+    #endregion
+
+    /// <summary>
+    /// 破棄フラグが立っているものをプールに戻す
+    /// </summary>
+    public void GotoPool()
+    {
+        GotoPoolFromUpdate();
+    }
 
     /// <summary>
     /// UPDATE状態にする。
@@ -198,11 +212,13 @@ public class BattleRealItemManager : ControllableObject
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var bullet = m_GotoPoolItems[idx];
-            bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            var item = m_GotoPoolItems[idx];
+            item.OnFinalize();
+            item.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            item.gameObject.SetActive(false);
             m_GotoPoolItems.RemoveAt(idx);
-            m_UpdateItems.Remove(bullet);
-            m_PoolItems.Add(bullet);
+            m_UpdateItems.Remove(item);
+            m_PoolItems.Add(item);
         }
 
         m_GotoPoolItems.Clear();
@@ -211,7 +227,7 @@ public class BattleRealItemManager : ControllableObject
     /// <summary>
     /// アイテムをSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public void CheckStandbyItem(ItemController item)
+    private void CheckStandbyItem(BattleRealItemController item)
     {
         if (item == null || !m_PoolItems.Contains(item))
         {
@@ -229,7 +245,7 @@ public class BattleRealItemManager : ControllableObject
     /// <summary>
     /// 指定したアイテムを制御から外すためにチェックする。
     /// </summary>
-    public void CheckPoolItem(ItemController item)
+    public void CheckPoolItem(BattleRealItemController item)
     {
         if (item == null || m_GotoPoolItems.Contains(item))
         {
@@ -238,29 +254,30 @@ public class BattleRealItemManager : ControllableObject
         }
 
         item.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        item.OnFinalize();
         m_GotoPoolItems.Add(item);
-        item.gameObject.SetActive(false);
+    }
+
+    private BattleRealItemController GetItemPrefab(E_ITEM_TYPE itemType)
+    {
+        if (m_ItemPrefabs == null || !m_ItemPrefabs.ContainsKey(itemType))
+        {
+            return null;
+        }
+
+        return m_ItemPrefabs[itemType];
     }
 
     /// <summary>
     /// プールからアイテムを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    /// <param name="itemPrefab">取得や生成の情報源となるアイテムのプレハブ</param>
-    public ItemController GetPoolingItem(ItemController itemPrefab)
+    private BattleRealItemController GetPoolingItem(E_ITEM_TYPE itemType)
     {
-        if (itemPrefab == null)
-        {
-            return null;
-        }
-
-        E_ITEM_TYPE itemType = itemPrefab.GetItemType();
-        ItemController item = null;
+        BattleRealItemController item = null;
 
         foreach (var i in m_PoolItems)
         {
-            if (i != null && i.GetItemType() == itemType)
+            if (i != null && i.ItemType == itemType)
             {
                 item = i;
                 break;
@@ -269,7 +286,13 @@ public class BattleRealItemManager : ControllableObject
 
         if (item == null)
         {
-            item = GameObject.Instantiate(itemPrefab);
+            var prefab = GetItemPrefab(itemType);
+            if (prefab == null)
+            {
+                return null;
+            }
+
+            item = GameObject.Instantiate(prefab);
             item.transform.SetParent(m_ItemHolder);
             m_PoolItems.Add(item);
         }
@@ -278,44 +301,8 @@ public class BattleRealItemManager : ControllableObject
     }
 
     /// <summary>
-    /// アイテムの種類を指定してアイテムプレハブを取得する。
-    /// なければnullを返す。
-    /// </summary>
-    public ItemController GetItemPrefabFromItemType(E_ITEM_TYPE itemType)
-    {
-        // キャッシュされていれば、それを返す
-        if (m_ItemPrefabCache.ContainsKey(itemType))
-        {
-            var item = m_ItemPrefabCache[itemType];
-            if (item != null)
-            {
-                return item;
-            }
-        }
-
-        foreach (var item in m_ItemPrefabs)
-        {
-            if (item == null)
-            {
-                continue;
-            }
-
-            if (item.GetItemType() == itemType)
-            {
-                m_ItemPrefabCache.Add(itemType, item);
-                return item;
-            }
-        }
-
-        return null;
-    }
-
-    /// <summary>
     /// 指定した座標から指定した情報でアイテムを生成する。
     /// </summary>
-    /// 
-    /// <param name="position">生成座標</param>
-    /// <param name="param">アイテムの生成情報</param>
     public void CreateItem(Vector3 position, ItemCreateParam param)
     {
         if (param.ItemSpreadParams == null || param.ItemSpreadParams.Length < 1)
@@ -323,32 +310,33 @@ public class BattleRealItemManager : ControllableObject
             return;
         }
 
-        foreach (var spreadParam in param.ItemSpreadParams)
+        for (int i = 0; i < param.ItemSpreadParams.Length; i++)
         {
-            var prefab = GetItemPrefabFromItemType(spreadParam.ItemType);
-            if (prefab == null)
-            {
-                continue;
-            }
+            var spreadParam = param.ItemSpreadParams[i];
 
-            var item = GetPoolingItem(prefab);
-            item.transform.SetParent(m_ItemHolder);
-
-            if (spreadParam.ItemType == param.CenterCreateItemType)
+            for (int j = 0; j < spreadParam.Num; j++)
             {
-                item.SetPosition(position);
-            }
-            else
-            {
-                float r = spreadParam.SpreadRadius;
-                float x = Random.Range(-r, r);
-                float zR = Mathf.Sqrt(r * r - x * x);
-                float z = Random.Range(-zR, zR);
-                item.SetPosition(position + new Vector3(x, 0, z));
-            }
+                var item = GetPoolingItem(spreadParam.Type);
+                if (item == null)
+                {
+                    continue;
+                }
 
-            item.ChangeOrbital(m_ItemOrbitalParam);
-            CheckStandbyItem(item);
+                var pos = position;
+                item.transform.SetParent(m_ItemHolder);
+                if (spreadParam.Type != param.CenterCreateItemType)
+                {
+                    var r = spreadParam.SpreadRadius;
+                    var x = Random.Range(-r, r);
+                    var zR = Mathf.Sqrt(r * r - x * x);
+                    var z = Random.Range(-zR, zR);
+                    pos += new Vector3(x, 0, z);
+                }
+
+                item.ChangeOrbital(m_ParamSet.OrbitalParam);
+                item.SetParam(pos, spreadParam.Type, spreadParam.Point, m_ParamSet.AttractRate);
+                CheckStandbyItem(item);
+            }
         }
     }
 
@@ -366,5 +354,26 @@ public class BattleRealItemManager : ControllableObject
     public void OnAttractAction(E_INPUT_STATE state)
     {
         AttractAllItem();
+    }
+
+    /// <summary>
+    /// アイテムがアイテムフィールドの範囲外に出ているかどうかを判定する。
+    /// </summary>
+    public bool IsOutOfField(BattleRealItemController item)
+    {
+        if (item == null)
+        {
+            return true;
+        }
+
+        var stageManager = BattleRealStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+
+        var pos = item.transform.position;
+
+        return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
 }

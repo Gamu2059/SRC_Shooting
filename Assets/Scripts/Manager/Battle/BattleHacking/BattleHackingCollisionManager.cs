@@ -6,11 +6,6 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
 {
     public static BattleHackingCollisionManager Instance => BattleHackingManager.Instance.CollisionManager;
 
-    public override void UpdateCollider()
-    {
-        BattleHackingBulletManager.Instance.UpdateCollider();
-    }
-
     /// <summary>
     /// 衝突をチェックする。
     /// </summary>

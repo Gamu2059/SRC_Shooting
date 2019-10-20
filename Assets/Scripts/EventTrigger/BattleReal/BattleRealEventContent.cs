@@ -51,9 +51,19 @@ public struct BattleRealEventContent
         GAME_START,
 
         /// <summary>
+        /// ボスイベントへ遷移する
+        /// </summary>
+        GOTO_BOSS_EVENT,
+
+        /// <summary>
         /// ゲームクリア
         /// </summary>
         GAME_CLEAR,
+
+        /// <summary>
+        /// ゲームオーバー
+        /// </summary>
+        GAME_OVER,
     }
 
     /// <summary>
@@ -72,7 +82,12 @@ public struct BattleRealEventContent
         DELAY,
     }
 
+    public string ContentName;
+
     [Header("共通パラメータ")]
+
+    [Tooltip("実行をパスするかどうか")]
+    public bool IsPassExecute;
 
     [Tooltip("イベントタイプ")]
     public E_EVENT_TYPE EventType;

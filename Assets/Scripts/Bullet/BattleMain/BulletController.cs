@@ -25,8 +25,6 @@ public class BulletController : BattleRealObjectBase
 
     #endregion
 
-
-
     #region Field
 
     /// <summary>
@@ -118,14 +116,17 @@ public class BulletController : BattleRealObjectBase
     /// </summary>
     private float m_NowLerp;
 
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうか。
-    /// </summary>
-    private bool m_IsReverseHacked;
+    protected Vector2 PrePosition { get; private set; }
+
+    protected Vector2 MoveDir { get; private set; }
+
+    protected bool m_IsLookMoveDir;
+
+    private HitSufferController<BulletController> m_BulletSuffer;
+    private HitSufferController<BulletController> m_BulletHit;
+    private HitSufferController<CharaController> m_CharaHit;
 
     #endregion
-
-
 
     #region Getter & Setter
 
@@ -428,22 +429,6 @@ public class BulletController : BattleRealObjectBase
         m_NowLerp = GetRelativeValue(relative, GetNowLerp(), value);
     }
 
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうかを取得する。
-    /// </summary>
-    public bool IsReverseHacked()
-    {
-        return m_IsReverseHacked;
-    }
-
-    /// <summary>
-    /// Hackerのリバースハックを受けたかどうかを設定する。
-    /// </summary>
-    public void SetReverseHacked(bool value)
-    {
-        m_IsReverseHacked = value;
-    }
-
     #endregion
 
 
@@ -499,7 +484,7 @@ public class BulletController : BattleRealObjectBase
         bullet.ResetBulletParam();
 
         bullet.m_BulletOwner = owner;
-        bullet.SetTroop(owner.GetTroop());
+        bullet.SetTroop(owner.Troop);
         bullet.m_BulletParam = null;
         bullet.m_BulletIndex = 0;
         bullet.m_BulletParamIndex = 0;
@@ -631,7 +616,7 @@ public class BulletController : BattleRealObjectBase
         bullet.ResetBulletParam();
 
         bullet.m_BulletOwner = owner;
-        bullet.SetTroop(owner.GetTroop());
+        bullet.SetTroop(owner.Troop);
         bullet.m_BulletParam = null;
         bullet.m_BulletIndex = 0;
         bullet.m_BulletParamIndex = 0;
@@ -831,23 +816,22 @@ public class BulletController : BattleRealObjectBase
         }
         else
         {
-            //List<EnemyController> enemies = BattleRealEnemyManager.Instance.GetUpdateEnemies();
-            //CharaController nearestEnemy = null;
-            //float minSqrDist = float.MaxValue;
+            var enemies = BattleRealEnemyManager.Instance.Enemies;
+            CharaController nearestEnemy = null;
+            float minSqrDist = float.MaxValue;
 
-            //foreach (var enemy in enemies)
-            //{
-            //    float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
+            foreach (var enemy in enemies)
+            {
+                float sqrDist = (transform.position - enemy.transform.position).sqrMagnitude;
 
-            //    if (sqrDist < minSqrDist)
-            //    {
-            //        minSqrDist = sqrDist;
-            //        nearestEnemy = enemy;
-            //    }
-            //}
+                if (sqrDist < minSqrDist)
+                {
+                    minSqrDist = sqrDist;
+                    nearestEnemy = enemy;
+                }
+            }
 
-            //return nearestEnemy;
-            return null;
+            return nearestEnemy;
         }
     }
 
@@ -874,8 +858,55 @@ public class BulletController : BattleRealObjectBase
 
         m_IsSearch = false;
         m_NowLerp = 0;
+    }
 
-        m_IsReverseHacked = false;
+    #region Game Cycle
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+
+        m_BulletSuffer = new HitSufferController<BulletController>();
+        m_BulletHit = new HitSufferController<BulletController>();
+        m_CharaHit = new HitSufferController<CharaController>();
+    }
+
+    protected override void OnDestroyed()
+    {
+        m_CharaHit.OnFinalize();
+        m_BulletHit.OnFinalize();
+        m_BulletSuffer.OnFinalize();
+        m_CharaHit = null;
+        m_BulletHit = null;
+        m_BulletSuffer = null;
+        base.OnDestroyed();
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        m_BulletSuffer.OnEnter = OnEnterSufferBullet;
+        m_BulletSuffer.OnStay = OnStaySufferBullet;
+        m_BulletSuffer.OnExit = OnExitSufferBullet;
+
+        m_BulletHit.OnEnter = OnEnterHitBullet;
+        m_BulletHit.OnStay = OnStayHitBullet;
+        m_BulletHit.OnExit = OnExitHitBullet;
+
+        m_CharaHit.OnEnter = OnEnterHitChara;
+        m_CharaHit.OnStay = OnStayHitChara;
+        m_CharaHit.OnExit = OnExitHitChara;
+
+        m_IsLookMoveDir = true;
+    }
+
+    public override void OnFinalize()
+    {
+        m_CharaHit.OnFinalize();
+        m_BulletHit.OnFinalize();
+        m_BulletSuffer.OnFinalize();
+        base.OnFinalize();
     }
 
     public override void OnUpdate()
@@ -913,11 +944,21 @@ public class BulletController : BattleRealObjectBase
     {
         base.OnLateUpdate();
 
-        if (BattleRealBulletManager.Instance.IsOutOfBulletField(this))
+        //var pos = transform.position.ToVector2XZ();
+        //MoveDir = pos - PrePosition;
+        //PrePosition = pos;
+        //if (m_IsLookMoveDir) {
+        //    transform.LookAt(transform.position + MoveDir.ToVector3XZ());
+        //}
+
+        if (BattleRealBulletManager.Instance.IsOutOfField(this))
         {
             DestroyBullet();
         }
+
     }
+
+    #endregion
 
     /// <summary>
     /// この弾が他の弾に衝突するかどうかを取得する。
@@ -927,16 +968,56 @@ public class BulletController : BattleRealObjectBase
         return m_CanHitOtherBullet;
     }
 
+    #region Impl IColliderProcess
+
+    public override void ClearColliderFlag()
+    {
+        m_BulletSuffer.ClearUpdateFlag();
+        m_BulletHit.ClearUpdateFlag();
+        m_CharaHit.ClearUpdateFlag();
+    }
+
+    public override void ProcessCollision()
+    {
+        m_BulletSuffer.ProcessCollision();
+        m_BulletHit.ProcessCollision();
+        m_CharaHit.ProcessCollision();
+    }
+
+    #endregion
+
+    #region Suffer Bullet
+
     /// <summary>
     /// 他の弾から当てられた時の処理。
     /// </summary>
     /// <param name="attackBullet">他の弾</param>
     /// <param name="attackData">他の弾の衝突情報</param>
     /// <param name="targetData">この弾の衝突情報</param>
-    public virtual void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void SufferBullet(BulletController attackBullet, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_BulletSuffer.Put(attackBullet, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
 
     }
+
+    protected virtual void OnStaySufferBullet(HitSufferData<BulletController> sufferData)
+    {
+
+    }
+
+    protected virtual void OnExitSufferBullet(HitSufferData<BulletController> sufferData)
+    {
+
+    }
+
+    #endregion
+
+    #region Hit Bullet
 
     /// <summary>
     /// 他の弾に当たった時の処理。
@@ -944,10 +1025,30 @@ public class BulletController : BattleRealObjectBase
     /// <param name="targetBullet">他の弾</param>
     /// <param name="attackData">この弾の衝突情報</param>
     /// <param name="targetData">他の弾の衝突情報</param>
-    public virtual void HitBullet(BulletController targetBullet, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void HitBullet(BulletController targetBullet, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_BulletHit.Put(targetBullet, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterHitBullet(HitSufferData<BulletController> hitData)
     {
 
     }
+
+    protected virtual void OnStayHitBullet(HitSufferData<BulletController> hitData)
+    {
+
+    }
+
+    protected virtual void OnExitHitBullet(HitSufferData<BulletController> hitData)
+    {
+
+    }
+
+    #endregion
+
+    #region Hit Chara
 
     /// <summary>
     /// 他のキャラに当たった時の処理。
@@ -955,8 +1056,26 @@ public class BulletController : BattleRealObjectBase
     /// <param name="targetChara">他のキャラ</param>
     /// <param name="attackData">この弾の衝突情報</param>
     /// <param name="targetData">他のキャラの衝突情報</param>
-    public virtual void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    /// <param name="hitPosList">衝突座標リスト</param>
+    public void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    {
+        m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
+    }
+
+    protected virtual void OnEnterHitChara(HitSufferData<CharaController> hitData)
     {
 
     }
+
+    protected virtual void OnStayHitChara(HitSufferData<CharaController> hitData)
+    {
+
+    }
+
+    protected virtual void OnExitHitChara(HitSufferData<CharaController> hitData)
+    {
+
+    }
+
+    #endregion
 }

@@ -8,7 +8,7 @@ using System.Linq;
 /// コマンドイベントの全ての弾の制御を管理する。
 /// </summary>
 [Serializable]
-public class BattleHackingBulletManager : ControllableObject, IUpdateCollider
+public class BattleHackingBulletManager : ControllableObject, IColliderProcess
 {
     public static BattleHackingBulletManager Instance => BattleHackingManager.Instance.BulletManager;
 
@@ -134,6 +134,24 @@ public class BattleHackingBulletManager : ControllableObject, IUpdateCollider
         }
     }
 
+    #endregion
+
+
+    #region Impl IColliderProcess
+
+    public void ClearColliderFlag()
+    {
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            bullet.ClearColliderFlag();
+        }
+    }
+
     public void UpdateCollider()
     {
         foreach (var bullet in m_UpdateBullets)
@@ -144,6 +162,19 @@ public class BattleHackingBulletManager : ControllableObject, IUpdateCollider
             }
 
             bullet.UpdateCollider();
+        }
+    }
+
+    public void ProcessCollision()
+    {
+        foreach (var bullet in m_UpdateBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            bullet.ProcessCollision();
         }
     }
 
@@ -199,7 +230,9 @@ public class BattleHackingBulletManager : ControllableObject, IUpdateCollider
         {
             int idx = count - i - 1;
             var bullet = m_GotoPoolBullets[idx];
+            bullet.OnFinalize();
             bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            bullet.gameObject.SetActive(false);
             m_GotoPoolBullets.RemoveAt(idx);
             m_UpdateBullets.Remove(bullet);
             m_PoolBullets.Add(bullet);
@@ -238,9 +271,7 @@ public class BattleHackingBulletManager : ControllableObject, IUpdateCollider
         }
 
         bullet.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        bullet.OnFinalize();
         m_GotoPoolBullets.Add(bullet);
-        bullet.gameObject.SetActive(false);
     }
 
     /// <summary>

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-using EventTriggerParam = BattleRealEventTriggerParamSet.EventTriggerParam;
-
 /// <summary>
 /// BattleRealのイベントトリガを管理するマネージャ。
 /// </summary>
@@ -14,7 +12,6 @@ public class BattleRealEventManager : ControllableObject
 
     public const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     public const string GAME_START_TIME_PERIOD_NAME = "Game Start";
-    public const string GAME_CLEAR_TIME_PERIOD_NAME = "Game Clear";
 
     #region Field
 
@@ -25,12 +22,11 @@ public class BattleRealEventManager : ControllableObject
     private Dictionary<string, bool> m_BoolVariables;
     private Dictionary<string, EventTriggerTimePeriod> m_TimePeriods;
 
-    private List<EventTriggerParam> m_EventParams;
-    private List<EventTriggerParam> m_GotoDestroyEventParams;
+    private List<BattleRealEventTriggerParam> m_EventParams;
+    private List<BattleRealEventTriggerParam> m_GotoDestroyEventParams;
 
     private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
     private EventTriggerTimePeriod m_GameStartTimePeriod;
-    private EventTriggerTimePeriod m_GameClearTimePeriod;
 
     private List<BattleRealEventContent> m_WaitExecuteParams;
 
@@ -78,18 +74,16 @@ public class BattleRealEventManager : ControllableObject
 
         m_BattleLoadedTimePeriod = new EventTriggerTimePeriod();
         m_GameStartTimePeriod = new EventTriggerTimePeriod();
-        m_GameClearTimePeriod = new EventTriggerTimePeriod();
         m_TimePeriods.Add(BATTLE_LOADED_TIME_PRERIOD_NAME, m_BattleLoadedTimePeriod);
         m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, m_GameStartTimePeriod);
-        m_TimePeriods.Add(GAME_CLEAR_TIME_PERIOD_NAME, m_GameClearTimePeriod);
 
         foreach (var periodName in m_ParamSet.TimePeriodNames)
         {
             m_TimePeriods.Add(periodName, new EventTriggerTimePeriod());
         }
 
-        m_EventParams = new List<EventTriggerParam>();
-        m_GotoDestroyEventParams = new List<EventTriggerParam>();
+        m_EventParams = new List<BattleRealEventTriggerParam>();
+        m_GotoDestroyEventParams = new List<BattleRealEventTriggerParam>();
         m_EventParams.AddRange(m_ParamSet.Params);
 
         m_WaitExecuteParams = new List<BattleRealEventContent>();
@@ -136,6 +130,11 @@ public class BattleRealEventManager : ControllableObject
         // イベント実行
         foreach (var param in m_WaitExecuteParams)
         {
+            if (param.IsPassExecute)
+            {
+                continue;
+            }
+
             ExecuteEvent(param);
         }
 
@@ -152,7 +151,7 @@ public class BattleRealEventManager : ControllableObject
             if (script.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
             {
                 script.OnStart();
-                script.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
+                script.SetCycle(E_OBJECT_CYCLE.UPDATE);
             }
 
             script.OnUpdate();
@@ -201,7 +200,7 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// EventParamを追加する。
     /// </summary>
-    public void AddEventParam(EventTriggerParam param)
+    public void AddEventParam(BattleRealEventTriggerParam param)
     {
         var condition = param.Condition;
         if (condition.IsMultiCondition && condition.MultiConditions == null)
@@ -595,6 +594,11 @@ public class BattleRealEventManager : ControllableObject
         }
 
         var period = m_TimePeriods[condition.VariableName];
+        if (period == null || !period.IsStart)
+        {
+            return false;
+        }
+
         var value = period.GetPeriod();
         switch (condition.CompareType)
         {
@@ -649,6 +653,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void ExecuteEvent(BattleRealEventContent eventContent)
     {
+        Debug.Log(eventContent.EventType);
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
@@ -675,8 +680,14 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.GAME_START:
                 ExecuteGameStart();
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.GOTO_BOSS_EVENT:
+                ExecuteGotoBossEvent();
+                break;
             case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR:
                 ExecuteGameClear();
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_OVER:
+                ExecuteGameOver();
                 break;
         }
     }
@@ -696,7 +707,7 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlCameraParams)
         {
-            var camera = CameraManager.Instance.GetCameraController(param.CameraType);
+            var camera = BattleRealCameraManager.Instance.GetCameraController(param.CameraType);
             if (camera != null)
             {
                 camera.StartTimeline(param.CameraTimelineParam);
@@ -739,13 +750,23 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlBgmParams)
         {
-            if (param.ControlType == ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY)
+            switch (param.ControlType)
             {
-                FadeAudioManager.Instance.PlayBGM(param.BgmClip, param.FadeOutDuration, param.FadeInStartOffset, param.FadeInDuration);
-            }
-            else
-            {
-                FadeAudioManager.Instance.StopBGM(param.FadeOutDuration);
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY:
+                    AudioManager.Instance.PlayBgm(param.PlayBgmName, param.FadeDuration, param.FadeOutCurve, param.FadeInCurve);
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY_IMMEDIATE:
+                    AudioManager.Instance.PlayBgmImmediate(param.PlayBgmName);
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP:
+                    AudioManager.Instance.StopBgm(param.FadeDuration, param.FadeOutCurve);
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP_IMMEDIATE:
+                    AudioManager.Instance.StopBgmImmediate();
+                    break;
+                case ControlBgmParam.E_BGM_CONTROL_TYPE.CONTROL_AISAC:
+                    AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);
+                    break;
             }
         }
     }
@@ -837,7 +858,6 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in callScriptParams)
         {
-
             Type type = Type.GetType(param.ScriptName);
 
             if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
@@ -888,11 +908,26 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
+    /// ボスイベントに入る。
+    /// </summary>
+    private void ExecuteGotoBossEvent()
+    {
+        BattleManager.Instance.GotoBossEvent();
+    }
+
+    /// <summary>
     /// ゲームクリアイベントを発行する。
     /// </summary>
     private void ExecuteGameClear()
     {
-        m_GameClearTimePeriod.CountStart();
         BattleManager.Instance.GameClear();
+    }
+
+    /// <summary>
+    /// ゲームオーバーイベントを発行する。
+    /// </summary>
+    private void ExecuteGameOver()
+    {
+        BattleManager.Instance.GameOver();
     }
 }

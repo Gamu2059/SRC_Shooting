@@ -58,21 +58,21 @@ public class BattleHackingPlayerController : CommandCharaController
         m_ShotTimeCount = m_ShotInterval;
     }
 
-    public override void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
-    {
-        //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
-        //{
-        //    base.SufferBullet(attackBullet, attackData, targetData);
-        //}
-    }
+    //public override void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
+    //{
+    //    //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
+    //    //{
+    //    //    base.SufferBullet(attackBullet, attackData, targetData);
+    //    //}
+    //}
 
-    public override void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
-    {
-        //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
-        //{
-        //    base.SufferChara(attackChara, attackData, targetData);
-        //}
-    }
+    //public override void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
+    //{
+    //    //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
+    //    //{
+    //    //    base.SufferChara(attackChara, attackData, targetData);
+    //    //}
+    //}
 
     public override void Dead()
     {

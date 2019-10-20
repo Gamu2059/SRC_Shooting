@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class HackerBullet : BulletController
 {
-    public override void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData)
+    public override void OnInitialize()
     {
-        base.HitChara(targetChara, attackData, targetData);
+        base.OnInitialize();
+        m_IsLookMoveDir = false;
+    }
+
+    protected override void OnEnterHitChara(HitSufferData<CharaController> hitData)
+    {
+        base.OnEnterHitChara(hitData);
         DestroyBullet();
     }
 }

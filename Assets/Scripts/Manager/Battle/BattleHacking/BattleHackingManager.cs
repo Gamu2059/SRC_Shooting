@@ -102,13 +102,13 @@ public class BattleHackingManager : ControllableObject
             OnEnd = EndOnGameOver,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.END_GAME)
+        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.END)
         {
-            OnStart = StartOnEndGame,
-            OnUpdate = UpdateOnEndGame,
-            OnLateUpdate = LateUpdateOnEndGame,
-            OnFixedUpdate = FixedUpdateOnEndGame,
-            OnEnd = EndOnEndGame,
+            OnStart = StartOnEnd,
+            OnUpdate = UpdateOnEnd,
+            OnLateUpdate = LateUpdateOnEnd,
+            OnFixedUpdate = FixedUpdateOnEnd,
+            OnEnd = EndOnEnd,
         });
 
         InputManager = new BattleHackingInputManager();
@@ -125,7 +125,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnInitialize();
         CollisionManager.OnInitialize();
 
-        RequestChangeState(E_BATTLE_HACKING_STATE.START);
+        RequestChangeState(E_BATTLE_HACKING_STATE.START);        
     }
 
     public override void OnFinalize()
@@ -289,6 +289,7 @@ public class BattleHackingManager : ControllableObject
     private void StartOnGame()
     {
         InputManager.RegistInput();
+        PlayerManager.ResetShotFlag();
     }
 
     private void UpdateOnGame()
@@ -307,9 +308,18 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnLateUpdate();
         CollisionManager.OnLateUpdate();
 
-        CollisionManager.UpdateCollider();
+        // 衝突フラグのクリア
+        BulletManager.ClearColliderFlag();
+
+        // 衝突情報の更新
+        BulletManager.UpdateCollider();
+
+        // 衝突判定処理
         CollisionManager.CheckCollision();
         CollisionManager.DrawCollider();
+
+        // 衝突処理
+        BulletManager.ProcessCollision();
 
         BulletManager.GotoPool();
     }
@@ -325,6 +335,7 @@ public class BattleHackingManager : ControllableObject
     private void EndOnGame()
     {
         InputManager.RemoveInput();
+        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
     }
 
     #endregion
@@ -333,7 +344,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameClear()
     {
-        RequestChangeState(E_BATTLE_HACKING_STATE.END_GAME);
+        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
     private void UpdateOnGameClear()
@@ -359,7 +370,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameOver()
     {
-        RequestChangeState(E_BATTLE_HACKING_STATE.END_GAME);
+        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
     private void UpdateOnGameOver()
@@ -381,26 +392,25 @@ public class BattleHackingManager : ControllableObject
 
     #endregion
 
-    #region End Game State
+    #region End State
 
-    private void StartOnEndGame()
-    {
-        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
-    }
-
-    private void UpdateOnEndGame()
+    private void StartOnEnd()
     {
     }
 
-    private void LateUpdateOnEndGame()
+    private void UpdateOnEnd()
     {
     }
 
-    private void FixedUpdateOnEndGame()
+    private void LateUpdateOnEnd()
     {
     }
 
-    private void EndOnEndGame()
+    private void FixedUpdateOnEnd()
+    {
+    }
+
+    private void EndOnEnd()
     {
     }
 

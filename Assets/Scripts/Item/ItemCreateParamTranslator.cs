@@ -45,8 +45,8 @@ public class ItemCreateParamTranslator
             }
 
             var spreadParam = new ItemCreateParam.ItemSpreadParam();
-            spreadParam.ItemType = GetItemType(type);
-            spreadParam.ItemNum = numValue;
+            spreadParam.Type = GetItemType(type);
+            spreadParam.Num = numValue;
             spreadParam.SpreadRadius = radiusValue;
 
             if (spreadParams == null)

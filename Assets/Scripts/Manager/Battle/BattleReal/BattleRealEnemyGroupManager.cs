@@ -66,7 +66,10 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
     public override void OnFinalize()
     {
-        DestroyAllEnemyGroup();
+        m_GotoPoolEnemyGroups.Clear();
+        m_PoolEnemyGroups.Clear();
+        m_UpdateEnemyGroups.Clear();
+        m_StandbyEnemyGroups.Clear();
 
         base.OnFinalize();
     }
@@ -173,7 +176,10 @@ public class BattleRealEnemyGroupManager : ControllableObject
                 continue;
             }
 
+            enemyGroup.OnFinalize();
             enemyGroup.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            enemyGroup.gameObject.SetActive(false);
+
             m_GotoPoolEnemyGroups.RemoveAt(idx);
             m_UpdateEnemyGroups.Remove(enemyGroup);
             m_PoolEnemyGroups.Add(enemyGroup);
@@ -271,9 +277,7 @@ public class BattleRealEnemyGroupManager : ControllableObject
         }
 
         enemyGroup.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
-        enemyGroup.OnFinalize();
         m_GotoPoolEnemyGroups.Add(enemyGroup);
-        enemyGroup.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -326,11 +330,16 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// </summary>
     private void BuildEnemyGroupAppearEvents()
     {
+        if (m_ParamSet == null || m_ParamSet.Generator == null)
+        {
+            return;
+        }
+
         var groups = m_ParamSet.Generator.Contents;
         for (int i = 0; i < groups.Length; i++)
         {
             var param = groups[i];
-            var eventParam = new BattleRealEventTriggerParamSet.EventTriggerParam();
+            var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();
             eventParam.Condition = param.Condition;
             var content = new BattleRealEventContent();
             content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;
