@@ -17,5 +17,11 @@ MonoBehaviour:
   m_InitAppearViewportPosition: {x: 0.5, y: 0.1}
   m_PlayerBaseMoveSpeed: 2
   m_PlayerSlowMoveSpeed: 1
+  m_BattleRealPlayerExpParamSets:
+  - NextLevelNecessaryExp: 500
+  - NextLevelNecessaryExp: 1000
+  - NextLevelNecessaryExp: 1500
+  - NextLevelNecessaryExp: 2000
+  - NextLevelNecessaryExp: 2500
   m_IsNormalWeapon: 1
   m_IsLaserType: 1

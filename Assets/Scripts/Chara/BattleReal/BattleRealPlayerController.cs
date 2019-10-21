@@ -33,8 +33,6 @@ public class BattleRealPlayerController : CharaController
 
     private BattleRealPlayerParamSet m_ParamSet;
 
-    private int m_Level;
-
     private float m_ShotRemainTime;
 
     #endregion
@@ -155,28 +153,28 @@ public class BattleRealPlayerController : CharaController
         switch (item.ItemType)
         {
             case E_ITEM_TYPE.SMALL_SCORE:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_SCORE:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_SCORE_UP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_EXP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_BOMB:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_BOMB:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
         }
     }

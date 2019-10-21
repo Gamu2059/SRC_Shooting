@@ -23,6 +23,9 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     private AudioManager m_AudioManager;
     public AudioManager AudioManager => m_AudioManager;
 
+    private PlayerData m_PlayerData;
+    public PlayerData PlayerData => m_PlayerData;
+
 	public float m_BestScore{get; private set;}
 
 	public int m_HackingSucceedCount{get; private set;}
@@ -69,6 +72,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
 
+        m_PlayerData = new PlayerData();
 		ResetBestScore();
 	}
 

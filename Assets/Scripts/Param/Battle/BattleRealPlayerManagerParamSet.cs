@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+[Serializable]
+public class BattleRealPlayerExpParamSet{
+    public int NextLevelNecessaryExp;
+}
+
 /// <summary>
 /// リアルモードのPlayerManagerのパラメータのセット。
 /// </summary>
@@ -24,6 +30,10 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     [SerializeField, Tooltip("プレイヤーの低速移動速度")]
     private float m_PlayerSlowMoveSpeed;
     public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
+
+    [SerializeField, Tooltip("次レベルまでに必要な経験値")]
+    private BattleRealPlayerExpParamSet[] m_BattleRealPlayerExpParamSets;
+    public BattleRealPlayerExpParamSet[] BattleRealPlayerExpParamSets => m_BattleRealPlayerExpParamSets;
 
     [SerializeField]
     private bool m_IsNormalWeapon;

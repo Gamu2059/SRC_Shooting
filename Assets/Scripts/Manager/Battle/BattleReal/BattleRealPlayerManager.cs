@@ -87,6 +87,10 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         return m_CurrentBombNum;
     }
 
+    public BattleRealPlayerExpParamSet[] GetRealPlayerExpParamSet(){
+        return m_ParamSet.BattleRealPlayerExpParamSets;
+    }
+
     #endregion
 
     public BattleRealPlayerManager (BattleRealPlayerManagerParamSet paramSet) {
@@ -222,6 +226,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
         /* デバッグ用 */
         //Debug.Log("CurrentScore = " + m_CurrentScore);
+        //Debug.Log("CurrentExp = " + m_CurrentExp);
 
         m_Player.OnUpdate();
     }
@@ -280,7 +285,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         var currentExp = m_CurrentExp.Value;
         var currentLevel = m_CurrentLevel.Value - 1;
 
-        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length) {
+        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length - 1) {
             // スコア増加(レベルMAXの時)
             AddScore(exp * 1.0f);
         } else {
@@ -301,13 +306,13 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     /// ボムチャージを加算する。
     /// </summary>
     public void AddBombCharge (float charge) {
-        var currentCharge = m_CurrentBombCharge.Value;
-        currentCharge += charge;
+        // var currentCharge = m_CurrentBombCharge.Value;
+        // currentCharge += charge;
 
-        if (currentCharge >= m_PlayerState.BombCharge) {
-            m_CurrentBombNum.Value++;
-            currentCharge %= m_PlayerState.BombCharge;
-        }
+        // if (currentCharge >= m_PlayerState.BombCharge) {
+        //     m_CurrentBombNum.Value++;
+        //     currentCharge %= m_PlayerState.BombCharge;
+        // }
     }
 
     public void ClearColliderFlag()
