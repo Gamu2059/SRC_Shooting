@@ -78,7 +78,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyEvacuationHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
-
     }
 
     public override void OnUpdate()

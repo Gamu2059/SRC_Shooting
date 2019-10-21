@@ -2,25 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 /// <summary>
-/// 敵の振る舞いの制御を行う。
+/// ハッキングモードの敵キャラを管理する。
 /// </summary>
 public class BattleHackingEnemyManager : ControllableObject
 {
     public static BattleHackingEnemyManager Instance => BattleHackingManager.Instance.EnemyManager;
-
-    /// <summary>
-    /// ステージ領域の左下に対するオフセット左下領域
-    /// </summary>
-    [SerializeField]
-    private Vector2 m_OffsetMinField;
-
-    /// <summary>
-    /// ステージ領域の右上に対するオフセット右上領域
-    /// </summary>
-    [SerializeField]
-    private Vector2 m_OffsetMaxField;
 
     /// <summary>
     /// 消滅可能になるまでの最小時間
@@ -28,10 +17,16 @@ public class BattleHackingEnemyManager : ControllableObject
     [SerializeField]
     private float m_CanOutTime;
 
-
     #region Field
 
+    private BattleHackingEnemyManagerParamSet m_ParamSet;
+
     private Transform m_EnemyCharaHolder;
+
+    /// <summary>
+    /// STANDBY状態の敵を保持するリスト。
+    /// </summary>
+    private List<CommandEnemyController> m_StandbyEnemies;
 
     /// <summary>
     /// UPDATE状態の敵を保持するリスト。
@@ -41,87 +36,77 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
     /// </summary>
-    private List<CommandEnemyController> m_GotoDestroyEnemies;
+    private List<CommandEnemyController> m_GotoPoolEnemies;
+
+    /// <summary>
+    /// POOL状態の敵のディクショナリ。
+    /// </summary>
+    private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
+
+    private static List<CommandEnemyController> m_ReservedRegisterEnemies = new List<CommandEnemyController>();
 
     #endregion
 
-
-
-    #region Get Set
-
-    /// <summary>
-    /// ゲームサイクルに入っている敵を取得する。
-    /// </summary>
-    public List<CommandEnemyController> GetUpdateEnemies()
+    public BattleHackingEnemyManager(BattleHackingEnemyManagerParamSet paramSet)
     {
-        return m_UpdateEnemies;
+        m_ParamSet = paramSet;
     }
 
-    /// <summary>
-    /// 消滅可能になるまでの最小時間を取得する。
-    /// </summary>
-    public float GetCanOutTime()
-    {
-        return m_CanOutTime;
-    }
-
-    #endregion
+    #region Game Cycle
 
     public override void OnInitialize()
     {
         base.OnInitialize();
 
+        m_StandbyEnemies = new List<CommandEnemyController>();
         m_UpdateEnemies = new List<CommandEnemyController>();
-        m_GotoDestroyEnemies = new List<CommandEnemyController>();
+        m_GotoPoolEnemies = new List<CommandEnemyController>();
+        m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
     }
 
     public override void OnFinalize()
     {
+        DestroyAllEnemy();
         base.OnFinalize();
-        DestroyAllEnemyImmediate();
-        m_UpdateEnemies = null;
-        m_GotoDestroyEnemies = null;
     }
 
     public override void OnStart()
     {
         base.OnStart();
 
-        m_EnemyCharaHolder = BattleHackingStageManager.Instance.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.ENEMY);
+        var stageManager = BattleHackingStageManager.Instance;
+        m_EnemyCharaHolder = stageManager.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.ENEMY);
     }
-
-    ///// <summary>
-    ///// コマンドイベントが有効になった時に呼び出される。
-    ///// </summary>
-    //public override void OnEnableObject()
-    //{
-    //    base.OnEnableObject();
-    //}
-
-    ///// <summary>
-    ///// コマンドイベントが無効になった時に呼び出される。
-    ///// </summary>
-    //public override void OnDisableObject()
-    //{
-    //    base.OnDisableObject();
-    //    DestroyAllEnemyImmediate();
-    //}
 
     public override void OnUpdate()
     {
+        // デバッグ用
+        foreach (var enemy in m_ReservedRegisterEnemies)
+        {
+            Register(enemy);
+        }
+
+        m_ReservedRegisterEnemies.Clear();
+
+        // Start
+        foreach (var enemy in m_StandbyEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.OnStart();
+        }
+
+        GotoUpdateEnemy();
+
         // Update処理
         foreach (var enemy in m_UpdateEnemies)
         {
             if (enemy == null)
             {
-                m_GotoDestroyEnemies.Add(enemy);
                 continue;
-            }
-
-            if (enemy.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
-            {
-                enemy.OnStart();
-                enemy.SetCycle(E_OBJECT_CYCLE.UPDATE);
             }
 
             enemy.OnUpdate();
@@ -135,137 +120,308 @@ public class BattleHackingEnemyManager : ControllableObject
         {
             if (enemy == null)
             {
-                m_GotoDestroyEnemies.Add(enemy);
                 continue;
             }
 
             enemy.OnLateUpdate();
         }
-
-        GotoDestroyFromUpdate();
     }
 
-    private void GotoDestroyFromUpdate()
+    public override void OnFixedUpdate()
     {
-        int count = m_GotoDestroyEnemies.Count;
-
-        for (int i = 0; i < count; i++)
+        // FixedUpdate処理
+        foreach (var enemy in m_UpdateEnemies)
         {
-            int idx = count - i - 1;
-            var enemy = m_GotoDestroyEnemies[idx];
-
             if (enemy == null)
             {
                 continue;
             }
 
-            m_GotoDestroyEnemies.RemoveAt(idx);
-            m_UpdateEnemies.Remove(enemy);
-            enemy.SetCycle(E_OBJECT_CYCLE.DESTROYED);
+            enemy.OnFixedUpdate();
+        }
+    }
+
+    #endregion
+
+
+    #region Impl IColliderProcess
+
+    public void ClearColliderFlag()
+    {
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.ClearColliderFlag();
+        }
+    }
+
+    public void UpdateCollider()
+    {
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.UpdateCollider();
+        }
+    }
+
+    public void ProcessCollision()
+    {
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.ProcessCollision();
+        }
+    }
+
+    #endregion
+
+    /// <summary>
+    /// 敵を登録する。
+    /// デバッグ専用。
+    /// </summary>
+    public static void RegisterEnemy(CommandEnemyController enemy)
+    {
+        if (enemy == null || m_ReservedRegisterEnemies.Contains(enemy))
+        {
+            return;
+        }
+
+        m_ReservedRegisterEnemies.Add(enemy);
+    }
+
+    private void Register(CommandEnemyController enemy)
+    {
+        if (enemy == null || m_StandbyEnemies.Contains(enemy) || m_UpdateEnemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
+        {
+            return;
+        }
+
+        var type = enemy.GetType().FullName;
+        if (!m_PoolEnemies.ContainsKey(type))
+        {
+            m_PoolEnemies.Add(type, new LinkedList<GameObject>());
+        }
+        enemy.SetLookId(type);
+        CheckStandByEnemy(enemy);
+    }
+
+    /// <summary>
+    /// 破棄フラグが立っているものをプールに戻す
+    /// </summary>
+    public void GotoPool()
+    {
+        GotoPoolEnemy();
+    }
+
+    /// <summary>
+    /// UPDATE状態にする。
+    /// </summary>
+    private void GotoUpdateEnemy()
+    {
+        foreach (var enemy in m_StandbyEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+            else if (enemy.GetCycle() != E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                CheckPoolEnemy(enemy);
+            }
+
+            enemy.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
+            m_UpdateEnemies.Add(enemy);
+        }
+
+        m_StandbyEnemies.Clear();
+    }
+
+    /// <summary>
+    /// 削除フラグが立っている敵を一斉に削除する
+    /// </summary>
+    private void GotoPoolEnemy()
+    {
+        int count = m_GotoPoolEnemies.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            int idx = count - i - 1;
+            var enemy = m_GotoPoolEnemies[idx];
+            if (enemy == null)
+            {
+                continue;
+            }
+
             enemy.OnFinalize();
-            GameObject.Destroy(enemy.gameObject);
+            enemy.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
+            enemy.gameObject.SetActive(false);
+            enemy.transform.SetParent(m_EnemyCharaHolder);
+
+            m_GotoPoolEnemies.RemoveAt(idx);
+            m_UpdateEnemies.Remove(enemy);
+
+            var poolId = enemy.GetLookId();
+            if (!m_PoolEnemies.ContainsKey(poolId))
+            {
+                m_PoolEnemies.Add(poolId, new LinkedList<GameObject>());
+            }
+            m_PoolEnemies[poolId].AddLast(enemy.gameObject);
+            GameObject.Destroy(enemy);
         }
 
-        m_GotoDestroyEnemies.Clear();
-
-        m_UpdateEnemies.RemoveAll((e) => e == null);
+        m_GotoPoolEnemies.Clear();
     }
 
-
     /// <summary>
-    /// 敵キャラを登録する。
-    /// いずれこのメソッドは外部から参照できなくする予定です。
+    /// プールから敵を取得する。
+    /// 足りなければ生成する。
     /// </summary>
-    public CommandEnemyController RegistEnemy(CommandEnemyController controller)
+    private GameObject GetPoolingEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
-        if (controller == null || m_UpdateEnemies.Contains(controller) || m_GotoDestroyEnemies.Contains(controller))
+        if (generateParamSet == null || behaviorParamSet == null)
         {
             return null;
         }
 
-        controller.transform.SetParent(m_EnemyCharaHolder);
-        m_UpdateEnemies.Add(controller);
-        controller.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
-        controller.OnInitialize();
-        return controller;
+        var lookParamSet = behaviorParamSet.EnemyLookParamSet;
+        var poolId = lookParamSet.LookId;
+
+        GameObject enemyObj = null;
+
+        if (m_PoolEnemies.ContainsKey(poolId))
+        {
+            if (m_PoolEnemies[poolId].Count > 0)
+            {
+                var node = m_PoolEnemies[poolId].First;
+                enemyObj = node.Value;
+            }
+        }
+
+        if (enemyObj == null)
+        {
+            enemyObj = GameObject.Instantiate(lookParamSet.EnemyPrefab);
+            enemyObj.transform.SetParent(m_EnemyEvacuationHolder);
+
+            if (!m_PoolEnemies.ContainsKey(poolId))
+            {
+                m_PoolEnemies.Add(poolId, new LinkedList<GameObject>());
+            }
+            m_PoolEnemies[poolId].AddLast(enemyObj);
+        }
+
+        return enemyObj;
     }
 
     /// <summary>
-    /// 敵キャラのプレハブから敵キャラを新規作成する。
+    /// 敵をSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public CommandEnemyController CreateEnemy(CommandEnemyController enemyPrefab)
+    private void CheckStandByEnemy(CommandEnemyController enemy)
     {
-        if (enemyPrefab == null)
-        {
-            return null;
-        }
-
-        CommandEnemyController controller = GameObject.Instantiate(enemyPrefab);
-        return RegistEnemy(controller);
-    }
-
-    public CommandEnemyController CreateEnemy(CommandEnemyController enemyPrefab, string paramString)
-    {
-        var enemy = CreateEnemy(enemyPrefab);
-
         if (enemy == null)
         {
+            Debug.LogError("指定された敵を追加できませんでした。");
+            return;
+        }
+
+        var poolId = enemy.GetLookId();
+        if (!m_PoolEnemies.ContainsKey(poolId))
+        {
+            Debug.LogError("指定された敵を追加できませんでした。");
+            return;
+        }
+
+        m_PoolEnemies[poolId].Remove(enemy.gameObject);
+        m_StandbyEnemies.Add(enemy);
+        enemy.gameObject.SetActive(true);
+        enemy.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE);
+        enemy.OnInitialize();
+    }
+
+    /// <summary>
+    /// 指定した敵を制御から外すためにチェックする。
+    /// </summary>
+    private void CheckPoolEnemy(CommandEnemyController enemy)
+    {
+        if (enemy == null || m_GotoPoolEnemies.Contains(enemy))
+        {
+            Debug.LogError("指定した敵を削除できませんでした。");
+            return;
+        }
+
+        enemy.SetCycle(E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
+        m_GotoPoolEnemies.Add(enemy);
+    }
+
+    /// <summary>
+    /// 敵グループの生成リストから敵を新規作成する。
+    /// </summary>
+    public CommandEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    {
+        if (generateParamSet == null || behaviorParamSet == null)
+        {
             return null;
         }
 
-        enemy.SetStringParam(paramString);
+        Type behaviorType = null;
+        try
+        {
+            behaviorType = Type.GetType(behaviorParamSet.BehaviorClass);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
 
+        var enemyObj = GetPoolingEnemy(generateParamSet, behaviorParamSet);
+        if (enemyObj == null)
+        {
+            return null;
+        }
+
+        var enemy = enemyObj.AddComponent(behaviorType) as CommandEnemyController;
+        if (enemy == null)
+        {
+            GameObject.Destroy(enemyObj);
+            return null;
+        }
+
+        var poolId = behaviorParamSet.EnemyLookParamSet.LookId;
+        enemy.SetLookId(poolId);
+        enemy.SetParamSet(generateParamSet, behaviorParamSet);
+        CheckStandByEnemy(enemy);
         return enemy;
     }
 
     /// <summary>
     /// 敵キャラを破棄する。
-    /// これを呼び出したタイミングの次のLateUpdateで削除される。
+    /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>
-    public void DestroyEnemy(CommandEnemyController controller)
+    public void DestroyEnemy(CommandEnemyController enemy)
     {
-        if (controller == null || !m_UpdateEnemies.Contains(controller))
-        {
-            return;
-        }
-
-        m_GotoDestroyEnemies.Add(controller);
+        CheckPoolEnemy(enemy);
     }
 
     /// <summary>
     /// 全ての敵キャラを破棄する。
-    /// これを呼び出したタイミングの次のLateUpdateで削除される。
+    /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>
     public void DestroyAllEnemy()
     {
-        m_GotoDestroyEnemies.AddRange(m_UpdateEnemies);
-        m_UpdateEnemies.Clear();
-    }
-
-    /// <summary>
-    /// 敵キャラを破棄する。
-    /// これを呼び出したタイミングで即座に削除される。
-    /// </summary>
-    public void DestroyEnemyImmediate(CommandEnemyController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnFinalize();
-        GameObject.Destroy(controller.gameObject);
-    }
-
-    /// <summary>
-    /// 全ての敵キャラを破棄する。
-    /// これを呼び出したタイミングで即座に削除される。
-    /// </summary>
-    public void DestroyAllEnemyImmediate()
-    {
         foreach (var enemy in m_UpdateEnemies)
         {
-            DestroyEnemyImmediate(enemy);
+            DestroyEnemy(enemy);
         }
 
         m_UpdateEnemies.Clear();
@@ -282,16 +438,34 @@ public class BattleHackingEnemyManager : ControllableObject
         var stageManager = BattleHackingStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        minPos += m_OffsetMinField;
-        maxPos += m_OffsetMaxField;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
 
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
 
-        //// コマンドイベントではMoveObjectHolderに入っているため補正を足す
-        //pos += CommandStageManager.Instance.GetMoveObjectHolder().transform.position;
-
         return pos;
+    }
+
+    /// <summary>
+    /// 敵が敵フィールドの範囲外に出ているかどうかを判定する。
+    /// </summary>
+    public bool IsOutOfField(CommandEnemyController enemy)
+    {
+        if (enemy == null)
+        {
+            return true;
+        }
+
+        var stageManager = BattleHackingStageManager.Instance;
+        var minPos = stageManager.MinLocalFieldPosition;
+        var maxPos = stageManager.MaxLocalFieldPosition;
+        minPos += m_ParamSet.MinOffsetFieldPosition;
+        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+
+        var pos = enemy.transform.position;
+
+        return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
 }
