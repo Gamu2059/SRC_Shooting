@@ -57,13 +57,13 @@ public class PlayerRecordManager : ControllableObject
     }
 
     private void AddDummyScore(){
-        m_PlayerRecords.Add(new PlayerRecord(1000, 1, new System.DateTime(2000, 8, 16)));
-        m_PlayerRecords.Add(new PlayerRecord(2000, 2, new System.DateTime(2000, 8, 16)));
-        m_PlayerRecords.Add(new PlayerRecord(3000, 3, new System.DateTime(2000, 8, 16)));
-        m_PlayerRecords.Add(new PlayerRecord(4000, 4, new System.DateTime(2000, 8, 16)));
-        m_PlayerRecords.Add(new PlayerRecord(5000, 5, new System.DateTime(2000, 8, 16)));
-        m_PlayerRecords.Add(new PlayerRecord(6000, 6, new System.DateTime(2000, 8, 16)));
-        m_PlayerRecords.Add(new PlayerRecord(9999, 7, new System.DateTime(2000, 8, 16)));
+        m_PlayerRecords.Add(new PlayerRecord(1000, 1, new System.DateTime(2019, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(2000, 2, new System.DateTime(2019, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(3000, 3, new System.DateTime(2019, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(4000, 4, new System.DateTime(2019, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(5000, 5, new System.DateTime(2019, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(6000, 6, new System.DateTime(2019, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(9999, 7, new System.DateTime(2000, 5, 1)));
     }
 
     private string ReachedStageStrFromInt(int stage){
