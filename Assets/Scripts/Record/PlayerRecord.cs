@@ -18,9 +18,11 @@ public class PlayerRecord
     /// </summary>
     public int m_FinalReachedStage {get; private set;}
 
-    public System.DateTime m_PlayedDate;
-
-    // プレイ日時
+    /// <summary>
+    /// プレイした日付
+    /// </summary>
+    /// <value></value>
+    public System.DateTime m_PlayedDate {get; private set;}
 
     // プレイヤーネーム
 
