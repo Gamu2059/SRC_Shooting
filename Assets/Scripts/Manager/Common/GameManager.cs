@@ -26,6 +26,9 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     private PlayerData m_PlayerData;
     public PlayerData PlayerData => m_PlayerData;
 
+    private PlayerRecordManager m_PlayerRecordManager;
+    public PlayerRecordManager PlayerRecordManager => m_PlayerRecordManager;
+
 	public float m_BestScore{get; private set;}
 
 	public int m_HackingSucceedCount{get; private set;}
@@ -73,7 +76,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         m_SceneManager.OnInitialize();
 
         m_PlayerData = new PlayerData();
-		ResetBestScore();
+        m_PlayerRecordManager = new PlayerRecordManager();
+        m_PlayerRecordManager.OnInitialize();
 	}
 
 	public override void OnFinalize()
@@ -131,7 +135,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	}
 
 	public void ResetBestScore(){
-        m_BestScore = 1000.0f;
+        m_BestScore = m_PlayerRecordManager.GetTopRecord().m_FinalScore;
     }
 
     public void UpdateBestScore(float score){
