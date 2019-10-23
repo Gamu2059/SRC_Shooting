@@ -16,4 +16,8 @@ public class BattleHackingEnemyManagerParamSet : ScriptableObject
     [SerializeField, Tooltip("右上のオフセットフィールド")]
     private Vector2 m_MaxOffsetFieldPosition;
     public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
+
+    [SerializeField, Tooltip("敵の生成パラメータの配列")]
+    private BattleHackingEnemyGenerator[] m_Generators;
+    public BattleHackingEnemyGenerator[] Generators => m_Generators;
 }

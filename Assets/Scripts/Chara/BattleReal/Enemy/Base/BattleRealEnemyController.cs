@@ -118,7 +118,6 @@ public class BattleRealEnemyController : CharaController
         {
             IsShowFirst = true;
         }
-
     }
 
     #endregion

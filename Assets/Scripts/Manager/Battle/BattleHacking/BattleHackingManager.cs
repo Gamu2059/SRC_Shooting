@@ -114,7 +114,7 @@ public class BattleHackingManager : ControllableObject
         InputManager = new BattleHackingInputManager();
         HackingTimerManager = new BattleHackingTimerManager();
         PlayerManager = new BattleHackingPlayerManager(m_ParamSet.PlayerManagerParamSet);
-        EnemyManager = new BattleHackingEnemyManager();
+        EnemyManager = new BattleHackingEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
         CollisionManager = new BattleHackingCollisionManager();
 
@@ -221,6 +221,7 @@ public class BattleHackingManager : ControllableObject
     private void EndOnTransitionToReal()
     {
         PlayerManager.OnPutAway();
+        EnemyManager.OnPutAway();
         BulletManager.OnPutAway();
     }
 
@@ -260,6 +261,7 @@ public class BattleHackingManager : ControllableObject
     private void StartOnTransitionToHacking()
     {
         PlayerManager.OnPrepare();
+        EnemyManager.OnPrepare();
     }
 
     private void UpdateOnTransitionToHacking()

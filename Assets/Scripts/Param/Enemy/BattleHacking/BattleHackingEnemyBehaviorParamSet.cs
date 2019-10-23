@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class BattleHackingEnemyBehaviorParamSet : MonoBehaviour
+/// <summary>
+/// ハッキングモードの敵の振る舞いパラメータの規定クラス。
+/// このクラスを継承してパラメータのセットを定義して下さい。
+/// </summary>
+public abstract class BattleHackingEnemyBehaviorParamSet : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private string m_BehaviorClass;
+    public string BehaviorClass => m_BehaviorClass;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    private BulletSetParam m_BulletSetParam;
+    public BulletSetParam BulletSetParam => m_BulletSetParam;
+
+    [SerializeField]
+    private BattleHackingEnemyLookParamSet m_EnemyLookParamSet;
+    public BattleHackingEnemyLookParamSet EnemyLookParamSet => m_EnemyLookParamSet;
 }

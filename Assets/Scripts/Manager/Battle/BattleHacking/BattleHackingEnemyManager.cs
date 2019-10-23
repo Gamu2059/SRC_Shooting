@@ -21,29 +21,30 @@ public class BattleHackingEnemyManager : ControllableObject
 
     private BattleHackingEnemyManagerParamSet m_ParamSet;
 
-    private Transform m_EnemyCharaHolder;
+    private Transform m_EnemyHolder;
 
     /// <summary>
     /// STANDBY状態の敵を保持するリスト。
     /// </summary>
-    private List<CommandEnemyController> m_StandbyEnemies;
+    private List<BattleHackingEnemyController> m_StandbyEnemies;
 
     /// <summary>
     /// UPDATE状態の敵を保持するリスト。
     /// </summary>
-    private List<CommandEnemyController> m_UpdateEnemies;
+    private List<BattleHackingEnemyController> m_UpdateEnemies;
+    public List<BattleHackingEnemyController> Enemies => m_UpdateEnemies;
 
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
     /// </summary>
-    private List<CommandEnemyController> m_GotoPoolEnemies;
+    private List<BattleHackingEnemyController> m_GotoPoolEnemies;
 
     /// <summary>
     /// POOL状態の敵のディクショナリ。
     /// </summary>
     private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
 
-    private static List<CommandEnemyController> m_ReservedRegisterEnemies = new List<CommandEnemyController>();
+    private static List<BattleHackingEnemyController> m_ReservedRegisterEnemies = new List<BattleHackingEnemyController>();
 
     #endregion
 
@@ -58,9 +59,9 @@ public class BattleHackingEnemyManager : ControllableObject
     {
         base.OnInitialize();
 
-        m_StandbyEnemies = new List<CommandEnemyController>();
-        m_UpdateEnemies = new List<CommandEnemyController>();
-        m_GotoPoolEnemies = new List<CommandEnemyController>();
+        m_StandbyEnemies = new List<BattleHackingEnemyController>();
+        m_UpdateEnemies = new List<BattleHackingEnemyController>();
+        m_GotoPoolEnemies = new List<BattleHackingEnemyController>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
     }
 
@@ -75,7 +76,7 @@ public class BattleHackingEnemyManager : ControllableObject
         base.OnStart();
 
         var stageManager = BattleHackingStageManager.Instance;
-        m_EnemyCharaHolder = stageManager.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.ENEMY);
+        m_EnemyHolder = stageManager.GetHolder(BattleHackingStageManager.E_HOLDER_TYPE.ENEMY);
     }
 
     public override void OnUpdate()
@@ -191,7 +192,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// 敵を登録する。
     /// デバッグ専用。
     /// </summary>
-    public static void RegisterEnemy(CommandEnemyController enemy)
+    public static void RegisterEnemy(BattleHackingEnemyController enemy)
     {
         if (enemy == null || m_ReservedRegisterEnemies.Contains(enemy))
         {
@@ -201,7 +202,7 @@ public class BattleHackingEnemyManager : ControllableObject
         m_ReservedRegisterEnemies.Add(enemy);
     }
 
-    private void Register(CommandEnemyController enemy)
+    private void Register(BattleHackingEnemyController enemy)
     {
         if (enemy == null || m_StandbyEnemies.Contains(enemy) || m_UpdateEnemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
         {
@@ -267,7 +268,7 @@ public class BattleHackingEnemyManager : ControllableObject
             enemy.OnFinalize();
             enemy.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
             enemy.gameObject.SetActive(false);
-            enemy.transform.SetParent(m_EnemyCharaHolder);
+            enemy.transform.SetParent(m_EnemyHolder);
 
             m_GotoPoolEnemies.RemoveAt(idx);
             m_UpdateEnemies.Remove(enemy);
@@ -312,7 +313,7 @@ public class BattleHackingEnemyManager : ControllableObject
         if (enemyObj == null)
         {
             enemyObj = GameObject.Instantiate(lookParamSet.EnemyPrefab);
-            enemyObj.transform.SetParent(m_EnemyEvacuationHolder);
+            enemyObj.transform.SetParent(m_EnemyHolder);
 
             if (!m_PoolEnemies.ContainsKey(poolId))
             {
@@ -327,7 +328,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// 敵をSTANDBY状態にして制御下に入れる。
     /// </summary>
-    private void CheckStandByEnemy(CommandEnemyController enemy)
+    private void CheckStandByEnemy(BattleHackingEnemyController enemy)
     {
         if (enemy == null)
         {
@@ -352,7 +353,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// 指定した敵を制御から外すためにチェックする。
     /// </summary>
-    private void CheckPoolEnemy(CommandEnemyController enemy)
+    private void CheckPoolEnemy(BattleHackingEnemyController enemy)
     {
         if (enemy == null || m_GotoPoolEnemies.Contains(enemy))
         {
@@ -367,7 +368,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public CommandEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    public BattleHackingEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
         if (generateParamSet == null || behaviorParamSet == null)
         {
@@ -390,7 +391,7 @@ public class BattleHackingEnemyManager : ControllableObject
             return null;
         }
 
-        var enemy = enemyObj.AddComponent(behaviorType) as CommandEnemyController;
+        var enemy = enemyObj.AddComponent(behaviorType) as BattleHackingEnemyController;
         if (enemy == null)
         {
             GameObject.Destroy(enemyObj);
@@ -408,7 +409,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// 敵キャラを破棄する。
     /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>
-    public void DestroyEnemy(CommandEnemyController enemy)
+    public void DestroyEnemy(BattleHackingEnemyController enemy)
     {
         CheckPoolEnemy(enemy);
     }
@@ -451,7 +452,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// 敵が敵フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    public bool IsOutOfField(CommandEnemyController enemy)
+    public bool IsOutOfField(BattleHackingEnemyController enemy)
     {
         if (enemy == null)
         {
@@ -467,5 +468,15 @@ public class BattleHackingEnemyManager : ControllableObject
         var pos = enemy.transform.position;
 
         return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
+    }
+
+    public void OnPrepare()
+    {
+
+    }
+
+    public void OnPutAway()
+    {
+
     }
 }

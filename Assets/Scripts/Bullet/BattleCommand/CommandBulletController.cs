@@ -759,7 +759,7 @@ public class CommandBulletController : BattleHackingObjectBase
         }
         else
         {
-            List<CommandEnemyController> enemies = BattleHackingEnemyManager.Instance.GetUpdateEnemies();
+            List<BattleHackingEnemyController> enemies = BattleHackingEnemyManager.Instance.Enemies;
             CommandCharaController nearestEnemy = null;
             float minSqrDist = float.MaxValue;
 

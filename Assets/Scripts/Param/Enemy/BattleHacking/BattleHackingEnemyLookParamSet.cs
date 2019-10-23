@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class BattleHackingEnemyLookParamSet : MonoBehaviour
+/// <summary>
+/// ハッキングモードの敵の見た目のパラメータのセット。
+/// </summary>
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Enemy/EnemyLook", fileName = "param.battle_hacking_enemy_look.asset")]
+public class BattleHackingEnemyLookParamSet : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField, Tooltip("敵のプールID これの名前が同じならば、プールから取得するモデルを再利用できます")]
+    private string m_LookId;
+    public string LookId => m_LookId;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField, Tooltip("敵のプレハブ")]
+    private GameObject m_EnemyPrefab;
+    public GameObject EnemyPrefab => m_EnemyPrefab;
 }
