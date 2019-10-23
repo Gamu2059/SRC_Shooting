@@ -21,7 +21,12 @@ public class InfC761 : BattleRealEnemyController
         END,
     }
 
+    private const string DOWN_KEY = "Down";
+    private const string HACKING_SUCCESS_KEY = "Hacking";
+
     #region Field
+
+    private InfC761ParamSet m_BossParamSet;
 
     private StateMachine<E_PHASE> m_StateMachine;
     private BattleRealBossBehaviorParamSet[] m_AttackParamSets;
@@ -36,6 +41,7 @@ public class InfC761 : BattleRealEnemyController
     private int m_AttackPhase;
     private int m_DownPhase;
     private float m_DownHp;
+    private List<float> m_ChangeAttackHpRates;
 
     #endregion
 
@@ -45,8 +51,10 @@ public class InfC761 : BattleRealEnemyController
 
         if (BehaviorParamSet is InfC761ParamSet paramSet)
         {
+            m_BossParamSet = paramSet;
             m_AttackParamSets = paramSet.AttackParamSets;
             m_DownParamSets = paramSet.DownParamSets;
+            m_ChangeAttackHpRates = paramSet.ChangeAttackHpRates;
         }
     }
 
@@ -58,6 +66,7 @@ public class InfC761 : BattleRealEnemyController
 
         m_IsLookMoveDir = false;
         m_WillDestroyOnOutOfEnemyField = false;
+        IsBoss = true;
 
         m_AttackBehaviors = new List<BattleRealBossBehavior>();
         m_DownBehaviors = new List<BattleRealBossBehavior>();
@@ -139,11 +148,15 @@ public class InfC761 : BattleRealEnemyController
         InitializeAttackBehaviors();
         InitializeDownBehaviors();
 
+        BattleRealManager.Instance.OnTransitionToReal += OnTransitionToReal;
+
         RequestChangeState(E_PHASE.START);
     }
 
     public override void OnFinalize()
     {
+        BattleRealManager.Instance.OnTransitionToReal -= OnTransitionToReal;
+
         if (m_DownBehaviors != null)
         {
             foreach (var b in m_DownBehaviors)
@@ -177,6 +190,7 @@ public class InfC761 : BattleRealEnemyController
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
+        Debug.Log(m_StateMachine.CurrentState.Key);
     }
 
     public override void OnLateUpdate()
@@ -265,9 +279,14 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnStart()
     {
-        // 即席処理
-        m_CurrentAttack = m_AttackBehaviors[0];
-        m_CurrentDown = m_DownBehaviors[0];
+        m_AttackPhase = 0;
+        m_DownPhase = 0;
+        m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
+        m_CurrentDown = m_DownBehaviors[m_DownPhase];
+
+        m_DownHp = m_BossParamSet.DownHp;
+
+        transform.position = new Vector3(0, 0, 1);
 
         RequestChangeState(E_PHASE.ATTACK);
     }
@@ -327,6 +346,14 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnDown()
     {
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
+        timer.SetTimeoutCallBack(() =>
+        {
+            timer = null;
+            RequestChangeState(E_PHASE.ATTACK);
+        });
+        RegistTimer(DOWN_KEY, timer);
+
         m_CurrentDown?.OnStart();
     }
 
@@ -356,7 +383,16 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnHackingSuccess()
     {
+        DestroyTimer(DOWN_KEY);
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
+        timer.SetTimeoutCallBack(() =>
+        {
+            DestroyTimer(HACKING_SUCCESS_KEY);
+            RequestChangeState(E_PHASE.CHANGE_ATTACK);
+        });
+        RegistTimer(HACKING_SUCCESS_KEY, timer);
 
+        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossParamSet.ItemParam);
     }
 
     private void UpdateOnHackingSuccess()
@@ -385,7 +421,10 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnChangeAttack()
     {
-
+        m_AttackPhase = Mathf.Min(m_AttackPhase + 1, m_AttackBehaviors.Count - 1);
+        m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
+        m_DownHp = m_BossParamSet.DownHp;
+        RequestChangeState(E_PHASE.ATTACK);
     }
 
     private void UpdateOnChangeAttack()
@@ -496,4 +535,54 @@ public class InfC761 : BattleRealEnemyController
     }
 
     #endregion
+
+    protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
+    {
+        base.OnEnterSufferBullet(sufferData);
+
+        var currentState = m_StateMachine.CurrentState.Key;
+
+        m_DownHp -= 1;
+        if (m_DownHp <= 0 && currentState == E_PHASE.ATTACK)
+        {
+            m_DownHp = m_BossParamSet.DownHp;
+            RequestChangeState(E_PHASE.DOWN);
+        }
+
+        //if (currentState == E_PHASE.ATTACK)
+        //{
+        //    var hpRate = 
+        //    if ()
+        //    {
+
+        //    }
+        //}
+    }
+
+    protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    {
+        base.OnEnterSufferChara(sufferData);
+
+        var currentState = m_StateMachine.CurrentState.Key;
+        if (currentState == E_PHASE.DOWN)
+        {
+            var colliderType = sufferData.HitCollider.Transform.ColliderType;
+            if (colliderType == E_COLLIDER_TYPE.CRITICAL)
+            {
+                BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+            }
+        }
+    }
+
+    private void OnTransitionToReal()
+    {
+        var currentState = m_StateMachine.CurrentState.Key;
+        if (currentState == E_PHASE.DOWN)
+        {
+            if (BattleHackingManager.Instance.IsHackingSuccess)
+            {
+                RequestChangeState(E_PHASE.HACKING_SUCCESS);
+            }
+        }
+    }
 }

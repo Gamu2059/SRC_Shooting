@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfC761Phase1 : BattleRealBossBehavior
+public class InfC761Phase2 : BattleRealBossBehavior
 {
     public enum E_PHASE
     {
@@ -13,20 +13,22 @@ public class InfC761Phase1 : BattleRealBossBehavior
         WAIT_ON_RIGHT,
     }
 
-    private InfC761Phase1ParamSet m_ParamSet;
+    private InfC761Phase2ParamSet m_ParamSet;
     private E_PHASE m_Phase;
 
     private Vector3 m_MoveStartPos;
     private Vector3 m_MoveEndPos;
+    private float m_MoveStartAngle;
+    private float m_MoveEndAngle;
 
     private float m_Duration;
     private float m_TimeCount;
 
     private float m_ShotTimeCount;
 
-    public InfC761Phase1(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
-        m_ParamSet = paramSet as InfC761Phase1ParamSet;
+        m_ParamSet = paramSet as InfC761Phase2ParamSet;
     }
 
     /// <summary>
@@ -40,7 +42,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
 
         m_Phase = E_PHASE.START;
         m_MoveStartPos = initPos;
-        m_MoveEndPos = m_ParamSet.BasePos;
+        m_MoveEndPos = GetArcPosition(0);
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
     }
@@ -69,12 +71,33 @@ public class InfC761Phase1 : BattleRealBossBehavior
         base.OnEnd();
     }
 
+    /// <summary>
+    /// 基準座標の真下を0°として円弧上の座標を取得する。
+    /// </summary>
+    private Vector3 GetArcPosition(float angle)
+    {
+        angle -= 90;
+        var rad = angle * Mathf.Deg2Rad;
+
+        var x = Mathf.Cos(rad) * m_ParamSet.Radius + m_ParamSet.BasePos.x;
+        var z = Mathf.Sin(rad) * m_ParamSet.Radius + m_ParamSet.BasePos.z;
+
+        return new Vector3(x, 0, z);
+    }
     private Vector3 GetMovePosition()
     {
         var rate = m_ParamSet.NormalizedRate;
         var duration = rate.keys[rate.keys.Length - 1].time;
         var t = rate.Evaluate(m_TimeCount * duration / m_Duration);
         return Vector3.Lerp(m_MoveStartPos, m_MoveEndPos, t);
+    }
+
+    private float GetMoveAngle()
+    {
+        var rate = m_ParamSet.NormalizedRate;
+        var duration = rate.keys[rate.keys.Length - 1].time;
+        var t = rate.Evaluate(m_TimeCount * duration / m_Duration);
+        return Mathf.Lerp(m_MoveStartAngle, m_MoveEndAngle, t);
     }
 
     private void OnMove()
@@ -86,15 +109,15 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_TimeCount >= m_Duration)
                 {
                     m_Phase = E_PHASE.MOVE_TO_RIGHT;
-                    m_MoveStartPos = m_ParamSet.BasePos;
-                    m_MoveEndPos = m_ParamSet.BasePos + Vector3.right * m_ParamSet.Amplitude / 2f;
+                    m_MoveStartAngle = 0f;
+                    m_MoveEndAngle = m_ParamSet.ArcAngle / 2f;
                     m_TimeCount = 0;
                     m_Duration = m_ParamSet.MoveDuration;
                 }
                 break;
 
             case E_PHASE.MOVE_TO_LEFT:
-                SetPosition(GetMovePosition());
+                SetPosition(GetArcPosition(GetMoveAngle()));
                 if (m_TimeCount >= m_Duration)
                 {
                     m_Phase = E_PHASE.WAIT_ON_LEFT;
@@ -107,15 +130,15 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_TimeCount >= m_Duration)
                 {
                     m_Phase = E_PHASE.MOVE_TO_RIGHT;
-                    m_MoveStartPos = m_ParamSet.BasePos - Vector3.right * m_ParamSet.Amplitude / 2f;
-                    m_MoveEndPos = m_ParamSet.BasePos + Vector3.right * m_ParamSet.Amplitude / 2f;
+                    m_MoveStartAngle = -m_ParamSet.ArcAngle / 2f;
+                    m_MoveEndAngle = m_ParamSet.ArcAngle / 2f;
                     m_TimeCount = 0;
                     m_Duration = m_ParamSet.MoveDuration;
                 }
                 break;
 
             case E_PHASE.MOVE_TO_RIGHT:
-                SetPosition(GetMovePosition());
+                SetPosition(GetArcPosition(GetMoveAngle()));
                 if (m_TimeCount >= m_Duration)
                 {
                     m_Phase = E_PHASE.WAIT_ON_RIGHT;
@@ -128,8 +151,8 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_TimeCount >= m_Duration)
                 {
                     m_Phase = E_PHASE.MOVE_TO_LEFT;
-                    m_MoveStartPos = m_ParamSet.BasePos + Vector3.right * m_ParamSet.Amplitude / 2f;
-                    m_MoveEndPos = m_ParamSet.BasePos - Vector3.right * m_ParamSet.Amplitude / 2f;
+                    m_MoveStartAngle = m_ParamSet.ArcAngle / 2f;
+                    m_MoveEndAngle = -m_ParamSet.ArcAngle / 2f;
                     m_TimeCount = 0;
                     m_Duration = m_ParamSet.MoveDuration;
                 }

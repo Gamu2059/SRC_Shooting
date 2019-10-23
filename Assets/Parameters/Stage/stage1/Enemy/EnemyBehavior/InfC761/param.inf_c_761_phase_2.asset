@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ab5bf3837ecf34c82b4d07f1c66d0e, type: 3}
-  m_Name: param.inf_c_761_phase_1
+  m_Script: {fileID: 11500000, guid: 0e9958890efad9c40ac2c7239bbd1ea2, type: 3}
+  m_Name: param.inf_c_761_phase_2
   m_EditorClassIdentifier: 
-  m_BehaviorClass: InfC761Phase1
-  m_BasePos: {x: 0, y: 0, z: 0.8}
-  m_Amplitude: 1
+  m_BehaviorClass: InfC761Phase2
+  m_BasePos: {x: 0, y: 0, z: 1}
+  m_Radius: 0.6
+  m_ArcAngle: 120
   m_NormalizedRate:
     serializedVersion: 2
     m_Curve:
@@ -41,10 +42,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_NextMoveWaitTime: 0.5
   m_StartDuration: 0.8
-  m_MoveDuration: 4
+  m_MoveDuration: 3
   m_ShotParam:
-    Interval: 0.3
-    Num: 1
-    Angle: 20
+    Interval: 0
+    Num: 3
+    Angle: 30
   m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
   m_RightShotOffset: {x: 0.1, y: 0, z: 0}

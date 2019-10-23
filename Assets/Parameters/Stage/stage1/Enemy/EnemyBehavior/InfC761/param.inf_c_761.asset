@@ -18,5 +18,16 @@ MonoBehaviour:
     type: 2}
   m_AttackParamSets:
   - {fileID: 11400000, guid: a5d77046beb62ee4e8513bd2f20c81ca, type: 2}
+  - {fileID: 11400000, guid: 26a464fc0bea5ba4a896a2f9837db437, type: 2}
+  - {fileID: 11400000, guid: e61391723b75e764b89291edbb88b2b9, type: 2}
   m_DownParamSets:
-  - {fileID: 11400000, guid: a5d77046beb62ee4e8513bd2f20c81ca, type: 2}
+  - {fileID: 11400000, guid: ff805f0f39f72244fa0ace7a78feebbb, type: 2}
+  m_DownHp: 100
+  m_ChangeAttackHpRates: []
+  m_ItemParam:
+    ItemSpreadParams:
+    - Type: 0
+      Num: 20
+      Point: 200
+      SpreadRadius: 0.6
+    CenterCreateItemType: 7

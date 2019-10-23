@@ -140,6 +140,18 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
                 player.SufferChara(player, attackData, targetData, hitPosList);
                 enemy.HitChara(enemy, attackData, targetData, hitPosList);
             });
+
+            // ボスならプレイヤーからの被弾も在り得る
+            if (enemy.IsBoss)
+            {
+                Collision.CheckCollide(player, enemy, (attackData, targetData, hitPosList) =>
+                {
+                    attackData.IsCollide = true;
+                    targetData.IsCollide = true;
+                    enemy.SufferChara(player, attackData, targetData, hitPosList);
+                    player.HitChara(enemy, attackData, targetData, hitPosList);
+                });
+            }
         }
     }
 

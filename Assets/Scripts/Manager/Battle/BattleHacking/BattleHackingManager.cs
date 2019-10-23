@@ -24,6 +24,8 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingBulletManager BulletManager { get; private set; }
     public BattleHackingCollisionManager CollisionManager { get; private set; }
 
+    public bool IsHackingSuccess { get; private set; }
+
     #endregion
 
     public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
@@ -169,6 +171,8 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnStart()
     {
+        IsHackingSuccess = false;
+
         InputManager.OnStart();
         HackingTimerManager.OnStart();
         PlayerManager.OnStart();
@@ -357,6 +361,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameClear()
     {
+        IsHackingSuccess = true;
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
@@ -383,6 +388,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameOver()
     {
+        IsHackingSuccess = false;
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
