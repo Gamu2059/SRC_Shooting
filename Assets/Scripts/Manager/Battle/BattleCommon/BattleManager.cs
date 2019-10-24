@@ -165,8 +165,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         HackingManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_STATE.START);
-
-        GameManager.Instance.ResetHackingSucceedCount();
     }
 
     public override void OnFinalize()
@@ -217,6 +215,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         audio.PlayBgmImmediate(m_ParamSet.BgmParamSet.StageBgmName);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
+        
+        GameManager.Instance.PlayerData.ResetHackingSucceedCount();
+        GameManager.Instance.PlayerData.ResetBestScore();
     }
 
     private void UpdateOnStart()
@@ -551,6 +552,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
         });
         TimerManager.Instance.RegistTimer(timer);
+
+        //Debug.Log("BackToTitle");
+        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord(BattleRealPlayerManager.Instance.GetCurrentScore().Value, 1, System.DateTime.Now));
+        GameManager.Instance.PlayerRecordManager.ShowRecord();
     }
 
     private void UpdateOnEnd()

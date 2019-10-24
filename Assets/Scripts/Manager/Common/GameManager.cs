@@ -26,9 +26,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     private PlayerData m_PlayerData;
     public PlayerData PlayerData => m_PlayerData;
 
-	public float m_BestScore{get; private set;}
-
-	public int m_HackingSucceedCount{get; private set;}
+    private PlayerRecordManager m_PlayerRecordManager;
+    public PlayerRecordManager PlayerRecordManager => m_PlayerRecordManager;
 
 	protected override void OnAwake()
 	{
@@ -72,8 +71,10 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
 
+        m_PlayerRecordManager = new PlayerRecordManager();
+        m_PlayerRecordManager.OnInitialize();
+
         m_PlayerData = new PlayerData();
-		ResetBestScore();
 	}
 
 	public override void OnFinalize()
@@ -129,20 +130,4 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         m_TransitionManager.OnFixedUpdate();
         m_SceneManager.OnFixedUpdate();
 	}
-
-	public void ResetBestScore(){
-        m_BestScore = 1000.0f;
-    }
-
-    public void UpdateBestScore(float score){
-        m_BestScore = score;
-    }
-
-	public void ResetHackingSucceedCount(){
-        m_HackingSucceedCount = 0;
-    }
-
-    public void IncreaseHackingSucceedCount(){
-        m_HackingSucceedCount++;
-    }
 }
