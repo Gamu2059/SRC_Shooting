@@ -190,7 +190,6 @@ public class InfC761 : BattleRealEnemyController
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
-        Debug.Log(m_StateMachine.CurrentState.Key);
     }
 
     public override void OnLateUpdate()
