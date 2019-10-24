@@ -75,7 +75,6 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
     {
         base.OnStart();
 
-        // 個別の敵をタイマー経由で生成するようにする
         if (m_GenerateParamSet != null)
         {
             var individualParamSets = m_GenerateParamSet.IndividualGenerateParamSets;

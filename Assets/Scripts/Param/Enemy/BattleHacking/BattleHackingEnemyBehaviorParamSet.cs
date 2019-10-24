@@ -14,8 +14,8 @@ public abstract class BattleHackingEnemyBehaviorParamSet : ScriptableObject
     public string BehaviorClass => m_BehaviorClass;
 
     [SerializeField]
-    private BulletSetParam m_BulletSetParam;
-    public BulletSetParam BulletSetParam => m_BulletSetParam;
+    private CommandBulletSetParam m_BulletSetParam;
+    public CommandBulletSetParam BulletSetParam => m_BulletSetParam;
 
     [SerializeField]
     private BattleHackingEnemyLookParamSet m_EnemyLookParamSet;

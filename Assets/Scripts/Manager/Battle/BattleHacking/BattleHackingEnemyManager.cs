@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using EnemyContent = BattleHackingLevelParamSet.Content;
 
 /// <summary>
 /// ハッキングモードの敵キャラを管理する。
@@ -44,6 +45,10 @@ public class BattleHackingEnemyManager : ControllableObject
     /// </summary>
     private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
 
+    private List<EnemyContent> m_ContentParamSets;
+    private List<EnemyContent> m_RemoveContentParamSets;
+    private float m_CreateEnemyCount;
+
     private static List<BattleHackingEnemyController> m_ReservedRegisterEnemies = new List<BattleHackingEnemyController>();
 
     #endregion
@@ -63,10 +68,18 @@ public class BattleHackingEnemyManager : ControllableObject
         m_UpdateEnemies = new List<BattleHackingEnemyController>();
         m_GotoPoolEnemies = new List<BattleHackingEnemyController>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
+
+        m_ContentParamSets = new List<EnemyContent>();
+        m_RemoveContentParamSets = new List<EnemyContent>();
     }
 
     public override void OnFinalize()
     {
+        m_RemoveContentParamSets.Clear();
+        m_ContentParamSets.Clear();
+        m_RemoveContentParamSets = null;
+        m_ContentParamSets = null;
+
         DestroyAllEnemy();
         base.OnFinalize();
     }
@@ -130,6 +143,9 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public override void OnFixedUpdate()
     {
+        // 生成処理
+        GenerateEnemy();
+
         // FixedUpdate処理
         foreach (var enemy in m_UpdateEnemies)
         {
@@ -218,6 +234,30 @@ public class BattleHackingEnemyManager : ControllableObject
         CheckStandByEnemy(enemy);
     }
 
+    private void GenerateEnemy()
+    {
+        for (int i = 0; i < m_ContentParamSets.Count; i++)
+        {
+            var paramSet = m_ContentParamSets[i];
+            if (m_CreateEnemyCount >= paramSet.GenerateTime)
+            {
+                CreateEnemy(paramSet.GenerateParamSet, paramSet.BehaviorParamSet);
+                m_RemoveContentParamSets.Add(paramSet);
+            }
+        }
+
+        if (m_RemoveContentParamSets.Count > 0)
+        {
+            foreach (var paramSet in m_RemoveContentParamSets)
+            {
+                m_ContentParamSets.Remove(paramSet);
+            }
+            m_RemoveContentParamSets.Clear();
+        }
+
+        m_CreateEnemyCount += Time.fixedDeltaTime;
+    }
+
     /// <summary>
     /// 破棄フラグが立っているものをプールに戻す
     /// </summary>
@@ -289,7 +329,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// プールから敵を取得する。
     /// 足りなければ生成する。
     /// </summary>
-    private GameObject GetPoolingEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    private GameObject GetPoolingEnemy(BattleHackingEnemyGenerateParamSet generateParamSet, BattleHackingEnemyBehaviorParamSet behaviorParamSet)
     {
         if (generateParamSet == null || behaviorParamSet == null)
         {
@@ -368,7 +408,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public BattleHackingEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    public BattleHackingEnemyController CreateEnemy(BattleHackingEnemyGenerateParamSet generateParamSet, BattleHackingEnemyBehaviorParamSet behaviorParamSet)
     {
         if (generateParamSet == null || behaviorParamSet == null)
         {
@@ -470,7 +510,7 @@ public class BattleHackingEnemyManager : ControllableObject
         return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
 
-    public void OnPrepare()
+    public void OnPrepare(BattleHackingLevelParamSet levelParamSet)
     {
 
     }

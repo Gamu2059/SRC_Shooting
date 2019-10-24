@@ -140,26 +140,25 @@ public class BattleHackingPlayerManager : ControllableObject
     /// <summary>
     /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
     /// </summary>
-    private Vector3 GetInitAppearPosition()
+    private Vector3 GetInitAppearPosition(Vector2 viewportPos)
     {
         var stageManager = BattleHackingStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        var initViewPos = m_ParamSet.InitAppearViewportPosition;
 
-        var factX = (maxPos.x - minPos.x) * initViewPos.x + minPos.x;
-        var factZ = (maxPos.y - minPos.y) * initViewPos.y + minPos.y;
+        var factX = (maxPos.x - minPos.x) * viewportPos.x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * viewportPos.y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
         pos += m_PlayerCharaHolder.position;
 
         return pos;
     }
 
-    public void OnPrepare()
+    public void OnPrepare(BattleHackingLevelParamSet levelParamSet)
     {
         if (Player != null)
         {
-            var pos = GetInitAppearPosition();
+            var pos = GetInitAppearPosition(levelParamSet.InitAppearViewportPosition);
             Player.transform.position = pos;
             Player.gameObject.SetActive(true);
             Player.OnStart();

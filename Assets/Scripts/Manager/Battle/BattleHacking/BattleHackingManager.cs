@@ -13,6 +13,8 @@ public class BattleHackingManager : ControllableObject
 
     private BattleHackingParamSet m_ParamSet;
 
+    private BattleHackingLevelParamSet m_LevelParamSet;
+
     private StateMachine<E_BATTLE_HACKING_STATE> m_StateMachine;
 
     public BattleHackingInputManager InputManager { get; private set; }
@@ -125,7 +127,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnInitialize();
         CollisionManager.OnInitialize();
 
-        RequestChangeState(E_BATTLE_HACKING_STATE.START);        
+        RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
 
     public override void OnFinalize()
@@ -173,6 +175,8 @@ public class BattleHackingManager : ControllableObject
         EnemyManager.OnStart();
         BulletManager.OnStart();
         CollisionManager.OnStart();
+
+        SetHackingLevel(0);
 
         RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
     }
@@ -260,8 +264,15 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnTransitionToHacking()
     {
-        PlayerManager.OnPrepare();
-        EnemyManager.OnPrepare();
+        if (m_LevelParamSet == null)
+        {
+            Debug.LogError("Hacking Level Param Set is null!");
+            RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+            return;
+        }
+
+        PlayerManager.OnPrepare(m_LevelParamSet);
+        EnemyManager.OnPrepare(m_LevelParamSet);
     }
 
     private void UpdateOnTransitionToHacking()
@@ -426,5 +437,56 @@ public class BattleHackingManager : ControllableObject
         }
 
         m_StateMachine.Goto(state);
+    }
+
+    /// <summary>
+    /// ハッキングのレベルを指定する。
+    /// これは、ハッキングモードに遷移する前に指定しなければ意味をなさない。
+    /// 指定したレベルが存在しなければ、一番最初にセットされているレベルを指定する。
+    /// </summary>
+    public void SetHackingLevel(string hackingLevelLabel)
+    {
+        if (m_ParamSet == null || m_ParamSet.LevelParamSets == null)
+        {
+            return;
+        }
+
+        var levels = m_ParamSet.LevelParamSets;
+        for (int i = 0; i < levels.Length; i++)
+        {
+            var level = levels[i];
+            if (hackingLevelLabel == level.GeneratorLabel)
+            {
+                m_LevelParamSet = level;
+                return;
+            }
+        }
+
+        if (levels.Length > 0)
+        {
+            m_LevelParamSet = levels[0];
+        }
+    }
+
+    /// <summary>
+    /// ハッキングのレベルを指定する。
+    /// これは、ハッキングモードに遷移する前に指定しなければ意味をなさない。
+    /// 指定したレベルが存在しなければ、一番最初にセットされているレベルを指定する。
+    /// </summary>
+    public void SetHackingLevel(int hackingLevelIndex)
+    {
+        if (m_ParamSet == null || m_ParamSet.LevelParamSets == null)
+        {
+            return;
+        }
+
+        var levels = m_ParamSet.LevelParamSets;
+        if ((hackingLevelIndex < 0 || hackingLevelIndex >= levels.Length) && levels.Length > 0)
+        {
+            m_LevelParamSet = levels[0];
+            return;
+        }
+
+        m_LevelParamSet = levels[hackingLevelIndex];
     }
 }

@@ -20,4 +20,8 @@ public class BattleHackingParamSet : ScriptableObject
     [SerializeField]
     private BattleHackingBulletManagerParamSet m_BulletManagerParamSet;
     public BattleHackingBulletManagerParamSet BulletManagerParamSet => m_BulletManagerParamSet;
+
+    [SerializeField]
+    private BattleHackingLevelParamSet[] m_LevelParamSets;
+    public BattleHackingLevelParamSet[] LevelParamSets => m_LevelParamSets;
 }

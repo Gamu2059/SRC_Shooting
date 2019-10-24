@@ -14,11 +14,11 @@ public class BattleHackingEnemyController : CommandCharaController
 
     private string m_LookId;
 
-    private BattleRealEnemyGenerateParamSet m_GenerateParamSet;
-    protected BattleRealEnemyGenerateParamSet GenerateParamSet => m_GenerateParamSet;
+    private BattleHackingEnemyGenerateParamSet m_GenerateParamSet;
+    protected BattleHackingEnemyGenerateParamSet GenerateParamSet => m_GenerateParamSet;
 
-    private BattleRealEnemyBehaviorParamSet m_BehaviorParamSet;
-    protected BattleRealEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
+    private BattleHackingEnemyBehaviorParamSet m_BehaviorParamSet;
+    protected BattleHackingEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
 
     /// <summary>
     /// 敵キャラのサイクル。
@@ -120,12 +120,12 @@ public class BattleHackingEnemyController : CommandCharaController
         m_Score = score;
     }
 
-    public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    public void SetParamSet(BattleHackingEnemyGenerateParamSet generateParamSet, BattleHackingEnemyBehaviorParamSet behaviorParamSet)
     {
-        //m_GenerateParamSet = generateParamSet;
-        //m_BehaviorParamSet = behaviorParamSet;
+        m_GenerateParamSet = generateParamSet;
+        m_BehaviorParamSet = behaviorParamSet;
 
-        //SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
+        SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
 
         OnSetParamSet();
     }
