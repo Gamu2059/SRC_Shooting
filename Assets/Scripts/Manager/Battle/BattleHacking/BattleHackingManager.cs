@@ -311,9 +311,15 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGame()
     {
+        // 消滅の更新
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
+
         InputManager.OnUpdate();
         HackingTimerManager.OnUpdate();
         PlayerManager.OnUpdate();
+        EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
         CollisionManager.OnUpdate();
     }
@@ -322,13 +328,18 @@ public class BattleHackingManager : ControllableObject
     {
         HackingTimerManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
+        EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
         CollisionManager.OnLateUpdate();
 
-        // 衝突フラグのクリア
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
         BulletManager.ClearColliderFlag();
 
         // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
         BulletManager.UpdateCollider();
 
         // 衝突判定処理
@@ -336,15 +347,16 @@ public class BattleHackingManager : ControllableObject
         CollisionManager.DrawCollider();
 
         // 衝突処理
+        PlayerManager.ProcessCollision();
+        EnemyManager.ProcessCollision();
         BulletManager.ProcessCollision();
-
-        BulletManager.GotoPool();
     }
 
     private void FixedUpdateOnGame()
     {
         HackingTimerManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
         CollisionManager.OnFixedUpdate();
     }

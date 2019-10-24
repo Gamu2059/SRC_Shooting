@@ -40,8 +40,6 @@ public class BattleRealEnemyController : CharaController
 
     public bool IsOutOfEnemyField { get; private set; }
 
-    private int m_Score;
-
     protected ArgumentParamSet m_ParamSet;
 
     #endregion
@@ -91,7 +89,6 @@ public class BattleRealEnemyController : CharaController
         if (m_GenerateParamSet != null)
         {
             InitHp(m_GenerateParamSet.Hp);
-            SetScore(m_GenerateParamSet.Score);
         }
     }
 
@@ -129,14 +126,6 @@ public class BattleRealEnemyController : CharaController
     public virtual void SetArguments(string param)
     {
         m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
-    }
-
-    /// <summary>
-    /// 撃破時スコアをセットする
-    /// </summary>
-    public void SetScore(int score)
-    {
-        m_Score = score;
     }
 
     public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
@@ -214,7 +203,7 @@ public class BattleRealEnemyController : CharaController
             {
                 for (int i = 0; i < events.Length; i++)
                 {
-                    BattleRealPlayerManager.Instance.AddScore(m_Score);
+                    BattleRealPlayerManager.Instance.AddScore(m_GenerateParamSet.Score);
                     BattleRealEventManager.Instance.AddEvent(events[i]);
                 }
             }

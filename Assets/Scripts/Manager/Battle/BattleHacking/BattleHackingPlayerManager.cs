@@ -173,6 +173,30 @@ public class BattleHackingPlayerManager : ControllableObject
         }
     }
 
+    public void ClearColliderFlag()
+    {
+        if (Player != null)
+        {
+            Player.ClearColliderFlag();
+        }
+    }
+
+    public void UpdateCollider()
+    {
+        if (Player != null)
+        {
+            Player.UpdateCollider();
+        }
+    }
+
+    public void ProcessCollision()
+    {
+        if (Player != null)
+        {
+            Player.ProcessCollision();
+        }
+    }
+
     public void ResetShotFlag()
     {
         m_IsShotNormal = false;

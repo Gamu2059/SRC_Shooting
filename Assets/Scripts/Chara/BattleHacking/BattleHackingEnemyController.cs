@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class BattleHackingEnemyController : CommandCharaController
 {
-    [SerializeField, Tooltip("被弾直後の無敵時間")]
-    private float m_OnHitInvincibleDuration;
-
-    [SerializeField, Tooltip("撃破時の獲得スコア")]
-    private int m_Score;
-
     #region Field
 
     private string m_LookId;
@@ -30,9 +24,16 @@ public class BattleHackingEnemyController : CommandCharaController
     protected Vector2 MoveDir { get; private set; }
 
     /// <summary>
+    /// 画面外に出た時に自動的に破棄するかどうか
+    /// </summary>
+    protected bool m_WillDestroyOnOutOfEnemyField;
+
+    /// <summary>
     /// 移動方向を常に正面とするかどうか
     /// </summary>
     protected bool m_IsLookMoveDir;
+
+    protected bool IsBoss { get; private set; }
 
     /// <summary>
     /// 出現して以降、画面に映ったかどうか
@@ -73,15 +74,25 @@ public class BattleHackingEnemyController : CommandCharaController
     {
         base.OnInitialize();
 
-        //Troop = E_CHARA_TROOP.ENEMY;
-        //IsShowFirst = false;
-        //m_IsLookMoveDir = true;
+        Troop = E_CHARA_TROOP.ENEMY;
+        IsShowFirst = false;
+        m_WillDestroyOnOutOfEnemyField = true;
+        m_IsLookMoveDir = true;
 
-        //if (m_GenerateParamSet != null)
-        //{
-        //    InitHp(m_GenerateParamSet.Hp);
-        //    SetScore(m_GenerateParamSet.Score);
-        //}
+        if (m_GenerateParamSet != null)
+        {
+            InitHp(m_GenerateParamSet.Hp);
+        }
+    }
+
+    public override void OnFinalize()
+    {
+        if (IsBoss)
+        {
+            // ボスが死んだらハッキングクリア
+            BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+        }
+        base.OnFinalize();
     }
 
     public override void OnLateUpdate()
@@ -112,18 +123,12 @@ public class BattleHackingEnemyController : CommandCharaController
 
     #endregion
 
-    /// <summary>
-    /// 撃破時スコアをセットする
-    /// </summary>
-    public void SetScore(int score)
-    {
-        m_Score = score;
-    }
-
     public void SetParamSet(BattleHackingEnemyGenerateParamSet generateParamSet, BattleHackingEnemyBehaviorParamSet behaviorParamSet)
     {
         m_GenerateParamSet = generateParamSet;
         m_BehaviorParamSet = behaviorParamSet;
+
+        IsBoss = generateParamSet.IsBoss;
 
         SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
 
@@ -135,27 +140,27 @@ public class BattleHackingEnemyController : CommandCharaController
 
     }
 
+    protected override void OnEnterSufferBullet(HitSufferData<CommandBulletController> sufferData)
+    {
+        base.OnEnterSufferBullet(sufferData);
+
+        var bullet = sufferData.OpponentObject;
+        if (BattleRealStageManager.Instance.IsOutOfField(bullet.transform))
+        {
+            return;
+        }
+
+        Damage(1);
+    }
+
     public override void Dead()
     {
         base.Dead();
 
-        BattleRealPlayerManager.Instance.AddScore(m_Score);
-
-        //if (m_GenerateParamSet != null)
-        //{
-        //    BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
-
-        //    var events = m_GenerateParamSet.DefeatEvents;
-        //    if (events != null)
-        //    {
-        //        for (int i = 0; i < events.Length; i++)
-        //        {
-        //            BattleRealPlayerManager.Instance.AddScore(m_Score);
-        //            BattleRealEventManager.Instance.ExecuteEvent(events[i]);
-        //        }
-        //    }
-        //}
-
+        if (m_GenerateParamSet != null)
+        {
+            BattleRealPlayerManager.Instance.AddScore(m_GenerateParamSet.Score);
+        }
         Destroy();
     }
 

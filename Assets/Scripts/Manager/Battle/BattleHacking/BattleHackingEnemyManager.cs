@@ -512,11 +512,19 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public void OnPrepare(BattleHackingLevelParamSet levelParamSet)
     {
-
+        if (levelParamSet != null)
+        {
+            for (int i=0;i<levelParamSet.EnemyContents.Length;i++)
+            {
+                var content = levelParamSet.EnemyContents[i];
+                m_ContentParamSets.Add(content);
+            }
+        }
+        m_CreateEnemyCount = 0;
     }
 
     public void OnPutAway()
     {
-
+        DestroyAllEnemy();
     }
 }

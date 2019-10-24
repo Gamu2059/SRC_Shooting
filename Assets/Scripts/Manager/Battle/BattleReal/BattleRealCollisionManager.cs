@@ -6,11 +6,6 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
 {
     public static BattleRealCollisionManager Instance => BattleRealManager.Instance.CollisionManager;
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
     /// <summary>
     /// 衝突をチェックする。
     /// </summary>

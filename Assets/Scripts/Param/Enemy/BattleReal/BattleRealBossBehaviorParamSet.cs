@@ -7,7 +7,7 @@ using System;
 /// リアルモードのボスの攻撃やダウン時のパラメータの規定クラス。
 /// このクラスを継承してパラメータのセットを定義して下さい。
 /// </summary>
-public class BattleRealBossBehaviorParamSet : ScriptableObject
+public abstract class BattleRealBossBehaviorParamSet : ScriptableObject
 {
     [SerializeField]
     private string m_BehaviorClass;

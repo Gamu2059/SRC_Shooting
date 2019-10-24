@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 65514efcd37b84349a86e9ec02a273b1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -164,8 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: 
-    ColliderType: 0
+  - ColliderType: 0
+    ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0, g: 0.91761637, b: 1, a: 0}
