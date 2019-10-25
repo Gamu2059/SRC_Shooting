@@ -41,6 +41,11 @@ public static class Collision
     {
         hitPosList = null;
 
+        if (collider1.Transform.IsDisable || collider2.Transform.IsDisable)
+        {
+            return false;
+        }
+
         // 大雑把に衝突していそうかを事前に判定する
         if (!IsCollideOutSide(collider1, collider2))
         {

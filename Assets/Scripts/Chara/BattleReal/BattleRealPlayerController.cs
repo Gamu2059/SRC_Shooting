@@ -193,8 +193,11 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
+        BattleRealManager.Instance.DeadPlayer();
+    }
 
-        gameObject.SetActive(false);
-        BattleManager.Instance.GameOver();
+    public virtual void SetInvinsible()
+    {
+
     }
 }
