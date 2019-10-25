@@ -5,16 +5,6 @@ using System;
 
 public class BattleRealEnemyController : CharaController
 {
-    public const string HIT_INVINCIBLE_TIMER_KEY = "HitInvincibleTimer";
-
-    [Space()]
-    [Header("敵専用 パラメータ")]
-    [SerializeField, Tooltip("撃破時の獲得スコア")]
-    private int m_Score;
-
-    [SerializeField, Tooltip("被弾直後の無敵時間")]
-    private float m_OnHitInvincibleDuration;
-
     #region Field
 
     private string m_LookId;
@@ -37,9 +27,16 @@ public class BattleRealEnemyController : CharaController
     protected bool m_IsLookMoveDir;
 
     /// <summary>
+    /// 画面外に出た時に自動的に破棄するかどうか
+    /// </summary>
+    protected bool m_WillDestroyOnOutOfEnemyField;
+
+    /// <summary>
     /// 出現して以降、画面に映ったかどうか
     /// </summary>
     protected bool IsShowFirst { get; private set; }
+
+    public bool IsBoss { get; protected set; }
 
     public bool IsOutOfEnemyField { get; private set; }
 
@@ -86,11 +83,12 @@ public class BattleRealEnemyController : CharaController
         Troop = E_CHARA_TROOP.ENEMY;
         IsShowFirst = false;
         m_IsLookMoveDir = true;
+        IsBoss = false;
+        m_WillDestroyOnOutOfEnemyField = true;
 
         if (m_GenerateParamSet != null)
         {
             InitHp(m_GenerateParamSet.Hp);
-            SetScore(m_GenerateParamSet.Score);
         }
     }
 
@@ -128,14 +126,6 @@ public class BattleRealEnemyController : CharaController
     public virtual void SetArguments(string param)
     {
         m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
-    }
-
-    /// <summary>
-    /// 撃破時スコアをセットする
-    /// </summary>
-    public void SetScore(int score)
-    {
-        m_Score = score;
     }
 
     public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
@@ -186,23 +176,7 @@ public class BattleRealEnemyController : CharaController
             return;
         }
 
-        if (m_OnHitInvincibleDuration <= 0)
-        {
-            Damage(1);
-            return;
-        }
-
-        Timer timer = GetTimer(HIT_INVINCIBLE_TIMER_KEY);
-
-        if (timer == null)
-        {
-            timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, m_OnHitInvincibleDuration, () =>
-            {
-                timer = null;
-            });
-            RegistTimer(HIT_INVINCIBLE_TIMER_KEY, timer);
-            Damage(1);
-        }
+        Damage(1);
     }
 
     protected override void OnStaySufferBullet(HitSufferData<BulletController> sufferData)
@@ -229,8 +203,8 @@ public class BattleRealEnemyController : CharaController
             {
                 for (int i = 0; i < events.Length; i++)
                 {
-                    BattleRealPlayerManager.Instance.AddScore(m_Score);
-                    BattleRealEventManager.Instance.ExecuteEvent(events[i]);
+                    BattleRealPlayerManager.Instance.AddScore(m_GenerateParamSet.Score);
+                    BattleRealEventManager.Instance.AddEvent(events[i]);
                 }
             }
         }

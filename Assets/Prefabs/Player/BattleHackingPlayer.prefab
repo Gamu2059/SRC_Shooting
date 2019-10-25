@@ -103,6 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1643017903703844851}
+  - component: {fileID: 8384026844665752691}
   m_Layer: 13
   m_Name: Critical Collider
   m_TagString: Untagged
@@ -124,6 +125,19 @@ Transform:
   m_Father: {fileID: 786666305985597985}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8384026844665752691
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4890402124776017212}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6023754390697953762
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,8 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - CollideName: CRITICAL
-    ColliderType: 1
+  - ColliderType: 1
+    ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 1, g: 1, b: 1, a: 0}
@@ -267,10 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4db30cd3e54b974c99beab274e624a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 0
   m_BulletSetParam: {fileID: 11400000, guid: 6be7d14790ede8c489ae4990a2ec958b, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
   m_ShotInterval: 0.03
   m_ShotPositions:
   - {fileID: 1217217349087042395}

@@ -9,4 +9,5 @@ public enum E_COLLIDER_TYPE
     ITEM_GAIN,
     ITEM_ATTRACT,
     PLAYER_LASER,
+    PLAYER_HACKING,
 }

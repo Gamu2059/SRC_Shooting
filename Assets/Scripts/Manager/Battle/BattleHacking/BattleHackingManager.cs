@@ -24,6 +24,11 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingBulletManager BulletManager { get; private set; }
     public BattleHackingCollisionManager CollisionManager { get; private set; }
 
+    public bool IsHackingSuccess { get; private set; }
+
+    private bool m_IsDeadPlayer;
+    private bool m_IsDeadBoss;
+
     #endregion
 
     public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
@@ -43,74 +48,74 @@ public class BattleHackingManager : ControllableObject
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL)
         {
-            OnStart = StartOnTransitionToReal,
-            OnUpdate = UpdateOnTransitionToReal,
-            OnLateUpdate = LateUpdateOnTransitionToReal,
-            OnFixedUpdate = FixedUpdateOnTransitionToReal,
-            OnEnd = EndOnTransitionToReal,
+            m_OnStart = StartOnTransitionToReal,
+            m_OnUpdate = UpdateOnTransitionToReal,
+            m_OnLateUpdate = LateUpdateOnTransitionToReal,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            m_OnEnd = EndOnTransitionToReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.START)
         {
-            OnStart = StartOnStart,
-            OnUpdate = UpdateOnStart,
-            OnLateUpdate = LateUpdateOnStart,
-            OnFixedUpdate = FixedUpdateOnStart,
-            OnEnd = EndOnStart,
+            m_OnStart = StartOnStart,
+            m_OnUpdate = UpdateOnStart,
+            m_OnLateUpdate = LateUpdateOnStart,
+            m_OnFixedUpdate = FixedUpdateOnStart,
+            m_OnEnd = EndOnStart,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.STAY_REAL)
         {
-            OnStart = StartOnStayReal,
-            OnUpdate = UpdateOnStayReal,
-            OnLateUpdate = LateUpdateOnStayReal,
-            OnFixedUpdate = FixedUpdateOnStayReal,
-            OnEnd = EndOnStayReal,
+            m_OnStart = StartOnStayReal,
+            m_OnUpdate = UpdateOnStayReal,
+            m_OnLateUpdate = LateUpdateOnStayReal,
+            m_OnFixedUpdate = FixedUpdateOnStayReal,
+            m_OnEnd = EndOnStayReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING)
         {
-            OnStart = StartOnTransitionToHacking,
-            OnUpdate = UpdateOnTransitionToHacking,
-            OnLateUpdate = LateUpdateOnTransitionToHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            OnEnd = EndOnTransitionToHacking,
+            m_OnStart = StartOnTransitionToHacking,
+            m_OnUpdate = UpdateOnTransitionToHacking,
+            m_OnLateUpdate = LateUpdateOnTransitionToHacking,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            m_OnEnd = EndOnTransitionToHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME)
         {
-            OnStart = StartOnGame,
-            OnUpdate = UpdateOnGame,
-            OnLateUpdate = LateUpdateOnGame,
-            OnFixedUpdate = FixedUpdateOnGame,
-            OnEnd = EndOnGame,
+            m_OnStart = StartOnGame,
+            m_OnUpdate = UpdateOnGame,
+            m_OnLateUpdate = LateUpdateOnGame,
+            m_OnFixedUpdate = FixedUpdateOnGame,
+            m_OnEnd = EndOnGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME_CLEAR)
         {
-            OnStart = StartOnGameClear,
-            OnUpdate = UpdateOnGameClear,
-            OnLateUpdate = LateUpdateOnGameClear,
-            OnFixedUpdate = FixedUpdateOnGameClear,
-            OnEnd = EndOnGameClear,
+            m_OnStart = StartOnGameClear,
+            m_OnUpdate = UpdateOnGameClear,
+            m_OnLateUpdate = LateUpdateOnGameClear,
+            m_OnFixedUpdate = FixedUpdateOnGameClear,
+            m_OnEnd = EndOnGameClear,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME_OVER)
         {
-            OnStart = StartOnGameOver,
-            OnUpdate = UpdateOnGameOver,
-            OnLateUpdate = LateUpdateOnGameOver,
-            OnFixedUpdate = FixedUpdateOnGameOver,
-            OnEnd = EndOnGameOver,
+            m_OnStart = StartOnGameOver,
+            m_OnUpdate = UpdateOnGameOver,
+            m_OnLateUpdate = LateUpdateOnGameOver,
+            m_OnFixedUpdate = FixedUpdateOnGameOver,
+            m_OnEnd = EndOnGameOver,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.END)
         {
-            OnStart = StartOnEnd,
-            OnUpdate = UpdateOnEnd,
-            OnLateUpdate = LateUpdateOnEnd,
-            OnFixedUpdate = FixedUpdateOnEnd,
-            OnEnd = EndOnEnd,
+            m_OnStart = StartOnEnd,
+            m_OnUpdate = UpdateOnEnd,
+            m_OnLateUpdate = LateUpdateOnEnd,
+            m_OnFixedUpdate = FixedUpdateOnEnd,
+            m_OnEnd = EndOnEnd,
         });
 
         InputManager = new BattleHackingInputManager();
@@ -169,6 +174,8 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnStart()
     {
+        IsHackingSuccess = false;
+
         InputManager.OnStart();
         HackingTimerManager.OnStart();
         PlayerManager.OnStart();
@@ -271,6 +278,9 @@ public class BattleHackingManager : ControllableObject
             return;
         }
 
+        m_IsDeadPlayer = false;
+        m_IsDeadBoss = false;
+
         PlayerManager.OnPrepare(m_LevelParamSet);
         EnemyManager.OnPrepare(m_LevelParamSet);
     }
@@ -307,9 +317,15 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGame()
     {
+        // 消滅の更新
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
+
         InputManager.OnUpdate();
         HackingTimerManager.OnUpdate();
         PlayerManager.OnUpdate();
+        EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
         CollisionManager.OnUpdate();
     }
@@ -318,13 +334,18 @@ public class BattleHackingManager : ControllableObject
     {
         HackingTimerManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
+        EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
         CollisionManager.OnLateUpdate();
 
-        // 衝突フラグのクリア
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
         BulletManager.ClearColliderFlag();
 
         // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
         BulletManager.UpdateCollider();
 
         // 衝突判定処理
@@ -332,15 +353,19 @@ public class BattleHackingManager : ControllableObject
         CollisionManager.DrawCollider();
 
         // 衝突処理
+        PlayerManager.ProcessCollision();
+        EnemyManager.ProcessCollision();
         BulletManager.ProcessCollision();
 
-        BulletManager.GotoPool();
+        // ゲームの終了をチェック
+        CheckGameEnd();
     }
 
     private void FixedUpdateOnGame()
     {
         HackingTimerManager.OnFixedUpdate();
         PlayerManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
         CollisionManager.OnFixedUpdate();
     }
@@ -351,12 +376,32 @@ public class BattleHackingManager : ControllableObject
         AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
     }
 
+    private void CheckGameEnd()
+    {
+        if (m_IsDeadPlayer && m_IsDeadBoss)
+        {
+            RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+        }
+        else
+        {
+            if (m_IsDeadPlayer)
+            {
+                RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+            }
+            if (m_IsDeadBoss)
+            {
+                RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+            }
+        }
+    }
+
     #endregion
 
     #region Game Clear State
 
     private void StartOnGameClear()
     {
+        IsHackingSuccess = true;
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
@@ -383,6 +428,7 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameOver()
     {
+        IsHackingSuccess = false;
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
     }
 
@@ -488,5 +534,15 @@ public class BattleHackingManager : ControllableObject
         }
 
         m_LevelParamSet = levels[hackingLevelIndex];
+    }
+
+    public void DeadPlayer()
+    {
+        m_IsDeadPlayer = true;
+    }
+
+    public void DeadBoss()
+    {
+        m_IsDeadBoss = true;
     }
 }

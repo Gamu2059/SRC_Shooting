@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea47b8c2bdd575740b805664c0ff770e, type: 3}
   m_Name: param.hacking_level
   m_EditorClassIdentifier: 
-  m_GeneratorLabel: 
-  m_InitAppearViewportPosition: {x: 0, y: 0}
-  m_EnemyContents: []
+  m_GeneratorLabel: InfC761
+  m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
+  m_EnemyContents:
+  - m_GenerateTime: 0
+    m_GenerateParamSet: {fileID: 11400000, guid: f4eea774275324a46911c7444ed515d9,
+      type: 2}
+    m_BehaviorParamSet: {fileID: 11400000, guid: c2cd8cfef5a84174988b9f5b580a7d0f,
+      type: 2}

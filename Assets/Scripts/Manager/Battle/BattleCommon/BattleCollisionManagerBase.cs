@@ -10,6 +10,7 @@ public abstract class BattleCollisionManagerBase : ControllableObject
     private Material m_CollisionMaterial;
     private MaterialPropertyBlock m_PropertyBlock;
     private int m_ColorId;
+    private LinkedList<Mesh> m_Meshes;
 
     public override void OnInitialize()
     {
@@ -18,9 +19,30 @@ public abstract class BattleCollisionManagerBase : ControllableObject
         m_CollisionMaterial = BattleManager.Instance.ParamSet.ColliderMaterial;
         m_PropertyBlock = new MaterialPropertyBlock();
         m_ColorId = Shader.PropertyToID("_Color");
+        m_Meshes = new LinkedList<Mesh>();
+    }
+
+    public override void OnFinalize()
+    {
+        DestroyDrawingColliderMeshes();
+        m_Meshes = null;
+        base.OnFinalize();
     }
 
     public abstract void CheckCollision();
+
+    public void DestroyDrawingColliderMeshes()
+    {
+        if (m_Meshes != null)
+        {
+            foreach (var m in m_Meshes)
+            {
+                m.Clear(false);
+                GameObject.Destroy(m);
+            }
+            m_Meshes.Clear();
+        }
+    }
 
     public abstract void DrawCollider();
 
@@ -123,6 +145,7 @@ public abstract class BattleCollisionManagerBase : ControllableObject
 
         var angle = Quaternion.Euler(0, t.eulerAngles.y, 0);
         Graphics.DrawMesh(mesh, t.position, angle, m_CollisionMaterial, 0, null, 0, m_PropertyBlock);
+        m_Meshes.AddFirst(mesh);
     }
 
     private void DrawOutSideRect(ColliderData cData)

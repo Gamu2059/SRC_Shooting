@@ -86,74 +86,74 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.START)
         {
-            OnStart = StartOnStart,
-            OnUpdate = UpdateOnStart,
-            OnLateUpdate = LateUpdateOnStart,
-            OnFixedUpdate = FixedUpdateOnStart,
-            OnEnd = EndOnStart,
+            m_OnStart = StartOnStart,
+            m_OnUpdate = UpdateOnStart,
+            m_OnLateUpdate = LateUpdateOnStart,
+            m_OnFixedUpdate = FixedUpdateOnStart,
+            m_OnEnd = EndOnStart,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.REAL_MODE)
         {
-            OnStart = StartOnRealMode,
-            OnUpdate = UpdateOnRealMode,
-            OnLateUpdate = LateUpdateOnRealMode,
-            OnFixedUpdate = FixedUpdateOnRealMode,
-            OnEnd = EndOnRealMode,
+            m_OnStart = StartOnRealMode,
+            m_OnUpdate = UpdateOnRealMode,
+            m_OnLateUpdate = LateUpdateOnRealMode,
+            m_OnFixedUpdate = FixedUpdateOnRealMode,
+            m_OnEnd = EndOnRealMode,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.HACKING_MODE)
         {
-            OnStart = StartOnHackingMode,
-            OnUpdate = UpdateOnHackingMode,
-            OnLateUpdate = LateUpdateOnHackingMode,
-            OnFixedUpdate = FixedUpdateOnHackingMode,
-            OnEnd = EndOnHackingMode,
+            m_OnStart = StartOnHackingMode,
+            m_OnUpdate = UpdateOnHackingMode,
+            m_OnLateUpdate = LateUpdateOnHackingMode,
+            m_OnFixedUpdate = FixedUpdateOnHackingMode,
+            m_OnEnd = EndOnHackingMode,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_REAL)
         {
-            OnStart = StartOnTransitionToReal,
-            OnUpdate = UpdateOnTransitionToReal,
-            OnLateUpdate = LateUpdateOnTransitionToReal,
-            OnFixedUpdate = FixedUpdateOnTransitionToReal,
-            OnEnd = EndOnTransitionToReal,
+            m_OnStart = StartOnTransitionToReal,
+            m_OnUpdate = UpdateOnTransitionToReal,
+            m_OnLateUpdate = LateUpdateOnTransitionToReal,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            m_OnEnd = EndOnTransitionToReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_HACKING)
         {
-            OnStart = StartOnTransitionToHacking,
-            OnUpdate = UpdateOnTransitionToHacking,
-            OnLateUpdate = LateUpdateOnTransitionToHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            OnEnd = EndOnTransitionToHacking,
+            m_OnStart = StartOnTransitionToHacking,
+            m_OnUpdate = UpdateOnTransitionToHacking,
+            m_OnLateUpdate = LateUpdateOnTransitionToHacking,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            m_OnEnd = EndOnTransitionToHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_CLEAR)
         {
-            OnStart = StartOnGameClear,
-            OnUpdate = UpdateOnGameClear,
-            OnLateUpdate = LateUpdateOnGameClear,
-            OnFixedUpdate = FixedUpdateOnGameClear,
-            OnEnd = EndOnGameClear,
+            m_OnStart = StartOnGameClear,
+            m_OnUpdate = UpdateOnGameClear,
+            m_OnLateUpdate = LateUpdateOnGameClear,
+            m_OnFixedUpdate = FixedUpdateOnGameClear,
+            m_OnEnd = EndOnGameClear,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_OVER)
         {
-            OnStart = StartOnGameOver,
-            OnUpdate = UpdateOnGameOver,
-            OnLateUpdate = LateUpdateOnGameOver,
-            OnFixedUpdate = FixedUpdateOnGameOver,
-            OnEnd = EndOnGameOver,
+            m_OnStart = StartOnGameOver,
+            m_OnUpdate = UpdateOnGameOver,
+            m_OnLateUpdate = LateUpdateOnGameOver,
+            m_OnFixedUpdate = FixedUpdateOnGameOver,
+            m_OnEnd = EndOnGameOver,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.END)
         {
-            OnStart = StartOnEnd,
-            OnUpdate = UpdateOnEnd,
-            OnLateUpdate = LateUpdateOnEnd,
-            OnFixedUpdate = FixedUpdateOnEnd,
-            OnEnd = EndOnEnd,
+            m_OnStart = StartOnEnd,
+            m_OnUpdate = UpdateOnEnd,
+            m_OnLateUpdate = LateUpdateOnEnd,
+            m_OnFixedUpdate = FixedUpdateOnEnd,
+            m_OnEnd = EndOnEnd,
         });
 
         m_BattleRealStageManager.OnInitialize();

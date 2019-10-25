@@ -21,4 +21,8 @@ public class BattleRealEnemyGroupGenerator : ScriptableObject
     [SerializeField]
     private Content[] m_Contents;
     public Content[] Contents => m_Contents;
+
+    [SerializeField]
+    private BattleRealEnemyGroupGenerateParamSet m_BossParamSet;
+    public BattleRealEnemyGroupGenerateParamSet BossParamSet => m_BossParamSet;
 }

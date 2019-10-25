@@ -120,7 +120,7 @@ public class BattleRealEventManager : ControllableObject
             var param = m_EventParams[i];
             if (IsMeetRootCondition(ref param.Condition))
             {
-                RegistEvent(param.Contents);
+                AddEvent(param.Contents);
                 m_GotoDestroyEventParams.Add(m_EventParams[i]);
             }
         }
@@ -195,26 +195,6 @@ public class BattleRealEventManager : ControllableObject
 
             script.OnFixedUpdate();
         }
-    }
-
-    /// <summary>
-    /// EventParamを追加する。
-    /// </summary>
-    public void AddEventParam(BattleRealEventTriggerParam param)
-    {
-        var condition = param.Condition;
-        if (condition.IsMultiCondition && condition.MultiConditions == null)
-        {
-            return;
-        }
-
-        var contents = param.Contents;
-        if (contents == null || contents.Length < 1)
-        {
-            return;
-        }
-
-        m_EventParams.Add(param);
     }
 
     /// <summary>
@@ -619,9 +599,29 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
+    /// EventParamを追加する。
+    /// </summary>
+    public void AddEventParam(BattleRealEventTriggerParam param)
+    {
+        var condition = param.Condition;
+        if (condition.IsMultiCondition && condition.MultiConditions == null)
+        {
+            return;
+        }
+
+        var contents = param.Contents;
+        if (contents == null || contents.Length < 1)
+        {
+            return;
+        }
+
+        m_EventParams.Add(param);
+    }
+
+    /// <summary>
     /// イベントを登録する。
     /// </summary>
-    private void RegistEvent(BattleRealEventContent[] contents)
+    public void AddEvent(BattleRealEventContent[] contents)
     {
         if (contents == null)
         {
@@ -630,22 +630,28 @@ public class BattleRealEventManager : ControllableObject
 
         for (int i = 0; i < contents.Length; i++)
         {
-            var content = contents[i];
-            if (content.ExecuteTiming == BattleRealEventContent.E_EXECUTE_TIMING.IMMEDIATE)
+            AddEvent(contents[i]);
+        }
+    }
+
+    /// <summary>
+    /// イベントを登録する。
+    /// </summary>
+    public void AddEvent(BattleRealEventContent content)
+    {
+        if (content.ExecuteTiming == BattleRealEventContent.E_EXECUTE_TIMING.IMMEDIATE)
+        {
+            m_WaitExecuteParams.Add(content);
+        }
+        else
+        {
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, () =>
             {
                 m_WaitExecuteParams.Add(content);
-            }
-            else
-            {
-                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, () =>
-                {
-                    m_WaitExecuteParams.Add(content);
-                });
+            });
 
-                BattleRealTimerManager.Instance.RegistTimer(timer);
-            }
+            BattleRealTimerManager.Instance.RegistTimer(timer);
         }
-
     }
 
     /// <summary>
@@ -653,7 +659,6 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void ExecuteEvent(BattleRealEventContent eventContent)
     {
-        //Debug.Log(eventContent.EventType);
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:

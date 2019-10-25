@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6acf02c244ab73544a435192216248ac, type: 3}
+  m_Name: param.inf_c_761
+  m_EditorClassIdentifier: 
+  m_BehaviorClass: InfC761
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_EnemyLookParamSet: {fileID: 11400000, guid: d2ae2c5cb6bce0a419fe1dabc026cf9a,
+    type: 2}
+  m_AttackParamSets:
+  - {fileID: 11400000, guid: a5d77046beb62ee4e8513bd2f20c81ca, type: 2}
+  - {fileID: 11400000, guid: 26a464fc0bea5ba4a896a2f9837db437, type: 2}
+  - {fileID: 11400000, guid: e61391723b75e764b89291edbb88b2b9, type: 2}
+  m_DownParamSets:
+  - {fileID: 11400000, guid: ff805f0f39f72244fa0ace7a78feebbb, type: 2}
+  m_DownHp: 300
+  m_ChangeAttackHpRates: []
+  m_ItemParam:
+    ItemSpreadParams:
+    - Type: 0
+      Num: 20
+      Point: 200
+      SpreadRadius: 0.6
+    CenterCreateItemType: 7
