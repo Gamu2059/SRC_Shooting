@@ -215,9 +215,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         audio.PlayBgmImmediate(m_ParamSet.BgmParamSet.StageBgmName);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
-        
-        GameManager.Instance.PlayerData.ResetHackingSucceedCount();
-        GameManager.Instance.PlayerData.ResetBestScore();
+
+        var pData = GameManager.Instance.PlayerData;
+        pData.ResetHackingSucceedCount();
+        pData.ResetBestScore();
+        pData.ResetPlayerLast();
     }
 
     private void UpdateOnStart()

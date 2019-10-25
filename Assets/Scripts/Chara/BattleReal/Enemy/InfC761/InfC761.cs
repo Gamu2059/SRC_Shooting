@@ -41,6 +41,7 @@ public class InfC761 : BattleRealEnemyController
     private int m_AttackPhase;
     private int m_DownPhase;
     private float m_DownHp;
+    private int m_HackingSuccessCount;
     private List<float> m_ChangeAttackHpRates;
 
     #endregion
@@ -284,6 +285,7 @@ public class InfC761 : BattleRealEnemyController
         m_CurrentDown = m_DownBehaviors[m_DownPhase];
 
         m_DownHp = m_BossParamSet.DownHp;
+        m_HackingSuccessCount = 0;
 
         transform.position = new Vector3(0, 0, 1);
 
@@ -384,6 +386,13 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnHackingSuccess()
     {
+        if (m_HackingSuccessCount >= m_BossParamSet.HackingCompleteNum)
+        {
+            RequestChangeState(E_PHASE.RESCUE);
+            return;
+        }
+
+        m_HackingSuccessCount++;
         DestroyTimer(DOWN_KEY);
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
         timer.SetTimeoutCallBack(() =>
@@ -483,7 +492,7 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnRescue()
     {
-
+        BattleManager.Instance.GameClear();
     }
 
     private void UpdateOnRescue()
@@ -576,6 +585,12 @@ public class InfC761 : BattleRealEnemyController
         }
     }
 
+    public override void Dead()
+    {
+        base.Dead();
+        BattleManager.Instance.GameClear();
+    }
+
     private void OnTransitionToReal()
     {
         var currentState = m_StateMachine.CurrentState.Key;
@@ -584,6 +599,10 @@ public class InfC761 : BattleRealEnemyController
             if (BattleHackingManager.Instance.IsHackingSuccess)
             {
                 RequestChangeState(E_PHASE.HACKING_SUCCESS);
+            }
+            else
+            {
+                RequestChangeState(E_PHASE.ATTACK);
             }
         }
     }

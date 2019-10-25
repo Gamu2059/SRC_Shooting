@@ -26,15 +26,15 @@ public class BattleRealManager : ControllableObject
     public BattleRealCollisionManager CollisionManager { get; private set; }
     public BattleRealCameraManager CameraManager { get; private set; }
 
+    private bool m_IsPlayerDead;
+
     public Action OnTransitionToHacking;
     public Action OnTransitionToReal;
 
     #endregion
 
-    public static BattleRealManager Instance
-    {
-        get
-        {
+    public static BattleRealManager Instance {
+        get {
             if (BattleManager.Instance == null)
             {
                 return null;
@@ -370,6 +370,7 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGame()
     {
+        m_IsPlayerDead = false;
         InputManager.RegistInput();
         PlayerManager.ResetShotFlag();
     }
@@ -426,6 +427,11 @@ public class BattleRealManager : ControllableObject
         EnemyManager.ProcessCollision();
         BulletManager.ProcessCollision();
         ItemManager.ProcessCollision();
+
+        if (m_IsPlayerDead)
+        {
+            RequestChangeState(E_BATTLE_REAL_STATE.DEAD);
+        }
     }
 
     private void FixedUpdateOnGame()
@@ -452,24 +458,88 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnDead()
     {
-
+        PlayerManager.SetPlayerActive(false);
+        var pData = GameManager.Instance.PlayerData;
+        if (pData.m_Last < 1)
+        {
+            BattleManager.Instance.GameOver();
+        }
+        else
+        {
+            pData.DecreaseLast();
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 2);
+            timer.SetTimeoutCallBack(()=>
+            {
+                timer = null;
+                RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+            });
+            TimerManager.Instance.RegistTimer(timer);
+            Time.timeScale = 0.1f;
+        }
     }
 
     private void UpdateOnDead()
     {
+        // 消滅の更新
+        EnemyGroupManager.GotoPool();
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+        ItemManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
+
+        //InputManager.OnUpdate();
+        RealTimerManager.OnUpdate();
+        EventManager.OnUpdate();
+        //PlayerManager.OnUpdate();
+        EnemyGroupManager.OnUpdate();
+        EnemyManager.OnUpdate();
+        BulletManager.OnUpdate();
+        ItemManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnDead()
     {
+        RealTimerManager.OnLateUpdate();
+        EventManager.OnLateUpdate();
+        //PlayerManager.OnLateUpdate();
+        EnemyGroupManager.OnLateUpdate();
+        EnemyManager.OnLateUpdate();
+        BulletManager.OnLateUpdate();
+        ItemManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
+
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
+        BulletManager.ClearColliderFlag();
+        ItemManager.ClearColliderFlag();
+
+        // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
+        BulletManager.UpdateCollider();
+        ItemManager.UpdateCollider();
     }
 
     private void FixedUpdateOnDead()
     {
+        RealTimerManager.OnFixedUpdate();
+        EventManager.OnFixedUpdate();
+        //PlayerManager.OnFixedUpdate();
+        EnemyGroupManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
+        BulletManager.OnFixedUpdate();
+        ItemManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnDead()
     {
-
+        PlayerManager.InitPlayerPosition();
+        PlayerManager.SetPlayerActive(true);
+        PlayerManager.SetPlayerInvinsible();
+        Time.timeScale = 1;
     }
 
     #endregion
@@ -704,5 +774,10 @@ public class BattleRealManager : ControllableObject
         }
 
         m_StateMachine.Goto(state);
+    }
+
+    public void DeadPlayer()
+    {
+        m_IsPlayerDead = true;
     }
 }

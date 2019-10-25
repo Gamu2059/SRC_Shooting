@@ -133,9 +133,8 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             m_Player = GameObject.Instantiate (m_ParamSet.PlayerPrefab);
         }
 
-        var pos = GetInitAppearPosition ();
         m_Player.transform.SetParent (m_PlayerCharaHolder);
-        m_Player.transform.position = pos;
+        InitPlayerPosition();
         m_Player.OnInitialize ();
 
         InitPlayerState();
@@ -243,10 +242,21 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         stageManager.ClampMovingObjectPosition (m_Player.transform);
     }
 
+    public void InitPlayerPosition()
+    {
+        if (Player == null)
+        {
+            return;
+        }
+
+        var pos = GetInitAppearPosition();
+        Player.transform.position = pos;
+    }
+
     /// <summary>
     /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
     /// </summary>
-    public Vector3 GetInitAppearPosition () {
+    private Vector3 GetInitAppearPosition () {
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
@@ -342,5 +352,21 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     public void ResetShotFlag()
     {
         m_IsShotNormal = false;
+    }
+
+    public void SetPlayerActive(bool isEnable)
+    {
+        if (Player != null)
+        {
+            Player.gameObject.SetActive(isEnable);
+        }
+    }
+
+    public void SetPlayerInvinsible()
+    {
+        if (Player != null)
+        {
+            Player.SetInvinsible();
+        }
     }
 }

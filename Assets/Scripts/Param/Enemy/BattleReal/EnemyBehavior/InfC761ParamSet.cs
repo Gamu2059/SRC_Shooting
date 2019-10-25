@@ -19,6 +19,10 @@ public class InfC761ParamSet : BattleRealEnemyBehaviorParamSet
     public float DownHp => m_DownHp;
 
     [SerializeField]
+    private int m_HackingCompleteNum;
+    public int HackingCompleteNum => m_HackingCompleteNum;
+
+    [SerializeField]
     private List<float> m_ChangeAttackHpRates;
     public List<float> ChangeAttackHpRates => m_ChangeAttackHpRates;
 
