@@ -26,6 +26,9 @@ public class BattleHackingManager : ControllableObject
 
     public bool IsHackingSuccess { get; private set; }
 
+    private bool m_IsDeadPlayer;
+    private bool m_IsDeadBoss;
+
     #endregion
 
     public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
@@ -275,6 +278,9 @@ public class BattleHackingManager : ControllableObject
             return;
         }
 
+        m_IsDeadPlayer = false;
+        m_IsDeadBoss = false;
+
         PlayerManager.OnPrepare(m_LevelParamSet);
         EnemyManager.OnPrepare(m_LevelParamSet);
     }
@@ -350,6 +356,9 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.ProcessCollision();
         EnemyManager.ProcessCollision();
         BulletManager.ProcessCollision();
+
+        // ゲームの終了をチェック
+        CheckGameEnd();
     }
 
     private void FixedUpdateOnGame()
@@ -365,6 +374,25 @@ public class BattleHackingManager : ControllableObject
     {
         InputManager.RemoveInput();
         AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
+    }
+
+    private void CheckGameEnd()
+    {
+        if (m_IsDeadPlayer && m_IsDeadBoss)
+        {
+            RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+        }
+        else
+        {
+            if (m_IsDeadPlayer)
+            {
+                RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+            }
+            if (m_IsDeadBoss)
+            {
+                RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+            }
+        }
     }
 
     #endregion
@@ -506,5 +534,15 @@ public class BattleHackingManager : ControllableObject
         }
 
         m_LevelParamSet = levels[hackingLevelIndex];
+    }
+
+    public void DeadPlayer()
+    {
+        m_IsDeadPlayer = true;
+    }
+
+    public void DeadBoss()
+    {
+        m_IsDeadBoss = true;
     }
 }

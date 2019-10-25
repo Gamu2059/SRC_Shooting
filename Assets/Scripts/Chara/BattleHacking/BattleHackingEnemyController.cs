@@ -87,11 +87,6 @@ public class BattleHackingEnemyController : CommandCharaController
 
     public override void OnFinalize()
     {
-        if (IsBoss)
-        {
-            // ボスが死んだらハッキングクリア
-            BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
-        }
         base.OnFinalize();
     }
 
@@ -161,6 +156,13 @@ public class BattleHackingEnemyController : CommandCharaController
         {
             BattleRealPlayerManager.Instance.AddScore(m_GenerateParamSet.Score);
         }
+
+        if (IsBoss)
+        {
+            // ボスが死んだらハッキングクリア
+            BattleHackingManager.Instance.DeadBoss();
+        }
+
         Destroy();
     }
 

@@ -185,15 +185,15 @@ public class InfC761Hacker1Phase1 : BattleHackingBossBehavior
         var correctAngle = 0f;
         if (isPlayerLook)
         {
-            var player = BattleRealPlayerManager.Instance.Player;
-            var delta = player.transform.position - Enemy.transform.position;
-            correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg + 180;
+            var player = BattleHackingPlayerManager.Instance.Player;
+            var delta = player.transform.position - ( shotPosition + Enemy.transform.position);
+            correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
         }
 
         for (int i = 0; i < num; i++)
         {
             var bullet = Shot(shotParam);
-            bullet.SetRotation(new Vector3(0, spreadAngles[i] + correctAngle, 0), E_RELATIVE.RELATIVE);
+            bullet.SetRotation(new Vector3(0, spreadAngles[i] + correctAngle, 0));
         }
     }
 

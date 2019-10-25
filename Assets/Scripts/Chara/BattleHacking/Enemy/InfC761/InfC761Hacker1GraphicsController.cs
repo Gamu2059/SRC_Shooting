@@ -8,8 +8,11 @@ using UnityEngine;
 public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
 {
     [SerializeField]
-    private Transform m_Eye;
-    public Transform Eye => m_Eye;
+    private Transform m_EyeHolder;
+
+    [SerializeField]
+    private Transform m_EyeMain;
+    public Transform Eye => m_EyeMain;
 
     [SerializeField]
     private SpriteRenderer m_BodyRenderer;
@@ -36,14 +39,14 @@ public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
             var player = BattleHackingPlayerManager.Instance.Player;
             if (player != null)
             {
-                var dir = player.transform.position - m_Eye.position;
+                var dir = player.transform.position - m_EyeMain.position;
                 dir = dir.ToVector2XZ().normalized.ToVector3XZ();
-                m_Eye.localPosition = dir * m_EyeMoveRadius;
+                m_EyeHolder.localPosition = dir * m_EyeMoveRadius;
             }
         }
         else
         {
-            m_Eye.position = Vector3.zero;
+            m_EyeHolder.position = Vector3.zero;
         }
     }
 

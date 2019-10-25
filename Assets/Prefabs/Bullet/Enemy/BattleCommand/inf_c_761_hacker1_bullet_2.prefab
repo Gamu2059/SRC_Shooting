@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9184732078692173472}
   - component: {fileID: 7298545733521227823}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,8 +88,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3362366713523454778}
-  - component: {fileID: 8072787174401334041}
-  m_Layer: 0
+  - component: {fileID: 5777714244507437898}
+  m_Layer: 13
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,13 +105,13 @@ Transform:
   m_GameObject: {fileID: 3362366713523454779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 6965415768105118110}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8072787174401334041
-BoxCollider:
+--- !u!135 &5777714244507437898
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -121,7 +121,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3362366715077073200
 GameObject:
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 3362366715077073203}
   - component: {fileID: 3362366715077073213}
   - component: {fileID: 3362366715077073202}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: inf_c_761_hacker1_bullet_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletGroupId: InfC761 Bullet2
+  m_IsDestoryOnCollide: 0
   m_Cycle: 0
 --- !u!1 &6468174637717606981
 GameObject:
@@ -198,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6965415768105118110}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}

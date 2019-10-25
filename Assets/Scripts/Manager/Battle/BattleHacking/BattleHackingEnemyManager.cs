@@ -80,7 +80,7 @@ public class BattleHackingEnemyManager : ControllableObject
         m_RemoveContentParamSets = null;
         m_ContentParamSets = null;
 
-        DestroyAllEnemy();
+        CheckPoolAllEnemy();
         base.OnFinalize();
     }
 
@@ -406,6 +406,26 @@ public class BattleHackingEnemyManager : ControllableObject
     }
 
     /// <summary>
+    /// 全ての敵キャラを破棄する。
+    /// これを呼び出したタイミングの次のLateUpdateで破棄される。
+    /// </summary>
+    private void CheckPoolAllEnemy()
+    {
+        foreach (var enemy in m_StandbyEnemies)
+        {
+            CheckPoolEnemy(enemy);
+        }
+        m_StandbyEnemies.Clear();
+
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            CheckPoolEnemy(enemy);
+        }
+
+        GotoPoolEnemy();
+    }
+
+    /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
     public BattleHackingEnemyController CreateEnemy(BattleHackingEnemyGenerateParamSet generateParamSet, BattleHackingEnemyBehaviorParamSet behaviorParamSet)
@@ -452,20 +472,6 @@ public class BattleHackingEnemyManager : ControllableObject
     public void DestroyEnemy(BattleHackingEnemyController enemy)
     {
         CheckPoolEnemy(enemy);
-    }
-
-    /// <summary>
-    /// 全ての敵キャラを破棄する。
-    /// これを呼び出したタイミングの次のLateUpdateで破棄される。
-    /// </summary>
-    public void DestroyAllEnemy()
-    {
-        foreach (var enemy in m_UpdateEnemies)
-        {
-            DestroyEnemy(enemy);
-        }
-
-        m_UpdateEnemies.Clear();
     }
 
     /// <summary>
@@ -525,6 +531,6 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public void OnPutAway()
     {
-        DestroyAllEnemy();
+        CheckPoolAllEnemy();
     }
 }
