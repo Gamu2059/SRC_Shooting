@@ -28,25 +28,15 @@ public abstract class DanmakuCountAbstract : System.Object
     public bool[] m_Bool;
 
 
+    /// <summary>
+    /// 単位弾幕パラメータを代入する。
+    /// </summary>
     public virtual void Awakes(UDParams uDParams)
     {
-        m_Int = new int[uDParams.GetNumIntParams()];
-        uDParams.SetIntParamsArray(m_Int);
-
-        m_Float = new float[uDParams.GetNumFloatParams()];
-        uDParams.SetFloatParamsArray(m_Float);
-
-        m_Vector3 = new Vector3[uDParams.GetNumVector3Params()];
-        uDParams.SetVector3ParamsArray(m_Vector3);
-
-        m_Bool = new bool[uDParams.GetNumBoolParams()];
-        uDParams.SetBoolParamsArray(m_Bool);
-    }
-
-
-    public virtual void Awakes(UDField uDField)
-    {
-
+        m_Bool = uDParams.GetBoolParams();
+        m_Int = uDParams.GetIntParams();
+        m_Float = uDParams.GetFloatParams();
+        m_Vector3 = uDParams.GetVector3Params();
     }
 
 
@@ -104,7 +94,8 @@ public abstract class DanmakuCountAbstract : System.Object
 
         Vector3 eulerAngles = CalcEulerAngles(enemyController.transform.eulerAngles, velocityRad);
 
-        BulletShotParam bulletShotParam = new BulletShotParam(enemyController, bulletIndex, (int)(speed / 2 - 1), 0, realPosition, eulerAngles, enemyController.transform.localScale);
+        // 弾の大きさを変えている。
+        BulletShotParam bulletShotParam = new BulletShotParam(enemyController, bulletIndex, Mathf.RoundToInt(speed * 10 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.03f);
         BulletController.ShotBullet(bulletShotParam);
     }
 
@@ -154,3 +145,22 @@ public abstract class DanmakuCountAbstract : System.Object
 //これいらなさそう
 //[SerializeField, Tooltip("その弾幕の開始からの経過時間")]
 //protected float m_Time;
+
+
+//m_Bool = new bool[uDParams.GetNumBoolParams()];
+//uDParams.SetBoolParamsArray(m_Bool);
+
+//m_Int = new int[uDParams.GetNumIntParams()];
+//uDParams.SetIntParamsArray(m_Int);
+
+//m_Float = new float[uDParams.GetNumFloatParams()];
+//uDParams.SetFloatParamsArray(m_Float);
+
+//m_Vector3 = new Vector3[uDParams.GetNumVector3Params()];
+//uDParams.SetVector3ParamsArray(m_Vector3);
+
+
+//public virtual void Awakes(UDField uDField)
+//{
+
+//}

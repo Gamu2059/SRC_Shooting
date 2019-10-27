@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 単位弾幕SWRの意味（名前と説明）を管理する。
+/// 単位弾幕ALSの意味（名前と説明）を管理する。
 /// </summary>
-public class Swr : ExpAbstract
+public class Als : ExpAbstract
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ public class Swr : ExpAbstract
     /// </summary>
     public override string GetExp()
     {
-        return "渦巻状に弾を発射する。";
+        return "";
     }
 
 
@@ -56,11 +56,12 @@ public class Swr : ExpAbstract
 
     public enum FLOAT
     {
-        発射間隔,
-        弾速,
-        角速度,
-        弾源円半径,
-        発射位置のブレ範囲の円の半径,
+        shotInterval,
+        bulletSpeed,
+        angleSpeed,
+        bulletSourceRadius,
+        shotBlurRadius,
+        angle,
     }
 
 
@@ -76,13 +77,15 @@ public class Swr : ExpAbstract
             "「発射位置」で指定した位置から、これだけ離れた位置から発射する。"
             ,
             "発射位置を、この半径の円の中にランダムでブレさせる。"
+            ,
+            "角度の初期値"
         };
     }
 
 
     public enum VECTOR3
     {
-        発射平均位置,
+        shotAvePosition,
     }
 
 

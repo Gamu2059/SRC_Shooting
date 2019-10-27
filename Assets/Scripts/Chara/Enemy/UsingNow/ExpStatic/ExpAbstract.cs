@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// bool型のパラメータの名前を管理するクラスの抽象クラス。（abstractにする）
 /// </summary>
-public class ExpAbstract : object
+public abstract class ExpAbstract : object
 {
 
     /// <summary>
@@ -165,4 +165,48 @@ public class ExpAbstract : object
 //public enum VECTOR3
 //{
 
+//}
+
+
+///// <summary>
+///// その単位弾幕全体の説明を取得する。
+///// </summary>
+//public virtual string GetExp()
+//{
+//    return "";
+//}
+
+
+///// <summary>
+///// bool型のパラメータの説明。（ここから4つはabstractにする）
+///// </summary>
+//public virtual string[] GetBoolExps2()
+//{
+//    return new string[] { };
+//}
+
+
+///// <summary>
+///// bool型のパラメータの名前と説明。（ここから4つはvirtualを外す）
+///// </summary>
+//public virtual string[] GetBoolExps12()
+//{
+//    string[] exp12 = new string[GetBoolExps2().Length];
+//    string[] exp2 = GetBoolExps2();
+
+//    for (int i = 0; i < exp12.Length; i++)
+//    {
+//        exp12[i] = (System.Enum.ToObject(GetEnumBool(), i)).ToString() + "\n\n" + exp2[i];
+//    }
+
+//    return exp12;
+//}
+
+
+///// <summary>
+///// bool型のパラメータ名。（ここから4つはabstractにする）
+///// </summary>
+//public virtual System.Type GetEnumBool()
+//{
+//    return typeof(E_U_D);
 //}

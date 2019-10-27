@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// アセット用単位弾幕パラメータの配列の配列のクラス。
+/// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/All UD Field Array Array", fileName = "AUDFAA", order = 0)]
 [System.Serializable]
 public class AllUDFieldArrayArray : ScriptableObject
 {
-    [SerializeField, Tooltip("全単位弾幕フィールド配列の配列")]
-    public AllUDFieldArray[] m_AllUDFieldArrayArray;
+    /// <summary>
+    /// アセット用単位弾幕パラメータの配列の配列。
+    /// </summary>
+    [SerializeField, Tooltip("")]
+    private AllUDFieldArray[] m_AllUDFieldArrayArray;
 
 
+    /// <summary>
+    /// 純粋な単位弾幕パラメータの配列の配列を取得する。
+    /// </summary>
     public UDParams[][] GetAllUDParams()
     {
         List<UDParams[]> uDParamsArrayList = new List<UDParams[]>();

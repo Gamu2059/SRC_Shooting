@@ -3,24 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ある単位弾幕のパラメータ全体。
+/// アセット用単位弾幕パラメータのパラメータ配列のクラス。
 /// </summary>
 [System.Serializable]
 public class ExpFields : object
 {
-    [SerializeField, Tooltip("boolパラメータ")]
+    /// <summary>
+    /// 説明付きのbool型のパラメータの配列。
+    /// </summary>
+    [SerializeField, Tooltip("説明付きのbool型のパラメータの配列。")]
     public ExpBool[] expBools;
 
-    [SerializeField, Tooltip("intパラメータ")]
+    /// <summary>
+    /// 説明付きのint型のパラメータの配列。
+    /// </summary>
+    [SerializeField, Tooltip("説明付きのint型のパラメータの配列。")]
     public ExpInt[] expInts;
 
-    [SerializeField, Tooltip("flaotパラメータ")]
+    /// <summary>
+    /// 説明付きのfloat型のパラメータの配列。
+    /// </summary>
+    [SerializeField, Tooltip("説明付きのfloat型のパラメータの配列。")]
     public ExpFloat[] expFloats;
 
-    [SerializeField, Tooltip("Vector3パラメータ")]
+    /// <summary>
+    /// 説明付きのVector3型のパラメータの配列。
+    /// </summary>
+    [SerializeField, Tooltip("説明付きのVector3型のパラメータの配列。")]
     public ExpVector3[] expVector3s;
 
 
+    /// <summary>
+    /// それぞれの型の各インデックスの説明の配列から、説明付きの単位弾幕パラメータのパラメータ配列を生成する。
+    /// </summary>
+    /// <param name="boolExps"   >説明付きのbool型パラメータの配列</param>
+    /// <param name="intExps"    >説明付きのint型パラメータの配列</param>
+    /// <param name="floatExps"  >説明付きのfloat型パラメータの配列</param>
+    /// <param name="Vector3Exps">説明付きのVector3型パラメータの配列</param>
     public ExpFields(string[] boolExps, string[] intExps, string[] floatExps, string[] Vector3Exps)
     {
         expBools = new ExpBool[boolExps.Length];
@@ -50,6 +69,9 @@ public class ExpFields : object
     }
 
 
+    /// <summary>
+    /// bool型のパラメータのみの配列を取得する。
+    /// </summary>
     public bool[] GetBoolArray()
     {
         bool[] boolArray = new bool[expBools.Length];
@@ -62,6 +84,9 @@ public class ExpFields : object
     }
 
 
+    /// <summary>
+    /// int型のパラメータのみの配列を取得する。
+    /// </summary>
     public int[] GetintArray()
     {
         int[] intArray = new int[expInts.Length];
@@ -74,6 +99,9 @@ public class ExpFields : object
     }
 
 
+    /// <summary>
+    /// float型のパラメータのみの配列を取得する。
+    /// </summary>
     public float[] GetFloatArray()
     {
         float[] floatArray = new float[expFloats.Length];
@@ -86,6 +114,9 @@ public class ExpFields : object
     }
 
 
+    /// <summary>
+    /// Vector3型のパラメータのみの配列を取得する。
+    /// </summary>
     public Vector3[] GetVector3Array()
     {
         Vector3[] Vector3Array = new Vector3[expVector3s.Length];

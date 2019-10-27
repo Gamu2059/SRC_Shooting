@@ -51,8 +51,6 @@ public class BossTest : BattleRealEnemyController
     public override void OnUpdate()
     {
 
-        Debug.Log("c");
-
         // 経過時間を進める
         m_Time += Time.deltaTime;
 

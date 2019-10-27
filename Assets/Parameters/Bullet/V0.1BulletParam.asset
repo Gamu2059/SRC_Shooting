@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: V14BulletParam
+  m_Name: V0.1BulletParam
   m_EditorClassIdentifier: 
-  LifeTime: 3.5714285
+  LifeTime: 5
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
     DeltaScaleRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 0.7
+    Speed: 0.5
     SpeedRelative: 0
     Accel: 0
     AccelRelative: 0

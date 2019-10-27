@@ -37,6 +37,7 @@ public class Omn : ExpAbstract
     public override string[] GetBoolExps2()
     {
         return new string[] {
+            "発射平均位置を指定するかどうか" + "\n\n" + 
             "falseなら、「発射平均位置」をゼロベクトルに固定する。"
             ,
             "falseなら「発射位置のずれの半径」を0に固定する。"

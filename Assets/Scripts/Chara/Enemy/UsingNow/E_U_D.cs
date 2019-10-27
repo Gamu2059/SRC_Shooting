@@ -15,4 +15,7 @@ public enum E_U_D
     //SIN,
     //CRS,
     WAY,
+    SWR,
+    WAP,
+    ALS,
 }

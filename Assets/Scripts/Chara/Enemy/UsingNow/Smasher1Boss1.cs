@@ -37,8 +37,9 @@ public class Smasher1Boss1 : System.Object
     [SerializeField, Tooltip("弾幕の抽象クラスの配列の配列")]
     private DanmakuCountAbstract[][] m_DanmakuCountAbstractArrayArray;
 
-    [SerializeField, Tooltip("単位弾幕のパラメータの配列の配列")]
-    private UDParamsArrayArray m_UDParamsArrayArray;
+    //いらなさそう
+    //[SerializeField, Tooltip("単位弾幕のパラメータの配列の配列")]
+    //private UDParamsArrayArray m_UDParamsArrayArray;
 
 
     [SerializeField, Tooltip("全単位弾幕フィールド配列の配列")]
@@ -81,17 +82,17 @@ public class Smasher1Boss1 : System.Object
         //}
 
 
-        m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract[m_AllUDFieldArrayArray.m_AllUDFieldArrayArray.Length][];
-
         UDParams[][] uDParamsArrayArray = m_AllUDFieldArrayArray.GetAllUDParams();
 
-        for (int i = 0; i < m_AllUDFieldArrayArray.m_AllUDFieldArrayArray.Length; i++)
+        m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract[uDParamsArrayArray.Length][];
+
+        for (int i = 0; i < uDParamsArrayArray.Length; i++)
         {
             m_DanmakuCountAbstractArrayArray[i] = new DanmakuCountAbstract[uDParamsArrayArray[i].Length];
 
             for (int j = 0; j < uDParamsArrayArray[i].Length; j++)
             {
-                m_DanmakuCountAbstractArrayArray[i][j] = EUDToUDObject(uDParamsArrayArray[i][j].m_EUD);
+                m_DanmakuCountAbstractArrayArray[i][j] = EUDS.EUDToUDObject(uDParamsArrayArray[i][j].GetEUD());
 
                 m_DanmakuCountAbstractArrayArray[i][j].Awakes(uDParamsArrayArray[i][j]);
             }
@@ -99,40 +100,25 @@ public class Smasher1Boss1 : System.Object
     }
 
 
-    // 単位弾幕の種類の列挙型を、単位弾幕のオブジェクトそのものに変換する
-    public DanmakuCountAbstract EUDToUDObject(E_U_D eUD)
-    {
-        switch (eUD)
-        {
-            //case E_U_D.ASW:
-            //    return new UDAsw();
+    //// 単位弾幕の種類の列挙型を、単位弾幕のオブジェクトそのものに変換する
+    //public DanmakuCountAbstract EUDToUDObject(E_U_D eUD)
+    //{
+    //    switch (eUD)
+    //    {
+    //        case E_U_D.OMN:
+    //            return new UDOmn();
 
-            //case E_U_D.JIK:
-            //    return new UDJik();
+    //        case E_U_D.WAY:
+    //            return new UDWay();
 
-            //case E_U_D.KIN:
-            //    return new UDKin();
+    //        case E_U_D.SWR:
+    //            return new UDSwr();
 
-            //case E_U_D.LIS:
-            //    return new UDLis();
-
-            case E_U_D.OMN:
-                return new UDOmn();
-
-            //case E_U_D.SIN:
-            //    return new UDSin();
-
-            //case E_U_D.CRS:
-            //    return new UDOmn2();
-
-            case E_U_D.WAY:
-                return new UDWay();
-
-            // 追加しやすいようにしている（この部分は変えない）
-            default:
-                return new UDOmn();
-        }
-    }
+    //        // 追加しやすいようにしている（この部分は変えない）
+    //        default:
+    //            return new UDOmn();
+    //    }
+    //}
 
 
     public void Updates(BattleRealEnemyController enemyController)

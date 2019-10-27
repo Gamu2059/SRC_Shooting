@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 単位弾幕SWRの意味（名前と説明）を管理する。
+/// 単位弾幕WAPの意味（名前と説明）を管理する。
 /// </summary>
-public class Swr : ExpAbstract
+public class Wap : ExpAbstract
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ public class Swr : ExpAbstract
     /// </summary>
     public override string GetExp()
     {
-        return "渦巻状に弾を発射する。";
+        return "波と粒の境界のような弾幕。";
     }
 
 
@@ -61,6 +61,8 @@ public class Swr : ExpAbstract
         角速度,
         弾源円半径,
         発射位置のブレ範囲の円の半径,
+        角加速度,
+        角度,
     }
 
 
@@ -76,6 +78,10 @@ public class Swr : ExpAbstract
             "「発射位置」で指定した位置から、これだけ離れた位置から発射する。"
             ,
             "発射位置を、この半径の円の中にランダムでブレさせる。"
+            ,
+            "弾源の回る角加速度"
+            ,
+            "角度の初期値"
         };
     }
 

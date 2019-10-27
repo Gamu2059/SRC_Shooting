@@ -42,7 +42,6 @@ public class ControllableMonoBehavior : MonoBehaviour, IControllableGameCycle
 
 	public virtual void OnUpdate()
 	{
-        Debug.Log("f");
     }
 
 	public virtual void OnLateUpdate()
