@@ -13,6 +13,12 @@ public class InfC761Phase1 : BattleRealBossBehavior
         WAIT_ON_RIGHT,
     }
 
+    private enum E_SHOT_PHASE{
+        NONE,
+        N_SHOTS,
+        N_WAY,
+    }
+
     private InfC761Phase1ParamSet m_ParamSet;
     private E_PHASE m_Phase;
 
@@ -24,11 +30,11 @@ public class InfC761Phase1 : BattleRealBossBehavior
 
     private float m_ShotTimeCount;
 
+    private E_SHOT_PHASE m_ShotPhase;
+
     private float m_NShotsCount;
 
     private float m_NShotsInterval;
-
-    private bool m_IsNShots;
 
     private int m_NShotsTime;
 
@@ -53,10 +59,10 @@ public class InfC761Phase1 : BattleRealBossBehavior
         m_MoveEndPos = m_ParamSet.BasePos;
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
+        m_ShotPhase = E_SHOT_PHASE.NONE;
         m_NShotsNum = m_ParamSet.NShotsNum;
         m_NShotsCount = 0.0f;
         m_NShotsInterval = m_ParamSet.NShotsInterval;
-        m_IsNShots = false;
         m_NShotsTime = 0;
     }
 
@@ -75,7 +81,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
         base.OnFixedUpdate();
 
         m_TimeCount += Time.fixedDeltaTime;
-        if(m_IsNShots){
+        if(m_ShotPhase == E_SHOT_PHASE.N_SHOTS){
             m_NShotsCount += Time.fixedDeltaTime;
         }else{
             m_ShotTimeCount += Time.fixedDeltaTime;
@@ -169,7 +175,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
         if (isPlayerLook)
         {
             var player = BattleRealPlayerManager.Instance.Player;
-            var delta = player.transform.position - Enemy.transform.position;
+            var delta = player.transform.position - (Enemy.transform.position + shotPosition);
             correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg + 180;
         }
 
@@ -182,18 +188,23 @@ public class InfC761Phase1 : BattleRealBossBehavior
 
 
     private void PlayerLookNShots(){
-        if(m_NShotsTime >= m_NShotsNum){
-            m_NShotsCount = 0.0f;
-            m_NShotsTime = 0;
-            m_IsNShots = false;
+        if(m_ShotPhase == E_SHOT_PHASE.N_SHOTS){
+            if(m_NShotsTime >= m_NShotsNum){
+                m_NShotsCount = 0.0f;
+                m_NShotsTime = 0;
+                SetShotPhase(E_SHOT_PHASE.NONE);
+            }else if(m_NShotsCount >= m_NShotsInterval){
+                m_NShotsCount = 0.0f;
+                m_NShotsTime++;
+                OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset, true);
+                OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset, true);
+            }
         }
+    }
 
-        if(m_NShotsCount >= m_NShotsInterval){
-            m_NShotsCount = 0.0f;
-            m_NShotsTime++;
-            OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset, true);
-            OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset, true);
-        }
+
+    private void SetShotPhase(E_SHOT_PHASE shotPhase){
+        m_ShotPhase = shotPhase;
     }
 
     private void OnShot()
@@ -207,7 +218,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
                 {
                     m_ShotTimeCount = 0;
-                    m_IsNShots = true;
+                    SetShotPhase(E_SHOT_PHASE.N_SHOTS);
                 }
                 break;
 
@@ -218,7 +229,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
                 {
                     m_ShotTimeCount = 0;
-                    m_IsNShots = true;
+                    SetShotPhase(E_SHOT_PHASE.N_SHOTS);
                 }
                 break;
 
