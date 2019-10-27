@@ -46,4 +46,16 @@ public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
     [SerializeField]
     private Vector3 m_RightShotOffset;
     public Vector3 RigthShotOffset => m_RightShotOffset;
+
+    [SerializeField]
+    private Vector3 m_CenterShotOffset;
+    public Vector3 CenterShotOffset => m_CenterShotOffset;
+
+    [SerializeField]
+    private int m_NShotsNum;
+    public int NShotsNum => m_NShotsNum;
+
+    [SerializeField]
+    private float m_NShotsInterval;
+    public float NShotsInterval => m_NShotsInterval;
 }

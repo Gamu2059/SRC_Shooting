@@ -24,6 +24,16 @@ public class InfC761Phase1 : BattleRealBossBehavior
 
     private float m_ShotTimeCount;
 
+    private float m_NShotsCount;
+
+    private float m_NShotsInterval;
+
+    private bool m_IsNShots;
+
+    private int m_NShotsTime;
+
+    private int m_NShotsNum;
+
     public InfC761Phase1(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase1ParamSet;
@@ -43,6 +53,11 @@ public class InfC761Phase1 : BattleRealBossBehavior
         m_MoveEndPos = m_ParamSet.BasePos;
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
+        m_NShotsNum = m_ParamSet.NShotsNum;
+        m_NShotsCount = 0.0f;
+        m_NShotsInterval = m_ParamSet.NShotsInterval;
+        m_IsNShots = false;
+        m_NShotsTime = 0;
     }
 
     public override void OnUpdate()
@@ -51,6 +66,8 @@ public class InfC761Phase1 : BattleRealBossBehavior
 
         OnMove();
         OnShot();
+
+        this.PlayerLookNShots();
     }
 
     public override void OnFixedUpdate()
@@ -58,7 +75,11 @@ public class InfC761Phase1 : BattleRealBossBehavior
         base.OnFixedUpdate();
 
         m_TimeCount += Time.fixedDeltaTime;
-        m_ShotTimeCount += Time.fixedDeltaTime;
+        if(m_IsNShots){
+            m_NShotsCount += Time.fixedDeltaTime;
+        }else{
+            m_ShotTimeCount += Time.fixedDeltaTime;
+        }
     }
 
     /// <summary>
@@ -159,6 +180,22 @@ public class InfC761Phase1 : BattleRealBossBehavior
         }
     }
 
+
+    private void PlayerLookNShots(){
+        if(m_NShotsTime >= m_NShotsNum){
+            m_NShotsCount = 0.0f;
+            m_NShotsTime = 0;
+            m_IsNShots = false;
+        }
+
+        if(m_NShotsCount >= m_NShotsInterval){
+            m_NShotsCount = 0.0f;
+            m_NShotsTime++;
+            OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset, true);
+            OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset, true);
+        }
+    }
+
     private void OnShot()
     {
         switch (m_Phase)
@@ -170,8 +207,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
                 {
                     m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
+                    m_IsNShots = true;
                 }
                 break;
 
@@ -182,8 +218,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
                 {
                     m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
+                    m_IsNShots = true;
                 }
                 break;
 
