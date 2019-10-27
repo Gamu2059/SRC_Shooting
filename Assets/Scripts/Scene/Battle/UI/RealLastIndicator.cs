@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
 
 /// <summary>
 /// リアルモードのプレイヤーの残機を表示する
@@ -13,28 +12,26 @@ public class RealLastIndicator : MonoBehaviour
     [SerializeField]
     private Text m_OutText;
 
-    private IntReactiveProperty m_Last;
+    private int m_DisplayedValue;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(BattleRealPlayerManager.Instance != null){
-            RegisterLast();
-        }else{
-            BattleRealPlayerManager.OnStartAction += RegisterLast;
+        if(GameManager.Instance != null){
+            m_DisplayedValue = GameManager.Instance.PlayerData.m_Last;
+            m_OutText.text = m_DisplayedValue.ToString(); 
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(BattleRealManager.Instance == null){
-            return;
+        if(GameManager.Instance != null){
+            int currentLast = GameManager.Instance.PlayerData.m_Last;
+            if(m_DisplayedValue != currentLast){
+                m_DisplayedValue = currentLast;
+                m_OutText.text = m_DisplayedValue.ToString();
+            }
         }
-    }
-
-    private void RegisterLast(){
-        m_Last = new IntReactiveProperty(GameManager.Instance.PlayerData.m_Last);
-        m_Last.SubscribeToText(m_OutText);
     }
 }
