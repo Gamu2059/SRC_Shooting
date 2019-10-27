@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleUiManager : SingletonMonoBehavior<TitleUiManager>
+public class TitleUiManager : ControllableMonoBehavior
 {
 	[SerializeField]
 	private Button m_StartButton;
