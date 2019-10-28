@@ -42,9 +42,12 @@ MonoBehaviour:
   m_NextMoveWaitTime: 0.5
   m_StartDuration: 0.8
   m_MoveDuration: 4
-  m_ShotParam:
-    Interval: 1.5
+  m_ShotParams:
+  - Interval: 1.5
     Num: 1
+    Angle: 20
+  - Interval: 1
+    Num: 18
     Angle: 20
   m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
   m_RightShotOffset: {x: 0.1, y: 0, z: 0}

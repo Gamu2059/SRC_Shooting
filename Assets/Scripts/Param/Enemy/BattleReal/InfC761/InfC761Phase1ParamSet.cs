@@ -36,8 +36,8 @@ public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
     [Header("Shot Param")]
 
     [SerializeField]
-    private EnemyShotParam m_ShotParam;
-    public EnemyShotParam ShotParam => m_ShotParam;
+    private EnemyShotParam[] m_ShotParams;
+    public EnemyShotParam[] ShotParams => m_ShotParams;
 
     [SerializeField]
     private Vector3 m_LeftShotOffset;
