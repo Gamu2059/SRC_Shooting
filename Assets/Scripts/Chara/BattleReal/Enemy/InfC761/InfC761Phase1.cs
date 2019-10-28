@@ -73,7 +73,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
         OnMove();
         OnShot();
 
-        this.PlayerLookNShots();
+        
     }
 
     public override void OnFixedUpdate()
@@ -86,6 +86,8 @@ public class InfC761Phase1 : BattleRealBossBehavior
         }else{
             m_ShotTimeCount += Time.fixedDeltaTime;
         }
+
+        this.PlayerLookNShots();
     }
 
     /// <summary>
@@ -170,6 +172,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
         var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
+        shotParam.BulletParamIndex = 1;
 
         var correctAngle = 0f;
         if (isPlayerLook)
