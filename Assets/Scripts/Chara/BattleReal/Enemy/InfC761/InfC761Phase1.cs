@@ -235,20 +235,18 @@ public class InfC761Phase1 : BattleRealBossBehavior
         switch (m_Phase)
         {
             case E_PHASE.START:
+                
                 break;
 
             case E_PHASE.MOVE_TO_LEFT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[1].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
                 {
                     m_ShotTimeCount = 0;
-                    SetShotPhase(E_SHOT_PHASE.N_SHOTS);
+                    SetShotPhase(E_SHOT_PHASE.N_WAY);
                 }
                 break;
 
             case E_PHASE.WAIT_ON_LEFT:
-                break;
-
-            case E_PHASE.MOVE_TO_RIGHT:
                 if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
                 {
                     m_ShotTimeCount = 0;
@@ -256,7 +254,20 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 }
                 break;
 
+            case E_PHASE.MOVE_TO_RIGHT:
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[1].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
+                {
+                    m_ShotTimeCount = 0;
+                    SetShotPhase(E_SHOT_PHASE.N_WAY);
+                }
+                break;
+
             case E_PHASE.WAIT_ON_RIGHT:
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
+                {
+                    m_ShotTimeCount = 0;
+                    SetShotPhase(E_SHOT_PHASE.N_SHOTS);
+                }
                 break;
         }
     }
