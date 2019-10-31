@@ -190,11 +190,11 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.MOVE_TO_LEFT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
                 {
                     m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset);
                 }
                 break;
 
@@ -202,11 +202,11 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.MOVE_TO_RIGHT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
                 {
                     m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset);
                 }
                 break;
 
