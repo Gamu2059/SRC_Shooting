@@ -126,7 +126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 0
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 6
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5

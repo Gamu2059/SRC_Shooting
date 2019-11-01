@@ -92,7 +92,7 @@ public class BattleHackingPlayerManager : ControllableObject
                 if (!m_IsShotNormal)
                 {
                     m_IsShotNormal = true;
-                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot02");
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hack_Shot01");
                 }
                 Player.ShotBullet();
                 break;
