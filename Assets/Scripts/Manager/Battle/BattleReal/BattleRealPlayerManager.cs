@@ -219,9 +219,12 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             IsNormalWeapon = !IsNormalWeapon;
         }
 
+        /* 
         if (input.Cancel == E_INPUT_STATE.DOWN) {
             BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
+        */
+        
 
         /* デバッグ用 */
         //Debug.Log("CurrentScore = " + m_CurrentScore);
