@@ -44,9 +44,11 @@ MonoBehaviour:
   m_StartDuration: 0.8
   m_MoveDuration: 3
   m_ShotParams:
-  - Interval: 1
-    Num: 3
-    Angle: 20
+  - Interval: 2
+    Num: 2
+    Angle: 60
   m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
   m_RightShotOffset: {x: 0.1, y: 0, z: 0}
-  m_NShotsPresets: []
+  m_NShotsPresets:
+  - m_NShotsNum: 32
+    m_NShotsDelay: 0.1

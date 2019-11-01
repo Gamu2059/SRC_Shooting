@@ -13,6 +13,11 @@ public class InfC761Phase2 : BattleRealBossBehavior
         WAIT_ON_RIGHT,
     }
 
+    public enum E_SHOT_PHASE{
+        NONE,
+        WINDER,
+    }
+
     private InfC761Phase2ParamSet m_ParamSet;
     private E_PHASE m_Phase;
 
@@ -25,6 +30,12 @@ public class InfC761Phase2 : BattleRealBossBehavior
     private float m_TimeCount;
 
     private float m_ShotTimeCount;
+
+    private E_SHOT_PHASE m_ShotPhase;
+
+    private int m_NShotsTime;
+
+    private float m_NShotsTimeCount;
 
     public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
@@ -45,6 +56,9 @@ public class InfC761Phase2 : BattleRealBossBehavior
         m_MoveEndPos = GetArcPosition(0);
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
+        m_ShotPhase = E_SHOT_PHASE.NONE;
+        m_NShotsTime = 0;
+        m_NShotsTimeCount = 0;
     }
 
     public override void OnUpdate()
@@ -55,12 +69,24 @@ public class InfC761Phase2 : BattleRealBossBehavior
         OnShot();
     }
 
+    private void CalcShotCount(){
+        switch (m_ShotPhase)
+        {
+            case E_SHOT_PHASE.NONE:
+                m_ShotTimeCount += Time.fixedDeltaTime;
+                break;
+            case E_SHOT_PHASE.WINDER:
+                m_NShotsTimeCount += Time.fixedDeltaTime;
+                break;
+        }
+    }
+
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
 
         m_TimeCount += Time.fixedDeltaTime;
-        m_ShotTimeCount += Time.fixedDeltaTime;
+        CalcShotCount();
     }
 
     /// <summary>
@@ -182,6 +208,38 @@ public class InfC761Phase2 : BattleRealBossBehavior
         }
     }
 
+    private void NShots(){
+        if(m_NShotsTime >= m_ParamSet.NShotsPresets[0].NShotsNum){
+            m_NShotsTime = 0;
+            m_NShotsTimeCount = 0;
+            m_ShotTimeCount = 0;
+            m_ShotPhase = E_SHOT_PHASE.NONE;
+        }
+        else if (m_NShotsTimeCount >= m_ParamSet.NShotsPresets[0].NShotsDelay)
+        {
+            m_ShotTimeCount = 0;
+            m_NShotsTime++;
+            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset);
+            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset);
+        }
+    }
+
+    private void DoShot(){
+        switch (m_ShotPhase)
+        {
+            case E_SHOT_PHASE.NONE:
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
+                {
+                    m_ShotTimeCount = 0;
+                    m_ShotPhase = E_SHOT_PHASE.WINDER;
+                }
+                break;
+            case E_SHOT_PHASE.WINDER:
+                NShots();
+                break;
+        }
+    }
+
     private void OnShot()
     {
         switch (m_Phase)
@@ -190,24 +248,14 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.MOVE_TO_LEFT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
-                {
-                    m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset);
-                }
+                DoShot();
                 break;
 
             case E_PHASE.WAIT_ON_LEFT:
                 break;
 
             case E_PHASE.MOVE_TO_RIGHT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
-                {
-                    m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset);
-                }
+                DoShot();
                 break;
 
             case E_PHASE.WAIT_ON_RIGHT:
