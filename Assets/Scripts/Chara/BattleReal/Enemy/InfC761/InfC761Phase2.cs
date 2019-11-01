@@ -209,17 +209,28 @@ public class InfC761Phase2 : BattleRealBossBehavior
         }
     }
 
+    private Vector3 CalcShotOffset(Vector3 offset){
+        var res = offset;
+        if(res.x > 0){
+            res.x += 0.1f * Mathf.Sin(m_TimeCount);
+        }else{
+            res.x += -0.1f * Mathf.Sin(m_TimeCount);
+        }
+        return res;
+    }
+
     private void DirectionAndPLookShot(){
         if (m_DirShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
         {
             m_DirShotTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset, 0);
-            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset, 0);
+
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 0);
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 0);
         }
 
         if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
             m_PLookShotTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 2);            
+            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 2, true);
         }
     }
 
