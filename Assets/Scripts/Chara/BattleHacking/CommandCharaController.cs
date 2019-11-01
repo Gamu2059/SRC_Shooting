@@ -168,7 +168,7 @@ public class CommandCharaController : BattleHackingObjectBase
     /// <summary>
     /// このキャラを回復する。
     /// </summary>
-    public virtual void Recover(int recover)
+    public void Recover(int recover)
     {
         if (recover <= 0)
         {
@@ -176,13 +176,20 @@ public class CommandCharaController : BattleHackingObjectBase
         }
 
         NowHp = Mathf.Clamp(NowHp + recover, 0, MaxHp);
+
+        OnRecover();
+    }
+
+    protected virtual void OnRecover()
+    {
+
     }
 
     /// <summary>
     /// このキャラにダメージを与える。
     /// HPが0になった場合は死ぬ。
     /// </summary>
-    public virtual void Damage(int damage)
+    public void Damage(int damage)
     {
         if (damage <= 0)
         {
@@ -191,10 +198,17 @@ public class CommandCharaController : BattleHackingObjectBase
 
         NowHp = Mathf.Clamp(NowHp - damage, 0, MaxHp);
 
+        OnDamage();
+
         if (NowHp == 0)
         {
             Dead();
         }
+    }
+
+    protected virtual void OnDamage()
+    {
+
     }
 
     /// <summary>

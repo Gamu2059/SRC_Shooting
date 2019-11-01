@@ -312,7 +312,6 @@ public class BattleHackingManager : ControllableObject
     private void StartOnGame()
     {
         InputManager.RegistInput();
-        PlayerManager.ResetShotFlag();
     }
 
     private void UpdateOnGame()
@@ -373,7 +372,6 @@ public class BattleHackingManager : ControllableObject
     private void EndOnGame()
     {
         InputManager.RemoveInput();
-        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
     }
 
     private void CheckGameEnd()

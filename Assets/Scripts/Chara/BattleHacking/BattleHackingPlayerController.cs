@@ -34,9 +34,8 @@ public class BattleHackingPlayerController : CommandCharaController
 
     /// <summary>
     /// 通常弾を発射する。
-    /// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
     /// </summary>
-    public virtual void ShotBullet()
+    public void ShotBullet()
     {
         if (m_ShotTimeCount > 0)
         {
@@ -47,6 +46,8 @@ public class BattleHackingPlayerController : CommandCharaController
         {
             return;
         }
+
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hack_Shot01");
 
         var shotParam = new CommandBulletShotParam(this);
         for (int i = 0; i < m_ShotPositions.Length; i++)
@@ -88,7 +89,6 @@ public class BattleHackingPlayerController : CommandCharaController
         }
 
         base.Dead();
-        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
         BattleHackingManager.Instance.DeadPlayer();
     }

@@ -128,6 +128,13 @@ public class CharaController : BattleRealObjectBase
         }
 
         m_NowHp = Mathf.Clamp(m_NowHp + recover, 0, m_MaxHp);
+
+        OnRecover();
+    }
+
+    protected virtual void OnRecover()
+    {
+
     }
 
     /// <summary>
@@ -142,11 +149,17 @@ public class CharaController : BattleRealObjectBase
         }
 
         m_NowHp = Mathf.Clamp(m_NowHp - damage, 0, m_MaxHp);
+        OnDamage();
 
         if (m_NowHp == 0)
         {
             Dead();
         }
+    }
+
+    protected virtual void OnDamage()
+    {
+
     }
 
     /// <summary>

@@ -192,6 +192,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
             case E_PHASE.MOVE_TO_LEFT:
                 if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
                 {
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
                     m_ShotTimeCount = 0;
                     OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
                     OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
@@ -204,6 +205,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
             case E_PHASE.MOVE_TO_RIGHT:
                 if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
                 {
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
                     m_ShotTimeCount = 0;
                     OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
                     OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
