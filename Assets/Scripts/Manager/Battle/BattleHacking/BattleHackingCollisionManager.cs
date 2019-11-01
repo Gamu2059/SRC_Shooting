@@ -72,12 +72,12 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
 
             if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
             {
-                Collision.CheckCollide(bullet, player, (attackData, targetData, hitPosList) =>
+                Collision.CheckCollideFast(bullet, player, (attackData, targetData) =>
                 {
                     attackData.IsCollide = true;
                     targetData.IsCollide = true;
-                    player.SufferBullet(bullet, attackData, targetData, hitPosList);
-                    bullet.HitChara(player, attackData, targetData, hitPosList);
+                    player.SufferBullet(bullet, attackData, targetData, null);
+                    bullet.HitChara(player, attackData, targetData, null);
                 });
             }
             else
@@ -92,12 +92,12 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
                         continue;
                     }
 
-                    Collision.CheckCollide(bullet, enemy, (attackData, targetData, hitPosList) =>
+                    Collision.CheckCollideFast(bullet, enemy, (attackData, targetData) =>
                     {
                         attackData.IsCollide = true;
                         targetData.IsCollide = true;
-                        enemy.SufferBullet(bullet, attackData, targetData, hitPosList);
-                        bullet.HitChara(enemy, attackData, targetData, hitPosList);
+                        enemy.SufferBullet(bullet, attackData, targetData, null);
+                        bullet.HitChara(enemy, attackData, targetData, null);
                     });
                 }
             }
@@ -121,12 +121,12 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
                 return;
             }
 
-            Collision.CheckCollide(enemy, player, (attackData, targetData, hitPosList) =>
+            Collision.CheckCollideFast(enemy, player, (attackData, targetData) =>
             {
                 attackData.IsCollide = true;
                 targetData.IsCollide = true;
-                player.SufferChara(player, attackData, targetData, hitPosList);
-                enemy.HitChara(enemy, attackData, targetData, hitPosList);
+                player.SufferChara(player, attackData, targetData, null);
+                enemy.HitChara(enemy, attackData, targetData, null);
             });
         }
     }

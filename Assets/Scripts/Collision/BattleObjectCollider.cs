@@ -31,6 +31,7 @@ public class BattleObjectCollider : MonoBehaviour
             c.Size = t.lossyScale.ToVector2XZ();
             c.Angle = -t.eulerAngles.y;
             c.Transform = m_ColliderTransforms[i];
+            c.OutSideRect = Collision.GetOutSideCorner(c);
 
             colliders[i] = c;
         }
