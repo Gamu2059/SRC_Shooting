@@ -27,6 +27,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealCameraManager CameraManager { get; private set; }
 
     private bool m_IsPlayerDead;
+    private bool m_IsHitAnyEnemy, m_PreIsHitAnyEnemy;
 
     public Action OnTransitionToHacking;
     public Action OnTransitionToReal;
@@ -371,6 +372,8 @@ public class BattleRealManager : ControllableObject
     private void StartOnGame()
     {
         m_IsPlayerDead = false;
+        m_IsHitAnyEnemy = false;
+        m_PreIsHitAnyEnemy = false;
         InputManager.RegistInput();
         PlayerManager.ResetShotFlag();
     }
@@ -397,6 +400,8 @@ public class BattleRealManager : ControllableObject
 
     private void LateUpdateOnGame()
     {
+        ResetHitEnemy();
+
         RealTimerManager.OnLateUpdate();
         EventManager.OnLateUpdate();
         PlayerManager.OnLateUpdate();
@@ -428,6 +433,33 @@ public class BattleRealManager : ControllableObject
         BulletManager.ProcessCollision();
         ItemManager.ProcessCollision();
 
+        CheckHitEnemy();
+        CheckDeadPlayer();
+    }
+
+    private void ResetHitEnemy()
+    {
+        m_IsHitAnyEnemy = false;
+    }
+
+    private void CheckHitEnemy()
+    {
+        if (m_IsHitAnyEnemy && !m_PreIsHitAnyEnemy)
+        {
+            // 衝突開始
+            AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Damage");
+        }
+        else if (!m_IsHitAnyEnemy && m_PreIsHitAnyEnemy)
+        {
+            // 誰にも衝突していない
+            AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.ENEMY);
+        }
+
+        m_PreIsHitAnyEnemy = m_IsHitAnyEnemy;
+    }
+
+    private void CheckDeadPlayer()
+    {
         if (m_IsPlayerDead)
         {
             RequestChangeState(E_BATTLE_REAL_STATE.DEAD);
@@ -449,7 +481,12 @@ public class BattleRealManager : ControllableObject
     private void EndOnGame()
     {
         InputManager.RemoveInput();
-        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
+
+        // プレイヤーが死んだ時は別の音が再生されるので止めない
+        if (!m_IsPlayerDead)
+        {
+            AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
+        }
     }
 
     #endregion
@@ -567,7 +604,7 @@ public class BattleRealManager : ControllableObject
     private void EndOnBeforeBossBattlePerformance()
     {
         var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
-        AudioManager.Instance.PlayBgmImmediate(bossBgmName);
+        AudioManager.Instance.PlayBgm(bossBgmName);
     }
 
     #endregion
@@ -774,6 +811,11 @@ public class BattleRealManager : ControllableObject
         }
 
         m_StateMachine.Goto(state);
+    }
+
+    public void SetEnemyHit()
+    {
+        m_IsHitAnyEnemy = true;
     }
 
     public void DeadPlayer()

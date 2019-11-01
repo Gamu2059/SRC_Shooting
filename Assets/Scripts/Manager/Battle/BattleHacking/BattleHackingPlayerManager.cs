@@ -92,7 +92,7 @@ public class BattleHackingPlayerManager : ControllableObject
                 if (!m_IsShotNormal)
                 {
                     m_IsShotNormal = true;
-                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot02");
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hack_Shot01");
                 }
                 Player.ShotBullet();
                 break;
@@ -104,6 +104,7 @@ public class BattleHackingPlayerManager : ControllableObject
                 break;
         }
 
+        /* 
         if (input.Cancel == E_INPUT_STATE.DOWN)
         {
             // リアルモードと違って、暫定でハッキングモードをクリアしたことにする
@@ -119,7 +120,7 @@ public class BattleHackingPlayerManager : ControllableObject
             GameManager.Instance.PlayerData.ResetHackingSucceedCount();
             //Debug.Log("Hacking failed... : " + GameManager.Instance.m_HackingSucceedCount);
         }
-
+        */
         Player.OnUpdate();
     }
 

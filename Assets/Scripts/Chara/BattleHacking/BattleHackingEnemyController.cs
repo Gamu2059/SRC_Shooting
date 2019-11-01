@@ -33,7 +33,7 @@ public class BattleHackingEnemyController : CommandCharaController
     /// </summary>
     protected bool m_IsLookMoveDir;
 
-    protected bool IsBoss { get; private set; }
+    public bool IsBoss { get; private set; }
 
     /// <summary>
     /// 出現して以降、画面に映ったかどうか

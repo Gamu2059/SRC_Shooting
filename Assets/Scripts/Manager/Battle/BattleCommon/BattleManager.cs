@@ -212,7 +212,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleRealUiManager.SetEnableGameOver(false);
 
         var audio = AudioManager.Instance;
-        audio.PlayBgmImmediate(m_ParamSet.BgmParamSet.StageBgmName);
+        audio.PlayBgm(m_ParamSet.BgmParamSet.StageBgmName);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
 
@@ -467,7 +467,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleRealUiManager.SetEnableGameClear(true);
 
-        AudioManager.Instance.StopAllBgmImmediate();
+        AudioManager.Instance.StopBgm();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
             RequestChangeState(E_BATTLE_STATE.END);
@@ -509,7 +509,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleRealUiManager.SetEnableGameOver(true);
 
-        AudioManager.Instance.StopAllBgmImmediate();
+        AudioManager.Instance.StopBgm();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
             RequestChangeState(E_BATTLE_STATE.END);

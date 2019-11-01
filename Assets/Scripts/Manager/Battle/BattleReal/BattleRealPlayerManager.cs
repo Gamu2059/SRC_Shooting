@@ -176,7 +176,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
                     if (!m_IsShotNormal)
                     {
                         m_IsShotNormal = true;
-                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot01");
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
                     }
                     Player.ShotBullet();
                     break;
@@ -219,13 +219,12 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             IsNormalWeapon = !IsNormalWeapon;
         }
 
+        /* 
         if (input.Cancel == E_INPUT_STATE.DOWN) {
             BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
-
-        /* デバッグ用 */
-        //Debug.Log("CurrentScore = " + m_CurrentScore);
-        //Debug.Log("CurrentExp = " + m_CurrentExp);
+        */
+        
 
         m_Player.OnUpdate();
     }
