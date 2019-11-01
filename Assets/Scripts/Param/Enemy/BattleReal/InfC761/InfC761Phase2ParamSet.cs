@@ -63,6 +63,10 @@ public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
     private Vector3 m_RightShotOffset;
     public Vector3 RigthShotOffset => m_RightShotOffset;
 
+    [SerializeField]
+    private Vector3 m_CenterShotOffset;
+    public Vector3 CenterShotOffset => m_CenterShotOffset;
+
     [Header("N_Shots Presets"), Tooltip("連射数、連射間隔のセットを保持します")]
 
     [SerializeField]

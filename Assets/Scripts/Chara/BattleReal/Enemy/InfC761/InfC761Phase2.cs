@@ -15,7 +15,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
     public enum E_SHOT_PHASE{
         NONE,
-        WINDER,
+        DICTION_AND_PLOOK,
     }
 
     private InfC761Phase2ParamSet m_ParamSet;
@@ -33,10 +33,9 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
     private E_SHOT_PHASE m_ShotPhase;
 
-    private int m_NShotsTime;
+    private float m_DirShotTimeCount;
 
-    private float m_NShotsTimeCount;
-
+    private float m_PLookShotTimeCount;
     public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase2ParamSet;
@@ -57,8 +56,8 @@ public class InfC761Phase2 : BattleRealBossBehavior
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
         m_ShotPhase = E_SHOT_PHASE.NONE;
-        m_NShotsTime = 0;
-        m_NShotsTimeCount = 0;
+        m_DirShotTimeCount = 0;
+        m_PLookShotTimeCount = 0;
     }
 
     public override void OnUpdate()
@@ -75,8 +74,9 @@ public class InfC761Phase2 : BattleRealBossBehavior
             case E_SHOT_PHASE.NONE:
                 m_ShotTimeCount += Time.fixedDeltaTime;
                 break;
-            case E_SHOT_PHASE.WINDER:
-                m_NShotsTimeCount += Time.fixedDeltaTime;
+            case E_SHOT_PHASE.DICTION_AND_PLOOK:
+                m_DirShotTimeCount += Time.fixedDeltaTime;
+                m_PLookShotTimeCount += Time.fixedDeltaTime;
                 break;
         }
     }
@@ -185,19 +185,20 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
         }
     }
-    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, bool isPlayerLook = false)
+    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletParamIndex, bool isPlayerLook = false)
     {
         int num = param.Num;
         float angle = param.Angle;
         var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
+        shotParam.BulletParamIndex = bulletParamIndex;
 
         var correctAngle = 0f;
         if (isPlayerLook)
         {
             var player = BattleRealPlayerManager.Instance.Player;
-            var delta = player.transform.position - Enemy.transform.position;
+            var delta = player.transform.position - (Enemy.transform.position + shotPosition);
             correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg + 180;
         }
 
@@ -208,19 +209,17 @@ public class InfC761Phase2 : BattleRealBossBehavior
         }
     }
 
-    private void NShots(){
-        if(m_NShotsTime >= m_ParamSet.NShotsPresets[0].NShotsNum){
-            m_NShotsTime = 0;
-            m_NShotsTimeCount = 0;
-            m_ShotTimeCount = 0;
-            m_ShotPhase = E_SHOT_PHASE.NONE;
-        }
-        else if (m_NShotsTimeCount >= m_ParamSet.NShotsPresets[0].NShotsDelay)
+    private void DirectionAndPLookShot(){
+        if (m_DirShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
         {
-            m_ShotTimeCount = 0;
-            m_NShotsTime++;
-            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset);
-            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset);
+            m_DirShotTimeCount = 0;
+            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset, 0);
+            OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset, 0);
+        }
+
+        if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
+            m_PLookShotTimeCount = 0;
+            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 2);            
         }
     }
 
@@ -231,11 +230,11 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
                 {
                     m_ShotTimeCount = 0;
-                    m_ShotPhase = E_SHOT_PHASE.WINDER;
+                    m_ShotPhase = E_SHOT_PHASE.DICTION_AND_PLOOK;
                 }
                 break;
-            case E_SHOT_PHASE.WINDER:
-                NShots();
+            case E_SHOT_PHASE.DICTION_AND_PLOOK:
+                DirectionAndPLookShot();
                 break;
         }
     }
@@ -252,6 +251,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.WAIT_ON_LEFT:
+                DoShot();
                 break;
 
             case E_PHASE.MOVE_TO_RIGHT:
@@ -259,6 +259,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.WAIT_ON_RIGHT:
+                DoShot();
                 break;
         }
     }
