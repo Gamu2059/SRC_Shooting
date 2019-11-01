@@ -30,4 +30,9 @@ public class ColliderData
     /// 衝突したか。
     /// </summary>
     public bool IsCollide;
+
+    /// <summary>
+    /// この当たり判定の外側の矩形
+    /// </summary>
+    public Rect OutSideRect;
 }
