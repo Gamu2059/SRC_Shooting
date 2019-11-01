@@ -758,16 +758,10 @@ public class BattleRealEventManager : ControllableObject
             switch (param.ControlType)
             {
                 case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY:
-                    AudioManager.Instance.PlayBgm(param.PlayBgmName, param.FadeDuration, param.FadeOutCurve, param.FadeInCurve);
-                    break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY_IMMEDIATE:
-                    AudioManager.Instance.PlayBgmImmediate(param.PlayBgmName);
+                    AudioManager.Instance.PlayBgm(param.PlayBgmName);
                     break;
                 case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP:
-                    AudioManager.Instance.StopBgm(param.FadeDuration, param.FadeOutCurve);
-                    break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP_IMMEDIATE:
-                    AudioManager.Instance.StopBgmImmediate();
+                    AudioManager.Instance.StopBgm();
                     break;
                 case ControlBgmParam.E_BGM_CONTROL_TYPE.CONTROL_AISAC:
                     AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);

@@ -150,6 +150,8 @@ public class BattleRealPlayerController : CharaController
             return;
         }
 
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Getitem");
+
         switch (item.ItemType)
         {
             case E_ITEM_TYPE.SMALL_SCORE:
@@ -193,6 +195,8 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
+        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
         BattleRealManager.Instance.DeadPlayer();
     }
 
