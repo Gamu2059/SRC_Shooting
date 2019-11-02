@@ -15,7 +15,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
     public enum E_SHOT_PHASE{
         NONE,
-        DICTION_AND_PLOOK,
+        DIRECTION_AND_PLOOK,
     }
 
     private InfC761Phase2ParamSet m_ParamSet;
@@ -74,7 +74,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
             case E_SHOT_PHASE.NONE:
                 m_ShotTimeCount += Time.fixedDeltaTime;
                 break;
-            case E_SHOT_PHASE.DICTION_AND_PLOOK:
+            case E_SHOT_PHASE.DIRECTION_AND_PLOOK:
                 m_DirShotTimeCount += Time.fixedDeltaTime;
                 m_PLookShotTimeCount += Time.fixedDeltaTime;
                 break;
@@ -241,10 +241,10 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
                 {
                     m_ShotTimeCount = 0;
-                    m_ShotPhase = E_SHOT_PHASE.DICTION_AND_PLOOK;
+                    m_ShotPhase = E_SHOT_PHASE.DIRECTION_AND_PLOOK;
                 }
                 break;
-            case E_SHOT_PHASE.DICTION_AND_PLOOK:
+            case E_SHOT_PHASE.DIRECTION_AND_PLOOK:
                 DirectionAndPLookShot();
                 break;
         }
