@@ -53,19 +53,22 @@ MonoBehaviour:
   - Interval: 0.05
     Num: 1
     Angle: 0
-  - Interval: 2
+  - Interval: 1
     Num: 0
     Angle: 0
   - Interval: 4
     Num: 6
     Angle: 60
+  - Interval: 1
+    Num: 0
+    Angle: 0
   m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
   m_RightShotOffset: {x: 0.1, y: 0, z: 0}
   m_CenterShotOffset: {x: 0, y: 0, z: 0}
-  m_LineShotStart: {x: -0.9, y: 0, z: -0.2}
-  m_LineShotEnd: {x: 0.9, y: 0, z: 0.2}
+  m_LineShotStart: {x: -1, y: 0, z: -0.2}
+  m_LineShotEnd: {x: 1, y: 0, z: 0.2}
   m_NShotsPresets:
-  - m_NShotsNum: 5
+  - m_NShotsNum: 3
     m_NShotsDelay: 0
   - m_NShotsNum: 16
     m_NShotsDelay: 0

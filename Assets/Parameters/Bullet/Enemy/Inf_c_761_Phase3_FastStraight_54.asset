@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: Inf_c_761_Phase3_AccFastStraightBullet
+  m_Name: Inf_c_761_Phase3_FastStraight_54
   m_EditorClassIdentifier: 
   LifeTime: 10
   OrbitalParam:
@@ -27,10 +27,10 @@ MonoBehaviour:
     DeltaScaleRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 0
+    Speed: 1.54
     SpeedRelative: 1
-    Accel: 1.81
-    AccelRelative: 1
+    Accel: 0
+    AccelRelative: 0
     IsSearch: 0
     Lerp: 0
     LerpRelative: 0

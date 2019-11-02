@@ -252,11 +252,11 @@ public class InfC761Phase3 : BattleRealBossBehavior
                 switch (m_ShotStartEdge)
                 {
                     case E_SHOT_START_EDGE.LEFT:
-                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.LeftShotOffset, 2, true);
+                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.LeftShotOffset, 7, true);
                         m_PlookShotTime++;
                         break;
                     case E_SHOT_START_EDGE.RIGHT:
-                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.RigthShotOffset, 2, true);
+                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.RigthShotOffset, 7, true);
                         m_PlookShotTime++;
                         break;
                 }
@@ -288,12 +288,12 @@ public class InfC761Phase3 : BattleRealBossBehavior
                     case E_SHOT_START_EDGE.LEFT:
                         x = Mathf.Lerp(m_ParamSet.LineShotStart.x, m_ParamSet.LineShotEnd.x, r);
                         z = Mathf.Lerp(m_ParamSet.LineShotStart.z, m_ParamSet.LineShotEnd.z, r);
-                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 3, true);
+                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 6, true);
                         break;
                     case E_SHOT_START_EDGE.RIGHT:
                         x = Mathf.Lerp(m_ParamSet.LineShotEnd.x, m_ParamSet.LineShotStart.x, r);
                         z = Mathf.Lerp(m_ParamSet.LineShotEnd.z, m_ParamSet.LineShotStart.z, r);
-                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 3, true);
+                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 6, true);
                         break;
                 }
                 
@@ -311,7 +311,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
                         m_ShotPhase = E_SHOT_PHASE.LINE;
                     }
                 }else{
-                    if(m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval){
+                    if(m_ShotTimeCount >= m_ParamSet.ShotParams[5].Interval){
                         m_ShotTimeCount = 0;
                         m_ShotPhase = E_SHOT_PHASE.PLOOK;
                     }

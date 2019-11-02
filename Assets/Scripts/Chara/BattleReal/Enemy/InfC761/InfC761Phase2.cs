@@ -224,13 +224,13 @@ public class InfC761Phase2 : BattleRealBossBehavior
         {
             m_DirShotTimeCount = 0;
 
-            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 0);
-            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 0);
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 2);
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 2);
         }
 
         if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
             m_PLookShotTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 2, true);
+            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 3);
         }
     }
 
