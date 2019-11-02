@@ -428,7 +428,6 @@ public class BattleRealEventManager : ControllableObject
 
             for (int i = 0; i < rootCondition.MultiConditions.Length; i++)
             {
-                Debug.Log(rootCondition.MultiConditions[i].VariableName);
                 bool isMeet = IsMeetCondition(ref rootCondition.MultiConditions[i]);
 
                 if (rootCondition.MultiConditionType == E_MULTI_CONDITION_TYPE.OR && isMeet)
@@ -490,7 +489,6 @@ public class BattleRealEventManager : ControllableObject
         }
 
         var value = m_IntVariables[condition.VariableName];
-        Debug.Log(value);
         switch (condition.CompareType)
         {
             case E_COMPARE_TYPE.EQUAL:

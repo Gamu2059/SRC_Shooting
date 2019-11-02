@@ -227,11 +227,13 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
             OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 1, 2);
             OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 1, 2);
+            AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
         }
 
         if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
             m_PLookShotTimeCount = 0;
             OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 0, 3);
+            AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
         }
     }
 

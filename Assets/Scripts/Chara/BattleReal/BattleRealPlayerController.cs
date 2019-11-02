@@ -107,21 +107,40 @@ public class BattleRealPlayerController : CharaController
     {
         base.OnEnterSufferBullet(sufferData);
 
+        var hitColliderType = sufferData.HitCollider.Transform.ColliderType;
         var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
-        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+
+        switch (hitColliderType)
         {
-            Damage(1);
+            case E_COLLIDER_TYPE.ENEMY_BULLET:
+            case E_COLLIDER_TYPE.ENEMY_LASER:
+            case E_COLLIDER_TYPE.ENEMY_BOMB:
+                if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+                {
+                    Damage(1);
+                }
+                break;
         }
+
     }
 
     protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
     {
         base.OnEnterSufferChara(sufferData);
 
+        var hitColliderType = sufferData.HitCollider.Transform.ColliderType;
         var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
-        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+
+        switch (hitColliderType)
         {
-            Damage(1);
+            case E_COLLIDER_TYPE.ENEMY_BULLET:
+            case E_COLLIDER_TYPE.ENEMY_LASER:
+            case E_COLLIDER_TYPE.ENEMY_BOMB:
+                if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+                {
+                    Damage(1);
+                }
+                break;
         }
     }
 

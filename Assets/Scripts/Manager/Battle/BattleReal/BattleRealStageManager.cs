@@ -83,12 +83,12 @@ public class BattleRealStageManager : ControllableMonoBehavior
     /// </summary>
     public bool IsOutOfField(Transform obj)
     {
-        var localPos = obj.localPosition;
+        var pos = obj.position;
         return
-            localPos.x < m_MinLocalFieldPosition.x ||
-            localPos.x > m_MaxLocalFieldPosition.x ||
-            localPos.z < m_MinLocalFieldPosition.y ||
-            localPos.z > m_MaxLocalFieldPosition.y;
+            pos.x < m_MinLocalFieldPosition.x ||
+            pos.x > m_MaxLocalFieldPosition.x ||
+            pos.z < m_MinLocalFieldPosition.y ||
+            pos.z > m_MaxLocalFieldPosition.y;
     }
 
     /// <summary>
