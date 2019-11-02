@@ -14,8 +14,8 @@ public class BattleRealEnemyStraightParamSet : BattleRealEnemyBehaviorParamSet
     public Vector3 MoveDirection => m_MoveDirection;
 
     [SerializeField]
-    private float m_MoveSpeed;
-    public float MoveSpeed => m_MoveSpeed;
+    private AnimationCurve m_MoveDistance;
+    public AnimationCurve MoveDistance => m_MoveDistance;
 
     [Header("Shot Param")]
 

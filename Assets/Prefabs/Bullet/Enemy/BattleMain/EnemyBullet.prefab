@@ -187,9 +187,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - IsEnable: 0
+  - IsDisable: 0
+    IsTriggerCollider: 0
     ColliderType: 0
-    ColliderShape: 0
+    ColliderShape: 1
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 1, g: 0, b: 0, a: 0}

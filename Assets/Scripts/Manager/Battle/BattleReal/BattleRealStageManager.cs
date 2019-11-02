@@ -122,6 +122,24 @@ public class BattleRealStageManager : ControllableMonoBehavior
         return new Vector2(vX, vZ);
     }
 
+    /// <summary>
+    /// 動体フィールド領域のビューポート座標から、実際の座標を取得する。
+    /// </summary>
+    /// <param name="x">フィールド領域x座標</param>
+    /// <param name="y">フィールド領域y座標</param>
+    /// <returns></returns>
+    public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
+    {
+        var minPos = MinLocalFieldPosition;
+        var maxPos = MaxLocalFieldPosition;
+
+        var factX = (maxPos.x - minPos.x) * x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+
+        return pos;
+    }
+
     public Transform GetHolder(E_HOLDER_TYPE holderType)
     {
         Transform holder = null;
