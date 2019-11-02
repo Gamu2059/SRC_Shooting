@@ -13,6 +13,11 @@ public class InfC761Phase2 : BattleRealBossBehavior
         WAIT_ON_RIGHT,
     }
 
+    public enum E_SHOT_PHASE{
+        NONE,
+        DIRECTION_AND_PLOOK,
+    }
+
     private InfC761Phase2ParamSet m_ParamSet;
     private E_PHASE m_Phase;
 
@@ -26,6 +31,11 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
     private float m_ShotTimeCount;
 
+    private E_SHOT_PHASE m_ShotPhase;
+
+    private float m_DirShotTimeCount;
+
+    private float m_PLookShotTimeCount;
     public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase2ParamSet;
@@ -45,6 +55,9 @@ public class InfC761Phase2 : BattleRealBossBehavior
         m_MoveEndPos = GetArcPosition(0);
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
+        m_ShotPhase = E_SHOT_PHASE.NONE;
+        m_DirShotTimeCount = 0;
+        m_PLookShotTimeCount = 0;
     }
 
     public override void OnUpdate()
@@ -55,12 +68,25 @@ public class InfC761Phase2 : BattleRealBossBehavior
         OnShot();
     }
 
+    private void CalcShotCount(){
+        switch (m_ShotPhase)
+        {
+            case E_SHOT_PHASE.NONE:
+                m_ShotTimeCount += Time.fixedDeltaTime;
+                break;
+            case E_SHOT_PHASE.DIRECTION_AND_PLOOK:
+                m_DirShotTimeCount += Time.fixedDeltaTime;
+                m_PLookShotTimeCount += Time.fixedDeltaTime;
+                break;
+        }
+    }
+
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
 
         m_TimeCount += Time.fixedDeltaTime;
-        m_ShotTimeCount += Time.fixedDeltaTime;
+        CalcShotCount();
     }
 
     /// <summary>
@@ -159,19 +185,21 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
         }
     }
-    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, bool isPlayerLook = false)
+    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex,int bulletParamIndex, bool isPlayerLook = false)
     {
         int num = param.Num;
         float angle = param.Angle;
         var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
+        shotParam.BulletParamIndex = bulletParamIndex;
+        shotParam.BulletIndex = bulletIndex;
 
         var correctAngle = 0f;
         if (isPlayerLook)
         {
             var player = BattleRealPlayerManager.Instance.Player;
-            var delta = player.transform.position - Enemy.transform.position;
+            var delta = player.transform.position - (Enemy.transform.position + shotPosition);
             correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg + 180;
         }
 
@@ -179,6 +207,47 @@ public class InfC761Phase2 : BattleRealBossBehavior
         {
             var bullet = Shot(shotParam);
             bullet.SetRotation(new Vector3(0, spreadAngles[i] + correctAngle, 0), E_RELATIVE.RELATIVE);
+        }
+    }
+
+    private Vector3 CalcShotOffset(Vector3 offset){
+        var res = offset;
+        if(res.x > 0){
+            res.x += 0.1f * Mathf.Sin(m_TimeCount);
+        }else{
+            res.x += -0.1f * Mathf.Sin(m_TimeCount);
+        }
+        return res;
+    }
+
+    private void DirectionAndPLookShot(){
+        if (m_DirShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
+        {
+            m_DirShotTimeCount = 0;
+
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 1, 2);
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 1, 2);
+        }
+
+        if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
+            m_PLookShotTimeCount = 0;
+            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 0, 3);
+        }
+    }
+
+    private void DoShot(){
+        switch (m_ShotPhase)
+        {
+            case E_SHOT_PHASE.NONE:
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
+                {
+                    m_ShotTimeCount = 0;
+                    m_ShotPhase = E_SHOT_PHASE.DIRECTION_AND_PLOOK;
+                }
+                break;
+            case E_SHOT_PHASE.DIRECTION_AND_PLOOK:
+                DirectionAndPLookShot();
+                break;
         }
     }
 
@@ -190,29 +259,19 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.MOVE_TO_LEFT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
-                {
-                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
-                    m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
-                }
+                DoShot();
                 break;
 
             case E_PHASE.WAIT_ON_LEFT:
+                DoShot();
                 break;
 
             case E_PHASE.MOVE_TO_RIGHT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParam.Interval)
-                {
-                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
-                    m_ShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.LeftShotOffset);
-                    OnShot(m_ParamSet.ShotParam, m_ParamSet.RigthShotOffset);
-                }
+                DoShot();
                 break;
 
             case E_PHASE.WAIT_ON_RIGHT:
+                DoShot();
                 break;
         }
     }

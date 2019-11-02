@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e9958890efad9c40ac2c7239bbd1ea2, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d94bbf34cabb1646ab7a22d4df666b0, type: 3}
   m_Name: param.inf_c_761_phase_3
   m_EditorClassIdentifier: 
-  m_BehaviorClass: InfC761Phase2
+  m_BehaviorClass: InfC761Phase3
   m_BasePos: {x: 0, y: 0, z: 0.6}
   m_Radius: 0.3
   m_ArcAngle: 900
@@ -26,26 +26,49 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_NextMoveWaitTime: 0.5
+  m_NextMoveWaitTime: 1
   m_StartDuration: 0.8
   m_MoveDuration: 8
-  m_ShotParam:
-    Interval: 0.1
-    Num: 15
-    Angle: 24
-  m_LeftShotOffset: {x: -0.3, y: 0, z: 0}
-  m_RightShotOffset: {x: 0.3, y: 0, z: 0}
+  m_ShotParams:
+  - Interval: 0.5
+    Num: 0
+    Angle: 0
+  - Interval: 0.03
+    Num: 5
+    Angle: 10
+  - Interval: 0.05
+    Num: 1
+    Angle: 0
+  - Interval: 1
+    Num: 0
+    Angle: 0
+  - Interval: 4
+    Num: 6
+    Angle: 60
+  - Interval: 1
+    Num: 0
+    Angle: 0
+  m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
+  m_RightShotOffset: {x: 0.1, y: 0, z: 0}
+  m_CenterShotOffset: {x: 0, y: 0, z: 0}
+  m_LineShotStart: {x: -1, y: 0, z: -0.2}
+  m_LineShotEnd: {x: 1, y: 0, z: 0.2}
+  m_NShotsPresets:
+  - m_NShotsNum: 3
+    m_NShotsDelay: 0
+  - m_NShotsNum: 16
+    m_NShotsDelay: 0
