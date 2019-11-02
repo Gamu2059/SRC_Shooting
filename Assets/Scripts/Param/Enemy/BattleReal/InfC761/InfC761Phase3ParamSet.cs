@@ -4,18 +4,34 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// INF-C-761の一つ目の行動パラメータのセット。
+/// INF-C-761の二つ目の行動パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase1", fileName = "param.inf_c_761_phase_1.asset")]
-public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
+[Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase3", fileName = "param.inf_c_761_phase_3.asset")]
+public class InfC761Phase3ParamSet : BattleRealBossBehaviorParamSet
 {
+    [Serializable]
+    public class NShotsPreset
+    {
+        [SerializeField]
+        private int m_NShotsNum;
+        public int NShotsNum => m_NShotsNum;
+
+        [SerializeField]
+        private float m_NShotsDelay;
+        public float NShotsDelay => m_NShotsDelay;
+    }
+
     [SerializeField]
     private Vector3 m_BasePos;
     public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
-    private float m_Amplitude;
-    public float Amplitude => m_Amplitude;
+    private float m_Radius;
+    public float Radius => m_Radius;
+
+    [SerializeField]
+    private float m_ArcAngle;
+    public float ArcAngle => m_ArcAngle;
 
     [SerializeField]
     private AnimationCurve m_NormalizedRate;
@@ -52,10 +68,16 @@ public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
     public Vector3 CenterShotOffset => m_CenterShotOffset;
 
     [SerializeField]
-    private int m_NShotsNum;
-    public int NShotsNum => m_NShotsNum;
+    private Vector3 m_LineShotStart;
+    public Vector3 LineShotStart => m_LineShotStart;
 
     [SerializeField]
-    private float m_NShotsInterval;
-    public float NShotsInterval => m_NShotsInterval;
+    private Vector3 m_LineShotEnd;
+    public Vector3 LineShotEnd => m_LineShotEnd;
+
+    [Header("N_Shots Presets"), Tooltip("連射数、連射間隔のセットを保持します")]
+
+    [SerializeField]
+    private NShotsPreset[] m_NShotsPresets;
+    public NShotsPreset[] NShotsPresets => m_NShotsPresets;
 }
