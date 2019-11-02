@@ -39,18 +39,18 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_NextMoveWaitTime: 4
+  m_NextMoveWaitTime: 0.5
   m_StartDuration: 2
-  m_MoveDuration: 2
+  m_MoveDuration: 3
   m_ShotParams:
   - Interval: 1
     Num: 1
     Angle: 20
-  - Interval: 1
+  - Interval: 0.3
     Num: 9
     Angle: 40
   m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
   m_RightShotOffset: {x: 0.1, y: 0, z: 0}
   m_CenterShotOffset: {x: 0, y: -0.5, z: 0}
-  m_NShotsNum: 4
+  m_NShotsNum: 5
   m_NShotsInterval: 0.05

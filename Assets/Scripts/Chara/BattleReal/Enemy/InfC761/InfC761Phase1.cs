@@ -173,7 +173,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 break;
         }
     }
-    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletParamIndex, bool isPlayerLook = false)
+    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex, int bulletParamIndex, bool isPlayerLook = false)
     {
         int num = param.Num;
         float angle = param.Angle;
@@ -181,6 +181,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;
+        shotParam.BulletIndex = bulletIndex;
 
         var correctAngle = 0f;
         if (isPlayerLook)
@@ -208,8 +209,8 @@ public class InfC761Phase1 : BattleRealBossBehavior
             }else if(m_NShotsCount >= m_NShotsInterval){
                 m_NShotsCount = 0.0f;
                 m_NShotsTime++;
-                OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset, 0, true);
-                OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset, 0, true);
+                OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset, 0, 8, true);
+                OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset, 0, 8, true);
             }
         }
     }
@@ -218,7 +219,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
         if(m_ShotPhase == E_SHOT_PHASE.N_WAY){
             if(m_ShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
                 m_ShotTimeCount = 0;
-                OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 1);
+                OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 0, 1);
                 SetShotPhase(E_SHOT_PHASE.NONE);
             }
             
@@ -239,35 +240,25 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 break;
 
             case E_PHASE.MOVE_TO_LEFT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[1].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
+                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
                 {
                     m_ShotTimeCount = 0;
-                    SetShotPhase(E_SHOT_PHASE.N_WAY);
+                    SetShotPhase(E_SHOT_PHASE.N_SHOTS);
                 }
                 break;
 
             case E_PHASE.WAIT_ON_LEFT:
+                break;
+
+            case E_PHASE.MOVE_TO_RIGHT:
                 if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
                 {
                     m_ShotTimeCount = 0;
                     SetShotPhase(E_SHOT_PHASE.N_SHOTS);
-                }
-                break;
-
-            case E_PHASE.MOVE_TO_RIGHT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[1].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
-                {
-                    m_ShotTimeCount = 0;
-                    SetShotPhase(E_SHOT_PHASE.N_WAY);
                 }
                 break;
 
             case E_PHASE.WAIT_ON_RIGHT:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval && m_ShotPhase == E_SHOT_PHASE.NONE)
-                {
-                    m_ShotTimeCount = 0;
-                    SetShotPhase(E_SHOT_PHASE.N_SHOTS);
-                }
                 break;
         }
     }

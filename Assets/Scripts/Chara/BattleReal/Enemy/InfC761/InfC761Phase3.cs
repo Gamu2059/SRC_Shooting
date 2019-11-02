@@ -202,13 +202,14 @@ public class InfC761Phase3 : BattleRealBossBehavior
         }
     }
 
-    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletParamIndex, bool isPlayerLook = false){
+    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex, int bulletParamIndex, bool isPlayerLook = false){
         int num = param.Num;
         float angle = param.Angle;
         var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;
+        shotParam.BulletIndex = bulletIndex;
 
         var correctAngle = 0f;
         if (isPlayerLook)
@@ -252,11 +253,11 @@ public class InfC761Phase3 : BattleRealBossBehavior
                 switch (m_ShotStartEdge)
                 {
                     case E_SHOT_START_EDGE.LEFT:
-                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.LeftShotOffset, 7, true);
+                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.LeftShotOffset, 0, 7, true);
                         m_PlookShotTime++;
                         break;
                     case E_SHOT_START_EDGE.RIGHT:
-                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.RigthShotOffset, 7, true);
+                        OnShot(m_ParamSet.ShotParams[1], m_ParamSet.RigthShotOffset, 0, 7, true);
                         m_PlookShotTime++;
                         break;
                 }
@@ -288,12 +289,12 @@ public class InfC761Phase3 : BattleRealBossBehavior
                     case E_SHOT_START_EDGE.LEFT:
                         x = Mathf.Lerp(m_ParamSet.LineShotStart.x, m_ParamSet.LineShotEnd.x, r);
                         z = Mathf.Lerp(m_ParamSet.LineShotStart.z, m_ParamSet.LineShotEnd.z, r);
-                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 6, true);
+                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 2, 6, true);
                         break;
                     case E_SHOT_START_EDGE.RIGHT:
                         x = Mathf.Lerp(m_ParamSet.LineShotEnd.x, m_ParamSet.LineShotStart.x, r);
                         z = Mathf.Lerp(m_ParamSet.LineShotEnd.z, m_ParamSet.LineShotStart.z, r);
-                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 6, true);
+                        OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 2, 6, true);
                         break;
                 }
                 

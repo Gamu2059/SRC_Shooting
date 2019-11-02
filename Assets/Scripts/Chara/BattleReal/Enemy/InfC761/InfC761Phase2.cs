@@ -185,7 +185,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
         }
     }
-    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletParamIndex, bool isPlayerLook = false)
+    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex,int bulletParamIndex, bool isPlayerLook = false)
     {
         int num = param.Num;
         float angle = param.Angle;
@@ -193,6 +193,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;
+        shotParam.BulletIndex = bulletIndex;
 
         var correctAngle = 0f;
         if (isPlayerLook)
@@ -224,13 +225,13 @@ public class InfC761Phase2 : BattleRealBossBehavior
         {
             m_DirShotTimeCount = 0;
 
-            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 2);
-            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 2);
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 1, 2);
+            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 1, 2);
         }
 
         if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
             m_PLookShotTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 3);
+            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 0, 3);
         }
     }
 
