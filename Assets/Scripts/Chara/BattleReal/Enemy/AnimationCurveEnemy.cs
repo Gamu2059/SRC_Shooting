@@ -126,5 +126,7 @@ public class AnimationCurveEnemy : BattleRealEnemyController
             var bullet = BulletController.ShotBullet(shotParam);
             bullet.SetRotation(new Vector3(0, spreadAngles[i] + correctAngle, 0));
         }
+
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
     }
 }

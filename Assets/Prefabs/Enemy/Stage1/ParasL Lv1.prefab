@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2115815410738801048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3277597437359890890}
+  - component: {fileID: 45229121599469760}
+  m_Layer: 11
+  m_Name: Hit Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3277597437359890890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115815410738801048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 5777065925503361208}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &45229121599469760
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115815410738801048}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4433259954340433325
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,6 +97,14 @@ MonoBehaviour:
     ColliderWidth: 10
     ColliderColor: {r: 1, g: 0.10283664, b: 0, a: 0}
     Transform: {fileID: 3536614110318891893}
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 8
+    ColliderShape: 1
+    Direction: 0
+    ColliderWidth: 10
+    ColliderColor: {r: 1, g: 0.10283664, b: 0, a: 0}
+    Transform: {fileID: 3277597437359890890}
 --- !u!1 &4753289694444341644
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,6 +135,7 @@ Transform:
   - {fileID: 5295655808547673213}
   - {fileID: 3861774096173857398}
   - {fileID: 3536614110318891893}
+  - {fileID: 3277597437359890890}
   m_Father: {fileID: 123677241004239965}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,7 +150,7 @@ GameObject:
   - component: {fileID: 3536614110318891893}
   - component: {fileID: 8422622157597231364}
   m_Layer: 11
-  m_Name: Collider
+  m_Name: Critical Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -254,10 +254,12 @@ public class InfC761Phase3 : BattleRealBossBehavior
                 {
                     case E_SHOT_START_EDGE.LEFT:
                         OnShot(m_ParamSet.ShotParams[1], m_ParamSet.LeftShotOffset, 0, 7, true);
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                         m_PlookShotTime++;
                         break;
                     case E_SHOT_START_EDGE.RIGHT:
                         OnShot(m_ParamSet.ShotParams[1], m_ParamSet.RigthShotOffset, 0, 7, true);
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                         m_PlookShotTime++;
                         break;
                 }
@@ -290,11 +292,13 @@ public class InfC761Phase3 : BattleRealBossBehavior
                         x = Mathf.Lerp(m_ParamSet.LineShotStart.x, m_ParamSet.LineShotEnd.x, r);
                         z = Mathf.Lerp(m_ParamSet.LineShotStart.z, m_ParamSet.LineShotEnd.z, r);
                         OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 2, 6, true);
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
                         break;
                     case E_SHOT_START_EDGE.RIGHT:
                         x = Mathf.Lerp(m_ParamSet.LineShotEnd.x, m_ParamSet.LineShotStart.x, r);
                         z = Mathf.Lerp(m_ParamSet.LineShotEnd.z, m_ParamSet.LineShotStart.z, r);
                         OnShot(m_ParamSet.ShotParams[2], new Vector3(x, Enemy.transform.position.y, z), 2, 6, true);
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
                         break;
                 }
                 

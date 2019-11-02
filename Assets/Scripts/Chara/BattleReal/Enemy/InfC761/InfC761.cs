@@ -24,6 +24,8 @@ public class InfC761 : BattleRealEnemyController
     private const string DOWN_KEY = "Down";
     private const string HACKING_SUCCESS_KEY = "Hacking";
 
+    private const string DAMAGE_COLLIDER_NAME = "Damage Collider";
+
     #region Field
 
     private InfC761ParamSet m_BossParamSet;
@@ -37,6 +39,8 @@ public class InfC761 : BattleRealEnemyController
 
     private BattleRealBossBehavior m_CurrentAttack;
     private BattleRealBossBehavior m_CurrentDown;
+
+    private Transform m_DamageCollider;
 
     private int m_AttackPhase;
     private int m_DownPhase;
@@ -149,6 +153,7 @@ public class InfC761 : BattleRealEnemyController
         InitializeAttackBehaviors();
         InitializeDownBehaviors();
 
+        m_DamageCollider = transform.Find(DAMAGE_COLLIDER_NAME);
         BattleRealManager.Instance.OnTransitionToReal += OnTransitionToReal;
 
         RequestChangeState(E_PHASE.START);
@@ -157,6 +162,7 @@ public class InfC761 : BattleRealEnemyController
     public override void OnFinalize()
     {
         BattleRealManager.Instance.OnTransitionToReal -= OnTransitionToReal;
+        m_DamageCollider = null;
 
         if (m_DownBehaviors != null)
         {
@@ -318,6 +324,7 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnAttack()
     {
+        GetCollider().SetEnableCollider(m_DamageCollider, true);
         m_CurrentAttack?.OnStart();
     }
 
@@ -347,6 +354,7 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnDown()
     {
+        GetCollider().SetEnableCollider(m_DamageCollider, false);
         BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Down");
 
@@ -551,38 +559,40 @@ public class InfC761 : BattleRealEnemyController
     {
         base.OnEnterSufferBullet(sufferData);
 
-        var currentState = m_StateMachine.CurrentState.Key;
-
-        m_DownHp -= 1;
-        if (m_DownHp <= 0 && currentState == E_PHASE.ATTACK)
+        var colliderType = sufferData.SufferCollider.Transform.ColliderType;
+        if (colliderType == E_COLLIDER_TYPE.CRITICAL)
         {
-            m_DownHp = m_BossParamSet.DownHp;
-            RequestChangeState(E_PHASE.DOWN);
+            var currentState = m_StateMachine.CurrentState.Key;
+            m_DownHp -= 1;
+            if (m_DownHp <= 0 && currentState == E_PHASE.ATTACK)
+            {
+                m_DownHp = m_BossParamSet.DownHp;
+                RequestChangeState(E_PHASE.DOWN);
+            }
         }
-
-        //if (currentState == E_PHASE.ATTACK)
-        //{
-        //    var hpRate = 
-        //    if ()
-        //    {
-
-        //    }
-        //}
     }
 
     protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
     {
         base.OnEnterSufferChara(sufferData);
 
-        var currentState = m_StateMachine.CurrentState.Key;
-        if (currentState == E_PHASE.DOWN)
+        var sufferType = sufferData.SufferCollider.Transform.ColliderType;
+        switch (sufferType)
         {
-            var colliderType = sufferData.HitCollider.Transform.ColliderType;
-            if (colliderType == E_COLLIDER_TYPE.PLAYER_HACKING)
-            {
-                BattleHackingManager.Instance.SetHackingLevel(m_AttackPhase);
-                BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
-            }
+            case E_COLLIDER_TYPE.CRITICAL:
+                break;
+            case E_COLLIDER_TYPE.ENEMY_HACKING:
+                var currentState = m_StateMachine.CurrentState.Key;
+                if (currentState == E_PHASE.DOWN)
+                {
+                    var colliderType = sufferData.HitCollider.Transform.ColliderType;
+                    if (colliderType == E_COLLIDER_TYPE.PLAYER_HACKING)
+                    {
+                        BattleHackingManager.Instance.SetHackingLevel(m_AttackPhase);
+                        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+                    }
+                }
+                break;
         }
     }
 

@@ -13,6 +13,13 @@ public class HackerBullet : BulletController
     protected override void OnEnterHitChara(HitSufferData<CharaController> hitData)
     {
         base.OnEnterHitChara(hitData);
-        DestroyBullet();
+
+        var colliderType = hitData.SufferCollider.Transform.ColliderType;
+        switch (colliderType)
+        {
+            case E_COLLIDER_TYPE.CRITICAL:
+                DestroyBullet();
+                break;
+        }
     }
 }

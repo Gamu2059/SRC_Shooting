@@ -171,15 +171,24 @@ public class BattleRealEnemyController : CharaController
             return;
         }
 
-        if (BattleRealStageManager.Instance.IsOutOfField(bullet.transform))
+        var stageM = BattleRealStageManager.Instance;
+        if (stageM.IsOutOfField(transform) || stageM.IsOutOfField(bullet.transform))
         {
             return;
         }
 
         var hitCollider = sufferData.HitCollider;
-        if (hitCollider.Transform.ColliderType == E_COLLIDER_TYPE.PLAYER_BULLET)
+        switch (hitCollider.Transform.ColliderType)
         {
-            Damage(1);
+            case E_COLLIDER_TYPE.PLAYER_BULLET:
+            case E_COLLIDER_TYPE.PLAYER_LASER:
+            case E_COLLIDER_TYPE.PLAYER_BOMB:
+                var sufferCollider = sufferData.SufferCollider;
+                if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
+                {
+                    Damage(1);
+                }
+                break;
         }
     }
 
@@ -188,9 +197,17 @@ public class BattleRealEnemyController : CharaController
         base.OnStaySufferBullet(sufferData);
 
         var hitCollider = sufferData.HitCollider;
-        if (hitCollider.Transform.ColliderType == E_COLLIDER_TYPE.PLAYER_LASER)
+        switch (hitCollider.Transform.ColliderType)
         {
-            Damage(1);
+            case E_COLLIDER_TYPE.PLAYER_BULLET:
+            case E_COLLIDER_TYPE.PLAYER_LASER:
+            case E_COLLIDER_TYPE.PLAYER_BOMB:
+                var sufferCollider = sufferData.SufferCollider;
+                if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
+                {
+                    Damage(1);
+                }
+                break;
         }
     }
 
