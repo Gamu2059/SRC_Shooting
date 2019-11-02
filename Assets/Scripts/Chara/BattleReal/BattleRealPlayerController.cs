@@ -80,7 +80,7 @@ public class BattleRealPlayerController : CharaController
     /// </summary>
     public virtual void ShotBullet()
     {
-
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
     }
 
     public void ChargeLaser()
@@ -195,7 +195,6 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
-        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
         BattleRealManager.Instance.DeadPlayer();
     }

@@ -214,6 +214,7 @@ public class InfC761Hacker1Phase1 : BattleHackingBossBehavior
             case E_PHASE.MOVE_TO_RIGHT:
                 if (m_CenterShotTimeCount >= centerParam.Interval)
                 {
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Hack_Shot01");
                     m_CenterShotTimeCount = 0;
                     if (m_GraphicsController != null)
                     {
@@ -227,6 +228,7 @@ public class InfC761Hacker1Phase1 : BattleHackingBossBehavior
                 }
                 if (m_SideShotTimeCount >= sideParam.Interval)
                 {
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Hack_Shot02");
                     m_SideShotTimeCount = 0;
                     OnShot(sideParam, m_ParamSet.LeftShotOffset, 1);
                     OnShot(sideParam, m_ParamSet.RigthShotOffset, 1);

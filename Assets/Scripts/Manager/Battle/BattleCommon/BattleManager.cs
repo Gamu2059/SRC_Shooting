@@ -14,26 +14,37 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
     #region Field Inspector
 
+    [Header("ParamSet")]
 
     [SerializeField]
     private BattleParamSet m_ParamSet;
     public BattleParamSet ParamSet => m_ParamSet;
+
+    [Header("StageManager")]
 
     [SerializeField]
     private BattleRealStageManager m_BattleRealStageManager;
     public BattleRealStageManager BattleRealStageManager => m_BattleRealStageManager;
 
     [SerializeField]
+    private BattleHackingStageManager m_BattleHackingStageManager;
+    public BattleHackingStageManager BattleHackingStageManager => m_BattleHackingStageManager;
+
+    [Header("UiManager")]
+
+    [SerializeField]
     private BattleRealUiManager m_BattleRealUiManager;
     public BattleRealUiManager BattleRealUiManager => m_BattleRealUiManager;
 
     [SerializeField]
-    private BattleHackingStageManager m_BattleHackingStageManager;
-    public BattleHackingStageManager BattleHackingStageManager => m_BattleHackingStageManager;
-
-    [SerializeField]
     private BattleHackingUiManager m_BattleHackingUiManager;
     public BattleHackingUiManager BattleHackingUiManager => m_BattleHackingUiManager;
+
+    [Header("PlayableManager")]
+
+    [SerializeField]
+    private BattleRealPlayableManager m_BattleRealPlayableManager;
+    public BattleRealPlayableManager BattleRealPlayableManager => m_BattleRealPlayableManager;
 
     [Header("Camera")]
 
@@ -157,6 +168,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         });
 
         m_BattleRealStageManager.OnInitialize();
+        m_BattleHackingStageManager.OnInitialize();
 
         RealManager = new BattleRealManager(m_ParamSet.BattleRealParamSet);
         HackingManager = new BattleHackingManager(m_ParamSet.BattleHackingParamSet);
@@ -164,14 +176,25 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.OnInitialize();
         HackingManager.OnInitialize();
 
+        m_BattleRealPlayableManager.OnInitialize();
+
+        m_BattleRealUiManager.OnInitialize();
+        m_BattleHackingUiManager.OnInitialize();
+
         RequestChangeState(E_BATTLE_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        m_BattleHackingUiManager.OnFinalize();
+        m_BattleRealUiManager.OnFinalize();
+
+        m_BattleRealPlayableManager.OnFinalize();
+
         HackingManager.OnFinalize();
         RealManager.OnFinalize();
 
+        m_BattleHackingStageManager.OnFinalize();
         m_BattleRealStageManager.OnFinalize();
 
         base.OnFinalize();
@@ -210,9 +233,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleRealUiManager.SetEnableGameClear(false);
         m_BattleRealUiManager.SetEnableGameOver(false);
-
-        var audio = AudioManager.Instance;
-        audio.PlayBgm(m_ParamSet.BgmParamSet.StageBgmName);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
 

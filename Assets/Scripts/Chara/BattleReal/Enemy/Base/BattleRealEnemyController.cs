@@ -179,7 +179,6 @@ public class BattleRealEnemyController : CharaController
         var hitCollider = sufferData.HitCollider;
         if (hitCollider.Transform.ColliderType == E_COLLIDER_TYPE.PLAYER_BULLET)
         {
-            BattleRealManager.Instance.SetEnemyHit();
             Damage(1);
         }
     }
@@ -191,9 +190,14 @@ public class BattleRealEnemyController : CharaController
         var hitCollider = sufferData.HitCollider;
         if (hitCollider.Transform.ColliderType == E_COLLIDER_TYPE.PLAYER_LASER)
         {
-            BattleRealManager.Instance.SetEnemyHit();
             Damage(1);
         }
+    }
+
+    protected override void OnDamage()
+    {
+        base.OnDamage();
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Damage");
     }
 
     public override void Dead()

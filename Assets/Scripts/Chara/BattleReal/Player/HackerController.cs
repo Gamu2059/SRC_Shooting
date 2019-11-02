@@ -39,6 +39,8 @@ public class HackerController : BattleRealPlayerController
 
     public override void ShotBullet()
     {
+        base.ShotBullet();
+
         if (shotDelay >= m_ShotInterval)
         {
             for (int i = 0; i < m_MainShotPosition.Length; i++)
