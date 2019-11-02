@@ -254,7 +254,10 @@ public class BattleRealManager : ControllableObject
     {
         InputManager.OnStart();
         RealTimerManager.OnStart();
+
+        // このタイミングでBattle Loadedがカウント開始する
         EventManager.OnStart();
+
         PlayerManager.OnStart();
         EnemyGroupManager.OnStart();
         EnemyManager.OnStart();
@@ -323,14 +326,17 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBeginGamePerformance()
     {
+        EventManager.OnUpdate();
     }
 
     private void LateUpdateOnBeforeBeginGamePerformance()
     {
+        EventManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeforeBeginGamePerformance()
     {
+        EventManager.OnFixedUpdate();
     }
 
     private void EndOnBeforeBeginGamePerformance()

@@ -727,23 +727,20 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlObjectParams)
         {
-            if (param.UsePlayableObjectPrefab)
+            switch (param.ControlObjectType)
             {
-                var obj = GameObject.Instantiate(param.PlayableObjectPrefab);
-                PlayableManager.Instance.RegistObject(obj);
-                obj.StartTimeline(param.ObjectTimelineParam);
-            }
-            else
-            {
-                var playables = PlayableManager.Instance.GetUpdateObjects();
-                foreach (var playable in playables)
-                {
-                    if (playable.name == param.RegisteredPlayableName)
-                    {
-                        playable.StartTimeline(param.ObjectTimelineParam);
-                        break;
-                    }
-                }
+                case E_CONTROL_OBJECT_TYPE.START:
+                    BattleRealPlayableManager.Instance.StartPlayable(param.Name);
+                    break;
+                case E_CONTROL_OBJECT_TYPE.PAUSE:
+                    BattleRealPlayableManager.Instance.PausePlayable(param.Name);
+                    break;
+                case E_CONTROL_OBJECT_TYPE.RESUME:
+                    BattleRealPlayableManager.Instance.ResumePlayable(param.Name);
+                    break;
+                case E_CONTROL_OBJECT_TYPE.STOP:
+                    BattleRealPlayableManager.Instance.StopPlayable(param.Name);
+                    break;
             }
         }
     }
