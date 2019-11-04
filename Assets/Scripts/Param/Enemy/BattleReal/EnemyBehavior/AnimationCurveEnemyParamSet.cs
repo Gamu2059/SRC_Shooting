@@ -30,4 +30,10 @@ public class AnimationCurveEnemyParamSet : BattleRealEnemyBehaviorParamSet
     [SerializeField]
     private EnemyShotParam m_ShotParam;
     public EnemyShotParam ShotParam => m_ShotParam;
+
+    [Header("Ring Param")]
+
+    [SerializeField, Tooltip("出現時にリングアニメーションを再生するかどうか。falseの場合、最初に弾を撃つ瞬間に再生する。")]
+    private bool m_IsStartAnimationOnStart;
+    public bool IsStartAnimationOnStart => m_IsStartAnimationOnStart;
 }

@@ -9,6 +9,7 @@ public class AnimationCurveEnemy : BattleRealEnemyController
     protected EnemyShotParam m_ShotParam;
     protected float m_ShotOffset;
     protected float m_ShotStop;
+    protected bool m_IsRingAnimationOnStart;
 
     protected Vector3 m_StartPosition;
     protected float m_StartAngle;
@@ -31,6 +32,7 @@ public class AnimationCurveEnemy : BattleRealEnemyController
             m_ShotParam = paramSet.ShotParam;
             m_ShotOffset = paramSet.ShotOffset;
             m_ShotStop = paramSet.ShotStop;
+            m_IsRingAnimationOnStart = paramSet.IsStartAnimationOnStart;
         }
     }
 
@@ -50,6 +52,11 @@ public class AnimationCurveEnemy : BattleRealEnemyController
         m_NowAngleSpeed = 0;
 
         m_IsLookMoveDir = false;
+
+        if(m_IsRingAnimationOnStart)
+        {
+            StartOutRingAnimation();
+        }
     }
 
     public override void OnUpdate()
@@ -92,6 +99,11 @@ public class AnimationCurveEnemy : BattleRealEnemyController
             {
                 m_ShotTimeCount = m_ShotParam.Interval;
                 m_IsCountOffset = false;
+
+                if (!m_IsRingAnimationOnStart)
+                {
+                    StartOutRingAnimation();
+                }
             }
         }
         else

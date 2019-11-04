@@ -324,6 +324,7 @@ public class InfC761 : BattleRealEnemyController
 
     private void StartOnAttack()
     {
+        StartOutRingAnimation();
         GetCollider().SetEnableCollider(m_DamageCollider, true);
         m_CurrentAttack?.OnStart();
     }
