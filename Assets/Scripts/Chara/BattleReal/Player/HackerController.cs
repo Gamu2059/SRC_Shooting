@@ -17,6 +17,9 @@ public class HackerController : BattleRealPlayerController
     private Animator m_ShieldAnimator;
 
     [SerializeField]
+    private Transform m_Critical;
+
+    [SerializeField]
     private Transform m_Shield;
 
     private float shotDelay;
@@ -87,7 +90,9 @@ public class HackerController : BattleRealPlayerController
     private void SetEnableCollider(bool isEnable)
     {
         var c = GetCollider();
-        c.SetEnableAllCollider(isEnable);
+
+        // ”í’e”»’è‚Æ–³“G”»’è‚Í”½‘Î‚ÌŠÖŒW
+        c.SetEnableCollider(m_Critical, isEnable);
         c.SetEnableCollider(m_Shield, !isEnable);
     }
 }

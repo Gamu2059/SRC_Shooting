@@ -153,7 +153,7 @@ public class InfC761 : BattleRealEnemyController
         InitializeAttackBehaviors();
         InitializeDownBehaviors();
 
-        m_DamageCollider = transform.Find(DAMAGE_COLLIDER_NAME);
+        m_DamageCollider = transform.Find(DAMAGE_COLLIDER_NAME, false);
         BattleRealManager.Instance.OnTransitionToReal += OnTransitionToReal;
 
         RequestChangeState(E_PHASE.START);
