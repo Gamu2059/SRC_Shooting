@@ -60,6 +60,7 @@ public class BattleRealPlayerController : CharaController
     {
         base.OnStart();
         m_ShotRemainTime = 0;
+        StartOutRingAnimation();
     }
 
     public override void OnUpdate()

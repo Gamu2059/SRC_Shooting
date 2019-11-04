@@ -31,6 +31,8 @@ public class CharaController : BattleRealObjectBase
     private HitSufferController<CharaController> m_CharaHit;
     private HitSufferController<BattleRealItemController> m_ItemHit;
 
+    private OutRingController m_OutRingController;
+
     #endregion
 
     #region Get Set
@@ -106,6 +108,37 @@ public class CharaController : BattleRealObjectBase
         base.OnFinalize();
     }
 
+    public override void OnStart()
+    {
+        base.OnStart();
+
+        m_OutRingController = GetComponentInChildren<OutRingController>(true);
+        if (m_OutRingController != null)
+        {
+            m_OutRingController.OnStart();
+        }
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+
+        if (m_OutRingController != null)
+        {
+            m_OutRingController.OnFixedUpdate();
+        }
+    }
+
     #endregion
 
     /// <summary>
@@ -168,6 +201,17 @@ public class CharaController : BattleRealObjectBase
     public virtual void Dead()
     {
 
+    }
+
+    /// <summary>
+    /// リングアニメーションを始める
+    /// </summary>
+    protected void StartOutRingAnimation()
+    {
+        if (m_OutRingController != null)
+        {
+            m_OutRingController.StartAnimation();
+        }
     }
 
     #region Impl IColliderProcess

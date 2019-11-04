@@ -145,6 +145,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         m_Player.transform.SetParent(m_PlayerCharaHolder);
         InitPlayerPosition();
         m_Player.OnInitialize();
+        m_Player.OnStart();
 
         InitPlayerState();
 
@@ -227,6 +228,30 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
 
         m_Player.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        if (m_Player == null)
+        {
+            return;
+        }
+
+        m_Player.OnLateUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+
+        if (m_Player == null)
+        {
+            return;
+        }
+
+        m_Player.OnFixedUpdate();
     }
 
     /// <summary>
