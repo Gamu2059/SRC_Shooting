@@ -1152,14 +1152,21 @@ public static class Collision
     /// </summary>
     public static bool IsCollideLineToLineFast(CollisionLine l1, CollisionLine l2)
     {
-        var v = l1.v;
-        var v1 = l2.p - l1.p;
-        var v2 = l2.p + l2.v - l1.p;
+        var l1v = l1.v;
+        var l1v1 = l2.p - l1.p;
+        var l1v2 = l2.p + l2.v - l1.p;
 
-        var crs_v_v1 = Cross(v, v1);
-        var crs_v_v2 = Cross(v, v2);
+        var l2v = l2.v;
+        var l2v1 = l1.p - l2.p;
+        var l2v2 = l1.p + l1.v - l2.p;
 
-        return crs_v_v1 * crs_v_v2 <= 0;
+        var crs_l1v_l1v1 = Cross(l1v, l1v1);
+        var crs_l1v_l1v2 = Cross(l1v, l1v2);
+
+        var crs_l2v_l2v1 = Cross(l2v, l2v1);
+        var crs_l2v_l2v2 = Cross(l2v, l2v2);
+
+        return crs_l1v_l1v1 * crs_l1v_l1v2 <= 0 && crs_l2v_l2v1 * crs_l2v_l2v2 <= 0;
     }
     
     /// <summary>
