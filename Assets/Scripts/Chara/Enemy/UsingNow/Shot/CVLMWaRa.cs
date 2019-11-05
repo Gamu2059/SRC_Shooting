@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 等速直線運動する、半径のある全方位弾を発射するときのクラス。継承と委譲、どっちの方がいいんだろう。
+/// 等速直線運動する、半径のある全方位弾を発射するときのクラス。
 /// </summary>
-public class CVLMWayRadiusShot : CVLMShotParam
+public class CVLMWaRa : CVLM
 {
 
     /// <summary>
@@ -20,9 +20,9 @@ public class CVLMWayRadiusShot : CVLMShotParam
 
 
     /// <summary>
-    /// インスタンスを生成する。
+    /// コンストラクタ。
     /// </summary>
-    public CVLMWayRadiusShot(CVLMShotParam cVLMShotParam,int way,float radius)
+    public CVLMWaRa(CVLM cVLMShotParam,int way,float radius)
         : base(cVLMShotParam)
     {
         m_Way = way;

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 等速直線運動する、半径のある全方位弾を等間隔に速度差をつけて発射するときのクラス。
 /// </summary>
-public class CVLMWaRaSp : CVLMShotParam
+public class CVLMWaRaSp : CVLM
 {
 
     /// <summary>
@@ -30,9 +30,9 @@ public class CVLMWaRaSp : CVLMShotParam
 
 
     /// <summary>
-    /// インスタンスを生成する。
+    /// コンストラクタ。
     /// </summary>
-    public CVLMWaRaSp(CVLMShotParam cVLMShotParam, int way, float radius,int speedNum,float dSpeed)
+    public CVLMWaRaSp(CVLM cVLMShotParam, int way, float radius,int speedNum,float dSpeed)
         : base(cVLMShotParam)
     {
         m_Way = way;
@@ -43,7 +43,7 @@ public class CVLMWaRaSp : CVLMShotParam
 
 
     /// <summary>
-    /// 弾を撃つ。（この中で、全方位と速度差をどっちを大きいループにしたかは、使う側は意識しない。）ローカル関数とは？
+    /// 弾を撃つ。（ローカル関数を使っている）
     /// </summary>
     public override void Shoot()
     {
@@ -60,19 +60,19 @@ public class CVLMWaRaSp : CVLMShotParam
         {
             Shoot2(0);
         }
-    }
 
 
-    public void Shoot2(float dSpeed)
-    {
-        for (int i = 0; i < m_Way; i++)
+        void Shoot2(float dSpeed)
         {
-            // wayによる角度差
-            float wayRad = Mathf.PI * 2 * i / m_Way;
+            for (int i = 0; i < m_Way; i++)
+            {
+                // wayによる角度差
+                float wayRad = Mathf.PI * 2 * i / m_Way;
 
-            Vector3 wayPos = Calc.RThetaToVector3(m_Radius, m_VelocityRad + wayRad);
+                Vector3 wayPos = Calc.RThetaToVector3(m_Radius, m_VelocityRad + wayRad);
 
-            ShootDpoDraDsp(wayPos,wayRad, dSpeed);
+                ShootDpoDraDsp(wayPos, wayRad, dSpeed);
+            }
         }
     }
 }
