@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 等速直線運動する弾を発射するときのパラメータのクラス。
+/// 等速直線運動する弾を発射するときのクラス。
 /// </summary>
-public class CVLMShotParam : object
+public class CVLM : object
 {
 
     /// <summary>
@@ -40,9 +40,9 @@ public class CVLMShotParam : object
 
 
     /// <summary>
-    /// インスタンスを生成する。引数がこのクラスの変数だけのコンストラクタも作るか。継承先用に。
+    /// 引数最多のコンストラクタ。
     /// </summary>
-    public CVLMShotParam(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
+    public CVLM(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
     {
         m_EnemyController = enemyController;
         m_BulletIndex = bulletIndex;
@@ -53,7 +53,10 @@ public class CVLMShotParam : object
     }
 
 
-    public CVLMShotParam(CVLMShotParam cVLMShotParam)
+    /// <summary>
+    /// 引数が自分だけのコンストラクタ。（継承先用）
+    /// </summary>
+    public CVLM(CVLM cVLMShotParam)
         : this(cVLMShotParam.m_EnemyController, cVLMShotParam.m_BulletIndex, cVLMShotParam.m_Position, cVLMShotParam.m_VelocityRad, cVLMShotParam.m_Speed, cVLMShotParam.m_DTime)
     {
 
@@ -61,7 +64,7 @@ public class CVLMShotParam : object
 
 
     /// <summary>
-    /// 発射位置に引数の値を足す。（相対的なsetPositionみたいなもの？）
+    /// 発射位置に引数の値を足す。
     /// </summary>
     public void PlusPosition(Vector3 position)
     {
@@ -70,16 +73,24 @@ public class CVLMShotParam : object
 
 
     /// <summary>
-    /// 弾を撃つ。（引数なし）（{}でなく=>でいける？）
+    /// 発射位置に引数の値を足す。
     /// </summary>
-    public virtual void Shoot()
+    public void PlusAngle(float angle)
     {
-        Shoot(m_EnemyController,m_BulletIndex,m_Position,m_VelocityRad,m_Speed,m_DTime);
+        m_VelocityRad += angle;
     }
 
 
     /// <summary>
-    /// 弾を撃つ。（引数最大）
+    /// 弾を撃つ。（引数なし）
+    /// </summary>
+    public virtual void Shoot()
+        =>
+        Shoot(m_EnemyController,m_BulletIndex,m_Position,m_VelocityRad,m_Speed,m_DTime);
+
+
+    /// <summary>
+    /// 弾を撃つ。（引数最多）
     /// </summary>
     public void Shoot(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
     {

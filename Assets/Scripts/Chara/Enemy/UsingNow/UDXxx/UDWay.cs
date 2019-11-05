@@ -40,7 +40,7 @@ public class UDWay : RegularIntervalUDAbstract
             // 1つの弾の角度
             float rad = centerRad + Mathf.PI * 2 * i * m_Float[(int)Way.FLOAT.dAngle] / 2;
 
-            CVLMShotParam cVLMShotParam = new CVLMShotParam(
+            CVLM cVLMShotParam = new CVLM(
                 enemyController,
                 m_Int[(int)Way.INT.bulletIndex],
                 enemyController.transform.position,
