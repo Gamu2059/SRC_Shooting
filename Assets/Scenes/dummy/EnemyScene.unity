@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427135, b: 0.5645232, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -352,8 +352,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 1
   m_PeriodSpeed: 1
@@ -479,8 +477,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 1
   m_Way: 0
@@ -687,8 +683,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 1
   angleAcceleration: 5
@@ -803,8 +797,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -993,8 +985,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 0.2
   m_AngleSpeed: 1
   m_BulletSpeed: 10
@@ -1128,8 +1118,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -1245,8 +1233,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.1
   circleRadius: 15
@@ -2036,8 +2022,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2152,8 +2136,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 1
   way: 4
@@ -2381,8 +2363,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2501,8 +2481,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2629,8 +2607,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 3.14
@@ -2746,8 +2722,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   shotNum: 0
   m_BulletSpeed: 10
@@ -2891,8 +2865,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -3096,8 +3068,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_Danmaku:
     m_AttackNum: 0
     m_AttackFormNum: 0
@@ -3421,8 +3391,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 3
   m_Way: 0
@@ -3442,8 +3410,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.04
   way: 4
@@ -3465,8 +3431,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.04
   way: 4
@@ -3618,8 +3582,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 1
   m_way: 20
@@ -6865,8 +6827,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 1000
   m_MaxHp: 1000
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_PhaseTime:
   - 8
   m_DanmakuPhase: 0
@@ -7000,8 +6960,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 1000
   way: 30
@@ -7150,8 +7108,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.03
   circleRadius: 20
@@ -7465,8 +7421,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   realShotNum: 0
   m_AngleSpeed: 1
@@ -7578,8 +7532,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7696,8 +7648,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7887,8 +7837,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.01
   circleRadiusPhaseSpeed: 1
@@ -8067,8 +8015,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -8756,8 +8702,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   shotInterval: 1000
   shotTime: 0
   nowRad: 0
@@ -8970,8 +8914,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   shotInterval: 1000
   shotTime: 0
   nowRad: 0
@@ -9087,8 +9029,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -9202,8 +9142,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.05
   m_AngleSpeed: 2
@@ -9317,8 +9255,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 0.1
   m_AngleSpeed: 1
   m_BulletSpeed: 10
@@ -9577,8 +9513,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_Normal: {fileID: 0}
   m_HitMate: {fileID: 0}
   m_Renderer: {fileID: 0}
@@ -9922,8 +9856,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_BulletSpeed: 10
 --- !u!65 &1200572590
@@ -10211,8 +10143,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10514,8 +10444,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10629,8 +10557,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.05
   way: 5
@@ -10746,8 +10672,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10900,8 +10824,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   shotInterval: 0.1
   way: 4
@@ -11017,8 +10939,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_PhaseTime: []
   m_DanmakuPhase: 0
   m_LocalPositionBezier0: []
@@ -11147,8 +11067,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_OmniShotInterval: 1000
   m_KinkoShotInterval: 1000
   m_OmniShotTime: 0
@@ -11271,8 +11189,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 1000
   m_MaxHp: 1000
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_Normal: {fileID: 0}
   m_HitMate: {fileID: 0}
   m_Renderer: {fileID: 1532760121}
@@ -11468,8 +11384,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_PhaseTime:
   - 5
   m_DanmakuPhase: 0
@@ -11603,8 +11517,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11856,8 +11768,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11974,8 +11884,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12090,8 +11998,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 10
   m_PeriodSpeed: 1
@@ -12235,8 +12141,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12313,6 +12217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1771546479}
   - component: {fileID: 1771546480}
+  - component: {fileID: 1771546481}
   m_Layer: 0
   m_Name: '[BattleReal]'
   m_TagString: Untagged
@@ -12356,6 +12261,19 @@ MonoBehaviour:
   m_ItemHolder: {fileID: 1409171911}
   m_MinLocalFieldPosition: {x: -0.81, y: -1}
   m_MaxLocalFieldPosition: {x: 0.81, y: 1}
+--- !u!114 &1771546481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771546478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c981faddc741f54685ae3d637f82551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Playables: []
 --- !u!1 &1771885899
 GameObject:
   m_ObjectHideFlags: 0
@@ -12405,8 +12323,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12527,8 +12443,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1
   m_ShotTime: 0
   m_NowRad: 0
@@ -12643,8 +12557,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12759,8 +12671,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_BasePos: {x: 0, y: 0, z: 0}
@@ -12968,8 +12878,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 3
   m_Way: 0
@@ -12989,8 +12897,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.1
   way: 4
@@ -13013,8 +12919,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   shotInterval: 0.1
   way: 4
@@ -13129,8 +13033,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 0.1
   m_ShotTime: 0
   m_NowRad: 0
@@ -13246,8 +13148,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -13365,7 +13265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 0
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 0
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 0
@@ -13386,8 +13288,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 5000
   m_MaxHp: 5000
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_Danmaku:
     m_AttackNum: 2
     m_AttackFormNum: 0
@@ -13583,8 +13483,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -13915,8 +13813,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   kinkoShotInterval: 0.1
   kinkoAngleSpeed: 1
@@ -14104,8 +14000,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_RealShotNum: -1
   m_BulletNum: 100
   m_Bullet: []
@@ -14235,8 +14129,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 
   SineshotInterval: 0.1
   Sineway: 8
@@ -14419,8 +14311,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 0}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -14722,8 +14612,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.05
   m_AngleSpeed: 2
@@ -14744,8 +14632,6 @@ MonoBehaviour:
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
   m_NowHp: 0
   m_MaxHp: 0
-  m_Score: 0
-  m_OnHitInvincibleDuration: 0
   realShotNum: 0
   m_ShotInterval: 0.015
   relativeLaunchPos: {x: 5, y: 0, z: 0}
@@ -14914,9 +14800,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ParamSet: {fileID: 11400000, guid: 547331156a18dbd49a174ed2b1cd9b81, type: 2}
   m_BattleRealStageManager: {fileID: 1771546480}
-  m_BattleRealUiManager: {fileID: 1630913269}
   m_BattleHackingStageManager: {fileID: 1183653724}
+  m_BattleRealUiManager: {fileID: 1630913269}
   m_BattleHackingUiManager: {fileID: 221366189}
+  m_BattleRealPlayableManager: {fileID: 1771546481}
   m_BattleRealFrontCamera: {fileID: 0}
   m_BattleRealBackCamera: {fileID: 0}
   m_VideoPlayer: {fileID: 2009328465}
