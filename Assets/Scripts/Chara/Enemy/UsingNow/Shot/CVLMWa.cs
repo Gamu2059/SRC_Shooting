@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 等速直線運動する、全方位弾を発射するときのクラス。
 /// </summary>
-public class CVLMWa : CVLMShotParam
+public class CVLMWa : CVLM
 {
 
     /// <summary>
@@ -17,7 +17,7 @@ public class CVLMWa : CVLMShotParam
     /// <summary>
     /// インスタンスを生成する。
     /// </summary>
-    public CVLMWa(CVLMShotParam cVLMShotParam, int way)
+    public CVLMWa(CVLM cVLMShotParam, int way)
         : base(cVLMShotParam)
     {
         m_Way = way;

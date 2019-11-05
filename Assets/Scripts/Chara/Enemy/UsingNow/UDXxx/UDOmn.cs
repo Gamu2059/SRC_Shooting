@@ -74,11 +74,11 @@ public class UDOmn : RegularIntervalUDAbstract
 
 
         CVLMWaRaSp cVLMWaRaSp = new CVLMWaRaSp(
-            new CVLMShotParam(
+            new CVLM(
                 enemyController,
                 m_Int[(int)Omn.INT.bulletIndex],
                 Vector3.zero,
-                rad0 + posVeloRad,
+                rad0 + Calc.floatIf(m_Bool[(int)Omn.BOOL.isTurnRightAngle], Calc.HALF_PI,0),
                 m_Float[(int)Omn.FLOAT.bulletSpeed],
                 dTime
                 ),

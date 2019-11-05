@@ -26,7 +26,7 @@ public class UDIdr : RegularIntervalUDAbstract
         m_Float[(int)Idr.FLOAT.angle] %= Mathf.PI * 2;
 
         CVLMWa cVLMWa = new CVLMWa(
-            new CVLMShotParam(
+            new CVLM(
                 enemyController,
                 m_Int[(int)Idr.INT.bulletIndex],
                 Vector3.zero,
