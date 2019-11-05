@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c693e247d6abd4e925eca8a111248e, type: 3}
+  m_Name: stage1_010_paras_s_left.animation_curve
+  m_EditorClassIdentifier: 
+  m_BehaviorClass: AnimationCurveEnemy
+  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_EnemyLookParamSet: {fileID: 11400000, guid: 8eec20119819812438860330601666e5,
+    type: 2}
+  m_SpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.5
+      inSlope: 0.33586448
+      outSlope: -0.9666667
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.04637681
+    - serializedVersion: 3
+      time: 1.5
+      value: 0.05
+      inSlope: -0.2943349
+      outSlope: -0.2943349
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.23902988
+    - serializedVersion: 3
+      time: 2
+      value: 0
+      inSlope: -0.0029941555
+      outSlope: -0.0025369562
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.2939098
+      outWeight: 0.32009077
+    - serializedVersion: 3
+      time: 2.5
+      value: 0.05
+      inSlope: 0.32260182
+      outSlope: 0.32260182
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19710541
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 4
+      value: 2.4
+      inSlope: 1.5666667
+      outSlope: 0.7979313
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.031884033
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_AngleSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 60
+      inSlope: 0
+      outSlope: Infinity
+      tangentMode: 97
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.5
+      value: 0
+      inSlope: -40
+      outSlope: 0
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.5
+      value: 45
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 4
+      value: 45
+      inSlope: -0
+      outSlope: -17.5
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07681161
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ShotOffset: 1.5
+  m_ShotStop: 10
+  m_ShotParam:
+    Interval: 10
+    Num: 1
+    Angle: 0
+    IsPlayerLook: 1
+  m_IsStartAnimationOnStart: 1

@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using UniRx;
+using UnityEngine;
 
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
 public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 {
-    public static BattleRealPlayerManager Instance
-    {
-        get
-        {
+    public static BattleRealPlayerManager Instance {
+        get {
             if (BattleRealManager.Instance == null)
             {
                 return null;
@@ -59,8 +57,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     public bool IsLaserType { get; private set; }
 
-    private bool m_IsShotNormal;
-
     public static Action OnStartAction;
 
     #endregion
@@ -92,8 +88,12 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         return m_CurrentBombNum;
     }
 
-    #endregion
+    public BattleRealPlayerExpParamSet[] GetRealPlayerExpParamSet()
+    {
+        return m_ParamSet.BattleRealPlayerExpParamSets;
+    }
 
+    #endregion
 
     public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
     {
@@ -142,10 +142,10 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             m_Player = GameObject.Instantiate(m_ParamSet.PlayerPrefab);
         }
 
-        var pos = GetInitAppearPosition();
         m_Player.transform.SetParent(m_PlayerCharaHolder);
-        m_Player.transform.position = pos;
+        InitPlayerPosition();
         m_Player.OnInitialize();
+        m_Player.OnStart();
 
         InitPlayerState();
 
@@ -184,24 +184,9 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
         if (IsNormalWeapon)
         {
-            switch (input.Shot)
+            if (input.Shot == E_INPUT_STATE.STAY)
             {
-                case E_INPUT_STATE.DOWN:
-                    break;
-                case E_INPUT_STATE.STAY:
-                    if (!m_IsShotNormal)
-                    {
-                        m_IsShotNormal = true;
-                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_PlayerShot01");
-                    }
-                    Player.ShotBullet();
-                    break;
-                case E_INPUT_STATE.UP:
-                    m_IsShotNormal = false;
-                    AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
-                    break;
-                case E_INPUT_STATE.NONE:
-                    break;
+                Player.ShotBullet();
             }
         }
         else
@@ -235,15 +220,35 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             IsNormalWeapon = !IsNormalWeapon;
         }
 
-        if (input.Cancel == E_INPUT_STATE.DOWN)
-        {
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+        if (input.Cancel == E_INPUT_STATE.DOWN) {
+            BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
 
-        /* デバッグ用 */
-        //Debug.Log("CurrentScore = " + m_CurrentScore);
-
         m_Player.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        if (m_Player == null)
+        {
+            return;
+        }
+
+        m_Player.OnLateUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+
+        if (m_Player == null)
+        {
+            return;
+        }
+
+        m_Player.OnFixedUpdate();
     }
 
     /// <summary>
@@ -260,10 +265,21 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         stageManager.ClampMovingObjectPosition(m_Player.transform);
     }
 
+    public void InitPlayerPosition()
+    {
+        if (Player == null)
+        {
+            return;
+        }
+
+        var pos = GetInitAppearPosition();
+        Player.transform.position = pos;
+    }
+
     /// <summary>
     /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
     /// </summary>
-    public Vector3 GetInitAppearPosition()
+    private Vector3 GetInitAppearPosition()
     {
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
@@ -304,18 +320,27 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     public void AddExp(int exp)
     {
         var currentExp = m_CurrentExp.Value;
-        currentExp += exp;
-
         var currentLevel = m_CurrentLevel.Value - 1;
 
-        //if (currentExp >= needExp)
-        //{
-        //    m_CurrentLevel.Value++;
-        //    currentExp %= needExp;
-        //    // Call LevelUp Action
-        //}
+        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length - 1)
+        {
+            // スコア増加(レベルMAXの時)
+            AddScore(exp * 1.0f);
+        }
+        else
+        {
+            // Exp増加(レベルMaxではない時)
+            currentExp += exp;
+            var expParamSet = m_ParamSet.BattleRealPlayerExpParamSets[currentLevel];
 
-        m_CurrentExp.Value = currentExp;
+            if (currentExp >= expParamSet.NextLevelNecessaryExp)
+            {
+                m_CurrentLevel.Value++;
+                currentExp %= expParamSet.NextLevelNecessaryExp;
+            }
+
+            m_CurrentExp.Value = currentExp;
+        }
     }
 
     /// <summary>
@@ -323,10 +348,13 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     /// </summary>
     public void AddBombCharge(float charge)
     {
-        var currentCharge = m_CurrentBombCharge.Value;
-        currentCharge += charge;
+        // var currentCharge = m_CurrentBombCharge.Value;
+        // currentCharge += charge;
 
-        m_CurrentBombCharge.Value = currentCharge;
+        // if (currentCharge >= m_PlayerState.BombCharge) {
+        //     m_CurrentBombNum.Value++;
+        //     currentCharge %= m_PlayerState.BombCharge;
+        // }
     }
 
     public void ClearColliderFlag()
@@ -353,8 +381,19 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         }
     }
 
-    public void ResetShotFlag()
+    public void SetPlayerActive(bool isEnable)
     {
-        m_IsShotNormal = false;
+        if (Player != null)
+        {
+            Player.gameObject.SetActive(isEnable);
+        }
+    }
+
+    public void SetPlayerInvinsible()
+    {
+        if (Player != null)
+        {
+            Player.SetInvinsible();
+        }
     }
 }

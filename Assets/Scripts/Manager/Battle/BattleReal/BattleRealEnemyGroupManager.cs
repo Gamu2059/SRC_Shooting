@@ -303,6 +303,22 @@ public class BattleRealEnemyGroupManager : ControllableObject
     }
 
     /// <summary>
+    /// ボスを作成する。
+    /// </summary>
+    public void CreateBossGroup()
+    {
+        var groupParam = m_ParamSet.Generator.BossParamSet;
+        var enemyGroup = GetPoolingEnemyGroup(groupParam);
+        if (enemyGroup == null)
+        {
+            return;
+        }
+
+        enemyGroup.SetParamSet(groupParam);
+        CheckStandByEnemyGroup(enemyGroup);
+    }
+
+    /// <summary>
     /// 敵グループを破棄する。
     /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>

@@ -15,7 +15,13 @@ MonoBehaviour:
   m_PlayerPrefab: {fileID: 6915949984067917126, guid: ebef49eadb94bd04195621177871e6c9,
     type: 3}
   m_InitAppearViewportPosition: {x: 0.5, y: 0.1}
-  m_PlayerBaseMoveSpeed: 2
-  m_PlayerSlowMoveSpeed: 1
+  m_PlayerBaseMoveSpeed: 1
+  m_PlayerSlowMoveSpeed: 0.5
+  m_BattleRealPlayerExpParamSets:
+  - NextLevelNecessaryExp: 500
+  - NextLevelNecessaryExp: 1000
+  - NextLevelNecessaryExp: 1500
+  - NextLevelNecessaryExp: 2000
+  - NextLevelNecessaryExp: 2500
   m_IsNormalWeapon: 1
   m_IsLaserType: 1

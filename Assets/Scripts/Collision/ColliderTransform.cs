@@ -17,6 +17,16 @@ public class ColliderTransform
     }
 
     /// <summary>
+    /// 衝突判定が有効かどうか
+    /// </summary>
+    public bool IsDisable;
+
+    /// <summary>
+    /// トリガーとしての衝突判定かどうか
+    /// </summary>
+    public bool IsTriggerCollider;
+
+    /// <summary>
     /// 衝突判定の種類。
     /// </summary>
     public E_COLLIDER_TYPE ColliderType;

@@ -298,4 +298,28 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
 
         return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
     }
+
+    /// <summary>
+    /// 全ての敵の弾をプールに送る
+    /// </summary>
+    public void CheckPoolAllEnemyBullet()
+    {
+        for (int i=0;i<m_StandbyBullets.Count;i++)
+        {
+            var bullet = m_StandbyBullets[i];
+            if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
+            {
+                CheckPoolBullet(bullet);
+            }
+        }
+
+        for (int i=0;i<Bullets.Count;i++)
+        {
+            var bullet = Bullets[i];
+            if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
+            {
+                CheckPoolBullet(bullet);
+            }
+        }
+    }
 }

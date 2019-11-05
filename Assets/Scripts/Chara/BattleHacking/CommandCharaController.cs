@@ -7,27 +7,14 @@ using UnityEngine;
 /// </summary>
 public class CommandCharaController : BattleHackingObjectBase
 {
-    #region Field Inspector
-
-    [Header("キャラの基礎パラメータ")]
-
-    [SerializeField, Tooltip("キャラの所属")]
-    private E_CHARA_TROOP m_Troop;
-
-    [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
+    [SerializeField]
     private CommandBulletSetParam m_BulletSetParam;
 
-    [Header("キャラの基礎ステータス")]
-
-    [SerializeField, Tooltip("キャラの現在HP")]
-    private int m_NowHp;
-
-    [SerializeField, Tooltip("キャラの最大HP")]
-    private int m_MaxHp;
-
-    #endregion
-
     #region Field
+
+    public E_CHARA_TROOP Troop { get; protected set; }
+    public float NowHp { get; private set; }
+    public float MaxHp { get; private set; }
 
     private HitSufferController<CommandBulletController> m_BulletSuffer;
     private HitSufferController<CommandCharaController> m_CharaSuffer;
@@ -39,7 +26,7 @@ public class CommandCharaController : BattleHackingObjectBase
 
     public E_CHARA_TROOP GetTroop()
     {
-        return m_Troop;
+        return Troop;
     }
 
     public CommandBulletSetParam GetBulletSetParam()
@@ -169,37 +156,59 @@ public class CommandCharaController : BattleHackingObjectBase
 
     #endregion
 
+    /// <summary>
+    /// HPを初期化する
+    /// </summary>
+    /// <param name="hp">最大HP</param>
+    public void InitHp(float hp)
+    {
+        MaxHp = NowHp = hp;
+    }
 
     /// <summary>
     /// このキャラを回復する。
     /// </summary>
-    public virtual void Recover(int recover)
+    public void Recover(int recover)
     {
         if (recover <= 0)
         {
             return;
         }
 
-        m_NowHp = Mathf.Clamp(m_NowHp + recover, 0, m_MaxHp);
+        NowHp = Mathf.Clamp(NowHp + recover, 0, MaxHp);
+
+        OnRecover();
+    }
+
+    protected virtual void OnRecover()
+    {
+
     }
 
     /// <summary>
     /// このキャラにダメージを与える。
     /// HPが0になった場合は死ぬ。
     /// </summary>
-    public virtual void Damage(int damage)
+    public void Damage(int damage)
     {
         if (damage <= 0)
         {
             return;
         }
 
-        m_NowHp = Mathf.Clamp(m_NowHp - damage, 0, m_MaxHp);
+        NowHp = Mathf.Clamp(NowHp - damage, 0, MaxHp);
 
-        if (m_NowHp == 0)
+        OnDamage();
+
+        if (NowHp == 0)
         {
             Dead();
         }
+    }
+
+    protected virtual void OnDamage()
+    {
+
     }
 
     /// <summary>

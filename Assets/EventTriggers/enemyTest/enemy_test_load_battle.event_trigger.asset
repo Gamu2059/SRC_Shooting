@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
+  m_Name: enemy_test_load_battle.event_trigger
+  m_EditorClassIdentifier: 
+  EventTriggerName: "\u30B7\u30FC\u30F3\u8AAD\u8FBC\u6642"
+  Condition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 3
+      VariableName: Battle Loaded
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
+  Contents:
+  - ContentName: "\u30B9\u30C6\u30FC\u30B8BGM\u518D\u751F"
+    IsPassExecute: 0
+    EventType: 3
+    ExecuteTiming: 1
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams:
+    - ControlType: 0
+      PlayBgmName: BGM_Boss01
+      AisacType: 0
+      AisacValue: 0
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []

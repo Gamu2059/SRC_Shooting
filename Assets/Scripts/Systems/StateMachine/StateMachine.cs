@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// ステートマシン。
 /// </summary>
-public class StateMachine<T>
+public class StateMachine<T> : ControllableObject
 {
     private Dictionary<T, State<T>> m_States;
 
@@ -22,7 +22,15 @@ public class StateMachine<T>
         m_NextState = null;
     }
 
-    public void OnFinalize()
+    public override void OnInitialize()
+    {
+        foreach (var state in m_States.Values)
+        {
+            state.OnInitialize();
+        }
+    }
+
+    public override void OnFinalize()
     {
         foreach (var state in m_States.Values)
         {
@@ -33,33 +41,24 @@ public class StateMachine<T>
         m_States = null;
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         if (CurrentState != m_NextState)
         {
             ProcessChangeState();
         }
 
-        if (CurrentState != null)
-        {
-            EventUtility.SafeInvokeAction(CurrentState.OnUpdate);
-        }
+        CurrentState?.OnUpdate();
     }
 
-    public void OnLateUpdate()
+    public override void OnLateUpdate()
     {
-        if (CurrentState != null)
-        {
-            EventUtility.SafeInvokeAction(CurrentState.OnLateUpdate);
-        }
+        CurrentState?.OnLateUpdate();
     }
 
-    public void OnFixedUpdate()
+    public override void OnFixedUpdate()
     {
-        if (CurrentState != null)
-        {
-            EventUtility.SafeInvokeAction(CurrentState.OnFixedUpdate);
-        }
+        CurrentState?.OnFixedUpdate();
     }
 
     public void AddState(State<T> state)
@@ -92,13 +91,13 @@ public class StateMachine<T>
         if (CurrentState != null)
         {
             m_PreState = CurrentState;
-            EventUtility.SafeInvokeAction(m_PreState.OnEnd);
+            m_PreState?.OnEnd();
         }
 
         if (m_NextState != null)
         {
             CurrentState = m_NextState;
-            EventUtility.SafeInvokeAction(CurrentState.OnStart);
+            CurrentState?.OnStart();
         }
     }
 }

@@ -26,15 +26,15 @@ public class BattleRealManager : ControllableObject
     public BattleRealCollisionManager CollisionManager { get; private set; }
     public BattleRealCameraManager CameraManager { get; private set; }
 
+    private bool m_IsPlayerDead;
+
     public Action OnTransitionToHacking;
     public Action OnTransitionToReal;
 
     #endregion
 
-    public static BattleRealManager Instance
-    {
-        get
-        {
+    public static BattleRealManager Instance {
+        get {
             if (BattleManager.Instance == null)
             {
                 return null;
@@ -58,128 +58,128 @@ public class BattleRealManager : ControllableObject
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.START)
         {
-            OnStart = StartOnStart,
-            OnUpdate = UpdateOnStart,
-            OnLateUpdate = LateUpdateOnStart,
-            OnFixedUpdate = FixedUpdateOnStart,
-            OnEnd = EndOnStart,
+            m_OnStart = StartOnStart,
+            m_OnUpdate = UpdateOnStart,
+            m_OnLateUpdate = LateUpdateOnStart,
+            m_OnFixedUpdate = FixedUpdateOnStart,
+            m_OnEnd = EndOnStart,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME)
         {
-            OnStart = StartOnBeforeBeginGame,
-            OnUpdate = UpdateOnBeforeBeginGame,
-            OnLateUpdate = LateUpdateOnBeforeBeginGame,
-            OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
-            OnEnd = EndOnBeforeBeginGame,
+            m_OnStart = StartOnBeforeBeginGame,
+            m_OnUpdate = UpdateOnBeforeBeginGame,
+            m_OnLateUpdate = LateUpdateOnBeforeBeginGame,
+            m_OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
+            m_OnEnd = EndOnBeforeBeginGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME_PERFORMANCE)
         {
-            OnStart = StartOnBeforeBeginGamePerformance,
-            OnUpdate = UpdateOnBeforeBeginGamePerformance,
-            OnLateUpdate = LateUpdateOnBeforeBeginGamePerformance,
-            OnFixedUpdate = FixedUpdateOnBeforeBeginGamePerformance,
-            OnEnd = EndOnBeforeBeginGamePerformance,
+            m_OnStart = StartOnBeforeBeginGamePerformance,
+            m_OnUpdate = UpdateOnBeforeBeginGamePerformance,
+            m_OnLateUpdate = LateUpdateOnBeforeBeginGamePerformance,
+            m_OnFixedUpdate = FixedUpdateOnBeforeBeginGamePerformance,
+            m_OnEnd = EndOnBeforeBeginGamePerformance,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEGIN_GAME)
         {
-            OnStart = StartOnBeginGame,
-            OnUpdate = UpdateOnBeginGame,
-            OnLateUpdate = LateUpdateOnBeginGame,
-            OnFixedUpdate = FixedUpdateOnBeginGame,
-            OnEnd = EndOnBeginGame,
+            m_OnStart = StartOnBeginGame,
+            m_OnUpdate = UpdateOnBeginGame,
+            m_OnLateUpdate = LateUpdateOnBeginGame,
+            m_OnFixedUpdate = FixedUpdateOnBeginGame,
+            m_OnEnd = EndOnBeginGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME)
         {
-            OnStart = StartOnGame,
-            OnUpdate = UpdateOnGame,
-            OnLateUpdate = LateUpdateOnGame,
-            OnFixedUpdate = FixedUpdateOnGame,
-            OnEnd = EndOnGame,
+            m_OnStart = StartOnGame,
+            m_OnUpdate = UpdateOnGame,
+            m_OnLateUpdate = LateUpdateOnGame,
+            m_OnFixedUpdate = FixedUpdateOnGame,
+            m_OnEnd = EndOnGame,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.DEAD)
         {
-            OnStart = StartOnDead,
-            OnUpdate = UpdateOnDead,
-            OnLateUpdate = LateUpdateOnDead,
-            OnFixedUpdate = FixedUpdateOnDead,
-            OnEnd = EndOnDead,
+            m_OnStart = StartOnDead,
+            m_OnUpdate = UpdateOnDead,
+            m_OnLateUpdate = LateUpdateOnDead,
+            m_OnFixedUpdate = FixedUpdateOnDead,
+            m_OnEnd = EndOnDead,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE)
         {
-            OnStart = StartOnBeforeBossBattlePerformance,
-            OnUpdate = UpdateOnBeforeBossBattlePerformance,
-            OnLateUpdate = LateUpdateOnBeforeBossBattlePerformance,
-            OnFixedUpdate = FixedUpdateOnBeforeBossBattlePerformance,
-            OnEnd = EndOnBeforeBossBattlePerformance,
+            m_OnStart = StartOnBeforeBossBattlePerformance,
+            m_OnUpdate = UpdateOnBeforeBossBattlePerformance,
+            m_OnLateUpdate = LateUpdateOnBeforeBossBattlePerformance,
+            m_OnFixedUpdate = FixedUpdateOnBeforeBossBattlePerformance,
+            m_OnEnd = EndOnBeforeBossBattlePerformance,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING)
         {
-            OnStart = StartOnTransitionToHacking,
-            OnUpdate = UpdateOnTransitionToHacking,
-            OnLateUpdate = LateUpdateOnTransitionToHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            OnEnd = EndOnTransitionToHacking,
+            m_OnStart = StartOnTransitionToHacking,
+            m_OnUpdate = UpdateOnTransitionToHacking,
+            m_OnLateUpdate = LateUpdateOnTransitionToHacking,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            m_OnEnd = EndOnTransitionToHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.STAY_HACKING)
         {
-            OnStart = StartOnStayHacking,
-            OnUpdate = UpdateOnStayHacking,
-            OnLateUpdate = LateUpdateOnStayHacking,
-            OnFixedUpdate = FixedUpdateOnStayHacking,
-            OnEnd = EndOnStayHacking,
+            m_OnStart = StartOnStayHacking,
+            m_OnUpdate = UpdateOnStayHacking,
+            m_OnLateUpdate = LateUpdateOnStayHacking,
+            m_OnFixedUpdate = FixedUpdateOnStayHacking,
+            m_OnEnd = EndOnStayHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.TRANSITION_TO_REAL)
         {
-            OnStart = StartOnTransitionToReal,
-            OnUpdate = UpdateOnTransitionToReal,
-            OnLateUpdate = LateUpdateOnTransitionToReal,
-            OnFixedUpdate = FixedUpdateOnTransitionToReal,
-            OnEnd = EndOnTransitionToReal,
+            m_OnStart = StartOnTransitionToReal,
+            m_OnUpdate = UpdateOnTransitionToReal,
+            m_OnLateUpdate = LateUpdateOnTransitionToReal,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            m_OnEnd = EndOnTransitionToReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_GAME_CLEAR_PERFORMANCE)
         {
-            OnStart = StartOnBeforeGameClearPerformance,
-            OnUpdate = UpdateOnBeforeGameClearPerformance,
-            OnLateUpdate = LateUpdateOnBeforeGameClearPerformance,
-            OnFixedUpdate = FixedUpdateOnBeforeGameClearPerformance,
-            OnEnd = EndOnBeforeGameClearPerformance,
+            m_OnStart = StartOnBeforeGameClearPerformance,
+            m_OnUpdate = UpdateOnBeforeGameClearPerformance,
+            m_OnLateUpdate = LateUpdateOnBeforeGameClearPerformance,
+            m_OnFixedUpdate = FixedUpdateOnBeforeGameClearPerformance,
+            m_OnEnd = EndOnBeforeGameClearPerformance,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME_CLEAR)
         {
-            OnStart = StartOnGameClear,
-            OnUpdate = UpdateOnGameClear,
-            OnLateUpdate = LateUpdateOnGameClear,
-            OnFixedUpdate = FixedUpdateOnGameClear,
-            OnEnd = EndOnGameClear,
+            m_OnStart = StartOnGameClear,
+            m_OnUpdate = UpdateOnGameClear,
+            m_OnLateUpdate = LateUpdateOnGameClear,
+            m_OnFixedUpdate = FixedUpdateOnGameClear,
+            m_OnEnd = EndOnGameClear,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME_OVER)
         {
-            OnStart = StartOnGameOver,
-            OnUpdate = UpdateOnGameOver,
-            OnLateUpdate = LateUpdateOnGameOver,
-            OnFixedUpdate = FixedUpdateOnGameOver,
-            OnEnd = EndOnGameOver,
+            m_OnStart = StartOnGameOver,
+            m_OnUpdate = UpdateOnGameOver,
+            m_OnLateUpdate = LateUpdateOnGameOver,
+            m_OnFixedUpdate = FixedUpdateOnGameOver,
+            m_OnEnd = EndOnGameOver,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.END)
         {
-            OnStart = StartOnEnd,
-            OnUpdate = UpdateOnEnd,
-            OnLateUpdate = LateUpdateOnEnd,
-            OnFixedUpdate = FixedUpdateOnEnd,
-            OnEnd = EndOnEnd,
+            m_OnStart = StartOnEnd,
+            m_OnUpdate = UpdateOnEnd,
+            m_OnLateUpdate = LateUpdateOnEnd,
+            m_OnFixedUpdate = FixedUpdateOnEnd,
+            m_OnEnd = EndOnEnd,
         });
 
         InputManager = new BattleRealInputManager();
@@ -254,7 +254,10 @@ public class BattleRealManager : ControllableObject
     {
         InputManager.OnStart();
         RealTimerManager.OnStart();
+
+        // このタイミングでBattle Loadedがカウント開始する
         EventManager.OnStart();
+
         PlayerManager.OnStart();
         EnemyGroupManager.OnStart();
         EnemyManager.OnStart();
@@ -323,14 +326,17 @@ public class BattleRealManager : ControllableObject
 
     private void UpdateOnBeforeBeginGamePerformance()
     {
+        EventManager.OnUpdate();
     }
 
     private void LateUpdateOnBeforeBeginGamePerformance()
     {
+        EventManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnBeforeBeginGamePerformance()
     {
+        EventManager.OnFixedUpdate();
     }
 
     private void EndOnBeforeBeginGamePerformance()
@@ -370,8 +376,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGame()
     {
+        m_IsPlayerDead = false;
         InputManager.RegistInput();
-        PlayerManager.ResetShotFlag();
     }
 
     private void UpdateOnGame()
@@ -381,6 +387,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
         ItemManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
 
         InputManager.OnUpdate();
         RealTimerManager.OnUpdate();
@@ -425,6 +432,16 @@ public class BattleRealManager : ControllableObject
         EnemyManager.ProcessCollision();
         BulletManager.ProcessCollision();
         ItemManager.ProcessCollision();
+
+        CheckDeadPlayer();
+    }
+
+    private void CheckDeadPlayer()
+    {
+        if (m_IsPlayerDead)
+        {
+            RequestChangeState(E_BATTLE_REAL_STATE.DEAD);
+        }
     }
 
     private void FixedUpdateOnGame()
@@ -442,7 +459,6 @@ public class BattleRealManager : ControllableObject
     private void EndOnGame()
     {
         InputManager.RemoveInput();
-        AudioManager.Instance.StopSe(AudioManager.E_SE_GROUP.PLAYER);
     }
 
     #endregion
@@ -451,24 +467,88 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnDead()
     {
-
+        PlayerManager.SetPlayerActive(false);
+        var pData = GameManager.Instance.PlayerData;
+        if (pData.m_Last < 1)
+        {
+            BattleManager.Instance.GameOver();
+        }
+        else
+        {
+            pData.DecreaseLast();
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 2);
+            timer.SetTimeoutCallBack(() =>
+            {
+                timer = null;
+                RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+            });
+            TimerManager.Instance.RegistTimer(timer);
+            Time.timeScale = 0.1f;
+        }
     }
 
     private void UpdateOnDead()
     {
+        // 消滅の更新
+        EnemyGroupManager.GotoPool();
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+        ItemManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
+
+        //InputManager.OnUpdate();
+        RealTimerManager.OnUpdate();
+        EventManager.OnUpdate();
+        //PlayerManager.OnUpdate();
+        EnemyGroupManager.OnUpdate();
+        EnemyManager.OnUpdate();
+        BulletManager.OnUpdate();
+        ItemManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnDead()
     {
+        RealTimerManager.OnLateUpdate();
+        EventManager.OnLateUpdate();
+        //PlayerManager.OnLateUpdate();
+        EnemyGroupManager.OnLateUpdate();
+        EnemyManager.OnLateUpdate();
+        BulletManager.OnLateUpdate();
+        ItemManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
+
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
+        BulletManager.ClearColliderFlag();
+        ItemManager.ClearColliderFlag();
+
+        // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
+        BulletManager.UpdateCollider();
+        ItemManager.UpdateCollider();
     }
 
     private void FixedUpdateOnDead()
     {
+        RealTimerManager.OnFixedUpdate();
+        EventManager.OnFixedUpdate();
+        //PlayerManager.OnFixedUpdate();
+        EnemyGroupManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
+        BulletManager.OnFixedUpdate();
+        ItemManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnDead()
     {
-
+        PlayerManager.InitPlayerPosition();
+        PlayerManager.SetPlayerActive(true);
+        PlayerManager.SetPlayerInvinsible();
+        Time.timeScale = 1;
     }
 
     #endregion
@@ -477,7 +557,7 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnBeforeBossBattlePerformance()
     {
-        AudioManager.Instance.StopBgmImmediate();
+        EnemyGroupManager.CreateBossGroup();
         RequestChangeState(E_BATTLE_REAL_STATE.GAME);
     }
 
@@ -496,7 +576,7 @@ public class BattleRealManager : ControllableObject
     private void EndOnBeforeBossBattlePerformance()
     {
         var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
-        AudioManager.Instance.PlayBgmImmediate(bossBgmName);
+        AudioManager.Instance.PlayBgm(bossBgmName);
     }
 
     #endregion
@@ -703,5 +783,10 @@ public class BattleRealManager : ControllableObject
         }
 
         m_StateMachine.Goto(state);
+    }
+
+    public void DeadPlayer()
+    {
+        m_IsPlayerDead = true;
     }
 }

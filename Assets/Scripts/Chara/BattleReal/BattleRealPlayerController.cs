@@ -33,8 +33,6 @@ public class BattleRealPlayerController : CharaController
 
     private BattleRealPlayerParamSet m_ParamSet;
 
-    private int m_Level;
-
     private float m_ShotRemainTime;
 
     #endregion
@@ -62,6 +60,7 @@ public class BattleRealPlayerController : CharaController
     {
         base.OnStart();
         m_ShotRemainTime = 0;
+        StartOutRingAnimation();
     }
 
     public override void OnUpdate()
@@ -82,7 +81,7 @@ public class BattleRealPlayerController : CharaController
     /// </summary>
     public virtual void ShotBullet()
     {
-
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
     }
 
     public void ChargeLaser()
@@ -109,21 +108,40 @@ public class BattleRealPlayerController : CharaController
     {
         base.OnEnterSufferBullet(sufferData);
 
+        var hitColliderType = sufferData.HitCollider.Transform.ColliderType;
         var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
-        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+
+        switch (hitColliderType)
         {
-            Damage(1);
+            case E_COLLIDER_TYPE.ENEMY_BULLET:
+            case E_COLLIDER_TYPE.ENEMY_LASER:
+            case E_COLLIDER_TYPE.ENEMY_BOMB:
+                if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+                {
+                    Damage(1);
+                }
+                break;
         }
+
     }
 
     protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
     {
         base.OnEnterSufferChara(sufferData);
 
+        var hitColliderType = sufferData.HitCollider.Transform.ColliderType;
         var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
-        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+
+        switch (hitColliderType)
         {
-            Damage(1);
+            case E_COLLIDER_TYPE.ENEMY_BULLET:
+            case E_COLLIDER_TYPE.ENEMY_LASER:
+            case E_COLLIDER_TYPE.ENEMY_BOMB:
+                if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+                {
+                    Damage(1);
+                }
+                break;
         }
     }
 
@@ -152,31 +170,33 @@ public class BattleRealPlayerController : CharaController
             return;
         }
 
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Getitem");
+
         switch (item.ItemType)
         {
             case E_ITEM_TYPE.SMALL_SCORE:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_SCORE:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_SCORE_UP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_EXP:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_BOMB:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_BOMB:
-                BattleRealPlayerManager.Instance.AddScore(item.ItemPoint);
+                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
                 break;
         }
     }
@@ -195,8 +215,12 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
+        BattleRealManager.Instance.DeadPlayer();
+    }
 
-        gameObject.SetActive(false);
-        BattleManager.Instance.GameOver();
+    public virtual void SetInvinsible()
+    {
+
     }
 }

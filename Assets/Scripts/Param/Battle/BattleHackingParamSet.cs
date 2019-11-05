@@ -14,6 +14,14 @@ public class BattleHackingParamSet : ScriptableObject
     public BattleHackingPlayerManagerParamSet PlayerManagerParamSet => m_PlayerManagerParamSet;
 
     [SerializeField]
+    private BattleHackingEnemyManagerParamSet m_EnemyManagerParamSet;
+    public BattleHackingEnemyManagerParamSet EnemyManagerParamSet => m_EnemyManagerParamSet;
+
+    [SerializeField]
     private BattleHackingBulletManagerParamSet m_BulletManagerParamSet;
     public BattleHackingBulletManagerParamSet BulletManagerParamSet => m_BulletManagerParamSet;
+
+    [SerializeField]
+    private BattleHackingLevelParamSet[] m_LevelParamSets;
+    public BattleHackingLevelParamSet[] LevelParamSets => m_LevelParamSets;
 }

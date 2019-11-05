@@ -14,26 +14,37 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
     #region Field Inspector
 
+    [Header("ParamSet")]
 
     [SerializeField]
     private BattleParamSet m_ParamSet;
     public BattleParamSet ParamSet => m_ParamSet;
+
+    [Header("StageManager")]
 
     [SerializeField]
     private BattleRealStageManager m_BattleRealStageManager;
     public BattleRealStageManager BattleRealStageManager => m_BattleRealStageManager;
 
     [SerializeField]
+    private BattleHackingStageManager m_BattleHackingStageManager;
+    public BattleHackingStageManager BattleHackingStageManager => m_BattleHackingStageManager;
+
+    [Header("UiManager")]
+
+    [SerializeField]
     private BattleRealUiManager m_BattleRealUiManager;
     public BattleRealUiManager BattleRealUiManager => m_BattleRealUiManager;
 
     [SerializeField]
-    private BattleHackingStageManager m_BattleHackingStageManager;
-    public BattleHackingStageManager BattleHackingStageManager => m_BattleHackingStageManager;
-
-    [SerializeField]
     private BattleHackingUiManager m_BattleHackingUiManager;
     public BattleHackingUiManager BattleHackingUiManager => m_BattleHackingUiManager;
+
+    [Header("PlayableManager")]
+
+    [SerializeField]
+    private BattleRealPlayableManager m_BattleRealPlayableManager;
+    public BattleRealPlayableManager BattleRealPlayableManager => m_BattleRealPlayableManager;
 
     [Header("Camera")]
 
@@ -86,77 +97,78 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.START)
         {
-            OnStart = StartOnStart,
-            OnUpdate = UpdateOnStart,
-            OnLateUpdate = LateUpdateOnStart,
-            OnFixedUpdate = FixedUpdateOnStart,
-            OnEnd = EndOnStart,
+            m_OnStart = StartOnStart,
+            m_OnUpdate = UpdateOnStart,
+            m_OnLateUpdate = LateUpdateOnStart,
+            m_OnFixedUpdate = FixedUpdateOnStart,
+            m_OnEnd = EndOnStart,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.REAL_MODE)
         {
-            OnStart = StartOnRealMode,
-            OnUpdate = UpdateOnRealMode,
-            OnLateUpdate = LateUpdateOnRealMode,
-            OnFixedUpdate = FixedUpdateOnRealMode,
-            OnEnd = EndOnRealMode,
+            m_OnStart = StartOnRealMode,
+            m_OnUpdate = UpdateOnRealMode,
+            m_OnLateUpdate = LateUpdateOnRealMode,
+            m_OnFixedUpdate = FixedUpdateOnRealMode,
+            m_OnEnd = EndOnRealMode,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.HACKING_MODE)
         {
-            OnStart = StartOnHackingMode,
-            OnUpdate = UpdateOnHackingMode,
-            OnLateUpdate = LateUpdateOnHackingMode,
-            OnFixedUpdate = FixedUpdateOnHackingMode,
-            OnEnd = EndOnHackingMode,
+            m_OnStart = StartOnHackingMode,
+            m_OnUpdate = UpdateOnHackingMode,
+            m_OnLateUpdate = LateUpdateOnHackingMode,
+            m_OnFixedUpdate = FixedUpdateOnHackingMode,
+            m_OnEnd = EndOnHackingMode,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_REAL)
         {
-            OnStart = StartOnTransitionToReal,
-            OnUpdate = UpdateOnTransitionToReal,
-            OnLateUpdate = LateUpdateOnTransitionToReal,
-            OnFixedUpdate = FixedUpdateOnTransitionToReal,
-            OnEnd = EndOnTransitionToReal,
+            m_OnStart = StartOnTransitionToReal,
+            m_OnUpdate = UpdateOnTransitionToReal,
+            m_OnLateUpdate = LateUpdateOnTransitionToReal,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToReal,
+            m_OnEnd = EndOnTransitionToReal,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_HACKING)
         {
-            OnStart = StartOnTransitionToHacking,
-            OnUpdate = UpdateOnTransitionToHacking,
-            OnLateUpdate = LateUpdateOnTransitionToHacking,
-            OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            OnEnd = EndOnTransitionToHacking,
+            m_OnStart = StartOnTransitionToHacking,
+            m_OnUpdate = UpdateOnTransitionToHacking,
+            m_OnLateUpdate = LateUpdateOnTransitionToHacking,
+            m_OnFixedUpdate = FixedUpdateOnTransitionToHacking,
+            m_OnEnd = EndOnTransitionToHacking,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_CLEAR)
         {
-            OnStart = StartOnGameClear,
-            OnUpdate = UpdateOnGameClear,
-            OnLateUpdate = LateUpdateOnGameClear,
-            OnFixedUpdate = FixedUpdateOnGameClear,
-            OnEnd = EndOnGameClear,
+            m_OnStart = StartOnGameClear,
+            m_OnUpdate = UpdateOnGameClear,
+            m_OnLateUpdate = LateUpdateOnGameClear,
+            m_OnFixedUpdate = FixedUpdateOnGameClear,
+            m_OnEnd = EndOnGameClear,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_OVER)
         {
-            OnStart = StartOnGameOver,
-            OnUpdate = UpdateOnGameOver,
-            OnLateUpdate = LateUpdateOnGameOver,
-            OnFixedUpdate = FixedUpdateOnGameOver,
-            OnEnd = EndOnGameOver,
+            m_OnStart = StartOnGameOver,
+            m_OnUpdate = UpdateOnGameOver,
+            m_OnLateUpdate = LateUpdateOnGameOver,
+            m_OnFixedUpdate = FixedUpdateOnGameOver,
+            m_OnEnd = EndOnGameOver,
         });
 
         m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.END)
         {
-            OnStart = StartOnEnd,
-            OnUpdate = UpdateOnEnd,
-            OnLateUpdate = LateUpdateOnEnd,
-            OnFixedUpdate = FixedUpdateOnEnd,
-            OnEnd = EndOnEnd,
+            m_OnStart = StartOnEnd,
+            m_OnUpdate = UpdateOnEnd,
+            m_OnLateUpdate = LateUpdateOnEnd,
+            m_OnFixedUpdate = FixedUpdateOnEnd,
+            m_OnEnd = EndOnEnd,
         });
 
         m_BattleRealStageManager.OnInitialize();
+        m_BattleHackingStageManager.OnInitialize();
 
         RealManager = new BattleRealManager(m_ParamSet.BattleRealParamSet);
         HackingManager = new BattleHackingManager(m_ParamSet.BattleHackingParamSet);
@@ -164,16 +176,25 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.OnInitialize();
         HackingManager.OnInitialize();
 
-        RequestChangeState(E_BATTLE_STATE.START);
+        m_BattleRealPlayableManager.OnInitialize();
 
-        GameManager.Instance.ResetHackingSucceedCount();
+        m_BattleRealUiManager.OnInitialize();
+        m_BattleHackingUiManager.OnInitialize();
+
+        RequestChangeState(E_BATTLE_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        m_BattleHackingUiManager.OnFinalize();
+        m_BattleRealUiManager.OnFinalize();
+
+        m_BattleRealPlayableManager.OnFinalize();
+
         HackingManager.OnFinalize();
         RealManager.OnFinalize();
 
+        m_BattleHackingStageManager.OnFinalize();
         m_BattleRealStageManager.OnFinalize();
 
         base.OnFinalize();
@@ -213,10 +234,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleRealUiManager.SetEnableGameClear(false);
         m_BattleRealUiManager.SetEnableGameOver(false);
 
-        var audio = AudioManager.Instance;
-        audio.PlayBgmImmediate(m_ParamSet.BgmParamSet.StageBgmName);
-
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
+
+        var pData = GameManager.Instance.PlayerData;
+        pData.ResetHackingSucceedCount();
+        pData.ResetBestScore();
+        pData.ResetPlayerLast();
     }
 
     private void UpdateOnStart()
@@ -464,7 +487,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleRealUiManager.SetEnableGameClear(true);
 
-        AudioManager.Instance.StopAllBgmImmediate();
+        AudioManager.Instance.StopBgm();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
             RequestChangeState(E_BATTLE_STATE.END);
@@ -506,7 +529,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleRealUiManager.SetEnableGameOver(true);
 
-        AudioManager.Instance.StopAllBgmImmediate();
+        AudioManager.Instance.StopBgm();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
             RequestChangeState(E_BATTLE_STATE.END);
@@ -551,6 +574,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
         });
         TimerManager.Instance.RegistTimer(timer);
+
+        //Debug.Log("BackToTitle");
+        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord(BattleRealPlayerManager.Instance.GetCurrentScore().Value, 1, System.DateTime.Now));
+        GameManager.Instance.PlayerRecordManager.ShowRecord();
     }
 
     private void UpdateOnEnd()

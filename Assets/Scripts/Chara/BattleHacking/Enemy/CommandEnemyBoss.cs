@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// コマンドイベントのボス敵。
 /// </summary>
-public class CommandEnemyBoss : CommandEnemyController
+public class CommandEnemyBoss : BattleHackingEnemyController
 {
 
     public override void Dead()

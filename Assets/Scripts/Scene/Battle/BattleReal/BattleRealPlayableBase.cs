@@ -13,7 +13,7 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
 {
     #region Field
 
-    protected PlayableDirector m_PlayableDirector;
+    public PlayableDirector PlayableDirector { get; private set; }
 
     protected TimelineParam m_TimelineParam;
 
@@ -48,9 +48,9 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_PlayableDirector = GetComponent<PlayableDirector>();
-        m_PlayableDirector.playOnAwake = false;
-        m_PlayableDirector.timeUpdateMode = DirectorUpdateMode.Manual;
+        PlayableDirector = GetComponent<PlayableDirector>();
+        PlayableDirector.playOnAwake = false;
+        PlayableDirector.timeUpdateMode = DirectorUpdateMode.Manual;
         IsPaused = false;
     }
 
@@ -58,10 +58,10 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
     {
         base.OnUpdate();
 
-        m_PlayableDirector.time += Time.deltaTime;
-        m_PlayableDirector.Evaluate();
+        PlayableDirector.time += Time.deltaTime;
+        PlayableDirector.Evaluate();
 
-        if (m_PlayableDirector.playableAsset != null && m_PlayableDirector.playableGraph.IsDone())
+        if (PlayableDirector.playableAsset != null && PlayableDirector.playableGraph.IsDone())
         {
             StopTimeline();
         }
@@ -74,10 +74,10 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
     /// </summary>
     protected void RegistPlayable()
     {
-        if (PlayableManager.Instance != null)
-        {
-            PlayableManager.Instance.RegistObject(this);
-        }
+        //if (BattleRealPlayableManager.Instance != null)
+        //{
+        //    BattleRealPlayableManager.Instance.RegistObject(this);
+        //}
     }
 
     /// <summary>
@@ -85,10 +85,10 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
     /// </summary>
     public void DestroyPlayable()
     {
-        if (PlayableManager.Instance != null)
-        {
-            PlayableManager.Instance.DestroyObject(this);
-        }
+        //if (BattleRealPlayableManager.Instance != null)
+        //{
+        //    BattleRealPlayableManager.Instance.DestroyObject(this);
+        //}
     }
 
     /// <summary>
@@ -96,18 +96,23 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
     /// </summary>
     public void StartTimeline(TimelineParam timelineParam)
     {
-        if (m_PlayableDirector == null)
+        if (PlayableDirector == null)
         {
             return;
         }
 
         m_TimelineParam = timelineParam;
+        if (m_TimelineParam == null)
+        {
+            Debug.LogError("TimelineParam is null");
+            return;
+        }
 
-        m_PlayableDirector.Stop();
-        m_PlayableDirector.playableAsset = m_TimelineParam.TimelineAsset;
-        m_PlayableDirector.initialTime = 0;
+        PlayableDirector.Stop();
+        PlayableDirector.playableAsset = m_TimelineParam.TimelineAsset;
+        PlayableDirector.initialTime = 0;
 
-        var outputs = m_PlayableDirector.playableAsset.outputs;
+        var outputs = PlayableDirector.playableAsset.outputs;
 
         // トラックをバインドする
         foreach (var trackBindParam in m_TimelineParam.TrackBindParams)
@@ -119,7 +124,7 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
             }
 
             var binding = outputs.First(t => t.streamName == trackBindParam.TrackName);
-            m_PlayableDirector.SetGenericBinding(binding.sourceObject, target);
+            PlayableDirector.SetGenericBinding(binding.sourceObject, target);
         }
 
         // 参照をバインドする
@@ -133,11 +138,11 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
 
             if (referenceBindParam.BindTargetComponentType == "GameObject")
             {
-                m_PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, target.gameObject);
+                PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, target.gameObject);
             }
             else if (referenceBindParam.BindTargetComponentType == "Transform")
             {
-                m_PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, target);
+                PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, target);
             }
             else
             {
@@ -147,21 +152,36 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
                     var component = target.GetComponent(type);
                     if (component != null)
                     {
-                        m_PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, component);
+                        PlayableDirector.SetReferenceValue(referenceBindParam.ReferenceName, component);
                     }
                 }
             }
 
-            m_PlayableDirector.SetReferenceValue(BattleAnimationPlayableAsset.PLAYABLE_OBJECT, this);
+            PlayableDirector.SetReferenceValue(BattleAnimationPlayableAsset.PLAYABLE_OBJECT, this);
         }
 
-        m_PlayableDirector.Play();
+        PlayableDirector.Play();
+    }
+
+    /// <summary>
+    /// 今設定されているTimelineを再生する。
+    /// </summary>
+    public void StartTimeline()
+    {
+        if (PlayableDirector == null)
+        {
+            return;
+        }
+
+        PlayableDirector.Stop();
+        PlayableDirector.initialTime = 0;
+        PlayableDirector.Play();
     }
 
     public void PauseTimeline()
     {
         IsPaused = true;
-        m_PlayableDirector.initialTime = m_PlayableDirector.time;
+        PlayableDirector.initialTime = PlayableDirector.time;
     }
 
     public void ResumeTimeline()
@@ -171,9 +191,9 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
 
     public void StopTimeline()
     {
-        m_PlayableDirector.Stop();
+        PlayableDirector.Stop();
 
-        if (m_TimelineParam.IsDestroyEndTimeline)
+        if (m_TimelineParam != null && m_TimelineParam.IsDestroyEndTimeline)
         {
             DestroyPlayable();
         }

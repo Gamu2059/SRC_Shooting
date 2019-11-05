@@ -31,6 +31,8 @@ public class CharaController : BattleRealObjectBase
     private HitSufferController<CharaController> m_CharaHit;
     private HitSufferController<BattleRealItemController> m_ItemHit;
 
+    private OutRingController m_OutRingController;
+
     #endregion
 
     #region Get Set
@@ -131,6 +133,37 @@ public class CharaController : BattleRealObjectBase
         base.OnFinalize();
     }
 
+    public override void OnStart()
+    {
+        base.OnStart();
+
+        m_OutRingController = GetComponentInChildren<OutRingController>(true);
+        if (m_OutRingController != null)
+        {
+            m_OutRingController.OnStart();
+        }
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+
+        if (m_OutRingController != null)
+        {
+            m_OutRingController.OnFixedUpdate();
+        }
+    }
+
     #endregion
 
     /// <summary>
@@ -153,6 +186,13 @@ public class CharaController : BattleRealObjectBase
         }
 
         m_NowHp = Mathf.Clamp(m_NowHp + recover, 0, m_MaxHp);
+
+        OnRecover();
+    }
+
+    protected virtual void OnRecover()
+    {
+
     }
 
     /// <summary>
@@ -167,11 +207,17 @@ public class CharaController : BattleRealObjectBase
         }
 
         m_NowHp = Mathf.Clamp(m_NowHp - damage, 0, m_MaxHp);
+        OnDamage();
 
         if (m_NowHp == 0)
         {
             Dead();
         }
+    }
+
+    protected virtual void OnDamage()
+    {
+
     }
 
     /// <summary>
@@ -180,6 +226,17 @@ public class CharaController : BattleRealObjectBase
     public virtual void Dead()
     {
 
+    }
+
+    /// <summary>
+    /// リングアニメーションを始める
+    /// </summary>
+    protected void StartOutRingAnimation()
+    {
+        if (m_OutRingController != null)
+        {
+            m_OutRingController.StartAnimation();
+        }
     }
 
     #region Impl IColliderProcess
@@ -328,7 +385,7 @@ public class CharaController : BattleRealObjectBase
     /// </summary>
     /// <param name="bulletNum">弾の個数</param>
     /// <param name="spreadAngle">弾同士の角度間隔</param>
-    protected static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
+    public static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
     {
         List<float> spreadAngles = new List<float>();
 

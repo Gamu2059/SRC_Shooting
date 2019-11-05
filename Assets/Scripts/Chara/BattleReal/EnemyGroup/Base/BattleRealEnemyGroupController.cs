@@ -75,7 +75,6 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
     {
         base.OnStart();
 
-        // 個別の敵をタイマー経由で生成するようにする
         if (m_GenerateParamSet != null)
         {
             var individualParamSets = m_GenerateParamSet.IndividualGenerateParamSets;
@@ -84,7 +83,7 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
         var viewPortPos = m_GenerateParamSet.ViewPortPos;
         var offsetPos = m_GenerateParamSet.OffsetPosFromViewPort;
-        var pos = BattleRealEnemyManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
+        var pos = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
         pos += offsetPos.ToVector3XZ();
         transform.position = pos;
 
@@ -181,12 +180,12 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
         var viewPortPos = individualParamSet.ViewPortPos;
         var offsetPos = individualParamSet.OffsetPosFromViewPort;
-        var pos = BattleRealEnemyManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
+        var pos = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
         pos += offsetPos.ToVector3XZ();
 
         if (individualParamSet.Relative == E_RELATIVE.RELATIVE)
         {
-            enemyT.localPosition = pos + transform.localPosition;
+            enemyT.localPosition = pos;
             var angles = enemyT.localEulerAngles;
             angles.y = individualParamSet.GenerateAngle;
             enemyT.localEulerAngles = angles;

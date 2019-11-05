@@ -120,7 +120,7 @@ public class BattleRealEventManager : ControllableObject
             var param = m_EventParams[i];
             if (IsMeetRootCondition(ref param.Condition))
             {
-                RegistEvent(param.Contents);
+                AddEvent(param.Contents);
                 m_GotoDestroyEventParams.Add(m_EventParams[i]);
             }
         }
@@ -195,26 +195,6 @@ public class BattleRealEventManager : ControllableObject
 
             script.OnFixedUpdate();
         }
-    }
-
-    /// <summary>
-    /// EventParamを追加する。
-    /// </summary>
-    public void AddEventParam(BattleRealEventTriggerParam param)
-    {
-        var condition = param.Condition;
-        if (condition.IsMultiCondition && condition.MultiConditions == null)
-        {
-            return;
-        }
-
-        var contents = param.Contents;
-        if (contents == null || contents.Length < 1)
-        {
-            return;
-        }
-
-        m_EventParams.Add(param);
     }
 
     /// <summary>
@@ -509,7 +489,6 @@ public class BattleRealEventManager : ControllableObject
         }
 
         var value = m_IntVariables[condition.VariableName];
-
         switch (condition.CompareType)
         {
             case E_COMPARE_TYPE.EQUAL:
@@ -619,9 +598,29 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
+    /// EventParamを追加する。
+    /// </summary>
+    public void AddEventParam(BattleRealEventTriggerParam param)
+    {
+        var condition = param.Condition;
+        if (condition.IsMultiCondition && condition.MultiConditions == null)
+        {
+            return;
+        }
+
+        var contents = param.Contents;
+        if (contents == null || contents.Length < 1)
+        {
+            return;
+        }
+
+        m_EventParams.Add(param);
+    }
+
+    /// <summary>
     /// イベントを登録する。
     /// </summary>
-    private void RegistEvent(BattleRealEventContent[] contents)
+    public void AddEvent(BattleRealEventContent[] contents)
     {
         if (contents == null)
         {
@@ -630,22 +629,28 @@ public class BattleRealEventManager : ControllableObject
 
         for (int i = 0; i < contents.Length; i++)
         {
-            var content = contents[i];
-            if (content.ExecuteTiming == BattleRealEventContent.E_EXECUTE_TIMING.IMMEDIATE)
+            AddEvent(contents[i]);
+        }
+    }
+
+    /// <summary>
+    /// イベントを登録する。
+    /// </summary>
+    public void AddEvent(BattleRealEventContent content)
+    {
+        if (content.ExecuteTiming == BattleRealEventContent.E_EXECUTE_TIMING.IMMEDIATE)
+        {
+            m_WaitExecuteParams.Add(content);
+        }
+        else
+        {
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, () =>
             {
                 m_WaitExecuteParams.Add(content);
-            }
-            else
-            {
-                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, content.DelayExecuteTime, () =>
-                {
-                    m_WaitExecuteParams.Add(content);
-                });
+            });
 
-                BattleRealTimerManager.Instance.RegistTimer(timer);
-            }
+            BattleRealTimerManager.Instance.RegistTimer(timer);
         }
-
     }
 
     /// <summary>
@@ -653,7 +658,6 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void ExecuteEvent(BattleRealEventContent eventContent)
     {
-        Debug.Log(eventContent.EventType);
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
@@ -722,23 +726,20 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var param in controlObjectParams)
         {
-            if (param.UsePlayableObjectPrefab)
+            switch (param.ControlObjectType)
             {
-                var obj = GameObject.Instantiate(param.PlayableObjectPrefab);
-                PlayableManager.Instance.RegistObject(obj);
-                obj.StartTimeline(param.ObjectTimelineParam);
-            }
-            else
-            {
-                var playables = PlayableManager.Instance.GetUpdateObjects();
-                foreach (var playable in playables)
-                {
-                    if (playable.name == param.RegisteredPlayableName)
-                    {
-                        playable.StartTimeline(param.ObjectTimelineParam);
-                        break;
-                    }
-                }
+                case E_CONTROL_OBJECT_TYPE.START:
+                    BattleRealPlayableManager.Instance.StartPlayable(param.Name);
+                    break;
+                case E_CONTROL_OBJECT_TYPE.PAUSE:
+                    BattleRealPlayableManager.Instance.PausePlayable(param.Name);
+                    break;
+                case E_CONTROL_OBJECT_TYPE.RESUME:
+                    BattleRealPlayableManager.Instance.ResumePlayable(param.Name);
+                    break;
+                case E_CONTROL_OBJECT_TYPE.STOP:
+                    BattleRealPlayableManager.Instance.StopPlayable(param.Name);
+                    break;
             }
         }
     }
@@ -753,16 +754,10 @@ public class BattleRealEventManager : ControllableObject
             switch (param.ControlType)
             {
                 case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY:
-                    AudioManager.Instance.PlayBgm(param.PlayBgmName, param.FadeDuration, param.FadeOutCurve, param.FadeInCurve);
-                    break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY_IMMEDIATE:
-                    AudioManager.Instance.PlayBgmImmediate(param.PlayBgmName);
+                    AudioManager.Instance.PlayBgm(param.PlayBgmName);
                     break;
                 case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP:
-                    AudioManager.Instance.StopBgm(param.FadeDuration, param.FadeOutCurve);
-                    break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP_IMMEDIATE:
-                    AudioManager.Instance.StopBgmImmediate();
+                    AudioManager.Instance.StopBgm();
                     break;
                 case ControlBgmParam.E_BGM_CONTROL_TYPE.CONTROL_AISAC:
                     AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);

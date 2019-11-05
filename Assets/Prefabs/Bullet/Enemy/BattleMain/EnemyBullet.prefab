@@ -100,7 +100,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5b6b0d9ceef97d6418e5e4fead2cb589, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00a9b5e3ed5388a43b593cec1bd27bcd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -136,7 +136,7 @@ Transform:
   m_GameObject: {fileID: 3352869604341295596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 5337908419741502639}
   m_RootOrder: 1
@@ -151,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6914097940554999020}
   - component: {fileID: 2307770972869067030}
-  - component: {fileID: 7663632291520977884}
+  - component: {fileID: 6531663667767994548}
   m_Layer: 11
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -187,13 +187,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 0
-    ColliderShape: 0
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 8
+    ColliderShape: 1
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 1, g: 0, b: 0, a: 0}
     Transform: {fileID: 339799567849857734}
---- !u!114 &7663632291520977884
+--- !u!114 &6531663667767994548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,9 +204,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6000828579167568356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbdf47c6427522a41a78eff3d8c8994c, type: 3}
+  m_Script: {fileID: 11500000, guid: 456d50327c7f0db4a82d86536e81d0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletGroupId: Default Bullet
+  m_BulletGroupId: Enemy Normal
   m_CanHitOtherBullet: 0
   m_Cycle: 0
+  m_IsDestoryOnHitOther: 1
