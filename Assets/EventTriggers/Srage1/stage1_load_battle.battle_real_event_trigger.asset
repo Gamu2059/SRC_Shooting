@@ -27,6 +27,46 @@ MonoBehaviour:
     MultiConditionType: 0
     MultiConditions: []
   Contents:
+  - ContentName: "\u30A4\u30F3\u30C8\u30ED\u306E\u30BF\u30A4\u30E0\u30E9\u30A4\u30F3"
+    IsPassExecute: 1
+    EventType: 2
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams:
+    - CameraType: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 11400000, guid: cca94f87871e2e34f8823f0d05c9b1d4,
+          type: 2}
+        TrackBindParams: []
+        ReferenceBindParams:
+        - ReferenceName: BackEnd Camera
+          BindTargetName: BackCamera
+          BindTargetComponentType: Transform
+        IsDestroyEndTimeline: 0
+    ControlObjectParams:
+    - Name: Intro
+      ControlObjectType: 0
+    ControlBgmParams: []
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  - ContentName: "\u30B9\u30C6\u30FC\u30B8BGM\u518D\u751F"
+    IsPassExecute: 0
+    EventType: 3
+    ExecuteTiming: 1
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams:
+    - ControlType: 0
+      PlayBgmName: BGM_Stage01
+      AisacType: 0
+      AisacValue: 0
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
   - ContentName: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8"
     IsPassExecute: 0
     EventType: 7

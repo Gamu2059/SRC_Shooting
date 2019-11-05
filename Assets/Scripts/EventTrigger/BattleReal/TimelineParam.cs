@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using System;
 
 /// <summary>
 /// Timelineのバインドパラメータ。
 /// </summary>
-[System.Serializable]
-public struct TimelineParam
+[Serializable]
+public class TimelineParam
 {
     /// <summary>
     /// トラックのバインドパラメータ。
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public struct TrackBindParam
     {
         /// <summary>
@@ -26,7 +27,7 @@ public struct TimelineParam
         public string BindTargetName;
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct ReferenceBindParam
     {
         /// <summary>

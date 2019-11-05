@@ -41,113 +41,128 @@ public static class Collision
     {
         hitPosList = null;
 
-        // 大雑把に衝突していそうかを事前に判定する
-        if (!IsCollideOutSide(collider1, collider2))
+        if (collider1.Transform.IsDisable || collider2.Transform.IsDisable)
         {
             return false;
         }
 
-        var colType1 = collider1.Transform.ColliderShape;
-        var colType2 = collider2.Transform.ColliderShape;
+        // 大雑把に衝突していそうかを事前に判定する
+        if (collider1.OutSideRect == Rect.zero || collider2.OutSideRect == Rect.zero)
+        {
+            if (!IsCollideOutSide(collider1, collider2))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (!IsCollideOutSide(collider1.OutSideRect, collider2.OutSideRect))
+            {
+                return false;
+            }
+        }
 
-        if (colType1 == E_COLLIDER_SHAPE.LINE)
+        var colShape1 = collider1.Transform.ColliderShape;
+        var colShape2 = collider2.Transform.ColliderShape;
+
+        if (colShape1 == E_COLLIDER_SHAPE.LINE)
         {
             var l1 = CreateLine(collider1);
 
-            if (colType2 == E_COLLIDER_SHAPE.LINE)
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
             {
                 var l2 = CreateLine(collider2);
                 return IsCollideLineToLine(l1, l2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
             {
                 var c2 = CreateCircle(collider2);
                 return IsCollideLineToCircle(l1, c2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
             {
                 var r2 = CreateRect(collider2);
                 return IsCollideLineToRect(l1, r2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
             {
                 var cap2 = CreateCapsule(collider2);
                 return IsCollideLineToCapsule(l1, cap2, out hitPosList);
             }
         }
 
-        if (colType1 == E_COLLIDER_SHAPE.CIRCLE)
+        if (colShape1 == E_COLLIDER_SHAPE.CIRCLE)
         {
             var c1 = CreateCircle(collider1);
 
-            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
             {
                 var r2 = CreateRect(collider2);
                 return IsCollideCircleToRect(c1, r2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
             {
                 var c2 = CreateCircle(collider2);
                 return IsCollideCircleToCircle(c1, c2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
             {
                 var cap2 = CreateCapsule(collider2);
                 return IsCollideCircleToCapsule(c1, cap2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.LINE)
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
             {
                 var l2 = CreateLine(collider2);
                 return IsCollideLineToCircle(l2, c1, out hitPosList);
             }
         }
 
-        if (colType1 == E_COLLIDER_SHAPE.RECT)
+        if (colShape1 == E_COLLIDER_SHAPE.RECT)
         {
             var r1 = CreateRect(collider1);
 
-            if (colType2 == E_COLLIDER_SHAPE.LINE)
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
             {
                 var l2 = CreateLine(collider2);
                 return IsCollideLineToRect(l2, r1, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
             {
                 var c2 = CreateCircle(collider2);
                 return IsCollideCircleToRect(c2, r1, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
             {
                 var r2 = CreateRect(collider2);
                 return IsCollideRectToRect(r1, r2, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
             {
                 var cap2 = CreateCapsule(collider2);
                 return IsCollideRectToCapsule(r1, cap2, out hitPosList);
             }
         }
 
-        if (colType1 == E_COLLIDER_SHAPE.CAPSULE)
+        if (colShape1 == E_COLLIDER_SHAPE.CAPSULE)
         {
             var cap1 = CreateCapsule(collider1);
 
-            if (colType2 == E_COLLIDER_SHAPE.LINE)
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
             {
                 var l2 = CreateLine(collider2);
                 return IsCollideLineToCapsule(l2, cap1, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
             {
                 var c2 = CreateCircle(collider2);
                 return IsCollideCircleToCapsule(c2, cap1, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.RECT)
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
             {
                 var r2 = CreateRect(collider2);
                 return IsCollideRectToCapsule(r2, cap1, out hitPosList);
             }
-            if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
             {
                 var cap2 = CreateCapsule(collider2);
                 return IsCollideCapsuleToCapsule(cap1, cap2, out hitPosList);
@@ -170,8 +185,7 @@ public static class Collision
         {
             foreach (var targetData in targetDatas)
             {
-                List<Vector2> hitPosList;
-                if (IsCollide(attackData, targetData, out hitPosList))
+                if (IsCollideFast(attackData, targetData))
                 {
                     onCollide.Invoke(attackData, targetData);
                 }
@@ -183,120 +197,135 @@ public static class Collision
     /// 二つの衝突情報が、互いに衝突しているかを判定する。
     /// 衝突点の計算を行わないため高速。
     /// </summary>
-    public static bool IsCollide(ColliderData collider1, ColliderData collider2)
+    public static bool IsCollideFast(ColliderData collider1, ColliderData collider2)
     {
-        // 大雑把に衝突していそうかを事前に判定する
-        if (!IsCollideOutSide(collider1, collider2))
+        if (collider1.Transform.IsDisable || collider2.Transform.IsDisable)
         {
             return false;
         }
 
-        //var colType1 = collider1.Transform.ColliderType;
-        //var colType2 = collider2.Transform.ColliderType;
+        // 大雑把に衝突していそうかを事前に判定する
+        if (collider1.OutSideRect == Rect.zero || collider2.OutSideRect == Rect.zero)
+        {
+            if (!IsCollideOutSide(collider1, collider2))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (!IsCollideOutSide(collider1.OutSideRect, collider2.OutSideRect))
+            {
+                return false;
+            }
+        }
 
-        //if (colType1 == E_COLLIDER_SHAPE.LINE)
-        //{
-        //    var l1 = CreateLine(collider1);
+        var colShape1 = collider1.Transform.ColliderShape;
+        var colShape2 = collider2.Transform.ColliderShape;
 
-        //    if (colType2 == E_COLLIDER_SHAPE.LINE)
-        //    {
-        //        var l2 = CreateLine(collider2);
-        //        return IsCollideLineToLine(l1, l2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
-        //    {
-        //        var c2 = CreateCircle(collider2);
-        //        return IsCollideLineToCircle(l1, c2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.RECT)
-        //    {
-        //        var r2 = CreateRect(collider2);
-        //        return IsCollideLineToRect(l1, r2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
-        //    {
-        //        var cap2 = CreateCapsule(collider2);
-        //        return IsCollideLineToCapsule(l1, cap2, out hitPosList);
-        //    }
-        //}
+        if (colShape1 == E_COLLIDER_SHAPE.LINE)
+        {
+            var l1 = CreateLine(collider1);
 
-        //if (colType1 == E_COLLIDER_SHAPE.CIRCLE)
-        //{
-        //    var c1 = CreateCircle(collider1);
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
+            {
+                var l2 = CreateLine(collider2);
+                return IsCollideLineToLineFast(l1, l2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+                var c2 = CreateCircle(collider2);
+                return IsCollideLineToCircleFast(l1, c2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
+            {
+                var r2 = CreateRect(collider2);
+                return IsCollideLineToRectFast(l1, r2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+                var cap2 = CreateCapsule(collider2);
+                return IsCollideLineToCapsuleFast(l1, cap2);
+            }
+        }
 
-        //    if (colType2 == E_COLLIDER_SHAPE.RECT)
-        //    {
-        //        var r2 = CreateRect(collider2);
-        //        return IsCollideCircleToRect(c1, r2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
-        //    {
-        //        var c2 = CreateCircle(collider2);
-        //        return IsCollideCircleToCircle(c1, c2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
-        //    {
-        //        var cap2 = CreateCapsule(collider2);
-        //        return IsCollideCircleToCapsule(c1, cap2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.LINE)
-        //    {
-        //        var l2 = CreateLine(collider2);
-        //        return IsCollideLineToCircle(l2, c1, out hitPosList);
-        //    }
-        //}
+        if (colShape1 == E_COLLIDER_SHAPE.CIRCLE)
+        {
+            var c1 = CreateCircle(collider1);
 
-        //if (colType1 == E_COLLIDER_SHAPE.RECT)
-        //{
-        //    var r1 = CreateRect(collider1);
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
+            {
+                var r2 = CreateRect(collider2);
+                return IsCollideCircleToRectFast(c1, r2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+                var c2 = CreateCircle(collider2);
+                return IsCollideCircleToCircleFast(c1, c2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+                var cap2 = CreateCapsule(collider2);
+                return IsCollideCircleToCapsuleFast(c1, cap2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
+            {
+                var l2 = CreateLine(collider2);
+                return IsCollideLineToCircleFast(l2, c1);
+            }
+        }
 
-        //    if (colType2 == E_COLLIDER_SHAPE.LINE)
-        //    {
-        //        var l2 = CreateLine(collider2);
-        //        return IsCollideLineToRect(l2, r1, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
-        //    {
-        //        var c2 = CreateCircle(collider2);
-        //        return IsCollideCircleToRect(c2, r1, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.RECT)
-        //    {
-        //        var r2 = CreateRect(collider2);
-        //        return IsCollideRectToRect(r1, r2, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
-        //    {
-        //        var cap2 = CreateCapsule(collider2);
-        //        return IsCollideRectToCapsule(r1, cap2, out hitPosList);
-        //    }
-        //}
+        if (colShape1 == E_COLLIDER_SHAPE.RECT)
+        {
+            var r1 = CreateRect(collider1);
 
-        //if (colType1 == E_COLLIDER_SHAPE.CAPSULE)
-        //{
-        //    var cap1 = CreateCapsule(collider1);
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
+            {
+                var l2 = CreateLine(collider2);
+                return IsCollideLineToRectFast(l2, r1);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+                var c2 = CreateCircle(collider2);
+                return IsCollideCircleToRectFast(c2, r1);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
+            {
+                var r2 = CreateRect(collider2);
+                return IsCollideRectToRectFast(r1, r2);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+                var cap2 = CreateCapsule(collider2);
+                return IsCollideRectToCapsuleFast(r1, cap2);
+            }
+        }
 
-        //    if (colType2 == E_COLLIDER_SHAPE.LINE)
-        //    {
-        //        var l2 = CreateLine(collider2);
-        //        return IsCollideLineToCapsule(l2, cap1, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CIRCLE)
-        //    {
-        //        var c2 = CreateCircle(collider2);
-        //        return IsCollideCircleToCapsule(c2, cap1, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.RECT)
-        //    {
-        //        var r2 = CreateRect(collider2);
-        //        return IsCollideRectToCapsule(r2, cap1, out hitPosList);
-        //    }
-        //    if (colType2 == E_COLLIDER_SHAPE.CAPSULE)
-        //    {
-        //        var cap2 = CreateCapsule(collider2);
-        //        return IsCollideCapsuleToCapsule(cap1, cap2, out hitPosList);
-        //    }
-        //}
+        if (colShape1 == E_COLLIDER_SHAPE.CAPSULE)
+        {
+            var cap1 = CreateCapsule(collider1);
+
+            if (colShape2 == E_COLLIDER_SHAPE.LINE)
+            {
+                var l2 = CreateLine(collider2);
+                return IsCollideLineToCapsuleFast(l2, cap1);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CIRCLE)
+            {
+                var c2 = CreateCircle(collider2);
+                return IsCollideCircleToCapsuleFast(c2, cap1);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.RECT)
+            {
+                var r2 = CreateRect(collider2);
+                return IsCollideRectToCapsuleFast(r2, cap1);
+            }
+            if (colShape2 == E_COLLIDER_SHAPE.CAPSULE)
+            {
+                var cap2 = CreateCapsule(collider2);
+                return IsCollideCapsuleToCapsuleFast(cap1, cap2);
+            }
+        }
 
         return false;
     }
@@ -390,148 +419,6 @@ public static class Collision
         return capsule;
     }
 
-    ///// <summary>
-    ///// 矩形と矩形の衝突判定。
-    ///// </summary>
-    //private static bool IsCollideRectAndRect(ColliderData rect1, ColliderData rect2)
-    //{
-    //    if (!IsCollideOutSide(rect1, rect2))
-    //    {
-    //        return false;
-    //    }
-
-    //    var corners1 = GetCornerPosFromRect(rect1, 2);
-    //    var corners2 = GetCornerPosFromRect(rect2, 2);
-
-    //    return IsCollideRectAndRect(corners1, corners2) || IsCollideRectAndRect(corners2, corners1);
-    //}
-
-    ///// <summary>
-    ///// 矩形と矩形の衝突判定の詳細処理。
-    ///// </summary>
-    //private static bool IsCollideRectAndRect(Vector2[] corners1, Vector2[] corners2)
-    //{
-    //    for (int j = 0; j < corners2.Length; j++)
-    //    {
-    //        bool flag = true;
-
-    //        for (int i = 0; i < corners1.Length; i++)
-    //        {
-    //            Vector2 baseV = corners1[(i + 1) % corners1.Length] - corners1[i];
-    //            Vector2 targetV = corners2[j] - corners1[i];
-
-    //            if (baseV.x * targetV.y - targetV.x * baseV.y > 0)
-    //            {
-    //                flag = false;
-    //                break;
-    //            }
-    //        }
-
-    //        if (flag)
-    //        {
-    //            return true;
-    //        }
-    //    }
-
-    //    return false;
-    //}
-
-    ///// <summary>
-    ///// 矩形と真円の衝突判定。
-    ///// </summary>
-    //private static bool IsCollideRectAndCircle()
-    //{
-    //    return false;
-    //}
-
-    ///// <summary>
-    ///// 矩形と楕円の衝突判定。
-    ///// </summary>
-    //private static bool IsCollideRectAndEllipse(ColliderData rect, ColliderData ellipse)
-    //{
-    //    Vector2[] corners = GetCornerPosFromRect(rect);
-    //    float cos = Mathf.Cos(ellipse.Angle * Mathf.Deg2Rad);
-    //    float sin = Mathf.Sin(ellipse.Angle * Mathf.Deg2Rad);
-    //    float scaleRate = ellipse.Size.x / ellipse.Size.y;
-
-    //    for (int i = 0; i < corners.Length; i++)
-    //    {
-    //        Vector2 offset = corners[i] - ellipse.CenterPos;
-    //        float x = offset.x * cos + offset.y * sin;
-    //        float y = scaleRate * (-offset.x * sin + offset.y * cos);
-
-    //        if (x * x + y * y <= ellipse.Size.x * ellipse.Size.x)
-    //        {
-    //            return true;
-    //        }
-    //    }
-
-    //    // 大きすぎる、小さすぎる時の対策のため矩形同士の判定処理を適用する
-    //    return IsCollideRectAndRect(rect, ellipse);
-    //}
-
-    ///// <summary>
-    ///// 楕円と楕円の衝突判定。参考URL : http://marupeke296.com/COL_2D_No7_EllipseVsEllipse.html
-    ///// </summary>
-    //private static bool IsCollideEllipseAndEllipse(ColliderData ellipse1, ColliderData ellipse2)
-    //{
-    //    ellipse1.Size /= 2;
-    //    ellipse2.Size /= 2;
-
-    //    float deffAngle = (ellipse1.Angle - ellipse2.Angle) * Mathf.Deg2Rad;
-    //    Vector2 deltaPos = ellipse2.CenterPos - ellipse1.CenterPos;
-    //    float deffCos = Mathf.Cos(deffAngle);
-    //    float deffSin = Mathf.Sin(deffAngle);
-    //    float nx = ellipse2.Size.x * deffCos;
-    //    float ny = -ellipse2.Size.x * deffSin;
-    //    float px = ellipse2.Size.y * deffSin;
-    //    float py = ellipse2.Size.y * deffCos;
-
-    //    float cos1 = Mathf.Cos(ellipse1.Angle * Mathf.Deg2Rad);
-    //    float sin1 = Mathf.Sin(ellipse1.Angle * Mathf.Deg2Rad);
-    //    float ox = cos1 * deltaPos.x + sin1 * deltaPos.y;
-    //    float oy = -sin1 * deltaPos.x + cos1 * deltaPos.y;
-
-    //    float rx_pow2 = 1f / (ellipse1.Size.x * ellipse1.Size.x);
-    //    float ry_pow2 = 1f / (ellipse1.Size.y * ellipse1.Size.y);
-    //    float A = rx_pow2 * nx * nx + ry_pow2 * ny * ny;
-    //    float B = rx_pow2 * px * px + ry_pow2 * py * py;
-    //    float D = 2 * rx_pow2 * nx * px + 2 * ry_pow2 * ny * py;
-    //    float E = 2 * rx_pow2 * nx * ox + 2 * ry_pow2 * ny * oy;
-    //    float F = 2 * rx_pow2 * px * ox + 2 * ry_pow2 * py * oy;
-    //    float G = (ox / ellipse1.Size.x) * (ox / ellipse1.Size.x) + (oy / ellipse1.Size.y) * (oy / ellipse1.Size.y) - 1;
-
-    //    float tmp1 = 1f / (D * D - 4 * A * B);
-    //    float h = (F * D - 2 * E * B) * tmp1;
-    //    float k = (E * D - 2 * A * F) * tmp1;
-    //    float Th = Mathf.Atan2(D, B - A) * 0.5f;
-
-    //    float CosTh = Mathf.Cos(Th);
-    //    float SinTh = Mathf.Sin(Th);
-    //    float A_tt = A * CosTh * CosTh + B * SinTh * SinTh - D * CosTh * SinTh;
-    //    float B_tt = A * SinTh * SinTh + B * CosTh * CosTh + D * CosTh * SinTh;
-    //    float KK = A * h * h + B * k * k + D * h * k - E * h - F * k + G;
-
-    //    // 念のため
-    //    if (KK > 0)
-    //    {
-    //        KK = 0;
-    //    }
-
-    //    float Rx_tt = 1 + Mathf.Sqrt(-KK / A_tt);
-    //    float Ry_tt = 1 + Mathf.Sqrt(-KK / B_tt);
-    //    float x_tt = CosTh * h - SinTh * k;
-    //    float y_tt = SinTh * h + CosTh * k;
-    //    float JudgeValue = x_tt * x_tt / (Rx_tt * Rx_tt) + y_tt * y_tt / (Ry_tt * Ry_tt);
-
-    //    if (JudgeValue <= 1)
-    //    {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-
     /// <summary>
     /// 指定した衝突判定の頂点の座標配列を取得する。
     /// </summary>
@@ -591,6 +478,11 @@ public static class Collision
         var o1 = GetOutSideCorner(collider1);
         var o2 = GetOutSideCorner(collider2);
 
+        return IsCollideOutSide(o1, o2);
+    }
+
+    private static bool IsCollideOutSide(Rect o1, Rect o2)
+    {
         var horizontal = (o2.x < o1.width) && (o1.x < o2.width);
         var vertical = (o2.y < o1.height) && (o1.y < o2.height);
         return horizontal && vertical;
@@ -1254,6 +1146,311 @@ public static class Collision
     #endregion
 
     #region Fast Collide Check
+
+    /// <summary>
+    /// 線分同士の衝突を行う。
+    /// </summary>
+    public static bool IsCollideLineToLineFast(CollisionLine l1, CollisionLine l2)
+    {
+        var v = l1.v;
+        var v1 = l2.p - l1.p;
+        var v2 = l2.p + l2.v - l1.p;
+
+        var crs_v_v1 = Cross(v, v1);
+        var crs_v_v2 = Cross(v, v2);
+
+        return crs_v_v1 * crs_v_v2 <= 0;
+    }
+    
+    /// <summary>
+    /// 線と円の衝突を行う。
+    /// </summary>
+    private static bool IsCollideLineToCircleFast(CollisionLine l, CollisionCircle c)
+    {
+        if (c.r < 0.0f && l.v.x == 0.0f && l.v.y == 0.0f)
+        {
+            return false;
+        }
+
+        var s = l.v;
+        var a = c.p - l.p;
+        var b = c.p - (l.p + l.v);
+
+        var d = Cross(s, a) / s.magnitude;
+
+        if (d <= c.r)
+        {
+            if (Dot(a,s) * Dot(b,s) <= 0)
+            {
+                return true;
+            }
+
+            var sqrR = c.r * c.r;
+            if (sqrR > a.sqrMagnitude || sqrR > b.sqrMagnitude)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 線と矩形の衝突を行う。
+    /// </summary>
+    private static bool IsCollideLineToRectFast(CollisionLine l, CollisionRect r)
+    {
+        var verts = new Vector2[] {
+            r.leftDown + r.p,
+            r.leftUp + r.p,
+            -r.leftDown + r.p,
+            -r.leftUp + r.p,
+        };
+
+        var l2 = new CollisionLine();
+
+        for (int i = 0; i < verts.Length; i++)
+        {
+            l2.p = verts[i];
+            l2.v = verts[(i + 1) % verts.Length] - verts[i];
+
+            if (IsCollideLineToLineFast(l, l2))
+            {
+                return true;
+            }
+        }
+
+        return IsInRect(l.p, r) && IsInRect(l.p + l.v, r);
+    }
+
+    /// <summary>
+    /// 線とカプセルの衝突を行う。
+    /// </summary>
+    private static bool IsCollideLineToCapsuleFast(CollisionLine l, CollisionCapsule c)
+    {
+        var beginCircle = new CollisionCircle();
+        beginCircle.p = c.l.p;
+        beginCircle.r = c.r;
+
+        var endCircle = new CollisionCircle();
+        endCircle.p = c.l.p + c.l.v;
+        endCircle.r = c.r;
+
+        var n = new Vector2(-c.l.v.y, c.l.v.x).normalized;
+        var rect = new CollisionRect();
+        rect.p = c.l.p + c.l.v / 2f;
+        rect.leftDown = n * c.r - c.l.v / 2f;
+        rect.leftUp = n * c.r + c.l.v / 2f;
+
+        if (IsCollideLineToCircleFast(l, beginCircle))
+        {
+            return true;
+        }
+
+        if (IsCollideLineToCircleFast(l, endCircle))
+        {
+            return true;
+        }
+
+        return IsCollideLineToRectFast(l, rect);
+    }
+
+    /// <summary>
+    /// 円と円の衝突を行う。
+    /// </summary>
+    private static bool IsCollideCircleToCircleFast(CollisionCircle c1, CollisionCircle c2)
+    {
+        var r = c1.r + c2.r;
+        var d = c2.p - c1.p;
+        var dSqrMag = d.sqrMagnitude;
+        return dSqrMag <= r * r;
+    }
+
+    /// <summary>
+    /// 円と矩形の衝突を行う。
+    /// </summary>
+    private static bool IsCollideCircleToRectFast(CollisionCircle c, CollisionRect r)
+    {
+        var verts = new Vector2[] {
+            r.leftDown + r.p,
+            r.leftUp + r.p,
+            -r.leftDown + r.p,
+            -r.leftUp + r.p,
+        };
+
+        var l = new CollisionLine();
+
+        for (int i = 0; i < verts.Length; i++)
+        {
+            l.p = verts[i];
+            l.v = verts[(i + 1) % verts.Length] - verts[i];
+
+            if (IsCollideLineToCircleFast(l, c))
+            {
+                if (IsInCircle(l.p, c) && IsInCircle(l.p + l.v, c))
+                {
+                    continue;
+                }
+
+                return true;
+            }
+        }
+
+        var isInRect = IsInRect(c.p, r);
+        var isInCircle = IsInCircle(r.p, c);
+        var rD = (r.leftUp - r.leftDown).sqrMagnitude;
+        var cD = c.r * c.r * 4;
+
+        if (isInRect && rD >= cD)
+        {
+            // 円が矩形に内包されている場合
+            return true;
+        }
+
+        if (isInCircle && rD <= cD)
+        {
+            // 矩形が円に内包されている場合
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 円とカプセルの衝突を行う。
+    /// </summary>
+    private static bool IsCollideCircleToCapsuleFast(CollisionCircle c, CollisionCapsule cap)
+    {
+        var beginLength = (cap.l.p - c.p).magnitude + cap.r;
+        var endLength = (cap.l.p + cap.l.v - c.p).magnitude + cap.r;
+        if (beginLength < c.r && endLength < c.r)
+        {
+            // カプセルが円に内包されている場合
+            return true;
+        }
+
+        var beginCircle = new CollisionCircle();
+        beginCircle.p = cap.l.p;
+        beginCircle.r = cap.r;
+
+        var endCircle = new CollisionCircle();
+        endCircle.p = cap.l.p + cap.l.v;
+        endCircle.r = cap.r;
+
+        var n = new Vector2(-cap.l.v.y, cap.l.v.x).normalized;
+        var rect = new CollisionRect();
+        rect.p = cap.l.p + cap.l.v / 2f;
+        rect.leftDown = n * cap.r - cap.l.v / 2f;
+        rect.leftUp = n * cap.r + cap.l.v / 2f;
+
+        if (IsCollideCircleToCircleFast(c, beginCircle))
+        {
+            return true;
+        }
+
+        if (IsCollideCircleToCircleFast(c, endCircle))
+        {
+            return true;
+        }
+
+        return IsCollideCircleToRectFast(c, rect);
+    }
+
+    /// <summary>
+    /// 矩形と矩形の衝突を行う。
+    /// </summary>
+    private static bool IsCollideRectToRectFast(CollisionRect r1, CollisionRect r2, bool isFirstLoop = true)
+    {
+        var verts = new Vector2[] {
+            r1.leftDown + r1.p,
+            r1.leftUp + r1.p,
+            -r1.leftDown + r1.p,
+            -r1.leftUp + r1.p,
+        };
+
+        var l = new CollisionLine();
+
+        for (int i = 0; i < verts.Length; i++)
+        {
+            l.p = verts[i];
+            l.v = verts[(i + 1) % verts.Length] - verts[i];
+
+            if (IsCollideLineToRectFast(l, r2))
+            {
+                return true;
+            }
+        }
+
+        if (!isFirstLoop)
+        {
+            return false;
+        }
+        return IsCollideRectToRectFast(r2, r1, false);
+    }
+
+    /// <summary>
+    /// 矩形とカプセルの衝突を行う。
+    /// </summary>
+    private static bool IsCollideRectToCapsuleFast(CollisionRect r, CollisionCapsule cap)
+    {
+        var beginCircle = new CollisionCircle();
+        beginCircle.p = cap.l.p;
+        beginCircle.r = cap.r;
+
+        var endCircle = new CollisionCircle();
+        endCircle.p = cap.l.p + cap.l.v;
+        endCircle.r = cap.r;
+
+        var n = new Vector2(-cap.l.v.y, cap.l.v.x).normalized;
+        var rect = new CollisionRect();
+        rect.p = cap.l.p + cap.l.v / 2f;
+        rect.leftDown = n * cap.r - cap.l.v / 2f;
+        rect.leftUp = n * cap.r + cap.l.v / 2f;
+
+        if (IsCollideCircleToRectFast(beginCircle, r))
+        {
+            return true;
+        }
+
+        if (IsCollideCircleToRectFast(endCircle, r))
+        {
+            return true;
+        }
+
+        return IsCollideRectToRectFast(rect, r);
+    }
+
+    /// <summary>
+    /// カプセルとカプセルの衝突を行う。
+    /// </summary>
+    private static bool IsCollideCapsuleToCapsuleFast(CollisionCapsule cap1, CollisionCapsule cap2)
+    {
+        var beginCircle = new CollisionCircle();
+        beginCircle.p = cap1.l.p;
+        beginCircle.r = cap1.r;
+
+        var endCircle = new CollisionCircle();
+        endCircle.p = cap1.l.p + cap1.l.v;
+        endCircle.r = cap1.r;
+
+        var n = new Vector2(-cap1.l.v.y, cap1.l.v.x).normalized;
+        var rect = new CollisionRect();
+        rect.p = cap1.l.p + cap1.l.v / 2f;
+        rect.leftDown = n * cap1.r - cap1.l.v / 2f;
+        rect.leftUp = n * cap1.r + cap1.l.v / 2f;
+
+        if (IsCollideCircleToCapsuleFast(beginCircle, cap2))
+        {
+            return true;
+        }
+
+        if (IsCollideCircleToCapsuleFast(endCircle, cap2))
+        {
+            return true;
+        }
+
+        return IsCollideRectToCapsuleFast(rect, cap2);
+    }
 
     #endregion
 }

@@ -8,15 +8,9 @@ using UnityEngine;
 [System.Serializable]
 public struct ControlObjectParam
 {
-    [Tooltip("プレハブを使うかどうか")]
-    public bool UsePlayableObjectPrefab;
+    [Tooltip("操作対象のオブジェクトの名前")]
+    public string Name;
 
-    [Tooltip("プレハブ")]
-    public BattleRealPlayableBase PlayableObjectPrefab;
-
-    [Tooltip("EventManagerに登録されているオブジェクトの名前")]
-    public string RegisteredPlayableName;
-
-    [Tooltip("オブジェクトのタイムラインパラメータ")]
-    public TimelineParam ObjectTimelineParam;
+    [Tooltip("オブジェクトの操作タイプ")]
+    public E_CONTROL_OBJECT_TYPE ControlObjectType;
 }

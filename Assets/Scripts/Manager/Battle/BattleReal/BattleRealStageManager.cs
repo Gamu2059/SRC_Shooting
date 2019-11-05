@@ -83,12 +83,12 @@ public class BattleRealStageManager : ControllableMonoBehavior
     /// </summary>
     public bool IsOutOfField(Transform obj)
     {
-        var localPos = obj.localPosition;
+        var pos = obj.position;
         return
-            localPos.x < m_MinLocalFieldPosition.x ||
-            localPos.x > m_MaxLocalFieldPosition.x ||
-            localPos.z < m_MinLocalFieldPosition.y ||
-            localPos.z > m_MaxLocalFieldPosition.y;
+            pos.x < m_MinLocalFieldPosition.x ||
+            pos.x > m_MaxLocalFieldPosition.x ||
+            pos.z < m_MinLocalFieldPosition.y ||
+            pos.z > m_MaxLocalFieldPosition.y;
     }
 
     /// <summary>
@@ -120,6 +120,24 @@ public class BattleRealStageManager : ControllableMonoBehavior
         vX *= (max.x - min.x) / 2;
         vZ *= (max.y - min.y) / 2;
         return new Vector2(vX, vZ);
+    }
+
+    /// <summary>
+    /// 動体フィールド領域のビューポート座標から、実際の座標を取得する。
+    /// </summary>
+    /// <param name="x">フィールド領域x座標</param>
+    /// <param name="y">フィールド領域y座標</param>
+    /// <returns></returns>
+    public Vector3 GetPositionFromFieldViewPortPosition(float x, float y)
+    {
+        var minPos = MinLocalFieldPosition;
+        var maxPos = MaxLocalFieldPosition;
+
+        var factX = (maxPos.x - minPos.x) * x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * y + minPos.y;
+        var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
+
+        return pos;
     }
 
     public Transform GetHolder(E_HOLDER_TYPE holderType)

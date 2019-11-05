@@ -6,11 +6,6 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
 {
     public static BattleRealCollisionManager Instance => BattleRealManager.Instance.CollisionManager;
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-    }
-
     /// <summary>
     /// 衝突をチェックする。
     /// </summary>
@@ -140,6 +135,18 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
                 player.SufferChara(player, attackData, targetData, hitPosList);
                 enemy.HitChara(enemy, attackData, targetData, hitPosList);
             });
+
+            // ボスならプレイヤーからの被弾も在り得る
+            if (enemy.IsBoss)
+            {
+                Collision.CheckCollide(player, enemy, (attackData, targetData, hitPosList) =>
+                {
+                    attackData.IsCollide = true;
+                    targetData.IsCollide = true;
+                    enemy.SufferChara(player, attackData, targetData, hitPosList);
+                    player.HitChara(enemy, attackData, targetData, hitPosList);
+                });
+            }
         }
     }
 

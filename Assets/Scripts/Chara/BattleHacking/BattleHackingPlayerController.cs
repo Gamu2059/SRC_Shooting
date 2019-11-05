@@ -34,9 +34,8 @@ public class BattleHackingPlayerController : CommandCharaController
 
     /// <summary>
     /// 通常弾を発射する。
-    /// このメソッドをオーバーロードしてそれぞれのキャラ固有の処理を記述して下さい。
     /// </summary>
-    public virtual void ShotBullet()
+    public void ShotBullet()
     {
         if (m_ShotTimeCount > 0)
         {
@@ -48,6 +47,8 @@ public class BattleHackingPlayerController : CommandCharaController
             return;
         }
 
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hack_Shot01");
+
         var shotParam = new CommandBulletShotParam(this);
         for (int i = 0; i < m_ShotPositions.Length; i++)
         {
@@ -58,21 +59,27 @@ public class BattleHackingPlayerController : CommandCharaController
         m_ShotTimeCount = m_ShotInterval;
     }
 
-    //public override void SufferBullet(CommandBulletController attackBullet, ColliderData attackData, ColliderData targetData)
-    //{
-    //    //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
-    //    //{
-    //    //    base.SufferBullet(attackBullet, attackData, targetData);
-    //    //}
-    //}
+    protected override void OnEnterSufferBullet(HitSufferData<CommandBulletController> sufferData)
+    {
+        base.OnEnterSufferBullet(sufferData);
 
-    //public override void SufferChara(CommandCharaController attackChara, ColliderData attackData, ColliderData targetData)
-    //{
-    //    //if (targetData.CollideName == CRITICAL_COLLIDE_NAME)
-    //    //{
-    //    //    base.SufferChara(attackChara, attackData, targetData);
-    //    //}
-    //}
+        var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
+        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+        {
+            Damage(1);
+        }
+    }
+
+    protected override void OnEnterSufferChara(HitSufferData<CommandCharaController> sufferData)
+    {
+        base.OnEnterSufferChara(sufferData);
+
+        var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
+        if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
+        {
+            Damage(1);
+        }
+    }
 
     public override void Dead()
     {
@@ -82,7 +89,7 @@ public class BattleHackingPlayerController : CommandCharaController
         }
 
         base.Dead();
-
-        BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
+        BattleHackingManager.Instance.DeadPlayer();
     }
 }

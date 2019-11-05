@@ -35,6 +35,9 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     private List<BattleRealEnemyController> m_UpdateEnemies;
     public List<BattleRealEnemyController> Enemies => m_UpdateEnemies;
 
+    private List<BattleRealEnemyController> m_BossEnemies;
+    public List<BattleRealEnemyController> BossEnemies => m_BossEnemies;
+
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
     /// </summary>
@@ -78,7 +81,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyEvacuationHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
-
     }
 
     public override void OnUpdate()
@@ -96,7 +98,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         {
             if (enemy == null)
             {
-                //CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -110,7 +111,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         {
             if (enemy == null)
             {
-                //CheckPoolEnemy(enemy);
                 continue;
             }
 
@@ -125,11 +125,24 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         {
             if (enemy == null)
             {
-                //CheckPoolEnemy(enemy);
                 continue;
             }
 
             enemy.OnLateUpdate();
+        }
+    }
+
+    public override void OnFixedUpdate()
+    {
+        // FixedUpdate処理
+        foreach (var enemy in m_UpdateEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.OnFixedUpdate();
         }
     }
 

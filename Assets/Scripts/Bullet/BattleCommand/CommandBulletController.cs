@@ -17,6 +17,9 @@ public class CommandBulletController : BattleHackingObjectBase
     [SerializeField]
     private string m_BulletGroupId = "Default Bullet";
 
+    [SerializeField]
+    private bool m_IsDestoryOnCollide = false;
+
     #endregion
 
 
@@ -759,7 +762,7 @@ public class CommandBulletController : BattleHackingObjectBase
         }
         else
         {
-            List<CommandEnemyController> enemies = BattleHackingEnemyManager.Instance.GetUpdateEnemies();
+            List<BattleHackingEnemyController> enemies = BattleHackingEnemyManager.Instance.Enemies;
             CommandCharaController nearestEnemy = null;
             float minSqrDist = float.MaxValue;
 
@@ -905,7 +908,10 @@ public class CommandBulletController : BattleHackingObjectBase
 
     protected virtual void OnEnterHitChara(HitSufferData<CommandCharaController> hitData)
     {
-
+        if (m_IsDestoryOnCollide)
+        {
+            DestroyBullet();
+        }
     }
 
     protected virtual void OnStayHitChara(HitSufferData<CommandCharaController> hitData)

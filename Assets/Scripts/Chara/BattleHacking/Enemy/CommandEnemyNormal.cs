@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// コマンドイベントの通常敵。
 /// </summary>
-public class CommandEnemyNormal : CommandEnemyController
+public class CommandEnemyNormal : BattleHackingEnemyController
 {
     /// <summary>
     /// 発射間隔
