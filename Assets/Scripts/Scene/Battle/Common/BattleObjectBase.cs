@@ -40,7 +40,7 @@ public abstract class BattleObjectBase : ControllableMonoBehavior, IColliderBase
 
     public override void OnUpdate()
     {
-        base.OnUpdate();
+        //base.OnUpdate();
     }
 
     #endregion

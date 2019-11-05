@@ -42,7 +42,7 @@ public class ControllableMonoBehavior : MonoBehaviour, IControllableGameCycle
 
 	public virtual void OnUpdate()
 	{
-	}
+    }
 
 	public virtual void OnLateUpdate()
 	{

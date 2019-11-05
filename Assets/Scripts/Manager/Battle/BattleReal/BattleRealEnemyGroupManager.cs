@@ -346,6 +346,11 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// </summary>
     private void BuildEnemyGroupAppearEvents()
     {
+        if (m_ParamSet == null || m_ParamSet.Generator == null)
+        {
+            return;
+        }
+
         var groups = m_ParamSet.Generator.Contents;
         for (int i = 0; i < groups.Length; i++)
         {

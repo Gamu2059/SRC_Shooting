@@ -27,10 +27,10 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
         STAGE1 = 5,
 	}
 
-	/// <summary>
-	/// BaseSceneのサイクル。
-	/// </summary>
-	public enum E_SCENE_CYCLE
+    /// <summary>
+    /// BaseSceneのサイクル。
+    /// </summary>
+    public enum E_SCENE_CYCLE
 	{
 		/// <summary>
 		/// 他のシーンから遷移してきた直後。

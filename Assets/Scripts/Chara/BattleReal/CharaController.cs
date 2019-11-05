@@ -51,6 +51,16 @@ public class CharaController : BattleRealObjectBase
         m_BulletSetParam = param;
     }
 
+    public BulletParam GetBulletParam(int index = 0)
+    {
+        return m_BulletSetParam.GetBulletParam(index);
+    }
+
+    public int GetBulletPrefabsCount()
+    {
+        return m_BulletSetParam.GetBulletPrefabsCount();
+    }
+
     #endregion
 
     #region Game Cycle
@@ -58,7 +68,6 @@ public class CharaController : BattleRealObjectBase
     protected override void OnAwake()
     {
         base.OnAwake();
-
         m_BulletSuffer = new HitSufferController<BulletController>();
         m_CharaSuffer = new HitSufferController<CharaController>();
         m_CharaHit = new HitSufferController<CharaController>();
@@ -67,10 +76,10 @@ public class CharaController : BattleRealObjectBase
 
     protected override void OnDestroyed()
     {
-        m_ItemHit.OnFinalize();
-        m_CharaHit.OnFinalize();
-        m_CharaSuffer.OnFinalize();
-        m_BulletSuffer.OnFinalize();
+        m_ItemHit?.OnFinalize();
+        m_CharaHit?.OnFinalize();
+        m_CharaSuffer?.OnFinalize();
+        m_BulletSuffer?.OnFinalize();
         m_ItemHit = null;
         m_CharaHit = null;
         m_CharaSuffer = null;
@@ -82,18 +91,34 @@ public class CharaController : BattleRealObjectBase
     {
         base.OnInitialize();
 
+        if (m_BulletSuffer == null)
+        {
+            m_BulletSuffer = new HitSufferController<BulletController>();
+        }
         m_BulletSuffer.OnEnter = OnEnterSufferBullet;
         m_BulletSuffer.OnStay = OnStaySufferBullet;
         m_BulletSuffer.OnExit = OnExitSufferBullet;
 
+        if (m_CharaSuffer == null)
+        {
+            m_CharaSuffer = new HitSufferController<CharaController>();
+        }
         m_CharaSuffer.OnEnter = OnEnterSufferChara;
         m_CharaSuffer.OnStay = OnStaySufferChara;
         m_CharaSuffer.OnExit = OnExitSufferChara;
 
+        if (m_CharaHit == null)
+        {
+            m_CharaHit = new HitSufferController<CharaController>();
+        }
         m_CharaHit.OnEnter = OnEnterHitChara;
         m_CharaHit.OnStay = OnStayHitChara;
         m_CharaHit.OnExit = OnExitHitChara;
 
+        if (m_ItemHit == null)
+        {
+            m_ItemHit = new HitSufferController<BattleRealItemController>();
+        }
         m_ItemHit.OnEnter = OnEnterHitItem;
         m_ItemHit.OnStay = OnStayHitItem;
         m_ItemHit.OnExit = OnExitHitItem;
