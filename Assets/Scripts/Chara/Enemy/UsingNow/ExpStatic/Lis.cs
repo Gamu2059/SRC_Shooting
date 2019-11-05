@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 単位弾幕WAYの意味（名前と説明）を管理する。
+/// 単位弾幕LISの意味（名前と説明）を管理する。
 /// </summary>
-public class Way : ExpAbstract
+public class Lis : ExpAbstract
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ public class Way : ExpAbstract
     /// </summary>
     public override string GetExp()
     {
-        return "自機に向かって扇形に弾を発射する。隣り合う角度は等しい。自機狙い弾か自機外し弾である。";
+        return "リサージュ曲線を描く。";
     }
 
 
@@ -32,7 +32,7 @@ public class Way : ExpAbstract
     public override string[] GetBoolExps2()
     {
         return new string[] {
-            "特になし"
+            "特になし。"
         };
     }
 
@@ -58,9 +58,10 @@ public class Way : ExpAbstract
     {
         shotInterval,
         bulletSpeed,
-        dAngle,
-        bulletSourceRadius,
-        shotBlurRadius,
+        ampX,
+        angFreqX,
+        ampY,
+        angFreqY,
     }
 
 
@@ -69,13 +70,15 @@ public class Way : ExpAbstract
         return new string[] {
             "前に発射してから次に発射するまでの時間。単位は秒。"
             ,
-            "弾の速さ。（今は2以上20以下の偶数にする）"
+            "弾の速さ。"
             ,
-            ""
+            "x軸方向の振幅"
             ,
-            "「発射位置」で指定した位置から、これだけ離れた位置から発射する。"
+            "x軸方向の各振動数"
             ,
-            "発射位置を、この半径の円の中にランダムでブレさせる。"
+            "y軸方向の振幅"
+            ,
+            "y軸方向の各振動数"
         };
     }
 

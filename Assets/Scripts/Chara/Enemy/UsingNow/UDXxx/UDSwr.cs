@@ -36,7 +36,7 @@ public class UDSwr : DanmakuCountAbstract
 
 
         // 発射角度
-        float angle = m_Float[(int)Swr.FLOAT.角速度] * launchTime;
+        float angle = m_Float[(int)Swr.FLOAT.角速度] * m_RealShotNum;
         //float angle = m_Float[(int)Swr.FLOAT.角速度] * m_RealShotNum * m_Float[(int)Swr.FLOAT.発射間隔];
         angle = angle % Mathf.PI * 2;
 

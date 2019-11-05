@@ -18,4 +18,6 @@ public enum E_U_D
     SWR,
     WAP,
     ALS,
+    LIS,
+    IDR,
 }

@@ -11,7 +11,7 @@ public class DLisOmn : System.Object
 
     // LissajousAliceのクラス
     [SerializeField]
-    private UDLis uDLis;
+    private UDLisOld uDLis;
 
     // OmniDirectionのクラス
     [SerializeField]

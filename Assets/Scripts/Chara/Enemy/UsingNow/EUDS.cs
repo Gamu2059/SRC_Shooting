@@ -29,6 +29,12 @@ public static class EUDS : object
             case E_U_D.ALS:
                 return new UDAls();
 
+            case E_U_D.LIS:
+                return new UDLis();
+
+            case E_U_D.IDR:
+                return new UDIdr();
+
             // 追加しやすいようにしている（この部分は変えない）
             default:
                 return new UDOmn();
@@ -54,6 +60,12 @@ public static class EUDS : object
 
             case E_U_D.ALS:
                 return new Als();
+
+            case E_U_D.LIS:
+                return new Lis();
+
+            case E_U_D.IDR:
+                return new Idr();
 
             // 追加しやすいようにしている（この部分は変えない）
             default:

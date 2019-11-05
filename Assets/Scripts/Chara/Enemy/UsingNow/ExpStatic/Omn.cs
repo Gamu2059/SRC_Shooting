@@ -22,12 +22,10 @@ public class Omn : ExpAbstract
     /// </summary>
     public enum BOOL
     {
-        発射平均位置を指定するかどうか,
-        発射中心位置を円内にブレさせるかどうか,
-        発射角度を直角に曲げるかどうか,
-        発射角度を指定するかどうか,
-        発射角度が自機依存かどうか,
-        発射角度が自機狙いかどうか,
+        isTurnRightAngle,
+        isShotAngleDefined,
+        isPlayerDependent,
+        isAimingAtPlayer,
     }
 
 
@@ -37,11 +35,6 @@ public class Omn : ExpAbstract
     public override string[] GetBoolExps2()
     {
         return new string[] {
-            "発射平均位置を指定するかどうか" + "\n\n" + 
-            "falseなら、「発射平均位置」をゼロベクトルに固定する。"
-            ,
-            "falseなら「発射位置のずれの半径」を0に固定する。"
-            ,
             "trueなら、発射角度を直角に曲げる。"
             ,
             "trueなら、発射角度を「発射角度」に固定する。"
@@ -57,8 +50,9 @@ public class Omn : ExpAbstract
 
     public enum INT
     {
-        何番目の弾か,
-        way数,
+        bulletIndex,
+        way,
+        speedNum,
     }
 
 
@@ -68,17 +62,20 @@ public class Omn : ExpAbstract
             "弾の外見のインデックス。（今は1種類しかないので0にする）"
             ,
             "一度に発射する弾の数。"
+            ,
+            ""
         };
     }
 
 
     public enum FLOAT
     {
-        発射間隔,
-        弾速,
-        弾源円半径,
-        発射位置のブレ範囲の円の半径,
-        発射角度,
+        shotInterval,
+        bulletSpeed,
+        bulletSourceRadius,
+        shotBlurRadius,
+        shotAngle,
+        dSpeed,
     }
 
 
@@ -100,7 +97,7 @@ public class Omn : ExpAbstract
 
     public enum VECTOR3
     {
-        発射平均位置,
+        shotAvePosition,
     }
 
 

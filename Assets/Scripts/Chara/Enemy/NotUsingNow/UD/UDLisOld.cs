@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UDLis : DanmakuCountAbstract
+public class UDLisOld : DanmakuCountAbstract
 {
 
     [SerializeField, Tooltip("発射間隔")]

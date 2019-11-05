@@ -57,7 +57,7 @@ public class UDWap : DanmakuCountAbstract
         m_Float[(int)Wap.FLOAT.角度] += deltaAngle;
         m_Float[(int)Wap.FLOAT.角度] %= Mathf.PI * 2;
 
-        Debug.Log((m_Float[(int)Wap.FLOAT.角加速度],m_Float[(int)Wap.FLOAT.角速度], m_Float[(int)Wap.FLOAT.角度]));
+        //Debug.Log((m_Float[(int)Wap.FLOAT.角加速度],m_Float[(int)Wap.FLOAT.角速度], m_Float[(int)Wap.FLOAT.角度]));
 
         for (int i = 0; i < m_Int[(int)Wap.INT.way]; i++)
         {

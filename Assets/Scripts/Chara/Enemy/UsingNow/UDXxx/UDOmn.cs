@@ -3,54 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UDOmn : DanmakuCountAbstract
+public class UDOmn : RegularIntervalUDAbstract
 {
 
-    //private enum BOOL
-    //{
-    //    発射平均位置を指定するかどうか,
-    //    発射中心位置を円内にブレさせるかどうか,
-    //    発射角度を直角に曲げるかどうか,
-    //    発射角度を指定するかどうか,
-    //    発射角度が自機依存かどうか,
-    //    発射角度が自機狙いかどうか,
-    //}
-
-
-    //private enum INT
-    //{
-    //    何番目の弾か,
-    //    way数,
-    //}
-
-
-    //private enum FLOAT
-    //{
-    //    発射間隔,
-    //    弾速,
-    //    弾源円半径,
-    //    発射位置のブレ範囲の円の半径,// 「発射位置を円内にブレさせるかどうか」がfalseのなら、0になる。
-    //    発射角度,// 「発射角度を指定するかどうか」がfalseなら、ランダムな角度になる。
-    //}
-
-
-    //private enum VECTOR3
-    //{
-    //    発射平均位置,// 「発射平均位置を指定するかどうか」がfalseのなら、ゼロベクトルになる。
-    //}
-
-
-    // 現在のあるべき発射回数を計算する(小数)
-    public override float CalcNowShotNum(float time)
+    /// <summary>
+    /// 発射間隔を取得する。
+    /// </summary>
+    public override float GetShotInterval()
     {
-        return time / m_Float[(int)Omn.FLOAT.発射間隔];
-    }
-
-
-    // 発射時刻を計算する
-    public override float CalcLaunchTime()
-    {
-        return m_Float[(int)Omn.FLOAT.発射間隔] * m_RealShotNum;
+        return m_Float[(int)Omn.FLOAT.shotInterval];
     }
 
 
@@ -58,23 +19,13 @@ public class UDOmn : DanmakuCountAbstract
     public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
     {
 
-        Vector3 avePosition;
-
-        if (m_Bool[(int)Omn.BOOL.発射平均位置を指定するかどうか])
-        {
-            avePosition = m_Vector3[(int)Omn.VECTOR3.発射平均位置];
-        }
-        else
-        {
-            avePosition = Vector3.zero;
-        }
-
+        // この部分は後々消す
 
         Vector3 posRandomZure;
 
-        if (m_Bool[(int)Omn.BOOL.発射中心位置を円内にブレさせるかどうか])
+        if (m_Float[(int)Omn.FLOAT.shotBlurRadius] != 0)
         {
-            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Omn.FLOAT.発射位置のブレ範囲の円の半径]);
+            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Omn.FLOAT.shotBlurRadius]);
         }
         else
         {
@@ -84,7 +35,7 @@ public class UDOmn : DanmakuCountAbstract
 
         float posVeloRad;
 
-        if (m_Bool[(int)Omn.BOOL.発射角度を直角に曲げるかどうか])
+        if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
         {
             posVeloRad = Mathf.PI / 2;
         }
@@ -96,25 +47,23 @@ public class UDOmn : DanmakuCountAbstract
 
         float rad0;
 
-        if (m_Bool[(int)Omn.BOOL.発射角度を指定するかどうか])
+        if (m_Bool[(int)Omn.BOOL.isShotAngleDefined])
         {
-            rad0 = Mathf.PI * 2 * m_Float[(int)Omn.FLOAT.発射角度];
+            rad0 = Mathf.PI * 2 * m_Float[(int)Omn.FLOAT.shotAngle];
         }
         else
         {
-            if (m_Bool[(int)Omn.BOOL.発射角度が自機依存かどうか])
+            if (m_Bool[(int)Omn.BOOL.isPlayerDependent])
             {
-                var player = BattleRealPlayerManager.Instance.Player;
-                rad0 = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Omn.VECTOR3.発射平均位置] + posRandomZure,
-                    player.transform.position);
+                rad0 = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Omn.VECTOR3.shotAvePosition] + posRandomZure, BattleRealPlayerManager.Instance.Player.transform.position);
 
-                if (m_Bool[(int)Omn.BOOL.発射角度が自機狙いかどうか])
+                if (m_Bool[(int)Omn.BOOL.isAimingAtPlayer])
                 {
                     
                 }
                 else
                 {
-                    rad0 += Mathf.PI * 2 / m_Int[(int)Omn.INT.way数] / 2;
+                    rad0 += Mathf.PI * 2 / m_Int[(int)Omn.INT.way] / 2;
                 }
             }
             else
@@ -124,22 +73,26 @@ public class UDOmn : DanmakuCountAbstract
         }
 
 
-        // これ以降で使うフィールドは、bool値によらず必ず使うものだけを使う。
+        CVLMWaRaSp cVLMWaRaSp = new CVLMWaRaSp(
+            new CVLMShotParam(
+                enemyController,
+                m_Int[(int)Omn.INT.bulletIndex],
+                Vector3.zero,
+                rad0 + posVeloRad,
+                m_Float[(int)Omn.FLOAT.bulletSpeed],
+                dTime
+                ),
+            m_Int[(int)Omn.INT.way],
+            m_Float[(int)Omn.FLOAT.bulletSourceRadius],
+            m_Int[(int)Omn.INT.speedNum],
+            m_Float[(int)Omn.FLOAT.dSpeed]
+            );
 
-        for (int i = 0; i < m_Int[(int)Omn.INT.way数]; i++)
-        {
-            // 1つの弾の角度
-            float rad = rad0 + Mathf.PI * 2 * i / m_Int[(int)Omn.INT.way数];
+        cVLMWaRaSp.PlusPosition(enemyController.transform.position);
+        cVLMWaRaSp.PlusPosition(m_Vector3[(int)Omn.VECTOR3.shotAvePosition]);
+        cVLMWaRaSp.PlusPosition(Calc.RandomCircleInsideToV3AndZero(m_Float[(int)Omn.FLOAT.shotBlurRadius]));
 
-            // 発射された弾の現在の位置
-            Vector3 pos;
-            pos = enemyController.transform.position;
-            pos += avePosition;
-            pos += posRandomZure;
-            pos += RThetaToVector3(m_Float[(int)Omn.FLOAT.弾源円半径], rad);
-
-            ShotTouchokuBullet(enemyController, m_Int[(int)Omn.INT.何番目の弾か], pos, rad + posVeloRad, m_Float[(int)Omn.FLOAT.弾速], dTime);
-        }
+        cVLMWaRaSp.Shoot();
     }
 }
 
@@ -338,3 +291,92 @@ public class UDOmn : DanmakuCountAbstract
 
 //Vector2 randomPos = Random.insideUnitCircle * m_Float[(int)FLOAT.発射位置のブレ範囲の円の半径];
 //posRandomZure = new Vector3(randomPos.x, 0, randomPos.y);
+
+
+//private enum BOOL
+//{
+//    発射平均位置を指定するかどうか,
+//    発射中心位置を円内にブレさせるかどうか,
+//    発射角度を直角に曲げるかどうか,
+//    発射角度を指定するかどうか,
+//    発射角度が自機依存かどうか,
+//    発射角度が自機狙いかどうか,
+//}
+
+
+//private enum INT
+//{
+//    何番目の弾か,
+//    way数,
+//}
+
+
+//private enum FLOAT
+//{
+//    発射間隔,
+//    弾速,
+//    弾源円半径,
+//    発射位置のブレ範囲の円の半径,// 「発射位置を円内にブレさせるかどうか」がfalseのなら、0になる。
+//    発射角度,// 「発射角度を指定するかどうか」がfalseなら、ランダムな角度になる。
+//}
+
+
+//private enum VECTOR3
+//{
+//    発射平均位置,// 「発射平均位置を指定するかどうか」がfalseのなら、ゼロベクトルになる。
+//}
+
+
+// これ以降で使うフィールドは、bool値によらず必ず使うものだけを使う。
+
+
+//// 現在のあるべき発射回数を計算する(小数)
+//public override float CalcNowShotNum(float time)
+//{
+//    return time / m_Float[(int)Omn.FLOAT.shotInterval];
+//}
+
+
+//// 発射時刻を計算する
+//public override float CalcLaunchTime()
+//{
+//    return m_Float[(int)Omn.FLOAT.shotInterval] * m_RealShotNum;
+//}
+
+
+//for (int i = 0; i < m_Int[(int)Omn.INT.way]; i++)
+//{
+//    // 1つの弾の角度
+//    float rad = rad0 + Mathf.PI * 2 * i / m_Int[(int)Omn.INT.way];
+
+//pos += RThetaToVector3(m_Float[(int)Omn.FLOAT.bulletSourceRadius], rad);
+
+//ShotTouchokuBullet(enemyController, m_Int[(int)Omn.INT.bulletIndex], pos, rad + posVeloRad, bulletSpeed, dTime);
+//}
+
+
+//if (m_Int[(int)Omn.INT.speedNum] >= 2)
+//{
+//    for (int i = -(m_Int[(int)Omn.INT.speedNum] - 1); i <= m_Int[(int)Omn.INT.speedNum] - 1; i += 2)
+//    {
+//        float bulletSpeed = m_Float[(int)Omn.FLOAT.bulletSpeed] + i * m_Float[(int)Omn.FLOAT.dSpeed] / 2;
+
+//        Do(enemyController, launchTime, dTime, rad0, posRandomZure, posVeloRad, bulletSpeed);
+//    }
+//}
+//else
+//{
+//    Do(enemyController, launchTime, dTime, rad0, posRandomZure, posVeloRad, m_Float[(int)Omn.FLOAT.bulletSpeed]);
+//}
+
+
+//public void Do(BattleRealEnemyController enemyController, float launchTime, float dTime, float rad0, Vector3 posRandomZure, float posVeloRad,float bulletSpeed)
+//{
+//    // 発射された弾の現在の位置
+//    Vector3 pos;
+//    pos = enemyController.transform.position;
+//    pos += m_Vector3[(int)Omn.VECTOR3.shotAvePosition];
+//    pos += RandomCircleInsideToV3AndZero(m_Float[(int)Omn.FLOAT.shotBlurRadius]);
+
+//    ShotTouchokuWayRadiusBullet(enemyController, m_Int[(int)Omn.INT.bulletIndex], pos, rad0 + posVeloRad, bulletSpeed, dTime, m_Int[(int)Omn.INT.way], m_Float[(int)Omn.FLOAT.bulletSourceRadius]);
+//}

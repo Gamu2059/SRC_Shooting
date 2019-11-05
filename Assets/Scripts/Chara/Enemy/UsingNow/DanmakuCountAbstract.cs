@@ -88,6 +88,19 @@ public abstract class DanmakuCountAbstract : System.Object
     }
 
 
+    public Vector3 RandomCircleInsideToV3AndZero(float radius)
+    {
+        if (radius != 0)
+        {
+            return RandomCircleInsideToV3(radius);
+        }
+        else
+        {
+            return Vector3.zero;
+        }
+    }
+
+
     public void ShotTouchokuBullet(BattleRealEnemyController enemyController,int bulletIndex, Vector3 position,float velocityRad,float speed,float dTime)
     {
         Vector3 realPosition = position + speed * dTime * new Vector3(Mathf.Cos(velocityRad), 0, Mathf.Sin(velocityRad));
@@ -97,6 +110,32 @@ public abstract class DanmakuCountAbstract : System.Object
         // 弾の大きさを変えている。
         BulletShotParam bulletShotParam = new BulletShotParam(enemyController, bulletIndex, Mathf.RoundToInt(speed * 10 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.03f);
         BulletController.ShotBullet(bulletShotParam);
+    }
+
+
+    public void ShotTouchokuWayBullet(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime,int way)
+    {
+        for (int i = 0; i < way; i++)
+        {
+            // wayによる角度差
+            float wayRad = Mathf.PI * 2 * i / m_Int[(int)Omn.INT.way];
+
+            ShotTouchokuBullet(enemyController, bulletIndex, position, velocityRad + wayRad, speed, dTime);
+        }
+    }
+
+
+    public void ShotTouchokuWayRadiusBullet(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime, int way,float radius)
+    {
+        for (int i = 0; i < way; i++)
+        {
+            // wayによる角度差
+            float wayRad = Mathf.PI * 2 * i / m_Int[(int)Omn.INT.way];
+
+            Vector3 wayPos = RThetaToVector3(m_Float[(int)Omn.FLOAT.bulletSourceRadius], velocityRad + wayRad);
+
+            ShotTouchokuBullet(enemyController, bulletIndex, position + wayPos, velocityRad + wayRad, speed, dTime);
+        }
     }
 
 
