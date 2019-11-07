@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// リアルモードのボスの基本的なパラメータのセット
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Boss/BaseBehavior", fileName = "param.boss_base_behavior.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Boss/BaseBehavior", fileName = "param.real_boss_base_behavior.asset")]
 public class BattleRealBossParamSet : BattleRealEnemyBehaviorParamSet
 {
     [SerializeField, Tooltip("攻撃の行動パターンの配列")]

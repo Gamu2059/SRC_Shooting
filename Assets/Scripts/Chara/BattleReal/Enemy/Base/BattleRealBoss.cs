@@ -27,25 +27,25 @@ public class BattleRealBoss : BattleRealEnemyController
 
     #region Field
 
-    private BattleRealBossParamSet m_BossParamSet;
+    protected BattleRealBossParamSet m_BossParamSet;
 
-    private StateMachine<E_PHASE> m_StateMachine;
-    private BattleRealBossBehaviorParamSet[] m_AttackParamSets;
-    private BattleRealBossBehaviorParamSet[] m_DownParamSets;
+    protected StateMachine<E_PHASE> m_StateMachine;
+    protected BattleRealBossBehaviorParamSet[] m_AttackParamSets;
+    protected BattleRealBossBehaviorParamSet[] m_DownParamSets;
 
-    private List<BattleRealBossBehavior> m_AttackBehaviors;
-    private List<BattleRealBossBehavior> m_DownBehaviors;
+    protected List<BattleRealBossBehavior> m_AttackBehaviors;
+    protected List<BattleRealBossBehavior> m_DownBehaviors;
 
-    private BattleRealBossBehavior m_CurrentAttack;
-    private BattleRealBossBehavior m_CurrentDown;
+    protected BattleRealBossBehavior m_CurrentAttack;
+    protected BattleRealBossBehavior m_CurrentDown;
 
-    private Transform m_DamageCollider;
+    protected Transform m_DamageCollider;
 
-    private int m_AttackPhase;
-    private int m_DownPhase;
-    private float m_DownHp;
-    private int m_HackingSuccessCount;
-    private List<float> m_ChangeAttackHpRates;
+    protected int m_AttackPhase;
+    protected int m_DownPhase;
+    protected float m_DownHp;
+    protected int m_HackingSuccessCount;
+    protected List<float> m_ChangeAttackHpRates;
 
     #endregion
 
