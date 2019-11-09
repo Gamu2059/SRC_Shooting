@@ -47,12 +47,16 @@ public class InfC761BehaviorParamSet : BattleRealBossBehaviorParamSet
     public BossMoveParam[] MoveParams => m_MoveParams;
 
     [SerializeField]
-    private E_LOOP_SETTING m_LoopSetting;
-    public E_LOOP_SETTING LoopSetting => m_LoopSetting;
+    private float[] m_Amplitudes;
+    public float[] Amplitudes => m_Amplitudes;
 
     [SerializeField]
-    private float m_Amplitude;
-    public float Amplitude => m_Amplitude;
+    private float[] m_NextMoveWaitTimes;
+    public float[] NextMoveWaitTimes => m_NextMoveWaitTimes;
+
+    [SerializeField]
+    private float[] m_MoveDurations;
+    public float[] MoveDurations => m_MoveDurations;
 
     [SerializeField]
     private AnimationCurve[] m_NormalizedRates;

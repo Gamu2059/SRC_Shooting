@@ -13,12 +13,22 @@ MonoBehaviour:
   m_Name: param.inf_c_761_phase_1_N
   m_EditorClassIdentifier: 
   m_BehaviorClass: InfC761Phase1N
-  m_BasePos: {x: 0, y: 0, z: 0}
+  m_BasePos: {x: 0, y: 0, z: 0.6}
+  m_StartDuration: 1
   m_MoveParams:
-  - Destination: {x: 0, y: 0, z: 0}
+  - Destination: {x: 0.3, y: 0, z: 0.6}
     Coordinate: 0
-  m_LoopSetting: 0
-  m_Amplitude: 0
+  - Destination: {x: -0.3, y: 0, z: 0.6}
+    Coordinate: 0
+  - Destination: {x: 0, y: 0, z: 0.5}
+    Coordinate: 0
+  m_Amplitudes:
+  - 1
+  m_NextMoveWaitTimes:
+  - 1
+  m_MoveDurations:
+  - 0.5
+  MoveDuratons: []
   m_NormalizedRates:
   - serializedVersion: 2
     m_Curve:
@@ -43,11 +53,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  m_NextMoveWaitTimes:
-  - 0
-  m_StartDuration: 0
-  m_MoveDurations:
-  - 0
+  m_GenericDurations: []
   m_ShotCoolTimes:
   - 0
   m_ShotParams:

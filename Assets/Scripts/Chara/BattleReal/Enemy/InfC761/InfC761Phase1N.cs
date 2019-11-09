@@ -6,8 +6,6 @@ public class InfC761Phase1N : BattleRealBossBehavior
 {
     public enum E_PHASE{
         START,
-        MOVE,
-        WAIT,
     }
 
     public enum E_SHOT_PHASE{
@@ -16,8 +14,6 @@ public class InfC761Phase1N : BattleRealBossBehavior
 
     private InfC761BehaviorParamSet m_ParamSet;
     private E_PHASE m_Phase;
-    private int m_MoveDestinationIndex;
-    private bool m_IsInverseMoveDestinaiton;
 
     private Vector3 m_MoveStartPos;
     private Vector3 m_MoveEndPos;
@@ -44,8 +40,6 @@ public class InfC761Phase1N : BattleRealBossBehavior
         var initPos = Enemy.transform.position;
 
         m_Phase = E_PHASE.START;
-        m_MoveDestinationIndex = 0;
-        m_IsInverseMoveDestinaiton = false;
         m_MoveStartPos = initPos;
         m_MoveEndPos = m_ParamSet.BasePos;
         m_TimeCount = 0;
@@ -95,10 +89,11 @@ public class InfC761Phase1N : BattleRealBossBehavior
         switch (m_Phase)
         {
             case E_PHASE.START:
-                break;
-            case E_PHASE.MOVE:
-                break;
-            case E_PHASE.WAIT:
+                SetPosition(GetMovePosition(0));
+                if(m_TimeCount >= m_Duration){
+                    m_TimeCount = 0;
+                    m_Duration = m_ParamSet.MoveDurations[0];
+                }
                 break;
         }
     }
