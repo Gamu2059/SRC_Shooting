@@ -13,4 +13,8 @@ public class BossMoveParam
     public Vector3 Destination;
 
     public E_COORD Coordinate;
+
+    public float NextMoveWaitTime;
+
+    public float MoveDuration;
 }
