@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfC761Phase2 : BattleRealBossBehavior
+public class InfC761Phase2OLD : BattleRealBossBehavior
 {
     public enum E_PHASE
     {
@@ -36,7 +36,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
     private float m_DirShotTimeCount;
 
     private float m_PLookShotTimeCount;
-    public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase2OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase2ParamSetOld;
     }
