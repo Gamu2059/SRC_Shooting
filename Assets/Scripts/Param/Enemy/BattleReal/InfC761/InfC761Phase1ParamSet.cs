@@ -58,4 +58,8 @@ public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
     [SerializeField]
     private int m_NumberOfChangeBullet;
     public int NumberOfChangeBullet => m_NumberOfChangeBullet;
+
+    [SerializeField]
+    private int m_NumberOfRapidShot;
+    public int NumberOfRapidShot => m_NumberOfRapidShot;
 }
