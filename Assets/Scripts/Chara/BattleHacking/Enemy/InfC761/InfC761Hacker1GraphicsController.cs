@@ -8,27 +8,27 @@ using UnityEngine;
 public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
 {
     [SerializeField]
-    private Transform m_EyeHolder;
+    private Transform m_EyeHolder = default;
 
     [SerializeField]
-    private Transform m_EyeMain;
+    private Transform m_EyeMain = default;
     public Transform Eye => m_EyeMain;
 
     [SerializeField]
-    private SpriteRenderer m_BodyRenderer;
+    private SpriteRenderer m_BodyRenderer = default;
 
     [SerializeField]
-    private SpriteRenderer m_BodyLightRenderer;
+    private SpriteRenderer m_BodyLightRenderer = default;
 
     [SerializeField]
-    private SpriteRenderer m_EyeLightRenderer;
+    private SpriteRenderer m_EyeLightRenderer = default;
 
     [SerializeField]
-    private float m_EyeMoveRadius;
+    private float m_EyeMoveRadius = default;
 
-    private bool m_IsMoveEye;
+    private bool m_IsMoveEye = default;
 
-    private float m_ColorReturnTime;
+    private float m_ColorReturnTime = default;
 
     public override void OnUpdate()
     {

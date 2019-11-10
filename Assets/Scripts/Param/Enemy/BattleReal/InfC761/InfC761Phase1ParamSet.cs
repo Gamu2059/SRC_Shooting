@@ -10,52 +10,52 @@ using System;
 public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
 {
     [SerializeField]
-    private Vector3 m_BasePos;
+    private Vector3 m_BasePos = default;
     public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
-    private float m_Amplitude;
+    private float m_Amplitude = default;
     public float Amplitude => m_Amplitude;
 
     [SerializeField]
-    private AnimationCurve m_NormalizedRate;
+    private AnimationCurve m_NormalizedRate = default;
     public AnimationCurve NormalizedRate => m_NormalizedRate;
 
     [SerializeField]
-    private float m_NextMoveWaitTime;
+    private float m_NextMoveWaitTime = default;
     public float NextMoveWaitTime => m_NextMoveWaitTime;
 
     [SerializeField]
-    private float m_StartDuration;
+    private float m_StartDuration = default;
     public float StartDuration => m_StartDuration;
 
     [SerializeField]
-    private float m_MoveDuration;
+    private float m_MoveDuration = default;
     public float MoveDuration => m_MoveDuration;
 
     [Header("Shot Param")]
 
     [SerializeField]
-    private EnemyShotParam[] m_ShotParams;
+    private EnemyShotParam[] m_ShotParams = default;
     public EnemyShotParam[] ShotParams => m_ShotParams;
 
     [SerializeField]
-    private Vector3 m_LeftShotOffset;
+    private Vector3 m_LeftShotOffset = default;
     public Vector3 LeftShotOffset => m_LeftShotOffset;
 
     [SerializeField]
-    private Vector3 m_RightShotOffset;
+    private Vector3 m_RightShotOffset = default;
     public Vector3 RigthShotOffset => m_RightShotOffset;
 
     [SerializeField]
-    private Vector3 m_CenterShotOffset;
+    private Vector3 m_CenterShotOffset = default;
     public Vector3 CenterShotOffset => m_CenterShotOffset;
 
     [SerializeField]
-    private int m_NShotsNum;
+    private int m_NShotsNum = default;
     public int NShotsNum => m_NShotsNum;
 
     [SerializeField]
-    private float m_NShotsInterval;
+    private float m_NShotsInterval = default;
     public float NShotsInterval => m_NShotsInterval;
 }

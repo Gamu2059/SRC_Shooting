@@ -10,10 +10,10 @@ using System;
 public class BattleHackingBulletManagerParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("左下のオフセットフィールド")]
-    private Vector2 m_MinOffsetFieldPosition;
+    private Vector2 m_MinOffsetFieldPosition = default;
     public Vector2 MinOffsetFieldPosition => m_MinOffsetFieldPosition;
 
     [SerializeField, Tooltip("右上のオフセットフィールド")]
-    private Vector2 m_MaxOffsetFieldPosition;
+    private Vector2 m_MaxOffsetFieldPosition = default;
     public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
 }

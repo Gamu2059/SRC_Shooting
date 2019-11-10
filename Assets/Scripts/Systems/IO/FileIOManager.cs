@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using UnityEngine;
 using JetBrains.Annotations;
 
 /// <summary>
@@ -47,9 +48,7 @@ public sealed class FileIOManager : GlobalSingletonMonoBehavior<FileIOManager>
 			}
 			catch( Exception e )
 			{
-#if DEBUG_ON
 				Debug.LogException( e );
-#endif
 				EventUtility.SafeInvokeAction( onFailure );
 				return;
 			}
@@ -80,9 +79,7 @@ public sealed class FileIOManager : GlobalSingletonMonoBehavior<FileIOManager>
 			}
 			catch( Exception e )
 			{
-#if DEBUG_ON
 				Debug.LogException( e );
-#endif
 				EventUtility.SafeInvokeAction( onFailure );
 				return;
 			}
@@ -115,9 +112,7 @@ public sealed class FileIOManager : GlobalSingletonMonoBehavior<FileIOManager>
 			}
 			catch( Exception e )
 			{
-#if DEBUG_ON
 				Debug.LogException( e );
-#endif
 				EventUtility.SafeInvokeAction( onFailure );
 				return;
 			}
@@ -148,9 +143,7 @@ public sealed class FileIOManager : GlobalSingletonMonoBehavior<FileIOManager>
 			}
 			catch( Exception e )
 			{
-#if DEBUG_ON
 				Debug.LogException( e );
-#endif
 				EventUtility.SafeInvokeAction( onFailure );
 				return;
 			}

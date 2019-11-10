@@ -28,38 +28,38 @@ public class BattleHackingStageManager : ControllableMonoBehavior
     /// ステージ上の背景オブジェクトを保持するためのホルダー
     /// </summary>
     [SerializeField]
-    private Transform m_StageObjectHolder;
+    private Transform m_StageObjectHolder = default;
     public Transform StageObjectHolder => m_StageObjectHolder;
 
     /// <summary>
     /// プレイヤーキャラを保持するためのホルダー
     /// </summary>
     [SerializeField]
-    private Transform m_PlayerCharaHolder;
+    private Transform m_PlayerCharaHolder = default;
     public Transform PlayerCharaHolder => m_PlayerCharaHolder;
 
     /// <summary>
     /// 敵キャラを保持するためのホルダー
     /// </summary>
     [SerializeField]
-    private Transform m_EnemyCharaHolder;
+    private Transform m_EnemyCharaHolder = default;
     public Transform EnemyCharaHolder => m_EnemyCharaHolder;
 
     /// <summary>
     /// 弾を保持するためのホルダー
     /// </summary>
     [SerializeField]
-    private Transform m_BulletHolder;
+    private Transform m_BulletHolder = default;
     public Transform BulletHolder => m_BulletHolder;
 
     [Header("Filed")]
 
     [SerializeField]
-    private Vector2 m_MinLocalFieldPosition;
+    private Vector2 m_MinLocalFieldPosition = default;
     public Vector2 MinLocalFieldPosition => m_MinLocalFieldPosition;
 
     [SerializeField]
-    private Vector2 m_MaxLocalFieldPosition;
+    private Vector2 m_MaxLocalFieldPosition = default;
     public Vector2 MaxLocalFieldPosition => m_MaxLocalFieldPosition;
 
     #endregion

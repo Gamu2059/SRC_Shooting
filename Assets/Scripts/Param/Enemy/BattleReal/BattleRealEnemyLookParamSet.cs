@@ -10,10 +10,10 @@ using System;
 public class BattleRealEnemyLookParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("敵のプールID これの名前が同じならば、プールから取得するモデルを再利用できます")]
-    private string m_LookId;
+    private string m_LookId = default;
     public string LookId => m_LookId;
 
     [SerializeField, Tooltip("敵のプレハブ")]
-    private GameObject m_EnemyPrefab;
+    private GameObject m_EnemyPrefab = default;
     public GameObject EnemyPrefab => m_EnemyPrefab;
 }

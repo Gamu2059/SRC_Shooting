@@ -397,7 +397,7 @@ public class BattleHackingEnemyManager : ControllableObject
     {
         if (enemy == null || m_GotoPoolEnemies.Contains(enemy))
         {
-            Debug.LogError("指定した敵を削除できませんでした。");
+            Debug.LogWarning("指定した敵を削除できませんでした。");
             return;
         }
 
