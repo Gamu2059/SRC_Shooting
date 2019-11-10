@@ -23,7 +23,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
         RIGHT,
     }
 
-    private InfC761Phase3ParamSet m_ParamSet;
+    private InfC761Phase3ParamSetOld m_ParamSet;
 
     private E_PHASE m_Phase;
 
@@ -52,7 +52,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
 
     public InfC761Phase3(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
-        m_ParamSet = paramSet as InfC761Phase3ParamSet;
+        m_ParamSet = paramSet as InfC761Phase3ParamSetOld;
     }
 
     public override void OnStart(){

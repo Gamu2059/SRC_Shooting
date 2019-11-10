@@ -18,7 +18,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
         DIRECTION_AND_PLOOK,
     }
 
-    private InfC761Phase2ParamSet m_ParamSet;
+    private InfC761Phase2ParamSetOld m_ParamSet;
     private E_PHASE m_Phase;
 
     private Vector3 m_MoveStartPos;
@@ -38,7 +38,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
     private float m_PLookShotTimeCount;
     public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
     {
-        m_ParamSet = paramSet as InfC761Phase2ParamSet;
+        m_ParamSet = paramSet as InfC761Phase2ParamSetOld;
     }
 
     /// <summary>

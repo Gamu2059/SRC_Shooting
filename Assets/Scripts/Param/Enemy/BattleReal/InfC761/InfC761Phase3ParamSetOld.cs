@@ -6,8 +6,8 @@ using System;
 /// <summary>
 /// INF-C-761の二つ目の行動パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase2", fileName = "param.inf_c_761_phase_2.asset")]
-public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
+[Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase3Old", fileName = "param.inf_c_761_phase_3_OLD.asset")]
+public class InfC761Phase3ParamSetOld : BattleRealBossBehaviorParamSet
 {
     [Serializable]
     public class NShotsPreset
@@ -66,6 +66,14 @@ public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
     [SerializeField]
     private Vector3 m_CenterShotOffset;
     public Vector3 CenterShotOffset => m_CenterShotOffset;
+
+    [SerializeField]
+    private Vector3 m_LineShotStart;
+    public Vector3 LineShotStart => m_LineShotStart;
+
+    [SerializeField]
+    private Vector3 m_LineShotEnd;
+    public Vector3 LineShotEnd => m_LineShotEnd;
 
     [Header("N_Shots Presets"), Tooltip("連射数、連射間隔のセットを保持します")]
 
