@@ -77,11 +77,11 @@ public class DisplayInheri : DanmakusAbstract
     }
 
 
-    protected void Awake()
+    protected override void Awake()
     {
-        CalcRealShotNum[] calcRealShotNum = { ShotNum };
-        CalcLaunchTime[] calcLaunchTime = { LaunchTime };
-        ShotBullets[] shotBullets = { ShotBullets };
+        CalcRealShotNumDelegate[] calcRealShotNum = { ShotNum };
+        CalcLaunchTimeDelegate[] calcLaunchTime = { LaunchTime };
+        ShotBulletsDelegate[] shotBullets = { ShotBullets };
 
         base.Awake(calcRealShotNum, calcLaunchTime, shotBullets);
     }

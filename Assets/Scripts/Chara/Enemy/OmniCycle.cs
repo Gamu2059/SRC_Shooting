@@ -47,8 +47,7 @@ public class OmniCycle : BattleRealEnemyController
     [SerializeField]
     private bool right;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

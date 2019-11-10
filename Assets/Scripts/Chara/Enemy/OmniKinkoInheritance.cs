@@ -32,11 +32,11 @@ public class OmniKinkoInheritance : DanmakusAbstract
     private float omniBulletSpeed = 10;
 
 
-    protected void Awake()
+    protected override void Awake()
     {
-        CalcRealShotNum[] calcRealShotNum = { KinkoCalcRealShotNum , OmniCalcRealShotNum };
-        CalcLaunchTime[] calcLaunchTime = { KinkoCalcLaunchTime, OmniCalcLaunchTime };
-        ShotBullets[] shotBullets = { KinkoShotBullets, OmniShotBullets };
+        CalcRealShotNumDelegate[] calcRealShotNum = { KinkoCalcRealShotNum , OmniCalcRealShotNum };
+        CalcLaunchTimeDelegate[] calcLaunchTime = { KinkoCalcLaunchTime, OmniCalcLaunchTime };
+        ShotBulletsDelegate[] shotBullets = { KinkoShotBullets, OmniShotBullets };
 
         base.Awake(calcRealShotNum, calcLaunchTime, shotBullets);
     }

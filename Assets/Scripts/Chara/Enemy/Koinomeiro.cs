@@ -48,8 +48,7 @@ public class Koinomeiro : BattleRealEnemyController
     private float leftRestTime;
 
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         shotTime = 0;
     }

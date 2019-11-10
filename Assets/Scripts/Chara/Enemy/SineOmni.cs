@@ -39,8 +39,7 @@ public class SineOmni : BattleRealEnemyController
     [SerializeField]
     private float angleSpeed;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         shotTime = 0;
     }

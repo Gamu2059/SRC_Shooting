@@ -23,13 +23,6 @@ public class KinkoTime : BattleRealEnemyController
     [SerializeField]
     private float m_BulletSpeed = 10;
 
-
-    // Start is called before the first frame update
-    private void Awake()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {

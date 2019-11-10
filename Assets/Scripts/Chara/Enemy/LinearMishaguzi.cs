@@ -35,8 +35,7 @@ public class LinearMishaguzi : BattleRealEnemyController
     [SerializeField]
     private float dist;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

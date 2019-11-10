@@ -43,8 +43,7 @@ public class KinkoOmniDir : BattleRealEnemyController
     [SerializeField]
     private float m_AngleSpeed;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_OmniShotTime = 0;
         m_KinkoShotTime = 0;

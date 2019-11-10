@@ -52,8 +52,7 @@ public class IeaouKinkakuji : BattleRealEnemyController
     private float phaseSpeed;
 
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

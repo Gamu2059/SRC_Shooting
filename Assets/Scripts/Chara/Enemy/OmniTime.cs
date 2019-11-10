@@ -23,13 +23,6 @@ public class OmniTime : BattleRealEnemyController
     [SerializeField]
     private int way;
 
-    // Start is called before the first frame update
-    private void Awake()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
 

@@ -44,8 +44,7 @@ public class Kinkakuji : BattleRealEnemyController
     private int way;
 
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

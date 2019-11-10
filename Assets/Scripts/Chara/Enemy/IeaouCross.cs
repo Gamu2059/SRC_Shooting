@@ -40,8 +40,7 @@ public class IeaouCross : BattleRealEnemyController
     private float phaseSpeed;
 
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }
@@ -100,7 +99,7 @@ public class IeaouCross : BattleRealEnemyController
             // 敵の向き
             Vector3 pastAngle = transform.eulerAngles;
 
-            Vector3 pos;
+            //Vector3 pos;
 
             Shot( pastPhase           , distance, pastPos, pastAngle);
             Shot( pastPhase + Mathf.PI, distance, pastPos, pastAngle);

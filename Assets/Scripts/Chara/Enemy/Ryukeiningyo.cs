@@ -36,8 +36,7 @@ public class Ryukeiningyo : BattleRealEnemyController
     private float m_AngleSpeed;
 
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

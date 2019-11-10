@@ -31,8 +31,7 @@ public class OneShot : BattleRealEnemyController
     [SerializeField]
     private Vector3 m_BaseVelocity;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

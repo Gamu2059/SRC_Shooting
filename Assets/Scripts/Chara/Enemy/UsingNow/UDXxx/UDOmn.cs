@@ -35,16 +35,16 @@ public class UDOmn : RegularIntervalUDAbstract
         }
 
 
-        float posVeloRad;
+        //float posVeloRad;
 
-        if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
-        {
-            posVeloRad = Mathf.PI / 2;
-        }
-        else
-        {
-            posVeloRad = 0;
-        }
+        //if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
+        //{
+        //    posVeloRad = Mathf.PI / 2;
+        //}
+        //else
+        //{
+        //    posVeloRad = 0;
+        //}
 
 
         float rad0;
