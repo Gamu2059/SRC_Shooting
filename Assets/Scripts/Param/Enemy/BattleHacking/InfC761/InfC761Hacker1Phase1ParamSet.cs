@@ -54,4 +54,14 @@ public class InfC761Hacker1Phase1ParamSet : BattleHackingBossBehaviorParamSet
     [SerializeField]
     private Vector3 m_RightShotOffset;
     public Vector3 RigthShotOffset => m_RightShotOffset;
+
+
+    [SerializeField, Tooltip("この攻撃の開始からの経過時間")]
+    private float m_Time;
+
+    [SerializeField, Tooltip("アセット用単位弾幕パラメータの配列")]
+    private AllUDFieldArray m_AllUDFieldArray;
+
+    [SerializeField, Tooltip("弾幕の抽象クラスの配列")]
+    private DanmakuCountAbstract[] m_DanmakuCountAbstractArray;
 }
