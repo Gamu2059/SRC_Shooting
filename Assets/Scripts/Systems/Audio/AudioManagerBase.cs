@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 0649
+
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Audio;

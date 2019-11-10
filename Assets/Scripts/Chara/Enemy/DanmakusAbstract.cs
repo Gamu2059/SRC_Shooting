@@ -10,18 +10,18 @@ public abstract class DanmakusAbstract : BattleRealEnemyController
     protected int[] realShotNum;
 
     // デリゲートを定義する
-    protected delegate float CalcRealShotNum();
-    protected delegate float CalcLaunchTime(float realShotNum);
-    protected delegate void ShotBullets(float launchTime, float dTime);
+    protected delegate float CalcRealShotNumDelegate();
+    protected delegate float CalcLaunchTimeDelegate(float realShotNum);
+    protected delegate void ShotBulletsDelegate(float launchTime, float dTime);
 
     // デリゲートの配列
-    protected CalcRealShotNum[] calcRealShotNum;
-    protected CalcLaunchTime[] calcLaunchTime;
-    protected ShotBullets[] shotBullets;
+    protected CalcRealShotNumDelegate[] calcRealShotNum;
+    protected CalcLaunchTimeDelegate[] calcLaunchTime;
+    protected ShotBulletsDelegate[] shotBullets;
 
 
     // Start is called before the first frame update
-    protected void Awake(CalcRealShotNum[] calcRealShotNums, CalcLaunchTime[] calcLaunchTimes, ShotBullets[] shotBulletss)
+    protected void Awake(CalcRealShotNumDelegate[] calcRealShotNums, CalcLaunchTimeDelegate[] calcLaunchTimes, ShotBulletsDelegate[] shotBulletss)
     {
         calcRealShotNum = calcRealShotNums;
         calcLaunchTime = calcLaunchTimes;

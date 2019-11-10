@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -145,11 +147,11 @@ public class SinCurveInheri : DanmakusAbstract
     }
 
 
-    protected void Awake()
+    protected override void Awake()
     {
-        CalcRealShotNum[] calcRealShotNum = { SineShotNum, OmniShotNum };
-        CalcLaunchTime[] calcLaunchTime = { SineLaunchTime, OmniLaunchTime };
-        ShotBullets[] shotBullets = { SineShotBullets, OmniShotBullets };
+        CalcRealShotNumDelegate[] calcRealShotNum = { SineShotNum, OmniShotNum };
+        CalcLaunchTimeDelegate[] calcLaunchTime = { SineLaunchTime, OmniLaunchTime };
+        ShotBulletsDelegate[] shotBullets = { SineShotBullets, OmniShotBullets };
 
         base.Awake(calcRealShotNum, calcLaunchTime, shotBullets);
     }

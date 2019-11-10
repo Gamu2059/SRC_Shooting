@@ -10,14 +10,14 @@ using System;
 public class BattleHackingEnemyGenerateParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("敵の体力")]
-    private int m_Hp;
+    private int m_Hp = default;
     public int Hp => m_Hp;
 
     [SerializeField, Tooltip("撃破時の獲得スコア")]
-    private int m_Score;
+    private int m_Score = default;
     public int Score => m_Score;
 
     [SerializeField, Tooltip("ボスかどうか")]
-    private bool m_IsBoss;
+    private bool m_IsBoss = default;
     public bool IsBoss => m_IsBoss;
 }

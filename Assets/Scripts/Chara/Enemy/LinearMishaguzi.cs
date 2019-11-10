@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,8 +35,7 @@ public class LinearMishaguzi : BattleRealEnemyController
     [SerializeField]
     private float dist;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,8 +31,7 @@ public class EnemyTest : BattleRealEnemyController
     [SerializeField]
     private float m_BulletSpeed = 10;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_ShotTime = 0;
     }

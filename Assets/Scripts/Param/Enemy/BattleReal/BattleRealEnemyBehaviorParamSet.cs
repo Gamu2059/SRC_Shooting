@@ -10,14 +10,14 @@ using System;
 public abstract class BattleRealEnemyBehaviorParamSet : ScriptableObject
 {
     [SerializeField]
-    private string m_BehaviorClass;
+    private string m_BehaviorClass = default;
     public string BehaviorClass => m_BehaviorClass;
 
     [SerializeField]
-    private BulletSetParam m_BulletSetParam;
+    private BulletSetParam m_BulletSetParam = default;
     public BulletSetParam BulletSetParam => m_BulletSetParam;
 
     [SerializeField]
-    private BattleRealEnemyLookParamSet m_EnemyLookParamSet;
+    private BattleRealEnemyLookParamSet m_EnemyLookParamSet = default;
     public BattleRealEnemyLookParamSet EnemyLookParamSet => m_EnemyLookParamSet;
 }

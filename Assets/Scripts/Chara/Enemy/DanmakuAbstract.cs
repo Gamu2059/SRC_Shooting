@@ -9,13 +9,6 @@ public abstract class DanmakuAbstract : BattleRealEnemyController
     [SerializeField]
     protected int realShotNum;
 
-
-    // Start is called before the first frame update
-    protected void Awake()
-    {
-        
-    }
-
     // Update is called once per frame
     protected virtual void Update()
     {

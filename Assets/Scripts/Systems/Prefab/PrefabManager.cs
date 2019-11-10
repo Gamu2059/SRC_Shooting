@@ -212,10 +212,10 @@ public class PrefabManager : GlobalSingletonMonoBehavior<PrefabManager>
 internal class PrefabInfo
 {
 	[SerializeField]
-	private string m_Name;
+	private string m_Name = default;
 
 	[SerializeField]
-	private GameObject m_Prefab;
+	private GameObject m_Prefab = default;
 
 	public string Name
 	{

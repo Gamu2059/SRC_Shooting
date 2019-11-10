@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,11 +32,11 @@ public class KakukasokuInheri : DanmakusAbstract
     private float bulletSpeed = 10;
 
 
-    protected void Awake()
+    protected override void Awake()
     {
-        CalcRealShotNum[] calcRealShotNum = { ShotNum };
-        CalcLaunchTime[] calcLaunchTime = { LaunchTime };
-        ShotBullets[] shotBullets = { ShotBullets };
+        CalcRealShotNumDelegate[] calcRealShotNum = { ShotNum };
+        CalcLaunchTimeDelegate[] calcLaunchTime = { LaunchTime };
+        ShotBulletsDelegate[] shotBullets = { ShotBullets };
 
         base.Awake(calcRealShotNum, calcLaunchTime, shotBullets);
     }
