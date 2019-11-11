@@ -263,7 +263,15 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 break;
             case E_PHASE.WAIT_ON_ABOVE:
                 if(m_TimeCount >= m_Duration){
-                    SetMove(E_PHASE.MOVE_TO_EDGE0, m_ParamSet.MoveDurations[0], Enemy.transform.position, m_ParamSet.MoveParams[0].Destination, m_ParamSet.MoveParams[0].Coordinate);
+                    //SetMove(E_PHASE.MOVE_TO_EDGE0, m_ParamSet.MoveDurations[0], Enemy.transform.position, m_ParamSet.MoveParams[0].Destination, m_ParamSet.MoveParams[0].Coordinate);
+                    float x = BattleRealPlayerManager.Instance.Player.transform.position.x;
+                    float z = m_ParamSet.MoveParams[5].Destination.z;
+                    Vector3 dest = new Vector3(x,0f,z);
+                    SetMove(E_PHASE.APPROACH_TO_PLAYER, m_ParamSet.MoveDurations[5], Enemy.transform.position, dest, BossMoveParam.E_COORD.ABSOLUTE);
+                    if(!m_IsShotSmallPLookBullet){
+                        m_IsShotSmallPLookBullet = true;
+                    }
+                    m_ShotBasicCirBulletToTotalDirectionTimeCount = 0;
                 }
                 break;
         }
