@@ -54,4 +54,8 @@ public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
     [SerializeField]
     private Vector3[] m_ShotOffSets;
     public Vector3[] ShotOffSets => m_ShotOffSets;
+
+    [SerializeField]
+    private int m_NumberOfShotRapidPLookSmallRectBullet;
+    public int NumberOfShotRapidPLookSmallRectBullet => m_NumberOfShotRapidPLookSmallRectBullet;
 }

@@ -32,11 +32,11 @@ MonoBehaviour:
     Coordinate: 1
   m_Amplitudes: []
   m_NextMoveWaitTimes:
-  - 0.01
-  - 0.01
-  - 0.01
-  - 0.01
-  - 0.8
+  - 0.5
+  - 0.005
+  - 0.005
+  - 0.005
+  - 1.5
   - 1
   - 10
   m_MoveDurations:
@@ -118,6 +118,44 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   m_GenericDurations: []
-  m_ShotCoolTimes: []
-  m_ShotParams: []
-  m_ShotOffSets: []
+  m_ShotCoolTimes:
+  - 0.75
+  - 0.5
+  m_ShotParams:
+  - Interval: 0.0025
+    Num: 1
+    Angle: 0
+    IsPlayerLook: 0
+  - Interval: 0.09
+    Num: 3
+    Angle: 8
+    IsPlayerLook: 1
+  - Interval: 0.3
+    Num: 2
+    Angle: 120
+    IsPlayerLook: 0
+  - Interval: 0.03
+    Num: 1
+    Angle: 0
+    IsPlayerLook: 1
+  - Interval: 0.8
+    Num: 6
+    Angle: 60
+    IsPlayerLook: 0
+  - Interval: 0.8
+    Num: 5
+    Angle: 72
+    IsPlayerLook: 0
+  - Interval: 0.67
+    Num: 16
+    Angle: 22.5
+    IsPlayerLook: 0
+  m_ShotOffSets:
+  - {x: 0, y: 0, z: -0.05}
+  - {x: 0.1, y: 0, z: -0.05}
+  - {x: -0.1, y: 0, z: -0.05}
+  - {x: 0, y: 0, z: 0}
+  - {x: -0.05, y: 0, z: 0}
+  - {x: 0.05, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  m_NumberOfShotRapidPLookSmallRectBullet: 4
