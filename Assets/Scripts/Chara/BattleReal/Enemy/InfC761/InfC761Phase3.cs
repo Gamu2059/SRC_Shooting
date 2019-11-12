@@ -174,7 +174,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
                     if(m_ShotRapidLargeBulletToUnderTimeCount >= m_ParamSet.ShotParams[2].Interval && m_NumberOfShotRapidLargeBulletToUnder < m_ParamSet.NumbersOfRapidShot[0]){
                         m_ShotRapidLargeBulletToUnderTimeCount = 0;
                         m_NumberOfShotRapidLargeBulletToUnder++;
-                        OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[1], 6, 4);
+                        OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[1], 15, 4);
                         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                     }else if(m_NumberOfShotRapidLargeBulletToUnder >= m_ParamSet.NumbersOfRapidShot[0]){
                         m_ShotRapidLargeBulletToUnderTimeCount = 0;

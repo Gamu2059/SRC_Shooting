@@ -193,15 +193,15 @@ public class InfC761Phase1 : BattleRealBossBehavior
                 if(m_NumberOfShotLargeBullet >= m_ParamSet.NumberOfChangeBullet){
                     m_LargeBulletShotTimeCount = 0;
                     m_NumberOfShotLargeBullet = 0;
-                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[5], 6, 0);
-                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[6], 6, 0);
-                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[7], 6, 0);
-                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[8], 6, 0);
-                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[9], 6, 0);
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[5], 15, 0);
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[6], 15, 0);
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[7], 15, 0);
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[8], 15, 0);
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[9], 15, 0);
                     AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                 }else{
                     m_LargeBulletShotTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.ShotOffSets[0], 6, 0);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.ShotOffSets[0], 15, 0);
                     AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                     m_NumberOfShotLargeBullet++;
                 }
