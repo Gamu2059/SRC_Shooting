@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -10,7 +12,7 @@ using System;
 public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
 {
     [SerializeField]
-    private Vector3 m_BasePos;
+    private Vector3 m_BasePos = default;
     public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
@@ -48,7 +50,7 @@ public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
     public float[] ShotCoolTimes => m_ShotCoolTimes;
 
     [SerializeField]
-    private EnemyShotParam[] m_ShotParams;
+    private EnemyShotParam[] m_ShotParams = default;
     public EnemyShotParam[] ShotParams => m_ShotParams;
 
     [SerializeField]

@@ -17,63 +17,63 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     [Header("ParamSet")]
 
     [SerializeField]
-    private BattleParamSet m_ParamSet;
+    private BattleParamSet m_ParamSet = default;
     public BattleParamSet ParamSet => m_ParamSet;
 
     [Header("StageManager")]
 
     [SerializeField]
-    private BattleRealStageManager m_BattleRealStageManager;
+    private BattleRealStageManager m_BattleRealStageManager = default;
     public BattleRealStageManager BattleRealStageManager => m_BattleRealStageManager;
 
     [SerializeField]
-    private BattleHackingStageManager m_BattleHackingStageManager;
+    private BattleHackingStageManager m_BattleHackingStageManager = default;
     public BattleHackingStageManager BattleHackingStageManager => m_BattleHackingStageManager;
 
     [Header("UiManager")]
 
     [SerializeField]
-    private BattleRealUiManager m_BattleRealUiManager;
+    private BattleRealUiManager m_BattleRealUiManager = default;
     public BattleRealUiManager BattleRealUiManager => m_BattleRealUiManager;
 
     [SerializeField]
-    private BattleHackingUiManager m_BattleHackingUiManager;
+    private BattleHackingUiManager m_BattleHackingUiManager = default;
     public BattleHackingUiManager BattleHackingUiManager => m_BattleHackingUiManager;
 
     [Header("PlayableManager")]
 
     [SerializeField]
-    private BattleRealPlayableManager m_BattleRealPlayableManager;
+    private BattleRealPlayableManager m_BattleRealPlayableManager = default;
     public BattleRealPlayableManager BattleRealPlayableManager => m_BattleRealPlayableManager;
 
     [Header("Camera")]
 
     [SerializeField]
-    private BattleRealCameraController m_BattleRealFrontCamera;
+    private BattleRealCameraController m_BattleRealFrontCamera = default;
     public BattleRealCameraController BattleRealFrontCamera => m_BattleRealFrontCamera;
 
     [SerializeField]
-    private BattleRealCameraController m_BattleRealBackCamera;
+    private BattleRealCameraController m_BattleRealBackCamera = default;
     public BattleRealCameraController BattleRealBackCamera => m_BattleRealBackCamera;
 
     [Header("Video")]
 
     [SerializeField]
-    private VideoPlayer m_VideoPlayer;
+    private VideoPlayer m_VideoPlayer = default;
 
     [Header("Debug")]
 
     [SerializeField]
-    private bool m_IsStartHackingMode;
+    private bool m_IsStartHackingMode = default;
 
     [SerializeField]
-    public bool m_PlayerNotDead;
+    public bool m_PlayerNotDead = default;
 
     [SerializeField]
-    public bool m_IsDrawColliderArea;
+    public bool m_IsDrawColliderArea = default;
 
     [SerializeField]
-    public bool m_IsDrawOutSideColliderArea;
+    public bool m_IsDrawOutSideColliderArea = default;
 
     #endregion
 

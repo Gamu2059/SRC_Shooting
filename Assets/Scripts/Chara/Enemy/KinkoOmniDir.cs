@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,8 +43,7 @@ public class KinkoOmniDir : BattleRealEnemyController
     [SerializeField]
     private float m_AngleSpeed;
 
-    // Start is called before the first frame update
-    private void Awake()
+    protected override void Awake()
     {
         m_OmniShotTime = 0;
         m_KinkoShotTime = 0;

@@ -10,7 +10,7 @@ using System;
 public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
 {
     [SerializeField]
-    private Vector3 m_BasePos;
+    private Vector3 m_BasePos = default;
     public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
