@@ -36,7 +36,7 @@ public class RealExpIndicator : MonoBehaviour
             var expParamSet = BattleRealPlayerManager.Instance.GetRealPlayerExpParamSet();
 
             if(currentLv == expParamSet.Length){
-                return "Full Power Mode!";
+                return "MAX EXP";
             }else{
                 return string.Format("{0}/{1}", m_CurrentExp.Value, expParamSet[currentLv - 1].NextLevelNecessaryExp);    
             }
