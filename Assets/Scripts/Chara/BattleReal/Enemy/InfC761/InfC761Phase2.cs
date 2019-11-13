@@ -307,7 +307,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
             m_IsShotLargeRectBulletToTotalDirection = true;
         }else if(m_ShotLargeRectBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[4].Interval){
             m_ShotLargeRectBulletToTotalDirectionTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[4],m_ParamSet.ShotOffSets[6], 20, 7);
+            OnShot(m_ParamSet.ShotParams[4],m_ParamSet.ShotOffSets[6], 38, 7);
             AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
         }else if(m_TimeCount >= m_Duration){
             m_IsShotLargeRectBulletToTotalDirection = false;
@@ -317,7 +317,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
             m_IsShotBasicRectBulletToTotalDirection = true;
         }else if(m_ShotBasicRectBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[5].Interval){
             m_ShotBasicRectBulletToTotalDirectionTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[5], m_ParamSet.ShotOffSets[6], 23, 7);
+            OnShot(m_ParamSet.ShotParams[5], m_ParamSet.ShotOffSets[6], 41, 7);
             AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
         }else if(m_TimeCount >= m_Duration){
             m_IsShotBasicRectBulletToTotalDirection = false;
@@ -327,7 +327,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
     private void ShotLargeBulletToUnder(){
         if(m_IsShotLargeBulletToUnder && m_ShotLargeBulletToUnderTimeCount >= m_ParamSet.ShotParams[0].Interval){
             m_ShotLargeBulletToUnderTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[0],m_ParamSet.ShotOffSets[0], 15, 2);
+            OnShot(m_ParamSet.ShotParams[0],m_ParamSet.ShotOffSets[0], 33, 2);
             AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
             m_IsShotLargeBulletToUnder = false;
         }
@@ -398,7 +398,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
                 if(m_ShotBasicCirBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[6].Interval){
                     m_ShotBasicCirBulletToTotalDirectionTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[6], m_ParamSet.ShotOffSets[6], 1, 7);
+                    OnShot(m_ParamSet.ShotParams[6], m_ParamSet.ShotOffSets[6], 37, 7);
                     AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                 }
 
@@ -409,7 +409,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 
                 if(m_Shot2WayLargeBulletTimeCount >= m_ParamSet.ShotParams[2].Interval){
                     m_Shot2WayLargeBulletTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[3], 15, 3);
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[3], 33, 3);
                     AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                 }
 

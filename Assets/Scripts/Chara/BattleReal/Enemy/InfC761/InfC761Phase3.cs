@@ -166,7 +166,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
             case E_PHASE.WAIT:
                 if(m_ShotBulletsToTotalDirectionTimeCount >= m_ParamSet.ShotCoolTimes[0]){
                     m_ShotBulletsToTotalDirectionTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.ShotOffSets[0], 23, 2);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.ShotOffSets[0], 41, 2);
                     OnShot(m_ParamSet.ShotParams[1], m_ParamSet.ShotOffSets[0], 20, 2);
                     AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                 }
@@ -174,7 +174,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
                     if(m_ShotRapidLargeBulletToUnderTimeCount >= m_ParamSet.ShotParams[2].Interval && m_NumberOfShotRapidLargeBulletToUnder < m_ParamSet.NumbersOfRapidShot[0]){
                         m_ShotRapidLargeBulletToUnderTimeCount = 0;
                         m_NumberOfShotRapidLargeBulletToUnder++;
-                        OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[1], 15, 4);
+                        OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[1], 33, 4);
                         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                     }else if(m_NumberOfShotRapidLargeBulletToUnder >= m_ParamSet.NumbersOfRapidShot[0]){
                         m_ShotRapidLargeBulletToUnderTimeCount = 0;
@@ -186,7 +186,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
             case E_PHASE.MOVE_TO_LEFT_RIGHT:
                 if(m_ShotBulletsToTotalDirectionTimeCount >= m_ParamSet.ShotCoolTimes[0]){
                     m_ShotBulletsToTotalDirectionTimeCount = 0;
-                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.ShotOffSets[0], 23, 2);
+                    OnShot(m_ParamSet.ShotParams[0], m_ParamSet.ShotOffSets[0], 41, 2);
                     OnShot(m_ParamSet.ShotParams[1], m_ParamSet.ShotOffSets[0], 20, 2);
                     AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                 }
