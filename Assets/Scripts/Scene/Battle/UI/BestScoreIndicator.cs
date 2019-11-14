@@ -38,15 +38,15 @@ public class BestScoreIndicator : MonoBehaviour
 		if(currentScore != null){
 			var currentScoreValue = currentScore.Value;
 			
-			if(currentScoreValue >= GameManager.Instance.PlayerData.m_BestScore){
+			if(currentScoreValue >= GameManager.Instance.PlayerData.BestScore){
 				GameManager.Instance.PlayerData.UpdateBestScore(currentScoreValue);
-				m_DisplayedBestScore.SetValueAndForceNotify(GameManager.Instance.PlayerData.m_BestScore);
+				m_DisplayedBestScore.SetValueAndForceNotify(GameManager.Instance.PlayerData.BestScore);
 			}
 		}
 	}
 
 	private void RegisterBestScore(){
-		m_DisplayedBestScore = new FloatReactiveProperty(GameManager.Instance.PlayerData.m_BestScore);
+		m_DisplayedBestScore = new FloatReactiveProperty(GameManager.Instance.PlayerData.BestScore);
 		m_DisplayedBestScore.SubscribeToText(m_OutText);
 	}
 }

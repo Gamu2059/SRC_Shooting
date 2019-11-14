@@ -25,6 +25,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     private AudioManager m_AudioManager;
     public AudioManager AudioManager => m_AudioManager;
 
+    public DataManager DataManager { get; private set; }
+
     private PlayerData m_PlayerData;
     public PlayerData PlayerData => m_PlayerData;
 
@@ -67,20 +69,27 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnInitialize();
 
         m_TimerManager = new TimerManager();
+        DataManager = new DataManager();
+        m_PlayerRecordManager = new PlayerRecordManager();
+        m_PlayerData = new PlayerData();
 
         m_TimerManager.OnInitialize();
         m_AudioManager.OnInitialize();
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
 
-        m_PlayerRecordManager = new PlayerRecordManager();
+        DataManager.OnInitialize();
+
         m_PlayerRecordManager.OnInitialize();
 
-        m_PlayerData = new PlayerData();
 	}
 
 	public override void OnFinalize()
 	{
+        m_PlayerRecordManager.OnFinalize();
+
+        DataManager.OnFinalize();
+
         m_SceneManager.OnFinalize();
         m_TransitionManager.OnFinalize();
         m_AudioManager.OnFinalize();

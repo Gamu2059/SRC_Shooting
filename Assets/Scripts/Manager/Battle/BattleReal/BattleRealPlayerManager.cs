@@ -24,20 +24,17 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     [Header("State")]
 
-    [SerializeField]
-    private FloatReactiveProperty m_CurrentScore;
+    //[SerializeField]
+    //private IntReactiveProperty m_CurrentLevel;
 
-    [SerializeField]
-    private IntReactiveProperty m_CurrentLevel;
+    //[SerializeField]
+    //private IntReactiveProperty m_CurrentExp;
 
-    [SerializeField]
-    private IntReactiveProperty m_CurrentExp;
+    //[SerializeField]
+    //private FloatReactiveProperty m_CurrentBombCharge;
 
-    [SerializeField]
-    private FloatReactiveProperty m_CurrentBombCharge;
-
-    [SerializeField]
-    private IntReactiveProperty m_CurrentBombNum;
+    //[SerializeField]
+    //private IntReactiveProperty m_CurrentBombNum;
 
     #endregion
 
@@ -63,30 +60,25 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     #region Get Set
 
-    public FloatReactiveProperty GetCurrentScore()
-    {
-        return m_CurrentScore;
-    }
+    //public IntReactiveProperty GetCurrentLevel()
+    //{
+    //    return m_CurrentLevel;
+    //}
 
-    public IntReactiveProperty GetCurrentLevel()
-    {
-        return m_CurrentLevel;
-    }
+    //public IntReactiveProperty GetCurrentExp()
+    //{
+    //    return m_CurrentExp;
+    //}
 
-    public IntReactiveProperty GetCurrentExp()
-    {
-        return m_CurrentExp;
-    }
+    //public FloatReactiveProperty GetCurrentBombCharge()
+    //{
+    //    return m_CurrentBombCharge;
+    //}
 
-    public FloatReactiveProperty GetCurrentBombCharge()
-    {
-        return m_CurrentBombCharge;
-    }
-
-    public IntReactiveProperty GetCurrentBombNum()
-    {
-        return m_CurrentBombNum;
-    }
+    //public IntReactiveProperty GetCurrentBombNum()
+    //{
+    //    return m_CurrentBombNum;
+    //}
 
     public BattleRealPlayerExpParamSet[] GetRealPlayerExpParamSet()
     {
@@ -146,8 +138,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         InitPlayerPosition();
         m_Player.OnInitialize();
         m_Player.OnStart();
-
-        InitPlayerState();
 
         OnStartAction?.Invoke();
         OnStartAction = null;
@@ -295,26 +285,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     }
 
     /// <summary>
-    /// プレイヤーステートを初期化する。
-    /// </summary>
-    public void InitPlayerState()
-    {
-        m_CurrentScore = new FloatReactiveProperty(0);
-        m_CurrentLevel = new IntReactiveProperty(1);
-        m_CurrentExp = new IntReactiveProperty(0);
-        m_CurrentBombCharge = new FloatReactiveProperty(0f);
-        m_CurrentBombNum = new IntReactiveProperty(0);
-    }
-
-    /// <summary>
-    /// スコアを加算する。
-    /// </summary>
-    public void AddScore(float score)
-    {
-        m_CurrentScore.Value += score;
-    }
-
-    /// <summary>
     /// 経験値を加算する。
     /// </summary>
     public void AddExp(int exp)
@@ -325,7 +295,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length - 1)
         {
             // スコア増加(レベルMAXの時)
-            AddScore(exp * 1.0f);
+            DataManager.Instance.BattleData.AddScore(exp);
         }
         else
         {

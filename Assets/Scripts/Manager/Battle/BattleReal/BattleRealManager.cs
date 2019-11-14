@@ -469,7 +469,7 @@ public class BattleRealManager : ControllableObject
     {
         PlayerManager.SetPlayerActive(false);
         var pData = GameManager.Instance.PlayerData;
-        if (pData.m_Last < 1)
+        if (pData.Remain < 1)
         {
             BattleManager.Instance.GameOver();
         }
@@ -644,7 +644,18 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnTransitionToReal()
     {
-
+        if (BattleManager.Instance.HackingManager.IsHackingSuccess)
+        {
+            GameManager.Instance.PlayerData.IncreaseHackingSucceedCount();
+            if (GameManager.Instance.PlayerData.HackingSucceedCount >= 1)
+            {
+                GameManager.Instance.DataManager.BattleData.AddScore(1000 * GameManager.Instance.PlayerData.HackingSucceedCount);
+            }
+        }
+        else
+        {
+            GameManager.Instance.PlayerData.ResetHackingSucceedCount();
+        }
     }
 
     private void UpdateOnTransitionToReal()

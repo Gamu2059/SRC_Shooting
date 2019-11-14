@@ -20,7 +20,7 @@ public class RealLastIndicator : MonoBehaviour
     void Start()
     {
         if(GameManager.Instance != null){
-            m_DisplayedValue = GameManager.Instance.PlayerData.m_Last;
+            m_DisplayedValue = GameManager.Instance.PlayerData.Remain;
             m_OutText.text = m_DisplayedValue.ToString(); 
         }
     }
@@ -29,7 +29,7 @@ public class RealLastIndicator : MonoBehaviour
     void Update()
     {
         if(GameManager.Instance != null){
-            int currentLast = GameManager.Instance.PlayerData.m_Last;
+            int currentLast = GameManager.Instance.PlayerData.Remain;
             if(m_DisplayedValue != currentLast){
                 m_DisplayedValue = currentLast;
                 m_OutText.text = m_DisplayedValue.ToString();
