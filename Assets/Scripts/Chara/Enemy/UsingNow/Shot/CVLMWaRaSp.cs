@@ -61,6 +61,8 @@ public class CVLMWaRaSp : CVLM
             Shoot2(0);
         }
 
+        //Debug.Log("CVLMWaRaSp.Shoot");
+
 
         void Shoot2(float dSpeed)
         {

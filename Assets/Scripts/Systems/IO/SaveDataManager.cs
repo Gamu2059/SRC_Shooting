@@ -22,9 +22,6 @@ public class SaveDataManager : GlobalSingletonMonoBehavior<SaveDataManager>
 	private string m_FileName = null;
 
 	[SerializeField]
-	private bool m_IsEncryptSave = false;
-
-	[SerializeField]
 	private static UnityEvent m_OnCompleteLoad = new UnityEvent();
 
 	[SerializeField]

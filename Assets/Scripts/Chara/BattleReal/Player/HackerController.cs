@@ -1,3 +1,5 @@
+ï»¿#pragma warning disable 0649
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -91,7 +93,7 @@ public class HackerController : BattleRealPlayerController
     {
         var c = GetCollider();
 
-        // ”í’e”»’è‚Æ–³“G”»’è‚Í”½‘Î‚ÌŠÖŒW
+        // è¢«å¼¾åˆ¤å®šã¨ç„¡æ•µåˆ¤å®šã¯åå¯¾ã®é–¢ä¿‚
         c.SetEnableCollider(m_Critical, isEnable);
         c.SetEnableCollider(m_Shield, !isEnable);
     }

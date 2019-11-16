@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UDSwr : DanmakuCountAbstract
+public class UDSwr : DanmakuCountAbstract2
 {
 
     // 現在のあるべき発射回数を計算する(小数)
@@ -21,7 +21,7 @@ public class UDSwr : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
         Vector3 posRandomZure;
 
@@ -47,7 +47,7 @@ public class UDSwr : DanmakuCountAbstract
 
             // 発射された弾の現在の位置
             Vector3 pos;
-            pos = enemyController.transform.position;
+            pos = enemyController.GetEnemy().transform.position;
             pos += m_Vector3[(int)Swr.VECTOR3.発射平均位置];
             pos += posRandomZure;
             pos += RThetaToVector3(m_Float[(int)Swr.FLOAT.弾源円半径], rad);

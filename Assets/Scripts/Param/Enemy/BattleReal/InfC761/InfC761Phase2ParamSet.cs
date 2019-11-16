@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -22,54 +24,54 @@ public class InfC761Phase2ParamSet : BattleRealBossBehaviorParamSet
     }
 
     [SerializeField]
-    private Vector3 m_BasePos;
+    private Vector3 m_BasePos = default;
     public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
-    private float m_Radius;
+    private float m_Radius = default;
     public float Radius => m_Radius;
 
     [SerializeField]
-    private float m_ArcAngle;
+    private float m_ArcAngle = default;
     public float ArcAngle => m_ArcAngle;
 
     [SerializeField]
-    private AnimationCurve m_NormalizedRate;
+    private AnimationCurve m_NormalizedRate = default;
     public AnimationCurve NormalizedRate => m_NormalizedRate;
 
     [SerializeField]
-    private float m_NextMoveWaitTime;
+    private float m_NextMoveWaitTime = default;
     public float NextMoveWaitTime => m_NextMoveWaitTime;
 
     [SerializeField]
-    private float m_StartDuration;
+    private float m_StartDuration = default;
     public float StartDuration => m_StartDuration;
 
     [SerializeField]
-    private float m_MoveDuration;
+    private float m_MoveDuration = default;
     public float MoveDuration => m_MoveDuration;
 
     [Header("Shot Param")]
 
     [SerializeField]
-    private EnemyShotParam[] m_ShotParams;
+    private EnemyShotParam[] m_ShotParams = default;
     public EnemyShotParam[] ShotParams => m_ShotParams;
 
     [SerializeField]
-    private Vector3 m_LeftShotOffset;
+    private Vector3 m_LeftShotOffset = default;
     public Vector3 LeftShotOffset => m_LeftShotOffset;
 
     [SerializeField]
-    private Vector3 m_RightShotOffset;
+    private Vector3 m_RightShotOffset = default;
     public Vector3 RigthShotOffset => m_RightShotOffset;
 
     [SerializeField]
-    private Vector3 m_CenterShotOffset;
+    private Vector3 m_CenterShotOffset = default;
     public Vector3 CenterShotOffset => m_CenterShotOffset;
 
     [Header("N_Shots Presets"), Tooltip("連射数、連射間隔のセットを保持します")]
 
     [SerializeField]
-    private NShotsPreset[] m_NShotsPresets;
+    private NShotsPreset[] m_NShotsPresets = default;
     public NShotsPreset[] NShotsPresets => m_NShotsPresets;
 }

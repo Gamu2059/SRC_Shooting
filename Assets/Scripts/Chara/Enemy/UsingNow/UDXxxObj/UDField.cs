@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -60,6 +62,8 @@ public class UDField : ScriptableObject
     [ContextMenu("EUDを反映させる")]
     public void ReflectEUD()
     {
+        Debug.Log("ReflectEUD");
+
         m_EUDExp = m_EUD + "\n\n" + EUDS.EUDToExpObject(m_EUD).GetExp();
 
         ExpAbstract expAbstract = EUDS.EUDToExpObject(m_EUD);

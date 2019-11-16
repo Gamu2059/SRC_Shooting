@@ -11,7 +11,7 @@ public class CVLM : object
     /// <summary>
     /// 敵本体。
     /// </summary>
-    public BattleRealEnemyController m_EnemyController;
+    public BattleHackingBossBehavior m_EnemyController;
 
     /// <summary>
     /// 弾の外見のインデックス。
@@ -42,7 +42,7 @@ public class CVLM : object
     /// <summary>
     /// 引数最多のコンストラクタ。
     /// </summary>
-    public CVLM(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
+    public CVLM(BattleHackingBossBehavior enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
     {
         m_EnemyController = enemyController;
         m_BulletIndex = bulletIndex;
@@ -92,15 +92,17 @@ public class CVLM : object
     /// <summary>
     /// 弾を撃つ。（引数最多）
     /// </summary>
-    public void Shoot(BattleRealEnemyController enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
+    public void Shoot(BattleHackingBossBehavior enemyController, int bulletIndex, Vector3 position, float velocityRad, float speed, float dTime)
     {
         Vector3 realPosition = position + speed * dTime * new Vector3(Mathf.Cos(velocityRad), 0, Mathf.Sin(velocityRad));
 
-        Vector3 eulerAngles = Calc.CalcEulerAngles(enemyController.transform.eulerAngles, velocityRad);
+        Vector3 eulerAngles = Calc.CalcEulerAngles(enemyController.GetEnemy().transform.eulerAngles, velocityRad);
 
         // 弾の大きさを変えている。
-        BulletShotParam bulletShotParam = new BulletShotParam(enemyController, bulletIndex, Mathf.RoundToInt(speed * 10 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.03f);
-        BulletController.ShotBullet(bulletShotParam);
+        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one);
+        var bullet = enemyController.Shot(bulletShotParam);
+
+        //Debug.Log("CVLM.Shoot");
     }
 
     /// <summary>

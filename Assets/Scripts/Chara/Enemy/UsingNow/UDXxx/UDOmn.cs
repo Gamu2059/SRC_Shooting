@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +18,7 @@ public class UDOmn : RegularIntervalUDAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
 
         // この部分は後々消す
@@ -33,16 +35,16 @@ public class UDOmn : RegularIntervalUDAbstract
         }
 
 
-        float posVeloRad;
+        //float posVeloRad;
 
-        if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
-        {
-            posVeloRad = Mathf.PI / 2;
-        }
-        else
-        {
-            posVeloRad = 0;
-        }
+        //if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
+        //{
+        //    posVeloRad = Mathf.PI / 2;
+        //}
+        //else
+        //{
+        //    posVeloRad = 0;
+        //}
 
 
         float rad0;
@@ -55,7 +57,7 @@ public class UDOmn : RegularIntervalUDAbstract
         {
             if (m_Bool[(int)Omn.BOOL.isPlayerDependent])
             {
-                rad0 = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Omn.VECTOR3.shotAvePosition] + posRandomZure, BattleRealPlayerManager.Instance.Player.transform.position);
+                rad0 = V3ToRelativeRad(enemyController.GetEnemy().transform.position + m_Vector3[(int)Omn.VECTOR3.shotAvePosition] + posRandomZure, BattleHackingPlayerManager.Instance.Player.transform.position);
 
                 if (m_Bool[(int)Omn.BOOL.isAimingAtPlayer])
                 {
@@ -88,11 +90,13 @@ public class UDOmn : RegularIntervalUDAbstract
             m_Float[(int)Omn.FLOAT.dSpeed]
             );
 
-        cVLMWaRaSp.PlusPosition(enemyController.transform.position);
+        cVLMWaRaSp.PlusPosition(enemyController.GetEnemy().transform.position);
         cVLMWaRaSp.PlusPosition(m_Vector3[(int)Omn.VECTOR3.shotAvePosition]);
         cVLMWaRaSp.PlusPosition(Calc.RandomCircleInsideToV3AndZero(m_Float[(int)Omn.FLOAT.shotBlurRadius]));
 
         cVLMWaRaSp.Shoot();
+
+        //Debug.Log("UDOnm.ShotBullets");
     }
 }
 
