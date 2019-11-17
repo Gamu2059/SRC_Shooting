@@ -9,10 +9,10 @@ public class DCrsCrs : System.Object
 {
 
     [SerializeField, Tooltip("直線軌道の交差弾の弾幕1")]
-    private UDOmn uDCrs1;
+    private UDOmn1 uDCrs1;
 
     [SerializeField, Tooltip("直線軌道の交差弾の弾幕2")]
-    private UDOmn uDCrs2;
+    private UDOmn1 uDCrs2;
 
 
     public void Updates(BattleRealEnemyController enemyController, float time)

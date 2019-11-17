@@ -37,7 +37,7 @@ public class Smasher1Boss1 : System.Object
 
 
     [SerializeField, Tooltip("弾幕の抽象クラスの配列の配列")]
-    private DanmakuCountAbstract[][] m_DanmakuCountAbstractArrayArray;
+    private DanmakuCountAbstract2[][] m_DanmakuCountAbstractArrayArray;
 
     //いらなさそう
     //[SerializeField, Tooltip("単位弾幕のパラメータの配列の配列")]
@@ -86,11 +86,11 @@ public class Smasher1Boss1 : System.Object
 
         UDParams[][] uDParamsArrayArray = m_AllUDFieldArrayArray.GetAllUDParams();
 
-        m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract[uDParamsArrayArray.Length][];
+        m_DanmakuCountAbstractArrayArray = new DanmakuCountAbstract2[uDParamsArrayArray.Length][];
 
         for (int i = 0; i < uDParamsArrayArray.Length; i++)
         {
-            m_DanmakuCountAbstractArrayArray[i] = new DanmakuCountAbstract[uDParamsArrayArray[i].Length];
+            m_DanmakuCountAbstractArrayArray[i] = new DanmakuCountAbstract2[uDParamsArrayArray[i].Length];
 
             for (int j = 0; j < uDParamsArrayArray[i].Length; j++)
             {
@@ -171,9 +171,10 @@ public class Smasher1Boss1 : System.Object
         //時間を進める
         m_Time += Time.deltaTime;
 
-        foreach (DanmakuCountAbstract danmakuCountAbstract in m_DanmakuCountAbstractArrayArray[m_AttackNum])
+        foreach (DanmakuCountAbstract2 danmakuCountAbstract in m_DanmakuCountAbstractArrayArray[m_AttackNum])
         {
-            danmakuCountAbstract.Updates(enemyController, m_Time);
+            // 引数の型を、コマンドイベントの方にしてので、エラーにならないようにコメントアウトした。
+            //danmakuCountAbstract.Updates(enemyController, m_Time);
         }
     }
 }

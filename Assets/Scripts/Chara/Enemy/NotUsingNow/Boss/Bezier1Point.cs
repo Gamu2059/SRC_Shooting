@@ -12,5 +12,5 @@ public class Bezier1Point : System.Object
     public Vector3 m_AnchorPosition;
 
     [SerializeField, Tooltip("アンカーポイントでの速度ベクトル")]
-    public Vector3 m_AnchorVolocity;
+    public Vector3 m_AnchorVelocity;
 }

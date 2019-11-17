@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 発射間隔が一定である単位弾幕の抽象クラス。
 /// </summary>
-public abstract class RegularIntervalUDAbstract : DanmakuCountAbstract
+public abstract class RegularIntervalUDAbstract : DanmakuCountAbstract2
 {
     /// <summary>
     /// 発射間隔を取得する。

@@ -22,7 +22,7 @@ public class Swr : ExpAbstract
     /// </summary>
     public enum BOOL
     {
-        特になし,
+        nothing,
     }
 
 
