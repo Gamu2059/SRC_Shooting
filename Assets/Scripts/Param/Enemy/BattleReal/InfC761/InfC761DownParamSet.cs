@@ -14,4 +14,8 @@ public class InfC761DownParamSet : BattleRealBossBehaviorParamSet
     [SerializeField]
     private float m_DownTime;
     public float DownTime => m_DownTime;
+
+    [SerializeField]
+    private float m_Amplitude;
+    public float Amplitude => m_Amplitude;
 }

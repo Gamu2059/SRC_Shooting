@@ -25,4 +25,21 @@ public class InfC761Down : BattleRealBossBehavior
     {
         m_ParamSet = paramSet as InfC761DownParamSet;
     }
+
+    public override void OnStart(){
+        base.OnStart();
+        m_TimeCount = 0;
+    }
+
+    public override void OnUpdate(){
+        base.OnUpdate();
+        float x = m_ParamSet.Amplitude * Mathf.Sin(m_TimeCount);
+        Vector3 pos = new Vector3(x,0f,0f);
+        SetPosition(Enemy.transform.position + pos);
+    }
+
+    public override void OnFixedUpdate(){
+        base.OnFixedUpdate();
+        m_TimeCount += Time.fixedDeltaTime;
+    }
 }

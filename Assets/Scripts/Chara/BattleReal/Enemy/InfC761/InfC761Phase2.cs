@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class InfC761Phase2 : BattleRealBossBehavior
 {
-    public enum E_PHASE
-    {
+    public enum E_PHASE{
         START,
-        MOVE_TO_LEFT,
-        MOVE_TO_RIGHT,
-        WAIT_ON_LEFT,
-        WAIT_ON_RIGHT,
+        MOVE_TO_EDGE0,
+        WAIT_ON_EDGE0,
+        MOVE_TO_EDGE1,
+        WAIT_ON_EDGE1,
+        MOVE_TO_EDGE2,
+        WAIT_ON_EDGE2,
+        MOVE_TO_EDGE3,
+        WAIT_ON_EDGE3,
+        MOVE_TO_EDGE4,
+        WAIT_ON_EDGE4,
+        APPROACH_TO_PLAYER,
+        WAIT_ON_NEAR_PLAYER,
+        MOVE_TO_ABOVE,
+        WAIT_ON_ABOVE,
     }
 
-    public enum E_SHOT_PHASE{
-        NONE,
-        DIRECTION_AND_PLOOK,
+    public enum E_SHOT_EDGE{
+        RIGHT,
+        LEFT,
     }
 
     private InfC761Phase2ParamSet m_ParamSet;
@@ -23,169 +32,252 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
     private Vector3 m_MoveStartPos;
     private Vector3 m_MoveEndPos;
-    private float m_MoveStartAngle;
-    private float m_MoveEndAngle;
 
     private float m_Duration;
     private float m_TimeCount;
 
-    private float m_ShotTimeCount;
+    private bool m_IsShotLargeBulletToUnder;
+    private float m_ShotLargeBulletToUnderTimeCount;
 
-    private E_SHOT_PHASE m_ShotPhase;
+    private bool m_IsShotSmallPLookBullet;
+    private float m_ShotSmallPLookBulletTimeCount;
+    private float m_StopShotSmallPLookBulletTimeCount;
 
-    private float m_DirShotTimeCount;
+    private float m_Shot2WayLargeBulletTimeCount;
 
-    private float m_PLookShotTimeCount;
-    public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
-    {
+    private E_SHOT_EDGE m_ShotEdge;
+    private bool m_IsShotPLookSmallRectBullet;
+    private float m_ShotPLookSmallRectBulletTimeCount;
+    private float m_ShotRapidPLookSmallRectBulletTimeCount;
+    private float m_NumberOfShotRapidPLookSmallRectBullet;
+
+    private bool m_IsShotLargeRectBulletToTotalDirection;
+    private float m_ShotLargeRectBulletToTotalDirectionTimeCount;
+
+    private bool m_IsShotBasicRectBulletToTotalDirection;
+    private float m_ShotBasicRectBulletToTotalDirectionTimeCount;
+
+    private float m_ShotBasicCirBulletToTotalDirectionTimeCount;
+
+    public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet){
         m_ParamSet = paramSet as InfC761Phase2ParamSet;
     }
 
-    /// <summary>
-    /// この行動パターンに入った瞬間に呼び出される
-    /// </summary>
-    public override void OnStart()
-    {
+    public override void OnStart(){
         base.OnStart();
 
         var initPos = Enemy.transform.position;
 
         m_Phase = E_PHASE.START;
         m_MoveStartPos = initPos;
-        m_MoveEndPos = GetArcPosition(0);
+        m_MoveEndPos = m_ParamSet.BasePos;
+        
         m_TimeCount = 0;
         m_Duration = m_ParamSet.StartDuration;
-        m_ShotPhase = E_SHOT_PHASE.NONE;
-        m_DirShotTimeCount = 0;
-        m_PLookShotTimeCount = 0;
+
+        m_IsShotLargeBulletToUnder = false;
+        m_ShotLargeBulletToUnderTimeCount = 0;
+
+        m_IsShotSmallPLookBullet = false;
+        m_ShotSmallPLookBulletTimeCount = 0;
+        m_StopShotSmallPLookBulletTimeCount = 0;
+
+        m_Shot2WayLargeBulletTimeCount = 0;
+
+        m_ShotEdge = E_SHOT_EDGE.LEFT;
+        m_IsShotPLookSmallRectBullet = false;
+        m_ShotPLookSmallRectBulletTimeCount = 0;
+        m_ShotRapidPLookSmallRectBulletTimeCount = 0;
+        m_NumberOfShotRapidPLookSmallRectBullet = 0;
+
+        m_IsShotLargeRectBulletToTotalDirection = false;
+        m_ShotLargeRectBulletToTotalDirectionTimeCount = 0;
+
+        m_IsShotBasicRectBulletToTotalDirection = false;
+        m_ShotBasicRectBulletToTotalDirectionTimeCount = 0;
+
+        m_ShotBasicCirBulletToTotalDirectionTimeCount = 0;
     }
 
-    public override void OnUpdate()
-    {
+    public override void OnUpdate(){
         base.OnUpdate();
-
         OnMove();
         OnShot();
     }
 
-    private void CalcShotCount(){
-        switch (m_ShotPhase)
-        {
-            case E_SHOT_PHASE.NONE:
-                m_ShotTimeCount += Time.fixedDeltaTime;
-                break;
-            case E_SHOT_PHASE.DIRECTION_AND_PLOOK:
-                m_DirShotTimeCount += Time.fixedDeltaTime;
-                m_PLookShotTimeCount += Time.fixedDeltaTime;
-                break;
-        }
-    }
-
-    public override void OnFixedUpdate()
-    {
+    public override void OnFixedUpdate(){
         base.OnFixedUpdate();
 
         m_TimeCount += Time.fixedDeltaTime;
-        CalcShotCount();
+
+        if(m_IsShotLargeBulletToUnder){
+            m_ShotLargeBulletToUnderTimeCount += Time.fixedDeltaTime;
+        }
+
+        if(m_IsShotSmallPLookBullet){
+            m_StopShotSmallPLookBulletTimeCount += Time.fixedDeltaTime;
+            m_ShotSmallPLookBulletTimeCount += Time.fixedDeltaTime;
+        }
+
+        if(m_Phase == E_PHASE.MOVE_TO_ABOVE){
+            m_Shot2WayLargeBulletTimeCount += Time.fixedDeltaTime;
+        }
+
+        if(m_Phase == E_PHASE.MOVE_TO_ABOVE){
+            if(m_IsShotPLookSmallRectBullet){
+                m_ShotRapidPLookSmallRectBulletTimeCount += Time.fixedDeltaTime;
+            }else{
+                m_ShotPLookSmallRectBulletTimeCount += Time.fixedDeltaTime;
+            }
+        }
+
+        if(m_IsShotLargeRectBulletToTotalDirection){
+            m_ShotLargeRectBulletToTotalDirectionTimeCount += Time.fixedDeltaTime;
+        }
+
+        if(m_IsShotBasicRectBulletToTotalDirection){
+            m_ShotBasicRectBulletToTotalDirectionTimeCount += Time.fixedDeltaTime;
+        }
+
+        if(m_Phase == E_PHASE.APPROACH_TO_PLAYER){
+            m_ShotBasicCirBulletToTotalDirectionTimeCount += Time.fixedDeltaTime;
+        }
     }
 
-    /// <summary>
-    /// この行動パターンから他のパターンになった時に呼び出される
-    /// </summary>
-    public override void OnEnd()
-    {
+    public override void OnEnd(){
         base.OnEnd();
     }
 
-    /// <summary>
-    /// 基準座標の真下を0°として円弧上の座標を取得する。
-    /// </summary>
-    private Vector3 GetArcPosition(float angle)
+    private Vector3 GetMovePosition(int normarizedRateIndex)
     {
-        angle -= 90;
-        var rad = angle * Mathf.Deg2Rad;
-
-        var x = Mathf.Cos(rad) * m_ParamSet.Radius + m_ParamSet.BasePos.x;
-        var z = Mathf.Sin(rad) * m_ParamSet.Radius + m_ParamSet.BasePos.z;
-
-        return new Vector3(x, 0, z);
-    }
-    private Vector3 GetMovePosition()
-    {
-        var rate = m_ParamSet.NormalizedRate;
+        var rate = m_ParamSet.NormalizedRates[normarizedRateIndex];
         var duration = rate.keys[rate.keys.Length - 1].time;
         var t = rate.Evaluate(m_TimeCount * duration / m_Duration);
         return Vector3.Lerp(m_MoveStartPos, m_MoveEndPos, t);
     }
 
-    private float GetMoveAngle()
-    {
-        var rate = m_ParamSet.NormalizedRate;
-        var duration = rate.keys[rate.keys.Length - 1].time;
-        var t = rate.Evaluate(m_TimeCount * duration / m_Duration);
-        return Mathf.Lerp(m_MoveStartAngle, m_MoveEndAngle, t);
+    private void SetMove(E_PHASE nextPhase, float nextDuration, Vector3 start, Vector3 end, BossMoveParam.E_COORD coord){
+        m_Phase = nextPhase;
+        m_TimeCount = 0;
+        m_Duration = nextDuration;
+        m_MoveStartPos = start;
+        if(coord == BossMoveParam.E_COORD.ABSOLUTE){
+            m_MoveEndPos = end;
+        }else{
+            m_MoveEndPos = start + end;
+        }
     }
 
-    private void OnMove()
-    {
+    private void SetWait(E_PHASE nextPhase, float nextDuration){
+        m_Phase = nextPhase;
+        m_TimeCount = 0;
+        m_Duration = nextDuration;
+    }
+
+    private void OnMove(){
         switch (m_Phase)
         {
             case E_PHASE.START:
-                SetPosition(GetMovePosition());
-                if (m_TimeCount >= m_Duration)
-                {
-                    m_Phase = E_PHASE.MOVE_TO_RIGHT;
-                    m_MoveStartAngle = 0f;
-                    m_MoveEndAngle = m_ParamSet.ArcAngle / 2f;
-                    m_TimeCount = 0;
-                    m_Duration = m_ParamSet.MoveDuration;
+                SetPosition(GetMovePosition(0));
+                if(m_TimeCount >= m_Duration){
+                    SetMove(E_PHASE.MOVE_TO_EDGE0, m_ParamSet.MoveDurations[0], Enemy.transform.position, m_ParamSet.MoveParams[0].Destination, m_ParamSet.MoveParams[0].Coordinate);
                 }
                 break;
-
-            case E_PHASE.MOVE_TO_LEFT:
-                SetPosition(GetArcPosition(GetMoveAngle()));
-                if (m_TimeCount >= m_Duration)
-                {
-                    m_Phase = E_PHASE.WAIT_ON_LEFT;
-                    m_Duration = m_ParamSet.NextMoveWaitTime;
-                    m_TimeCount = 0;
+            case E_PHASE.MOVE_TO_EDGE0:
+                SetPosition(GetMovePosition(2));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_EDGE0, m_ParamSet.NextMoveWaitTimes[0]);
                 }
                 break;
-
-            case E_PHASE.WAIT_ON_LEFT:
-                if (m_TimeCount >= m_Duration)
-                {
-                    m_Phase = E_PHASE.MOVE_TO_RIGHT;
-                    m_MoveStartAngle = -m_ParamSet.ArcAngle / 2f;
-                    m_MoveEndAngle = m_ParamSet.ArcAngle / 2f;
-                    m_TimeCount = 0;
-                    m_Duration = m_ParamSet.MoveDuration;
+            case E_PHASE.WAIT_ON_EDGE0:
+                if(m_TimeCount >= m_Duration){
+                    SetMove(E_PHASE.MOVE_TO_EDGE1, m_ParamSet.MoveDurations[1], Enemy.transform.position, m_ParamSet.MoveParams[1].Destination, m_ParamSet.MoveParams[1].Coordinate);
                 }
                 break;
-
-            case E_PHASE.MOVE_TO_RIGHT:
-                SetPosition(GetArcPosition(GetMoveAngle()));
-                if (m_TimeCount >= m_Duration)
-                {
-                    m_Phase = E_PHASE.WAIT_ON_RIGHT;
-                    m_Duration = m_ParamSet.NextMoveWaitTime;
-                    m_TimeCount = 0;
+            case E_PHASE.MOVE_TO_EDGE1:
+                SetPosition(GetMovePosition(2));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_EDGE1, m_ParamSet.NextMoveWaitTimes[1]);
                 }
                 break;
-
-            case E_PHASE.WAIT_ON_RIGHT:
-                if (m_TimeCount >= m_Duration)
-                {
-                    m_Phase = E_PHASE.MOVE_TO_LEFT;
-                    m_MoveStartAngle = m_ParamSet.ArcAngle / 2f;
-                    m_MoveEndAngle = -m_ParamSet.ArcAngle / 2f;
-                    m_TimeCount = 0;
-                    m_Duration = m_ParamSet.MoveDuration;
+            case E_PHASE.WAIT_ON_EDGE1:
+                if(m_TimeCount >= m_Duration){
+                    SetMove(E_PHASE.MOVE_TO_EDGE2, m_ParamSet.MoveDurations[2], Enemy.transform.position, m_ParamSet.MoveParams[2].Destination, m_ParamSet.MoveParams[2].Coordinate);
+                }
+                break;
+            case E_PHASE.MOVE_TO_EDGE2:
+                SetPosition(GetMovePosition(2));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_EDGE2, m_ParamSet.NextMoveWaitTimes[2]);
+                }
+                break;
+            case E_PHASE.WAIT_ON_EDGE2:
+                if(m_TimeCount >= m_Duration){
+                    SetMove(E_PHASE.MOVE_TO_EDGE3, m_ParamSet.MoveDurations[3], Enemy.transform.position, m_ParamSet.MoveParams[3].Destination, m_ParamSet.MoveParams[3].Coordinate);
+                }
+                break;
+            case E_PHASE.MOVE_TO_EDGE3:
+                SetPosition(GetMovePosition(2));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_EDGE3, m_ParamSet.NextMoveWaitTimes[3]);
+                }
+                break;
+            case E_PHASE.WAIT_ON_EDGE3:
+                if(m_TimeCount >= m_Duration){
+                    SetMove(E_PHASE.MOVE_TO_EDGE4, m_ParamSet.MoveDurations[4], Enemy.transform.position, m_ParamSet.MoveParams[4].Destination, m_ParamSet.MoveParams[4].Coordinate);
+                }
+                break;
+            case E_PHASE.MOVE_TO_EDGE4:
+                SetPosition(GetMovePosition(2));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_EDGE4, m_ParamSet.NextMoveWaitTimes[4]);
+                }
+                break;
+            case E_PHASE.WAIT_ON_EDGE4:
+                if(m_TimeCount >= m_Duration){
+                    float x = BattleRealPlayerManager.Instance.Player.transform.position.x;
+                    float z = m_ParamSet.MoveParams[5].Destination.z;
+                    Vector3 dest = new Vector3(x,0f,z);
+                    SetMove(E_PHASE.APPROACH_TO_PLAYER, m_ParamSet.MoveDurations[5], Enemy.transform.position, dest, BossMoveParam.E_COORD.ABSOLUTE);
+                    if(!m_IsShotSmallPLookBullet){
+                        m_IsShotSmallPLookBullet = true;
+                    }
+                }
+                break;
+            case E_PHASE.APPROACH_TO_PLAYER:
+                SetPosition(GetMovePosition(1));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_NEAR_PLAYER, m_ParamSet.NextMoveWaitTimes[5]);
+                }
+                break;
+            case E_PHASE.WAIT_ON_NEAR_PLAYER:
+                if(m_TimeCount >= m_Duration){
+                    SetMove(E_PHASE.MOVE_TO_ABOVE, m_ParamSet.MoveDurations[6], Enemy.transform.position, m_ParamSet.MoveParams[6].Destination, m_ParamSet.MoveParams[6].Coordinate);
+                }
+                break;
+            case E_PHASE.MOVE_TO_ABOVE:
+                SetPosition(GetMovePosition(2));
+                if(m_TimeCount >= m_Duration){
+                    SetWait(E_PHASE.WAIT_ON_ABOVE, m_ParamSet.NextMoveWaitTimes[6]);
+                }
+                break;
+            case E_PHASE.WAIT_ON_ABOVE:
+                if(m_TimeCount >= m_Duration){
+                    //SetMove(E_PHASE.MOVE_TO_EDGE0, m_ParamSet.MoveDurations[0], Enemy.transform.position, m_ParamSet.MoveParams[0].Destination, m_ParamSet.MoveParams[0].Coordinate);
+                    float x = BattleRealPlayerManager.Instance.Player.transform.position.x;
+                    float z = m_ParamSet.MoveParams[5].Destination.z;
+                    Vector3 dest = new Vector3(x,0f,z);
+                    SetMove(E_PHASE.APPROACH_TO_PLAYER, m_ParamSet.MoveDurations[5], Enemy.transform.position, dest, BossMoveParam.E_COORD.ABSOLUTE);
+                    if(!m_IsShotSmallPLookBullet){
+                        m_IsShotSmallPLookBullet = true;
+                    }
+                    m_ShotBasicCirBulletToTotalDirectionTimeCount = 0;
                 }
                 break;
         }
     }
-    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex,int bulletParamIndex, bool isPlayerLook = false)
+
+    protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex, int bulletParamIndex)
     {
         int num = param.Num;
         float angle = param.Angle;
@@ -196,7 +288,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
         shotParam.BulletIndex = bulletIndex;
 
         var correctAngle = 0f;
-        if (isPlayerLook)
+        if (param.IsPlayerLook)
         {
             var player = BattleRealPlayerManager.Instance.Player;
             var delta = player.transform.position - (Enemy.transform.position + shotPosition);
@@ -210,70 +302,143 @@ public class InfC761Phase2 : BattleRealBossBehavior
         }
     }
 
-    private Vector3 CalcShotOffset(Vector3 offset){
-        var res = offset;
-        if(res.x > 0){
-            res.x += 0.1f * Mathf.Sin(m_TimeCount);
-        }else{
-            res.x += -0.1f * Mathf.Sin(m_TimeCount);
-        }
-        return res;
-    }
-
-    private void DirectionAndPLookShot(){
-        if (m_DirShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
-        {
-            m_DirShotTimeCount = 0;
-
-            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.LeftShotOffset), 1, 2);
-            OnShot(m_ParamSet.ShotParams[0], CalcShotOffset(m_ParamSet.RigthShotOffset), 1, 2);
-            AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
-        }
-
-        if(m_PLookShotTimeCount >= m_ParamSet.ShotParams[1].Interval){
-            m_PLookShotTimeCount = 0;
-            OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 0, 3);
+    private void ShotBulletToTotalDirection(){
+        if(!m_IsShotLargeRectBulletToTotalDirection){
+            m_IsShotLargeRectBulletToTotalDirection = true;
+        }else if(m_ShotLargeRectBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[4].Interval){
+            m_ShotLargeRectBulletToTotalDirectionTimeCount = 0;
+            OnShot(m_ParamSet.ShotParams[4],m_ParamSet.ShotOffSets[6], 38, 7);
             AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+        }else if(m_TimeCount >= m_Duration){
+            m_IsShotLargeRectBulletToTotalDirection = false;
+        }
+
+        if(!m_IsShotBasicRectBulletToTotalDirection){
+            m_IsShotBasicRectBulletToTotalDirection = true;
+        }else if(m_ShotBasicRectBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[5].Interval){
+            m_ShotBasicRectBulletToTotalDirectionTimeCount = 0;
+            OnShot(m_ParamSet.ShotParams[5], m_ParamSet.ShotOffSets[6], 41, 7);
+            AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+        }else if(m_TimeCount >= m_Duration){
+            m_IsShotBasicRectBulletToTotalDirection = false;
         }
     }
 
-    private void DoShot(){
-        switch (m_ShotPhase)
-        {
-            case E_SHOT_PHASE.NONE:
-                if (m_ShotTimeCount >= m_ParamSet.ShotParams[0].Interval)
-                {
-                    m_ShotTimeCount = 0;
-                    m_ShotPhase = E_SHOT_PHASE.DIRECTION_AND_PLOOK;
-                }
-                break;
-            case E_SHOT_PHASE.DIRECTION_AND_PLOOK:
-                DirectionAndPLookShot();
-                break;
+    private void ShotLargeBulletToUnder(){
+        if(m_IsShotLargeBulletToUnder && m_ShotLargeBulletToUnderTimeCount >= m_ParamSet.ShotParams[0].Interval){
+            m_ShotLargeBulletToUnderTimeCount = 0;
+            OnShot(m_ParamSet.ShotParams[0],m_ParamSet.ShotOffSets[0], 33, 2);
+            AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+            m_IsShotLargeBulletToUnder = false;
         }
     }
 
-    private void OnShot()
-    {
+    private void OnShot(){
         switch (m_Phase)
         {
             case E_PHASE.START:
                 break;
-
-            case E_PHASE.MOVE_TO_LEFT:
-                DoShot();
+            case E_PHASE.MOVE_TO_EDGE0:
+                if(!m_IsShotLargeBulletToUnder){
+                    m_IsShotLargeBulletToUnder = true;
+                }
+                ShotBulletToTotalDirection();
                 break;
-
-            case E_PHASE.WAIT_ON_LEFT:
-                DoShot();
+            case E_PHASE.WAIT_ON_EDGE0:
+                ShotLargeBulletToUnder();
                 break;
-
-            case E_PHASE.MOVE_TO_RIGHT:
-                DoShot();
+            case E_PHASE.MOVE_TO_EDGE1:
+                if(!m_IsShotLargeBulletToUnder){
+                    m_IsShotLargeBulletToUnder = true;
+                }
+                ShotBulletToTotalDirection();
                 break;
+            case E_PHASE.WAIT_ON_EDGE1:
+                ShotLargeBulletToUnder();
+                break;
+            case E_PHASE.MOVE_TO_EDGE2:
+                if(!m_IsShotLargeBulletToUnder){
+                    m_IsShotLargeBulletToUnder = true;
+                }
+                ShotBulletToTotalDirection();
+                break;
+            case E_PHASE.WAIT_ON_EDGE2:
+                ShotLargeBulletToUnder();
+                break;
+            case E_PHASE.MOVE_TO_EDGE3:                
+                if(!m_IsShotLargeBulletToUnder){
+                    m_IsShotLargeBulletToUnder = true;
+                }
+                ShotBulletToTotalDirection();
+                break;
+            case E_PHASE.WAIT_ON_EDGE3:
+                ShotLargeBulletToUnder();
+                break;
+            case E_PHASE.MOVE_TO_EDGE4:                
+                if(!m_IsShotLargeBulletToUnder){
+                    m_IsShotLargeBulletToUnder = true;
+                }
+                ShotBulletToTotalDirection();
+                break;
+            case E_PHASE.WAIT_ON_EDGE4:
+                ShotLargeBulletToUnder();
+                break;
+            case E_PHASE.APPROACH_TO_PLAYER:
 
-            case E_PHASE.WAIT_ON_RIGHT:
-                DoShot();
+                if(m_IsShotSmallPLookBullet && m_ShotSmallPLookBulletTimeCount >= m_ParamSet.ShotParams[1].Interval){
+                    m_ShotSmallPLookBulletTimeCount = 0;
+                    OnShot(m_ParamSet.ShotParams[1], m_ParamSet.ShotOffSets[1], 21, 0);
+                    OnShot(m_ParamSet.ShotParams[1], m_ParamSet.ShotOffSets[2], 21, 0);
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                }
+                if(m_StopShotSmallPLookBulletTimeCount >= m_ParamSet.ShotCoolTimes[0]){
+                    m_StopShotSmallPLookBulletTimeCount = 0;
+                    m_IsShotSmallPLookBullet = false;
+                }
+
+                if(m_ShotBasicCirBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[6].Interval){
+                    m_ShotBasicCirBulletToTotalDirectionTimeCount = 0;
+                    OnShot(m_ParamSet.ShotParams[6], m_ParamSet.ShotOffSets[6], 37, 7);
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                }
+
+                break;
+            case E_PHASE.WAIT_ON_NEAR_PLAYER:
+                break;
+            case E_PHASE.MOVE_TO_ABOVE:
+                
+                if(m_Shot2WayLargeBulletTimeCount >= m_ParamSet.ShotParams[2].Interval){
+                    m_Shot2WayLargeBulletTimeCount = 0;
+                    OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[3], 33, 3);
+                    AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                }
+
+                if(!m_IsShotPLookSmallRectBullet && m_ShotPLookSmallRectBulletTimeCount >= m_ParamSet.ShotCoolTimes[1]){
+                    m_ShotPLookSmallRectBulletTimeCount = 0;
+                    m_IsShotPLookSmallRectBullet = true;
+                }else if(m_ShotRapidPLookSmallRectBulletTimeCount >= m_ParamSet.ShotParams[3].Interval && m_NumberOfShotRapidPLookSmallRectBullet < m_ParamSet.NumberOfShotRapidPLookSmallRectBullet){
+                    m_ShotRapidPLookSmallRectBulletTimeCount = 0;
+                    m_NumberOfShotRapidPLookSmallRectBullet++;
+                    if(m_ShotEdge == E_SHOT_EDGE.LEFT){
+                        OnShot(m_ParamSet.ShotParams[3], m_ParamSet.ShotOffSets[4], 23, 0);
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                    }else{
+                        OnShot(m_ParamSet.ShotParams[3], m_ParamSet.ShotOffSets[5], 23, 0);
+                        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                    }
+                }else if(m_NumberOfShotRapidPLookSmallRectBullet >= m_ParamSet.NumberOfShotRapidPLookSmallRectBullet){
+                    if(m_ShotEdge == E_SHOT_EDGE.LEFT){
+                        m_ShotEdge = E_SHOT_EDGE.RIGHT;
+                    }else{
+                        m_ShotEdge = E_SHOT_EDGE.LEFT;
+                    }
+                    m_NumberOfShotRapidPLookSmallRectBullet = 0;
+                    m_ShotRapidPLookSmallRectBulletTimeCount = 0;
+                    m_IsShotPLookSmallRectBullet = false;
+                }
+
+                break;
+            case E_PHASE.WAIT_ON_ABOVE:
                 break;
         }
     }
