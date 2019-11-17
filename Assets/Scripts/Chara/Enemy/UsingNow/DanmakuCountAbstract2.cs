@@ -117,7 +117,7 @@ public abstract class DanmakuCountAbstract2 : System.Object
         Vector3 eulerAngles = CalcEulerAngles(enemyController.GetEnemy().transform.eulerAngles, velocityRad);
 
         // 弾の大きさを変えている。
-        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one);
+        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.8f);
         CommandBulletController.ShotBullet(bulletShotParam);
     }
 

@@ -99,7 +99,7 @@ public class CVLM : object
         Vector3 eulerAngles = Calc.CalcEulerAngles(enemyController.GetEnemy().transform.eulerAngles, velocityRad);
 
         // 弾の大きさを変えている。
-        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one);
+        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.8f);
         var bullet = enemyController.Shot(bulletShotParam);
 
         //Debug.Log("CVLM.Shoot");

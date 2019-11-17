@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: param.inf_c_761_hacker2_phase
   m_EditorClassIdentifier: 
   m_BehaviorClass: InfC761Hacker1Phase1
-  m_Bezier3Points: []
-  m_LoopBeginPhase: 0
-  m_AllUDFieldArray: {fileID: 0}
+  m_Bezier3Points:
+  - m_Time: 1
+    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
+    m_AnchorVelocity: {x: 0, y: 0, z: 0}
+  - m_Time: 1
+    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
+    m_AnchorVelocity: {x: 0, y: 0, z: 0}
+  - m_Time: 1
+    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
+    m_AnchorVelocity: {x: 0, y: 0, z: 0}
+  m_LoopBeginPhase: 1
+  m_AllUDFieldArray: {fileID: 11400000, guid: 29f123054cbd8bd4eb4c63d52df11bcc, type: 2}

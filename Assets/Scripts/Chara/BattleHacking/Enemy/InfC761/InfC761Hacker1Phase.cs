@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Inf-C-761の振る舞いの基底クラス。
+/// </summary>
 public class InfC761Hacker1Phase : BattleHackingBossBehavior
 {
     // InfC761 Hacker1の見た目に強く依存しているコンポーネント
