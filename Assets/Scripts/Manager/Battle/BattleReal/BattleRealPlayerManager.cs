@@ -58,35 +58,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     #endregion
 
-    #region Get Set
-
-    //public IntReactiveProperty GetCurrentLevel()
-    //{
-    //    return m_CurrentLevel;
-    //}
-
-    //public IntReactiveProperty GetCurrentExp()
-    //{
-    //    return m_CurrentExp;
-    //}
-
-    //public FloatReactiveProperty GetCurrentBombCharge()
-    //{
-    //    return m_CurrentBombCharge;
-    //}
-
-    //public IntReactiveProperty GetCurrentBombNum()
-    //{
-    //    return m_CurrentBombNum;
-    //}
-
-    public BattleRealPlayerExpParamSet[] GetRealPlayerExpParamSet()
-    {
-        return m_ParamSet.BattleRealPlayerExpParamSets;
-    }
-
-    #endregion
-
     public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
     {
         m_ParamSet = paramSet;
@@ -282,49 +253,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         pos += m_PlayerCharaHolder.position;
 
         return pos;
-    }
-
-    /// <summary>
-    /// 経験値を加算する。
-    /// </summary>
-    public void AddExp(int exp)
-    {
-        var currentExp = m_CurrentExp.Value;
-        var currentLevel = m_CurrentLevel.Value - 1;
-
-        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length - 1)
-        {
-            // スコア増加(レベルMAXの時)
-            DataManager.Instance.BattleData.AddScore(exp);
-        }
-        else
-        {
-            // Exp増加(レベルMaxではない時)
-            currentExp += exp;
-            var expParamSet = m_ParamSet.BattleRealPlayerExpParamSets[currentLevel];
-
-            if (currentExp >= expParamSet.NextLevelNecessaryExp)
-            {
-                m_CurrentLevel.Value++;
-                currentExp %= expParamSet.NextLevelNecessaryExp;
-            }
-
-            m_CurrentExp.Value = currentExp;
-        }
-    }
-
-    /// <summary>
-    /// ボムチャージを加算する。
-    /// </summary>
-    public void AddBombCharge(float charge)
-    {
-        // var currentCharge = m_CurrentBombCharge.Value;
-        // currentCharge += charge;
-
-        // if (currentCharge >= m_PlayerState.BombCharge) {
-        //     m_CurrentBombNum.Value++;
-        //     currentCharge %= m_PlayerState.BombCharge;
-        // }
     }
 
     public void ClearColliderFlag()

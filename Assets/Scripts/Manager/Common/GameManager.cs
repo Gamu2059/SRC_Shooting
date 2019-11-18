@@ -12,6 +12,19 @@ using DG.Tweening;
 /// </summary>
 public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 {
+    [Serializable]
+    private class GameManagerParamSet
+    {
+        [SerializeField]
+        private BattleRealPlayerLevelParamSet m_PlayerLevelParamSet;
+        public BattleRealPlayerLevelParamSet PlayerLevelParamSet => m_PlayerLevelParamSet;
+    }
+
+    [SerializeField]
+    private GameManagerParamSet m_GameManagerParamSet;
+
+    #region Manager
+
     private TimerManager m_TimerManager;
     public TimerManager TimerManager => m_TimerManager;
 
@@ -27,13 +40,12 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
     public DataManager DataManager { get; private set; }
 
-    private PlayerData m_PlayerData;
-    public PlayerData PlayerData => m_PlayerData;
-
     private PlayerRecordManager m_PlayerRecordManager;
     public PlayerRecordManager PlayerRecordManager => m_PlayerRecordManager;
 
-	protected override void OnAwake()
+    #endregion
+
+    protected override void OnAwake()
 	{
 		base.OnAwake();
 	}
@@ -69,9 +81,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnInitialize();
 
         m_TimerManager = new TimerManager();
-        DataManager = new DataManager();
+        DataManager = new DataManager(m_GameManagerParamSet.PlayerLevelParamSet);
         m_PlayerRecordManager = new PlayerRecordManager();
-        m_PlayerData = new PlayerData();
 
         m_TimerManager.OnInitialize();
         m_AudioManager.OnInitialize();

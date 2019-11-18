@@ -468,14 +468,14 @@ public class BattleRealManager : ControllableObject
     private void StartOnDead()
     {
         PlayerManager.SetPlayerActive(false);
-        var pData = GameManager.Instance.PlayerData;
-        if (pData.Remain < 1)
+        var battleData = DataManager.Instance.BattleData;
+        if (battleData.RemainPlayer < 1)
         {
             BattleManager.Instance.GameOver();
         }
         else
         {
-            pData.DecreaseLast();
+            battleData.DecreaseRemainPlayer();
             var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 2);
             timer.SetTimeoutCallBack(() =>
             {
@@ -644,17 +644,18 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnTransitionToReal()
     {
+        var battleData = DataManager.Instance.BattleData;
         if (BattleManager.Instance.HackingManager.IsHackingSuccess)
         {
-            GameManager.Instance.PlayerData.IncreaseHackingSucceedCount();
-            if (GameManager.Instance.PlayerData.HackingSucceedCount >= 1)
+            battleData.IncreaseHackingSucceedCount();
+            if (battleData.HackingSucceedCount >= 1)
             {
-                GameManager.Instance.DataManager.BattleData.AddScore(1000 * GameManager.Instance.PlayerData.HackingSucceedCount);
+                battleData.AddScore(1000 * battleData.HackingSucceedCount);
             }
         }
         else
         {
-            GameManager.Instance.PlayerData.ResetHackingSucceedCount();
+            battleData.ResetHackingSucceedCount();
         }
     }
 

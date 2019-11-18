@@ -32,7 +32,7 @@ public class RealEnergyLevelIndicator : MonoBehaviour
     }
 
     private void RegisterEnergyLevel(){
-        m_CurrentEnergyLevel = BattleRealPlayerManager.Instance.GetCurrentBombNum();
-        m_CurrentEnergyLevel.SubscribeToText(m_OutText);
+        //m_CurrentEnergyLevel = BattleRealPlayerManager.Instance.GetCurrentBombNum();
+        //m_CurrentEnergyLevel.SubscribeToText(m_OutText);
     }
 }

@@ -11,42 +11,44 @@ using UniRx;
 /// </summary>
 public class BestScoreIndicator : MonoBehaviour
 {
-	[SerializeField]
-	private Text m_OutText;
+    [SerializeField]
+    private Text m_OutText;
 
-	private FloatReactiveProperty m_DisplayedBestScore;
+    private FloatReactiveProperty m_DisplayedBestScore;
 
-	// Start is called before the first frame update
-	void Start()
-	{
-		if (BattleRealPlayerManager.Instance != null && BattleManager.Instance != null){
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (BattleRealPlayerManager.Instance != null && BattleManager.Instance != null)
+        {
             RegisterBestScore();
-        } else {
+        }
+        else
+        {
             BattleRealPlayerManager.OnStartAction += RegisterBestScore;
         }
-	}
+    }
 
-	// Update is called once per frame
-	void Update()
-	{
-		if(BattleRealPlayerManager.Instance == null || GameManager.Instance == null){
-			return;
-		}
+    // Update is called once per frame
+    void Update()
+    {
+        if (BattleRealPlayerManager.Instance == null || GameManager.Instance == null)
+        {
+            return;
+        }
 
-		var currentScore = BattleRealPlayerManager.Instance.GetCurrentScore();
-		
-		if(currentScore != null){
-			var currentScoreValue = currentScore.Value;
-			
-			if(currentScoreValue >= GameManager.Instance.PlayerData.BestScore){
-				GameManager.Instance.PlayerData.UpdateBestScore(currentScoreValue);
-				m_DisplayedBestScore.SetValueAndForceNotify(GameManager.Instance.PlayerData.BestScore);
-			}
-		}
-	}
+        var battleData = DataManager.Instance.BattleData;
 
-	private void RegisterBestScore(){
-		m_DisplayedBestScore = new FloatReactiveProperty(GameManager.Instance.PlayerData.BestScore);
-		m_DisplayedBestScore.SubscribeToText(m_OutText);
-	}
+        if (battleData.Score >= battleData.BestScore)
+        {
+            battleData.UpdateBestScore(battleData.Score);
+            //m_DisplayedBestScore.SetValueAndForceNotify(battleData.BestScore);
+        }
+    }
+
+    private void RegisterBestScore()
+    {
+        //m_DisplayedBestScore = new FloatReactiveProperty(DataManager.Instance.BattleData.BestScore);
+        //m_DisplayedBestScore.SubscribeToText(m_OutText);
+    }
 }

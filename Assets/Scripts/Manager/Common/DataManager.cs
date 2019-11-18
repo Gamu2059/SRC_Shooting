@@ -20,9 +20,9 @@ public class DataManager : ControllableObject
 
     public BattleData BattleData { get; private set; }
 
-    public DataManager()
+    public DataManager(BattleRealPlayerLevelParamSet playerLevelParamSet)
     {
-        BattleData = new BattleData();
+        BattleData = new BattleData(playerLevelParamSet);
     }
 
     public override void OnInitialize()

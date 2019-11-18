@@ -41,19 +41,19 @@ public class ScoreIndicator : MonoBehaviour
             return;
         }
         
-        if(m_DisplayOnConsole == DisplayOnConsole.ENABLE){
+        //if(m_DisplayOnConsole == DisplayOnConsole.ENABLE){
             
-            if(m_Score == null){
-                return;
-            }
+        //    if(m_Score == null){
+        //        return;
+        //    }
 
-            Debug.Log(string.Format("{0}", m_Score.Value));
-        }
+        //    Debug.Log(string.Format("{0}", m_Score.Value));
+        //}
     }
 
     private void RegisterScore()
     {
-        m_Score = BattleRealPlayerManager.Instance.GetCurrentScore();
-        m_Score.SubscribeToText(m_OutText);
+        //m_Score = BattleRealPlayerManager.Instance.GetCurrentScore();
+        //m_Score.SubscribeToText(m_OutText);
     }
 }
