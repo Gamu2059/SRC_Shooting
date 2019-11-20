@@ -13,43 +13,15 @@ MonoBehaviour:
   m_Name: param.inf_c_761_hacker2_phase
   m_EditorClassIdentifier: 
   m_BehaviorClass: InfC761Hacker1Phase1
-  m_BasePos: {x: 0, y: 0, z: 0.5}
-  m_Amplitude: 0.7
-  m_NormalizedRate:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_NextMoveWaitTime: 1
-  m_StartDuration: 1
-  m_MoveDuration: 6
-  m_CenterShotParam:
-    Interval: 0.8
-    Num: 25
-    Angle: 14.4
-  m_SideShotParam:
-    Interval: 2.5
-    Num: 15
-    Angle: 24
-  m_AlternativeCenterPos: {x: 0, y: 0, z: 0.14}
-  m_LeftShotOffset: {x: -0.3, y: 0, z: 0.14}
-  m_RightShotOffset: {x: 0.3, y: 0, z: 0.14}
+  m_Bezier3Points:
+  - m_Time: 1
+    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
+    m_AnchorVelocity: {x: 0, y: 0, z: 0}
+  - m_Time: 1
+    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
+    m_AnchorVelocity: {x: 0, y: 0, z: 0}
+  - m_Time: 1
+    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
+    m_AnchorVelocity: {x: 0, y: 0, z: 0}
+  m_LoopBeginPhase: 1
+  m_AllUDFieldArray: {fileID: 11400000, guid: 29f123054cbd8bd4eb4c63d52df11bcc, type: 2}

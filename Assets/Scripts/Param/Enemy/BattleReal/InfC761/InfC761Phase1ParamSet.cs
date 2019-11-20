@@ -14,48 +14,52 @@ public class InfC761Phase1ParamSet : BattleRealBossBehaviorParamSet
     public Vector3 BasePos => m_BasePos;
 
     [SerializeField]
-    private float m_Amplitude = default;
-    public float Amplitude => m_Amplitude;
-
-    [SerializeField]
-    private AnimationCurve m_NormalizedRate = default;
-    public AnimationCurve NormalizedRate => m_NormalizedRate;
-
-    [SerializeField]
-    private float m_NextMoveWaitTime = default;
-    public float NextMoveWaitTime => m_NextMoveWaitTime;
-
-    [SerializeField]
-    private float m_StartDuration = default;
+    private float m_StartDuration;
     public float StartDuration => m_StartDuration;
 
+    [Header("Move Param")]
     [SerializeField]
-    private float m_MoveDuration = default;
-    public float MoveDuration => m_MoveDuration;
+    private BossMoveParam[] m_MoveParams;
+    public BossMoveParam[] MoveParams => m_MoveParams;
 
+    [SerializeField]
+    private float[] m_Amplitudes;
+    public float[] Amplitudes => m_Amplitudes;
+
+    [SerializeField]
+    private float[] m_NextMoveWaitTimes;
+    public float[] NextMoveWaitTimes => m_NextMoveWaitTimes;
+
+    [SerializeField]
+    private float[] m_MoveDurations;
+    public float[] MoveDurations => m_MoveDurations;
+
+    [SerializeField]
+    private AnimationCurve[] m_NormalizedRates;
+    public AnimationCurve[] NormalizedRates => m_NormalizedRates;
+
+    [SerializeField]
+    private float[] m_GenericDurations;
+    public float[] GenericDurations => m_GenericDurations;
+    
     [Header("Shot Param")]
+    [SerializeField]
+    private float[] m_ShotCoolTimes;
+    public float[] ShotCoolTimes => m_ShotCoolTimes;
 
     [SerializeField]
-    private EnemyShotParam[] m_ShotParams = default;
+    private EnemyShotParam[] m_ShotParams;
     public EnemyShotParam[] ShotParams => m_ShotParams;
 
     [SerializeField]
-    private Vector3 m_LeftShotOffset = default;
-    public Vector3 LeftShotOffset => m_LeftShotOffset;
+    private Vector3[] m_ShotOffSets;
+    public Vector3[] ShotOffSets => m_ShotOffSets;
 
     [SerializeField]
-    private Vector3 m_RightShotOffset = default;
-    public Vector3 RigthShotOffset => m_RightShotOffset;
+    private int m_NumberOfChangeBullet;
+    public int NumberOfChangeBullet => m_NumberOfChangeBullet;
 
     [SerializeField]
-    private Vector3 m_CenterShotOffset = default;
-    public Vector3 CenterShotOffset => m_CenterShotOffset;
-
-    [SerializeField]
-    private int m_NShotsNum = default;
-    public int NShotsNum => m_NShotsNum;
-
-    [SerializeField]
-    private float m_NShotsInterval = default;
-    public float NShotsInterval => m_NShotsInterval;
+    private int m_NumberOfRapidShot;
+    public int NumberOfRapidShot => m_NumberOfRapidShot;
 }

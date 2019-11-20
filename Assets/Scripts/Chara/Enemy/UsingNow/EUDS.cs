@@ -7,10 +7,11 @@ using UnityEngine;
 /// </summary>
 public static class EUDS : object
 {
+
     /// <summary>
     /// 単位弾幕の種類の列挙型から、単位弾幕のオブジェクトそのものを取得する。
     /// </summary>
-    public static DanmakuCountAbstract EUDToUDObject(E_U_D eUD)
+    public static DanmakuCountAbstract2 EUDToUDObject(E_U_D eUD)
     {
         switch (eUD)
         {
@@ -55,6 +56,9 @@ public static class EUDS : object
             case E_U_D.WAY:
                 return new Way();
 
+            case E_U_D.SWR:
+                return new Swr();
+
             case E_U_D.WAP:
                 return new Wap();
 
@@ -69,6 +73,7 @@ public static class EUDS : object
 
             // 追加しやすいようにしている（この部分は変えない）
             default:
+                Debug.Log("通るべきではない所を通りました。");
                 return new Omn();
         }
     }

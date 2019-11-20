@@ -16,7 +16,7 @@ public class UDWay : RegularIntervalUDAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
         Vector3 posRandomZure;
 
@@ -32,8 +32,8 @@ public class UDWay : RegularIntervalUDAbstract
 
         // これ以降で使うフィールドは、bool値によらず必ず使うものだけを使う。
 
-        float centerRad = V3ToRelativeRad(enemyController.transform.position + m_Vector3[(int)Way.VECTOR3.shotAvePosition] + posRandomZure,
-            BattleRealPlayerManager.Instance.Player.transform.position);
+        float centerRad = V3ToRelativeRad(enemyController.GetEnemy().transform.position + m_Vector3[(int)Way.VECTOR3.shotAvePosition] + posRandomZure,
+            BattleHackingPlayerManager.Instance.Player.transform.position);
 
         for (int i = -(m_Int[(int)Way.INT.way] - 1); i <= m_Int[(int)Way.INT.way] - 1; i += 2)
         {
@@ -43,7 +43,7 @@ public class UDWay : RegularIntervalUDAbstract
             CVLM cVLMShotParam = new CVLM(
                 enemyController,
                 m_Int[(int)Way.INT.bulletIndex],
-                enemyController.transform.position,
+                enemyController.GetEnemy().transform.position,
                 rad,
                 m_Float[(int)Way.FLOAT.bulletSpeed],
                 dTime

@@ -13,20 +13,28 @@ MonoBehaviour:
   m_Name: param.inf_c_761_phase_1
   m_EditorClassIdentifier: 
   m_BehaviorClass: InfC761Phase1
-  m_BasePos: {x: 0, y: 0, z: 0.8}
-  m_Amplitude: 1
-  m_NormalizedRate:
-    serializedVersion: 2
+  m_BasePos: {x: 0, y: 0, z: 0.6}
+  m_StartDuration: 1
+  m_MoveParams: []
+  m_Amplitudes:
+  - 1
+  - 0.1
+  m_NextMoveWaitTimes:
+  - 0.5
+  m_MoveDurations:
+  - 1.5
+  m_NormalizedRates:
+  - serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
@@ -34,23 +42,43 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_NextMoveWaitTime: 0.5
-  m_StartDuration: 2
-  m_MoveDuration: 3
+    m_RotationOrder: 0
+  m_GenericDurations:
+  - 6
+  m_ShotCoolTimes: []
   m_ShotParams:
+  - Interval: 1.8
+    Num: 2
+    Angle: 60
+    IsPlayerLook: 0
+  - Interval: 1.1
+    Num: 1
+    Angle: 0
+    IsPlayerLook: 1
   - Interval: 1
     Num: 1
-    Angle: 20
-  - Interval: 0.3
-    Num: 9
-    Angle: 40
-  m_LeftShotOffset: {x: -0.1, y: 0, z: 0}
-  m_RightShotOffset: {x: 0.1, y: 0, z: 0}
-  m_CenterShotOffset: {x: 0, y: -0.5, z: 0}
-  m_NShotsNum: 5
-  m_NShotsInterval: 0.05
+    Angle: 0
+    IsPlayerLook: 0
+  - Interval: 0.08
+    Num: 3
+    Angle: 5
+    IsPlayerLook: 1
+  m_ShotOffSets:
+  - {x: 0, y: 0, z: 0}
+  - {x: -0.15, y: 0, z: 0.2}
+  - {x: -0.2, y: 0, z: 0.2}
+  - {x: 0.15, y: 0, z: 0.2}
+  - {x: 0.2, y: 0, z: 0.2}
+  - {x: -0.7, y: 0, z: -0.1}
+  - {x: -0.35, y: 0, z: -0.1}
+  - {x: 0, y: 0, z: -0.1}
+  - {x: 0.35, y: 0, z: -0.1}
+  - {x: 0.7, y: 0, z: -0.1}
+  - {x: 0.2, y: 0, z: 0}
+  - {x: -0.2, y: 0, z: 0}
+  m_NumberOfChangeBullet: 4
+  m_NumberOfRapidShot: 5

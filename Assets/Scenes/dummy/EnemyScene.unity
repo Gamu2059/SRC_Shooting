@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
+  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427135, b: 0.5645232, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9510,22 +9510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_Normal: {fileID: 0}
-  m_HitMate: {fileID: 0}
-  m_Renderer: {fileID: 0}
-  m_BasePos: {x: 0, y: 0, z: 0}
-  m_Radius: 0
-  m_AngleSpeed: 5
-  m_ShotInterval: 1000
-  m_ShotPosOffset: 1
-  m_BulletSpeed: 20
-  m_DeadDistance: 500
-  a: 0
-  b: 0
-  c: 0
 --- !u!65 &1130501785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11186,22 +11170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72329e256fd4d4eab31a023a4094b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 1000
-  m_MaxHp: 1000
-  m_Normal: {fileID: 0}
-  m_HitMate: {fileID: 0}
-  m_Renderer: {fileID: 1532760121}
-  m_BasePos: {x: 0, y: 0, z: 0}
-  m_Radius: 5
-  m_AngleSpeed: 1
-  m_ShotInterval: 1
-  m_ShotPosOffset: 1
-  m_BulletSpeed: 10
-  m_DeadDistance: 500
-  a: 0
-  b: 0
-  c: 0
 --- !u!65 &1532760120
 BoxCollider:
   m_ObjectHideFlags: 0
