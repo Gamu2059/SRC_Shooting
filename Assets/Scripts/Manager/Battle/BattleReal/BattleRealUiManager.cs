@@ -11,6 +11,17 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [SerializeField]
     private CanvasGroup m_CanvasGroup;
 
+    [Header("UI")]
+
+    [SerializeField]
+    private ScoreIndicator m_BestScoreIndicator;
+
+    [SerializeField]
+    private ScoreIndicator m_ScoreIndicator;
+
+
+    [Header("ゲーム終了時のやつ")]
+
     [SerializeField]
     private GameObject m_GameOver;
 

@@ -4,56 +4,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
 
 /// <summary>
 /// Scoreを表示する
 /// </summary>
-public class ScoreIndicator : MonoBehaviour
+public class ScoreIndicator : ControllableMonoBehavior
 {
-    private enum DisplayOnConsole{
-        ENABLE,
-        DISABLE,
-    }
-
-    [SerializeField]
-    private DisplayOnConsole m_DisplayOnConsole;
-
-    [SerializeField]
+    [SerializeField, Tooltip("スコアを表示させるテキスト")]
     private Text m_OutText;
 
-    private FloatReactiveProperty m_Score;  
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField, Tooltip("trueの場合、BestScoreを参照する")]
+    private bool m_IsShowBestScore;
+
+    [SerializeField, Tooltip("trueの場合、コンソールにも表示する")]
+    private bool m_IsShowOnConsole;
+
+    private double m_PreScore;
+
+    #region Game Cycle
+
+    public override void OnStart()
     {
-        if (BattleRealPlayerManager.Instance != null){
-            RegisterScore();
-        } else {
-            BattleRealPlayerManager.OnStartAction += RegisterScore;
+        base.OnStart();
+
+        m_PreScore = GetScore();
+        Show((int)m_PreScore);
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        var score = GetScore();
+        if (m_PreScore != score)
+        {
+            m_PreScore = score;
+            Show((int)m_PreScore);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion
+
+    private double GetScore()
     {
-        if(BattleRealManager.Instance == null){
-            return;
+        var battleData = DataManager.Instance.BattleData;
+        return m_IsShowBestScore ? battleData.BestScore : battleData.Score;
+    }
+
+    /// <summary>
+    /// 指定した値をスコアとして表示する。
+    /// </summary>
+    public void Show(int score)
+    {
+        if (m_OutText != null)
+        {
+            m_OutText.text = score.ToString();
         }
-        
-        if(m_DisplayOnConsole == DisplayOnConsole.ENABLE){
-            
-            if(m_Score == null){
-                return;
+
+        if (m_IsShowOnConsole)
+        {
+            if (m_IsShowBestScore)
+            {
+                Debug.LogFormat("BestScore : {0}", score);
             }
-
-            Debug.Log(string.Format("{0}", m_Score.Value));
+            else
+            {
+                Debug.LogFormat("Score : {0}", score);
+            }
         }
-    }
-
-    private void RegisterScore()
-    {
-        m_Score = BattleRealPlayerManager.Instance.GetCurrentScore();
-        m_Score.SubscribeToText(m_OutText);
     }
 }

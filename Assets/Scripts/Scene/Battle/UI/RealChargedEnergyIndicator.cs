@@ -32,9 +32,9 @@ public class RealChargedEnergyIndicator : MonoBehaviour
     }
 
     private void RegisterChargedEnergy(){
-        m_CurrentChargedEnergy = BattleRealPlayerManager.Instance.GetCurrentBombCharge();
-        m_CurrentChargedEnergy.SubscribeToText(m_OutText, _ =>{
-            return string.Format("{0}/{1}", m_CurrentChargedEnergy.Value, "9999");
-        });
+        //m_CurrentChargedEnergy = BattleRealPlayerManager.Instance.GetCurrentBombCharge();
+        //m_CurrentChargedEnergy.SubscribeToText(m_OutText, _ =>{
+        //    return string.Format("{0}/{1}", m_CurrentChargedEnergy.Value, "9999");
+        //});
     }
 }

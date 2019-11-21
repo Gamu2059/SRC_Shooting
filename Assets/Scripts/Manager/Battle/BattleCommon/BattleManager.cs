@@ -90,7 +90,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     #region Game Cycle
 
     public override void OnInitialize()
-    {        
+    {
         base.OnInitialize();
 
         m_StateMachine = new StateMachine<E_BATTLE_STATE>();
@@ -235,11 +235,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleRealUiManager.SetEnableGameOver(false);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
-
-        var pData = GameManager.Instance.PlayerData;
-        pData.ResetHackingSucceedCount();
-        pData.ResetBestScore();
-        pData.ResetPlayerLast();
     }
 
     private void UpdateOnStart()
@@ -575,8 +570,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         });
         TimerManager.Instance.RegistTimer(timer);
 
-        //Debug.Log("BackToTitle");
-        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord(BattleRealPlayerManager.Instance.GetCurrentScore().Value, 1, System.DateTime.Now));
+        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord((int)DataManager.Instance.BattleData.Score, 1, DateTime.Now));
         GameManager.Instance.PlayerRecordManager.ShowRecord();
     }
 

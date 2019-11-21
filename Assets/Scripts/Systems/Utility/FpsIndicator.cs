@@ -25,6 +25,9 @@ public class FpsIndicator : MonoBehaviour
     [SerializeField]
     private Text m_OutText;
 
+    [SerializeField]
+    private string m_IndicateTemplate;
+
     private int m_FrameCount;
     private float m_PrevTime;
 
@@ -41,7 +44,7 @@ public class FpsIndicator : MonoBehaviour
 
         if (time >= m_UpdateInterval)
         {
-            var fps = string.Format("fps : {0}", (m_FrameCount / time).ToString("f2"));
+            var fps = string.Format(m_IndicateTemplate, (m_FrameCount / time).ToString("f2"));
             switch(m_IndicatorType)
             {
                 case IndicatorType.CONSOLE:

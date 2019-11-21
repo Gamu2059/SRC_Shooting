@@ -171,40 +171,35 @@ public class BattleRealPlayerController : CharaController
         }
 
         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Getitem");
+        var battleData = DataManager.Instance.BattleData;
 
         switch (item.ItemType)
         {
             case E_ITEM_TYPE.SMALL_SCORE:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_SCORE:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_SCORE_UP:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_SCORE_UP:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_EXP:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_BOMB:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.BIG_BOMB:
-                BattleRealPlayerManager.Instance.AddExp(item.ItemPoint);
+                battleData.AddExp(item.ItemPoint);
                 break;
         }
-    }
-
-    public int GetLevel()
-    {
-        //return BattleRealPlayerManager.Instance.GetCurrentLevel().Value;
-        return 0;
     }
 
     public override void Dead()

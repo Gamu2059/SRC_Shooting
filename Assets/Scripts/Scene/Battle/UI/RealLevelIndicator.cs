@@ -32,7 +32,7 @@ public class RealLevelIndicator : MonoBehaviour
     }
 
     private void RegisterLevel(){
-        m_Level = BattleRealPlayerManager.Instance.GetCurrentLevel();
-        m_Level.SubscribeToText(m_OutText);
+        //m_Level = BattleRealPlayerManager.Instance.GetCurrentLevel();
+        //m_Level.SubscribeToText(m_OutText);
     }
 }
