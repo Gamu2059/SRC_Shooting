@@ -14,7 +14,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [Header("UI")]
 
     [SerializeField]
-    private BestScoreIndicator m_BestScoreIndicator;
+    private ScoreIndicator m_BestScoreIndicator;
 
     [SerializeField]
     private ScoreIndicator m_ScoreIndicator;
