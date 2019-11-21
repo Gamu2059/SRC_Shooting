@@ -7,9 +7,9 @@ using UnityEngine.UI;
 using UniRx;
 
 /// <summary>
-/// BestScoreを表示
+/// BestScoreを表示する
 /// </summary>
-public class BestScoreIndicator : MonoBehaviour
+public class BestScoreIndicator : ControllableMonoBehavior
 {
     [SerializeField]
     private Text m_OutText;

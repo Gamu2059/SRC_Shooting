@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 33ae002c4fe1d5f46aa881a4cafa485c
+guid: 3be22cc87b68a0b49aafde455af70b67
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -82,28 +82,17 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: iPhone
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 33
+    textureFormat: -1
     textureCompression: 1
-    compressionQuality: 0
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 512
-    resizeAlgorithm: 0
-    textureFormat: 47
-    textureCompression: 1
-    compressionQuality: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -119,12 +108,12 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: d87d5f0ade1fe5c4fb4541e59a498a96
+    spriteID: 
     vertices: []
     indices: 
     edges: []
     weights: []
-  spritePackingTag: Frame
+  spritePackingTag: battle real
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

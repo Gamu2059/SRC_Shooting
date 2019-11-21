@@ -9,51 +9,54 @@ using UniRx;
 /// <summary>
 /// Scoreを表示する
 /// </summary>
-public class ScoreIndicator : MonoBehaviour
+public class ScoreIndicator : ControllableMonoBehavior
 {
-    private enum DisplayOnConsole{
-        ENABLE,
-        DISABLE,
-    }
-
-    [SerializeField]
-    private DisplayOnConsole m_DisplayOnConsole;
-
     [SerializeField]
     private Text m_OutText;
 
-    private FloatReactiveProperty m_Score;  
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private bool m_IsShowOnConsole;
+
+    private double m_PreScore;
+
+    #region Game Cycle
+
+    public override void OnStart()
     {
-        if (BattleRealPlayerManager.Instance != null){
-            RegisterScore();
-        } else {
-            BattleRealPlayerManager.OnStartAction += RegisterScore;
+        base.OnStart();
+
+        var battleData = DataManager.Instance.BattleData;
+        m_PreScore = battleData.Score;
+        Show((int)m_PreScore);
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        var battleData = DataManager.Instance.BattleData;
+        if (m_PreScore != battleData.Score)
+        {
+            m_PreScore = battleData.Score;
+            Show((int)m_PreScore);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion
+
+    /// <summary>
+    /// 指定した値をスコアとして表示する。
+    /// </summary>
+    public void Show(int score)
     {
-        if(BattleRealManager.Instance == null){
-            return;
+        if (m_OutText != null)
+        {
+            m_OutText.text = score.ToString();
         }
-        
-        //if(m_DisplayOnConsole == DisplayOnConsole.ENABLE){
-            
-        //    if(m_Score == null){
-        //        return;
-        //    }
 
-        //    Debug.Log(string.Format("{0}", m_Score.Value));
-        //}
-    }
-
-    private void RegisterScore()
-    {
-        //m_Score = BattleRealPlayerManager.Instance.GetCurrentScore();
-        //m_Score.SubscribeToText(m_OutText);
+        if (m_IsShowOnConsole)
+        {
+            Debug.LogFormat("Score : {0}", score);
+        }
     }
 }
