@@ -8,9 +8,19 @@ using UnityEngine;
 public class BattleData
 {
     /// <summary>
+    /// ゲームモード
+    /// </summary>
+    public E_GAME_MODE GameMode { get; private set; }
+
+    /// <summary>
+    /// ステージ
+    /// </summary>
+    public E_STAGE Stage { get; private set; }
+
+    /// <summary>
     /// 残機
     /// </summary>
-    public int RemainPlayer { get; private set; }
+    public int PlayerLife { get; private set; }
 
     /// <summary>
     /// 同じ挑戦条件のベストスコア
@@ -52,6 +62,9 @@ public class BattleData
     public BattleData(BattleRealPlayerLevelParamSet playerLevelParamSet)
     {
         m_PlayerLevelParamSet = playerLevelParamSet;
+
+        GameMode = E_GAME_MODE.STORY;
+        Stage = E_STAGE.NORMAL_1;
     }
 
     public void ResetAll()
@@ -59,22 +72,22 @@ public class BattleData
 
     }
 
-    #region Remain Player
+    #region Player Life
 
-    public void ResetRemainPlayer()
+    public void ResetPlayerLife()
     {
         // パラメータで設定できるようにしたい
-        RemainPlayer = 3;
+        PlayerLife = 3;
     }
 
-    public void IncreaseRemainPlayer()
+    public void IncreasePlayerLife()
     {
-        RemainPlayer++;
+        PlayerLife++;
     }
 
-    public void DecreaseRemainPlayer()
+    public void DecreasePlayerLife()
     {
-        RemainPlayer = Mathf.Max(RemainPlayer -1 , 0);
+        PlayerLife = Mathf.Max(PlayerLife -1 , 0);
     }
 
     #endregion

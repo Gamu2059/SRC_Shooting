@@ -23,9 +23,9 @@ public class ScoreIndicator : ControllableMonoBehavior
 
     #region Game Cycle
 
-    public override void OnStart()
+    public override void OnInitialize()
     {
-        base.OnStart();
+        base.OnInitialize();
 
         m_PreScore = GetScore();
         Show((int)m_PreScore);

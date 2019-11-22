@@ -14,10 +14,17 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [Header("UI")]
 
     [SerializeField]
+    private Text m_ModeIndicator;
+
+    [SerializeField]
+    private Text m_StageIndicator;
+
+    [SerializeField]
     private ScoreIndicator m_BestScoreIndicator;
 
     [SerializeField]
     private ScoreIndicator m_ScoreIndicator;
+
 
 
     [Header("ゲーム終了時のやつ")]

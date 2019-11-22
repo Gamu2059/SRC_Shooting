@@ -7,6 +7,11 @@ using UnityEngine;
 /// </summary>
 public class DataManager : ControllableObject
 {
+    #region Field
+
+
+    #endregion
+
     public static DataManager Instance {
         get {
             if (GameManager.Instance == null)
