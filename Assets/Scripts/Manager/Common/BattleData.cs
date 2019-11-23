@@ -8,9 +8,19 @@ using UnityEngine;
 public class BattleData
 {
     /// <summary>
+    /// ゲームモード
+    /// </summary>
+    public E_GAME_MODE GameMode { get; private set; }
+
+    /// <summary>
+    /// ステージ
+    /// </summary>
+    public E_STAGE Stage { get; private set; }
+
+    /// <summary>
     /// 残機
     /// </summary>
-    public int RemainPlayer { get; private set; }
+    public int PlayerLife { get; private set; }
 
     /// <summary>
     /// 同じ挑戦条件のベストスコア
@@ -42,6 +52,8 @@ public class BattleData
     /// </summary>
     public float EnergyCharge { get; private set; }
 
+    public float MaxEnergyCharge { get; private set; }
+
     /// <summary>
     /// ハッキング成功回数
     /// </summary>
@@ -52,6 +64,12 @@ public class BattleData
     public BattleData(BattleRealPlayerLevelParamSet playerLevelParamSet)
     {
         m_PlayerLevelParamSet = playerLevelParamSet;
+
+        GameMode = E_GAME_MODE.STORY;
+        Stage = E_STAGE.NORMAL_1;
+
+        PlayerLife = 3;
+        MaxEnergyCharge = 1000;
     }
 
     public void ResetAll()
@@ -59,22 +77,27 @@ public class BattleData
 
     }
 
-    #region Remain Player
+    public BattleRealPlayerLevel GetCurrentLevelParam()
+    {
+        return m_PlayerLevelParamSet.PlayerLevels[Level];
+    }
 
-    public void ResetRemainPlayer()
+    #region Player Life
+
+    public void ResetPlayerLife()
     {
         // パラメータで設定できるようにしたい
-        RemainPlayer = 3;
+        PlayerLife = 3;
     }
 
-    public void IncreaseRemainPlayer()
+    public void IncreasePlayerLife()
     {
-        RemainPlayer++;
+        PlayerLife++;
     }
 
-    public void DecreaseRemainPlayer()
+    public void DecreasePlayerLife()
     {
-        RemainPlayer = Mathf.Max(RemainPlayer -1 , 0);
+        PlayerLife = Mathf.Max(PlayerLife -1 , 0);
     }
 
     #endregion
@@ -125,33 +148,39 @@ public class BattleData
 
     public void AddExp(int exp)
     {
-        Exp += exp;
-
-        var currentExp = Exp;
-        var currentLevel = Level;
-
         var levelNum = m_PlayerLevelParamSet.PlayerLevels.Length;
 
         // スコア増加(レベルMAXの時)
-        if (currentLevel == levelNum - 1)
+        if (Level == levelNum - 1)
         {
             AddScore(exp);
             return;
         }
 
-        currentExp += exp;
-        var expParamSet = m_PlayerLevelParamSet.PlayerLevels[currentLevel];
+        var addedExp = Exp + exp;
+        var expParamSet = GetCurrentLevelParam();
 
-        if (currentExp >= expParamSet.NecessaryExpToLevelUpNextLevel)
+        while (addedExp >= expParamSet.NecessaryExpToLevelUpNextLevel)
         {
             Level++;
-            currentExp %= expParamSet.NecessaryExpToLevelUpNextLevel;
+            if (Level == levelNum - 1)
+            {
+                addedExp = 0;
+            }
+            else
+            {
+                addedExp %= expParamSet.NecessaryExpToLevelUpNextLevel;
+            }
+
+            expParamSet = GetCurrentLevelParam();
         }
 
-        Exp = currentExp;
+        Exp = addedExp;
     }
 
     #endregion
+
+    #region Energy
 
     /// <summary>
     /// エナジーチャージを増やす。
@@ -166,6 +195,8 @@ public class BattleData
         //     currentCharge %= m_PlayerState.BombCharge;
         // }
     }
+
+    #endregion
 
     #region Hacking Succeed Count 
 

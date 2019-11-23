@@ -28,10 +28,6 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
 
     [SerializeField]
-    private bool m_IsNormalWeapon;
-    public bool IsNormalWeapon => m_IsNormalWeapon;
-
-    [SerializeField]
     private bool m_IsLaserType;
     public bool IsLaserType => m_IsLaserType;
 }

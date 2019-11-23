@@ -167,8 +167,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_OnEnd = EndOnEnd,
         });
 
-        m_BattleRealStageManager.OnInitialize();
-        m_BattleHackingStageManager.OnInitialize();
+        BattleRealStageManager.OnInitialize();
+        BattleHackingStageManager.OnInitialize();
 
         RealManager = new BattleRealManager(m_ParamSet.BattleRealParamSet);
         HackingManager = new BattleHackingManager(m_ParamSet.BattleHackingParamSet);
@@ -176,26 +176,26 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.OnInitialize();
         HackingManager.OnInitialize();
 
-        m_BattleRealPlayableManager.OnInitialize();
+        BattleRealPlayableManager.OnInitialize();
 
-        m_BattleRealUiManager.OnInitialize();
-        m_BattleHackingUiManager.OnInitialize();
+        BattleRealUiManager.OnInitialize();
+        BattleHackingUiManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_STATE.START);
     }
 
     public override void OnFinalize()
     {
-        m_BattleHackingUiManager.OnFinalize();
-        m_BattleRealUiManager.OnFinalize();
+        BattleHackingUiManager.OnFinalize();
+        BattleRealUiManager.OnFinalize();
 
-        m_BattleRealPlayableManager.OnFinalize();
+        BattleRealPlayableManager.OnFinalize();
 
         HackingManager.OnFinalize();
         RealManager.OnFinalize();
 
-        m_BattleHackingStageManager.OnFinalize();
-        m_BattleRealStageManager.OnFinalize();
+        BattleHackingStageManager.OnFinalize();
+        BattleRealStageManager.OnFinalize();
 
         base.OnFinalize();
     }
@@ -226,6 +226,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnStart();
         HackingManager.OnStart();
+
+        BattleRealUiManager.OnStart();
+        BattleHackingUiManager.OnStart();
 
         m_BattleRealStageManager.gameObject.SetActive(true);
         m_BattleHackingStageManager.gameObject.SetActive(false);
@@ -283,18 +286,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnRealMode()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnRealMode()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnRealMode()
@@ -319,18 +331,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnHackingMode()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnHackingMode()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnHackingMode()
@@ -618,6 +639,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     }
 
+    /// <summary>
+    /// ボス戦に遷移する。
+    /// </summary>
     public void GotoBossEvent()
     {
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);

@@ -469,13 +469,13 @@ public class BattleRealManager : ControllableObject
     {
         PlayerManager.SetPlayerActive(false);
         var battleData = DataManager.Instance.BattleData;
-        if (battleData.RemainPlayer < 1)
+        if (battleData.PlayerLife < 1)
         {
             BattleManager.Instance.GameOver();
         }
         else
         {
-            battleData.DecreaseRemainPlayer();
+            battleData.DecreasePlayerLife();
             var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 2);
             timer.SetTimeoutCallBack(() =>
             {
