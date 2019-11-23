@@ -29,6 +29,11 @@ public class BattleHackingManager : ControllableObject
     private bool m_IsDeadPlayer;
     private bool m_IsDeadBoss;
 
+    public float CurrentRemainTime { get; private set; }
+    public float MaxRemainTime { get; private set; }
+    public float CurrentRemainBonusTime { get; private set; }
+    public float MaxRemainBonusTime { get; private set; }
+
     #endregion
 
     public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
@@ -281,6 +286,12 @@ public class BattleHackingManager : ControllableObject
         m_IsDeadPlayer = false;
         m_IsDeadBoss = false;
 
+        CurrentRemainTime = 20;
+        MaxRemainTime = 20;
+        // ボーナスタイムはアイテムの取得数に応じる
+        CurrentRemainBonusTime = 10;
+        MaxRemainBonusTime = 10;
+
         PlayerManager.OnPrepare(m_LevelParamSet);
         EnemyManager.OnPrepare(m_LevelParamSet);
     }
@@ -367,6 +378,24 @@ public class BattleHackingManager : ControllableObject
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
         CollisionManager.OnFixedUpdate();
+
+        if (CurrentRemainBonusTime <= 0)
+        {
+            CurrentRemainTime -= Time.fixedDeltaTime;
+            if (CurrentRemainTime <= 0)
+            {
+                CurrentRemainTime = 0;
+                RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+            }
+        }
+        else
+        {
+            CurrentRemainBonusTime -= Time.fixedDeltaTime;
+            if (CurrentRemainBonusTime <= 0)
+            {
+                CurrentRemainBonusTime = 0;
+            }
+        }
     }
 
     private void EndOnGame()
