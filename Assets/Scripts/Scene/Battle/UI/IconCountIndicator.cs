@@ -33,7 +33,7 @@ public class IconCountIndicator : ControllableMonoBehavior
         base.OnInitialize();
 
         m_PreCount = GetValueCount();
-        ShowCount(m_PreCount, false);
+        ShowCountOnForce(m_PreCount);
     }
 
     public override void OnUpdate()
@@ -57,17 +57,28 @@ public class IconCountIndicator : ControllableMonoBehavior
         switch (m_CountType)
         {
             case E_COUNT_TYPE.LIFE:
-                return battleData.PlayerLife;
+                // 残機は1の時に1個目が表示されてほしいので、-1
+                return battleData.PlayerLife - 1;
             case E_COUNT_TYPE.LEVEL:
+                // レベルは0の時に1個目が表示されてほしいので、そのまま
                 return battleData.Level;
             case E_COUNT_TYPE.ENERGY:
-                return battleData.EnergyCount;
+                // エナジーは1の時に1個目が表示されてほしいので、-1
+                return battleData.EnergyCount - 1;
         }
 
         return 0;
     }
+    public void ShowCountOnForce(int count)
+    {
+        for (int i = 0; i < m_Icons.Length; i++)
+        {
+            var icon = m_Icons[i];
+            icon.SetEnable(i <= count);
+        }
+    }
 
-    public void ShowCount(int count, bool withAnimation = true)
+    public void ShowCount(int count)
     {
         for (int i = 0; i < m_Icons.Length; i++)
         {
@@ -85,10 +96,7 @@ public class IconCountIndicator : ControllableMonoBehavior
                 if (i <= count)
                 {
                     icon.SetEnable(true);
-                    if (withAnimation)
-                    {
-                        icon.PlayAnimation();
-                    }
+                    icon.PlayAnimation();
                 }
             }
         }

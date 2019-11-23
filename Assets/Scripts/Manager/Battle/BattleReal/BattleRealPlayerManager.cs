@@ -50,11 +50,9 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     private BattleRealPlayerController m_Player;
     public BattleRealPlayerController Player => m_Player;
 
-    public bool IsNormalWeapon { get; private set; }
-
     public bool IsLaserType { get; private set; }
 
-    public static Action OnStartAction;
+    public Action<bool> OnChangeWeaponType;
 
     #endregion
 
@@ -82,11 +80,11 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         base.OnInitialize();
 
         IsLaserType = m_ParamSet.IsLaserType;
-        IsNormalWeapon = m_ParamSet.IsNormalWeapon;
     }
 
     public override void OnFinalize()
     {
+        OnChangeWeaponType = null;
         base.OnFinalize();
     }
 
@@ -109,9 +107,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         InitPlayerPosition();
         m_Player.OnInitialize();
         m_Player.OnStart();
-
-        OnStartAction?.Invoke();
-        OnStartAction = null;
     }
 
     public override void OnUpdate()
@@ -143,42 +138,37 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         // 移動直後に位置制限を掛ける
         RestrictPlayerPosition();
 
-        if (IsNormalWeapon)
+        if (input.Shot == E_INPUT_STATE.STAY)
         {
-            if (input.Shot == E_INPUT_STATE.STAY)
-            {
-                Player.ShotBullet();
-            }
+            Player.ShotBullet();
         }
-        else
-        {
-            if (input.Shot == E_INPUT_STATE.STAY)
-            {
-                if (IsLaserType)
-                {
-                    Player.ChargeLaser();
-                }
-                else
-                {
-                    Player.ChargeBomb();
-                }
-            }
-            else if (input.Shot == E_INPUT_STATE.UP)
-            {
-                if (IsLaserType)
-                {
-                    Player.ShotLaser();
-                }
-                else
-                {
-                    Player.ShotBomb();
-                }
-            }
-        }
+        //if (input.Shot == E_INPUT_STATE.STAY)
+        //{
+        //    if (IsLaserType)
+        //    {
+        //        Player.ChargeLaser();
+        //    }
+        //    else
+        //    {
+        //        Player.ChargeBomb();
+        //    }
+        //}
+        //else if (input.Shot == E_INPUT_STATE.UP)
+        //{
+        //    if (IsLaserType)
+        //    {
+        //        Player.ShotLaser();
+        //    }
+        //    else
+        //    {
+        //        Player.ShotBomb();
+        //    }
+        //}
 
         if (input.ChangeMode == E_INPUT_STATE.DOWN)
         {
-            IsNormalWeapon = !IsNormalWeapon;
+            IsLaserType = !IsLaserType;
+            OnChangeWeaponType?.Invoke(IsLaserType);
         }
 
         if (input.Cancel == E_INPUT_STATE.DOWN) {

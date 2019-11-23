@@ -33,7 +33,7 @@ public class IconIndicator : ControllableMonoBehavior
 
     public void SetEnable(bool isEnable)
     {
-        IsEnable = IsEnable;
+        IsEnable = isEnable;
         m_Image.color = IsEnable ? m_EnableColor : m_DisableColor;
     }
 }

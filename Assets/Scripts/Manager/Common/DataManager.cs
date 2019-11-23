@@ -9,7 +9,6 @@ public class DataManager : ControllableObject
 {
     #region Field
 
-
     #endregion
 
     public static DataManager Instance {
