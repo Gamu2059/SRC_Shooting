@@ -13,13 +13,8 @@ public class CharaController : BattleRealObjectBase
     [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
     private BulletSetParam m_BulletSetParam;
 
-    [Header("キャラの基礎ステータス")]
-
-    [SerializeField, Tooltip("キャラの現在HP")]
-    private float m_NowHp;
-
-    [SerializeField, Tooltip("キャラの最大HP")]
-    private float m_MaxHp;
+    public float NowHp{get; private set;}
+    public float MaxHp{get; private set;}
 
     #endregion
 
@@ -172,7 +167,7 @@ public class CharaController : BattleRealObjectBase
     /// <param name="hp">最大HP</param>
     public void InitHp(float hp)
     {
-        m_MaxHp = m_NowHp = hp;
+        MaxHp = NowHp = hp;
     }
 
     /// <summary>
@@ -185,7 +180,7 @@ public class CharaController : BattleRealObjectBase
             return;
         }
 
-        m_NowHp = Mathf.Clamp(m_NowHp + recover, 0, m_MaxHp);
+        NowHp = Mathf.Clamp(NowHp + recover, 0, MaxHp);
 
         OnRecover();
     }
@@ -206,10 +201,10 @@ public class CharaController : BattleRealObjectBase
             return;
         }
 
-        m_NowHp = Mathf.Clamp(m_NowHp - damage, 0, m_MaxHp);
+        NowHp = Mathf.Clamp(NowHp - damage, 0, MaxHp);
         OnDamage();
 
-        if (m_NowHp == 0)
+        if (NowHp == 0)
         {
             Dead();
         }

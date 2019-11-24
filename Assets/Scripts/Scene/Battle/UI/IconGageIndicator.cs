@@ -16,6 +16,7 @@ public class IconGageIndicator : ControllableMonoBehavior
     {
         LEVEL,
         ENERGY,
+        BOSS_HP,
     }
 
     [SerializeField]
@@ -25,6 +26,8 @@ public class IconGageIndicator : ControllableMonoBehavior
     private E_VALUE_TYPE m_ValueType;
 
     private float m_PreRate;
+
+    private BattleRealEnemyController m_Boss;
 
     #region Game Cycle
 
@@ -50,6 +53,20 @@ public class IconGageIndicator : ControllableMonoBehavior
 
     #endregion
 
+    private BattleRealEnemyController GetBoss(){
+        if(m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE){
+            return m_Boss;
+        }
+
+        m_Boss = null;
+        var enemies = BattleRealEnemyManager.Instance.Enemies;
+        foreach (var e in enemies)
+        {
+            m_Boss = e;            
+        }
+        return m_Boss;
+    }
+
     private float GetValueRate()
     {
         var battleData = DataManager.Instance.BattleData;
@@ -64,6 +81,12 @@ public class IconGageIndicator : ControllableMonoBehavior
                 float energy = battleData.EnergyCharge;
                 float maxEnergy = battleData.MaxEnergyCharge;
                 return energy / maxEnergy;
+            case E_VALUE_TYPE.BOSS_HP:
+                var boss = GetBoss();
+                if(boss == null){
+                    return 0;
+                }
+                return boss.NowHp / boss.MaxHp;       
         }
 
         return 0;

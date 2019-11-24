@@ -42,7 +42,13 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     [SerializeField]
     private WeaponIndicator m_WeaponIndicator;
-
+    [SerializeField]
+    private IconGageIndicator m_BossHpGage;
+    /* [SerializeField]
+    private IconGageIndicator m_BossDownGage;
+ */
+    [SerializeField]
+    private GameObject m_BossUI;
 
 
     [Header("ゲーム終了時のやつ")]
@@ -80,10 +86,14 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_EnergyIcon.OnInitialize();
         m_EnergyGage.OnInitialize();
         m_WeaponIndicator.OnInitialize();
+        m_BossHpGage.OnInitialize();
+        SetEnableBossUI(false);
+        //SetEnableBossDownGage(false);
     }
 
     public override void OnFinalize()
     {
+        m_BossHpGage.OnFinalize();
         m_WeaponIndicator.OnFinalize();
         m_EnergyGage.OnFinalize();
         m_EnergyIcon.OnFinalize();
@@ -92,7 +102,6 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_LifeIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
-
         base.OnFinalize();
     }
 
@@ -108,6 +117,8 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_EnergyIcon.OnUpdate();
         m_EnergyGage.OnUpdate();
         m_WeaponIndicator.OnUpdate();
+        m_BossHpGage.OnUpdate();
+        
     }
 
     #endregion
@@ -126,4 +137,12 @@ public class BattleRealUiManager : ControllableMonoBehavior
     {
         m_GameClear.SetActive(isEnable);
     }
+
+    public void SetEnableBossUI(bool isEnable){
+        m_BossUI.SetActive(isEnable);
+    }
+
+    /* public void SetEnableBossDownGage(bool isEnable){
+        m_BossDownGage.gameObject.SetActive(isEnable);
+    } */
 }
