@@ -70,6 +70,39 @@ public class ExpFields : object
 
 
     /// <summary>
+    /// それぞれの型の各インデックスの説明の配列から、説明付きの単位弾幕パラメータのパラメータ配列を生成する。
+    /// </summary>
+    public ExpFields(string[] boolExps, string[] intExps, string[] floatExps, string[] Vector3Exps,
+        bool[] expBoolArray, int[] expIntArray, float[] expFloatArray, Vector3[] expVector3Array)
+    {
+        expBools = new ExpBool[boolExps.Length];
+        expInts = new ExpInt[intExps.Length];
+        expFloats = new ExpFloat[floatExps.Length];
+        expVector3s = new ExpVector3[Vector3Exps.Length];
+
+        for (int i = 0; i < boolExps.Length; i++)
+        {
+            expBools[i] = new ExpBool(boolExps[i], expBoolArray[i]);
+        }
+
+        for (int i = 0; i < intExps.Length; i++)
+        {
+            expInts[i] = new ExpInt(intExps[i], expIntArray[i]);
+        }
+
+        for (int i = 0; i < floatExps.Length; i++)
+        {
+            expFloats[i] = new ExpFloat(floatExps[i], expFloatArray[i]);
+        }
+
+        for (int i = 0; i < Vector3Exps.Length; i++)
+        {
+            expVector3s[i] = new ExpVector3(Vector3Exps[i], expVector3Array[i]);
+        }
+    }
+
+
+    /// <summary>
     /// bool型のパラメータのみの配列を取得する。
     /// </summary>
     public bool[] GetBoolArray()

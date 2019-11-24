@@ -16,4 +16,11 @@ public class ExpVector3 : object
     {
         m_Exp = exp;
     }
+
+
+    public ExpVector3(string exp,Vector3 value)
+    {
+        m_Exp = exp;
+        m_Vector3 = value;
+    }
 }

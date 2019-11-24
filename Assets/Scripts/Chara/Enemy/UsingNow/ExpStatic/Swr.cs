@@ -57,10 +57,11 @@ public class Swr : ExpAbstract
     public enum FLOAT
     {
         発射間隔,
-        弾速,
-        角速度,
-        弾源円半径,
+        bulletSpeed,
+        angleSpeed,
+        bulletSourceRadius,
         発射位置のブレ範囲の円の半径,
+        angle,
     }
 
 
@@ -76,6 +77,10 @@ public class Swr : ExpAbstract
             "「発射位置」で指定した位置から、これだけ離れた位置から発射する。"
             ,
             "発射位置を、この半径の円の中にランダムでブレさせる。"
+            ,
+            "弾の大きさ"
+            ,
+            "弾源の初期角度"
         };
     }
 

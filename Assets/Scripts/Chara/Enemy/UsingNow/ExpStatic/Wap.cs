@@ -82,6 +82,8 @@ public class Wap : ExpAbstract
             "弾源の回る角加速度"
             ,
             "角度の初期値"
+            ,
+            "弾の大きさ"
         };
     }
 

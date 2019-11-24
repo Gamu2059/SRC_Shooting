@@ -33,51 +33,32 @@ public static class Calc : object
 
 
     /// <summary>
-    /// 2πで割った余りにする。
+    /// 角度にプラスして、一周余り処理をする。
     /// </summary>
-    public static float Modulo2PI(float rad)
+    public static float PlusRad(float rad,float plusRad)
     {
+        rad += plusRad;
         rad %= Mathf.PI * 2;
         return rad;
     }
 
 
     /// <summary>
-    /// オイラー角から角度を計算する。
-    /// </summary>
-    public static float CalcRad(Vector3 eulerAngles)
-    {
-        Vector3 angle = eulerAngles;
-        return (90 - angle.y) * Mathf.Deg2Rad;
-    }
-
-
-    /// <summary>
     /// 半径と偏角から、XZ平面上の3次元ベクトルを取得する。
     /// </summary>
-    public static Vector3 RThetaToVector3(float radius, float rad)
+    public static Vector3 RThetaToVec3(float radius, float rad)
     {
         return new Vector3(radius * Mathf.Cos(rad), 0, radius * Mathf.Sin(rad));
     }
 
 
     /// <summary>
-    /// XZ平面上の3次元ベクトルの差から、相対角度を取得する。
+    /// XZ平面上の3次元ベクトルの差から、v1からv2への相対角度を取得する。
     /// </summary>
-    public static float V3ToRelativeRad(Vector3 v1, Vector3 v2)
+    public static float Vec3ToRelativeRad(Vector3 v1, Vector3 v2)
     {
         Vector3 relativePosition = v2 - v1;
         return Mathf.Atan2(relativePosition.z, relativePosition.x);
-    }
-
-
-    /// <summary>
-    /// 半径から、XZ平面上の円内のランダムな3次元ベクトルを取得する。
-    /// </summary>
-    public static Vector3 RandomCircleInsideToV3(float radius)
-    {
-        Vector2 randomPos = Random.insideUnitCircle * radius;
-        return new Vector3(randomPos.x, 0, randomPos.y);
     }
 
 
@@ -88,7 +69,8 @@ public static class Calc : object
     {
         if (radius != 0)
         {
-            return RandomCircleInsideToV3(radius);
+            Vector2 randomVec2 = Random.insideUnitCircle * radius;
+            return new Vector3(randomVec2.x, 0, randomVec2.y);
         }
         else
         {
@@ -96,11 +78,55 @@ public static class Calc : object
         }
     }
 
+
     /// <summary>
-    /// if文。float型の値を返す。
+    /// プレイヤーの位置を取得する。
     /// </summary>
-    public static float floatIf(bool b,float t,float f)
+    public static Vector3 GetPlayerPosition()
     {
-        if (b) return t; else return f;
+        return BattleHackingPlayerManager.Instance.Player.transform.position;
     }
 }
+
+
+
+
+///// <summary>
+///// 2πで割った余りにする。
+///// </summary>
+//public static float Modulo2PI(float rad)
+//{
+//    rad %= Mathf.PI * 2;
+//    return rad;
+//}
+
+
+// なんだこれ(いらない)
+
+///// <summary>
+///// オイラー角から角度を計算する。
+///// </summary>
+//public static float CalcRad(Vector3 eulerAngles)
+//{
+//    Vector3 angle = eulerAngles;
+//    return (90 - angle.y) * Mathf.Deg2Rad;
+//}
+
+
+///// <summary>
+///// 半径から、XZ平面上の円内のランダムな3次元ベクトルを取得する。
+///// </summary>
+//public static Vector3 RandomCircleInsideToV3(float radius)
+//{
+//    Vector2 randomVec2 = Random.insideUnitCircle * radius;
+//    return new Vector3(randomVec2.x, 0, randomVec2.y);
+//}
+
+
+///// <summary>
+///// if文。float型の値を返す。
+///// </summary>
+//public static float floatIf(bool b, float t, float f)
+//{
+//    if (b) return t; else return f;
+//}

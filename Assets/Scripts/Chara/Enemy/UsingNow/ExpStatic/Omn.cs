@@ -76,6 +76,7 @@ public class Omn : ExpAbstract
         shotBlurRadius,
         shotAngle,
         dSpeed,
+        bulletScale,
     }
 
 
@@ -93,6 +94,8 @@ public class Omn : ExpAbstract
             "一周を1とした時の値。例えば直角なら4分の1。"
             ,
             "弾速差"
+            ,
+            "弾の大きさ"
         };
     }
 

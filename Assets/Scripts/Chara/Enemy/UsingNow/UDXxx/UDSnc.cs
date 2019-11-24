@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UDIdr : RegularIntervalUDAbstract
+public class UDSnc : RegularIntervalUDAbstract
 {
 
     /// <summary>
@@ -19,11 +19,8 @@ public class UDIdr : RegularIntervalUDAbstract
     public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
 
-        // メソッド使用ではないが、新しく変数を宣言しているわけでもない。（これらもCalcクラスのメソッドにするか。）
-        m_Float[(int)Idr.FLOAT.sourceAngle] += m_Float[(int)Idr.FLOAT.sourceAngleSpeed] * m_Float[(int)Idr.FLOAT.shotInterval];
-        m_Float[(int)Idr.FLOAT.sourceAngle] %= Mathf.PI * 2;
-        m_Float[(int)Idr.FLOAT.angle] += m_Float[(int)Idr.FLOAT.angleSpeed] * m_Float[(int)Idr.FLOAT.shotInterval];
-        m_Float[(int)Idr.FLOAT.angle] %= Mathf.PI * 2;
+        m_Float[(int)Snc.FLOAT.sourceAngle] += m_Float[(int)Snc.FLOAT.sourceAngleSpeed] * m_Float[(int)Snc.FLOAT.shotInterval];
+        m_Float[(int)Snc.FLOAT.sourceAngle] %= Mathf.PI * 2;
 
         CVLMWa cVLMWa = new CVLMWa(
             new CVLM(

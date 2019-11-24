@@ -71,7 +71,7 @@ public class CVLMWaRaSp : CVLM
                 // wayによる角度差
                 float wayRad = Mathf.PI * 2 * i / m_Way;
 
-                Vector3 wayPos = Calc.RThetaToVector3(m_Radius, m_VelocityRad + wayRad);
+                Vector3 wayPos = Calc.RThetaToVec3(m_Radius, m_VelocityRad + wayRad);
 
                 ShootDpoDraDsp(wayPos, wayRad, dSpeed);
             }

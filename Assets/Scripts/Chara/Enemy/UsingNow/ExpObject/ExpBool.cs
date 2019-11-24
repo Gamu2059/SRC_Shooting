@@ -16,4 +16,11 @@ public class ExpBool : object
     {
         m_Exp = exp;
     }
+
+
+    public ExpBool(string exp,bool value)
+    {
+        m_Exp = exp;
+        m_Bool = value;
+    }
 }
