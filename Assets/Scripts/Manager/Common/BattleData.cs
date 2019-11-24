@@ -162,17 +162,16 @@ public class BattleData
 
         while (addedExp >= expParamSet.NecessaryExpToLevelUpNextLevel)
         {
-            Level++;
-            if (Level == levelNum - 1)
-            {
-                addedExp = 0;
-            }
-            else
-            {
+            if(Level < levelNum - 1){
                 addedExp %= expParamSet.NecessaryExpToLevelUpNextLevel;
+                Level++;
             }
 
             expParamSet = GetCurrentLevelParam();
+        }
+
+        if(Level == levelNum -1){
+            addedExp = GetCurrentLevelParam().NecessaryExpToLevelUpNextLevel;
         }
 
         Exp = addedExp;
@@ -198,7 +197,7 @@ public class BattleData
 
     #endregion
 
-    #region Hacking Succeed Count 
+    #region Hacking Succeed Count
 
     public void ResetHackingSucceedCount()
     {
