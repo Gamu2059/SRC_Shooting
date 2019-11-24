@@ -44,9 +44,9 @@ public class BattleRealUiManager : ControllableMonoBehavior
     private WeaponIndicator m_WeaponIndicator;
     [SerializeField]
     private IconGageIndicator m_BossHpGage;
-    /* [SerializeField]
+    [SerializeField]
     private IconGageIndicator m_BossDownGage;
- */
+
     [SerializeField]
     private GameObject m_BossUI;
 
@@ -87,12 +87,13 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_EnergyGage.OnInitialize();
         m_WeaponIndicator.OnInitialize();
         m_BossHpGage.OnInitialize();
+        m_BossDownGage.OnInitialize();
         SetEnableBossUI(false);
-        //SetEnableBossDownGage(false);
     }
 
     public override void OnFinalize()
     {
+        m_BossDownGage.OnFinalize();
         m_BossHpGage.OnFinalize();
         m_WeaponIndicator.OnFinalize();
         m_EnergyGage.OnFinalize();
@@ -118,6 +119,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_EnergyGage.OnUpdate();
         m_WeaponIndicator.OnUpdate();
         m_BossHpGage.OnUpdate();
+        m_BossDownGage.OnUpdate();
         
     }
 
@@ -141,8 +143,4 @@ public class BattleRealUiManager : ControllableMonoBehavior
     public void SetEnableBossUI(bool isEnable){
         m_BossUI.SetActive(isEnable);
     }
-
-    /* public void SetEnableBossDownGage(bool isEnable){
-        m_BossDownGage.gameObject.SetActive(isEnable);
-    } */
 }
