@@ -79,6 +79,8 @@ public class Lis : ExpAbstract
             "y軸方向の振幅"
             ,
             "y軸方向の各振動数"
+            ,
+            "弾の大きさ"
         };
     }
 

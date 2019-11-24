@@ -66,8 +66,6 @@ public class Snc : ExpAbstract
         bulletSourceRadius,
         sourceAngle,
         sourceAngleSpeed,
-        angle,
-        angleSpeed,
     }
 
 

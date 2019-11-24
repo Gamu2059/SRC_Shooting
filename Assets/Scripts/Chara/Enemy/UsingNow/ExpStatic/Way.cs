@@ -61,6 +61,7 @@ public class Way : ExpAbstract
         dAngle,
         bulletSourceRadius,
         shotBlurRadius,
+        bulletScale,
     }
 
 
@@ -76,6 +77,8 @@ public class Way : ExpAbstract
             "「発射位置」で指定した位置から、これだけ離れた位置から発射する。"
             ,
             "発射位置を、この半径の円の中にランダムでブレさせる。"
+            ,
+            "弾の大きさ"
         };
     }
 

@@ -18,43 +18,28 @@ public class UDWay : RegularIntervalUDAbstract
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
     public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
-        Vector3 posRandomZure;
 
-        if (m_Float[(int)Way.FLOAT.shotBlurRadius] != 0)
-        {
-            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Way.FLOAT.shotBlurRadius]);
-        }
-        else
-        {
-            posRandomZure = Vector3.zero;
-        }
-
-
-        // これ以降で使うフィールドは、bool値によらず必ず使うものだけを使う。
-
-        float centerRad = V3ToRelativeRad(enemyController.GetEnemy().transform.position + m_Vector3[(int)Way.VECTOR3.shotAvePosition] + posRandomZure,
-            BattleHackingPlayerManager.Instance.Player.transform.position);
-
-        for (int i = -(m_Int[(int)Way.INT.way] - 1); i <= m_Int[(int)Way.INT.way] - 1; i += 2)
-        {
-            // 1つの弾の角度
-            float rad = centerRad + Mathf.PI * 2 * i * m_Float[(int)Way.FLOAT.dAngle] / 2;
-
-            CVLM cVLMShotParam = new CVLM(
+        CVLMWyDrRa cVLMShotParam = new CVLMWyDrRa(
+            new CVLM(
                 enemyController,
                 m_Int[(int)Way.INT.bulletIndex],
-                enemyController.GetEnemy().transform.position,
-                rad,
+                Vector3.zero,
+                0,
                 m_Float[(int)Way.FLOAT.bulletSpeed],
                 dTime
+                ),
+                m_Int[(int)Way.INT.way],
+                m_Float[(int)Way.FLOAT.dAngle],
+                m_Float[(int)Way.FLOAT.bulletSourceRadius]
                 );
 
-            cVLMShotParam.PlusPosition(m_Vector3[(int)Way.VECTOR3.shotAvePosition]);
-            cVLMShotParam.PlusPosition(posRandomZure);
-            cVLMShotParam.PlusPosition(RThetaToVector3(m_Float[(int)Way.FLOAT.bulletSourceRadius], rad));
+        cVLMShotParam.PlusPosition(enemyController.GetEnemy().transform.position);
+        cVLMShotParam.PlusPosition(m_Vector3[(int)Way.VECTOR3.shotAvePosition]);
+        cVLMShotParam.PlusPosition(Calc.RandomCircleInsideToV3AndZero(m_Float[(int)Way.FLOAT.shotBlurRadius]));
 
-            cVLMShotParam.Shoot();
-        }
+        cVLMShotParam.PlusAngle(V3ToRelativeAngle(cVLMShotParam.Position, Calc.GetPlayerPosition()));
+
+        cVLMShotParam.Shoot();
     }
 }
 
@@ -114,3 +99,31 @@ public class UDWay : RegularIntervalUDAbstract
 
 
 //ShotTouchokuBullet(enemyController, m_Int[(int)Way.INT.bulletIndex], pos, rad, m_Float[(int)Way.FLOAT.bulletSpeed], dTime);
+
+
+//for (int i = -(m_Int[(int)Way.INT.way] - 1); i <= m_Int[(int)Way.INT.way] - 1; i += 2)
+//{
+//    // 1つの弾の角度
+//    float rad = centerRad + Mathf.PI * 2 * i * m_Float[(int)Way.FLOAT.dAngle] / 2;
+
+
+//cVLMShotParam.PlusPosition(RThetaToVector3(m_Float[(int)Way.FLOAT.bulletSourceRadius], rad));
+
+
+//}
+
+
+//Vector3 posRandomZure;
+
+//        if (m_Float[(int)Way.FLOAT.shotBlurRadius] != 0)
+//        {
+//            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Way.FLOAT.shotBlurRadius]);
+//        }
+//        else
+//        {
+//            posRandomZure = Vector3.zero;
+//        }
+
+
+//        float centerRad = V3ToRelativeAngle(enemyController.GetEnemy().transform.position + m_Vector3[(int)Way.VECTOR3.shotAvePosition] + posRandomZure,
+//            BattleHackingPlayerManager.Instance.Player.transform.position);

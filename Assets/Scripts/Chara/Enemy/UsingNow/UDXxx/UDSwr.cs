@@ -3,56 +3,77 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UDSwr : DanmakuCountAbstract2
+public class UDSwr : RegularIntervalUDAbstract
 {
 
-    // 現在のあるべき発射回数を計算する(小数)
-    public override float CalcNowShotNum(float time)
+    /// <summary>
+    /// 発射間隔を取得する。
+    /// </summary>
+    public override float GetShotInterval()
     {
-        return time / m_Float[(int)Swr.FLOAT.発射間隔];
-    }
-
-
-    // 発射時刻を計算する
-    public override float CalcLaunchTime()
-    {
-        return m_Float[(int)Swr.FLOAT.発射間隔] * m_RealShotNum;
+        return m_Float[(int)Omn.FLOAT.shotInterval];
     }
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
     public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
-        Vector3 posRandomZure;
 
-        if (m_Float[(int)Swr.FLOAT.発射位置のブレ範囲の円の半径] != 0)
-        {
-            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Swr.FLOAT.発射位置のブレ範囲の円の半径]);
-        }
-        else
-        {
-            posRandomZure = Vector3.zero;
-        }
+        // intとか基本型をメソッドで書き換えたい
+        // パラメータ自体を書き換える時はこうするしかないか
+        m_Float[(int)Swr.FLOAT.angle] = Calc.PlusRad(m_Float[(int)Swr.FLOAT.angle], m_Float[(int)Swr.FLOAT.angleSpeed]);
 
 
-        // 発射角度
-        float angle = m_Float[(int)Swr.FLOAT.角速度] * m_RealShotNum;
-        //float angle = m_Float[(int)Swr.FLOAT.角速度] * m_RealShotNum * m_Float[(int)Swr.FLOAT.発射間隔];
-        angle = angle % Mathf.PI * 2;
+        CVLMWaRa cVLMWaRaSp = new CVLMWaRa(
+        new CVLM(
+            enemyController,
+            m_Int[(int)Swr.INT.bulletIndex],
+            Vector3.zero,
+            m_Float[(int)Swr.FLOAT.angle],
+            m_Float[(int)Swr.FLOAT.bulletSpeed],
+            dTime
+            ),
+        m_Int[(int)Swr.INT.way],
+        m_Float[(int)Swr.FLOAT.bulletSourceRadius]
+        );
 
-        for (int i = 0; i < m_Int[(int)Swr.INT.way]; i++)
-        {
-            // 1つの弾の角度
-            float rad = angle + Mathf.PI * 2 * i / m_Int[(int)Swr.INT.way];
+        cVLMWaRaSp.PlusPosition(enemyController.GetEnemy().transform.position);
+        cVLMWaRaSp.PlusPosition(m_Vector3[(int)Swr.VECTOR3.発射平均位置]);
+        cVLMWaRaSp.PlusPosition(Calc.RandomCircleInsideToV3AndZero(m_Float[(int)Swr.FLOAT.発射位置のブレ範囲の円の半径]));
 
-            // 発射された弾の現在の位置
-            Vector3 pos;
-            pos = enemyController.GetEnemy().transform.position;
-            pos += m_Vector3[(int)Swr.VECTOR3.発射平均位置];
-            pos += posRandomZure;
-            pos += RThetaToVector3(m_Float[(int)Swr.FLOAT.弾源円半径], rad);
-
-            ShotTouchokuBullet(enemyController, m_Int[(int)Swr.INT.bulletIndex], pos, rad, m_Float[(int)Swr.FLOAT.弾速], dTime);
-        }
+        cVLMWaRaSp.Shoot();
     }
 }
+
+
+
+
+//Vector3 posRandomZure;
+
+//if (m_Float[(int)Swr.FLOAT.発射位置のブレ範囲の円の半径] != 0)
+//{
+//    posRandomZure = RandomCircleInsideToV3(m_Float[(int)Swr.FLOAT.発射位置のブレ範囲の円の半径]);
+//}
+//else
+//{
+//    posRandomZure = Vector3.zero;
+//}
+
+
+// 発射角度
+//float angle = m_Float[(int)Swr.FLOAT.角速度] * m_RealShotNum;
+////float angle = m_Float[(int)Swr.FLOAT.角速度] * m_RealShotNum * m_Float[(int)Swr.FLOAT.発射間隔];
+//angle = angle % Mathf.PI * 2;
+
+
+//for (int i = 0; i < m_Int[(int)Swr.INT.way]; i++)
+//{
+//    // 1つの弾の角度
+//    float rad = m_Float[(int)Swr.FLOAT.angle] + Mathf.PI * 2 * i / m_Int[(int)Swr.INT.way];
+
+
+//}
+
+
+//m_Float[(int)Swr.FLOAT.angle] += m_Float[(int)Swr.FLOAT.角速度];
+//m_Float[(int)Swr.FLOAT.angle] %= Calc.TWO_PI;

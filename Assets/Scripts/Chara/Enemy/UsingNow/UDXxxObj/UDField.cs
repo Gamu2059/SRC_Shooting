@@ -62,7 +62,21 @@ public class UDField : ScriptableObject
     [ContextMenu("EUDを反映させる")]
     public void ReflectEUD()
     {
-        Debug.Log("ReflectEUD");
+
+        m_EUDExp = m_EUD + "\n\n" + EUDS.EUDToExpObject(m_EUD).GetExp();
+
+        ExpAbstract expAbstract = EUDS.EUDToExpObject(m_EUD);
+
+        m_ExpFields = new ExpFields(expAbstract.GetBoolExps12(), expAbstract.GetIntExps12(), expAbstract.GetFloatExps12(), expAbstract.GetVector3Exps12());
+    }
+
+
+    /// <summary>
+    /// 入力した単位弾幕の種類に応じて、各パラメータの説明を表示する。(パラメータを残す)
+    /// </summary>
+    [ContextMenu("EUDを反映させる（パラメータを残す）")]
+    public void ReflectEUDRemaining()
+    {
 
         m_EUDExp = m_EUD + "\n\n" + EUDS.EUDToExpObject(m_EUD).GetExp();
 

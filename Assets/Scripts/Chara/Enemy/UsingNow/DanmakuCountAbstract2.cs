@@ -83,7 +83,7 @@ public abstract class DanmakuCountAbstract2 : System.Object
     }
 
 
-    public float V3ToRelativeRad(Vector3 v1, Vector3 v2)
+    public float V3ToRelativeAngle(Vector3 v1, Vector3 v2)
     {
         Vector3 relativePosition = v2 - v1;
         return Mathf.Atan2(relativePosition.z, relativePosition.x);

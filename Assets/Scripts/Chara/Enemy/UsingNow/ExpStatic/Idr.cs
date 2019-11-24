@@ -87,6 +87,8 @@ public class Idr : ExpAbstract
             "発射角度の初期値"
             ,
             "発射角度の角速度"
+            ,
+            "弾の大きさ"
         };
     }
 

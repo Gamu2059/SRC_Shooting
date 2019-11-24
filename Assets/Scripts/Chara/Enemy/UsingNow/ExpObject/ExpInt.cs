@@ -16,4 +16,11 @@ public class ExpInt : object
     {
         m_Exp = exp;
     }
+
+
+    public ExpInt(string exp,int value)
+    {
+        m_Exp = exp;
+        m_Int = value;
+    }
 }

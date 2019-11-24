@@ -21,66 +21,12 @@ public class UDOmn : RegularIntervalUDAbstract
     public override void ShotBullets(BattleHackingBossBehavior enemyController, float launchTime, float dTime)
     {
 
-        // この部分は後々消す
-
-        Vector3 posRandomZure;
-
-        if (m_Float[(int)Omn.FLOAT.shotBlurRadius] != 0)
-        {
-            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Omn.FLOAT.shotBlurRadius]);
-        }
-        else
-        {
-            posRandomZure = Vector3.zero;
-        }
-
-
-        //float posVeloRad;
-
-        //if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
-        //{
-        //    posVeloRad = Mathf.PI / 2;
-        //}
-        //else
-        //{
-        //    posVeloRad = 0;
-        //}
-
-
-        float rad0;
-
-        if (m_Bool[(int)Omn.BOOL.isShotAngleDefined])
-        {
-            rad0 = Mathf.PI * 2 * m_Float[(int)Omn.FLOAT.shotAngle];
-        }
-        else
-        {
-            if (m_Bool[(int)Omn.BOOL.isPlayerDependent])
-            {
-                rad0 = V3ToRelativeRad(enemyController.GetEnemy().transform.position + m_Vector3[(int)Omn.VECTOR3.shotAvePosition] + posRandomZure, BattleHackingPlayerManager.Instance.Player.transform.position);
-
-                if (m_Bool[(int)Omn.BOOL.isAimingAtPlayer])
-                {
-                    
-                }
-                else
-                {
-                    rad0 += Mathf.PI * 2 / m_Int[(int)Omn.INT.way] / 2;
-                }
-            }
-            else
-            {
-                rad0 = Random.Range(0, Mathf.PI * 2);
-            }
-        }
-
-
         CVLMWaRaSp cVLMWaRaSp = new CVLMWaRaSp(
             new CVLM(
                 enemyController,
                 m_Int[(int)Omn.INT.bulletIndex],
                 Vector3.zero,
-                rad0 + Calc.floatIf(m_Bool[(int)Omn.BOOL.isTurnRightAngle], Calc.HALF_PI,0),
+                0,
                 m_Float[(int)Omn.FLOAT.bulletSpeed],
                 dTime
                 ),
@@ -94,9 +40,34 @@ public class UDOmn : RegularIntervalUDAbstract
         cVLMWaRaSp.PlusPosition(m_Vector3[(int)Omn.VECTOR3.shotAvePosition]);
         cVLMWaRaSp.PlusPosition(Calc.RandomCircleInsideToV3AndZero(m_Float[(int)Omn.FLOAT.shotBlurRadius]));
 
-        cVLMWaRaSp.Shoot();
+        if (m_Bool[(int)Omn.BOOL.isShotAngleDefined])
+        {
+            cVLMWaRaSp.PlusAngle(Calc.TWO_PI * m_Float[(int)Omn.FLOAT.shotAngle]);
+        }
+        else
+        {
+            if (m_Bool[(int)Omn.BOOL.isPlayerDependent])
+            {
+                cVLMWaRaSp.PlusAngle(V3ToRelativeAngle(cVLMWaRaSp.Position, Calc.GetPlayerPosition()));
 
-        //Debug.Log("UDOnm.ShotBullets");
+                if (m_Bool[(int)Omn.BOOL.isAimingAtPlayer])
+                {
+
+                }
+                else
+                {
+                    cVLMWaRaSp.PlusAngle(Mathf.PI * 2 / m_Int[(int)Omn.INT.way] / 2);
+                }
+            }
+            else
+            {
+                cVLMWaRaSp.PlusAngle(Random.Range(0, Mathf.PI * 2));
+            }
+        }
+
+        cVLMWaRaSp.PlusAngle(m_Bool[(int)Omn.BOOL.isTurnRightAngle] ? Calc.HALF_PI : 0);
+
+        cVLMWaRaSp.Shoot();
     }
 }
 
@@ -384,3 +355,27 @@ public class UDOmn : RegularIntervalUDAbstract
 
 //    ShotTouchokuWayRadiusBullet(enemyController, m_Int[(int)Omn.INT.bulletIndex], pos, rad0 + posVeloRad, bulletSpeed, dTime, m_Int[(int)Omn.INT.way], m_Float[(int)Omn.FLOAT.bulletSourceRadius]);
 //}
+
+
+//float posVeloRad;
+
+//if (m_Bool[(int)Omn.BOOL.isTurnRightAngle])
+//{
+//    posVeloRad = Mathf.PI / 2;
+//}
+//else
+//{
+//    posVeloRad = 0;
+//}
+
+
+//Vector3 posRandomZure;
+
+//        if (m_Float[(int)Omn.FLOAT.shotBlurRadius] != 0)
+//        {
+//            posRandomZure = RandomCircleInsideToV3(m_Float[(int)Omn.FLOAT.shotBlurRadius]);
+//        }
+//        else
+//        {
+//            posRandomZure = Vector3.zero;
+//        }

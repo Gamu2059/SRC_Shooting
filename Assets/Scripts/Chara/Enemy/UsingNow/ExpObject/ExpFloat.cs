@@ -16,4 +16,11 @@ public class ExpFloat : object
     {
         m_Exp = exp;
     }
+
+
+    public ExpFloat(string exp,float value)
+    {
+        m_Exp = exp;
+        m_Float = value;
+    }
 }
