@@ -24,20 +24,17 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     [Header("State")]
 
-    [SerializeField]
-    private FloatReactiveProperty m_CurrentScore;
+    //[SerializeField]
+    //private IntReactiveProperty m_CurrentLevel;
 
-    [SerializeField]
-    private IntReactiveProperty m_CurrentLevel;
+    //[SerializeField]
+    //private IntReactiveProperty m_CurrentExp;
 
-    [SerializeField]
-    private IntReactiveProperty m_CurrentExp;
+    //[SerializeField]
+    //private FloatReactiveProperty m_CurrentBombCharge;
 
-    [SerializeField]
-    private FloatReactiveProperty m_CurrentBombCharge;
-
-    [SerializeField]
-    private IntReactiveProperty m_CurrentBombNum;
+    //[SerializeField]
+    //private IntReactiveProperty m_CurrentBombNum;
 
     #endregion
 
@@ -53,45 +50,9 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     private BattleRealPlayerController m_Player;
     public BattleRealPlayerController Player => m_Player;
 
-    public bool IsNormalWeapon { get; private set; }
-
     public bool IsLaserType { get; private set; }
 
-    public static Action OnStartAction;
-
-    #endregion
-
-    #region Get Set
-
-    public FloatReactiveProperty GetCurrentScore()
-    {
-        return m_CurrentScore;
-    }
-
-    public IntReactiveProperty GetCurrentLevel()
-    {
-        return m_CurrentLevel;
-    }
-
-    public IntReactiveProperty GetCurrentExp()
-    {
-        return m_CurrentExp;
-    }
-
-    public FloatReactiveProperty GetCurrentBombCharge()
-    {
-        return m_CurrentBombCharge;
-    }
-
-    public IntReactiveProperty GetCurrentBombNum()
-    {
-        return m_CurrentBombNum;
-    }
-
-    public BattleRealPlayerExpParamSet[] GetRealPlayerExpParamSet()
-    {
-        return m_ParamSet.BattleRealPlayerExpParamSets;
-    }
+    public Action<bool> OnChangeWeaponType;
 
     #endregion
 
@@ -119,11 +80,11 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         base.OnInitialize();
 
         IsLaserType = m_ParamSet.IsLaserType;
-        IsNormalWeapon = m_ParamSet.IsNormalWeapon;
     }
 
     public override void OnFinalize()
     {
+        OnChangeWeaponType = null;
         base.OnFinalize();
     }
 
@@ -146,11 +107,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         InitPlayerPosition();
         m_Player.OnInitialize();
         m_Player.OnStart();
-
-        InitPlayerState();
-
-        OnStartAction?.Invoke();
-        OnStartAction = null;
     }
 
     public override void OnUpdate()
@@ -182,42 +138,37 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         // 移動直後に位置制限を掛ける
         RestrictPlayerPosition();
 
-        if (IsNormalWeapon)
+        if (input.Shot == E_INPUT_STATE.STAY)
         {
-            if (input.Shot == E_INPUT_STATE.STAY)
-            {
-                Player.ShotBullet();
-            }
+            Player.ShotBullet();
         }
-        else
-        {
-            if (input.Shot == E_INPUT_STATE.STAY)
-            {
-                if (IsLaserType)
-                {
-                    Player.ChargeLaser();
-                }
-                else
-                {
-                    Player.ChargeBomb();
-                }
-            }
-            else if (input.Shot == E_INPUT_STATE.UP)
-            {
-                if (IsLaserType)
-                {
-                    Player.ShotLaser();
-                }
-                else
-                {
-                    Player.ShotBomb();
-                }
-            }
-        }
+        //if (input.Shot == E_INPUT_STATE.STAY)
+        //{
+        //    if (IsLaserType)
+        //    {
+        //        Player.ChargeLaser();
+        //    }
+        //    else
+        //    {
+        //        Player.ChargeBomb();
+        //    }
+        //}
+        //else if (input.Shot == E_INPUT_STATE.UP)
+        //{
+        //    if (IsLaserType)
+        //    {
+        //        Player.ShotLaser();
+        //    }
+        //    else
+        //    {
+        //        Player.ShotBomb();
+        //    }
+        //}
 
         if (input.ChangeMode == E_INPUT_STATE.DOWN)
         {
-            IsNormalWeapon = !IsNormalWeapon;
+            IsLaserType = !IsLaserType;
+            OnChangeWeaponType?.Invoke(IsLaserType);
         }
 
         if (input.Cancel == E_INPUT_STATE.DOWN) {
@@ -292,69 +243,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         pos += m_PlayerCharaHolder.position;
 
         return pos;
-    }
-
-    /// <summary>
-    /// プレイヤーステートを初期化する。
-    /// </summary>
-    public void InitPlayerState()
-    {
-        m_CurrentScore = new FloatReactiveProperty(0);
-        m_CurrentLevel = new IntReactiveProperty(1);
-        m_CurrentExp = new IntReactiveProperty(0);
-        m_CurrentBombCharge = new FloatReactiveProperty(0f);
-        m_CurrentBombNum = new IntReactiveProperty(0);
-    }
-
-    /// <summary>
-    /// スコアを加算する。
-    /// </summary>
-    public void AddScore(float score)
-    {
-        m_CurrentScore.Value += score;
-    }
-
-    /// <summary>
-    /// 経験値を加算する。
-    /// </summary>
-    public void AddExp(int exp)
-    {
-        var currentExp = m_CurrentExp.Value;
-        var currentLevel = m_CurrentLevel.Value - 1;
-
-        if (currentLevel == m_ParamSet.BattleRealPlayerExpParamSets.Length - 1)
-        {
-            // スコア増加(レベルMAXの時)
-            AddScore(exp * 1.0f);
-        }
-        else
-        {
-            // Exp増加(レベルMaxではない時)
-            currentExp += exp;
-            var expParamSet = m_ParamSet.BattleRealPlayerExpParamSets[currentLevel];
-
-            if (currentExp >= expParamSet.NextLevelNecessaryExp)
-            {
-                m_CurrentLevel.Value++;
-                currentExp %= expParamSet.NextLevelNecessaryExp;
-            }
-
-            m_CurrentExp.Value = currentExp;
-        }
-    }
-
-    /// <summary>
-    /// ボムチャージを加算する。
-    /// </summary>
-    public void AddBombCharge(float charge)
-    {
-        // var currentCharge = m_CurrentBombCharge.Value;
-        // currentCharge += charge;
-
-        // if (currentCharge >= m_PlayerState.BombCharge) {
-        //     m_CurrentBombNum.Value++;
-        //     currentCharge %= m_PlayerState.BombCharge;
-        // }
     }
 
     public void ClearColliderFlag()

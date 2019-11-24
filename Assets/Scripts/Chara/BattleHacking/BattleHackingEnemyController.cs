@@ -160,7 +160,7 @@ public class BattleHackingEnemyController : CommandCharaController
 
         if (m_GenerateParamSet != null)
         {
-            BattleRealPlayerManager.Instance.AddScore(m_GenerateParamSet.Score);
+            DataManager.Instance.BattleData.AddScore(m_GenerateParamSet.Score);
         }
 
         if (IsBoss)
