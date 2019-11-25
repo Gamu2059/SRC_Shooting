@@ -166,11 +166,6 @@ public class BattleRealEnemyController : CharaController
         base.OnEnterSufferBullet(sufferData);
 
         var bullet = sufferData.OpponentObject;
-        if (IsSufferEchoBullet(bullet))
-        {
-            return;
-        }
-
         var stageM = BattleRealStageManager.Instance;
         if (stageM.IsOutOfField(transform) || stageM.IsOutOfField(bullet.transform))
         {
@@ -186,7 +181,7 @@ public class BattleRealEnemyController : CharaController
                 var sufferCollider = sufferData.SufferCollider;
                 if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
                 {
-                    Damage(1);
+                    Damage(bullet.GetNowDamage());
                 }
                 break;
         }
@@ -196,6 +191,7 @@ public class BattleRealEnemyController : CharaController
     {
         base.OnStaySufferBullet(sufferData);
 
+        var bullet = sufferData.OpponentObject;
         var hitCollider = sufferData.HitCollider;
         switch (hitCollider.Transform.ColliderType)
         {
@@ -205,7 +201,7 @@ public class BattleRealEnemyController : CharaController
                 var sufferCollider = sufferData.SufferCollider;
                 if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
                 {
-                    Damage(1);
+                    Damage(bullet.GetNowDamage());
                 }
                 break;
         }

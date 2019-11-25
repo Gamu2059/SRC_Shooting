@@ -48,17 +48,21 @@ public class HackerController : BattleRealPlayerController
 
         if (shotDelay >= m_ShotInterval)
         {
+            var level = DataManager.Instance.BattleData.Level;
+
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
                 var shotParam = new BulletShotParam(this);
                 shotParam.Position = m_MainShotPosition[i].transform.position;
-                BulletController.ShotBullet(shotParam);
+                var bullet = BulletController.ShotBullet(shotParam);
+                // 現状は、レベルの値を攻撃力にしてみる
+                bullet.SetNowDamage(level + 1, E_RELATIVE.ABSOLUTE);
             }
             shotDelay = 0;
         }
     }
 
-    public override void ShotLaser() 
+    public override void ShotLaser()
     {
         base.ShotLaser();
 
@@ -76,7 +80,7 @@ public class HackerController : BattleRealPlayerController
     {
         DestroyTimer(INVINSIBLE_KEY);
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, INVINSIBLE_DURATION);
-        timer.SetTimeoutCallBack(()=>
+        timer.SetTimeoutCallBack(() =>
         {
             timer = null;
             SetEnableCollider(true);
