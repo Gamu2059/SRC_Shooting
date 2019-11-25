@@ -43,7 +43,8 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected int m_AttackPhase;
     protected int m_DownPhase;
-    protected float m_DownHp;
+    public float NowDownHp{get; protected set;}
+    public float MaxDownHp{get; protected set;}
     protected int m_HackingSuccessCount;
     protected List<float> m_ChangeAttackHpRates;
 
@@ -289,7 +290,7 @@ public class BattleRealBoss : BattleRealEnemyController
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
         m_CurrentDown = m_DownBehaviors[m_DownPhase];
 
-        m_DownHp = m_BossParamSet.DownHp;
+        MaxDownHp = NowDownHp = m_BossParamSet.DownHp;
         m_HackingSuccessCount = 0;
 
         transform.position = new Vector3(0, 0, 1);
@@ -442,7 +443,7 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         m_AttackPhase = Mathf.Min(m_AttackPhase + 1, m_AttackBehaviors.Count - 1);
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
-        m_DownHp = m_BossParamSet.DownHp;
+        NowDownHp = m_BossParamSet.DownHp;
         RequestChangeState(E_PHASE.ATTACK);
     }
 
@@ -563,10 +564,10 @@ public class BattleRealBoss : BattleRealEnemyController
         if (colliderType == E_COLLIDER_TYPE.CRITICAL)
         {
             var currentState = m_StateMachine.CurrentState.Key;
-            m_DownHp -= 1;
-            if (m_DownHp <= 0 && currentState == E_PHASE.ATTACK)
+            NowDownHp -= 1;
+            if (NowDownHp <= 0 && currentState == E_PHASE.ATTACK)
             {
-                m_DownHp = m_BossParamSet.DownHp;
+                NowDownHp = m_BossParamSet.DownHp;
                 RequestChangeState(E_PHASE.DOWN);
             }
         }

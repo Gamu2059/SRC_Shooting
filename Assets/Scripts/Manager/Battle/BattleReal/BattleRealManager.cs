@@ -555,6 +555,9 @@ public class BattleRealManager : ControllableObject
 
     #region Before Boss Battle Performance State
 
+    /// <summary>
+    /// ボス戦前の演出の処理
+    /// </summary>
     private void StartOnBeforeBossBattlePerformance()
     {
         EnemyGroupManager.CreateBossGroup();
@@ -573,8 +576,14 @@ public class BattleRealManager : ControllableObject
     {
     }
 
+    /// <summary>
+    /// ボス戦前の演出が終わって、ボス戦に突入する直前の処理
+    /// </summary>
     private void EndOnBeforeBossBattlePerformance()
     {
+        // ここにボスHPゲージ表示処理を入れる
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(true);
+        //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(true);
         var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
         AudioManager.Instance.PlayBgm(bossBgmName);
     }
@@ -713,7 +722,9 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGameClear()
     {
-
+        // ここにボスHPゲージ消去処理を入れる
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
+        //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(false);
     }
 
     private void UpdateOnGameClear()
@@ -739,7 +750,9 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGameOver()
     {
-
+        // ここにボスHPゲージ消去処理を入れる
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
+        //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(false);
     }
 
     private void UpdateOnGameOver()
@@ -765,7 +778,7 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnEnd()
     {
-
+        
     }
 
     private void UpdateOnEnd()
