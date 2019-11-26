@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2841,7 +2841,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235440762}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: 0, y: 1.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1360843892}
@@ -2885,7 +2885,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 1
   m_Depth: 2
   m_CullingMask:
@@ -19314,6 +19314,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7071806974401272117, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071806974401272117, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6600833958053083298, guid: dd972c705f691794281cf03ea9915c3d,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -19333,6 +19343,24 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071806974660053127, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071806974660053127, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 292749198, guid: dd972c705f691794281cf03ea9915c3d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 292749198, guid: dd972c705f691794281cf03ea9915c3d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7071806974660053126, guid: dd972c705f691794281cf03ea9915c3d,
         type: 3}
@@ -19358,6 +19386,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285571613381387153, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285571613381387153, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071806974100055082, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071806974100055082, guid: dd972c705f691794281cf03ea9915c3d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd972c705f691794281cf03ea9915c3d, type: 3}
@@ -27344,7 +27392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ParamSet: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
+  m_ParamSet: {fileID: 11400000, guid: 578b476b14cd87a43995df3e2173acb7, type: 2}
   m_BattleRealStageManager: {fileID: 1771546482}
   m_BattleHackingStageManager: {fileID: 1183653724}
   m_BattleRealUiManager: {fileID: 1630913269}
