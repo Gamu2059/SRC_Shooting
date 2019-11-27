@@ -61,6 +61,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     [SerializeField]
     private VideoPlayer m_VideoPlayer = default;
 
+    [Header("GameOver")]
+
+    [SerializeField]
+    private GameOverController m_GameOverController = default;
+
     [Header("Debug")]
 
     [SerializeField]
@@ -289,6 +294,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         BattleRealUiManager.OnUpdate();
         BattleHackingUiManager.OnUpdate();
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            RequestChangeState(E_BATTLE_STATE.GAME_OVER);
+        }
     }
 
     private void LateUpdateOnRealMode()
@@ -543,20 +553,16 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_OVER);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
 
-        m_BattleRealUiManager.SetEnableGameOver(true);
-
         AudioManager.Instance.StopBgm();
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-        {
-            RequestChangeState(E_BATTLE_STATE.END);
-        });
-        TimerManager.Instance.RegistTimer(timer);
+        m_GameOverController.PlayGameOver();
     }
 
     private void UpdateOnGameOver()
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        m_GameOverController.OnUpdate();
     }
 
     private void LateUpdateOnGameOver()

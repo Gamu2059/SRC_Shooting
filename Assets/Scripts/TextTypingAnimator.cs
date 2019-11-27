@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextTypingAnimator : MonoBehaviour {
+public class TextTypingAnimator : ControllableMonoBehavior {
 
     [SerializeField]
     private Text m_Text;
@@ -21,16 +23,24 @@ public class TextTypingAnimator : MonoBehaviour {
     private float m_TimeCount;
     private bool m_IsComplete;
 
-    private void Start () {
+    private bool m_IsAnimating;
+
+    #region Game Cycle
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
         m_Text.text = "";
         m_TimeCount = 0;
         m_CurrentIndex = 0;
         m_IsComplete = false;
+        m_IsAnimating = false;
     }
 
-    private void Update () {
+    public override void OnUpdate () {
 
-        if (m_IsComplete)
+        if (!m_IsAnimating || m_IsComplete)
         {
             return;
         }
@@ -45,10 +55,22 @@ public class TextTypingAnimator : MonoBehaviour {
             }
         }
 
-        m_TimeCount += Time.deltaTime;
+        m_TimeCount += Time.unscaledDeltaTime;
         m_Text.text = m_TargetText.Substring(0, m_CurrentIndex);
         if (m_CurrentIndex >= m_TargetText.Length) {
             m_IsComplete = true;
         }
+    }
+
+    #endregion
+
+    public void StartAnimation()
+    {
+        m_IsAnimating = true;
+    }
+
+    public void StopAnimation()
+    {
+        m_IsAnimating = false;
     }
 }

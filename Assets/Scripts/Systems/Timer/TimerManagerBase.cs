@@ -21,13 +21,11 @@ public abstract class TimerManagerBase : ControllableObject
         base.OnFinalize();
     }
 
-    /// <summary>
-    /// 1秒間に FixedTimeStep * TimeScale 回呼び出される。
-    /// </summary>
-    public override void OnFixedUpdate()
-	{
-		m_TimerController.OnFixedUpdate();
-	}
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+		m_TimerController.OnUpdate();
+    }
 
 	/// <summary>
 	/// タイマーを登録する。

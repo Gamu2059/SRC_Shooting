@@ -1,44 +1,36 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class CustomImageEffect : MonoBehaviour
+public class CustomImageEffect : ControllableMonoBehavior
 {
     [SerializeField]
     private Material m_Material;
 
     [SerializeField]
-    private AnimationCurve m_ShifLevelCurve;
+    private float m_ShiftLevel;
 
-    private bool m_IsPush = false;
-    private float m_Time = 0;
-
-    void Start()
+    public override void OnInitialize()
     {
+        base.OnInitialize();
+
+        m_ShiftLevel = 0;
         m_Material.SetFloat("_ShiftLevel", 0);
     }
 
-    void Update()
+    public override void OnUpdate()
     {
 
-        if (m_IsPush)
-        {
-            // 一定時間後にShiftLevelを上げる
-            var level = m_ShifLevelCurve.Evaluate(m_Time);
-
-            m_Time += Time.deltaTime;
-            // シェーダに数値を渡す
-            m_Material.SetFloat("_ShiftLevel", level);
-        }
-        else if (Input.anyKey)
-        {
-            m_IsPush = true;
-        }
+        m_Material.SetFloat("_ShiftLevel", m_ShiftLevel);
     }
 
-    void OnRenderImage(RenderTexture source, RenderTexture destination)
+    private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         // イメージエフェクトの適用
-        if (m_Material)
+        if (m_Material != null)
+        {
             Graphics.Blit(source, destination, m_Material);
+        }
     }
 }

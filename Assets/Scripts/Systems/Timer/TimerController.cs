@@ -21,10 +21,7 @@ public class TimerController
 		m_TimerCycle = E_TIMER_CYCLE.UPDATE;
 	}
 
-	/// <summary>
-	/// 1秒間に FixedTimeStep * TimeScale 回呼び出される。
-	/// </summary>
-	public void OnFixedUpdate()
+	public void OnUpdate()
 	{
 		if( m_TimerCycle != E_TIMER_CYCLE.UPDATE )
 		{
@@ -35,7 +32,7 @@ public class TimerController
 		{
 			if( timer != null )
 			{
-				timer.OnFixedUpdate();
+				timer.OnUpdate();
 			}
 		}
 
