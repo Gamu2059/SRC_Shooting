@@ -68,7 +68,7 @@ public class BattleData
         GameMode = E_GAME_MODE.STORY;
         Stage = E_STAGE.NORMAL_1;
 
-        PlayerLife = 3;
+        PlayerLife = 0;
         MaxEnergyCharge = 1000;
     }
 

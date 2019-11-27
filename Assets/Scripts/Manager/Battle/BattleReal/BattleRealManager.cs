@@ -471,7 +471,14 @@ public class BattleRealManager : ControllableObject
         var battleData = DataManager.Instance.BattleData;
         if (battleData.PlayerLife < 1)
         {
-            BattleManager.Instance.GameOver();
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 1);
+            timer.SetTimeoutCallBack(() =>
+            {
+                timer = null;
+                BattleManager.Instance.GameOver();
+            });
+            TimerManager.Instance.RegistTimer(timer);
+            Time.timeScale = 0f;
         }
         else
         {
@@ -753,6 +760,8 @@ public class BattleRealManager : ControllableObject
         // ここにボスHPゲージ消去処理を入れる
         BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
         //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(false);
+
+        PlayerManager.SetPlayerActive(false);
     }
 
     private void UpdateOnGameOver()

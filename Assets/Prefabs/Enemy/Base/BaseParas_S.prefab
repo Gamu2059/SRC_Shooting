@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7425188362396140327}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BaseParas_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,6 +42,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ParasuS_H_non_addition
+      objectReference: {fileID: 0}
+    - target: {fileID: 8477499708149043179, guid: cc6cb149adad4574687826b51324ebd8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1713810876448646528, guid: cc6cb149adad4574687826b51324ebd8,
         type: 3}
