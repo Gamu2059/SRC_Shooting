@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -50,7 +50,7 @@ LightmapSettings:
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
-    m_EnvironmentLightingMode: 0
+    m_EnvironmentLightingMode: 1
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
@@ -3129,7 +3129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 3891e5ae93586454294f9368c1242418, type: 2}
+  profile: {fileID: 0}
 --- !u!20 &235440765
 Camera:
   m_ObjectHideFlags: 0
@@ -3354,7 +3354,6 @@ GameObject:
   m_Component:
   - component: {fileID: 260737157}
   - component: {fileID: 260737160}
-  - component: {fileID: 260737158}
   - component: {fileID: 260737162}
   - component: {fileID: 260737161}
   - component: {fileID: 260737163}
@@ -3380,19 +3379,6 @@ Transform:
   m_Father: {fileID: 1360843892}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &260737158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260737156}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 3891e5ae93586454294f9368c1242418, type: 2}
 --- !u!45 &260737159
 Skybox:
   m_ObjectHideFlags: 0
@@ -28330,7 +28316,7 @@ MonoBehaviour:
   m_VideoPlayer: {fileID: 2009328465}
   m_GameOverController: {fileID: 474313381}
   m_IsStartHackingMode: 0
-  m_PlayerNotDead: 0
+  m_PlayerNotDead: 1
   m_IsDrawColliderArea: 0
   m_IsDrawOutSideColliderArea: 0
 --- !u!114 &2075168772
@@ -28345,7 +28331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b5a0e473421004cb3b20532676027c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Scene: 5
+  m_Scene: 3
   m_SceneCycle: 0
   m_ManagerList:
   - {fileID: 2075168771}
