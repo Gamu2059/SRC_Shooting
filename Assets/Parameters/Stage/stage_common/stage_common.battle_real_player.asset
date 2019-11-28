@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b158cc9ad4f2464ea14f1e5c5f8055a, type: 3}
+  m_Name: stage_common.battle_real_player
+  m_EditorClassIdentifier: 
+  m_PlayerPrefab: {fileID: 6915949984067917126, guid: ebef49eadb94bd04195621177871e6c9,
+    type: 3}
+  m_InitAppearViewportPosition: {x: 0.5, y: 0.1}
+  m_PlayerBaseMoveSpeed: 1
+  m_PlayerSlowMoveSpeed: 0.5
+  m_IsLaserType: 1
