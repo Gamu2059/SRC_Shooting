@@ -51,15 +51,15 @@ public class BattleHackingBossBehavior : ControllableObject
         Enemy.transform.eulerAngles = angles;
     }
 
-    public CommandBulletController Shot()
+    public BattleHackingBulletController Shot()
     {
-        return CommandBulletController.ShotBullet(Enemy);
+        return BattleHackingBulletController.ShotBullet(Enemy);
     }
 
-    public CommandBulletController Shot(CommandBulletShotParam p)
+    public BattleHackingBulletController Shot(CommandBulletShotParam p,TrajectoryBase trajectoryBase, Vector3 position,float dTime)
     {
         p.BulletOwner = Enemy;
-        return CommandBulletController.ShotBullet(p);
+        return BattleHackingBulletController.ShotBullet(p, trajectoryBase, position,dTime);
     }
 
     // ボスや攻撃に関わらず共通に使いそうなので、以下に書いておく。

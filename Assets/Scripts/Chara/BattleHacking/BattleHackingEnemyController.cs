@@ -135,7 +135,7 @@ public class BattleHackingEnemyController : CommandCharaController
 
     }
 
-    protected override void OnEnterSufferBullet(HitSufferData<CommandBulletController> sufferData)
+    protected override void OnEnterSufferBullet(HitSufferData<BattleHackingBulletController> sufferData)
     {
         base.OnEnterSufferBullet(sufferData);
 

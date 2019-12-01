@@ -53,13 +53,14 @@ public class BattleHackingPlayerController : CommandCharaController
         for (int i = 0; i < m_ShotPositions.Length; i++)
         {
             shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
-            CommandBulletController.ShotBullet(shotParam);
+            // 結構適当
+            BattleHackingBulletController.ShotBullet(shotParam,new ConstAcceleLinearTrajectory(Calc.HALF_PI,0,5),transform.localPosition,0);
         }
 
         m_ShotTimeCount = m_ShotInterval;
     }
 
-    protected override void OnEnterSufferBullet(HitSufferData<CommandBulletController> sufferData)
+    protected override void OnEnterSufferBullet(HitSufferData<BattleHackingBulletController> sufferData)
     {
         base.OnEnterSufferBullet(sufferData);
 

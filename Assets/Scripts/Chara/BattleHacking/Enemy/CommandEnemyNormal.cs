@@ -31,7 +31,7 @@ public class CommandEnemyNormal : BattleHackingEnemyController
         if (m_ShotTimeCount >= m_ShotInterval)
         {
             m_ShotTimeCount = 0;
-            CommandBulletController.ShotBullet(this);
+            BattleHackingBulletController.ShotBullet(this);
         }
     }
 }

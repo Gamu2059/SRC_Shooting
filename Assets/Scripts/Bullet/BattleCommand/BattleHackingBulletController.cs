@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// コマンドイベントの全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class CommandBulletController : BattleHackingObjectBase
+public class BattleHackingBulletController : BattleHackingObjectBase
 {
     #region Field Inspector
 
@@ -430,7 +430,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// 弾を生成する。
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
-    private static CommandBulletController CreateBullet(CommandCharaController bulletOwner)
+    private static BattleHackingBulletController CreateBullet(CommandCharaController bulletOwner)
     {
         if (bulletOwner == null)
         {
@@ -482,7 +482,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBulletWithoutBulletParam(CommandCharaController bulletOwner, bool isCheck = true)
+    public static BattleHackingBulletController ShotBulletWithoutBulletParam(CommandCharaController bulletOwner, bool isCheck = true)
     {
         var bullet = CreateBullet(bulletOwner);
 
@@ -505,7 +505,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBullet(CommandCharaController bulletOwner, bool isCheck = true)
+    public static BattleHackingBulletController ShotBullet(CommandCharaController bulletOwner, bool isCheck = true)
     {
         var bullet = CreateBullet(bulletOwner);
 
@@ -537,7 +537,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// 指定したパラメータを用いて弾を生成する。
     /// </summary>
     /// <param name="shotParam">弾を発射させるパラメータ</param>
-    private static CommandBulletController CreateBullet(CommandBulletShotParam shotParam)
+    private static BattleHackingBulletController CreateBullet(CommandBulletShotParam shotParam)
     {
         var bulletOwner = shotParam.BulletOwner;
 
@@ -590,7 +590,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBulletWithoutBulletParam(CommandBulletShotParam shotParam, bool isCheck = true)
+    public static BattleHackingBulletController ShotBulletWithoutBulletParam(CommandBulletShotParam shotParam, bool isCheck = true)
     {
         var bullet = CreateBullet(shotParam);
 
@@ -612,7 +612,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="shotParam">発射時のパラメータ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBullet(CommandBulletShotParam shotParam, bool isCheck = true)
+    public static BattleHackingBulletController ShotBullet(CommandBulletShotParam shotParam, TrajectoryBase trajectoryBase, Vector3 position, float dTime, bool isCheck = true)
     {
         var bullet = CreateBullet(shotParam);
 
@@ -638,6 +638,24 @@ public class CommandBulletController : BattleHackingObjectBase
         {
             BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
         }
+
+
+        // 付け加えた部分
+
+        bullet.m_BasePosition = position;
+        //bullet.m_Speed = bulletParam.OrbitalParam.Speed;
+
+        // 本来は、どのクラスで初期化したかはこのクラス内からは見えない（？）
+        bullet.m_TrajectoryBase = trajectoryBase;
+
+        //switch (bullet.trajectoryBase)
+        //{
+        //    case ConstAcceleLinearMotion constAcceleLinearMotion:
+        //        break;
+        //}
+
+        bullet.m_Time = dTime;
+
 
         return bullet;
     }
@@ -809,6 +827,22 @@ public class CommandBulletController : BattleHackingObjectBase
 
     #region Game Cycle
 
+    /// <summary>
+    /// 発射してからの経過時間
+    /// </summary>
+    public float m_Time;
+
+    /// <summary>
+    /// 発射時の敵本体の位置
+    /// </summary>
+    public Vector3 m_BasePosition;
+
+    /// <summary>
+    /// 弾の軌道
+    /// </summary>
+    public TrajectoryBase m_TrajectoryBase;
+
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -837,7 +871,7 @@ public class CommandBulletController : BattleHackingObjectBase
         base.OnFinalize();
     }
 
-    public override void OnUpdate()
+    public void OnUpdates()
     {
         if (m_BulletParam == null)
         {
@@ -864,6 +898,17 @@ public class CommandBulletController : BattleHackingObjectBase
         {
             DestroyBullet();
         }
+    }
+
+    public override void OnUpdate()
+    {
+        m_Time += Time.deltaTime;
+
+        //transform.localPosition = Calc.RThetaToVec3(m_Time * 0.1f, m_Time);
+
+        //transform.localPosition = m_BasePosition + m_Time * transform.forward;
+
+        transform.localPosition = m_TrajectoryBase.GetPosition(m_Time,m_BasePosition);
     }
 
     public override void OnLateUpdate()
@@ -926,3 +971,35 @@ public class CommandBulletController : BattleHackingObjectBase
 
     #endregion
 }
+
+
+
+
+//public override void OnUpdate()
+//{
+//    if (m_BulletParam == null)
+//    {
+//        return;
+//    }
+
+//    SetRotation(GetNowDeltaRotation() * Time.deltaTime, E_RELATIVE.RELATIVE);
+//    SetScale(GetNowDeltaScale() * Time.deltaTime, E_RELATIVE.RELATIVE);
+
+//    SetNowSpeed(GetNowAccel() * Time.deltaTime, E_RELATIVE.RELATIVE);
+
+//    if (m_Target != null)
+//    {
+//        Vector3 targetDeltaPos = m_Target.transform.position - transform.position;
+//        transform.forward = Vector3.Lerp(transform.forward, targetDeltaPos.normalized, m_NowLerp);
+//    }
+
+//    var speed = GetNowSpeed() * Time.deltaTime;
+//    SetPosition(transform.forward * speed, E_RELATIVE.RELATIVE);
+
+//    SetNowLifeTime(Time.deltaTime, E_RELATIVE.RELATIVE);
+
+//    if (GetNowLifeTime() > GetBulletParam().LifeTime)
+//    {
+//        DestroyBullet();
+//    }
+//}

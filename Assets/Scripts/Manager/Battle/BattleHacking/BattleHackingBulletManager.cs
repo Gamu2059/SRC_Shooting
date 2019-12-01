@@ -21,23 +21,23 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     //// <summary>
     /// STANDBY状態の弾を保持するリスト。
     /// </summary>
-    private List<CommandBulletController> m_StandbyBullets;
+    private List<BattleHackingBulletController> m_StandbyBullets;
 
     /// <summary>
     /// UPDATE状態の弾を保持するリスト。
     /// </summary>
-    private List<CommandBulletController> m_UpdateBullets;
-    public List<CommandBulletController> Bullets => m_UpdateBullets;
+    private List<BattleHackingBulletController> m_UpdateBullets;
+    public List<BattleHackingBulletController> Bullets => m_UpdateBullets;
 
     /// <summary>
     /// POOL状態の弾を保持するリスト。
     /// </summary>
-    private List<CommandBulletController> m_PoolBullets;
+    private List<BattleHackingBulletController> m_PoolBullets;
 
     /// <summary>
     /// POOL状態に遷移する弾のリスト。
     /// </summary>
-    private List<CommandBulletController> m_GotoPoolBullets;
+    private List<BattleHackingBulletController> m_GotoPoolBullets;
 
     #endregion
 
@@ -46,7 +46,7 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// UPDATE状態の弾を保持するリストを取得する。
     /// </summary>
-    public List<CommandBulletController> GetUpdateBullets()
+    public List<BattleHackingBulletController> GetUpdateBullets()
     {
         return m_UpdateBullets;
     }
@@ -67,10 +67,10 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     {
         base.OnInitialize();
 
-        m_StandbyBullets = new List<CommandBulletController>();
-        m_UpdateBullets = new List<CommandBulletController>();
-        m_PoolBullets = new List<CommandBulletController>();
-        m_GotoPoolBullets = new List<CommandBulletController>();
+        m_StandbyBullets = new List<BattleHackingBulletController>();
+        m_UpdateBullets = new List<BattleHackingBulletController>();
+        m_PoolBullets = new List<BattleHackingBulletController>();
+        m_GotoPoolBullets = new List<BattleHackingBulletController>();
     }
 
     /// <summary>
@@ -244,7 +244,7 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 弾をSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public void CheckStandbyBullet(CommandBulletController bullet)
+    public void CheckStandbyBullet(BattleHackingBulletController bullet)
     {
         if (bullet == null || !m_PoolBullets.Contains(bullet))
         {
@@ -262,7 +262,7 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 指定した弾を制御から外すためにチェックする。
     /// </summary>
-    public void CheckPoolBullet(CommandBulletController bullet)
+    public void CheckPoolBullet(BattleHackingBulletController bullet)
     {
         if (bullet == null || m_GotoPoolBullets.Contains(bullet))
         {
@@ -279,7 +279,7 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     /// 足りなければ生成する。
     /// </summary>
     /// <param name="bulletPrefab">取得や生成の情報源となる弾のプレハブ</param>
-    public CommandBulletController GetPoolingBullet(CommandBulletController bulletPrefab)
+    public BattleHackingBulletController GetPoolingBullet(BattleHackingBulletController bulletPrefab)
     {
         if (bulletPrefab == null)
         {
@@ -287,7 +287,7 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
         }
 
         string bulletId = bulletPrefab.GetBulletGroupId();
-        CommandBulletController bullet = null;
+        BattleHackingBulletController bullet = null;
 
         foreach (var b in m_PoolBullets)
         {
@@ -330,7 +330,7 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 弾が弾フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    public bool IsOutOfBulletField(CommandBulletController bullet)
+    public bool IsOutOfBulletField(BattleHackingBulletController bullet)
     {
         if (bullet == null)
         {
