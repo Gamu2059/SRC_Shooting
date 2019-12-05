@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28305,7 +28305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ParamSet: {fileID: 11400000, guid: 578b476b14cd87a43995df3e2173acb7, type: 2}
+  m_ParamSet: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
   m_BattleRealStageManager: {fileID: 1771546482}
   m_BattleHackingStageManager: {fileID: 1183653724}
   m_BattleRealUiManager: {fileID: 1630913269}
@@ -28316,7 +28316,7 @@ MonoBehaviour:
   m_VideoPlayer: {fileID: 2009328465}
   m_GameOverController: {fileID: 474313381}
   m_IsStartHackingMode: 0
-  m_PlayerNotDead: 1
+  m_PlayerNotDead: 0
   m_IsDrawColliderArea: 0
   m_IsDrawOutSideColliderArea: 0
 --- !u!114 &2075168772

@@ -625,13 +625,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e0cc4b7c5c1c84f8513456e185b3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsStartFromBeginningScene: 1
-  m_StartScene: 2
+  m_IsStartFromBeginningScene: 0
+  m_StartScene: 3
   m_TransitionInfos:
   - CurrentScene: -1
     NextScene: -1
     AdditiveScene: 
   - CurrentScene: 0
+    NextScene: 1
+    AdditiveScene: 
+  - CurrentScene: 3
     NextScene: 1
     AdditiveScene: 
   m_CurrentInfoNextScene: -1
