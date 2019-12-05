@@ -40,8 +40,6 @@ public class BattleRealEnemyController : CharaController
 
     public bool IsOutOfEnemyField { get; private set; }
 
-    protected ArgumentParamSet m_ParamSet;
-
     #endregion
 
     #region Get & Set
@@ -119,14 +117,6 @@ public class BattleRealEnemyController : CharaController
     }
 
     #endregion
-
-    /// <summary>
-    /// 引数をセットする
-    /// </summary>
-    public virtual void SetArguments(string param)
-    {
-        m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
-    }
 
     public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
@@ -219,6 +209,13 @@ public class BattleRealEnemyController : CharaController
 
         if (m_GenerateParamSet != null)
         {
+            var defeatEffect = m_GenerateParamSet.DefeatEffect;
+            if (defeatEffect != null)
+            {
+                var effect = Instantiate(defeatEffect);
+                effect.transform.position = transform.position;
+            }
+
             BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
 
             var events = m_GenerateParamSet.DefeatEvents;

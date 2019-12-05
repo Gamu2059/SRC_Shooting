@@ -26,4 +26,8 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     [SerializeField, Tooltip("撃破時のイベント")]
     private BattleRealEventContent[] m_DefeatEvents;
     public BattleRealEventContent[] DefeatEvents => m_DefeatEvents;
+
+    [SerializeField, Tooltip("撃破時エフェクト")]
+    private ParticleController m_DefeatEffect;
+    public ParticleController DefeatEffect => m_DefeatEffect;
 }
