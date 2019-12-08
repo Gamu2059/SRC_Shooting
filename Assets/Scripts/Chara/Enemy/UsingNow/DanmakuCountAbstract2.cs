@@ -119,8 +119,15 @@ public abstract class DanmakuCountAbstract2 : System.Object
         // 弾の大きさを変えている。
         CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.8f);
         // とりあえずパラメータは適当に
-        BattleHackingBulletController.ShotBullet(bulletShotParam,new ShunLinearTrajectory(velocityRad, speed * 2, speed, 0.2f, 0.1f),
-            position, dTime);
+        //BattleHackingBulletController.ShotBullet(bulletShotParam,new ShunLinearTrajectory(new TrajectoryBase(position, velocityRad, speed * 2), speed, 0.2f, 0.1f)
+        //    , dTime);
+        BattleHackingBulletController.ShotBullet(
+            bulletShotParam,
+            new SimpleTrajectory(
+                new TransformSimple(position, velocityRad, 0.8f),
+                velocityRad,
+                speed),
+            dTime);
     }
 
 

@@ -86,6 +86,45 @@ public static class Calc : object
     {
         return BattleHackingPlayerManager.Instance.Player.transform.position;
     }
+
+
+    /// <summary>
+    /// 与えられた位置から画面端までの最長距離を取得する。（未使用）（弾の大きさを考えていない）
+    /// </summary>
+    public static float GetLongestDistance(Vector3 position)
+    {
+        float minPositionX = -1;
+        float maxPositionX = 1;
+        float minPositionZ = -1;
+        float maxPositionZ = 1;
+
+        if (position.z >= 0)
+        {
+            // 第一象限なら
+            if (position.x >= 0)
+            {
+                return Vector3.Distance(position, new Vector3(minPositionX,minPositionZ));
+            }
+            // 第二象限なら
+            else
+            {
+                return Vector3.Distance(position, new Vector3(maxPositionX, minPositionZ));
+            }
+        }
+        else
+        {
+            // 第四象限なら
+            if (position.x >= 0)
+            {
+                return Vector3.Distance(position, new Vector3(minPositionX, maxPositionZ));
+            }
+            // 第三象限なら
+            else
+            {
+                return Vector3.Distance(position, new Vector3(maxPositionX, maxPositionZ));
+            }
+        }
+    }
 }
 
 

@@ -54,7 +54,15 @@ public class BattleHackingPlayerController : CommandCharaController
         {
             shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
             // 結構適当
-            BattleHackingBulletController.ShotBullet(shotParam,new ConstAcceleLinearTrajectory(Calc.HALF_PI,0,5),transform.localPosition,0);
+            BattleHackingBulletController.ShotBullet(
+                shotParam,
+                new ConstAcceleLinearTrajectory(
+                    new SimpleTrajectory(
+                        new TransformSimple(transform.localPosition, Calc.HALF_PI, 2),
+                        Calc.HALF_PI,
+                        0.5f),
+                    5),
+                0);
         }
 
         m_ShotTimeCount = m_ShotInterval;

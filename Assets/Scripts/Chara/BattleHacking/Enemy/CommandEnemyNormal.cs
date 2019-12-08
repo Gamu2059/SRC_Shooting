@@ -6,6 +6,7 @@ using UnityEngine;
 
 /// <summary>
 /// コマンドイベントの通常敵。
+/// 勝手にコメントアウトしている部分があります。
 /// </summary>
 public class CommandEnemyNormal : BattleHackingEnemyController
 {
@@ -15,23 +16,23 @@ public class CommandEnemyNormal : BattleHackingEnemyController
     [SerializeField]
     private float m_ShotInterval;
 
-    private float m_ShotTimeCount;
+    //private float m_ShotTimeCount;
 
     public override void OnInitialize()
     {
         base.OnInitialize();
-        m_ShotTimeCount = 0;
+        //m_ShotTimeCount = 0;
     }
 
-    public override void OnUpdate()
-    {
-        base.OnUpdate();
+    //public override void OnUpdate()
+    //{
+    //    base.OnUpdate();
 
-        m_ShotTimeCount += Time.deltaTime;
-        if (m_ShotTimeCount >= m_ShotInterval)
-        {
-            m_ShotTimeCount = 0;
-            BattleHackingBulletController.ShotBullet(this);
-        }
-    }
+    //    m_ShotTimeCount += Time.deltaTime;
+    //    if (m_ShotTimeCount >= m_ShotInterval)
+    //    {
+    //        m_ShotTimeCount = 0;
+    //        BattleHackingBulletController.ShotBullet(this);
+    //    }
+    //}
 }

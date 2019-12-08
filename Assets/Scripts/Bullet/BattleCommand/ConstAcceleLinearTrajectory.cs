@@ -5,18 +5,8 @@ using UnityEngine;
 /// <summary>
 /// 等加速度直線運動する弾のパラメータ（？）。シリアライズする?。
 /// </summary>
-public class ConstAcceleLinearTrajectory : TrajectoryBase
+public class ConstAcceleLinearTrajectory : SimpleTrajectory
 {
-
-    /// <summary>
-    /// 弾の進む向き
-    /// </summary>
-    public float m_Angle;
-
-    /// <summary>
-    /// 速さ
-    /// </summary>
-    public float m_Speed;
 
     /// <summary>
     /// 加速度の大きさ
@@ -27,16 +17,18 @@ public class ConstAcceleLinearTrajectory : TrajectoryBase
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    public ConstAcceleLinearTrajectory(float angle,float speed,float acceleration)
+    public ConstAcceleLinearTrajectory(SimpleTrajectory trajectoryBase, float acceleration) : base(trajectoryBase)
     {
-        m_Angle = angle;
-        m_Speed = speed;
         m_Acceleration = acceleration;
     }
 
 
-    public override Vector3 GetPosition(float time,Vector3 basePosition)
+    public override TransformSimple GetTransform(float time)
     {
-        return basePosition + (m_Speed * time + m_Acceleration * time * time / 2) * Calc.RThetaToVec3(1,m_Angle);
+        return new TransformSimple(
+            m_BaseTransform.m_Position + (m_Speed * time + m_Acceleration * time * time / 2) * Calc.RThetaToVec3(1,m_Angle),
+            m_BaseTransform.m_Angle,
+            m_BaseTransform.m_Scale
+            );
     }
 }
