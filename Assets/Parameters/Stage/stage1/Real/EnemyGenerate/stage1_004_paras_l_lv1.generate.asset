@@ -15,11 +15,7 @@ MonoBehaviour:
   m_Hp: 80
   m_Score: 200
   m_ItemCreateParam:
-    ItemSpreadParams:
-    - Type: 0
-      Num: 4
-      Point: 100
-      SpreadRadius: 0.2
+    ItemSpreadParams: []
     CenterCreateItemType: 7
   m_DefeatEvents:
   - ContentName: "\u30DC\u30B9\u524D\u6483\u7834"

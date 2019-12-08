@@ -15,10 +15,6 @@ MonoBehaviour:
   m_Hp: 150
   m_Score: 1000
   m_ItemCreateParam:
-    ItemSpreadParams:
-    - Type: 0
-      Num: 10
-      Point: 100
-      SpreadRadius: 0.2
+    ItemSpreadParams: []
     CenterCreateItemType: 7
   m_DefeatEvents: []
