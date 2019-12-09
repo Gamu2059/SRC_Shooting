@@ -198,4 +198,10 @@ public class BattleRealCameraManager : ControllableObject
         var camera = GetCameraController(cameraType).Camera;
         return camera.WorldToViewportPoint(worldPosition);
     }
+
+    public void Shake(CameraShakeParam shakeParam, E_CAMERA_TYPE cameraType = E_CAMERA_TYPE.BACK_CAMERA)
+    {
+        var camera = GetCameraController(cameraType);
+        camera.Shake(shakeParam);
+    }
 }

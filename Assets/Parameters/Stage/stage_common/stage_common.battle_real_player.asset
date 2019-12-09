@@ -18,3 +18,15 @@ MonoBehaviour:
   m_PlayerBaseMoveSpeed: 1
   m_PlayerSlowMoveSpeed: 0.5
   m_IsLaserType: 1
+  m_ChargePrefab: {fileID: 5996861524069773491, guid: 70240d28eeba21a44849741025d0d76f,
+    type: 3}
+  m_ChargeRelatedPos: {x: 0, y: 0, z: 0.15}
+  m_BackWavePrefab: {fileID: 7639616373707422010, guid: 4e31cf45318f52d4ab15be8b2c4d2201,
+    type: 3}
+  m_BackWaveRelatedPos: {x: 0, y: 0, z: 0}
+  m_CameraShakeParam:
+    XAmp: 0.15
+    YAmp: 0.15
+    Freq: 50
+    Dec: 5
+    Duration: 3

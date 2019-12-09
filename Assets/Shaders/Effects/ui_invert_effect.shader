@@ -16,9 +16,9 @@ Shader "Custom/UI/Invert"
 
         [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
 
-        _PosX ("Pos X", Float) = 0
-        _PosY ("Pos Y", Float) = 0
-        _Radius ("Radius", Float) = 0
+        _PosX ("_PosX", Float) = 0
+        _PosY ("_PosY", Float) = 0
+        _Radius ("_Radius", Float) = 0
         
         // アスペクト比
         _Aspect ("Aspect", Float) = 1

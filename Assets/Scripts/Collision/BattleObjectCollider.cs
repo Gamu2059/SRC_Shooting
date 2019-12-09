@@ -74,4 +74,17 @@ public class BattleObjectCollider : MonoBehaviour
             c.IsDisable = !isEnable;
         }
     }
+
+    public ColliderTransform GetColliderTransform(E_COLLIDER_TYPE colliderType)
+    {
+        foreach (var t in m_ColliderTransforms)
+        {
+            if (t.ColliderType == colliderType)
+            {
+                return t;
+            }
+        }
+
+        return null;
+    }
 }

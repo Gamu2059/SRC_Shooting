@@ -7,9 +7,16 @@ using UnityEngine.UI;
 
 public class BattleRealUiManager : ControllableMonoBehavior
 {
+    #region Field Inspector
 
     [SerializeField]
     private CanvasGroup m_CanvasGroup;
+
+    [Header("Front View")]
+
+    [SerializeField]
+    private FrontViewEffect m_FrontViewEffect;
+    public FrontViewEffect FrontViewEffect => m_FrontViewEffect;
 
     [Header("Indicator")]
 
@@ -54,10 +61,9 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [Header("ゲーム終了時のやつ")]
 
     [SerializeField]
-    private GameObject m_GameOver;
-
-    [SerializeField]
     private GameObject m_GameClear;
+
+    #endregion
 
 
     #region Game Cycle
@@ -65,7 +71,6 @@ public class BattleRealUiManager : ControllableMonoBehavior
     protected override void OnAwake()
     {
         base.OnAwake();
-        SetEnableGameClear(false);
         SetEnableGameClear(false);
     }
 
@@ -78,6 +83,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_ModeIndicator.text = battleData.GameMode.ToString();
         m_StageIndicator.text = battleData.Stage.ToString().Replace("_", " ");
 
+        m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
         m_LifeIndicator.OnInitialize();
@@ -103,6 +109,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_LifeIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
+        m_FrontViewEffect.OnFinalize();
         base.OnFinalize();
     }
 
@@ -110,6 +117,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     {
         base.OnUpdate();
 
+        m_FrontViewEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
         m_LifeIndicator.OnUpdate();
@@ -128,11 +136,6 @@ public class BattleRealUiManager : ControllableMonoBehavior
     public void SetAlpha(float normalizedAlpha)
     {
         m_CanvasGroup.alpha = normalizedAlpha;
-    }
-
-    public void SetEnableGameOver(bool isEnable)
-    {
-        m_GameOver.SetActive(isEnable);
     }
 
     public void SetEnableGameClear(bool isEnable)

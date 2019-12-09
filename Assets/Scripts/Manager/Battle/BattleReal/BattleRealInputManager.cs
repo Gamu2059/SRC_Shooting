@@ -8,10 +8,12 @@ public class BattleRealInputManager : InputManagerBase
     private const string VERTICAL = "Vertical";
     private const string SUBMIT = "Submit";
     private const string CANCEL = "Cancel";
+    private const string MENU = "Menu";
+
     private const string SHOT = "Shot";
     private const string SLOW = "Slow";
     private const string CHANGE_WEAPON_TYPE = "ChangeWeaponType";
-    private const string MENU = "Menu";
+    private const string CHARGE_SHOT = "Charge Shot";
 
     private KeyCode[] m_DebugKey = new KeyCode[]
     {
@@ -39,6 +41,8 @@ public class BattleRealInputManager : InputManagerBase
 
     public E_INPUT_STATE Slow { get; private set; }
 
+    public E_INPUT_STATE ChargeShot { get; private set; }
+
     public E_INPUT_STATE ChangeMode { get; private set; }
 
     public E_INPUT_STATE Menu { get; private set; }
@@ -62,6 +66,7 @@ public class BattleRealInputManager : InputManagerBase
         Cancel = GetButton(CANCEL);
         Shot = GetButton(SHOT);
         Slow = GetButton(SLOW);
+        ChargeShot = GetButton(CHARGE_SHOT);
         ChangeMode = GetButton(CHANGE_WEAPON_TYPE);
         Menu = GetButton(MENU);
 
@@ -82,6 +87,7 @@ public class BattleRealInputManager : InputManagerBase
         RegisterButton(CANCEL);
         RegisterButton(SHOT);
         RegisterButton(SLOW);
+        RegisterButton(CHARGE_SHOT);
         RegisterButton(CHANGE_WEAPON_TYPE);
         RegisterButton(MENU);
     }
@@ -94,6 +100,7 @@ public class BattleRealInputManager : InputManagerBase
         RemoveButton(CANCEL);
         RemoveButton(SHOT);
         RemoveButton(SLOW);
+        RemoveButton(CHARGE_SHOT);
         RemoveButton(CHANGE_WEAPON_TYPE);
         RemoveButton(MENU);
     }
