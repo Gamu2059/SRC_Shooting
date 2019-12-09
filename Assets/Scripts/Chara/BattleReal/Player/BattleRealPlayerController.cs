@@ -2,33 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// ���A�����[�h�̃v���C���[�R���g���[��
-/// </summary>
 public class BattleRealPlayerController : CharaController
 {
-    /// <summary>
-    /// �v���C���[�L�����̃��C�t�T�C�N��
-    /// </summary>
-    [System.Serializable]
-    public enum E_PLAYER_LIFE_CYCLE
-    {
-        /// <summary>
-        /// �퓬��ʂɂ͏o�Ă��Ȃ�
-        /// </summary>
-        AHEAD,
-
-        /// <summary>
-        /// ���ݐ퓬��
-        /// </summary>
-        SORTIE,
-
-        /// <summary>
-        /// ���S�ɂ��퓬��ʂ���ޏ�
-        /// </summary>
-        DEAD,
-    }
-
     #region Field
 
     private BattleRealPlayerParamSet m_ParamSet;
@@ -41,7 +16,6 @@ public class BattleRealPlayerController : CharaController
 
     private void Start()
     {
-        // �J������p�ŁA�����I�Ƀ}�l�[�W���ɃL������ǉ����邽�߂�Unity��Start��p���Ă��܂�
         BattleRealPlayerManager.RegisterPlayer(this);
     }
 
@@ -76,25 +50,17 @@ public class BattleRealPlayerController : CharaController
         m_ParamSet = paramSet;
     }
 
-    /// <summary>
-    /// �ʏ�e�𔭎˂���B
-    /// </summary>
     public virtual void ShotBullet()
     {
         AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
     }
 
-    public void ChargeLaser()
+    public virtual void ChargeUpdate()
     {
 
     }
 
     public virtual void ShotLaser()
-    {
-
-    }
-
-    public void ChargeBomb()
     {
 
     }

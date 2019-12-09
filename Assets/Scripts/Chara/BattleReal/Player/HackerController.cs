@@ -76,6 +76,13 @@ public class HackerController : BattleRealPlayerController
         m_Laser = BulletController.ShotBullet(param, true);
     }
 
+    public override void ShotBomb()
+    {
+        base.ShotBomb();
+
+
+    }
+
     public override void SetInvinsible()
     {
         DestroyTimer(INVINSIBLE_KEY);
