@@ -16,14 +16,32 @@ public class FrontViewEffect : ControllableMonoBehavior
     [SerializeField]
     private AnimationCurve m_InverseEffectRadiusCurve;
 
+    [SerializeField]
+    private Material m_InverseEffect;
+
     #endregion
 
     #region Field
 
+    private Material m_UseInverseEffect;
     private bool m_IsAnimatingInverseEffect;
     private float m_InverseEffectTimeCount;
 
     #endregion
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+
+        m_UseInverseEffect = Instantiate(m_InverseEffect);
+    }
+
+    public override void OnFinalize()
+    {
+        Destroy(m_UseInverseEffect);
+
+        base.OnFinalize();
+    }
 
     public override void OnUpdate()
     {
@@ -34,7 +52,7 @@ public class FrontViewEffect : ControllableMonoBehavior
             var maxTime = m_InverseEffectRadiusCurve.keys[m_InverseEffectRadiusCurve.keys.Length - 1].time;
             if (m_InverseEffectTimeCount > maxTime)
             {
-                m_IsAnimatingInverseEffect = false;
+                StopInverseEffect();
             }
             else
             {
@@ -54,6 +72,7 @@ public class FrontViewEffect : ControllableMonoBehavior
 
         m_IsAnimatingInverseEffect = true;
         m_InverseEffectTimeCount = 0;
+        m_RawImage.material = m_UseInverseEffect;
         m_RawImage.material.SetFloat("_PosX", centerPos.x);
         m_RawImage.material.SetFloat("_PosY", centerPos.y);
     }

@@ -41,19 +41,13 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     private Vector3 m_ChargeRelatedPos;
     public Vector3 ChargeRelatedPos => m_ChargeRelatedPos;
 
-    [Header("バックウェーブ関連")]
-
-    [SerializeField]
-    private BattleRealEffectController m_BackWavePrefab;
-    public BattleRealEffectController BackWavePrefab => m_BackWavePrefab;
-
-    [SerializeField, Tooltip("バックウェーブの発生相対位置")]
-    private Vector3 m_BackWaveRelatedPos;
-    public Vector3 BackWaveRelatedPos => m_BackWaveRelatedPos;
-
     [Header("カメラウェーブ")]
 
     [SerializeField]
-    private CameraShakeParam m_CameraShakeParam;
-    public CameraShakeParam CameraShakeParam => m_CameraShakeParam;
+    private CameraShakeParam m_LaserShakeParam;
+    public CameraShakeParam LaserShakeParam => m_LaserShakeParam;
+
+    [SerializeField]
+    private CameraShakeParam m_BombShakeParam;
+    public CameraShakeParam BombShakeParam => m_BombShakeParam;
 }
