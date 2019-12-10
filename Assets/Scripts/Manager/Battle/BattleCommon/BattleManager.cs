@@ -186,11 +186,15 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         BattleRealUiManager.OnInitialize();
         BattleHackingUiManager.OnInitialize();
 
+        m_GameOverController.OnInitialize();
+
         RequestChangeState(E_BATTLE_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        m_GameOverController.OnFinalize();
+
         BattleHackingUiManager.OnFinalize();
         BattleRealUiManager.OnFinalize();
 

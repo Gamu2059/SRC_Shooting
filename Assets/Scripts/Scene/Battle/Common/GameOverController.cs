@@ -26,6 +26,14 @@ public class GameOverController : ControllableMonoBehavior
         m_CustomImageEffect.OnInitialize();
     }
 
+    public override void OnFinalize()
+    {
+        m_CustomImageEffect.OnFinalize();
+        m_TextTypingAnimator.OnFinalize();
+
+        base.OnFinalize();
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
