@@ -24,9 +24,15 @@ MonoBehaviour:
   m_BackWavePrefab: {fileID: 7639616373707422010, guid: 4e31cf45318f52d4ab15be8b2c4d2201,
     type: 3}
   m_BackWaveRelatedPos: {x: 0, y: 0, z: 0}
-  m_CameraShakeParam:
-    XAmp: 0.15
-    YAmp: 0.15
+  m_LaserShakeParam:
+    XAmp: 0.3
+    YAmp: 0.3
+    Freq: 50
+    Dec: 3
+    Duration: 3
+  m_BombShakeParam:
+    XAmp: 0.3
+    YAmp: 0.3
     Freq: 50
     Dec: 5
     Duration: 3

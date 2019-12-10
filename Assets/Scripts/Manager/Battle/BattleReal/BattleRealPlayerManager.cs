@@ -278,13 +278,13 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             if (IsLaserType)
             {
                 Player.ShotLaser();
+                BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
             }
             else
             {
                 Player.ShotBomb();
+                BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
             }
-
-            BattleRealCameraManager.Instance.Shake(m_ParamSet.CameraShakeParam);
         }
     }
 }

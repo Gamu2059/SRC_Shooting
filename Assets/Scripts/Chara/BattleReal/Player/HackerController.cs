@@ -112,13 +112,6 @@ public class HackerController : BattleRealPlayerController
         // 現状は、レベルの値を攻撃力にしてみる
         var level = DataManager.Instance.BattleData.Level;
         m_Laser.SetNowDamage(level + 1, E_RELATIVE.ABSOLUTE);
-
-        var laserParam = GetBulletSetParam().GetBombParam(0);
-        var paramSet = BattleRealPlayerManager.Instance.ParamSet;
-        var backWaveEffect = BattleRealEffectManager.Instance.GetPoolingBullet(paramSet.BackWavePrefab, transform);
-        backWaveEffect.IsAllowOwner = true;
-        backWaveEffect.RelatedAllowPos = paramSet.BackWaveRelatedPos;
-        backWaveEffect.Duration = laserParam.LifeTime;
     }
 
     public override void ShotBomb()
@@ -142,7 +135,7 @@ public class HackerController : BattleRealPlayerController
 
         // 現状は、レベルの値を攻撃力にしてみる
         var level = DataManager.Instance.BattleData.Level;
-        m_Bomb.SetNowDamage((level + 1) * 50, E_RELATIVE.ABSOLUTE);
+        m_Bomb.SetNowDamage((level + 1) * 100, E_RELATIVE.ABSOLUTE);
     }
 
     public override void SetInvinsible()

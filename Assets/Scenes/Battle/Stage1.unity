@@ -20245,7 +20245,7 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: a58662dc0be31074f904bd2b70945e72, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -20287,20 +20287,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.3761686
-      outSlope: -0.3761686
+      inSlope: -0.0000069707125
+      outSlope: -0.0000069707125
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.124223605
+      outWeight: 0.08550725
+    - serializedVersion: 3
+      time: 0.14634854
+      value: 0.8827836
+      inSlope: -2.4670184
+      outSlope: -4.7861824
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.09883575
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.2
       value: 0
-      inSlope: -14.362791
+      inSlope: -15.78084
       outSlope: 0
       tangentMode: 65
       weightedMode: 0
-      inWeight: 0.026570037
+      inWeight: 0.02173908
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.3
@@ -20314,6 +20323,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_InverseEffect: {fileID: 2100000, guid: a58662dc0be31074f904bd2b70945e72, type: 2}
 --- !u!1 &1463275388
 GameObject:
   m_ObjectHideFlags: 0
