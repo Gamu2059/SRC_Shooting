@@ -133,24 +133,6 @@ public class BattleRealEnemyController : CharaController
 
     }
 
-    /// <summary>
-    /// 指定した弾がEchoBullet、かつ被弾済みのインデックスならばtrueを返す。
-    /// </summary>
-    protected bool IsSufferEchoBullet(BulletController bullet)
-    {
-        // EchoBulletかつ被弾済みならtrueを返す
-        if (bullet is EchoBullet)
-        {
-            var echoBullet = bullet as EchoBullet;
-            if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(echoBullet.GetRootIndex(), this))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
         base.OnEnterSufferBullet(sufferData);
@@ -187,7 +169,8 @@ public class BattleRealEnemyController : CharaController
         {
             case E_COLLIDER_TYPE.PLAYER_BULLET:
             case E_COLLIDER_TYPE.PLAYER_LASER:
-            case E_COLLIDER_TYPE.PLAYER_BOMB:
+                // ボムは瞬間の当たり判定だけを見る
+                //case E_COLLIDER_TYPE.PLAYER_BOMB:
                 var sufferCollider = sufferData.SufferCollider;
                 if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
                 {

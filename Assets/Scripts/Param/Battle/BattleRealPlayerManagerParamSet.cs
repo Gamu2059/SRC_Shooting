@@ -30,4 +30,30 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     [SerializeField]
     private bool m_IsLaserType;
     public bool IsLaserType => m_IsLaserType;
+
+    [Header("チャージエフェクト関連")]
+
+    [SerializeField, Tooltip("チャージエフェクト")]
+    private BattleRealEffectController m_ChargePrefab;
+    public BattleRealEffectController ChargePrefab => m_ChargePrefab;
+
+    [SerializeField, Tooltip("チャージエフェクトの発生相対位置")]
+    private Vector3 m_ChargeRelatedPos;
+    public Vector3 ChargeRelatedPos => m_ChargeRelatedPos;
+
+    [Header("バックウェーブ関連")]
+
+    [SerializeField]
+    private BattleRealEffectController m_BackWavePrefab;
+    public BattleRealEffectController BackWavePrefab => m_BackWavePrefab;
+
+    [SerializeField, Tooltip("バックウェーブの発生相対位置")]
+    private Vector3 m_BackWaveRelatedPos;
+    public Vector3 BackWaveRelatedPos => m_BackWaveRelatedPos;
+
+    [Header("カメラウェーブ")]
+
+    [SerializeField]
+    private CameraShakeParam m_CameraShakeParam;
+    public CameraShakeParam CameraShakeParam => m_CameraShakeParam;
 }

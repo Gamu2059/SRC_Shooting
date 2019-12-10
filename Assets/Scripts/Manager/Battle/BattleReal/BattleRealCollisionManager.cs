@@ -55,7 +55,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
             return Vector2.one / 2f;
         }
 
-        return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
+        return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y, true);
     }
 
     /// <summary>

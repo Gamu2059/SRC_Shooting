@@ -60,6 +60,11 @@ public class BattleRealPlayerController : CharaController
 
     }
 
+    public virtual void ChargeShot()
+    {
+
+    }
+
     public virtual void ShotLaser()
     {
 

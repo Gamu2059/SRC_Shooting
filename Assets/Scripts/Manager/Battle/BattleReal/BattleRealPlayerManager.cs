@@ -41,6 +41,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     #region Field
 
     private BattleRealPlayerManagerParamSet m_ParamSet;
+    public BattleRealPlayerManagerParamSet ParamSet => m_ParamSet;
 
     private Transform m_PlayerCharaHolder;
 
@@ -142,37 +143,22 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         {
             Player.ShotBullet();
         }
-        //if (input.Shot == E_INPUT_STATE.STAY)
-        //{
-        //    if (IsLaserType)
-        //    {
-        //        Player.ChargeLaser();
-        //    }
-        //    else
-        //    {
-        //        Player.ChargeBomb();
-        //    }
-        //}
-        //else if (input.Shot == E_INPUT_STATE.UP)
-        //{
-        //    if (IsLaserType)
-        //    {
-        //        Player.ShotLaser();
-        //    }
-        //    else
-        //    {
-        //        Player.ShotBomb();
-        //    }
-        //}
+
+        switch (input.ChargeShot)
+        {
+            case E_INPUT_STATE.DOWN:
+            case E_INPUT_STATE.STAY:
+                Player.ChargeUpdate();
+                break;
+            case E_INPUT_STATE.UP:
+                Player.ChargeShot();
+                break;
+        }
 
         if (input.ChangeMode == E_INPUT_STATE.DOWN)
         {
             IsLaserType = !IsLaserType;
             OnChangeWeaponType?.Invoke(IsLaserType);
-        }
-
-        if (input.Cancel == E_INPUT_STATE.DOWN) {
-            BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
 
         m_Player.OnUpdate();
@@ -282,6 +268,23 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         if (Player != null)
         {
             Player.SetInvinsible();
+        }
+    }
+
+    public void ChargeShot()
+    {
+        if (Player != null)
+        {
+            if (IsLaserType)
+            {
+                Player.ShotLaser();
+            }
+            else
+            {
+                Player.ShotBomb();
+            }
+
+            BattleRealCameraManager.Instance.Shake(m_ParamSet.CameraShakeParam);
         }
     }
 }

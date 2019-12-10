@@ -240,7 +240,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(false);
 
         m_BattleRealUiManager.SetEnableGameClear(false);
-        m_BattleRealUiManager.SetEnableGameOver(false);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
     }
