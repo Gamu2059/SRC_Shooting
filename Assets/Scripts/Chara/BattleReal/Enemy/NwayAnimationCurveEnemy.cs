@@ -50,6 +50,6 @@ public class NwayAnimationCurveEnemy : AnimationCurveEnemy
             }
         }
 
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
+        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
     }
 }

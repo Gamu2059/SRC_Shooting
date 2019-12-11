@@ -747,22 +747,22 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// BGMを制御する。
     /// </summary>
-    private void ExecuteControlBgm(ControlBgmParam[] controlBgmParams)
+    private void ExecuteControlBgm(ControlSoundParam[] controlBgmParams)
     {
         foreach (var param in controlBgmParams)
         {
-            switch (param.ControlType)
-            {
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY:
-                    AudioManager.Instance.PlayBgm(param.PlayBgmName);
-                    break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP:
-                    AudioManager.Instance.StopBgm();
-                    break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.CONTROL_AISAC:
-                    AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);
-                    break;
-            }
+            //switch (param.ControlType)
+            //{
+            //    case ControlSoundParam.E_SOUND_CONTROL_TYPE.PLAY:
+            //        AudioManager.Instance.PlayBgm(param.PlayBgmName);
+            //        break;
+            //    case ControlSoundParam.E_SOUND_CONTROL_TYPE.STOP:
+            //        AudioManager.Instance.StopBgm();
+            //        break;
+            //    case ControlSoundParam.E_SOUND_CONTROL_TYPE.CONTROL_AISAC:
+            //        AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);
+            //        break;
+            //}
         }
     }
 

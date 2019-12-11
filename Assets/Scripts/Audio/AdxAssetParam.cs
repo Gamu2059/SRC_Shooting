@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -16,19 +18,15 @@ public class AdxAssetParam : ScriptableObject
         public string Name;
     }
 
-    [Serializable]
-    public struct CueSet
-    {
-        public E_CUE_NAME CueName;
-        public E_CUE_SHEET BelongCueSheet;
-        public string Name;
-    }
-
     [SerializeField]
     private AisacSet[] m_AisacSets;
     public AisacSet[] AisacSets => m_AisacSets;
 
     [SerializeField]
-    private CueSet[] m_CueSets;
-    public CueSet[] CueSets => m_CueSets;
+    private E_CUE_SHEET[] m_BgmCueSheets;
+    public E_CUE_SHEET[] BgmCueSheets => m_BgmCueSheets;
+
+    [SerializeField]
+    private E_CUE_SHEET[] m_SeCueSheets;
+    public E_CUE_SHEET[] SeCueSheets => m_SeCueSheets;
 }

@@ -112,7 +112,7 @@ public struct BattleRealEventContent
 
     [Header("CONTROL_BGM")]
 
-    public ControlBgmParam[] ControlBgmParams;
+    public ControlSoundParam[] ControlBgmParams;
 
     [Header("OPERATE_VARIABLE")]
 

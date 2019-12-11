@@ -663,7 +663,7 @@ public class BattleRealManager : ControllableObject
         BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(true);
         //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(true);
         var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
-        AudioManager.Instance.PlayBgm(bossBgmName);
+        //AudioManager.Instance.PlayBgm(bossBgmName);
     }
 
     #endregion

@@ -357,7 +357,7 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         GetCollider().SetEnableCollider(m_DamageCollider, false);
         BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Down");
+        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Down");
 
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
         timer.SetTimeoutCallBack(() =>

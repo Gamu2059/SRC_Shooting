@@ -276,7 +276,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnRealMode()
     {
         var audio = AudioManager.Instance;
-        audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 0);
+        //audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 0);
 
         m_BattleRealUiManager.SetAlpha(1);
         m_BattleHackingUiManager.SetAlpha(0);
@@ -332,7 +332,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnHackingMode()
     {
         var audio = AudioManager.Instance;
-        audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 1);
+        //audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 1);
 
         m_BattleHackingUiManager.SetAlpha(1);
         m_BattleRealUiManager.SetAlpha(0);
@@ -386,7 +386,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(true);
 
         var audio = AudioManager.Instance;
-        audio.PlaySe(AudioManager.E_SE_GROUP.GLOBAL, m_ParamSet.TransitionToHackingSeName);
+        //audio.PlaySe(AudioManager.E_SE_GROUP.GLOBAL, m_ParamSet.TransitionToHackingSeName);
     }
 
     private void UpdateOnTransitionToHacking()
@@ -403,7 +403,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
 
             var audio = AudioManager.Instance;
-            audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, normalizedTime);
+            //audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, normalizedTime);
         }
         else
         {
@@ -452,7 +452,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(true);
 
         var audio = AudioManager.Instance;
-        audio.PlaySe(AudioManager.E_SE_GROUP.GLOBAL, m_ParamSet.TransitionToRealSeName);
+        //audio.PlaySe(AudioManager.E_SE_GROUP.GLOBAL, m_ParamSet.TransitionToRealSeName);
     }
 
     private void UpdateOnTransitionToReal()
@@ -470,7 +470,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
             var audio = AudioManager.Instance;
             // ハッキングモードから戻す時は逆にしなければならない
-            audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 1 - normalizedTime);
+            //audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 1 - normalizedTime);
         }
         else
         {
@@ -514,7 +514,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         m_BattleRealUiManager.SetEnableGameClear(true);
 
-        AudioManager.Instance.StopBgm();
+        AudioManager.Instance.StopAllBgm();
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
         {
             RequestChangeState(E_BATTLE_STATE.END);
@@ -554,7 +554,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_OVER);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
 
-        AudioManager.Instance.StopBgm();
+        AudioManager.Instance.StopAllBgm();
         m_GameOverController.PlayGameOver();
     }
 

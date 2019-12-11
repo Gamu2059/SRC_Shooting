@@ -7,28 +7,52 @@ using System;
 
 public class AudioManager : ControllableMonoBehavior
 {
+    #region Definition
 
     [Serializable]
-    private struct SeGroup
+    private struct SourceSet
     {
-        public E_CUE_SHEET Group;
+        public E_CUE_SHEET CueSheet;
         public CriAtomSource Source;
     }
 
+    private class OperateAisacData
+    {
+        public OperateAisacParam OperateAisacParam;
+        public float NowTime;
+
+        public OperateAisacData(OperateAisacParam param)
+        {
+            OperateAisacParam = param;
+            NowTime = 0;
+        }
+    }
+
+    #endregion
+
     public static AudioManager Instance => GameManager.Instance.AudioManager;
+
+    #region Field Inspector
 
     [SerializeField]
     private CriWareInitializer m_CriWareInitializer;
 
     [SerializeField]
-    private CriAtomSource m_BgmSource;
+    private SourceSet[] m_SourceSets;
 
-    [SerializeField]
-    private SeGroup[] m_SeGroups;
+    #endregion
 
-    private Dictionary<E_CUE_SHEET, CriAtomSource> m_SeSourceDict;
+    #region Field
+
+    private AdxAssetParam m_AdxAssetParam;
+
+    private Dictionary<E_CUE_SHEET, CriAtomSource> m_SourceDict;
     private Dictionary<E_AISAC_TYPE, string> m_AisacDict;
-    private Dictionary<E_CUE_NAME, AdxAssetParam.CueSet> m_CueDict;
+
+    private List<OperateAisacData> m_ProcessingOperateAisacList;
+    private List<OperateAisacData> m_DestroyOperateAisacList;
+
+    #endregion
 
     #region Game Cycle
 
@@ -39,17 +63,13 @@ public class AudioManager : ControllableMonoBehavior
     /// <param name="adxParam"></param>
     public void SetAdxParam(AdxAssetParam adxParam)
     {
+        m_AdxAssetParam = adxParam;
+
         m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
-        m_CueDict = new Dictionary<E_CUE_NAME, AdxAssetParam.CueSet>();
 
         foreach (var aisacSet in adxParam.AisacSets)
         {
             m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
-        }
-
-        foreach (var cueSet in adxParam.CueSets)
-        {
-            m_CueDict.Add(cueSet.CueName, cueSet);
         }
     }
 
@@ -58,57 +78,167 @@ public class AudioManager : ControllableMonoBehavior
         base.OnInitialize();
         m_CriWareInitializer.Initialize();
 
-        m_SeSourceDict = new Dictionary<E_CUE_SHEET, CriAtomSource>();
-        foreach (var seGroup in m_SeGroups)
+        m_SourceDict = new Dictionary<E_CUE_SHEET, CriAtomSource>();
+        foreach (var sourceSet in m_SourceSets)
         {
-            m_SeSourceDict.Add(seGroup.Group, seGroup.Source);
+            m_SourceDict.Add(sourceSet.CueSheet, sourceSet.Source);
         }
+
+        m_ProcessingOperateAisacList = new List<OperateAisacData>();
+        m_DestroyOperateAisacList = new List<OperateAisacData>();
+    }
+
+    public override void OnFinalize()
+    {
+        m_DestroyOperateAisacList.Clear();
+        m_ProcessingOperateAisacList.Clear();
+        m_SourceDict.Clear();
+
+        m_DestroyOperateAisacList = null;
+        m_ProcessingOperateAisacList = null;
+        m_SourceDict = null;
+
+        m_AdxAssetParam = null;
+
+        base.OnFinalize();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        foreach (var data in m_ProcessingOperateAisacList)
+        {
+            var aisac = data.OperateAisacParam.AisacType;
+            var sheet = data.OperateAisacParam.TargetCueSheet;
+            var anim = data.OperateAisacParam.AnimationValue;
+            var value = anim.Evaluate(data.NowTime);
+            SetAisac(aisac, sheet, value);
+
+            if (data.NowTime > anim.Duration())
+            {
+                m_DestroyOperateAisacList.Add(data);
+                continue;
+            }
+
+            data.NowTime += Time.deltaTime;
+        }
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        foreach (var data in m_DestroyOperateAisacList)
+        {
+            m_ProcessingOperateAisacList.Remove(data);
+        }
+
+        m_DestroyOperateAisacList.Clear();
     }
 
     #endregion
 
-    private CriAtomSource GetSeSource(E_CUE_SHEET sheet)
+    private CriAtomSource GetSource(E_CUE_SHEET sheet)
     {
-        return m_SeSourceDict[sheet];
+        if (m_SourceDict == null || !m_SourceDict.ContainsKey(sheet))
+        {
+            return null;
+        }
+
+        return m_SourceDict[sheet];
     }
 
-    public void PlaySe(E_CUE_NAME cue)
+    private void SetAisac(E_AISAC_TYPE targetAisac, E_CUE_SHEET targetSheet, float value)
     {
-        var cueSet = m_CueDict[cue];
-        var source = GetSeSource(cueSet.BelongCueSheet);
-        source.cueName = cueSet.Name;
+        if (m_AisacDict == null || !m_AisacDict.ContainsKey(targetAisac))
+        {
+            return;
+        }
+
+        var source = GetSource(targetSheet);
+        if (source == null)
+        {
+            return;
+        }
+
+        var aisac = m_AisacDict[targetAisac];
+        source.SetAisacControl(aisac, value);
+    }
+
+    /// <summary>
+    /// サウンドを再生する。
+    /// BGMかSEかは問わない。
+    /// </summary>
+    public void Play(PlaySoundParam playSoundParam)
+    {
+        if (playSoundParam == null)
+        {
+            return;
+        }
+
+        var source = GetSource(playSoundParam.CueSheet);
+        if (source == null)
+        {
+            return;
+        }
+
+        source.cueName = playSoundParam.CueName;
         source.Play();
     }
 
-    public void PlaySe(E_CUE_SHEET sheet, E_CUE_NAME cue)
+    /// <summary>
+    /// サウンドを停止する。
+    /// BGMかSEかは問わない。
+    /// </summary>
+    public void Stop(E_CUE_SHEET target)
     {
-        var cueSet = m_CueDict[cue];
-        var source = GetSeSource(sheet);
-        source.cueName = cueSet.Name;
-        source.Play();
+        var source = GetSource(target);
+        if (source != null)
+        {
+            source.Stop();
+        }
     }
 
-    public void StopSe(E_CUE_SHEET sheet)
+    /// <summary>
+    /// 全てのSEを停止する。
+    /// </summary>
+    public void StopAllSe()
     {
-        var source = GetSeSource(sheet);
-        source.Stop();
+        foreach (var t in m_AdxAssetParam.SeCueSheets)
+        {
+            Stop(t);
+        }
     }
 
-    public void PlayBgm(E_CUE_NAME cue)
+    /// <summary>
+    /// 全てのBGMを停止する。
+    /// </summary>
+    public void StopAllBgm()
     {
-        var cueSet = m_CueDict[cue];
-        m_BgmSource.cueName = cueSet.Name;
-        m_BgmSource.Play();
+        foreach (var t in m_AdxAssetParam.BgmCueSheets)
+        {
+            Stop(t);
+        }
     }
 
-    public void StopBgm()
+    /// <summary>
+    /// AISACを制御する。
+    /// </summary>
+    public void OperateAisac(OperateAisacParam operateAisacParam)
     {
-        m_BgmSource.Stop();
-    }
+        if (operateAisacParam == null)
+        {
+            return;
+        }
 
-    public void SetBgmAisac(E_AISAC_TYPE controlType, float value)
-    {
-        var type = m_AisacDict[controlType];
-        m_BgmSource.SetAisacControl(type, value);
+        if (operateAisacParam.UseAnimationValue)
+        {
+            m_ProcessingOperateAisacList.Add(new OperateAisacData(operateAisacParam));
+        }
+        else
+        {
+            SetAisac(operateAisacParam.AisacType, operateAisacParam.TargetCueSheet, operateAisacParam.ConstantValue);
+        }
     }
 }

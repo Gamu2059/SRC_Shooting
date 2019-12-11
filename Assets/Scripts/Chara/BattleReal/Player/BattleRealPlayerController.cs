@@ -52,7 +52,7 @@ public class BattleRealPlayerController : CharaController
 
     public virtual void ShotBullet()
     {
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
+        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
     }
 
     public virtual void ChargeUpdate()
@@ -141,7 +141,7 @@ public class BattleRealPlayerController : CharaController
             return;
         }
 
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Getitem");
+        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Getitem");
         var battleData = DataManager.Instance.BattleData;
 
         switch (item.ItemType)
@@ -181,7 +181,7 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
+        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
         BattleRealManager.Instance.DeadPlayer();
     }
 

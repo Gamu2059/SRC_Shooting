@@ -17,7 +17,7 @@ public class TitleUiManager : ControllableMonoBehavior
 	{
 		base.OnStart();
 
-        AudioManager.Instance.PlayBgm(BGM_TITLE);
+        //AudioManager.Instance.PlayBgm(BGM_TITLE);
 		m_StartButton.onClick.AddListener( GotoMenu );
 	}
 
@@ -33,8 +33,8 @@ public class TitleUiManager : ControllableMonoBehavior
 
 	private void GotoMenu()
 	{
-        AudioManager.Instance.StopBgm();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.SYSTEM, SE_START);
+        AudioManager.Instance.StopAllBgm();
+        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.SYSTEM, SE_START);
 		BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.STAGE1 );
 	}
 }

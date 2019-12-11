@@ -5,7 +5,5 @@ public enum E_CUE_SHEET
     SYSTEM,
     GLOBAL,
     ENEMY,
-    PLAYER_ATTACK,
-    PLAYER_WEAPON,
-    PLAYER_OTHERS,
+    PLAYER,
 }
