@@ -72,9 +72,9 @@ public class HackerController : BattleRealPlayerController
         }
     }
 
-    public override void ChargeUpdate()
+    public override void ChargeStart()
     {
-        base.ChargeUpdate();
+        base.ChargeStart();
 
         if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
         {
@@ -85,9 +85,9 @@ public class HackerController : BattleRealPlayerController
         }
     }
 
-    public override void ChargeShot()
+    public override void ChargeRelease()
     {
-        base.ChargeShot();
+        base.ChargeRelease();
         BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT_PERFORMANCE);
     }
 

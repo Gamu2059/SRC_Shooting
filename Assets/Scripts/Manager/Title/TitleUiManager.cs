@@ -7,18 +7,21 @@ using UnityEngine.UI;
 
 public class TitleUiManager : ControllableMonoBehavior
 {
-    private const string BGM_TITLE = "BGM_Title";
-    private const string SE_START = "SE_System_Start";
-
 	[SerializeField]
 	private Button m_StartButton;
+
+    [SerializeField]
+    private PlaySoundParam m_TitleBgm;
+
+    [SerializeField]
+    private PlaySoundParam m_StartSe;
 
 	public override void OnStart()
 	{
 		base.OnStart();
 
-        //AudioManager.Instance.PlayBgm(BGM_TITLE);
-		m_StartButton.onClick.AddListener( GotoMenu );
+        AudioManager.Instance.Play(m_TitleBgm);
+        m_StartButton.onClick.AddListener( GotoMenu );
 	}
 
 	public override void OnUpdate()
@@ -34,7 +37,7 @@ public class TitleUiManager : ControllableMonoBehavior
 	private void GotoMenu()
 	{
         AudioManager.Instance.StopAllBgm();
-        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.SYSTEM, SE_START);
-		BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.STAGE1 );
+        AudioManager.Instance.Play(m_StartSe);
+        BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.STAGE1 );
 	}
 }

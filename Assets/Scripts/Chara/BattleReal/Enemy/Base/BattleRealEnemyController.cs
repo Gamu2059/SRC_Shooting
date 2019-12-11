@@ -183,7 +183,7 @@ public class BattleRealEnemyController : CharaController
     protected override void OnDamage()
     {
         base.OnDamage();
-        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Damage");
+        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DamageSe);
     }
 
     public override void Dead()
@@ -212,7 +212,7 @@ public class BattleRealEnemyController : CharaController
             }
         }
 
-        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Break01");
+        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.BreakSe);
         Destroy();
     }
 

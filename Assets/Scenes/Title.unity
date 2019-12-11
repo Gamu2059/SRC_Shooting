@@ -827,6 +827,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartButton: {fileID: 42434675}
+  m_TitleBgm: {fileID: 11400000, guid: c14a470a86af5464ebe960658ada2d26, type: 2}
+  m_StartSe: {fileID: 11400000, guid: a8f3fd1268064da4784985a500b4f698, type: 2}
 --- !u!114 &630446757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,7 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Overall: {fileID: 787157942}
-  m_MotherColony: {fileID: 0}
+  m_MotherColony: {fileID: 161723358}
   m_OverallRotateSpeed: 5
   m_MotherColonyRotateSpeed: -3
 --- !u!1 &687908273

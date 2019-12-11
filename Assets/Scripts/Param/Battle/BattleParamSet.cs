@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -33,36 +35,38 @@ public class BattleParamSet : ScriptableObject
     public AnimationCurve FadeInVideoParam => m_FadeInVideoParam;
 
     [SerializeField]
-    private VideoClip m_TransitionToHackingMovie = default;
-    public VideoClip TransitionToHackingMovie => m_TransitionToHackingMovie;
+    private VideoClip m_ToHackingMovie = default;
+    public VideoClip ToHackingMovie => m_ToHackingMovie;
 
     [SerializeField]
-    private VideoClip m_TransitionToRealMovie = default;
-    public VideoClip TransitionToRealMovie => m_TransitionToRealMovie;
+    private VideoClip m_ToRealMovie = default;
+    public VideoClip ToRealMovie => m_ToRealMovie;
 
     [SerializeField]
-    private string m_TransitionToHackingSeName = default;
-    public string TransitionToHackingSeName => m_TransitionToHackingSeName;
+    private PlaySoundParam m_ToHackingSe;
+    public PlaySoundParam ToHackingSe => m_ToHackingSe;
 
     [SerializeField]
-    private string m_TransitionToRealSeName = default;
-    public string TransitionToRealSeName => m_TransitionToRealSeName;
-
-    [Header("BGM")]
+    private PlaySoundParam m_ToRealSe;
+    public PlaySoundParam ToRealSe => m_ToRealSe;
 
     [SerializeField]
-    private BattleBgmParamSet m_BgmParamSet = default;
-    public BattleBgmParamSet BgmParamSet => m_BgmParamSet;
-}
-
-[Serializable]
-public class BattleBgmParamSet
-{
-    [SerializeField]
-    private string m_StageBgmName = default;
-    public string StageBgmName => m_StageBgmName;
+    private OperateAisacParam m_ToHackingAisac;
+    public OperateAisacParam ToHackingAisac => m_ToHackingAisac;
 
     [SerializeField]
-    private string m_BossBgmName = default;
-    public string BossBgmName => m_BossBgmName;
+    private OperateAisacParam m_ToRealAisac;
+    public OperateAisacParam ToRealAisac => m_ToRealAisac;
+
+    [Header("Game Clear")]
+
+    [SerializeField]
+    private PlaySoundParam m_GameClearSe;
+    public PlaySoundParam GameClearSe => m_GameClearSe;
+
+    [Header("Game Over")]
+
+    [SerializeField]
+    private PlaySoundParam m_GameOverSe;
+    public PlaySoundParam GameOverSe => m_GameOverSe;
 }

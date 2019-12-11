@@ -13,7 +13,7 @@ public class BattleHackingPlayerManager : ControllableObject
 
     private Transform m_PlayerCharaHolder;
 
-    private BattleHackingPlayerManagerParamSet m_ParamSet;
+    public BattleHackingPlayerManagerParamSet ParamSet { get; private set; }
 
     public BattleHackingPlayerController Player { get; private set; }
 
@@ -23,7 +23,7 @@ public class BattleHackingPlayerManager : ControllableObject
 
     public BattleHackingPlayerManager(BattleHackingPlayerManagerParamSet paramSet)
     {
-        m_ParamSet = paramSet;
+        ParamSet = paramSet;
     }
 
     public override void OnInitialize()
@@ -47,7 +47,7 @@ public class BattleHackingPlayerManager : ControllableObject
 
         if (Player == null)
         {
-            Player = GameObject.Instantiate(m_ParamSet.PlayerPrefab);
+            Player = GameObject.Instantiate(ParamSet.PlayerPrefab);
             Player.transform.SetParent(m_PlayerCharaHolder);
             Player.OnInitialize();
         }
@@ -68,11 +68,11 @@ public class BattleHackingPlayerManager : ControllableObject
             float speed = 0;
             if (input.Slow == E_INPUT_STATE.STAY)
             {
-                speed = m_ParamSet.PlayerSlowMoveSpeed;
+                speed = ParamSet.PlayerSlowMoveSpeed;
             }
             else
             {
-                speed = m_ParamSet.PlayerBaseMoveSpeed;
+                speed = ParamSet.PlayerBaseMoveSpeed;
             }
 
             var move = moveDir.ToVector3XZ() * speed * Time.deltaTime;

@@ -10,6 +10,9 @@ public struct ControlSoundParam
         PLAY,
         STOP,
         CONTROL_AISAC,
+        STOP_ALL_BGM,
+        STOP_ALL_SE,
+        STOP_ALL_BGM_AND_SE,
     }
 
     public E_SOUND_CONTROL_TYPE ControlType;

@@ -113,7 +113,7 @@ public class AudioManager : ControllableMonoBehavior
             var sheet = data.OperateAisacParam.TargetCueSheet;
             var anim = data.OperateAisacParam.AnimationValue;
             var value = anim.Evaluate(data.NowTime);
-            SetAisac(aisac, sheet, value);
+            OperateAisac(aisac, sheet, value);
 
             if (data.NowTime > anim.Duration())
             {
@@ -147,23 +147,6 @@ public class AudioManager : ControllableMonoBehavior
         }
 
         return m_SourceDict[sheet];
-    }
-
-    private void SetAisac(E_AISAC_TYPE targetAisac, E_CUE_SHEET targetSheet, float value)
-    {
-        if (m_AisacDict == null || !m_AisacDict.ContainsKey(targetAisac))
-        {
-            return;
-        }
-
-        var source = GetSource(targetSheet);
-        if (source == null)
-        {
-            return;
-        }
-
-        var aisac = m_AisacDict[targetAisac];
-        source.SetAisacControl(aisac, value);
     }
 
     /// <summary>
@@ -238,7 +221,27 @@ public class AudioManager : ControllableMonoBehavior
         }
         else
         {
-            SetAisac(operateAisacParam.AisacType, operateAisacParam.TargetCueSheet, operateAisacParam.ConstantValue);
+            OperateAisac(operateAisacParam.AisacType, operateAisacParam.TargetCueSheet, operateAisacParam.ConstantValue);
         }
+    }
+
+    /// <summary>
+    /// AISACを直接制御する。
+    /// </summary>
+    public void OperateAisac(E_AISAC_TYPE targetAisac, E_CUE_SHEET targetSheet, float value)
+    {
+        if (m_AisacDict == null || !m_AisacDict.ContainsKey(targetAisac))
+        {
+            return;
+        }
+
+        var source = GetSource(targetSheet);
+        if (source == null)
+        {
+            return;
+        }
+
+        var aisac = m_AisacDict[targetAisac];
+        source.SetAisacControl(aisac, value);
     }
 }

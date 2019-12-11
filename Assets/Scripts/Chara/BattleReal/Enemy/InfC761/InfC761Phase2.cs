@@ -308,8 +308,9 @@ public class InfC761Phase2 : BattleRealBossBehavior
         }else if(m_ShotLargeRectBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[4].Interval){
             m_ShotLargeRectBulletToTotalDirectionTimeCount = 0;
             OnShot(m_ParamSet.ShotParams[4],m_ParamSet.ShotOffSets[6], 38, 7);
-            //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
-        }else if(m_TimeCount >= m_Duration){
+            AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
+        }
+        else if(m_TimeCount >= m_Duration){
             m_IsShotLargeRectBulletToTotalDirection = false;
         }
 
@@ -318,8 +319,9 @@ public class InfC761Phase2 : BattleRealBossBehavior
         }else if(m_ShotBasicRectBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[5].Interval){
             m_ShotBasicRectBulletToTotalDirectionTimeCount = 0;
             OnShot(m_ParamSet.ShotParams[5], m_ParamSet.ShotOffSets[6], 41, 7);
-            //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
-        }else if(m_TimeCount >= m_Duration){
+            AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
+        }
+        else if(m_TimeCount >= m_Duration){
             m_IsShotBasicRectBulletToTotalDirection = false;
         }
     }
@@ -328,7 +330,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
         if(m_IsShotLargeBulletToUnder && m_ShotLargeBulletToUnderTimeCount >= m_ParamSet.ShotParams[0].Interval){
             m_ShotLargeBulletToUnderTimeCount = 0;
             OnShot(m_ParamSet.ShotParams[0],m_ParamSet.ShotOffSets[0], 33, 2);
-            //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+            AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
             m_IsShotLargeBulletToUnder = false;
         }
     }
@@ -389,7 +391,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                     m_ShotSmallPLookBulletTimeCount = 0;
                     OnShot(m_ParamSet.ShotParams[1], m_ParamSet.ShotOffSets[1], 21, 0);
                     OnShot(m_ParamSet.ShotParams[1], m_ParamSet.ShotOffSets[2], 21, 0);
-                    //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                    AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
                 }
                 if(m_StopShotSmallPLookBulletTimeCount >= m_ParamSet.ShotCoolTimes[0]){
                     m_StopShotSmallPLookBulletTimeCount = 0;
@@ -399,7 +401,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 if(m_ShotBasicCirBulletToTotalDirectionTimeCount >= m_ParamSet.ShotParams[6].Interval){
                     m_ShotBasicCirBulletToTotalDirectionTimeCount = 0;
                     OnShot(m_ParamSet.ShotParams[6], m_ParamSet.ShotOffSets[6], 37, 7);
-                    //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                    AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
                 }
 
                 break;
@@ -410,7 +412,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
                 if(m_Shot2WayLargeBulletTimeCount >= m_ParamSet.ShotParams[2].Interval){
                     m_Shot2WayLargeBulletTimeCount = 0;
                     OnShot(m_ParamSet.ShotParams[2], m_ParamSet.ShotOffSets[3], 33, 3);
-                    //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                    AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
                 }
 
                 if(!m_IsShotPLookSmallRectBullet && m_ShotPLookSmallRectBulletTimeCount >= m_ParamSet.ShotCoolTimes[1]){
@@ -421,12 +423,12 @@ public class InfC761Phase2 : BattleRealBossBehavior
                     m_NumberOfShotRapidPLookSmallRectBullet++;
                     if(m_ShotEdge == E_SHOT_EDGE.LEFT){
                         OnShot(m_ParamSet.ShotParams[3], m_ParamSet.ShotOffSets[4], 23, 0);
-                        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                     }else{
                         OnShot(m_ParamSet.ShotParams[3], m_ParamSet.ShotOffSets[5], 23, 0);
-                        //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
                     }
-                }else if(m_NumberOfShotRapidPLookSmallRectBullet >= m_ParamSet.NumberOfShotRapidPLookSmallRectBullet){
+                    AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot02Se);
+                }
+                else if(m_NumberOfShotRapidPLookSmallRectBullet >= m_ParamSet.NumberOfShotRapidPLookSmallRectBullet){
                     if(m_ShotEdge == E_SHOT_EDGE.LEFT){
                         m_ShotEdge = E_SHOT_EDGE.RIGHT;
                     }else{

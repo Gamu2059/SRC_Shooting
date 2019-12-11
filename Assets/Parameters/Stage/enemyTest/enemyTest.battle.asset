@@ -65,12 +65,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_TransitionToHackingMovie: {fileID: 32900000, guid: 1ad0c4cc318325244935f976dcfc9df7,
-    type: 3}
-  m_TransitionToRealMovie: {fileID: 32900000, guid: 150c35aa09bb97e4c903325d9057ecac,
-    type: 3}
-  m_TransitionToHackingSeName: SE_Global_Hack_Start
-  m_TransitionToRealSeName: SE_Global_Hack_End
-  m_BgmParamSet:
-    m_StageBgmName: BGM_Stage01
-    m_BossBgmName: BGM_Boss01
+  m_ToHackingMovie: {fileID: 32900000, guid: 1ad0c4cc318325244935f976dcfc9df7, type: 3}
+  m_ToRealMovie: {fileID: 32900000, guid: 150c35aa09bb97e4c903325d9057ecac, type: 3}
+  m_ToHackingSe: {fileID: 11400000, guid: 4ef814f6d1b5f834986b411e83f7c826, type: 2}
+  m_ToRealSe: {fileID: 11400000, guid: b08813d195a114f498bc51f3553fd18a, type: 2}

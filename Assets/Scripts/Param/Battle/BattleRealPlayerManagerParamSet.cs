@@ -50,4 +50,34 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     [SerializeField]
     private CameraShakeParam m_BombShakeParam;
     public CameraShakeParam BombShakeParam => m_BombShakeParam;
+
+    [Header("SE"), Tooltip("いずれ各々の行動のパラメータに分散させたい")]
+
+    [SerializeField]
+    private PlaySoundParam m_ShotSe;
+    public PlaySoundParam ShotSe => m_ShotSe;
+
+    [SerializeField]
+    private PlaySoundParam m_LaserSe;
+    public PlaySoundParam LaserSe => m_LaserSe;
+
+    [SerializeField]
+    private PlaySoundParam m_BombSe;
+    public PlaySoundParam BombSe => m_BombSe;
+
+    [SerializeField]
+    private PlaySoundParam m_ChargeSe;
+    public PlaySoundParam ChargeSe => m_ChargeSe;
+
+    [SerializeField]
+    private PlaySoundParam m_WeaponChangeSe;
+    public PlaySoundParam WeaponChangeSe => m_WeaponChangeSe;
+
+    [SerializeField]
+    private PlaySoundParam m_GetItemSe;
+    public PlaySoundParam GetItemSe => m_GetItemSe;
+
+    [SerializeField]
+    private PlaySoundParam m_DeadSe;
+    public PlaySoundParam DeadSe => m_DeadSe;
 }
