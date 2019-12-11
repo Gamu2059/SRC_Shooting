@@ -165,6 +165,15 @@ public class BattleRealManager : ControllableObject
             m_OnEnd = EndOnBeforeGameClearPerformance,
         });
 
+        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE)
+        {
+            m_OnStart = StartOnBeginBossBattle,
+            m_OnUpdate = UpdateOnBeginBossBattle,
+            m_OnLateUpdate = LateUpdateOnBeginBossBattle,
+            m_OnFixedUpdate = FixedUpdateOnBeginBossBattle,
+            m_OnEnd = EndOnBeginBossBattle,
+        });
+
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME_CLEAR)
         {
             m_OnStart = StartOnGameClear,
@@ -638,8 +647,8 @@ public class BattleRealManager : ControllableObject
     /// </summary>
     private void StartOnBeforeBossBattlePerformance()
     {
-        EnemyGroupManager.CreateBossGroup();
-        RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+        // ボス戦移行は、本来はEvent関連で行う
+        BattleManager.Instance.BossBattleStart();
     }
 
     private void UpdateOnBeforeBossBattlePerformance()
@@ -659,11 +668,37 @@ public class BattleRealManager : ControllableObject
     /// </summary>
     private void EndOnBeforeBossBattlePerformance()
     {
-        // ここにボスHPゲージ表示処理を入れる
         BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(true);
-        //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(true);
-        var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
-        AudioManager.Instance.PlayBgm(bossBgmName);
+    }
+
+    #endregion
+
+    #region Begin Boss Battle State
+
+    private void StartOnBeginBossBattle()
+    {
+        EnemyGroupManager.CreateBossGroup();
+        RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+    }
+
+    private void UpdateOnBeginBossBattle()
+    {
+
+    }
+
+    private void LateUpdateOnBeginBossBattle()
+    {
+
+    }
+
+    private void FixedUpdateOnBeginBossBattle()
+    {
+
+    }
+
+    private void EndOnBeginBossBattle()
+    {
+
     }
 
     #endregion

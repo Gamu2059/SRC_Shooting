@@ -18,6 +18,10 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         [SerializeField]
         private BattleRealPlayerLevelParamSet m_PlayerLevelParamSet;
         public BattleRealPlayerLevelParamSet PlayerLevelParamSet => m_PlayerLevelParamSet;
+
+        [SerializeField]
+        private AdxAssetParam m_AdxAssetParam;
+        public AdxAssetParam AdxAssetParam => m_AdxAssetParam;
     }
 
     [SerializeField]
@@ -81,6 +85,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnInitialize();
 
         m_TimerManager = new TimerManager();
+        m_AudioManager.SetAdxParam(m_GameManagerParamSet.AdxAssetParam);
         DataManager = new DataManager(m_GameManagerParamSet.PlayerLevelParamSet);
         m_PlayerRecordManager = new PlayerRecordManager();
 

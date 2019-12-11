@@ -40,6 +40,6 @@ public class BattleRealParamSet : ScriptableObject
     [Header("Boss Change")]
 
     [SerializeField]
-    private ControlBgmParam m_ControlBgmParam;
-    public ControlBgmParam ControlBgmParam => m_ControlBgmParam;
+    private ControlSoundParam m_ControlBgmParam;
+    public ControlSoundParam ControlBgmParam => m_ControlBgmParam;
 }

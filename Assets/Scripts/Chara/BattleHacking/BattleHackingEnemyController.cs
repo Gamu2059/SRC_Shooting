@@ -151,7 +151,7 @@ public class BattleHackingEnemyController : CommandCharaController
     protected override void OnDamage()
     {
         base.OnDamage();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Damage");
+        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.DamageSe);
     }
 
     public override void Dead()
@@ -169,7 +169,7 @@ public class BattleHackingEnemyController : CommandCharaController
             BattleHackingManager.Instance.DeadBoss();
         }
 
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Break01");
+        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.BreakSe);
         Destroy();
     }
 

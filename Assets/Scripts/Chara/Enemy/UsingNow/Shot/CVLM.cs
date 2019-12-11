@@ -102,6 +102,7 @@ public class CVLM : object
         // 弾の大きさを変えている。
         CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.8f);
         var bullet = enemyController.Shot(bulletShotParam);
+        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.Shot02Se);
     }
 
     /// <summary>

@@ -36,7 +36,7 @@ public class CustomImageEffect : ControllableMonoBehavior
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        if (m_Material != null)
+        if (m_UseMaterial != null)
         {
             Graphics.Blit(source, destination, m_UseMaterial);
         }

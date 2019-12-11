@@ -12,15 +12,9 @@ public class BattleHackingEnemyManager : ControllableObject
 {
     public static BattleHackingEnemyManager Instance => BattleHackingManager.Instance.EnemyManager;
 
-    /// <summary>
-    /// 消滅可能になるまでの最小時間
-    /// </summary>
-    [SerializeField]
-    private float m_CanOutTime;
-
     #region Field
 
-    private BattleHackingEnemyManagerParamSet m_ParamSet;
+    public BattleHackingEnemyManagerParamSet ParamSet { get; private set; }
 
     private Transform m_EnemyHolder;
 
@@ -32,8 +26,7 @@ public class BattleHackingEnemyManager : ControllableObject
     /// <summary>
     /// UPDATE状態の敵を保持するリスト。
     /// </summary>
-    private List<BattleHackingEnemyController> m_UpdateEnemies;
-    public List<BattleHackingEnemyController> Enemies => m_UpdateEnemies;
+    public List<BattleHackingEnemyController> Enemies { get; private set; }
 
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
@@ -55,7 +48,7 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public BattleHackingEnemyManager(BattleHackingEnemyManagerParamSet paramSet)
     {
-        m_ParamSet = paramSet;
+        ParamSet = paramSet;
     }
 
     #region Game Cycle
@@ -65,7 +58,7 @@ public class BattleHackingEnemyManager : ControllableObject
         base.OnInitialize();
 
         m_StandbyEnemies = new List<BattleHackingEnemyController>();
-        m_UpdateEnemies = new List<BattleHackingEnemyController>();
+        Enemies = new List<BattleHackingEnemyController>();
         m_GotoPoolEnemies = new List<BattleHackingEnemyController>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
 
@@ -116,7 +109,7 @@ public class BattleHackingEnemyManager : ControllableObject
         GotoUpdateEnemy();
 
         // Update処理
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -130,7 +123,7 @@ public class BattleHackingEnemyManager : ControllableObject
     public override void OnLateUpdate()
     {
         // LateUpdate処理
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -147,7 +140,7 @@ public class BattleHackingEnemyManager : ControllableObject
         GenerateEnemy();
 
         // FixedUpdate処理
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -165,7 +158,7 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public void ClearColliderFlag()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -178,7 +171,7 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public void UpdateCollider()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -191,7 +184,7 @@ public class BattleHackingEnemyManager : ControllableObject
 
     public void ProcessCollision()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -220,7 +213,7 @@ public class BattleHackingEnemyManager : ControllableObject
 
     private void Register(BattleHackingEnemyController enemy)
     {
-        if (enemy == null || m_StandbyEnemies.Contains(enemy) || m_UpdateEnemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
+        if (enemy == null || m_StandbyEnemies.Contains(enemy) || Enemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
         {
             return;
         }
@@ -283,7 +276,7 @@ public class BattleHackingEnemyManager : ControllableObject
             }
 
             enemy.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
-            m_UpdateEnemies.Add(enemy);
+            Enemies.Add(enemy);
         }
 
         m_StandbyEnemies.Clear();
@@ -311,7 +304,7 @@ public class BattleHackingEnemyManager : ControllableObject
             enemy.transform.SetParent(m_EnemyHolder);
 
             m_GotoPoolEnemies.RemoveAt(idx);
-            m_UpdateEnemies.Remove(enemy);
+            Enemies.Remove(enemy);
 
             var poolId = enemy.GetLookId();
             if (!m_PoolEnemies.ContainsKey(poolId))
@@ -417,7 +410,7 @@ public class BattleHackingEnemyManager : ControllableObject
         }
         m_StandbyEnemies.Clear();
 
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             CheckPoolEnemy(enemy);
         }
@@ -485,8 +478,8 @@ public class BattleHackingEnemyManager : ControllableObject
         var stageManager = BattleHackingStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        minPos += m_ParamSet.MinOffsetFieldPosition;
-        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+        minPos += ParamSet.MinOffsetFieldPosition;
+        maxPos += ParamSet.MaxOffsetFieldPosition;
 
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
@@ -508,8 +501,8 @@ public class BattleHackingEnemyManager : ControllableObject
         var stageManager = BattleHackingStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        minPos += m_ParamSet.MinOffsetFieldPosition;
-        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+        minPos += ParamSet.MinOffsetFieldPosition;
+        maxPos += ParamSet.MaxOffsetFieldPosition;
 
         var pos = enemy.transform.position;
 
