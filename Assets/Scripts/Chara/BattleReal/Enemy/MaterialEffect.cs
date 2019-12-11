@@ -24,7 +24,8 @@ public class MaterialEffect : ControllableMonoBehavior
             m_OriginMaterialDict = new Dictionary<Renderer, Material>();
             foreach (var r in m_Renderers)
             {
-                m_OriginMaterialDict.Add(r, r.sharedMaterial);
+                // データの上書きが怖いので複製しておく
+                m_OriginMaterialDict.Add(r, Instantiate(r.sharedMaterial));
             }
         }
     }
