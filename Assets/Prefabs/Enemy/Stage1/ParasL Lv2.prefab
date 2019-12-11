@@ -98,6 +98,7 @@ GameObject:
   m_Component:
   - component: {fileID: 123677241004239965}
   - component: {fileID: 3243567741059995588}
+  - component: {fileID: 6161024426327301214}
   m_Layer: 11
   m_Name: ParasL Lv2
   m_TagString: Untagged
@@ -149,6 +150,21 @@ MonoBehaviour:
     ColliderWidth: 10
     ColliderColor: {r: 1, g: 0.10283664, b: 0, a: 0}
     Transform: {fileID: 7404969033603456812}
+--- !u!114 &6161024426327301214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4433259954340433325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f50ef0529f9a864bbd81717a7746079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Renderers:
+  - {fileID: 7312900342399644281}
+  - {fileID: 1260855176825585924}
 --- !u!1 &4753289694444341644
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +205,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5777065925503361208}
     m_Modifications:
+    - target: {fileID: 1249697513097487280, guid: 7e76b07532dee3a4badc081ebfef344a,
+        type: 3}
+      propertyPath: m_Name
+      value: BaseParas_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249697513097487280, guid: 7e76b07532dee3a4badc081ebfef344a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 7425188362396140327, guid: 7e76b07532dee3a4badc081ebfef344a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -244,16 +270,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1249697513097487280, guid: 7e76b07532dee3a4badc081ebfef344a,
-        type: 3}
-      propertyPath: m_Name
-      value: BaseParas_L
-      objectReference: {fileID: 0}
-    - target: {fileID: 1249697513097487280, guid: 7e76b07532dee3a4badc081ebfef344a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 6706021744123274934, guid: 7e76b07532dee3a4badc081ebfef344a,
         type: 3}
       propertyPath: m_Layer
@@ -279,6 +295,18 @@ PrefabInstance:
 --- !u!4 &5295655808547673213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7425188362396140327, guid: 7e76b07532dee3a4badc081ebfef344a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3347972911100811098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7312900342399644281 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5407353665404757283, guid: 7e76b07532dee3a4badc081ebfef344a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3347972911100811098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1260855176825585924 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4542186462018115166, guid: 7e76b07532dee3a4badc081ebfef344a,
     type: 3}
   m_PrefabInstance: {fileID: 3347972911100811098}
   m_PrefabAsset: {fileID: 0}
