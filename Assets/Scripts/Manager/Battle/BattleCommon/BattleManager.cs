@@ -4,8 +4,6 @@ using UnityEngine;
 using System;
 using UnityEngine.Video;
 
-using E_AISAC_TYPE = AudioManager.E_AISAC_TYPE;
-
 /// <summary>
 /// バトル画面のマネージャーを管理する上位マネージャ。
 /// メイン画面とコマンド画面の切り替えを主に管理する。
@@ -278,7 +276,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnRealMode()
     {
         var audio = AudioManager.Instance;
-        audio.SetBgmAisac(E_AISAC_TYPE.BGM_FADE_CONTROL, 0);
+        audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 0);
 
         m_BattleRealUiManager.SetAlpha(1);
         m_BattleHackingUiManager.SetAlpha(0);
@@ -334,7 +332,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private void StartOnHackingMode()
     {
         var audio = AudioManager.Instance;
-        audio.SetBgmAisac(E_AISAC_TYPE.BGM_FADE_CONTROL, 1);
+        audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 1);
 
         m_BattleHackingUiManager.SetAlpha(1);
         m_BattleRealUiManager.SetAlpha(0);
@@ -405,7 +403,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
 
             var audio = AudioManager.Instance;
-            audio.SetBgmAisac(E_AISAC_TYPE.BGM_FADE_CONTROL, normalizedTime);
+            audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, normalizedTime);
         }
         else
         {
@@ -472,7 +470,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
             var audio = AudioManager.Instance;
             // ハッキングモードから戻す時は逆にしなければならない
-            audio.SetBgmAisac(E_AISAC_TYPE.BGM_FADE_CONTROL, 1 - normalizedTime);
+            audio.SetBgmAisac(AudioManager.E_AISAC_TYPE.BGM_FADE_CONTROL, 1 - normalizedTime);
         }
         else
         {

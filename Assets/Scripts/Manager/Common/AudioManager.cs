@@ -7,25 +7,11 @@ using System;
 
 public class AudioManager : ControllableMonoBehavior
 {
-    [Serializable]
-    public enum E_SE_GROUP
-    {
-        GLOBAL,
-        PLAYER,
-        ENEMY,
-        SYSTEM,
-    }
-
-    [Serializable]
-    public enum E_AISAC_TYPE
-    {
-        BGM_FADE_CONTROL,
-    }
 
     [Serializable]
     private struct SeGroup
     {
-        public E_SE_GROUP Group;
+        public E_CUE_SHEET Group;
         public CriAtomSource Source;
     }
 
@@ -40,61 +26,81 @@ public class AudioManager : ControllableMonoBehavior
     [SerializeField]
     private SeGroup[] m_SeGroups;
 
+    private Dictionary<E_CUE_SHEET, CriAtomSource> m_SeSourceDict;
     private Dictionary<E_AISAC_TYPE, string> m_AisacDict;
+    private Dictionary<E_CUE_NAME, AdxAssetParam.CueSet> m_CueDict;
 
     #region Game Cycle
+
+    /// <summary>
+    /// Adxパラメータをセットする。
+    /// OnInitializeより先に呼び出す。
+    /// </summary>
+    /// <param name="adxParam"></param>
+    public void SetAdxParam(AdxAssetParam adxParam)
+    {
+        m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
+        m_CueDict = new Dictionary<E_CUE_NAME, AdxAssetParam.CueSet>();
+
+        foreach (var aisacSet in adxParam.AisacSets)
+        {
+            m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
+        }
+
+        foreach (var cueSet in adxParam.CueSets)
+        {
+            m_CueDict.Add(cueSet.CueName, cueSet);
+        }
+    }
 
     public override void OnInitialize()
     {
         base.OnInitialize();
-
         m_CriWareInitializer.Initialize();
-        m_AisacDict = new Dictionary<E_AISAC_TYPE, string>()
+
+        m_SeSourceDict = new Dictionary<E_CUE_SHEET, CriAtomSource>();
+        foreach (var seGroup in m_SeGroups)
         {
-            { E_AISAC_TYPE.BGM_FADE_CONTROL, "BGM_FadeControl"},
-        };
+            m_SeSourceDict.Add(seGroup.Group, seGroup.Source);
+        }
     }
 
     #endregion
 
-    private CriAtomSource GetSeSource(E_SE_GROUP group)
+    private CriAtomSource GetSeSource(E_CUE_SHEET sheet)
     {
-        for (int i=0;i<m_SeGroups.Length;i++)
-        {
-            if (group == m_SeGroups[i].Group)
-            {
-                return m_SeGroups[i].Source;
-            }
-        }
-
-        return null;
+        return m_SeSourceDict[sheet];
     }
 
-    public void PlaySe(E_SE_GROUP group, string name)
+    public void PlaySe(E_CUE_NAME cue)
     {
-        var source = GetSeSource(group);
-        source.cueName = name;
+        var cueSet = m_CueDict[cue];
+        var source = GetSeSource(cueSet.BelongCueSheet);
+        source.cueName = cueSet.Name;
         source.Play();
     }
 
-    public void StopSe(E_SE_GROUP group)
+    public void PlaySe(E_CUE_SHEET sheet, E_CUE_NAME cue)
     {
-        var source = GetSeSource(group);
+        var cueSet = m_CueDict[cue];
+        var source = GetSeSource(sheet);
+        source.cueName = cueSet.Name;
+        source.Play();
+    }
+
+    public void StopSe(E_CUE_SHEET sheet)
+    {
+        var source = GetSeSource(sheet);
         source.Stop();
     }
 
-    /// <summary>
-    /// BGMを再生する
-    /// </summary>
-    public void PlayBgm(string name)
+    public void PlayBgm(E_CUE_NAME cue)
     {
-        m_BgmSource.cueName = name;
+        var cueSet = m_CueDict[cue];
+        m_BgmSource.cueName = cueSet.Name;
         m_BgmSource.Play();
     }
 
-    /// <summary>
-    /// BGMを止める
-    /// </summary>
     public void StopBgm()
     {
         m_BgmSource.Stop();
