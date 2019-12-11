@@ -8218,16 +8218,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 5791671124984244751, guid: d94fbe3299eb5854fa1cb48e3a025153,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5791671124984244751, guid: d94fbe3299eb5854fa1cb48e3a025153,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4206279706672444316, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_Layer
@@ -8264,6 +8254,16 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8823883031540206957, guid: d94fbe3299eb5854fa1cb48e3a025153,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791671124984244751, guid: d94fbe3299eb5854fa1cb48e3a025153,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791671124984244751, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -28204,7 +28204,7 @@ MonoBehaviour:
   m_VideoPlayer: {fileID: 2009328465}
   m_GameOverController: {fileID: 474313381}
   m_IsStartHackingMode: 0
-  m_PlayerNotDead: 1
+  m_PlayerNotDead: 0
   m_IsDrawColliderArea: 0
   m_IsDrawOutSideColliderArea: 0
 --- !u!114 &2075168772
