@@ -9,11 +9,9 @@ public class BattleRealEnemyController : CharaController
 
     private string m_LookId;
 
-    private BattleRealEnemyGenerateParamSet m_GenerateParamSet;
-    protected BattleRealEnemyGenerateParamSet GenerateParamSet => m_GenerateParamSet;
+    protected BattleRealEnemyGenerateParamSet GenerateParamSet { get; private set; }
 
-    private BattleRealEnemyBehaviorParamSet m_BehaviorParamSet;
-    protected BattleRealEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
+    protected BattleRealEnemyBehaviorParamSet BehaviorParamSet { get; private set; }
 
     private E_POOLED_OBJECT_CYCLE m_Cycle;
 
@@ -39,6 +37,8 @@ public class BattleRealEnemyController : CharaController
     public bool IsBoss { get; protected set; }
 
     public bool IsOutOfEnemyField { get; private set; }
+
+    private MaterialEffect m_MaterialEffect;
 
     #endregion
 
@@ -84,10 +84,25 @@ public class BattleRealEnemyController : CharaController
         IsBoss = false;
         m_WillDestroyOnOutOfEnemyField = true;
 
-        if (m_GenerateParamSet != null)
+        if (GenerateParamSet != null)
         {
-            InitHp(m_GenerateParamSet.Hp);
+            InitHp(GenerateParamSet.Hp);
         }
+
+        m_MaterialEffect = GetComponent<MaterialEffect>();
+        m_MaterialEffect?.OnInitialize();
+    }
+
+    public override void OnFinalize()
+    {
+        m_MaterialEffect?.OnFinalize();
+        base.OnFinalize();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        m_MaterialEffect?.OnUpdate();
     }
 
     public override void OnLateUpdate()
@@ -120,10 +135,10 @@ public class BattleRealEnemyController : CharaController
 
     public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
-        m_GenerateParamSet = generateParamSet;
-        m_BehaviorParamSet = behaviorParamSet;
+        GenerateParamSet = generateParamSet;
+        BehaviorParamSet = behaviorParamSet;
 
-        SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
+        SetBulletSetParam(BehaviorParamSet.BulletSetParam);
 
         OnSetParamSet();
     }
@@ -184,29 +199,36 @@ public class BattleRealEnemyController : CharaController
     {
         base.OnDamage();
         AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DamageSe);
+
+        if (m_MaterialEffect != null)
+        {
+            var mat = GenerateParamSet.DamageEffectMaterial;
+            var dur = GenerateParamSet.DamageEffectDuration;
+            m_MaterialEffect.ChangeMaterial(mat, dur);
+        }
     }
 
     public override void Dead()
     {
         base.Dead();
 
-        if (m_GenerateParamSet != null)
+        if (GenerateParamSet != null)
         {
-            var defeatEffect = m_GenerateParamSet.DefeatEffect;
+            var defeatEffect = GenerateParamSet.DefeatEffect;
             if (defeatEffect != null)
             {
                 var effect = Instantiate(defeatEffect);
                 effect.transform.position = transform.position;
             }
 
-            BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
+            BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.ItemCreateParam);
 
-            var events = m_GenerateParamSet.DefeatEvents;
+            var events = GenerateParamSet.DefeatEvents;
             if (events != null)
             {
                 for (int i = 0; i < events.Length; i++)
                 {
-                    DataManager.Instance.BattleData.AddScore(m_GenerateParamSet.Score);
+                    DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
                     BattleRealEventManager.Instance.AddEvent(events[i]);
                 }
             }

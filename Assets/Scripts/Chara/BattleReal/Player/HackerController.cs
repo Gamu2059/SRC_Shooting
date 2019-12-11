@@ -80,8 +80,11 @@ public class HackerController : BattleRealPlayerController
         {
             var paramSet = BattleRealPlayerManager.Instance.ParamSet;
             m_ChargeEffect = BattleRealEffectManager.Instance.GetPoolingBullet(paramSet.ChargePrefab, transform);
-            m_ChargeEffect.IsAllowOwner = true;
-            m_ChargeEffect.RelatedAllowPos = paramSet.ChargeRelatedPos;
+            if (m_ChargeEffect != null)
+            {
+                m_ChargeEffect.IsAllowOwner = true;
+                m_ChargeEffect.RelatedAllowPos = paramSet.ChargeRelatedPos;
+            }
         }
     }
 
