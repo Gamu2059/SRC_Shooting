@@ -171,6 +171,42 @@ public class AudioManager : ControllableMonoBehavior
     }
 
     /// <summary>
+    /// サウンドを一時停止する。
+    /// BGMかSEかは問わない。
+    /// </summary>
+    public void Pause(E_CUE_SHEET target)
+    {
+        var source = GetSource(target);
+        if (source == null)
+        {
+            return;
+        }
+
+        if (!source.IsPaused())
+        {
+            source.Pause(true);
+        }
+    }
+
+    /// <summary>
+    /// サウンドを再開する。
+    /// BGMかSEかは問わない。
+    /// </summary>
+    public void Resume(E_CUE_SHEET target)
+    {
+        var source = GetSource(target);
+        if (source == null)
+        {
+            return;
+        }
+
+        if (source.IsPaused())
+        {
+            source.Pause(false);
+        }
+    }
+
+    /// <summary>
     /// サウンドを停止する。
     /// BGMかSEかは問わない。
     /// </summary>
