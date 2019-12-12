@@ -299,6 +299,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             RequestChangeState(E_BATTLE_STATE.GAME_OVER);
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DataManager.Instance.BattleData.AddEnergyCount(1);
+        }
     }
 
     private void LateUpdateOnRealMode()

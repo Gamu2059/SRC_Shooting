@@ -127,8 +127,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         switch (input.ChargeShot)
         {
             case E_INPUT_STATE.DOWN:
-                Player.ChargeStart();
-                break;
             case E_INPUT_STATE.STAY:
                 Player.ChargeUpdate();
                 break;
