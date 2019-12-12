@@ -70,10 +70,9 @@ public class ItemCreateParamTranslator
     {
         switch(type)
         {
+            case "LR":
             case "SS":
             case "BS":
-            case "SU":
-            case "BU":
             case "SE":
             case "BE":
             case "SB":
@@ -89,21 +88,21 @@ public class ItemCreateParamTranslator
         switch (type)
         {
             default:
+                return E_ITEM_TYPE.NONE;
+            case "LR":
+                return E_ITEM_TYPE.LIFE_RECOVERY;
+            case "SS":
                 return E_ITEM_TYPE.SMALL_SCORE;
             case "BS":
                 return E_ITEM_TYPE.BIG_SCORE;
-            case "SU":
-                return E_ITEM_TYPE.SMALL_SCORE_UP;
-            case "BU":
-                return E_ITEM_TYPE.BIG_SCORE_UP;
             case "SE":
                 return E_ITEM_TYPE.SMALL_EXP;
             case "BE":
                 return E_ITEM_TYPE.BIG_EXP;
             case "SB":
-                return E_ITEM_TYPE.SMALL_BOMB;
+                return E_ITEM_TYPE.SMALL_ENERGY;
             case "BB":
-                return E_ITEM_TYPE.BIG_BOMB;
+                return E_ITEM_TYPE.BIG_ENERGY;
         }
     }
 }

@@ -36,6 +36,8 @@ public class HackerController : BattleRealPlayerController
     private BulletController m_Laser;
     private BulletController m_Bomb;
 
+    private bool m_IsExistEnergyCharge;
+
     #endregion
 
     public override void OnInitialize()
@@ -76,8 +78,18 @@ public class HackerController : BattleRealPlayerController
     {
         base.ChargeStart();
 
+        var battleData = DataManager.Instance.BattleData.EnergyCount;
+        m_IsExistEnergyCharge = battleData > 0;
+
+        if (!m_IsExistEnergyCharge)
+        {
+            return;
+        }
+
         if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
         {
+            AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ChargeSe);
+
             var paramSet = BattleRealPlayerManager.Instance.ParamSet;
             m_ChargeEffect = BattleRealEffectManager.Instance.GetPoolingBullet(paramSet.ChargePrefab, transform);
             if (m_ChargeEffect != null)
@@ -91,6 +103,24 @@ public class HackerController : BattleRealPlayerController
     public override void ChargeRelease()
     {
         base.ChargeRelease();
+
+        if (!m_IsExistEnergyCharge)
+        {
+            return;
+        }
+
+        // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
+        var playerManager = BattleRealPlayerManager.Instance;
+        if (playerManager.IsLaserType)
+        {
+            AudioManager.Instance.Play(playerManager.ParamSet.LaserSe);
+        }
+        else
+        {
+            AudioManager.Instance.Play(playerManager.ParamSet.BombSe);
+        }
+
+        DataManager.Instance.BattleData.ConsumeEnergyCount(1);
         BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT_PERFORMANCE);
     }
 

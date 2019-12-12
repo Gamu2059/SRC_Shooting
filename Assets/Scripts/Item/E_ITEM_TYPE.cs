@@ -8,6 +8,16 @@ using UnityEngine;
 public enum E_ITEM_TYPE
 {
     /// <summary>
+    /// ダミー用
+    /// </summary>
+    NONE,
+
+    /// <summary>
+    /// 残機アップ
+    /// </summary>
+    LIFE_RECOVERY,
+
+    /// <summary>
     /// 小さなスコアアイテム
     /// </summary>
     SMALL_SCORE,
@@ -16,16 +26,6 @@ public enum E_ITEM_TYPE
     /// 大きなスコアアイテム
     /// </summary>
     BIG_SCORE,
-
-    /// <summary>
-    /// 小さなスコア得点増加アイテム
-    /// </summary>
-    SMALL_SCORE_UP,
-
-    /// <summary>
-    /// 大きなスコア得点増加アイテム
-    /// </summary>
-    BIG_SCORE_UP,
 
     /// <summary>
     /// 小さな経験値アイテム
@@ -40,10 +40,10 @@ public enum E_ITEM_TYPE
     /// <summary>
     /// 小さなボムポイント増加アイテム
     /// </summary>
-    SMALL_BOMB,
+    SMALL_ENERGY,
 
     /// <summary>
     /// 大きなボムポイント増加アイテム
     /// </summary>
-    BIG_BOMB,
+    BIG_ENERGY,
 }
