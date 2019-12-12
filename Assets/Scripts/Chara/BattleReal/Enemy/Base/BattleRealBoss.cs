@@ -565,7 +565,11 @@ public class BattleRealBoss : BattleRealEnemyController
         if (colliderType == E_COLLIDER_TYPE.CRITICAL)
         {
             var currentState = m_StateMachine.CurrentState.Key;
-            NowDownHp -= 1;
+            
+            if(currentState != E_PHASE.DOWN){
+                NowDownHp -= 1;
+            }
+            
             if (NowDownHp <= 0 && currentState == E_PHASE.ATTACK)
             {
                 NowDownHp = m_BossParamSet.DownHp;

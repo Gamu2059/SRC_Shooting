@@ -22,10 +22,10 @@ MonoBehaviour:
     type: 2}
   m_ItemManagerParamSet: {fileID: 11400000, guid: ab30d5993a4622b48bc610f7a5b3a0e5,
     type: 2}
-  m_EventTriggerParamSet: {fileID: 11400000, guid: ee278599230674a4880e20fb8bf387d4,
+  m_EventTriggerParamSet: {fileID: 11400000, guid: 4c69dda9a59c138438e8a55ef39b00c1,
     type: 2}
   m_ControlBgmParam:
     ControlType: 0
-    PlayBgmName: 
-    AisacType: 0
-    AisacValue: 0
+    PlaySoundParam: {fileID: 0}
+    StopSoundGroup: 0
+    OperateAisacParam: {fileID: 0}
