@@ -15,6 +15,18 @@ public class BattleRealPlayerLevelParamSet : ScriptableObject
     private BattleRealPlayerLevel[] m_PlayerLevels;
 
     public BattleRealPlayerLevel[] PlayerLevels => m_PlayerLevels;
+
+    [SerializeField]
+    private BattleCommonDefData m_CommonDefData;
+    public BattleCommonDefData CommonDefData => m_CommonDefData;
+
+    [SerializeField]
+    private BattleInitData m_Stage0InitData;
+    public BattleInitData Stage0InitData => m_Stage0InitData;
+
+    [SerializeField]
+    private BattleInitData m_Stage1InitData;
+    public BattleInitData Stage1InitData => m_Stage1InitData;
 }
 
 /// <summary>
@@ -27,4 +39,48 @@ public class BattleRealPlayerLevel
     private int m_NecessaryExpToLevelUpNextLevel;
 
     public int NecessaryExpToLevelUpNextLevel => m_NecessaryExpToLevelUpNextLevel;
+}
+
+/// <summary>
+/// 共有固定パラメータ。
+/// バトル中に使用する共通パラメータをまとめたもの。
+/// </summary>
+[Serializable]
+public class BattleCommonDefData
+{
+    [SerializeField]
+    private int m_MaxPlayerLife;
+    public int MaxPlayerLifeNum => m_MaxPlayerLife;
+
+    [SerializeField]
+    private int m_MaxLevel;
+    public int MaxLevel => m_MaxLevel;
+
+    [SerializeField]
+    private int m_MaxEnergyCount;
+    public int MaxEnergyCount => m_MaxEnergyCount;
+
+    [SerializeField]
+    private float m_MaxEnergyCharge;
+    public float MaxEnergyCharge => m_MaxEnergyCharge;
+}
+
+/// <summary>
+/// 初期値パラメータ。
+/// ストーリーモードやチャプターモードでのそれぞれの初期値に対応させるために構造化させた。
+/// </summary>
+[Serializable]
+public class BattleInitData
+{
+    [SerializeField, Tooltip("初期残機数")]
+    private int m_InitPlayerLife;
+    public int InitPlayerLife => m_InitPlayerLife;
+
+    [SerializeField, Tooltip("初期レベル")]
+    private int m_InitLevel;
+    public int InitLevel => m_InitLevel;
+
+    [SerializeField, Tooltip("初期エナジー数")]
+    private int m_InitEnergyCount;
+    public int InitEnergyCount => m_InitEnergyCount;
 }

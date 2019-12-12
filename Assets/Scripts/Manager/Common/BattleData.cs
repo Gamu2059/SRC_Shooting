@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class BattleData
 {
+    #region Field
+
+    private BattleRealPlayerLevelParamSet m_PlayerLevelParamSet;
+
     /// <summary>
     /// ゲームモード
     /// </summary>
@@ -43,23 +47,41 @@ public class BattleData
     public int Exp { get; private set; }
 
     /// <summary>
-    /// チャージしきったエネルギーの数
+    /// チャージしきったエナジーの数
     /// </summary>
     public int EnergyCount { get; private set; }
 
     /// <summary>
-    /// チャージ中のエネルギー
+    /// チャージ中のエナジー
     /// </summary>
     public float EnergyCharge { get; private set; }
-
-    public float MaxEnergyCharge { get; private set; }
 
     /// <summary>
     /// ハッキング成功回数
     /// </summary>
     public int HackingSucceedCount { get; private set; }
 
-    private BattleRealPlayerLevelParamSet m_PlayerLevelParamSet;
+    /// <summary>
+    /// 残機の最大保持数
+    /// </summary>
+    public int MaxPlayerLife { get; private set; }
+
+    /// <summary>
+    /// 最大レベル
+    /// </summary>
+    public int MaxLevel { get; private set; }
+
+    /// <summary>
+    /// エナジーの最大保持数
+    /// </summary>
+    public int MaxEnergyCount { get; private set; }
+
+    /// <summary>
+    /// エナジー1つ分とみなすエナジーチャージ量
+    /// </summary>
+    public float MaxEnergyCharge { get; private set; }
+
+    #endregion
 
     public BattleData(BattleRealPlayerLevelParamSet playerLevelParamSet)
     {
@@ -67,14 +89,56 @@ public class BattleData
 
         GameMode = E_GAME_MODE.STORY;
         Stage = E_STAGE.NORMAL_1;
-
-        PlayerLife = 0;
-        MaxEnergyCharge = 1000;
     }
 
-    public void ResetAll()
+    public void ResetData(E_STAGE stage)
     {
+        if (m_PlayerLevelParamSet == null)
+        {
+            Debug.LogError("PlayerLevelParamSetがありません。");
+            return;
+        }
 
+        // 定数の初期化
+        var defData = m_PlayerLevelParamSet.CommonDefData;
+        MaxPlayerLife = defData.MaxPlayerLifeNum;
+        MaxLevel = defData.MaxLevel;
+        MaxEnergyCount = defData.MaxEnergyCount;
+        MaxEnergyCharge = defData.MaxEnergyCharge;
+
+        // 初期値が共通なものを初期化
+        BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore;
+        Score = 0;
+        Exp = 0;
+        EnergyCharge = 0;
+        HackingSucceedCount = 0;
+
+        // ステージに応じて初期値が異なるものを初期化
+        switch (stage)
+        {
+            case E_STAGE.EASY_0:
+            case E_STAGE.NORMAL_0:
+            case E_STAGE.HARD_0:
+            case E_STAGE.HADES_0:
+                InitData(m_PlayerLevelParamSet.Stage0InitData);
+                break;
+            default:
+                InitData(m_PlayerLevelParamSet.Stage1InitData);
+                break;
+        }
+    }
+
+    private void InitData(BattleInitData initData)
+    {
+        if (initData == null)
+        {
+            Debug.LogError("initDataがありません。");
+            return;
+        }
+
+        PlayerLife = initData.InitPlayerLife;
+        Level = initData.InitLevel;
+        EnergyCount = initData.InitEnergyCount;
     }
 
     public BattleRealPlayerLevel GetCurrentLevelParam()
@@ -84,20 +148,9 @@ public class BattleData
 
     #region Player Life
 
-    public void ResetPlayerLife()
-    {
-        // パラメータで設定できるようにしたい
-        PlayerLife = 3;
-    }
-
     public void AddPlayerLife(int num)
     {
         PlayerLife += num;
-    }
-
-    public void IncreasePlayerLife()
-    {
-        PlayerLife++;
     }
 
     public void DecreasePlayerLife()
@@ -108,11 +161,6 @@ public class BattleData
     #endregion
 
     #region Score
-
-    public void ResetScore()
-    {
-        Score = 0;
-    }
 
     public void AddScore(double score)
     {
@@ -137,19 +185,9 @@ public class BattleData
 
     #region Level
 
-    public void ResetLevel()
-    {
-        Level = 0;
-    }
-
     #endregion
 
     #region Exp
-
-    public void ResetExp()
-    {
-        Exp = 0;
-    }
 
     public void AddExp(int exp)
     {
@@ -188,9 +226,6 @@ public class BattleData
 
     #region Energy
 
-    /// <summary>
-    /// エナジーチャージを増やす。
-    /// </summary>
     public void AddEnergyCharge(float charge)
     {
         var addedCharge = EnergyCharge + charge;
@@ -216,11 +251,6 @@ public class BattleData
         {
             EnergyCharge = addedCharge;
         }
-    }
-
-    public void ResetEnergyCount()
-    {
-        EnergyCount = 0;
     }
 
     public void AddEnergyCount(int num)
