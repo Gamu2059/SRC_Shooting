@@ -234,4 +234,31 @@ public class HackerController : BattleRealPlayerController
         var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
         return useLaser || useBomb;
     }
+
+    public override void StopChargeShot()
+    {
+        base.StopChargeShot();
+
+        if (m_Laser != null)
+        {
+            m_Laser.DestroyBullet();
+            m_Laser = null;
+        }
+
+        if (m_Bomb != null)
+        {
+            m_Bomb.DestroyBullet();
+            m_Bomb = null;
+        }
+
+        if (m_ChargeEffect != null)
+        {
+            m_ChargeEffect.DestoryEffect(true);
+            m_ChargeEffect = null;
+        }
+
+        m_IsCharging = false;
+
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
+    }
 }

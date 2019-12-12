@@ -273,4 +273,12 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             }
         }
     }
+
+    public void StopChargeShot()
+    {
+        if (Player != null)
+        {
+            Player.StopChargeShot();
+        }
+    }
 }
