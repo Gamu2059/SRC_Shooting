@@ -835,9 +835,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGameClear()
     {
-        // ここにボスHPゲージ消去処理を入れる
         BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
-        //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(false);
+        PlayerManager.StopChargeShot();
     }
 
     private void UpdateOnGameClear()
@@ -863,10 +862,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGameOver()
     {
-        // ここにボスHPゲージ消去処理を入れる
         BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
-        //BattleManager.Instance.BattleRealUiManager.SetEnableBossDownGage(false);
-
+        PlayerManager.StopChargeShot();
         PlayerManager.SetPlayerActive(false);
     }
 
@@ -893,7 +890,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnEnd()
     {
-
+        AudioManager.Instance.StopAllBgm();
+        AudioManager.Instance.StopAllSe();
     }
 
     private void UpdateOnEnd()
