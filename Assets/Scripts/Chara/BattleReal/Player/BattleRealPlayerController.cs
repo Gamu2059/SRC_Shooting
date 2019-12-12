@@ -48,7 +48,6 @@ public class BattleRealPlayerController : CharaController
     /// </summary>
     public virtual void ChargeStart()
     {
-        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ChargeSe);
     }
 
     /// <summary>
@@ -64,16 +63,6 @@ public class BattleRealPlayerController : CharaController
     /// </summary>
     public virtual void ChargeRelease()
     {
-        // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
-        var playerManager = BattleRealPlayerManager.Instance;
-        if (playerManager.IsLaserType)
-        {
-            AudioManager.Instance.Play(playerManager.ParamSet.LaserSe);
-        }
-        else
-        {
-            AudioManager.Instance.Play(playerManager.ParamSet.BombSe);
-        }
     }
 
     /// <summary>
@@ -160,7 +149,7 @@ public class BattleRealPlayerController : CharaController
 
     private void GetItem(BattleRealItemController item)
     {
-        if (item == null)
+        if (item == null || item.ItemType == E_ITEM_TYPE.NONE)
         {
             return;
         }
@@ -170,29 +159,22 @@ public class BattleRealPlayerController : CharaController
 
         switch (item.ItemType)
         {
+            case E_ITEM_TYPE.LIFE_RECOVERY:
+                battleData.AddPlayerLife(item.ItemPoint);
+                break;
             case E_ITEM_TYPE.SMALL_SCORE:
-                battleData.AddExp(item.ItemPoint);
-                break;
             case E_ITEM_TYPE.BIG_SCORE:
-                battleData.AddExp(item.ItemPoint);
-                break;
-            case E_ITEM_TYPE.SMALL_SCORE_UP:
-                battleData.AddExp(item.ItemPoint);
-                break;
-            case E_ITEM_TYPE.BIG_SCORE_UP:
-                battleData.AddExp(item.ItemPoint);
+                battleData.AddScore(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
-                battleData.AddExp(item.ItemPoint);
-                break;
             case E_ITEM_TYPE.BIG_EXP:
                 battleData.AddExp(item.ItemPoint);
                 break;
-            case E_ITEM_TYPE.SMALL_BOMB:
-                battleData.AddExp(item.ItemPoint);
+            case E_ITEM_TYPE.SMALL_ENERGY:
+            case E_ITEM_TYPE.BIG_ENERGY:
+                battleData.AddEnergyCharge(item.ItemPoint);
                 break;
-            case E_ITEM_TYPE.BIG_BOMB:
-                battleData.AddExp(item.ItemPoint);
+            default:
                 break;
         }
     }
