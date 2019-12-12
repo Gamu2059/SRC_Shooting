@@ -121,7 +121,7 @@ public class HackerController : BattleRealPlayerController
         }
 
         // BGMは一時停止する
-        AudioManager.Instance.Pause(E_CUE_SHEET.BGM);
+        //AudioManager.Instance.Pause(E_CUE_SHEET.BGM);
 
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
         BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT_PERFORMANCE);
@@ -142,7 +142,7 @@ public class HackerController : BattleRealPlayerController
         }
 
         // BGMを再開する
-        AudioManager.Instance.Resume(E_CUE_SHEET.BGM);
+        //AudioManager.Instance.Resume(E_CUE_SHEET.BGM);
 
         var param = new BulletShotParam(this);
         param.Position = m_MainShotPosition[0].transform.position;
@@ -168,7 +168,7 @@ public class HackerController : BattleRealPlayerController
         }
 
         // BGMを再開する
-        AudioManager.Instance.Resume(E_CUE_SHEET.BGM);
+        //AudioManager.Instance.Resume(E_CUE_SHEET.BGM);
 
         var param = new BulletShotParam(this);
         param.BulletIndex = 1;
