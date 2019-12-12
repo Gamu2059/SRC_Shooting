@@ -1004,7 +1004,16 @@ public class BulletController : BattleRealObjectBase
 
     protected virtual void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
-
+        // 敵の通常の弾は、プレイヤーのレーザーやボムで消される
+        var hitType = sufferData.HitCollider.Transform.ColliderType;
+        if (hitType == E_COLLIDER_TYPE.PLAYER_LASER || hitType == E_COLLIDER_TYPE.PLAYER_BOMB)
+        {
+            var sufferType = sufferData.SufferCollider.Transform.ColliderType;
+            if (sufferType == E_COLLIDER_TYPE.ENEMY_BULLET)
+            {
+                DestroyBullet();
+            }
+        }
     }
 
     protected virtual void OnStaySufferBullet(HitSufferData<BulletController> sufferData)
