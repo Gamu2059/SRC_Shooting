@@ -20,35 +20,16 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         }
     }
 
-    #region Inspector
-
-    [Header("State")]
-
-    //[SerializeField]
-    //private IntReactiveProperty m_CurrentLevel;
-
-    //[SerializeField]
-    //private IntReactiveProperty m_CurrentExp;
-
-    //[SerializeField]
-    //private FloatReactiveProperty m_CurrentBombCharge;
-
-    //[SerializeField]
-    //private IntReactiveProperty m_CurrentBombNum;
-
-    #endregion
-
     #region Field
 
-    private BattleRealPlayerManagerParamSet m_ParamSet;
+    public BattleRealPlayerManagerParamSet ParamSet { get; private set; }
 
     private Transform m_PlayerCharaHolder;
 
     // 事前にシーンに存在していたプレイヤー
     private static BattleRealPlayerController m_RegisteredPlayer;
 
-    private BattleRealPlayerController m_Player;
-    public BattleRealPlayerController Player => m_Player;
+    public BattleRealPlayerController Player { get; private set; }
 
     public bool IsLaserType { get; private set; }
 
@@ -58,7 +39,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
     {
-        m_ParamSet = paramSet;
+        ParamSet = paramSet;
     }
 
     /// <summary>
@@ -79,7 +60,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     {
         base.OnInitialize();
 
-        IsLaserType = m_ParamSet.IsLaserType;
+        IsLaserType = ParamSet.IsLaserType;
     }
 
     public override void OnFinalize()
@@ -96,22 +77,22 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
         if (m_RegisteredPlayer != null)
         {
-            m_Player = m_RegisteredPlayer;
+            Player = m_RegisteredPlayer;
         }
         else
         {
-            m_Player = GameObject.Instantiate(m_ParamSet.PlayerPrefab);
+            Player = GameObject.Instantiate(ParamSet.PlayerPrefab);
         }
 
-        m_Player.transform.SetParent(m_PlayerCharaHolder);
+        Player.transform.SetParent(m_PlayerCharaHolder);
         InitPlayerPosition();
-        m_Player.OnInitialize();
-        m_Player.OnStart();
+        Player.OnInitialize();
+        Player.OnStart();
     }
 
     public override void OnUpdate()
     {
-        if (m_Player == null)
+        if (Player == null)
         {
             return;
         }
@@ -124,15 +105,15 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             float speed = 0;
             if (input.Slow == E_INPUT_STATE.STAY)
             {
-                speed = m_ParamSet.PlayerSlowMoveSpeed;
+                speed = ParamSet.PlayerSlowMoveSpeed;
             }
             else
             {
-                speed = m_ParamSet.PlayerBaseMoveSpeed;
+                speed = ParamSet.PlayerBaseMoveSpeed;
             }
 
             var move = moveDir.ToVector3XZ() * speed * Time.deltaTime;
-            m_Player.transform.Translate(move, Space.World);
+            Player.transform.Translate(move, Space.World);
         }
 
         // 移動直後に位置制限を掛ける
@@ -142,64 +123,57 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         {
             Player.ShotBullet();
         }
-        //if (input.Shot == E_INPUT_STATE.STAY)
-        //{
-        //    if (IsLaserType)
-        //    {
-        //        Player.ChargeLaser();
-        //    }
-        //    else
-        //    {
-        //        Player.ChargeBomb();
-        //    }
-        //}
-        //else if (input.Shot == E_INPUT_STATE.UP)
-        //{
-        //    if (IsLaserType)
-        //    {
-        //        Player.ShotLaser();
-        //    }
-        //    else
-        //    {
-        //        Player.ShotBomb();
-        //    }
-        //}
+
+        switch (input.ChargeShot)
+        {
+            case E_INPUT_STATE.DOWN:
+                Player.ChargeStart();
+                break;
+            case E_INPUT_STATE.STAY:
+                Player.ChargeUpdate();
+                break;
+            case E_INPUT_STATE.UP:
+                Player.ChargeRelease();
+                break;
+        }
 
         if (input.ChangeMode == E_INPUT_STATE.DOWN)
         {
             IsLaserType = !IsLaserType;
+            Player.ChangeWeapon();
             OnChangeWeaponType?.Invoke(IsLaserType);
         }
 
-        if (input.Cancel == E_INPUT_STATE.DOWN) {
-            BattleManager.Instance.RequestChangeState (E_BATTLE_STATE.TRANSITION_TO_HACKING);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
         }
 
-        m_Player.OnUpdate();
+        Player.OnUpdate();
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
 
-        if (m_Player == null)
+        if (Player == null)
         {
             return;
         }
 
-        m_Player.OnLateUpdate();
+        Player.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
 
-        if (m_Player == null)
+        if (Player == null)
         {
             return;
         }
 
-        m_Player.OnFixedUpdate();
+        Player.OnFixedUpdate();
     }
 
     /// <summary>
@@ -207,13 +181,13 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     /// </summary>
     private void RestrictPlayerPosition()
     {
-        if (m_Player == null)
+        if (Player == null)
         {
             return;
         }
 
         var stageManager = BattleRealStageManager.Instance;
-        stageManager.ClampMovingObjectPosition(m_Player.transform);
+        stageManager.ClampMovingObjectPosition(Player.transform);
     }
 
     public void InitPlayerPosition()
@@ -235,7 +209,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        var initViewPos = m_ParamSet.InitAppearViewportPosition;
+        var initViewPos = ParamSet.InitAppearViewportPosition;
 
         var factX = (maxPos.x - minPos.x) * initViewPos.x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * initViewPos.y + minPos.y;
@@ -282,6 +256,23 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         if (Player != null)
         {
             Player.SetInvinsible();
+        }
+    }
+
+    public void ChargeShot()
+    {
+        if (Player != null)
+        {
+            if (IsLaserType)
+            {
+                Player.ShotLaser();
+                BattleRealCameraManager.Instance.Shake(ParamSet.LaserShakeParam);
+            }
+            else
+            {
+                Player.ShotBomb();
+                BattleRealCameraManager.Instance.Shake(ParamSet.BombShakeParam);
+            }
         }
     }
 }

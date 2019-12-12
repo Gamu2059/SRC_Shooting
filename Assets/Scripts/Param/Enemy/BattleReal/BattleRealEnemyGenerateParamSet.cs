@@ -15,6 +15,18 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     private int m_Hp;
     public int Hp => m_Hp;
 
+    [Header("被弾")]
+
+    [SerializeField]
+    private Material m_DamageEffectMaterial;
+    public Material DamageEffectMaterial => m_DamageEffectMaterial;
+
+    [SerializeField]
+    private float m_DamageEffectDuration;
+    public float DamageEffectDuration => m_DamageEffectDuration;
+
+    [Header("撃破")]
+
     [SerializeField, Tooltip("撃破時の獲得スコア")]
     private int m_Score;
     public int Score => m_Score;
@@ -26,4 +38,8 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     [SerializeField, Tooltip("撃破時のイベント")]
     private BattleRealEventContent[] m_DefeatEvents;
     public BattleRealEventContent[] DefeatEvents => m_DefeatEvents;
+
+    [SerializeField, Tooltip("撃破時エフェクト")]
+    private ParticleController m_DefeatEffect;
+    public ParticleController DefeatEffect => m_DefeatEffect;
 }

@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: stage1_004_paras_l_lv1.generate
   m_EditorClassIdentifier: 
   m_Hp: 80
+  m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+    type: 2}
+  m_DamageEffectDuration: 0.01
   m_Score: 200
   m_ItemCreateParam:
     ItemSpreadParams: []
@@ -38,3 +41,5 @@ MonoBehaviour:
       BoolOperandValue: 0
     CountStartTimePeriodNames: []
     CallScriptParams: []
+  m_DefeatEffect: {fileID: 6630883398802632190, guid: 0dba00c88eb79cf4385c338430f45daa,
+    type: 3}

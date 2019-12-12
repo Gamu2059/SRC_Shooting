@@ -90,6 +90,11 @@ public class BattleData
         PlayerLife = 3;
     }
 
+    public void AddPlayerLife(int num)
+    {
+        PlayerLife += num;
+    }
+
     public void IncreasePlayerLife()
     {
         PlayerLife++;
@@ -97,7 +102,7 @@ public class BattleData
 
     public void DecreasePlayerLife()
     {
-        PlayerLife = Mathf.Max(PlayerLife -1 , 0);
+        PlayerLife = Mathf.Max(PlayerLife - 1, 0);
     }
 
     #endregion
@@ -162,7 +167,8 @@ public class BattleData
 
         while (addedExp >= expParamSet.NecessaryExpToLevelUpNextLevel)
         {
-            if(Level < levelNum - 1){
+            if (Level < levelNum - 1)
+            {
                 addedExp %= expParamSet.NecessaryExpToLevelUpNextLevel;
                 Level++;
             }
@@ -170,7 +176,8 @@ public class BattleData
             expParamSet = GetCurrentLevelParam();
         }
 
-        if(Level == levelNum -1){
+        if (Level == levelNum - 1)
+        {
             addedExp = GetCurrentLevelParam().NecessaryExpToLevelUpNextLevel;
         }
 
@@ -186,13 +193,52 @@ public class BattleData
     /// </summary>
     public void AddEnergyCharge(float charge)
     {
-        // var currentCharge = m_CurrentBombCharge.Value;
-        // currentCharge += charge;
+        var addedCharge = EnergyCharge + charge;
+        while (addedCharge >= MaxEnergyCharge)
+        {
+            if (EnergyCount < 10)
+            {
+                AddEnergyCount(1);
+                addedCharge %= MaxEnergyCharge;
+            }
+            else
+            {
+                AddScore(addedCharge);
+                break;
+            }
+        }
 
-        // if (currentCharge >= m_PlayerState.BombCharge) {
-        //     m_CurrentBombNum.Value++;
-        //     currentCharge %= m_PlayerState.BombCharge;
-        // }
+        if (EnergyCount == 10)
+        {
+            EnergyCharge = MaxEnergyCharge;
+        }
+        else
+        {
+            EnergyCharge = addedCharge;
+        }
+    }
+
+    public void ResetEnergyCount()
+    {
+        EnergyCount = 0;
+    }
+
+    public void AddEnergyCount(int num)
+    {
+        if (num < 1)
+        {
+            return;
+        }
+        EnergyCount += num;
+    }
+
+    public void ConsumeEnergyCount(int num)
+    {
+        if (num < 1)
+        {
+            return;
+        }
+        EnergyCount -= num;
     }
 
     #endregion

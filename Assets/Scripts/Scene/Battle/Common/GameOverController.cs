@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +8,7 @@ using UnityEngine.UI;
 public class GameOverController : ControllableMonoBehavior
 {
     private const string GAME_OVER = "game_over";
+    private const string END_GAME_OVER = "end_game_over";
 
     [SerializeField]
     private Animator m_Animator;
@@ -16,6 +19,9 @@ public class GameOverController : ControllableMonoBehavior
     [SerializeField]
     private CustomImageEffect m_CustomImageEffect;
 
+    private bool m_PlayTextAnimation;
+    private bool m_PlayEndAnimation;
+
     #region Game Cycle
 
     public override void OnInitialize()
@@ -24,6 +30,17 @@ public class GameOverController : ControllableMonoBehavior
 
         m_TextTypingAnimator.OnInitialize();
         m_CustomImageEffect.OnInitialize();
+
+        m_PlayTextAnimation = false;
+        m_PlayEndAnimation = false;
+    }
+
+    public override void OnFinalize()
+    {
+        m_CustomImageEffect.OnFinalize();
+        m_TextTypingAnimator.OnFinalize();
+
+        base.OnFinalize();
     }
 
     public override void OnUpdate()
@@ -32,6 +49,11 @@ public class GameOverController : ControllableMonoBehavior
 
         m_TextTypingAnimator.OnUpdate();
         m_CustomImageEffect.OnUpdate();
+
+        if (Input.anyKeyDown && !m_PlayEndAnimation)
+        {
+            PlayGameOverEnd();
+        }
     }
 
     #endregion
@@ -44,11 +66,28 @@ public class GameOverController : ControllableMonoBehavior
 
     public void PlayTextAnimation()
     {
+        m_PlayTextAnimation = true;
         m_TextTypingAnimator.StartAnimation();
+    }
+
+    public void PlayGameOverEnd()
+    {
+        if (!m_PlayTextAnimation || m_PlayEndAnimation)
+        {
+            return;
+        }
+
+        m_PlayEndAnimation = true;
+        m_Animator.Play(END_GAME_OVER, 0);
     }
 
     public void EndGameOver()
     {
+        if (!m_PlayEndAnimation)
+        {
+            return;
+        }
+
         BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
     }
 }

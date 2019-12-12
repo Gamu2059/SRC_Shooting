@@ -211,7 +211,7 @@ public class InfC761Phase1OLD : BattleRealBossBehavior
                 m_NShotsTime++;
                 OnShot(m_ParamSet.ShotParams[0], m_ParamSet.LeftShotOffset, 0, 8, true);
                 OnShot(m_ParamSet.ShotParams[0], m_ParamSet.RigthShotOffset, 0, 8, true);
-                AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
+                //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot01");
             }
         }
     }
@@ -222,7 +222,7 @@ public class InfC761Phase1OLD : BattleRealBossBehavior
                 m_ShotTimeCount = 0;
                 OnShot(m_ParamSet.ShotParams[1], m_ParamSet.CenterShotOffset, 0, 1);
                 SetShotPhase(E_SHOT_PHASE.NONE);
-                AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
+                //AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Shot02");
             }
         }
     }

@@ -20,4 +20,14 @@ public class BattleHackingEnemyGenerateParamSet : ScriptableObject
     [SerializeField, Tooltip("ボスかどうか")]
     private bool m_IsBoss = default;
     public bool IsBoss => m_IsBoss;
+
+    [Header("被弾")]
+
+    [SerializeField]
+    private Material m_DamageEffectMaterial;
+    public Material DamageEffectMaterial => m_DamageEffectMaterial;
+
+    [SerializeField]
+    private float m_DamageEffectDuration;
+    public float DamageEffectDuration => m_DamageEffectDuration;
 }

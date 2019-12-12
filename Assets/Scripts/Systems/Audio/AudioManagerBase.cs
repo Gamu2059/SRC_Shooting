@@ -357,7 +357,7 @@ public class AudioManagerBase<T> : SingletonMonoBehavior<T> where T : MonoBehavi
 			return false;
 		}
 
-		if( ArrayUtility.IsOutOfArray( m_BgmSources, idx ) )
+		if( YS_Tool.ArrayUtility.IsOutOfArray( m_BgmSources, idx ) )
 		{
 #if DEBUG_ON
 			Debug.LogErrorFormat( "BGM AudioSources Out of Index! Size : {0}, Idx : {1}", m_BgmSources.Length, idx );

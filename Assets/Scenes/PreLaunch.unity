@@ -359,7 +359,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498450087}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.10320508, y: 20.019188, z: 0.40088695}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1281577261}
@@ -498,10 +498,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _cueName: BGM_Stage01
+  _cueName: 
   _cueSheet: BGM
   _use3dPositioning: 1
-  _loop: 1
+  _loop: 0
   _volume: 1
   _pitch: 0
   _androidUseLowLatencyVoicePool: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsStartFromBeginningScene: 0
-  m_StartScene: 3
+  m_StartScene: 1
   m_TransitionInfos:
   - CurrentScene: -1
     NextScene: -1
@@ -656,6 +656,7 @@ MonoBehaviour:
   m_GameManagerParamSet:
     m_PlayerLevelParamSet: {fileID: 11400000, guid: da88837ded6f4cf49b509676f0d847a0,
       type: 2}
+    m_AdxAssetParam: {fileID: 11400000, guid: e694442f98e43b7439e93c18b83a687b, type: 2}
   m_SceneManager: {fileID: 1379646823}
   m_TransitionManager: {fileID: 1379646827}
   m_AudioManager: {fileID: 1379646826}
@@ -688,16 +689,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CriWareInitializer: {fileID: 120875731}
-  m_BgmSource: {fileID: 1072788107}
-  m_SeGroups:
-  - Group: 3
+  m_SourceSets:
+  - CueSheet: 0
+    Source: {fileID: 1072788107}
+  - CueSheet: 1
     Source: {fileID: 589815191}
-  - Group: 0
+  - CueSheet: 2
     Source: {fileID: 1339261327}
-  - Group: 1
-    Source: {fileID: 68704729}
-  - Group: 2
+  - CueSheet: 3
     Source: {fileID: 1541977758}
+  - CueSheet: 4
+    Source: {fileID: 68704729}
 --- !u!114 &1379646827
 MonoBehaviour:
   m_ObjectHideFlags: 0

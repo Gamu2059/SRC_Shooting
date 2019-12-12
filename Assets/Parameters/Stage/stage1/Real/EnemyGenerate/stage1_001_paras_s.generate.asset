@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: stage1_001_paras_s.generate
   m_EditorClassIdentifier: 
   m_Hp: 6
+  m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+    type: 2}
+  m_DamageEffectDuration: 0.01
   m_Score: 100
   m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 7
+    ItemSpreadParams:
+    - Type: 6
+      Num: 1
+      Point: 100
+      SpreadRadius: 0
+    CenterCreateItemType: 6
   m_DefeatEvents: []
+  m_DefeatEffect: {fileID: 6630883398802632190, guid: 9a880eb7475d3c04b886a75cc05efa8c,
+    type: 3}
