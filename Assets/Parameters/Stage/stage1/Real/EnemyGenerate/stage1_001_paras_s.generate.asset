@@ -18,12 +18,8 @@ MonoBehaviour:
   m_DamageEffectDuration: 0.01
   m_Score: 100
   m_ItemCreateParam:
-    ItemSpreadParams:
-    - Type: 6
-      Num: 1
-      Point: 100
-      SpreadRadius: 0
-    CenterCreateItemType: 6
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_DefeatEvents: []
   m_DefeatEffect: {fileID: 6630883398802632190, guid: 9a880eb7475d3c04b886a75cc05efa8c,
     type: 3}
