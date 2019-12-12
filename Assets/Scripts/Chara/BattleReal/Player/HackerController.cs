@@ -37,6 +37,7 @@ public class HackerController : BattleRealPlayerController
     private BulletController m_Bomb;
 
     private bool m_IsExistEnergyCharge;
+    private bool m_IsCharging;
 
     #endregion
 
@@ -46,6 +47,7 @@ public class HackerController : BattleRealPlayerController
 
         SetEnableCollider(true);
         m_Shield.gameObject.SetActive(false);
+        m_IsCharging = false;
     }
 
     public override void OnUpdate()
@@ -74,9 +76,24 @@ public class HackerController : BattleRealPlayerController
         }
     }
 
+    public override void ChargeUpdate()
+    {
+        base.ChargeUpdate();
+
+        if (!m_IsCharging)
+        {
+            ChargeStart();
+        }
+    }
+
     public override void ChargeStart()
     {
         base.ChargeStart();
+
+        if (IsUsingChargeShot())
+        {
+            return;
+        }
 
         var battleData = DataManager.Instance.BattleData.EnergyCount;
         m_IsExistEnergyCharge = battleData > 0;
@@ -85,6 +102,8 @@ public class HackerController : BattleRealPlayerController
         {
             return;
         }
+
+        m_IsCharging = true;
 
         if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
         {
@@ -104,10 +123,12 @@ public class HackerController : BattleRealPlayerController
     {
         base.ChargeRelease();
 
-        if (!m_IsExistEnergyCharge)
+        if (IsUsingChargeShot() || !m_IsCharging || !m_IsExistEnergyCharge)
         {
             return;
         }
+
+        m_IsCharging = false;
 
         // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
         var playerManager = BattleRealPlayerManager.Instance;
@@ -120,9 +141,6 @@ public class HackerController : BattleRealPlayerController
             AudioManager.Instance.Play(playerManager.ParamSet.BombSe);
         }
 
-        // BGMは一時停止する
-        //AudioManager.Instance.Pause(E_CUE_SHEET.BGM);
-
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
         BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT_PERFORMANCE);
     }
@@ -130,6 +148,11 @@ public class HackerController : BattleRealPlayerController
     public override void ShotLaser()
     {
         base.ShotLaser();
+
+        if (IsUsingChargeShot())
+        {
+            return;
+        }
 
         if (m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
         {
@@ -140,9 +163,6 @@ public class HackerController : BattleRealPlayerController
         {
             m_ChargeEffect.DestoryEffect(true);
         }
-
-        // BGMを再開する
-        //AudioManager.Instance.Resume(E_CUE_SHEET.BGM);
 
         var param = new BulletShotParam(this);
         param.Position = m_MainShotPosition[0].transform.position;
@@ -157,6 +177,11 @@ public class HackerController : BattleRealPlayerController
     {
         base.ShotBomb();
 
+        if (IsUsingChargeShot())
+        {
+            return;
+        }
+
         if (m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
         {
             return;
@@ -166,9 +191,6 @@ public class HackerController : BattleRealPlayerController
         {
             m_ChargeEffect.DestoryEffect(true);
         }
-
-        // BGMを再開する
-        //AudioManager.Instance.Resume(E_CUE_SHEET.BGM);
 
         var param = new BulletShotParam(this);
         param.BulletIndex = 1;
@@ -204,5 +226,12 @@ public class HackerController : BattleRealPlayerController
         // 被弾判定と無敵判定は反対の関係
         c.SetEnableCollider(m_Critical, isEnable);
         c.SetEnableCollider(m_Shield, !isEnable);
+    }
+
+    public bool IsUsingChargeShot()
+    {
+        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        return useLaser || useBomb;
     }
 }
