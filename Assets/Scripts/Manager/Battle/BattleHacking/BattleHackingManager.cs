@@ -9,6 +9,8 @@ using System;
 [Serializable]
 public class BattleHackingManager : ControllableObject
 {
+    private const float GAME_OVER_DURATION = 1f;
+
     #region Field
 
     private BattleHackingParamSet m_ParamSet;
@@ -22,6 +24,7 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingPlayerManager PlayerManager { get; private set; }
     public BattleHackingEnemyManager EnemyManager { get; private set; }
     public BattleHackingBulletManager BulletManager { get; private set; }
+    public BattleHackingEffectManager EffectManager { get; private set; }
     public BattleHackingCollisionManager CollisionManager { get; private set; }
 
     public bool IsHackingSuccess { get; private set; }
@@ -128,6 +131,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager = new BattleHackingPlayerManager(m_ParamSet.PlayerManagerParamSet);
         EnemyManager = new BattleHackingEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
+        EffectManager = new BattleHackingEffectManager();
         CollisionManager = new BattleHackingCollisionManager();
 
         InputManager.OnInitialize();
@@ -135,6 +139,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnInitialize();
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
+        EffectManager.OnInitialize();
         CollisionManager.OnInitialize();
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
@@ -143,6 +148,7 @@ public class BattleHackingManager : ControllableObject
     public override void OnFinalize()
     {
         CollisionManager.OnFinalize();
+        EffectManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
         PlayerManager.OnFinalize();
@@ -186,6 +192,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnStart();
         EnemyManager.OnStart();
         BulletManager.OnStart();
+        EffectManager.OnStart();
         CollisionManager.OnStart();
 
         SetHackingLevel(0);
@@ -216,7 +223,13 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnTransitionToReal()
     {
+        //var battleManager = BattleManager.Instance;
+        //var player = PlayerManager.Player;
+        //var centerPos = battleManager.BattleHackingStageManager.CalcViewportPosFromWorldPosition(player.transform, false);
 
+        //// StageManagerは原点が中央にあるため、原点をずらす
+        //centerPos += Vector2.one * 0.5f;
+        //battleManager.BattleHackingUiManager.GridHoleEffect.PlayEffect(centerPos);
     }
 
     private void UpdateOnTransitionToReal()
@@ -239,6 +252,9 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnPutAway();
         EnemyManager.OnPutAway();
         BulletManager.OnPutAway();
+        EffectManager.OnPutAway();
+
+        BattleManager.Instance.BattleHackingUiManager.GridHoleEffect.StopEffect();
     }
 
     #endregion
@@ -330,6 +346,7 @@ public class BattleHackingManager : ControllableObject
         // 消滅の更新
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
+        EffectManager.GotoPool();
         CollisionManager.DestroyDrawingColliderMeshes();
 
         InputManager.OnUpdate();
@@ -337,6 +354,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnUpdate();
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
+        EffectManager.OnUpdate();
         CollisionManager.OnUpdate();
     }
 
@@ -346,6 +364,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnLateUpdate();
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
+        EffectManager.OnLateUpdate();
         CollisionManager.OnLateUpdate();
 
         // 衝突フラグクリア
@@ -377,6 +396,7 @@ public class BattleHackingManager : ControllableObject
         PlayerManager.OnFixedUpdate();
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
+        EffectManager.OnFixedUpdate();
         CollisionManager.OnFixedUpdate();
 
         if (CurrentRemainBonusTime <= 0)
@@ -434,14 +454,17 @@ public class BattleHackingManager : ControllableObject
 
     private void UpdateOnGameClear()
     {
+        EffectManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
+        EffectManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
+        EffectManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
@@ -456,24 +479,33 @@ public class BattleHackingManager : ControllableObject
     private void StartOnGameOver()
     {
         IsHackingSuccess = false;
-        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+
+        var waitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.6f);
+        waitTimer.SetTimeoutCallBack(() =>
+        {
+            waitTimer = null;
+            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+        });
+        TimerManager.Instance.RegistTimer(waitTimer);
     }
 
     private void UpdateOnGameOver()
     {
+        EffectManager.OnUpdate();
     }
 
     private void LateUpdateOnGameOver()
     {
+        EffectManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameOver()
     {
+        EffectManager.OnFixedUpdate();
     }
 
     private void EndOnGameOver()
     {
-
     }
 
     #endregion

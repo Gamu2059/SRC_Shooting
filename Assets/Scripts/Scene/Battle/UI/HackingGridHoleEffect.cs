@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// リアルモードの画面エフェクトを制御する。
+/// ハッキングモードのグリッドホールエフェクトを制御する。
 /// </summary>
-public class FrontViewEffect : ControllableMonoBehavior
+public class HackingGridHoleEffect : ControllableMonoBehavior
 {
     #region Field Inspector
 
@@ -16,10 +16,10 @@ public class FrontViewEffect : ControllableMonoBehavior
     private RawImage m_RawImage;
 
     [SerializeField]
-    private AnimationCurve m_InverseEffectRadiusCurve;
+    private AnimationCurve m_GridHoleEffectRadiusCurve;
 
     [SerializeField]
-    private Material m_InverseEffect;
+    private Material m_GridHoleEffect;
 
     #endregion
 
@@ -36,8 +36,8 @@ public class FrontViewEffect : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_UseEffect = Instantiate(m_InverseEffect);
-        m_Duration = m_InverseEffectRadiusCurve.Duration();
+        m_UseEffect = Instantiate(m_GridHoleEffect);
+        m_Duration = m_GridHoleEffectRadiusCurve.Duration();
     }
 
     public override void OnFinalize()
@@ -59,7 +59,7 @@ public class FrontViewEffect : ControllableMonoBehavior
             }
             else
             {
-                var radius = m_InverseEffectRadiusCurve.Evaluate(m_TimeCount);
+                var radius = m_GridHoleEffectRadiusCurve.Evaluate(m_TimeCount);
                 m_RawImage.material.SetFloat("_Radius", radius);
                 m_TimeCount += Time.deltaTime;
             }
@@ -83,6 +83,6 @@ public class FrontViewEffect : ControllableMonoBehavior
     public void StopEffect()
     {
         m_IsAnimating = false;
-        m_RawImage.material.SetFloat("_Radius", 100);
+        m_RawImage.material.SetFloat("_Radius", 0);
     }
 }

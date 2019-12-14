@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 19510998}
   - component: {fileID: 19511000}
   - component: {fileID: 19510999}
+  - component: {fileID: 19511001}
   m_Layer: 0
   m_Name: MainView
   m_TagString: Untagged
@@ -378,6 +379,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19510997}
   m_CullTransparentMesh: 0
+--- !u!114 &19511001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19510997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e63145673ac9d43804bb85c6273164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RawImage: {fileID: 19510999}
+  m_GridHoleEffectRadiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1.5
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1.5
+      inSlope: 1.5
+      outSlope: 1
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_GridHoleEffect: {fileID: 2100000, guid: 8aa443797ef2c3f479f7530752678e4d, type: 2}
 --- !u!1001 &26845169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3212,6 +3251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CanvasGroup: {fileID: 221366188}
+  m_GridHoleEffect: {fileID: 19511001}
   m_ModeIndicator: {fileID: 17665732}
   m_StageIndicator: {fileID: 1822330687}
   m_BestScoreIndicator: {fileID: 1003198763}
@@ -4050,13 +4090,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295319343}
-  m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 533081379}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!95 &295319345
 Animator:
   serializedVersion: 3
@@ -14757,6 +14797,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4fdc3d07023b844a817507a1a9e34d6, type: 3}
+--- !u!4 &1008323715 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 14422630063229467, guid: a4fdc3d07023b844a817507a1a9e34d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1008323714}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1009394326
 GameObject:
   m_ObjectHideFlags: 0
@@ -17072,6 +17118,7 @@ MonoBehaviour:
   m_PlayerCharaHolder: {fileID: 1181454857}
   m_EnemyCharaHolder: {fileID: 483837413}
   m_BulletHolder: {fileID: 1385185427}
+  m_EffectHolder: {fileID: 1008323715}
   m_MinLocalFieldPosition: {x: -0.8, y: -0.99}
   m_MaxLocalFieldPosition: {x: 0.8, y: 0.99}
 --- !u!1001 &1185791939
