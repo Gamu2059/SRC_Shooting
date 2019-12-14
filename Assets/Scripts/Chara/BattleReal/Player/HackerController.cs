@@ -259,7 +259,6 @@ public class HackerController : BattleRealPlayerController
         }
 
         m_IsCharging = false;
-
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
     }
 }

@@ -19,6 +19,9 @@ public class GameOverController : ControllableMonoBehavior
     [SerializeField]
     private CustomImageEffect m_CustomImageEffect;
 
+    [SerializeField]
+    private PlaySoundParam m_EndSe;
+
     private bool m_PlayTextAnimation;
     private bool m_PlayEndAnimation;
 
@@ -79,6 +82,8 @@ public class GameOverController : ControllableMonoBehavior
 
         m_PlayEndAnimation = true;
         m_Animator.Play(END_GAME_OVER, 0);
+
+        AudioManager.Instance.Play(m_EndSe);
     }
 
     public void EndGameOver()

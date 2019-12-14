@@ -406,7 +406,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(true);
 
         AudioManager.Instance.Play(m_ParamSet.ToHackingSe);
-        AudioManager.Instance.OperateAisac(m_ParamSet.ToHackingAisac);
     }
 
     private void UpdateOnTransitionToHacking()
@@ -478,7 +477,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(true);
 
         AudioManager.Instance.Play(m_ParamSet.ToRealSe);
-        AudioManager.Instance.OperateAisac(m_ParamSet.ToRealAisac);
     }
 
     private void UpdateOnTransitionToReal()
