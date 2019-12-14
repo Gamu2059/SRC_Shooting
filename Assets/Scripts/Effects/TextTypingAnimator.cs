@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextTypingAnimator : ControllableMonoBehavior {
+public class TextTypingAnimator : ControllableMonoBehavior
+{
 
     [SerializeField]
     private Text m_Text;
@@ -18,6 +19,9 @@ public class TextTypingAnimator : ControllableMonoBehavior {
 
     [SerializeField]
     private int m_ForwardIndexNum = 2;
+
+    [SerializeField]
+    private PlaySoundParam m_TypingSe;
 
     private int m_CurrentIndex;
     private float m_TimeCount;
@@ -38,7 +42,8 @@ public class TextTypingAnimator : ControllableMonoBehavior {
         m_IsAnimating = false;
     }
 
-    public override void OnUpdate () {
+    public override void OnUpdate()
+    {
 
         if (!m_IsAnimating || m_IsComplete)
         {
@@ -53,11 +58,13 @@ public class TextTypingAnimator : ControllableMonoBehavior {
             {
                 m_CurrentIndex = m_TargetText.Length;
             }
+            AudioManager.Instance.Play(m_TypingSe);
         }
 
         m_TimeCount += Time.unscaledDeltaTime;
         m_Text.text = m_TargetText.Substring(0, m_CurrentIndex);
-        if (m_CurrentIndex >= m_TargetText.Length) {
+        if (m_CurrentIndex >= m_TargetText.Length)
+        {
             m_IsComplete = true;
         }
     }

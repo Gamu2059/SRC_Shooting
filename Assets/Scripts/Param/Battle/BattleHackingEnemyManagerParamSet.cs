@@ -22,12 +22,16 @@ public class BattleHackingEnemyManagerParamSet : ScriptableObject
     [Header("SE"), Tooltip("あとでそれぞれの敵パラメータで指定するようにする")]
 
     [SerializeField]
-    private PlaySoundParam m_Shot01Se;
-    public PlaySoundParam Shot01Se => m_Shot01Se;
+    private PlaySoundParam m_SmallShot01Se;
+    public PlaySoundParam SmallShot01Se => m_SmallShot01Se;
 
     [SerializeField]
-    private PlaySoundParam m_Shot02Se;
-    public PlaySoundParam Shot02Se => m_Shot02Se;
+    private PlaySoundParam m_MediumShot01Se;
+    public PlaySoundParam MediumShot01Se => m_MediumShot01Se;
+
+    [SerializeField]
+    private PlaySoundParam m_MediumShot02Se;
+    public PlaySoundParam MediumShot02Se => m_MediumShot02Se;
 
     [SerializeField]
     private PlaySoundParam m_DamageSe;
