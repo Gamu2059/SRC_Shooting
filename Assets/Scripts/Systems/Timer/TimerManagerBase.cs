@@ -13,10 +13,12 @@ public abstract class TimerManagerBase : ControllableObject
 	{
         base.OnInitialize();
 		m_TimerController = new TimerController();
+        m_TimerController.OnInitialize();
 	}
 
     public override void OnFinalize()
     {
+        m_TimerController.OnFinalize();
         m_TimerController = null;
         base.OnFinalize();
     }

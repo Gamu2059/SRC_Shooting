@@ -250,18 +250,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnStart()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnStart()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnStart()
@@ -412,18 +421,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnTransitionToHacking()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnTransitionToHacking()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnTransitionToHacking()
@@ -475,18 +493,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnTransitionToReal()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnTransitionToReal()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnTransitionToReal()
@@ -523,18 +550,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
@@ -561,6 +597,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
 
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
+
         m_GameOverController.OnUpdate();
     }
 
@@ -568,12 +607,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameOver()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnGameOver()
@@ -604,18 +649,27 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.OnUpdate();
         HackingManager.OnUpdate();
+
+        BattleRealUiManager.OnUpdate();
+        BattleHackingUiManager.OnUpdate();
     }
 
     private void LateUpdateOnEnd()
     {
         RealManager.OnLateUpdate();
         HackingManager.OnLateUpdate();
+
+        BattleRealUiManager.OnLateUpdate();
+        BattleHackingUiManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnEnd()
     {
         RealManager.OnFixedUpdate();
         HackingManager.OnFixedUpdate();
+
+        BattleRealUiManager.OnFixedUpdate();
+        BattleHackingUiManager.OnFixedUpdate();
     }
 
     private void EndOnEnd()

@@ -78,12 +78,12 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
     /// </summary>
     public override void OnFinalize()
     {
-        base.OnFinalize();
         CheckPoolAllBullet();
         m_StandbyBullets = null;
         m_UpdateBullets = null;
         m_PoolBullets = null;
         m_GotoPoolBullets = null;
+        base.OnFinalize();
     }
 
     public override void OnStart()

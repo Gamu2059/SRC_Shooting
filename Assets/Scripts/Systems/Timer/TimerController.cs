@@ -4,22 +4,41 @@ using UnityEngine;
 
 public class TimerController
 {
+    private LinkedList<Timer> m_StandbyTimers;
 
-	private LinkedList<Timer> m_TimerList;
+	private LinkedList<Timer> m_Timers;
 
-	private LinkedList<Timer> m_GotoStopTimerList;
+	private LinkedList<Timer> m_GotoStopTimers;
 
 	/// <summary>
 	/// TimerManagerのタイマーサイクル。
 	/// </summary>
 	private E_TIMER_CYCLE m_TimerCycle;
 
-	public TimerController()
-	{
-		m_TimerList = new LinkedList<Timer>();
-		m_GotoStopTimerList = new LinkedList<Timer>();
+    public void OnInitialize()
+    {
+        m_StandbyTimers = new LinkedList<Timer>();
+		m_Timers = new LinkedList<Timer>();
+		m_GotoStopTimers = new LinkedList<Timer>();
 		m_TimerCycle = E_TIMER_CYCLE.UPDATE;
-	}
+    }
+
+    public void OnFinalize()
+    {
+        foreach (var timer in m_Timers)
+        {
+            RemoveTimer(timer);
+        }
+
+        RemoveStopTimers();
+
+        m_GotoStopTimers.Clear();
+        m_Timers.Clear();
+        m_StandbyTimers.Clear();
+        m_GotoStopTimers = null;
+        m_Timers = null;
+        m_StandbyTimers = null;
+    }
 
 	public void OnUpdate()
 	{
@@ -28,7 +47,7 @@ public class TimerController
 			return;
 		}
 
-		foreach( var timer in m_TimerList )
+		foreach( var timer in m_Timers )
 		{
 			if( timer != null )
 			{
@@ -37,34 +56,40 @@ public class TimerController
 		}
 
 		RemoveStopTimers();
+        RegisterStandbyTimers();
 	}
 
-	/// <summary>
-	/// 停止したタイマーを削除する。
-	/// </summary>
-	public void RemoveStopTimers()
+	private void RemoveStopTimers()
 	{
-		int count = m_GotoStopTimerList.Count;
+        foreach (var timer in m_GotoStopTimers)
+        {
+			m_Timers.Remove( timer );
+        }
 
-		for( int i = 0; i < count; i++ )
-		{
-			var timer = m_GotoStopTimerList.First.Value;
-			m_TimerList.Remove( timer );
-			m_GotoStopTimerList.RemoveFirst();
-		}
+        m_GotoStopTimers.Clear();
 	}
 
-	/// <summary>
-	/// タイマーを登録する。
-	/// </summary>
-	public void RegistTimer( Timer timer )
+    private void RegisterStandbyTimers()
+    {
+        foreach (var timer in m_StandbyTimers)
+        {
+            m_Timers.AddLast(timer);
+        }
+
+        m_StandbyTimers.Clear();
+    }
+
+    /// <summary>
+    /// タイマーを登録する。
+    /// </summary>
+    public void RegistTimer( Timer timer )
 	{
-		if( timer == null )
+		if( timer == null || m_StandbyTimers.Contains(timer))
 		{
 			return;
 		}
 
-		m_TimerList.AddLast( timer );
+        m_StandbyTimers.AddLast(timer);
 		timer.SetTimerCycle( E_TIMER_CYCLE.UPDATE );
 		timer.SetTimerController( this );
 	}
@@ -82,10 +107,10 @@ public class TimerController
 		if( timer.GetTimerCycle() != E_TIMER_CYCLE.UPDATE && timer.GetTimerCycle() != E_TIMER_CYCLE.PAUSE )
 		{
 			timer.SetTimerCycle( E_TIMER_CYCLE.STOP );
-			EventUtility.SafeInvokeAction( timer.GetStopCallBack() );
+            timer.GetStopCallBack()?.Invoke();
 		}
 
-		m_GotoStopTimerList.AddLast( timer );
+		m_GotoStopTimers.AddLast( timer );
 	}
 
 	/// <summary>

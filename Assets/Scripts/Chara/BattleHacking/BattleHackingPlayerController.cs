@@ -90,11 +90,13 @@ public class BattleHackingPlayerController : CommandCharaController
 
         base.Dead();
 
+        var paramSet = BattleHackingPlayerManager.Instance.ParamSet;
+
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
-        AudioManager.Instance.Play(BattleHackingPlayerManager.Instance.ParamSet.DeadSe);
-
-
-
+        AudioManager.Instance.Play(paramSet.DeadSe);
+        BattleHackingEffectManager.Instance.CreateEffect(paramSet.DeadEffectParam, transform);
         BattleHackingManager.Instance.DeadPlayer();
+
+        gameObject.SetActive(false);
     }
 }

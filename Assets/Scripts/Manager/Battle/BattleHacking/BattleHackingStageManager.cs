@@ -13,12 +13,14 @@ public class BattleHackingStageManager : ControllableMonoBehavior
         PLAYER,
         ENEMY,
         BULLET,
+        EFFECT,
     }
 
     public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
     public const string PLAYER_HOLDER = "[PlayerCharaHolder]";
     public const string ENEMY_HOLDER = "[EnemyCharaHolder]";
     public const string BULLET_HOLDER = "[BulletHolder]";
+    public const string EFFECT_HOLDER = "[EffectHolder]";
 
     #region Inspector
 
@@ -52,7 +54,11 @@ public class BattleHackingStageManager : ControllableMonoBehavior
     private Transform m_BulletHolder = default;
     public Transform BulletHolder => m_BulletHolder;
 
-    [Header("Filed")]
+    [SerializeField]
+    private Transform m_EffectHolder = default;
+    public Transform EffectHolder => m_EffectHolder;
+
+    [Header("Field")]
 
     [SerializeField]
     private Vector2 m_MinLocalFieldPosition = default;
@@ -151,6 +157,10 @@ public class BattleHackingStageManager : ControllableMonoBehavior
             case E_HOLDER_TYPE.BULLET:
                 holder = BulletHolder;
                 holderName = BULLET_HOLDER;
+                break;
+            case E_HOLDER_TYPE.EFFECT:
+                holder = EffectHolder;
+                holderName = EFFECT_HOLDER;
                 break;
         }
 
