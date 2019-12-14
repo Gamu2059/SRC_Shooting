@@ -398,7 +398,7 @@ public class BattleHackingManager : ControllableObject
 
         if (CurrentRemainBonusTime <= 0)
         {
-            CurrentRemainTime -= Time.fixedDeltaTime;
+            CurrentRemainTime -= Time.deltaTime;
             if (CurrentRemainTime <= 0)
             {
                 CurrentRemainTime = 0;
@@ -407,7 +407,7 @@ public class BattleHackingManager : ControllableObject
         }
         else
         {
-            CurrentRemainBonusTime -= Time.fixedDeltaTime;
+            CurrentRemainBonusTime -= Time.deltaTime;
             if (CurrentRemainBonusTime <= 0)
             {
                 CurrentRemainBonusTime = 0;
@@ -478,6 +478,7 @@ public class BattleHackingManager : ControllableObject
 
         IsHackingSuccess = true;
 
+
         BulletManager.DestroyAllEnemyBullet();
         CameraManager.Shake(m_ParamSet.DestroyBulletShakeParam);
     }
@@ -486,18 +487,21 @@ public class BattleHackingManager : ControllableObject
     {
         BulletManager.GotoPool();
 
+        EnemyManager.OnUpdate();
         EffectManager.OnUpdate();
         CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
+        EnemyManager.OnLateUpdate();
         EffectManager.OnLateUpdate();
         CameraManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
+        EnemyManager.OnFixedUpdate();
         EffectManager.OnFixedUpdate();
         CameraManager.OnFixedUpdate();
     }

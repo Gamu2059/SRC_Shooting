@@ -7,7 +7,7 @@ using System;
 /// INF-C-761のハッキングモードの一つ目の行動パラメータのセット。
 /// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Hacker1_Phase1", fileName = "param.inf_c_761_hacker1_phase_1.asset")]
-public class InfC761Hacker1Phase1ParamSet : BattleHackingBossBehaviorParamSet
+public class InfC761Hacker1Phase1ParamSet : BattleHackingBossBehaviorUnitParamSet
 {
 
 }

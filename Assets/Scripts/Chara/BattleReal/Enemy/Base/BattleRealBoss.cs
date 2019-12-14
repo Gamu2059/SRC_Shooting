@@ -691,4 +691,8 @@ public class BattleRealBoss : BattleRealEnemyController
             }
         }
     }
+
+    public virtual void DestroyPerformance()
+    {
+    }
 }
