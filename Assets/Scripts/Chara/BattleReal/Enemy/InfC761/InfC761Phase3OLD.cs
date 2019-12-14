@@ -50,7 +50,7 @@ public class InfC761Phase3OLD : BattleRealBossBehavior
     private float m_LineShotTimeCount;
     private int m_LineShotTime;
 
-    public InfC761Phase3OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase3OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase3ParamSetOld;
     }

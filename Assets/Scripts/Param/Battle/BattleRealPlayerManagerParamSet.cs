@@ -31,15 +31,9 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     private bool m_IsLaserType;
     public bool IsLaserType => m_IsLaserType;
 
-    [Header("チャージエフェクト関連")]
-
     [SerializeField, Tooltip("チャージエフェクト")]
-    private BattleRealEffectController m_ChargePrefab;
-    public BattleRealEffectController ChargePrefab => m_ChargePrefab;
-
-    [SerializeField, Tooltip("チャージエフェクトの発生相対位置")]
-    private Vector3 m_ChargeRelatedPos;
-    public Vector3 ChargeRelatedPos => m_ChargeRelatedPos;
+    private EffectParamSet m_ChargeEffectParam;
+    public EffectParamSet ChargeEffectParam => m_ChargeEffectParam;
 
     [Header("カメラウェーブ")]
 

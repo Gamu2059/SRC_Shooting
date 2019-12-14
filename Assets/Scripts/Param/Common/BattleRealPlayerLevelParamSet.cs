@@ -39,6 +39,30 @@ public class BattleRealPlayerLevel
     private int m_NecessaryExpToLevelUpNextLevel;
 
     public int NecessaryExpToLevelUpNextLevel => m_NecessaryExpToLevelUpNextLevel;
+
+    [SerializeField, Tooltip("レーザータイプでの通常弾1発のダメージ")]
+    private float m_LaserTypeShotDamage;
+    public float LaserTypeShotDamage => m_LaserTypeShotDamage;
+
+    [SerializeField, Tooltip("レーザータイプでの通常弾1発のダウンダメージ")]
+    private float m_LaserTypeShotDownDamage;
+    public float LaserTypeShotDownDamage => m_LaserTypeShotDownDamage;
+
+    [SerializeField, Tooltip("ボムタイプでの通常弾1発のダメージ")]
+    private float m_BombTypeShotDamage;
+    public float BombTypeShotDamage => m_BombTypeShotDamage;
+
+    [SerializeField, Tooltip("ボムタイプでの通常弾1発のダウンダメージ")]
+    private float m_BombTypeShotDownDamage;
+    public float BombTypeShotDownDamage => m_BombTypeShotDownDamage;
+
+    [SerializeField, Tooltip("レーザーの1秒あたりのダメージ")]
+    private float m_LaserDamagePerSeconds;
+    public float LaserDamagePerSeconds => m_LaserDamagePerSeconds;
+
+    [SerializeField, Tooltip("ボムの1発あたりのダメージ")]
+    private float m_BombDamage;
+    public float BombDamage => m_BombDamage;
 }
 
 /// <summary>

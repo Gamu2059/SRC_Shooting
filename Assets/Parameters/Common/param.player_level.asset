@@ -14,10 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerLevels:
   - m_NecessaryExpToLevelUpNextLevel: 500
+    m_LaserTypeShotDamage: 1
+    m_LaserTypeShotDownDamage: 0.5
+    m_BombTypeShotDamage: 1
+    m_BombTypeShotDownDamage: 0.5
+    m_LaserDamagePerSeconds: 150
+    m_BombDamage: 100
   - m_NecessaryExpToLevelUpNextLevel: 1000
+    m_LaserTypeShotDamage: 1.2
+    m_LaserTypeShotDownDamage: 0.6
+    m_BombTypeShotDamage: 1.2
+    m_BombTypeShotDownDamage: 0.6
+    m_LaserDamagePerSeconds: 250
+    m_BombDamage: 200
   - m_NecessaryExpToLevelUpNextLevel: 1500
+    m_LaserTypeShotDamage: 1.5
+    m_LaserTypeShotDownDamage: 0.75
+    m_BombTypeShotDamage: 1.5
+    m_BombTypeShotDownDamage: 0.75
+    m_LaserDamagePerSeconds: 350
+    m_BombDamage: 300
   - m_NecessaryExpToLevelUpNextLevel: 2000
+    m_LaserTypeShotDamage: 2
+    m_LaserTypeShotDownDamage: 1
+    m_BombTypeShotDamage: 2
+    m_BombTypeShotDownDamage: 1
+    m_LaserDamagePerSeconds: 450
+    m_BombDamage: 400
   - m_NecessaryExpToLevelUpNextLevel: 2500
+    m_LaserTypeShotDamage: 3
+    m_LaserTypeShotDownDamage: 1.5
+    m_BombTypeShotDamage: 3
+    m_BombTypeShotDownDamage: 1.5
+    m_LaserDamagePerSeconds: 600
+    m_BombDamage: 600
   m_CommonDefData:
     m_MaxPlayerLife: 10
     m_MaxLevel: 5

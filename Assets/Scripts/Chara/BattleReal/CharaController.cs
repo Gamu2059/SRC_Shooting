@@ -181,7 +181,6 @@ public class CharaController : BattleRealObjectBase
         }
 
         NowHp = Mathf.Clamp(NowHp + recover, 0, MaxHp);
-
         OnRecover();
     }
 
