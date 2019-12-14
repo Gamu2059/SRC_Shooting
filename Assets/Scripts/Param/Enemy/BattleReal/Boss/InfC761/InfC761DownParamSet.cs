@@ -9,7 +9,7 @@ using System;
 /// INF-C-761のダウン行動パラメータのセット。
 /// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Down", fileName = "param.inf_c_761_down.asset")]
-public class InfC761DownParamSet : BattleRealBossBehaviorParamSet
+public class InfC761DownParamSet : BattleRealBossBehaviorUnitParamSet
 {
     [SerializeField]
     private float m_Amplitude;

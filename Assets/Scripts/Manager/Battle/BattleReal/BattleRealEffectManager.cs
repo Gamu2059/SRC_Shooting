@@ -27,22 +27,22 @@ public class BattleRealEffectManager : ControllableObject
     /// <summary>
     /// STANDBY状態のエフェクトを保持するリスト。
     /// </summary>
-    private List<BattleRealEffectController> m_StandbyEffects;
+    private List<BattleCommonEffectController> m_StandbyEffects;
 
     /// <summary>
     /// UPDATE状態のエフェクトを保持するリスト。
     /// </summary>
-    private List<BattleRealEffectController> m_UpdateEffects;
+    private List<BattleCommonEffectController> m_UpdateEffects;
 
     /// <summary>
     /// POOL状態のエフェクトを保持するリスト。
     /// </summary>
-    private List<BattleRealEffectController> m_PoolEffects;
+    private List<BattleCommonEffectController> m_PoolEffects;
 
     /// <summary>
     /// POOL状態に遷移するエフェクトのリスト。
     /// </summary>
-    private List<BattleRealEffectController> m_GotoPoolEffects;
+    private List<BattleCommonEffectController> m_GotoPoolEffects;
 
     #endregion
 
@@ -56,10 +56,10 @@ public class BattleRealEffectManager : ControllableObject
     public override void OnInitialize()
     {
         base.OnInitialize();
-        m_StandbyEffects = new List<BattleRealEffectController>();
-        m_UpdateEffects = new List<BattleRealEffectController>();
-        m_PoolEffects = new List<BattleRealEffectController>();
-        m_GotoPoolEffects = new List<BattleRealEffectController>();
+        m_StandbyEffects = new List<BattleCommonEffectController>();
+        m_UpdateEffects = new List<BattleCommonEffectController>();
+        m_PoolEffects = new List<BattleCommonEffectController>();
+        m_GotoPoolEffects = new List<BattleCommonEffectController>();
 
         BattleRealManager.Instance.OnTransitionToHacking += PauseAllEffect;
         BattleRealManager.Instance.OnTransitionToReal += ResumeAllEffect;
@@ -123,6 +123,20 @@ public class BattleRealEffectManager : ControllableObject
 
             effect.OnLateUpdate();
         }
+
+        // 除外判定
+        foreach (var effect in m_UpdateEffects)
+        {
+            if (effect == null)
+            {
+                continue;
+            }
+
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.STANDBY_CHECK_POOL)
+            {
+                CheckPoolEffect(effect);
+            }
+        }
     }
 
     #endregion
@@ -183,7 +197,7 @@ public class BattleRealEffectManager : ControllableObject
     /// <summary>
     /// エフェクトをSTANDBY状態にして制御下に入れる。
     /// </summary>
-    public void CheckStandbyEffect(BattleRealEffectController effect)
+    private void CheckStandbyEffect(BattleCommonEffectController effect)
     {
         if (effect == null || !m_PoolEffects.Contains(effect))
         {
@@ -201,7 +215,7 @@ public class BattleRealEffectManager : ControllableObject
     /// <summary>
     /// 指定したエフェクトを制御から外すためにチェックする。
     /// </summary>
-    public void CheckPoolEffect(BattleRealEffectController effect)
+    private void CheckPoolEffect(BattleCommonEffectController effect)
     {
         if (effect == null || m_GotoPoolEffects.Contains(effect))
         {
@@ -217,9 +231,7 @@ public class BattleRealEffectManager : ControllableObject
     /// プールからエフェクトを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    /// <param name="effectPrefab">取得や生成の情報源となるエフェクトのプレハブ</param>
-    /// <param name="owner">エフェクトを作成したもの</param>
-    public BattleRealEffectController GetPoolingBullet(BattleRealEffectController effectPrefab, Transform owner)
+    public BattleCommonEffectController GetPoolingEffect(BattleCommonEffectController effectPrefab)
     {
         if (effectPrefab == null)
         {
@@ -227,7 +239,7 @@ public class BattleRealEffectManager : ControllableObject
         }
 
         string bulletId = effectPrefab.EffectGroupId;
-        BattleRealEffectController effect = null;
+        BattleCommonEffectController effect = null;
 
         foreach (var e in m_PoolEffects)
         {
@@ -245,11 +257,29 @@ public class BattleRealEffectManager : ControllableObject
             m_PoolEffects.Add(effect);
         }
 
-        effect.Owner = owner;
-
-        CheckStandbyEffect(effect);
-
         return effect;
+    }
+
+    /// <summary>
+    /// エフェクトを作成する。
+    /// </summary>
+    public BattleCommonEffectController CreateEffect(EffectParamSet paramSet, Transform owner)
+    {
+        if (paramSet == null)
+        {
+            return null;
+        }
+
+        var poolingEffect = GetPoolingEffect(paramSet.Effect);
+        if (poolingEffect == null)
+        {
+            return null;
+        }
+
+        poolingEffect.OnCreateEffect(paramSet, owner);
+        CheckStandbyEffect(poolingEffect);
+
+        return poolingEffect;
     }
 
     /// <summary>

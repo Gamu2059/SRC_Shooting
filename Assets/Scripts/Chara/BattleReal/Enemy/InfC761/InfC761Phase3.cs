@@ -32,7 +32,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
     private int m_NumberOfShotRapidLargeBulletToUnder;
     private int m_NumberOfMove;
 
-    public InfC761Phase3(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet){
+    public InfC761Phase3(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet){
         m_ParamSet = paramSet as InfC761Phase3ParamSet;
     }
 

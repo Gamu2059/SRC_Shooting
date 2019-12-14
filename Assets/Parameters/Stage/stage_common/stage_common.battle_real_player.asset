@@ -18,9 +18,8 @@ MonoBehaviour:
   m_PlayerBaseMoveSpeed: 1
   m_PlayerSlowMoveSpeed: 0.5
   m_IsLaserType: 1
-  m_ChargePrefab: {fileID: 5996861524069773491, guid: 70240d28eeba21a44849741025d0d76f,
-    type: 3}
-  m_ChargeRelatedPos: {x: 0, y: 0, z: 0.15}
+  m_ChargeEffectParam: {fileID: 11400000, guid: 831e12128ad097c46803a62a083f7f8f,
+    type: 2}
   m_LaserShakeParam:
     XAmp: 0.3
     YAmp: 0.3

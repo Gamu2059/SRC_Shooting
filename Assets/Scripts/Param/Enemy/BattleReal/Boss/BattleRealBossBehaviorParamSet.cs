@@ -9,15 +9,15 @@ using System;
 /// リアルモードのボスの基本的なパラメータのセット
 /// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Boss/BaseBehavior", fileName = "param.real_boss_base_behavior.asset")]
-public class BattleRealBossParamSet : BattleRealEnemyBehaviorParamSet
+public class BattleRealBossBehaviorParamSet : BattleRealEnemyBehaviorParamSet
 {
     [SerializeField, Tooltip("攻撃の行動パターンの配列")]
-    private BattleRealBossBehaviorParamSet[] m_AttackParamSets;
-    public BattleRealBossBehaviorParamSet[] AttackParamSets => m_AttackParamSets;
+    private BattleRealBossBehaviorUnitParamSet[] m_AttackParamSets;
+    public BattleRealBossBehaviorUnitParamSet[] AttackParamSets => m_AttackParamSets;
 
     [SerializeField, Tooltip("ダウンの行動パターンの配列")]
-    private BattleRealBossBehaviorParamSet[] m_DownParamSets;
-    public BattleRealBossBehaviorParamSet[] DownParamSets => m_DownParamSets;
+    private BattleRealBossBehaviorUnitParamSet[] m_DownParamSets;
+    public BattleRealBossBehaviorUnitParamSet[] DownParamSets => m_DownParamSets;
 
     [SerializeField]
     private float m_DownHp;

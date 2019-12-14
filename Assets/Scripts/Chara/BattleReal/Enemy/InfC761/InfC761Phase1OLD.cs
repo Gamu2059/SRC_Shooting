@@ -40,7 +40,7 @@ public class InfC761Phase1OLD : BattleRealBossBehavior
 
     private int m_NShotsNum;
 
-    public InfC761Phase1OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase1OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase1ParamSetOld;
     }

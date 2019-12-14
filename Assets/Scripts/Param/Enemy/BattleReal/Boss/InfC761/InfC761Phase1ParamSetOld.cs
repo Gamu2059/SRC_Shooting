@@ -9,7 +9,7 @@ using System;
 /// INF-C-761の一つ目の行動パラメータのセット。
 /// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase1Old", fileName = "param.inf_c_761_phase_1_OLD.asset")]
-public class InfC761Phase1ParamSetOld : BattleRealBossBehaviorParamSet
+public class InfC761Phase1ParamSetOld : BattleRealBossBehaviorUnitParamSet
 {
     [SerializeField]
     private Vector3 m_BasePos;

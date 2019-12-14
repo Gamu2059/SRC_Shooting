@@ -59,7 +59,7 @@ public class InfC761Phase2 : BattleRealBossBehavior
 
     private float m_ShotBasicCirBulletToTotalDirectionTimeCount;
 
-    public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet){
+    public InfC761Phase2(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet){
         m_ParamSet = paramSet as InfC761Phase2ParamSet;
     }
 

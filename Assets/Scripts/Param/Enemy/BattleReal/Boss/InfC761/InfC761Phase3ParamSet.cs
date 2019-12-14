@@ -6,7 +6,7 @@ using UnityEngine;
 using System;
 
 [Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase3", fileName = "param.inf_c_761_phase_3.asset")]
-public class InfC761Phase3ParamSet : BattleRealBossBehaviorParamSet
+public class InfC761Phase3ParamSet : BattleRealBossBehaviorUnitParamSet
 {
     [SerializeField]
     private Vector3 m_BasePos;

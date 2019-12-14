@@ -30,11 +30,12 @@ public class BattleRealBoss : BattleRealEnemyController
 
     #region Field
 
-    protected BattleRealBossParamSet m_BossParamSet;
+    protected BattleRealBossGenerateParamSet m_BossGenerateParamSet;
+    protected BattleRealBossBehaviorParamSet m_BossBehaviorParamSet;
 
     protected StateMachine<E_PHASE> m_StateMachine;
-    protected BattleRealBossBehaviorParamSet[] m_AttackParamSets;
-    protected BattleRealBossBehaviorParamSet[] m_DownParamSets;
+    protected BattleRealBossBehaviorUnitParamSet[] m_AttackParamSets;
+    protected BattleRealBossBehaviorUnitParamSet[] m_DownParamSets;
 
     protected List<BattleRealBossBehavior> m_AttackBehaviors;
     protected List<BattleRealBossBehavior> m_DownBehaviors;
@@ -44,10 +45,14 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected Transform m_DamageCollider;
 
+    protected BattleCommonEffectController m_DownEffect;
+
     protected int m_AttackPhase;
     protected int m_DownPhase;
+
     public float NowDownHp { get; protected set; }
     public float MaxDownHp { get; protected set; }
+
     protected int m_HackingSuccessCount;
     protected List<float> m_ChangeAttackHpRates;
 
@@ -57,12 +62,17 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         base.OnSetParamSet();
 
-        if (BehaviorParamSet is BattleRealBossParamSet paramSet)
+        if (GenerateParamSet is BattleRealBossGenerateParamSet generateParamSet)
         {
-            m_BossParamSet = paramSet;
-            m_AttackParamSets = paramSet.AttackParamSets;
-            m_DownParamSets = paramSet.DownParamSets;
-            m_ChangeAttackHpRates = paramSet.ChangeAttackHpRates;
+            m_BossGenerateParamSet = generateParamSet;
+        }
+
+        if (BehaviorParamSet is BattleRealBossBehaviorParamSet behaviorParamSet)
+        {
+            m_BossBehaviorParamSet = behaviorParamSet;
+            m_AttackParamSets = behaviorParamSet.AttackParamSets;
+            m_DownParamSets = behaviorParamSet.DownParamSets;
+            m_ChangeAttackHpRates = behaviorParamSet.ChangeAttackHpRates;
         }
     }
 
@@ -216,7 +226,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     #endregion
 
-    private BattleRealBossBehavior CreateBehavior(BattleRealBossBehaviorParamSet bossBehaviorParamSet)
+    private BattleRealBossBehavior CreateBehavior(BattleRealBossBehaviorUnitParamSet bossBehaviorParamSet)
     {
         if (bossBehaviorParamSet == null)
         {
@@ -238,7 +248,7 @@ public class BattleRealBoss : BattleRealEnemyController
             return null;
         }
 
-        var cstr = type.GetConstructor(new[] { typeof(BattleRealEnemyController), typeof(BattleRealBossBehaviorParamSet) });
+        var cstr = type.GetConstructor(new[] { typeof(BattleRealEnemyController), typeof(BattleRealBossBehaviorUnitParamSet) });
         if (cstr == null)
         {
             return null;
@@ -336,7 +346,7 @@ public class BattleRealBoss : BattleRealEnemyController
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
         m_CurrentDown = m_DownBehaviors[m_DownPhase];
 
-        MaxDownHp = NowDownHp = m_BossParamSet.DownHp;
+        MaxDownHp = NowDownHp = m_BossBehaviorParamSet.DownHp;
         m_HackingSuccessCount = 0;
 
         transform.position = new Vector3(0, 0, 1);
@@ -401,10 +411,6 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnDown()
     {
-        GetCollider().SetEnableCollider(m_DamageCollider, false);
-        BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
-
-        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, DOWN_HEAL_TIME);
         timer.SetTimeoutCallBack(() =>
@@ -413,6 +419,13 @@ public class BattleRealBoss : BattleRealEnemyController
             RequestChangeState(E_PHASE.ATTACK);
         });
         RegistTimer(DOWN_KEY, timer);
+
+        GetCollider().SetEnableCollider(m_DamageCollider, false);
+
+        BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
+        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
+
+        m_DownEffect = BattleRealEffectManager.Instance.CreateEffect(m_BossGenerateParamSet.DownEffectParam, transform);
 
         m_CurrentDown?.OnStart();
     }
@@ -437,6 +450,11 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void EndOnDown()
     {
+        if (m_DownEffect != null)
+        {
+            m_DownEffect.DestroyEffect(true);
+        }
+
         NowDownHp = MaxDownHp;
         m_CurrentDown?.OnEnd();
     }
@@ -447,7 +465,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnHackingSuccess()
     {
-        if (m_HackingSuccessCount >= m_BossParamSet.HackingCompleteNum)
+        if (m_HackingSuccessCount >= m_BossBehaviorParamSet.HackingCompleteNum)
         {
             RequestChangeState(E_PHASE.RESCUE);
             return;
@@ -463,7 +481,7 @@ public class BattleRealBoss : BattleRealEnemyController
         });
         RegistTimer(HACKING_SUCCESS_KEY, timer);
 
-        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossParamSet.ItemParam);
+        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossBehaviorParamSet.ItemParam);
     }
 
     private void UpdateOnHackingSuccess()
@@ -494,7 +512,7 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         m_AttackPhase = Mathf.Min(m_AttackPhase + 1, m_AttackBehaviors.Count - 1);
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
-        NowDownHp = m_BossParamSet.DownHp;
+        NowDownHp = m_BossBehaviorParamSet.DownHp;
         RequestChangeState(E_PHASE.ATTACK);
     }
 

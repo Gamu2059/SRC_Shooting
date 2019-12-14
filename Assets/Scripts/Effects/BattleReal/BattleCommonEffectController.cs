@@ -6,9 +6,9 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// リアルモードのエフェクトの基礎クラス。
+/// エフェクトの基礎クラス。
 /// </summary>
-public class BattleRealEffectController : ControllableMonoBehavior
+public class BattleCommonEffectController : ControllableMonoBehavior
 {
     #region Field Inspector
 
@@ -34,14 +34,8 @@ public class BattleRealEffectController : ControllableMonoBehavior
     /// このエフェクトを発生させたもの。
     /// </summary>
     private Transform m_Owner;
-    public Transform Owner {
-        get => m_Owner;
-        set => m_Owner = value;
-    }
+    public Transform Owner { get; private set; }
 
-    /// <summary>
-    /// このエフェクトの状態
-    /// </summary>
     [SerializeField]
     private E_POOLED_OBJECT_CYCLE m_Cycle;
     public E_POOLED_OBJECT_CYCLE Cycle {
@@ -49,38 +43,73 @@ public class BattleRealEffectController : ControllableMonoBehavior
         set => m_Cycle = value;
     }
 
-    /// <summary>
-    /// 発生元の位置を追従するかどうか
-    /// </summary>
     private bool m_IsAllowOwner;
-    public bool IsAllowOwner {
-        get => m_IsAllowOwner;
-        set => m_IsAllowOwner = value;
-    }
+    public bool IsAllowOwner { get; private set; }
 
-    /// <summary>
-    /// 相対追従座標
-    /// </summary>
     private Vector3 m_RelatedAllowPos;
-    public Vector3 RelatedAllowPos {
-        get => m_RelatedAllowPos;
-        set => m_RelatedAllowPos = value;
-    }
 
-    /// <summary>
-    /// 継続時間
-    /// </summary>
+    private bool m_IsAutoDestroyDuration;
+
     private float m_Duration;
-    public float Duration {
-        get => m_Duration;
-        set => m_Duration = value;
-    }
+    public float Duration { get; private set; }
 
     private float m_NowLifeTime;
+    public float NowLifeTime { get; private set; }
 
     #endregion
 
     #region Game Cycle
+
+    public void OnCreateEffect(EffectParamSet paramSet, Transform owner)
+    {
+        if (paramSet == null)
+        {
+            Debug.LogWarning("EffectParamSetがありません。");
+            return;
+        }
+
+        m_Owner = owner;
+
+        var position = paramSet.GetFirePosition();
+        var rotation = paramSet.GetFireRotation();
+        var scale = paramSet.GetFireScale();
+
+        if (m_Owner == null || paramSet.FirePositionRelative == E_RELATIVE.ABSOLUTE)
+        {
+            transform.position = position;
+            m_RelatedAllowPos = Vector3.zero;
+        }
+        else
+        {
+            transform.position = position + m_Owner.position;
+            m_RelatedAllowPos = position;
+        }
+
+        if (m_Owner == null || paramSet.FireRotationRelative == E_RELATIVE.ABSOLUTE)
+        {
+            transform.eulerAngles = rotation;
+        }
+        else
+        {
+            transform.eulerAngles = rotation + m_Owner.eulerAngles;
+        }
+
+        if (m_Owner == null || paramSet.FireScaleRelative == E_RELATIVE.ABSOLUTE)
+        {
+            transform.localScale = scale;
+        }
+        else
+        {
+            scale.x *= m_Owner.localScale.x;
+            scale.y *= m_Owner.localScale.y;
+            scale.z *= m_Owner.localScale.z;
+            transform.localScale = scale;
+        }
+
+        m_IsAllowOwner = paramSet.IsAllowOwnerPosition && m_Owner != null;
+        m_IsAutoDestroyDuration = paramSet.IsAutoDestroyDuration;
+        m_Duration = paramSet.Duration;
+    }
 
     public override void OnInitialize()
     {
@@ -129,25 +158,28 @@ public class BattleRealEffectController : ControllableMonoBehavior
             }
         }
 
-        if (m_Duration >= 0)
-        {
-            if (m_NowLifeTime >= m_Duration)
-            {
-                DestoryEffect(true);
-            }
-        }
-
         m_NowLifeTime += Time.deltaTime;
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        if (m_IsAutoDestroyDuration && m_Duration >= 0 && m_NowLifeTime >= m_Duration)
+        {
+            DestroyEffect(true);
+        }
     }
 
     #endregion
 
-    public virtual void DestoryEffect(bool isImmediateStop)
+    public virtual void DestroyEffect(bool isImmediateStop)
     {
         if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             Stop(isImmediateStop);
-            BattleRealEffectManager.Instance.CheckPoolEffect(this);
+            // マネージャが自動的に回収することを期待してプールスタンバイにする
+            m_Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_CHECK_POOL;
         }
     }
 

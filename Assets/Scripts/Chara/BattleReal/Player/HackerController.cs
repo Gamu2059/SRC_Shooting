@@ -32,7 +32,7 @@ public class HackerController : BattleRealPlayerController
 
     private float shotDelay;
 
-    private BattleRealEffectController m_ChargeEffect;
+    private BattleCommonEffectController m_ChargeEffect;
     private BulletController m_Laser;
     private BulletController m_Bomb;
 
@@ -116,15 +116,9 @@ public class HackerController : BattleRealPlayerController
 
         if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
         {
-            AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ChargeSe);
-
             var paramSet = BattleRealPlayerManager.Instance.ParamSet;
-            m_ChargeEffect = BattleRealEffectManager.Instance.GetPoolingBullet(paramSet.ChargePrefab, transform);
-            if (m_ChargeEffect != null)
-            {
-                m_ChargeEffect.IsAllowOwner = true;
-                m_ChargeEffect.RelatedAllowPos = paramSet.ChargeRelatedPos;
-            }
+            AudioManager.Instance.Play(paramSet.ChargeSe);
+            m_ChargeEffect = BattleRealEffectManager.Instance.CreateEffect(paramSet.ChargeEffectParam, transform);
         }
     }
 
@@ -170,7 +164,7 @@ public class HackerController : BattleRealPlayerController
 
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            m_ChargeEffect.DestoryEffect(true);
+            m_ChargeEffect.DestroyEffect(true);
         }
 
         var param = new BulletShotParam(this);
@@ -197,7 +191,7 @@ public class HackerController : BattleRealPlayerController
 
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            m_ChargeEffect.DestoryEffect(true);
+            m_ChargeEffect.DestroyEffect(true);
         }
 
         var param = new BulletShotParam(this);
@@ -260,7 +254,7 @@ public class HackerController : BattleRealPlayerController
 
         if (m_ChargeEffect != null)
         {
-            m_ChargeEffect.DestoryEffect(true);
+            m_ChargeEffect.DestroyEffect(true);
             m_ChargeEffect = null;
         }
 
