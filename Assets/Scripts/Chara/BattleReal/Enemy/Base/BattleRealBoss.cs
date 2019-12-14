@@ -43,8 +43,8 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected int m_AttackPhase;
     protected int m_DownPhase;
-    public float NowDownHp{get; protected set;}
-    public float MaxDownHp{get; protected set;}
+    public float NowDownHp { get; protected set; }
+    public float MaxDownHp { get; protected set; }
     protected int m_HackingSuccessCount;
     protected List<float> m_ChangeAttackHpRates;
 
@@ -363,7 +363,7 @@ public class BattleRealBoss : BattleRealEnemyController
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
         timer.SetTimeoutCallBack(() =>
         {
-            timer = null;
+            DestroyTimer(DOWN_KEY);
             RequestChangeState(E_PHASE.ATTACK);
         });
         RegistTimer(DOWN_KEY, timer);
@@ -374,6 +374,9 @@ public class BattleRealBoss : BattleRealEnemyController
     private void UpdateOnDown()
     {
         m_CurrentDown?.OnUpdate();
+
+        NowDownHp += MaxDownHp * Time.deltaTime / 5;
+        NowDownHp = Math.Min(NowDownHp, MaxDownHp);
     }
 
     private void LateUpdateOnDown()
@@ -388,6 +391,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void EndOnDown()
     {
+        NowDownHp = MaxDownHp;
         m_CurrentDown?.OnEnd();
     }
 
@@ -565,15 +569,15 @@ public class BattleRealBoss : BattleRealEnemyController
         if (colliderType == E_COLLIDER_TYPE.CRITICAL)
         {
             var currentState = m_StateMachine.CurrentState.Key;
-            
-            if(currentState != E_PHASE.DOWN){
-                NowDownHp -= 1;
-            }
-            
-            if (NowDownHp <= 0 && currentState == E_PHASE.ATTACK)
+
+            if (currentState == E_PHASE.ATTACK)
             {
-                NowDownHp = m_BossParamSet.DownHp;
-                RequestChangeState(E_PHASE.DOWN);
+                NowDownHp -= 1;
+
+                if (NowDownHp <= 0)
+                {
+                    RequestChangeState(E_PHASE.DOWN);
+                }
             }
         }
     }
