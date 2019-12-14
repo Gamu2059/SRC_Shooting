@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
 {
+    private const string RADIUS = "_Radius";
+
     [SerializeField]
     private Transform m_EyeHolder = default;
 
@@ -26,9 +28,49 @@ public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
     [SerializeField]
     private float m_EyeMoveRadius = default;
 
+    [SerializeField]
+    private Material m_DefeatEffect;
+
+    [SerializeField]
+    private Material m_NormalEffect;
+
+    [SerializeField]
+    private AnimationCurve m_DefeatRadiusCurve;
+
+    private Material m_UseDefeatEffect;
+    private bool m_IsAnimation;
+    private float m_Duration;
+    private float m_TimeCount;
+
     private bool m_IsMoveEye = default;
 
     private float m_ColorReturnTime = default;
+
+    /// <summary>
+    /// OnInitializeやOnStartは複数回呼ばれてしまうのでOnAwakeにした
+    /// </summary>
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        m_UseDefeatEffect = Instantiate(m_DefeatEffect);
+        m_IsAnimation = false;
+        m_Duration = m_DefeatRadiusCurve.Duration();
+    }
+
+    /// <summary>
+    /// OnFinalizeは複数回呼ばれてしまうのでOnDestroyedにした
+    /// </summary>
+    protected override void OnDestroyed()
+    {
+        Destroy(m_UseDefeatEffect);
+        base.OnDestroyed();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        m_EyeHolder.gameObject.SetActive(true);
+    }
 
     public override void OnUpdate()
     {
@@ -48,22 +90,37 @@ public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
         {
             m_EyeHolder.position = Vector3.zero;
         }
+
+        if (m_IsAnimation)
+        {
+            if (m_TimeCount <= m_Duration)
+            {
+                CheckMaterial();
+
+                var radius = m_DefeatRadiusCurve.Evaluate(m_TimeCount);
+                m_UseDefeatEffect.SetFloat(RADIUS, radius);
+                m_TimeCount += Time.deltaTime;
+            }
+            else
+            {
+                m_IsAnimation = false;
+            }
+        }
     }
 
-    public override void OnFixedUpdate()
+    /// <summary>
+    /// レンダラのマテリアルをチェックし、強制的にエフェクト用マテリアルに切り替える
+    /// </summary>
+    private void CheckMaterial()
     {
-        base.OnFixedUpdate();
-
-        if (m_ColorReturnTime > 0)
+        if (m_BodyRenderer != null && m_BodyRenderer.sharedMaterial != m_UseDefeatEffect)
         {
-            m_ColorReturnTime -= Time.fixedDeltaTime;
-            if (m_ColorReturnTime <= 0)
-            {
-                if (m_BodyRenderer != null)
-                {
-                    m_BodyRenderer.color = Color.white;
-                }
-            }
+            m_BodyRenderer.sharedMaterial = m_UseDefeatEffect;
+        }
+
+        if (m_BodyLightRenderer != null && m_BodyLightRenderer.sharedMaterial != m_UseDefeatEffect)
+        {
+            m_BodyLightRenderer.sharedMaterial = m_UseDefeatEffect;
         }
     }
 
@@ -72,25 +129,19 @@ public class InfC761Hacker1GraphicsController : ControllableMonoBehavior
         m_IsMoveEye = isEnable;
     }
 
-    public void ChangeLightColor(Color color)
+    public void PlayDestroyAnimation()
     {
-        if (m_BodyLightRenderer != null)
+        if (m_IsAnimation)
         {
-            m_BodyLightRenderer.color = color;
+            return;
         }
 
-        if (m_EyeLightRenderer != null)
-        {
-            m_EyeLightRenderer.color = color;
-        }
+        m_IsAnimation = true;
+        m_TimeCount = 0;
     }
 
-    public void OnSufferBullet()
+    public void HideEye()
     {
-        if (m_BodyRenderer != null)
-        {
-            m_BodyRenderer.color = Color.red;
-            m_ColorReturnTime = 0.3f;
-        }
+        m_EyeHolder.gameObject.SetActive(false);
     }
 }

@@ -171,7 +171,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e5dafb17a7414cc4793e8554dd6a12ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -782,6 +782,32 @@ MonoBehaviour:
   m_BodyLightRenderer: {fileID: 5479686425978014621}
   m_EyeLightRenderer: {fileID: 8276570313827874527}
   m_EyeMoveRadius: 0.023
+  m_DefeatEffect: {fileID: 2100000, guid: e5dafb17a7414cc4793e8554dd6a12ec, type: 2}
+  m_NormalEffect: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_DefeatRadiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &3706262958088353037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,7 +951,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e5dafb17a7414cc4793e8554dd6a12ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

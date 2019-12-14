@@ -29,6 +29,11 @@ public class BattleHackingEnemyManager : ControllableObject
     public List<BattleHackingEnemyController> Enemies { get; private set; }
 
     /// <summary>
+    /// UPDATE状態の敵の中でもボスだけを保持するリスト。
+    /// </summary>
+    public List<BattleHackingEnemyController> BossEnemies { get; private set; }
+
+    /// <summary>
     /// 破棄状態に遷移する敵のリスト。
     /// </summary>
     private List<BattleHackingEnemyController> m_GotoPoolEnemies;
@@ -59,6 +64,7 @@ public class BattleHackingEnemyManager : ControllableObject
 
         m_StandbyEnemies = new List<BattleHackingEnemyController>();
         Enemies = new List<BattleHackingEnemyController>();
+        BossEnemies = new List<BattleHackingEnemyController>();
         m_GotoPoolEnemies = new List<BattleHackingEnemyController>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
 
@@ -277,6 +283,11 @@ public class BattleHackingEnemyManager : ControllableObject
 
             enemy.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
             Enemies.Add(enemy);
+
+            if (enemy.IsBoss)
+            {
+                BossEnemies.Add(enemy);
+            }
         }
 
         m_StandbyEnemies.Clear();
@@ -305,6 +316,11 @@ public class BattleHackingEnemyManager : ControllableObject
 
             m_GotoPoolEnemies.RemoveAt(idx);
             Enemies.Remove(enemy);
+
+            if (enemy.IsBoss)
+            {
+                BossEnemies.Remove(enemy);
+            }
 
             var poolId = enemy.GetLookId();
             if (!m_PoolEnemies.ContainsKey(poolId))
@@ -507,6 +523,25 @@ public class BattleHackingEnemyManager : ControllableObject
         var pos = enemy.transform.position;
 
         return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
+    }
+
+    /// <summary>
+    /// 全てのボスを殺す。
+    /// </summary>
+    public void KillAllBoss()
+    {
+        foreach (var boss in BossEnemies)
+        {
+            if (boss == null)
+            {
+                continue;
+            }
+
+            if (boss.IsBoss)
+            {
+                boss.Dead();
+            }
+        }
     }
 
     public void OnPrepare(BattleHackingLevelParamSet levelParamSet)

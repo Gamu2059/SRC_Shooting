@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ui_grid_hole
-  m_Shader: {fileID: 4800000, guid: 1723bdbef18e4a446900f18a7a5f2df2, type: 3}
+  m_Name: hacking_boss_defeat
+  m_Shader: {fileID: 4800000, guid: a6cf79f12c22a58408f5be453091e89f, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA UNITY_UI_ALPHACLIP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -65,15 +65,15 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GridNumX: 20
-    - _GridNumY: 20
+    - _GridNumX: 30
+    - _GridNumY: 15
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PosX: 0.45
+    - _PosX: 0.47
     - _PosY: 0.63
-    - _Radius: -0.39
+    - _Radius: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

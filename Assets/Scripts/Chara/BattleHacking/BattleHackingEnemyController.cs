@@ -8,9 +8,9 @@ public class BattleHackingEnemyController : CommandCharaController
 
     private string m_LookId;
 
-    protected BattleHackingEnemyGenerateParamSet GenerateParamSet { get; private set; }
+    public BattleHackingEnemyGenerateParamSet GenerateParamSet { get; private set; }
 
-    protected BattleHackingEnemyBehaviorParamSet BehaviorParamSet { get; private set; }
+    public BattleHackingEnemyBehaviorParamSet BehaviorParamSet { get; private set; }
 
     /// <summary>
     /// 敵キャラのサイクル。
@@ -92,6 +92,12 @@ public class BattleHackingEnemyController : CommandCharaController
     {
         m_MaterialEffect?.OnFinalize();
         base.OnFinalize();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        m_MaterialEffect?.OnStart();
     }
 
     public override void OnUpdate()
@@ -178,12 +184,6 @@ public class BattleHackingEnemyController : CommandCharaController
         if (GenerateParamSet != null)
         {
             DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
-        }
-
-        if (IsBoss)
-        {
-            // ボスが死んだらハッキングクリア
-            BattleHackingManager.Instance.DeadBoss();
         }
 
         AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.BreakSe);

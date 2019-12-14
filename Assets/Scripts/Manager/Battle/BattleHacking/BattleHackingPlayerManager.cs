@@ -87,10 +87,10 @@ public class BattleHackingPlayerManager : ControllableObject
             Player.ShotBullet();
         }
  
-        if (input.Cancel == E_INPUT_STATE.DOWN)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // リアルモードと違って、暫定でハッキングモードをクリアしたことにする
-            BattleHackingManager.Instance.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
+            // 全ボスを殺して間接的にゲームクリアにする
+            BattleHackingEnemyManager.Instance.KillAllBoss();
         }
 
         Player.OnUpdate();

@@ -7,9 +7,9 @@ using System;
 
 /// <summary>
 /// ハッキングモードのボスの攻撃やダウン時のパラメータの規定クラス。
-/// このクラスを継承してパラメータのセットを定義して下さい。
 /// </summary>
-public abstract class BattleHackingBossBehaviorParamSet : ScriptableObject
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Boss/BaseBehaviorUnit", fileName = "param.hacking_boss_base_behavior_unit.asset")]
+public class BattleHackingBossBehaviorUnitParamSet : ScriptableObject
 {
     [SerializeField]
     private string m_BehaviorClass;

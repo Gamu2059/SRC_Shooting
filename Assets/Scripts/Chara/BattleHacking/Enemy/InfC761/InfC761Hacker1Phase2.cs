@@ -11,13 +11,13 @@ public class InfC761Hacker1Phase2 : InfC761Hacker1Phase
 
     #endregion
 
-    public InfC761Hacker1Phase2(BattleHackingEnemyController enemy, BattleHackingBossBehaviorParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Hacker1Phase2(BattleHackingEnemyController enemy, BattleHackingBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Hacker1Phase2ParamSet;
     }
 
 
-    public override BattleHackingBossBehaviorParamSet GetParamSet()
+    public override BattleHackingBossBehaviorUnitParamSet GetParamSet()
     {
         return m_ParamSet;
     }
