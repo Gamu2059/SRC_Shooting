@@ -54,6 +54,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private BattleRealCameraController m_BattleRealBackCamera = default;
     public BattleRealCameraController BattleRealBackCamera => m_BattleRealBackCamera;
 
+    [SerializeField]
+    private BattleHackingCameraController m_BattleHackingFrontCamera = default;
+    public BattleHackingCameraController BattleHackingFrontCamera => m_BattleHackingFrontCamera;
+
+    [SerializeField]
+    private BattleHackingCameraController m_BattleHackingBackCamera = default;
+    public BattleHackingCameraController BattleHackingBackCamera => m_BattleHackingBackCamera;
+
     [Header("Video")]
 
     [SerializeField]

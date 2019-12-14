@@ -26,6 +26,7 @@ public class BattleHackingManager : ControllableObject
     public BattleHackingBulletManager BulletManager { get; private set; }
     public BattleHackingEffectManager EffectManager { get; private set; }
     public BattleHackingCollisionManager CollisionManager { get; private set; }
+    public BattleHackingCameraManager CameraManager { get; private set; }
 
     public bool IsHackingSuccess { get; private set; }
 
@@ -133,6 +134,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
         EffectManager = new BattleHackingEffectManager();
         CollisionManager = new BattleHackingCollisionManager();
+        CameraManager = new BattleHackingCameraManager();
 
         InputManager.OnInitialize();
         HackingTimerManager.OnInitialize();
@@ -141,12 +143,17 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnInitialize();
         EffectManager.OnInitialize();
         CollisionManager.OnInitialize();
+        CameraManager.OnInitialize();
+
+        CameraManager.RegisterCamera(BattleManager.Instance.BattleHackingBackCamera, E_CAMERA_TYPE.BACK_CAMERA);
+        CameraManager.RegisterCamera(BattleManager.Instance.BattleHackingFrontCamera, E_CAMERA_TYPE.FRONT_CAMERA);
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        CameraManager.OnFinalize();
         CollisionManager.OnFinalize();
         EffectManager.OnFinalize();
         BulletManager.OnFinalize();
@@ -194,6 +201,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnStart();
         EffectManager.OnStart();
         CollisionManager.OnStart();
+        CameraManager.OnStart();
 
         SetHackingLevel(0);
 
@@ -356,6 +364,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnUpdate();
         EffectManager.OnUpdate();
         CollisionManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGame()
@@ -366,6 +375,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnLateUpdate();
         EffectManager.OnLateUpdate();
         CollisionManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
 
         // 衝突フラグクリア
         PlayerManager.ClearColliderFlag();
@@ -386,19 +396,6 @@ public class BattleHackingManager : ControllableObject
         EnemyManager.ProcessCollision();
         BulletManager.ProcessCollision();
 
-        // ゲームの終了をチェック
-        CheckGameEnd();
-    }
-
-    private void FixedUpdateOnGame()
-    {
-        HackingTimerManager.OnFixedUpdate();
-        PlayerManager.OnFixedUpdate();
-        EnemyManager.OnFixedUpdate();
-        BulletManager.OnFixedUpdate();
-        EffectManager.OnFixedUpdate();
-        CollisionManager.OnFixedUpdate();
-
         if (CurrentRemainBonusTime <= 0)
         {
             CurrentRemainTime -= Time.fixedDeltaTime;
@@ -416,6 +413,20 @@ public class BattleHackingManager : ControllableObject
                 CurrentRemainBonusTime = 0;
             }
         }
+
+        // ゲームの終了をチェック
+        CheckGameEnd();
+    }
+
+    private void FixedUpdateOnGame()
+    {
+        HackingTimerManager.OnFixedUpdate();
+        PlayerManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
+        BulletManager.OnFixedUpdate();
+        EffectManager.OnFixedUpdate();
+        CollisionManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnGame()
@@ -448,16 +459,27 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameClear()
     {
-        var waitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.6f);
-        waitTimer.SetTimeoutCallBack(() =>
+        var destroyBulletTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 1f);
+        destroyBulletTimer.SetTimeoutCallBack(() =>
         {
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+            destroyBulletTimer = null;
+
+            var destroyBossTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 1f);
+            destroyBossTimer.SetTimeoutCallBack(() =>
+            {
+                destroyBossTimer = null;
+                BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+            });
+            TimerManager.Instance.RegistTimer(destroyBossTimer);
+
+            CameraManager.Shake(m_ParamSet.DestroyBossShakeParam);
         });
-        TimerManager.Instance.RegistTimer(waitTimer);
+        TimerManager.Instance.RegistTimer(destroyBulletTimer);
 
         IsHackingSuccess = true;
 
         BulletManager.DestroyAllEnemyBullet();
+        CameraManager.Shake(m_ParamSet.DestroyBulletShakeParam);
     }
 
     private void UpdateOnGameClear()
@@ -465,16 +487,19 @@ public class BattleHackingManager : ControllableObject
         BulletManager.GotoPool();
 
         EffectManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
         EffectManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameClear()
     {
         EffectManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
@@ -502,16 +527,19 @@ public class BattleHackingManager : ControllableObject
     private void UpdateOnGameOver()
     {
         EffectManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGameOver()
     {
         EffectManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
     }
 
     private void FixedUpdateOnGameOver()
     {
         EffectManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnGameOver()
