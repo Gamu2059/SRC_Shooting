@@ -62,15 +62,24 @@ public class HackerController : BattleRealPlayerController
 
         if (shotDelay >= m_ShotInterval)
         {
-            var level = DataManager.Instance.BattleData.Level;
+            var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
 
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
                 var shotParam = new BulletShotParam(this);
                 shotParam.Position = m_MainShotPosition[i].transform.position;
                 var bullet = BulletController.ShotBullet(shotParam);
-                // 現状は、レベルの値を攻撃力にしてみる
-                bullet.SetNowDamage(level + 1, E_RELATIVE.ABSOLUTE);
+
+                // 現状は、レーザータイプの通常弾だけを使う
+                bullet.SetNowDamage(levelParam.LaserTypeShotDamage);
+
+                // ダウンダメージを設定する
+                switch (bullet)
+                {
+                    case HackerBullet hackerBullet:
+                        hackerBullet.SetNowDownDamage(levelParam.LaserTypeShotDownDamage);
+                        break;
+                }
             }
             shotDelay = 0;
         }
@@ -168,9 +177,8 @@ public class HackerController : BattleRealPlayerController
         param.Position = m_MainShotPosition[0].transform.position;
         m_Laser = BulletController.ShotBullet(param, true);
 
-        // 現状は、レベルの値を攻撃力にしてみる
-        var level = DataManager.Instance.BattleData.Level;
-        m_Laser.SetNowDamage(level + 1, E_RELATIVE.ABSOLUTE);
+        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
+        m_Laser.SetNowDamage(levelParam.LaserDamagePerSeconds, E_RELATIVE.ABSOLUTE);
     }
 
     public override void ShotBomb()
@@ -197,9 +205,8 @@ public class HackerController : BattleRealPlayerController
         param.BulletParamIndex = 1;
         m_Bomb = BulletController.ShotBullet(param, true);
 
-        // 現状は、レベルの値を攻撃力にしてみる
-        var level = DataManager.Instance.BattleData.Level;
-        m_Bomb.SetNowDamage((level + 1) * 100, E_RELATIVE.ABSOLUTE);
+        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
+        m_Bomb.SetNowDamage(levelParam.BombDamage, E_RELATIVE.ABSOLUTE);
     }
 
     public override void SetInvinsible()

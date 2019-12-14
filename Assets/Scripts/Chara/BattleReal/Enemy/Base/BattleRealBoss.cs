@@ -25,6 +25,9 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private const string DAMAGE_COLLIDER_NAME = "Damage Collider";
 
+    private const float DOWN_HEAL_TIME = 5f;
+    private const float HACKING_SUCCESS_TIME = 3f;
+
     #region Field
 
     protected BattleRealBossParamSet m_BossParamSet;
@@ -281,6 +284,49 @@ public class BattleRealBoss : BattleRealEnemyController
         m_StateMachine.Goto(state);
     }
 
+    /// <summary>
+    /// このボスのダウンHPを回復する。回復量は0より大きくなければ処理されない。
+    /// </summary>
+    public void RecoverDownHp(float recover)
+    {
+        if (recover <= 0)
+        {
+            return;
+        }
+
+        NowDownHp = Mathf.Clamp(NowDownHp + recover, 0, MaxDownHp);
+        OnRecoverDownHp();
+    }
+
+    protected virtual void OnRecoverDownHp()
+    {
+
+    }
+
+    /// <summary>
+    /// このボスのダウンHPを削る。ダメージ量は0より大きくなければ処理されない。
+    /// </summary>
+    public void DamageDownHp(float damage)
+    {
+        if (damage <= 0)
+        {
+            return;
+        }
+
+        NowDownHp = Mathf.Clamp(NowDownHp - damage, 0, MaxDownHp);
+        OnDamageDownHp();
+
+        if (NowDownHp <= 0)
+        {
+            RequestChangeState(E_PHASE.DOWN);
+        }
+    }
+
+    protected virtual void OnDamageDownHp()
+    {
+
+    }
+
     #region Start State
 
     private void StartOnStart()
@@ -360,7 +406,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
         AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, DOWN_HEAL_TIME);
         timer.SetTimeoutCallBack(() =>
         {
             DestroyTimer(DOWN_KEY);
@@ -375,7 +421,7 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         m_CurrentDown?.OnUpdate();
 
-        NowDownHp += MaxDownHp * Time.deltaTime / 5;
+        NowDownHp += MaxDownHp * Time.deltaTime / DOWN_HEAL_TIME;
         NowDownHp = Math.Min(NowDownHp, MaxDownHp);
     }
 
@@ -409,7 +455,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
         m_HackingSuccessCount++;
         DestroyTimer(DOWN_KEY);
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, HACKING_SUCCESS_TIME);
         timer.SetTimeoutCallBack(() =>
         {
             DestroyTimer(HACKING_SUCCESS_KEY);
@@ -569,14 +615,13 @@ public class BattleRealBoss : BattleRealEnemyController
         if (colliderType == E_COLLIDER_TYPE.CRITICAL)
         {
             var currentState = m_StateMachine.CurrentState.Key;
-
             if (currentState == E_PHASE.ATTACK)
             {
-                NowDownHp -= 1;
-
-                if (NowDownHp <= 0)
+                switch (sufferData.OpponentObject)
                 {
-                    RequestChangeState(E_PHASE.DOWN);
+                    case HackerBullet hackerBullet:
+                        DamageDownHp(hackerBullet.GetNowDownDamage());
+                        break;
                 }
             }
         }

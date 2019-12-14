@@ -159,18 +159,21 @@ public class BattleRealEnemyController : CharaController
             return;
         }
 
-        var hitCollider = sufferData.HitCollider;
-        switch (hitCollider.Transform.ColliderType)
+        var sufferCollider = sufferData.SufferCollider;
+        if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
         {
-            case E_COLLIDER_TYPE.PLAYER_BULLET:
-            case E_COLLIDER_TYPE.PLAYER_LASER:
-            case E_COLLIDER_TYPE.PLAYER_BOMB:
-                var sufferCollider = sufferData.SufferCollider;
-                if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
-                {
+            var hitCollider = sufferData.HitCollider;
+            switch (hitCollider.Transform.ColliderType)
+            {
+                case E_COLLIDER_TYPE.PLAYER_BULLET:
+                case E_COLLIDER_TYPE.PLAYER_BOMB:
                     Damage(bullet.GetNowDamage());
-                }
-                break;
+                    break;
+                case E_COLLIDER_TYPE.PLAYER_LASER:
+                    // レーザーは1秒あたりのダメージが入っているのでこうする
+                    Damage(bullet.GetNowDamage() * Time.deltaTime);
+                    break;
+            }
         }
     }
 
@@ -179,19 +182,20 @@ public class BattleRealEnemyController : CharaController
         base.OnStaySufferBullet(sufferData);
 
         var bullet = sufferData.OpponentObject;
-        var hitCollider = sufferData.HitCollider;
-        switch (hitCollider.Transform.ColliderType)
+        var sufferCollider = sufferData.SufferCollider;
+        if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
         {
-            case E_COLLIDER_TYPE.PLAYER_BULLET:
-            case E_COLLIDER_TYPE.PLAYER_LASER:
-                // ボムは瞬間の当たり判定だけを見る
-                //case E_COLLIDER_TYPE.PLAYER_BOMB:
-                var sufferCollider = sufferData.SufferCollider;
-                if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
-                {
+            var hitCollider = sufferData.HitCollider;
+            switch (hitCollider.Transform.ColliderType)
+            {
+                case E_COLLIDER_TYPE.PLAYER_BULLET:
                     Damage(bullet.GetNowDamage());
-                }
-                break;
+                    break;
+                case E_COLLIDER_TYPE.PLAYER_LASER:
+                    // レーザーは1秒あたりのダメージが入っているのでこうする
+                    Damage(bullet.GetNowDamage() * Time.deltaTime);
+                    break;
+            }
         }
     }
 
