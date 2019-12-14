@@ -16,4 +16,8 @@ public class BattleRealBossGenerateParamSet : BattleRealEnemyGenerateParamSet
     [SerializeField]
     private EffectParamSet m_DownEffectParam;
     public EffectParamSet DownEffectParam => m_DownEffectParam;
+
+    [SerializeField]
+    private EffectParamSet m_PlayerTriangleEffectParam;
+    public EffectParamSet PlayerTriangleEffectParam => m_PlayerTriangleEffectParam;
 }

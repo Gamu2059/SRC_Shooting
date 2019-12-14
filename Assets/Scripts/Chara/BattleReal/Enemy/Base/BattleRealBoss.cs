@@ -46,6 +46,7 @@ public class BattleRealBoss : BattleRealEnemyController
     protected Transform m_DamageCollider;
 
     protected BattleCommonEffectController m_DownEffect;
+    protected BattleCommonEffectController m_DownPlayerTriangleEffect;
 
     protected int m_AttackPhase;
     protected int m_DownPhase;
@@ -425,7 +426,9 @@ public class BattleRealBoss : BattleRealEnemyController
         BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
         AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
-        m_DownEffect = BattleRealEffectManager.Instance.CreateEffect(m_BossGenerateParamSet.DownEffectParam, transform);
+        var effectManager = BattleRealEffectManager.Instance;
+        m_DownEffect = effectManager.CreateEffect(m_BossGenerateParamSet.DownEffectParam, transform);
+        m_DownPlayerTriangleEffect = effectManager.CreateEffect(m_BossGenerateParamSet.PlayerTriangleEffectParam, transform);
 
         m_CurrentDown?.OnStart();
     }
@@ -450,10 +453,8 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void EndOnDown()
     {
-        if (m_DownEffect != null)
-        {
-            m_DownEffect.DestroyEffect(true);
-        }
+        m_DownEffect?.DestroyEffect(true);
+        m_DownPlayerTriangleEffect?.DestroyEffect(true);
 
         NowDownHp = MaxDownHp;
         m_CurrentDown?.OnEnd();

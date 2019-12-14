@@ -33,7 +33,6 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     /// <summary>
     /// このエフェクトを発生させたもの。
     /// </summary>
-    private Transform m_Owner;
     public Transform Owner { get; private set; }
 
     [SerializeField]
@@ -68,45 +67,45 @@ public class BattleCommonEffectController : ControllableMonoBehavior
             return;
         }
 
-        m_Owner = owner;
+        Owner = owner;
 
         var position = paramSet.GetFirePosition();
         var rotation = paramSet.GetFireRotation();
         var scale = paramSet.GetFireScale();
 
-        if (m_Owner == null || paramSet.FirePositionRelative == E_RELATIVE.ABSOLUTE)
+        if (Owner == null || paramSet.FirePositionRelative == E_RELATIVE.ABSOLUTE)
         {
             transform.position = position;
             m_RelatedAllowPos = Vector3.zero;
         }
         else
         {
-            transform.position = position + m_Owner.position;
+            transform.position = position + Owner.position;
             m_RelatedAllowPos = position;
         }
 
-        if (m_Owner == null || paramSet.FireRotationRelative == E_RELATIVE.ABSOLUTE)
+        if (Owner == null || paramSet.FireRotationRelative == E_RELATIVE.ABSOLUTE)
         {
             transform.eulerAngles = rotation;
         }
         else
         {
-            transform.eulerAngles = rotation + m_Owner.eulerAngles;
+            transform.eulerAngles = rotation + Owner.eulerAngles;
         }
 
-        if (m_Owner == null || paramSet.FireScaleRelative == E_RELATIVE.ABSOLUTE)
+        if (Owner == null || paramSet.FireScaleRelative == E_RELATIVE.ABSOLUTE)
         {
             transform.localScale = scale;
         }
         else
         {
-            scale.x *= m_Owner.localScale.x;
-            scale.y *= m_Owner.localScale.y;
-            scale.z *= m_Owner.localScale.z;
+            scale.x *= Owner.localScale.x;
+            scale.y *= Owner.localScale.y;
+            scale.z *= Owner.localScale.z;
             transform.localScale = scale;
         }
 
-        m_IsAllowOwner = paramSet.IsAllowOwnerPosition && m_Owner != null;
+        m_IsAllowOwner = paramSet.IsAllowOwnerPosition && Owner != null;
         m_IsAutoDestroyDuration = paramSet.IsAutoDestroyDuration;
         m_Duration = paramSet.Duration;
     }
@@ -144,9 +143,9 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     {
         base.OnUpdate();
 
-        if (m_IsAllowOwner && m_Owner != null)
+        if (m_IsAllowOwner && Owner != null)
         {
-            var ownerPos = m_Owner.transform.position;
+            var ownerPos = Owner.transform.position;
             transform.position = ownerPos + m_RelatedAllowPos;
         }
 
