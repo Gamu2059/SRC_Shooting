@@ -99,15 +99,34 @@ public class BattleHackingStageManager : ControllableMonoBehavior
     /// 指定した座標から、このマネージャが疑似的に表現するビューポート座標へと変換する。
     /// フロントオブジェクト専用。
     /// </summary>
-    public Vector2 CalcViewportPosFromWorldPosition(float x, float z)
+    public Vector2 CalcViewportPosFromWorldPosition(float x, float z, bool isScaleWithLocalField)
     {
         var min = MinLocalFieldPosition;
         var max = MaxLocalFieldPosition;
         var vX = MathUtility.CalcRate(min.x, max.x, x) - 0.5f;
         var vZ = MathUtility.CalcRate(min.y, max.y, z) - 0.5f;
-        vX *= (max.x - min.x) / 2;
-        vZ *= (max.y - min.y) / 2;
+
+        if (isScaleWithLocalField)
+        {
+            vX *= (max.x - min.x) / 2;
+            vZ *= (max.y - min.y) / 2;
+        }
+
         return new Vector2(vX, vZ);
+    }
+
+    /// <summary>
+    /// このマネージャが疑似的に表現するビューポート座標へと変換する。
+    /// フロントオブジェクト専用。
+    /// </summary>
+    public Vector2 CalcViewportPosFromWorldPosition(Transform t, bool isScaleWithLocalField)
+    {
+        if (t == null)
+        {
+            return new Vector2(0.5f, 0.5f);
+        }
+
+        return CalcViewportPosFromWorldPosition(t.position.x, t.position.z, isScaleWithLocalField);
     }
 
     public Transform GetHolder(E_HOLDER_TYPE holderType)

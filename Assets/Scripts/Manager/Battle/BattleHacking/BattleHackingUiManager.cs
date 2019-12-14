@@ -12,6 +12,12 @@ public class BattleHackingUiManager : ControllableMonoBehavior
     [SerializeField]
     private CanvasGroup m_CanvasGroup;
 
+    [Header("Center View")]
+
+    [SerializeField]
+    private HackingGridHoleEffect m_GridHoleEffect;
+    public HackingGridHoleEffect GridHoleEffect => m_GridHoleEffect;
+
     [Header("Indicator")]
 
     [SerializeField]
@@ -48,6 +54,7 @@ public class BattleHackingUiManager : ControllableMonoBehavior
         m_ModeIndicator.text = battleData.GameMode.ToString();
         m_StageIndicator.text = battleData.Stage.ToString().Replace("_", " ");
 
+        m_GridHoleEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
         m_TimeIndicator.OnInitialize();
@@ -62,6 +69,7 @@ public class BattleHackingUiManager : ControllableMonoBehavior
         m_TimeIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
+        m_GridHoleEffect.OnFinalize();
 
         base.OnFinalize();
     }
@@ -70,6 +78,7 @@ public class BattleHackingUiManager : ControllableMonoBehavior
     {
         base.OnUpdate();
 
+        m_GridHoleEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
         m_TimeIndicator.OnUpdate();

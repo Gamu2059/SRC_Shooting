@@ -9,6 +9,8 @@ using System;
 [Serializable]
 public class BattleHackingManager : ControllableObject
 {
+    private const float GAME_OVER_DURATION = 1f;
+
     #region Field
 
     private BattleHackingParamSet m_ParamSet;
@@ -456,7 +458,21 @@ public class BattleHackingManager : ControllableObject
     private void StartOnGameOver()
     {
         IsHackingSuccess = false;
-        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, GAME_OVER_DURATION);
+        timer.SetTimeoutCallBack(() => {
+            timer.DestroyTimer();
+            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+        });
+        TimerManager.Instance.RegistTimer(timer);
+
+        var battleManager = BattleManager.Instance;
+        var player = PlayerManager.Player;
+        var centerPos = battleManager.BattleHackingStageManager.CalcViewportPosFromWorldPosition(player.transform, false);
+
+        // StageManagerは原点が中央にあるため、原点をずらす
+        centerPos += Vector2.one * 0.5f;
+        battleManager.BattleHackingUiManager.GridHoleEffect.PlayEffect(centerPos);
     }
 
     private void UpdateOnGameOver()

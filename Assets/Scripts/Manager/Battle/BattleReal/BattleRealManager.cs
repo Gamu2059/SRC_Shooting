@@ -597,7 +597,7 @@ public class BattleRealManager : ControllableObject
     {
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.3f);
         timer.SetTimeoutCallBack(()=> {
-            timer = null;
+            timer.DestroyTimer();
             RequestChangeState(E_BATTLE_REAL_STATE.GAME);
         });
         TimerManager.Instance.RegistTimer(timer);
@@ -611,7 +611,7 @@ public class BattleRealManager : ControllableObject
         // StageManagerは原点が中央にあるため、原点をずらす
         centerPos += Vector2.one * 0.5f;
 
-        battleManager.BattleRealUiManager.FrontViewEffect.PlayInverseEffect(centerPos);
+        battleManager.BattleRealUiManager.FrontViewEffect.PlayEffect(centerPos);
     }
 
     private void UpdateOnChargeShotPerformance()
@@ -632,7 +632,7 @@ public class BattleRealManager : ControllableObject
     private void EndOnChargeShotPerformance()
     {
         var battleManager = BattleManager.Instance;
-        battleManager.BattleRealUiManager.FrontViewEffect.StopInverseEffect();
+        battleManager.BattleRealUiManager.FrontViewEffect.StopEffect();
 
         EffectManager.ResumeAllEffect();
         PlayerManager.ChargeShot();

@@ -89,7 +89,12 @@ public class BattleHackingPlayerController : CommandCharaController
         }
 
         base.Dead();
+
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
         AudioManager.Instance.Play(BattleHackingPlayerManager.Instance.ParamSet.DeadSe);
+
+
+
         BattleHackingManager.Instance.DeadPlayer();
     }
 }
