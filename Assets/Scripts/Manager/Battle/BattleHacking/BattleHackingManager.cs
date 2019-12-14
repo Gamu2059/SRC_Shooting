@@ -448,12 +448,22 @@ public class BattleHackingManager : ControllableObject
 
     private void StartOnGameClear()
     {
+        var waitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.6f);
+        waitTimer.SetTimeoutCallBack(() =>
+        {
+            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+        });
+        TimerManager.Instance.RegistTimer(waitTimer);
+
         IsHackingSuccess = true;
-        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+
+        BulletManager.DestroyAllEnemyBullet();
     }
 
     private void UpdateOnGameClear()
     {
+        BulletManager.GotoPool();
+
         EffectManager.OnUpdate();
     }
 
