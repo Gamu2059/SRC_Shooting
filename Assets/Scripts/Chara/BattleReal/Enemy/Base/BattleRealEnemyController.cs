@@ -36,6 +36,11 @@ public class BattleRealEnemyController : CharaController
 
     public bool IsBoss { get; protected set; }
 
+    /// <summary>
+    /// 既に死亡しているか
+    /// </summary>
+    public bool IsDead { get; private set; }
+
     public bool IsOutOfEnemyField { get; private set; }
 
     private MaterialEffect m_MaterialEffect;
@@ -82,6 +87,7 @@ public class BattleRealEnemyController : CharaController
         IsShowFirst = false;
         m_IsLookMoveDir = true;
         IsBoss = false;
+        IsDead = false;
         m_WillDestroyOnOutOfEnemyField = true;
 
         if (GenerateParamSet != null)
@@ -91,6 +97,13 @@ public class BattleRealEnemyController : CharaController
 
         m_MaterialEffect = GetComponent<MaterialEffect>();
         m_MaterialEffect?.OnInitialize();
+
+        OnInitializeCollider();
+    }
+
+    protected virtual void OnInitializeCollider()
+    {
+        GetCollider().SetEnableAllCollider(true);
     }
 
     public override void OnFinalize()
@@ -212,36 +225,63 @@ public class BattleRealEnemyController : CharaController
         }
     }
 
-    public override void Dead()
+    public sealed override void Dead()
     {
         base.Dead();
 
+        IsDead = true;
+        GetCollider().SetEnableAllCollider(false);
+        OnDead();
+    }
+
+    protected virtual void OnDead()
+    {
+        float defeatTime = 0;
+
         if (GenerateParamSet != null)
         {
-            var defeatEffect = GenerateParamSet.DefeatEffect;
-            if (defeatEffect != null)
+            // シーケンシャルエフェクトを登録する
+            var effect = GenerateParamSet.DefeatSequentialEffect;
+            if (effect != null)
             {
-                var effect = Instantiate(defeatEffect);
-                effect.transform.position = transform.position;
+                BattleRealEffectManager.Instance.RegisterSequentialEffect(effect, transform);
             }
 
-            BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.ItemCreateParam);
+            defeatTime = GenerateParamSet.DefeatHideTime;
+        }
 
-            var events = GenerateParamSet.DefeatEvents;
-            if (events != null)
+        if (defeatTime <= 0)
+        {
+            OnDefeatDestroy();
+        }
+        else
+        {
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, defeatTime);
+            timer.SetTimeoutCallBack(() => OnDefeatDestroy());
+            TimerManager.Instance.RegistTimer(timer);
+        }
+    }
+
+    protected void OnDefeatDestroy()
+    {
+        BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.DefeatItemParam);
+        DataManager.Instance.BattleData.AddScore(GenerateParamSet.DefeatScore);
+
+        var events = GenerateParamSet.DefeatEvents;
+        if (events != null)
+        {
+            for (int i = 0; i < events.Length; i++)
             {
-                for (int i = 0; i < events.Length; i++)
-                {
-                    DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
-                    BattleRealEventManager.Instance.AddEvent(events[i]);
-                }
+                BattleRealEventManager.Instance.AddEvent(events[i]);
             }
         }
 
-        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.BreakSe);
         Destroy();
     }
 
+    /// <summary>
+    /// 死亡ではなく強制削除
+    /// </summary>
     public void Destroy()
     {
         BattleRealEnemyManager.Instance.DestroyEnemy(this);

@@ -28,18 +28,22 @@ public class BattleRealEnemyGenerateParamSet : ScriptableObject
     [Header("撃破")]
 
     [SerializeField, Tooltip("撃破時の獲得スコア")]
-    private int m_Score;
-    public int Score => m_Score;
+    private int m_DefeatScore;
+    public int DefeatScore => m_DefeatScore;
 
     [SerializeField, Tooltip("ドロップアイテム")]
-    private ItemCreateParam m_ItemCreateParam;
-    public ItemCreateParam ItemCreateParam => m_ItemCreateParam;
+    private ItemCreateParam m_DefeatItemParam;
+    public ItemCreateParam DefeatItemParam => m_DefeatItemParam;
 
     [SerializeField, Tooltip("撃破時のイベント")]
     private BattleRealEventContent[] m_DefeatEvents;
     public BattleRealEventContent[] DefeatEvents => m_DefeatEvents;
 
-    [SerializeField, Tooltip("撃破時エフェクト")]
-    private ParticleController m_DefeatEffect;
-    public ParticleController DefeatEffect => m_DefeatEffect;
+    [SerializeField, Tooltip("撃破時の一連のエフェクト")]
+    private SequentialEffectParamSet m_DefeatSequentialEffect;
+    public SequentialEffectParamSet DefeatSequentialEffect => m_DefeatSequentialEffect;
+
+    [SerializeField, Tooltip("敵非表示タイミング")]
+    private float m_DefeatHideTime;
+    public float DefeatHideTime => m_DefeatHideTime;
 }

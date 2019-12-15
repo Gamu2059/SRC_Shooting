@@ -49,6 +49,10 @@ public class EffectParamSet : ScriptableObject
     private float m_Duration;
     public float Duration => m_Duration;
 
+    [SerializeField, Tooltip("再生と同時に鳴らしたい音")]
+    private PlaySoundParam[] m_PlaySoundParams;
+    public PlaySoundParam[] PlaySoundParams => m_PlaySoundParams;
+
     public Vector3 GetFirePosition()
     {
         if (m_FirePosition == null)

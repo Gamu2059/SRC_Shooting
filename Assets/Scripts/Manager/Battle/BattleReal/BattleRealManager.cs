@@ -596,7 +596,8 @@ public class BattleRealManager : ControllableObject
     private void StartOnChargeShotPerformance()
     {
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.3f);
-        timer.SetTimeoutCallBack(()=> {
+        timer.SetTimeoutCallBack(() =>
+        {
             timer.DestroyTimer();
             RequestChangeState(E_BATTLE_REAL_STATE.GAME);
         });
@@ -837,23 +838,91 @@ public class BattleRealManager : ControllableObject
     {
         BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
         PlayerManager.StopChargeShot();
+
+        BattleManager.Instance.BattleRealUiManager.PlayGameClearAnimation();
+        var hideViewWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
+        hideViewWaitTimer.SetTimeoutCallBack(() =>
+        {
+            BattleManager.Instance.BattleRealUiManager.PlayMainViewHideAnimation();
+            var resultWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
+            resultWaitTimer.SetTimeoutCallBack(() =>
+            {
+                BattleManager.Instance.BattleRealUiManager.DisplayResult();
+            });
+            TimerManager.Instance.RegistTimer(resultWaitTimer);
+        });
+        TimerManager.Instance.RegistTimer(hideViewWaitTimer);
     }
 
     private void UpdateOnGameClear()
     {
+        // 消滅の更新
+        EnemyGroupManager.GotoPool();
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+        ItemManager.GotoPool();
+        EffectManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
+
+        RealTimerManager.OnUpdate();
+        EventManager.OnUpdate();
+        EnemyGroupManager.OnUpdate();
+        EnemyManager.OnUpdate();
+        BulletManager.OnUpdate();
+        ItemManager.OnUpdate();
+        EffectManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
+        RealTimerManager.OnLateUpdate();
+        EventManager.OnLateUpdate();
+        EnemyGroupManager.OnLateUpdate();
+        EnemyManager.OnLateUpdate();
+        BulletManager.OnLateUpdate();
+        ItemManager.OnLateUpdate();
+        EffectManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
+
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
+        BulletManager.ClearColliderFlag();
+        ItemManager.ClearColliderFlag();
+
+        // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
+        BulletManager.UpdateCollider();
+        ItemManager.UpdateCollider();
+
+        // 衝突判定処理
+        CollisionManager.CheckCollision();
+        CollisionManager.DrawCollider();
+
+        // 衝突処理
+        PlayerManager.ProcessCollision();
+        EnemyManager.ProcessCollision();
+        BulletManager.ProcessCollision();
+        ItemManager.ProcessCollision();
     }
 
     private void FixedUpdateOnGameClear()
     {
+        RealTimerManager.OnFixedUpdate();
+        EventManager.OnFixedUpdate();
+        PlayerManager.OnFixedUpdate();
+        EnemyGroupManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
+        BulletManager.OnFixedUpdate();
+        ItemManager.OnFixedUpdate();
+        EffectManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
     {
-
     }
 
     #endregion

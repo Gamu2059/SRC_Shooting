@@ -9,44 +9,25 @@ using DG.Tweening;
 
 public class DefaultTransition : TransitionController
 {
-	[SerializeField]
-	private Image m_BackGround;
-
-	[SerializeField]
-	private Text m_LoadingText;
+    [SerializeField]
+    private CanvasGroup m_CanvasGroup;
 
 	[SerializeField]
 	private float m_Duration;
 
 	protected override IEnumerator OnHide( Action onComplete )
 	{
-		var bgColor = Color.black;
-
-		m_BackGround.DOColor( bgColor, m_Duration );
-
-		var textColor = Color.white;
-
-		m_LoadingText.DOColor( textColor, m_Duration );
-
+        m_CanvasGroup.DOFade(1, m_Duration);
 		yield return new WaitForSeconds( m_Duration );
-
 		EventUtility.SafeInvokeAction( onComplete );
+        m_CanvasGroup.alpha = 1;
 	}
 
 	protected override IEnumerator OnShow( Action onComplete )
-	{
-		var bgColor = Color.black;
-		bgColor.a = 0;
-
-		m_BackGround.DOColor( bgColor, m_Duration );
-
-		var textColor = Color.white;
-		textColor.a = 0;
-
-		m_LoadingText.DOColor( textColor, m_Duration );
-
+    {
+        m_CanvasGroup.alpha = 1;
+		m_CanvasGroup.DOFade( 0, m_Duration );
 		yield return new WaitForSeconds( m_Duration );
-
 		EventUtility.SafeInvokeAction( onComplete );
 	}
 }

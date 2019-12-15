@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class BattleHackingUiManager : ControllableMonoBehavior
 {
+    private const string TO_HACKING = "battle_hacking_ui_to_hacking";
+    private const string TO_REAL = "battle_hacking_ui_to_real";
+
     #region Inspector Field
 
     [SerializeField]
@@ -40,6 +43,11 @@ public class BattleHackingUiManager : ControllableMonoBehavior
 
     [SerializeField]
     private GridGageIndicator m_BossHpIndicator;
+
+    [Header("Animator")]
+
+    [SerializeField]
+    private Animator m_MainViewAnimator;
 
     #endregion
 
@@ -91,5 +99,15 @@ public class BattleHackingUiManager : ControllableMonoBehavior
     public void SetAlpha(float normalizedAlpha)
     {
         m_CanvasGroup.alpha = normalizedAlpha;
+    }
+
+    public void PlayToHacking()
+    {
+        m_MainViewAnimator.Play(TO_HACKING, 0);
+    }
+
+    public void PlayToReal()
+    {
+        m_MainViewAnimator.Play(TO_REAL, 0);
     }
 }

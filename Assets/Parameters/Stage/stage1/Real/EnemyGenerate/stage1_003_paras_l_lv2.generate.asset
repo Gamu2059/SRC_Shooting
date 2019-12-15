@@ -16,14 +16,17 @@ MonoBehaviour:
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_Score: 1000
-  m_ItemCreateParam:
+  m_DefeatScore: 1000
+  m_DefeatItemParam:
     ItemSpreadParams:
     - Type: 6
-      Num: 10
+      Num: 5
       Point: 100
-      SpreadRadius: 0.2
-    CenterCreateItemType: 7
+      SpreadRadius: 0.3
+    CenterCreateItemType: 0
   m_DefeatEvents: []
-  m_DefeatEffect: {fileID: 6630883398802632190, guid: 0dba00c88eb79cf4385c338430f45daa,
-    type: 3}
+  m_DefeatSequentialEffect:
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: b2c42e67000a0a5438928542ee3c2dfe, type: 2}
+  m_DefeatHideTime: 0
