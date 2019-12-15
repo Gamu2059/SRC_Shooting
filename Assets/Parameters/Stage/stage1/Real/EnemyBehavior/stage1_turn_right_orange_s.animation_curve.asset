@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c693e247d6abd4e925eca8a111248e, type: 3}
-  m_Name: stage1_2x6_separation_r_red_s.animation_curve
+  m_Name: stage1_turn_right_orange_s.animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: AnimationCurveEnemy
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_EnemyLookParamSet: {fileID: 11400000, guid: 8eec20119819812438860330601666e5,
+  m_EnemyLookParamSet: {fileID: 11400000, guid: 153dd4c7257de16458514db9e17b18ee,
     type: 2}
   m_SpeedCurve:
     serializedVersion: 2
@@ -100,11 +100,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 1
-  m_ShotStop: 0.5
+  m_ShotOffset: 0
+  m_ShotStop: 0
   m_ShotParam:
-    Interval: 0.5
-    Num: 1
+    Interval: 1000
+    Num: 0
     Angle: 0
-    IsPlayerLook: 1
+    IsPlayerLook: 0
   m_IsStartAnimationOnStart: 1

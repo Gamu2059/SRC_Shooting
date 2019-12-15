@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38b2ba784fcdb384ebd5c4dcd92dab6b, type: 3}
-  m_Name: stage1_012_left.enemy_group_generate
+  m_Name: stage1_handspiner_r.enemy_group_generate
   m_EditorClassIdentifier: 
-  m_ViewPortPos: {x: 0, y: 1.2}
+  m_ViewPortPos: {x: 0.8, y: 1}
   m_OffsetPosFromViewPort: {x: 0, y: 0}
-  m_GenerateAngle: 165
+  m_GenerateAngle: 180
   m_EnemyGroupBehaviorParamSet: {fileID: 11400000, guid: 882c0d3b7e0988b45a5221c887a24df5,
     type: 2}
   m_IndividualGenerateParamSets:
   - m_GenerateTime: 0
     m_Relative: 0
-    m_ViewPortPos: {x: 0.5, y: 0.5}
+    m_ViewPortPos: {x: 0.5, y: 0.4}
     m_OffsetPosFromViewPort: {x: 0, y: 0}
     m_GenerateAngle: 0
-    m_EnemyGenerateParamSet: {fileID: 11400000, guid: fe5f4ba9f3775de40bf55bab47d1520f,
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: d5c81ada002a26f4b9a3e25fbbb629a7,
       type: 2}
-    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: e29eef865174df549845e39e5e12dbf3,
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 1343629975863284eac274c8b74aa42b,
       type: 2}
