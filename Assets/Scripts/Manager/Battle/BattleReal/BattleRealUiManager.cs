@@ -7,9 +7,25 @@ using UnityEngine.UI;
 
 public class BattleRealUiManager : ControllableMonoBehavior
 {
+    private const string TO_HACKING = "battle_real_ui_to_hacking";
+    private const string TO_REAL = "battle_real_ui_to_real";
+    private const string CLEAR_WITHOUT_HACKING_COMPLETE = "stage_clear_without_hacking_complete";
+    private const string CLEAR_WITH_HACKING_COMPLETE = "stage_clear_with_hacking_complete";
+    private const string CLEAR_CLOSE = "stage_clear_close_banner";
+
+    #region Field Inspector
 
     [SerializeField]
-    private CanvasGroup m_CanvasGroup;
+    private CanvasGroup m_MainUiGroup;
+
+    [SerializeField]
+    private CanvasGroup m_ResultUiGroup;
+
+    [Header("Front View")]
+
+    [SerializeField]
+    private FrontViewEffect m_FrontViewEffect;
+    public FrontViewEffect FrontViewEffect => m_FrontViewEffect;
 
     [Header("Indicator")]
 
@@ -42,25 +58,42 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     [SerializeField]
     private WeaponIndicator m_WeaponIndicator;
-
-
-
-    [Header("ゲーム終了時のやつ")]
+    [SerializeField]
+    private IconGageIndicator m_BossHpGage;
+    [SerializeField]
+    private IconGageIndicator m_BossDownGage;
 
     [SerializeField]
-    private GameObject m_GameOver;
+    private GameObject m_BossUI;
+
+    [Header("Animator")]
 
     [SerializeField]
-    private GameObject m_GameClear;
+    private Animator m_MainViewAnimator;
 
+    [SerializeField]
+    private Animator m_ResultViewAnimator;
+
+    [SerializeField]
+    private Animator m_StageClearAnimator;
+
+    [Header("Result")]
+
+    [SerializeField]
+    private Text m_ResultText;
+
+    #endregion
+
+    private bool m_IsShowResult;
 
     #region Game Cycle
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        SetEnableGameClear(false);
-        SetEnableGameClear(false);
+        m_StageClearAnimator.gameObject.SetActive(false);
+        m_ResultText.gameObject.SetActive(false);
+        m_IsShowResult = false;
     }
 
     public override void OnInitialize()
@@ -72,6 +105,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_ModeIndicator.text = battleData.GameMode.ToString();
         m_StageIndicator.text = battleData.Stage.ToString().Replace("_", " ");
 
+        m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
         m_LifeIndicator.OnInitialize();
@@ -80,10 +114,15 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_EnergyIcon.OnInitialize();
         m_EnergyGage.OnInitialize();
         m_WeaponIndicator.OnInitialize();
+        m_BossHpGage.OnInitialize();
+        m_BossDownGage.OnInitialize();
+        SetEnableBossUI(false);
     }
 
     public override void OnFinalize()
     {
+        m_BossDownGage.OnFinalize();
+        m_BossHpGage.OnFinalize();
         m_WeaponIndicator.OnFinalize();
         m_EnergyGage.OnFinalize();
         m_EnergyIcon.OnFinalize();
@@ -92,7 +131,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_LifeIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
-
+        m_FrontViewEffect.OnFinalize();
         base.OnFinalize();
     }
 
@@ -100,6 +139,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     {
         base.OnUpdate();
 
+        m_FrontViewEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
         m_LifeIndicator.OnUpdate();
@@ -108,22 +148,62 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_EnergyIcon.OnUpdate();
         m_EnergyGage.OnUpdate();
         m_WeaponIndicator.OnUpdate();
+        m_BossHpGage.OnUpdate();
+        m_BossDownGage.OnUpdate();
+        
+        if (m_IsShowResult && Input.anyKey)
+        {
+            m_IsShowResult = false;
+            m_ResultText.gameObject.SetActive(false);
+            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
+        }
     }
 
     #endregion
 
+    public void PlayToHacking()
+    {
+        m_MainViewAnimator.Play(TO_HACKING, 0);
+        m_ResultViewAnimator.Play(TO_HACKING, 0);
+    }
+
+    public void PlayToReal()
+    {
+        m_MainViewAnimator.Play(TO_REAL, 0);
+        m_ResultViewAnimator.Play(TO_REAL, 0);
+    }
+
     public void SetAlpha(float normalizedAlpha)
     {
-        m_CanvasGroup.alpha = normalizedAlpha;
+        m_MainUiGroup.alpha = normalizedAlpha;
+        m_ResultUiGroup.alpha = normalizedAlpha;
     }
 
-    public void SetEnableGameOver(bool isEnable)
-    {
-        m_GameOver.SetActive(isEnable);
+    public void SetEnableBossUI(bool isEnable){
+        m_BossUI.SetActive(isEnable);
     }
 
-    public void SetEnableGameClear(bool isEnable)
+    public void PlayGameClearAnimation()
     {
-        m_GameClear.SetActive(isEnable);
+        m_StageClearAnimator.gameObject.SetActive(true);
+        if (BattleManager.Instance.IsHackingComplete)
+        {
+            m_StageClearAnimator.Play(CLEAR_WITH_HACKING_COMPLETE, 0);
+        }
+        else
+        {
+            m_StageClearAnimator.Play(CLEAR_WITHOUT_HACKING_COMPLETE, 0);
+        }
+    }
+
+    public void PlayMainViewHideAnimation()
+    {
+        m_MainViewAnimator.Play(TO_HACKING, 0);
+    }
+
+    public void DisplayResult()
+    {
+        m_ResultText.gameObject.SetActive(true);
+        m_IsShowResult = true;
     }
 }

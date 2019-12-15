@@ -5,9 +5,9 @@ using UnityEngine;
 public class BattleHackingBossBehavior : ControllableObject
 {
     protected BattleHackingEnemyController Enemy { get; private set; }
-    protected BattleHackingBossBehaviorParamSet BehaviorParamSet { get; private set; }
+    protected BattleHackingBossBehaviorUnitParamSet BehaviorParamSet { get; private set; }
 
-    public BattleHackingBossBehavior(BattleHackingEnemyController enemy, BattleHackingBossBehaviorParamSet paramSet)
+    public BattleHackingBossBehavior(BattleHackingEnemyController enemy, BattleHackingBossBehaviorUnitParamSet paramSet)
     {
         Enemy = enemy;
         BehaviorParamSet = paramSet;
@@ -110,7 +110,7 @@ public class BattleHackingBossBehavior : ControllableObject
     }
 
     // オーバーライド前提なのでひとまずnull
-    public virtual BattleHackingBossBehaviorParamSet GetParamSet()
+    public virtual BattleHackingBossBehaviorUnitParamSet GetParamSet()
     {
         return null;
     }
@@ -122,17 +122,22 @@ public class BattleHackingBossBehavior : ControllableObject
     {
         base.OnStart();
 
+        var paramSet = GetParamSet();
+        if (paramSet == null)
+        {
+            return;
+        }
 
         m_Time = 0;
 
-        m_AllUDFieldArray = GetParamSet().AllUDFieldArray;
-        m_DanmakuCountAbstractArray = GetParamSet().DanmakuCountAbstractArray;
+        m_AllUDFieldArray = paramSet.AllUDFieldArray;
+        m_DanmakuCountAbstractArray = paramSet.DanmakuCountAbstractArray;
 
         m_InitPos = Enemy.transform.position;
         m_MoveTime = 0;
         m_NowPhase = 0;
-        m_Bezier3Points = GetParamSet().Bezier3Points;
-        m_LoopBeginPhase = GetParamSet().LoopBeginPhase;
+        m_Bezier3Points = paramSet.Bezier3Points;
+        m_LoopBeginPhase = paramSet.LoopBeginPhase;
 
         UDParams[] uDParamsArray = m_AllUDFieldArray.GetAllUDParams();
 
@@ -155,31 +160,37 @@ public class BattleHackingBossBehavior : ControllableObject
         m_Time += Time.deltaTime;
         m_MoveTime += Time.deltaTime;
 
-        if (m_Bezier3Points[m_NowPhase].m_Time < m_MoveTime)
+        if (m_Bezier3Points != null)
         {
-
-            // 経過時間を正しくする
-            m_MoveTime -= m_Bezier3Points[m_NowPhase].m_Time;
-
-            // 形態を次のものにする
-            m_NowPhase++;
-
-            m_IsLooping = false;
-
-            // 形態が最後まで行っているか
-            if (m_NowPhase == m_Bezier3Points.Length)
+            if (m_Bezier3Points[m_NowPhase].m_Time < m_MoveTime)
             {
-                m_IsLooping = true;
-                m_NowPhase = m_LoopBeginPhase;
+
+                // 経過時間を正しくする
+                m_MoveTime -= m_Bezier3Points[m_NowPhase].m_Time;
+
+                // 形態を次のものにする
+                m_NowPhase++;
+
+                m_IsLooping = false;
+
+                // 形態が最後まで行っているか
+                if (m_NowPhase == m_Bezier3Points.Length)
+                {
+                    m_IsLooping = true;
+                    m_NowPhase = m_LoopBeginPhase;
+                }
             }
+
+            // 敵本体の状態を更新する
+            BezierPositionMovingPV();
         }
 
-        // 敵本体の状態を更新する
-        BezierPositionMovingPV();
-
-        foreach (DanmakuCountAbstract2 danmakuCountAbstract in m_DanmakuCountAbstractArray)
+        if (m_DanmakuCountAbstractArray != null)
         {
-            danmakuCountAbstract.Updates(this, m_Time);
+            foreach (DanmakuCountAbstract2 danmakuCountAbstract in m_DanmakuCountAbstractArray)
+            {
+                danmakuCountAbstract.Updates(this, m_Time);
+            }
         }
     }
 

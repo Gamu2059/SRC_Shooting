@@ -22,13 +22,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 67b0b645f6b9ca240863dd73ad0ba2c2, type: 2}
   m_DownParamSets:
   - {fileID: 11400000, guid: ff805f0f39f72244fa0ace7a78feebbb, type: 2}
-  m_DownHp: 300
+  m_DownHp: 10
   m_HackingCompleteNum: 2
   m_ChangeAttackHpRates: []
   m_ItemParam:
     ItemSpreadParams:
-    - Type: 0
+    - Type: 6
       Num: 20
       Point: 200
       SpreadRadius: 0.6
-    CenterCreateItemType: 7
+    CenterCreateItemType: 0

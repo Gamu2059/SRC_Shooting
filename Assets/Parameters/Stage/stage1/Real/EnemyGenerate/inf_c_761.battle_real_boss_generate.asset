@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758b53089f2cd6d4896bda520f9f58c4, type: 3}
+  m_Name: inf_c_761.battle_real_boss_generate
+  m_EditorClassIdentifier: 
+  m_Hp: 10
+  m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+    type: 2}
+  m_DamageEffectDuration: 0.01
+  m_DefeatScore: 10000
+  m_DefeatItemParam:
+    ItemSpreadParams:
+    - Type: 6
+      Num: 20
+      Point: 100
+      SpreadRadius: 0.5
+    CenterCreateItemType: 0
+  m_DefeatEvents:
+  - ContentName: "\u6483\u7834\u6570+1"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 1
+    DelayExecuteTime: 3
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Boss Defeat
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  m_DefeatSequentialEffect:
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: 97ad3ebef7cd188408d03a91a4129709, type: 2}
+    - Delay: 5
+      Effect: {fileID: 11400000, guid: 34a131c3b59bdf04794d478b70474ae5, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+  m_DefeatHideTime: 5
+  m_HackingCompleteNum: 3
+  m_DownHpArray:
+  - 100
+  - 100
+  - 100
+  m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb, type: 2}
+  m_PlayerTriangleEffectParam: {fileID: 11400000, guid: ed5997dcef785994a93b25d031fa9a6c,
+    type: 2}
+  m_ChangeAttackHpRates: []
+  m_HackingSuccessItemParam:
+    ItemSpreadParams:
+    - Type: 6
+      Num: 10
+      Point: 200
+      SpreadRadius: 0.5
+    CenterCreateItemType: 0
+  m_RescueScore: 30000
+  m_RescueItemParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_RescueEvents:
+  - ContentName: "\u6551\u51FA\u6570+1"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 1
+    DelayExecuteTime: 3
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Boss Rescue
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  m_RescueSequentialEffect:
+    m_Params: []
+  m_RescueHideTime: 0

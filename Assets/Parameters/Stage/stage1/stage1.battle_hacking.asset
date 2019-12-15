@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94af5236b90d1f498621cd7d99de262, type: 3}
+  m_Name: stage1.battle_hacking
+  m_EditorClassIdentifier: 
+  m_PlayerManagerParamSet: {fileID: 11400000, guid: 70bab5e0c93c1fc4785dc8115153bf2b,
+    type: 2}
+  m_EnemyManagerParamSet: {fileID: 11400000, guid: f7facbbf9f8fc0e46a6bc82f640dc1a2,
+    type: 2}
+  m_BulletManagerParamSet: {fileID: 11400000, guid: 0c96e642e63b85841a1864e1271bfb65,
+    type: 2}
+  m_LevelParamSets:
+  - {fileID: 11400000, guid: 138f571f6c9003642bc0a9b9126b29a2, type: 2}
+  - {fileID: 11400000, guid: 1a19522e2833a48419860e4f5e19b23f, type: 2}
+  - {fileID: 11400000, guid: 3c5a7d61399efb24b9959c43ec7b5897, type: 2}
+  m_DestroyBulletShakeParam:
+    XAmp: 0.05
+    YAmp: 0.05
+    Freq: 30
+    Dec: 5
+    Duration: 0.5
+  m_DestroyBossShakeParam:
+    XAmp: 0.3
+    YAmp: 0.3
+    Freq: 50
+    Dec: 5
+    Duration: 0.5

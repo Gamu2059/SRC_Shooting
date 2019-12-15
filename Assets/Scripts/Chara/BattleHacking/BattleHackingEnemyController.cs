@@ -8,11 +8,9 @@ public class BattleHackingEnemyController : CommandCharaController
 
     private string m_LookId;
 
-    private BattleHackingEnemyGenerateParamSet m_GenerateParamSet;
-    protected BattleHackingEnemyGenerateParamSet GenerateParamSet => m_GenerateParamSet;
+    public BattleHackingEnemyGenerateParamSet GenerateParamSet { get; private set; }
 
-    private BattleHackingEnemyBehaviorParamSet m_BehaviorParamSet;
-    protected BattleHackingEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
+    public BattleHackingEnemyBehaviorParamSet BehaviorParamSet { get; private set; }
 
     /// <summary>
     /// 敵キャラのサイクル。
@@ -41,6 +39,8 @@ public class BattleHackingEnemyController : CommandCharaController
     protected bool IsShowFirst { get; private set; }
 
     public bool IsOutOfEnemyField { get; private set; }
+
+    private MaterialEffect m_MaterialEffect;
 
     #endregion
 
@@ -79,15 +79,31 @@ public class BattleHackingEnemyController : CommandCharaController
         m_WillDestroyOnOutOfEnemyField = true;
         m_IsLookMoveDir = true;
 
-        if (m_GenerateParamSet != null)
+        if (GenerateParamSet != null)
         {
-            InitHp(m_GenerateParamSet.Hp);
+            InitHp(GenerateParamSet.Hp);
         }
+
+        m_MaterialEffect = GetComponent<MaterialEffect>();
+        m_MaterialEffect?.OnInitialize();
     }
 
     public override void OnFinalize()
     {
+        m_MaterialEffect?.OnFinalize();
         base.OnFinalize();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        m_MaterialEffect?.OnStart();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        m_MaterialEffect?.OnUpdate();
     }
 
     public override void OnLateUpdate()
@@ -120,12 +136,12 @@ public class BattleHackingEnemyController : CommandCharaController
 
     public void SetParamSet(BattleHackingEnemyGenerateParamSet generateParamSet, BattleHackingEnemyBehaviorParamSet behaviorParamSet)
     {
-        m_GenerateParamSet = generateParamSet;
-        m_BehaviorParamSet = behaviorParamSet;
+        GenerateParamSet = generateParamSet;
+        BehaviorParamSet = behaviorParamSet;
 
         IsBoss = generateParamSet.IsBoss;
 
-        SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
+        SetBulletSetParam(BehaviorParamSet.BulletSetParam);
 
         OnSetParamSet();
     }
@@ -151,25 +167,26 @@ public class BattleHackingEnemyController : CommandCharaController
     protected override void OnDamage()
     {
         base.OnDamage();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Damage");
+        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.DamageSe);
+
+        if (m_MaterialEffect != null)
+        {
+            var mat = GenerateParamSet.DamageEffectMaterial;
+            var dur = GenerateParamSet.DamageEffectDuration;
+            m_MaterialEffect.ChangeMaterial(mat, dur);
+        }
     }
 
     public override void Dead()
     {
         base.Dead();
 
-        if (m_GenerateParamSet != null)
+        if (GenerateParamSet != null)
         {
-            DataManager.Instance.BattleData.AddScore(m_GenerateParamSet.Score);
+            DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
         }
 
-        if (IsBoss)
-        {
-            // ボスが死んだらハッキングクリア
-            BattleHackingManager.Instance.DeadBoss();
-        }
-
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Break01");
+        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.BreakSe);
         Destroy();
     }
 

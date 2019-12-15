@@ -22,4 +22,16 @@ public class BattleHackingPlayerManagerParamSet : ScriptableObject
     [SerializeField, Tooltip("プレイヤーの低速移動速度")]
     private float m_PlayerSlowMoveSpeed;
     public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
+
+    [Header("Effect")]
+
+    [SerializeField]
+    private EffectParamSet m_DeadEffectParam;
+    public EffectParamSet DeadEffectParam => m_DeadEffectParam;
+
+    [Header("SE"), Tooltip("いずれ各々の行動のパラメータに分散させたい")]
+
+    [SerializeField]
+    private PlaySoundParam m_ShotSe;
+    public PlaySoundParam ShotSe => m_ShotSe;
 }

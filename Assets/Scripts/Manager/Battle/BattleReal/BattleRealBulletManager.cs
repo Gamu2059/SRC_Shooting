@@ -26,8 +26,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// UPDATE状態の弾を保持するリスト。
     /// </summary>
-    private List<BulletController> m_UpdateBullets;
-    public List<BulletController> Bullets => m_UpdateBullets;
+    public List<BulletController> Bullets { get; private set; }
 
     /// <summary>
     /// POOL状態の弾を保持するリスト。
@@ -38,6 +37,16 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     /// POOL状態に遷移する弾のリスト。
     /// </summary>
     private List<BulletController> m_GotoPoolBullets;
+
+    /// <summary>
+    /// UPDATE状態かつ、TROOPがPLAYERの弾を保持するリスト。
+    /// </summary>
+    public List<BulletController> PlayerBullets { get; private set; }
+
+    /// <summary>
+    /// UPDATE状態かつ、TROOPがENEMYの弾を保持するリスト。
+    /// </summary>
+    public List<BulletController> EnemyBullets { get; private set; }
 
     #endregion
 
@@ -52,16 +61,20 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     {
         base.OnInitialize();
         m_StandbyBullets = new List<BulletController>();
-        m_UpdateBullets = new List<BulletController>();
+        Bullets = new List<BulletController>();
         m_PoolBullets = new List<BulletController>();
-        m_GotoPoolBullets = new List<BulletController>(); ;
+        m_GotoPoolBullets = new List<BulletController>();
+        PlayerBullets = new List<BulletController>();
+        EnemyBullets = new List<BulletController>();
     }
 
     public override void OnFinalize()
     {
-        m_StandbyBullets.Clear();
-        m_UpdateBullets.Clear();
+        EnemyBullets.Clear();
+        PlayerBullets.Clear();
         m_PoolBullets.Clear();
+        Bullets.Clear();
+        m_StandbyBullets.Clear();
         base.OnFinalize();
     }
 
@@ -88,7 +101,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
         GotoUpdateFromStandby();
 
         // Update処理
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in Bullets)
         {
             if (bullet == null)
             {
@@ -102,7 +115,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     public override void OnLateUpdate()
     {
         // LateUpdate処理
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in Bullets)
         {
             if (bullet == null)
             {
@@ -119,7 +132,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
 
     public void ClearColliderFlag()
     {
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in Bullets)
         {
             if (bullet == null)
             {
@@ -132,7 +145,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
 
     public void UpdateCollider()
     {
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in Bullets)
         {
             if (bullet == null)
             {
@@ -145,7 +158,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
 
     public void ProcessCollision()
     {
-        foreach (var bullet in m_UpdateBullets)
+        foreach (var bullet in Bullets)
         {
             if (bullet == null)
             {
@@ -183,7 +196,17 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
             }
 
             bullet.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
-            m_UpdateBullets.Add(bullet);
+            Bullets.Add(bullet);
+
+            switch (bullet.GetTroop())
+            {
+                case E_CHARA_TROOP.PLAYER:
+                    PlayerBullets.Add(bullet);
+                    break;
+                case E_CHARA_TROOP.ENEMY:
+                    EnemyBullets.Add(bullet);
+                    break;
+            }
         }
 
         m_StandbyBullets.Clear();
@@ -204,8 +227,18 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
             bullet.SetCycle(E_POOLED_OBJECT_CYCLE.POOLED);
             bullet.gameObject.SetActive(false);
             m_GotoPoolBullets.RemoveAt(idx);
-            m_UpdateBullets.Remove(bullet);
+            Bullets.Remove(bullet);
             m_PoolBullets.Add(bullet);
+
+            switch (bullet.GetTroop())
+            {
+                case E_CHARA_TROOP.PLAYER:
+                    PlayerBullets.Remove(bullet);
+                    break;
+                case E_CHARA_TROOP.ENEMY:
+                    EnemyBullets.Remove(bullet);
+                    break;
+            }
         }
 
         m_GotoPoolBullets.Clear();
@@ -304,19 +337,51 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     /// </summary>
     public void CheckPoolAllEnemyBullet()
     {
-        for (int i=0;i<m_StandbyBullets.Count;i++)
+        foreach (var bullet in m_StandbyBullets)
         {
-            var bullet = m_StandbyBullets[i];
             if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
             {
                 CheckPoolBullet(bullet);
             }
         }
 
-        for (int i=0;i<Bullets.Count;i++)
+        foreach (var bullet in EnemyBullets)
         {
-            var bullet = Bullets[i];
-            if (bullet.GetTroop() == E_CHARA_TROOP.ENEMY)
+            CheckPoolBullet(bullet);
+        }
+    }
+
+    /// <summary>
+    /// 指定したキャラが撃った弾をプールに送る
+    /// </summary>
+    public void CheckPoolBullet(CharaController targetOwner)
+    {
+        if (targetOwner == null)
+        {
+            return;
+        }
+
+        foreach (var bullet in m_StandbyBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            if (bullet.GetBulletOwner() == targetOwner)
+            {
+                CheckPoolBullet(bullet);
+            }
+        }
+
+        foreach (var bullet in Bullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            if (bullet.GetBulletOwner() == targetOwner)
             {
                 CheckPoolBullet(bullet);
             }

@@ -293,7 +293,7 @@ public class Timer
 
 
 
-	public void OnFixedUpdate()
+	public void OnUpdate()
 	{
 		if( m_TimerCycle != E_TIMER_CYCLE.UPDATE )
 		{
@@ -304,24 +304,24 @@ public class Timer
 		{
 			if( m_TimeoutDuration >= 0 )
 			{
-				m_TimeoutCount += Time.fixedDeltaTime;
+				m_TimeoutCount += Time.deltaTime;
 			}
 
 			if( m_IntervalDuration >= 0 )
 			{
-				m_IntervalCount += Time.fixedDeltaTime;
+				m_IntervalCount += Time.deltaTime;
 			}
 		}
 		else
 		{
 			if( m_TimeoutDuration >= 0 )
 			{
-				m_TimeoutCount += Time.fixedUnscaledDeltaTime;
+				m_TimeoutCount += Time.unscaledDeltaTime;
 			}
 
 			if( m_IntervalDuration >= 0 )
 			{
-				m_IntervalCount += Time.fixedUnscaledDeltaTime;
+				m_IntervalCount += Time.unscaledDeltaTime;
 			}
 		}
 

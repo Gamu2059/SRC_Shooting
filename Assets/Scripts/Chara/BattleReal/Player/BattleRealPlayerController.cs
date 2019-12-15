@@ -2,46 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hï¿½Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½
-/// </summary>
 public class BattleRealPlayerController : CharaController
 {
-    /// <summary>
-    /// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½tï¿½Tï¿½Cï¿½Nï¿½ï¿½
-    /// </summary>
-    [System.Serializable]
-    public enum E_PLAYER_LIFE_CYCLE
-    {
-        /// <summary>
-        /// ï¿½í“¬ï¿½ï¿½Ê‚É‚Íoï¿½Ä‚ï¿½ï¿½È‚ï¿½
-        /// </summary>
-        AHEAD,
-
-        /// <summary>
-        /// ï¿½ï¿½ï¿½İí“¬ï¿½ï¿½
-        /// </summary>
-        SORTIE,
-
-        /// <summary>
-        /// ï¿½ï¿½ï¿½Sï¿½É‚ï¿½ï¿½í“¬ï¿½ï¿½Ê‚ï¿½ï¿½ï¿½Şï¿½
-        /// </summary>
-        DEAD,
-    }
-
-    #region Field
-
-    private BattleRealPlayerParamSet m_ParamSet;
-
-    private float m_ShotRemainTime;
-
-    #endregion
-
     #region Game Cycle
 
     private void Start()
     {
-        // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ÅAï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Éƒ}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½ÉƒLï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ï¿½Unityï¿½ï¿½Startï¿½ï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½
         BattleRealPlayerManager.RegisterPlayer(this);
     }
 
@@ -59,49 +25,68 @@ public class BattleRealPlayerController : CharaController
     public override void OnStart()
     {
         base.OnStart();
-        m_ShotRemainTime = 0;
         StartOutRingAnimation();
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-        m_ShotRemainTime -= Time.deltaTime;
     }
 
     #endregion
 
-    public void SetParamSet(BattleRealPlayerParamSet paramSet)
-    {
-        m_ParamSet = paramSet;
-    }
-
     /// <summary>
-    /// ï¿½Êï¿½eï¿½ğ”­Ë‚ï¿½ï¿½ï¿½B
+    /// ’Êí’e‚ğ•ú‚Â
     /// </summary>
     public virtual void ShotBullet()
     {
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Shot01");
+        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ShotSe);
     }
 
-    public void ChargeLaser()
+    /// <summary>
+    /// ƒ`ƒƒ[ƒWŠJn‚Ìˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
+    /// </summary>
+    public virtual void ChargeStart()
+    {
+    }
+
+    /// <summary>
+    /// ƒ`ƒƒ[ƒW’†ŒÄ‚Î‚ê‘±‚¯‚é
+    /// </summary>
+    public virtual void ChargeUpdate()
     {
 
     }
 
+    /// <summary>
+    /// ƒ`ƒƒ[ƒW‚ğ•ú‚Á‚½uŠÔ‚ÉŒÄ‚Î‚ê‚é
+    /// </summary>
+    public virtual void ChargeRelease()
+    {
+    }
+
+    /// <summary>
+    /// ƒŒ[ƒU[‚ğ•ú‚Â
+    /// ƒ`ƒƒ[ƒW‚ğ•ú‚Á‚½Œã‚ÉŒÄ‚Î‚ê‚é‚±‚Æ‚ğ‘z’è‚µ‚Ä‚¢‚é
+    /// </summary>
     public virtual void ShotLaser()
     {
-
     }
 
-    public void ChargeBomb()
-    {
-
-    }
-
+    /// <summary>
+    /// ƒ{ƒ€‚ğ•ú‚Â
+    /// ƒ`ƒƒ[ƒW‚ğ•ú‚Á‚½Œã‚ÉŒÄ‚Î‚ê‚é‚±‚Æ‚ğ‘z’è‚µ‚Ä‚¢‚é
+    /// </summary>
     public virtual void ShotBomb()
     {
+    }
 
+    /// <summary>
+    /// •Ší‚ğØ‚è‘Ö‚¦‚½‚ÉŒÄ‚Î‚ê‚é
+    /// </summary>
+    public virtual void ChangeWeapon()
+    {
+        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.WeaponChangeSe);
     }
 
     protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
@@ -122,7 +107,6 @@ public class BattleRealPlayerController : CharaController
                 }
                 break;
         }
-
     }
 
     protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
@@ -165,39 +149,32 @@ public class BattleRealPlayerController : CharaController
 
     private void GetItem(BattleRealItemController item)
     {
-        if (item == null)
+        if (item == null || item.ItemType == E_ITEM_TYPE.NONE)
         {
             return;
         }
 
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Getitem");
+        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.GetItemSe);
         var battleData = DataManager.Instance.BattleData;
 
         switch (item.ItemType)
         {
+            case E_ITEM_TYPE.LIFE_RECOVERY:
+                battleData.AddPlayerLife(item.ItemPoint);
+                break;
             case E_ITEM_TYPE.SMALL_SCORE:
-                battleData.AddExp(item.ItemPoint);
-                break;
             case E_ITEM_TYPE.BIG_SCORE:
-                battleData.AddExp(item.ItemPoint);
-                break;
-            case E_ITEM_TYPE.SMALL_SCORE_UP:
-                battleData.AddExp(item.ItemPoint);
-                break;
-            case E_ITEM_TYPE.BIG_SCORE_UP:
-                battleData.AddExp(item.ItemPoint);
+                battleData.AddScore(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
-                battleData.AddExp(item.ItemPoint);
-                break;
             case E_ITEM_TYPE.BIG_EXP:
                 battleData.AddExp(item.ItemPoint);
                 break;
-            case E_ITEM_TYPE.SMALL_BOMB:
-                battleData.AddExp(item.ItemPoint);
+            case E_ITEM_TYPE.SMALL_ENERGY:
+            case E_ITEM_TYPE.BIG_ENERGY:
+                battleData.AddEnergyCharge(item.ItemPoint);
                 break;
-            case E_ITEM_TYPE.BIG_BOMB:
-                battleData.AddExp(item.ItemPoint);
+            default:
                 break;
         }
     }
@@ -210,11 +187,23 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
+
+        StopChargeShot();
+
+        // €–SSE‚ÍFX‚Èˆ—‚ÌŒã‚É‚µ‚Ä‚¨‚©‚È‚¢‚ÆAƒvƒŒƒCƒ„[SE‚Ì’â~‚ÉŠª‚«‚Ü‚ê‚é‰Â”\«‚ª‚ ‚é
+        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.DeadSe);
         BattleRealManager.Instance.DeadPlayer();
     }
 
     public virtual void SetInvinsible()
+    {
+
+    }
+
+    /// <summary>
+    /// ƒ`ƒƒ[ƒW‚âƒ`ƒƒ[ƒWƒVƒ‡ƒbƒg‚ğ‹­§“I‚ÉI—¹‚³‚¹‚éB
+    /// </summary>
+    public virtual void StopChargeShot()
     {
 
     }

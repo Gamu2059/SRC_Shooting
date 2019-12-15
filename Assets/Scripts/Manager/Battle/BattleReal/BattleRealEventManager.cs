@@ -10,8 +10,9 @@ public class BattleRealEventManager : ControllableObject
 {
     public static BattleRealEventManager Instance => BattleRealManager.Instance.EventManager;
 
-    public const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
-    public const string GAME_START_TIME_PERIOD_NAME = "Game Start";
+    private const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
+    private const string GAME_START_TIME_PERIOD_NAME = "Game Start";
+    private const string BOSS_START_TIME_PERIOD_NAME = "Boss Start";
 
     #region Field
 
@@ -27,6 +28,7 @@ public class BattleRealEventManager : ControllableObject
 
     private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
     private EventTriggerTimePeriod m_GameStartTimePeriod;
+    private EventTriggerTimePeriod m_BossStartTimePeriod;
 
     private List<BattleRealEventContent> m_WaitExecuteParams;
 
@@ -74,8 +76,10 @@ public class BattleRealEventManager : ControllableObject
 
         m_BattleLoadedTimePeriod = new EventTriggerTimePeriod();
         m_GameStartTimePeriod = new EventTriggerTimePeriod();
+        m_BossStartTimePeriod = new EventTriggerTimePeriod();
         m_TimePeriods.Add(BATTLE_LOADED_TIME_PRERIOD_NAME, m_BattleLoadedTimePeriod);
         m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, m_GameStartTimePeriod);
+        m_TimePeriods.Add(BOSS_START_TIME_PERIOD_NAME, m_BossStartTimePeriod);
 
         foreach (var periodName in m_ParamSet.TimePeriodNames)
         {
@@ -687,8 +691,14 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.GOTO_BOSS_EVENT:
                 ExecuteGotoBossEvent();
                 break;
-            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR:
-                ExecuteGameClear();
+            case BattleRealEventContent.E_EVENT_TYPE.BOSS_BATTLE_START:
+                ExecuteBossBattleStart();
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR_WITHOUT_HACKING_COMPLETE:
+                ExecuteGameClearWithoutHackingComplete();
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR_WITH_HACKING_COMPLETE:
+                ExecuteGameClearWithHackingComplete();
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.GAME_OVER:
                 ExecuteGameOver();
@@ -747,20 +757,30 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// BGMを制御する。
     /// </summary>
-    private void ExecuteControlBgm(ControlBgmParam[] controlBgmParams)
+    private void ExecuteControlBgm(ControlSoundParam[] controlBgmParams)
     {
         foreach (var param in controlBgmParams)
         {
             switch (param.ControlType)
             {
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.PLAY:
-                    AudioManager.Instance.PlayBgm(param.PlayBgmName);
+                case ControlSoundParam.E_SOUND_CONTROL_TYPE.PLAY:
+                    AudioManager.Instance.Play(param.PlaySoundParam);
                     break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.STOP:
-                    AudioManager.Instance.StopBgm();
+                case ControlSoundParam.E_SOUND_CONTROL_TYPE.STOP:
+                    AudioManager.Instance.Stop(param.StopSoundGroup);
                     break;
-                case ControlBgmParam.E_BGM_CONTROL_TYPE.CONTROL_AISAC:
-                    AudioManager.Instance.SetBgmAisac(param.AisacType, param.AisacValue);
+                case ControlSoundParam.E_SOUND_CONTROL_TYPE.CONTROL_AISAC:
+                    AudioManager.Instance.OperateAisac(param.OperateAisacParam);
+                    break;
+                case ControlSoundParam.E_SOUND_CONTROL_TYPE.STOP_ALL_BGM:
+                    AudioManager.Instance.StopAllBgm();
+                    break;
+                case ControlSoundParam.E_SOUND_CONTROL_TYPE.STOP_ALL_SE:
+                    AudioManager.Instance.StopAllSe();
+                    break;
+                case ControlSoundParam.E_SOUND_CONTROL_TYPE.STOP_ALL_BGM_AND_SE:
+                    AudioManager.Instance.StopAllBgm();
+                    AudioManager.Instance.StopAllSe();
                     break;
             }
         }
@@ -903,7 +923,7 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
-    /// ボスイベントに入る。
+    /// ボス戦開始前イベントを発行する。
     /// </summary>
     private void ExecuteGotoBossEvent()
     {
@@ -911,11 +931,24 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
+    /// ボス戦開始イベントを発行する。
+    /// </summary>
+    private void ExecuteBossBattleStart()
+    {
+        BattleManager.Instance.BossBattleStart();
+    }
+
+    /// <summary>
     /// ゲームクリアイベントを発行する。
     /// </summary>
-    private void ExecuteGameClear()
+    private void ExecuteGameClearWithoutHackingComplete()
     {
-        BattleManager.Instance.GameClear();
+        BattleManager.Instance.GameClearWithoutHackingComplete();
+    }
+
+    private void ExecuteGameClearWithHackingComplete()
+    {
+        BattleManager.Instance.GameClearWithHackingComplete();
     }
 
     /// <summary>

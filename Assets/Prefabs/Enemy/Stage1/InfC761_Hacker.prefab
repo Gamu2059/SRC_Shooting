@@ -171,7 +171,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e5dafb17a7414cc4793e8554dd6a12ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -656,6 +656,7 @@ GameObject:
   - component: {fileID: 4909216527598324398}
   - component: {fileID: 8225120013939572925}
   - component: {fileID: 3350768570933283969}
+  - component: {fileID: 3706262958088353037}
   m_Layer: 13
   m_Name: InfC761_Hacker
   m_TagString: Untagged
@@ -691,55 +692,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 1
     Direction: 0
     ColliderWidth: 10
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 1}
     Transform: {fileID: 9119092719111349621}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 1
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 1706888641583074973}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 1
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 6301203590296341009}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 5552675234676251236}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 4669512789524190701}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 6313562896247177284}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 7114001032202687461}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
     ColliderColor: {r: 0.5157392, g: 1, b: 0, a: 0}
     Transform: {fileID: 4073757096561151661}
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
@@ -763,6 +782,49 @@ MonoBehaviour:
   m_BodyLightRenderer: {fileID: 5479686425978014621}
   m_EyeLightRenderer: {fileID: 8276570313827874527}
   m_EyeMoveRadius: 0.023
+  m_DefeatEffect: {fileID: 2100000, guid: e5dafb17a7414cc4793e8554dd6a12ec, type: 2}
+  m_NormalEffect: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_DefeatRadiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3706262958088353037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8171854453379546235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f50ef0529f9a864bbd81717a7746079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Renderers:
+  - {fileID: 4127343067875834031}
+  - {fileID: 5479686425978014621}
+  - {fileID: 2528939365597313289}
+  - {fileID: 8276570313827874527}
 --- !u!1 &8223105880580932767
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +951,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e5dafb17a7414cc4793e8554dd6a12ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -9,11 +9,9 @@ public class BattleRealEnemyController : CharaController
 
     private string m_LookId;
 
-    private BattleRealEnemyGenerateParamSet m_GenerateParamSet;
-    protected BattleRealEnemyGenerateParamSet GenerateParamSet => m_GenerateParamSet;
+    protected BattleRealEnemyGenerateParamSet GenerateParamSet { get; private set; }
 
-    private BattleRealEnemyBehaviorParamSet m_BehaviorParamSet;
-    protected BattleRealEnemyBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
+    protected BattleRealEnemyBehaviorParamSet BehaviorParamSet { get; private set; }
 
     private E_POOLED_OBJECT_CYCLE m_Cycle;
 
@@ -38,9 +36,14 @@ public class BattleRealEnemyController : CharaController
 
     public bool IsBoss { get; protected set; }
 
+    /// <summary>
+    /// 既に死亡しているか
+    /// </summary>
+    public bool IsDead { get; private set; }
+
     public bool IsOutOfEnemyField { get; private set; }
 
-    protected ArgumentParamSet m_ParamSet;
+    private MaterialEffect m_MaterialEffect;
 
     #endregion
 
@@ -84,12 +87,35 @@ public class BattleRealEnemyController : CharaController
         IsShowFirst = false;
         m_IsLookMoveDir = true;
         IsBoss = false;
+        IsDead = false;
         m_WillDestroyOnOutOfEnemyField = true;
 
-        if (m_GenerateParamSet != null)
+        if (GenerateParamSet != null)
         {
-            InitHp(m_GenerateParamSet.Hp);
+            InitHp(GenerateParamSet.Hp);
         }
+
+        m_MaterialEffect = GetComponent<MaterialEffect>();
+        m_MaterialEffect?.OnInitialize();
+
+        OnInitializeCollider();
+    }
+
+    protected virtual void OnInitializeCollider()
+    {
+        GetCollider().SetEnableAllCollider(true);
+    }
+
+    public override void OnFinalize()
+    {
+        m_MaterialEffect?.OnFinalize();
+        base.OnFinalize();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        m_MaterialEffect?.OnUpdate();
     }
 
     public override void OnLateUpdate()
@@ -120,20 +146,12 @@ public class BattleRealEnemyController : CharaController
 
     #endregion
 
-    /// <summary>
-    /// 引数をセットする
-    /// </summary>
-    public virtual void SetArguments(string param)
-    {
-        m_ParamSet = ArgumentParamSetTranslator.TranslateFromString(param);
-    }
-
     public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
     {
-        m_GenerateParamSet = generateParamSet;
-        m_BehaviorParamSet = behaviorParamSet;
+        GenerateParamSet = generateParamSet;
+        BehaviorParamSet = behaviorParamSet;
 
-        SetBulletSetParam(m_BehaviorParamSet.BulletSetParam);
+        SetBulletSetParam(BehaviorParamSet.BulletSetParam);
 
         OnSetParamSet();
     }
@@ -143,52 +161,32 @@ public class BattleRealEnemyController : CharaController
 
     }
 
-    /// <summary>
-    /// 指定した弾がEchoBullet、かつ被弾済みのインデックスならばtrueを返す。
-    /// </summary>
-    protected bool IsSufferEchoBullet(BulletController bullet)
-    {
-        // EchoBulletかつ被弾済みならtrueを返す
-        if (bullet is EchoBullet)
-        {
-            var echoBullet = bullet as EchoBullet;
-            if (EchoBulletIndexGenerater.Instance.IsRegisteredChara(echoBullet.GetRootIndex(), this))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
         base.OnEnterSufferBullet(sufferData);
 
         var bullet = sufferData.OpponentObject;
-        if (IsSufferEchoBullet(bullet))
-        {
-            return;
-        }
-
         var stageM = BattleRealStageManager.Instance;
         if (stageM.IsOutOfField(transform) || stageM.IsOutOfField(bullet.transform))
         {
             return;
         }
 
-        var hitCollider = sufferData.HitCollider;
-        switch (hitCollider.Transform.ColliderType)
+        var sufferCollider = sufferData.SufferCollider;
+        if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
         {
-            case E_COLLIDER_TYPE.PLAYER_BULLET:
-            case E_COLLIDER_TYPE.PLAYER_LASER:
-            case E_COLLIDER_TYPE.PLAYER_BOMB:
-                var sufferCollider = sufferData.SufferCollider;
-                if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
-                {
-                    Damage(1);
-                }
-                break;
+            var hitCollider = sufferData.HitCollider;
+            switch (hitCollider.Transform.ColliderType)
+            {
+                case E_COLLIDER_TYPE.PLAYER_BULLET:
+                case E_COLLIDER_TYPE.PLAYER_BOMB:
+                    Damage(bullet.GetNowDamage());
+                    break;
+                case E_COLLIDER_TYPE.PLAYER_LASER:
+                    // レーザーは1秒あたりのダメージが入っているのでこうする
+                    Damage(bullet.GetNowDamage() * Time.deltaTime);
+                    break;
+            }
         }
     }
 
@@ -196,50 +194,94 @@ public class BattleRealEnemyController : CharaController
     {
         base.OnStaySufferBullet(sufferData);
 
-        var hitCollider = sufferData.HitCollider;
-        switch (hitCollider.Transform.ColliderType)
+        var bullet = sufferData.OpponentObject;
+        var sufferCollider = sufferData.SufferCollider;
+        if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
         {
-            case E_COLLIDER_TYPE.PLAYER_BULLET:
-            case E_COLLIDER_TYPE.PLAYER_LASER:
-            case E_COLLIDER_TYPE.PLAYER_BOMB:
-                var sufferCollider = sufferData.SufferCollider;
-                if (sufferCollider.Transform.ColliderType == E_COLLIDER_TYPE.CRITICAL)
-                {
-                    Damage(1);
-                }
-                break;
+            var hitCollider = sufferData.HitCollider;
+            switch (hitCollider.Transform.ColliderType)
+            {
+                case E_COLLIDER_TYPE.PLAYER_BULLET:
+                    Damage(bullet.GetNowDamage());
+                    break;
+                case E_COLLIDER_TYPE.PLAYER_LASER:
+                    // レーザーは1秒あたりのダメージが入っているのでこうする
+                    Damage(bullet.GetNowDamage() * Time.deltaTime);
+                    break;
+            }
         }
     }
 
     protected override void OnDamage()
     {
         base.OnDamage();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Damage");
+        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DamageSe);
+
+        if (m_MaterialEffect != null)
+        {
+            var mat = GenerateParamSet.DamageEffectMaterial;
+            var dur = GenerateParamSet.DamageEffectDuration;
+            m_MaterialEffect.ChangeMaterial(mat, dur);
+        }
     }
 
-    public override void Dead()
+    public sealed override void Dead()
     {
         base.Dead();
 
-        if (m_GenerateParamSet != null)
-        {
-            BattleRealItemManager.Instance.CreateItem(transform.position, m_GenerateParamSet.ItemCreateParam);
+        IsDead = true;
+        GetCollider().SetEnableAllCollider(false);
+        OnDead();
+    }
 
-            var events = m_GenerateParamSet.DefeatEvents;
-            if (events != null)
+    protected virtual void OnDead()
+    {
+        float defeatTime = 0;
+
+        if (GenerateParamSet != null)
+        {
+            // シーケンシャルエフェクトを登録する
+            var effect = GenerateParamSet.DefeatSequentialEffect;
+            if (effect != null)
             {
-                for (int i = 0; i < events.Length; i++)
-                {
-                    DataManager.Instance.BattleData.AddScore(m_GenerateParamSet.Score);
-                    BattleRealEventManager.Instance.AddEvent(events[i]);
-                }
+                BattleRealEffectManager.Instance.RegisterSequentialEffect(effect, transform);
+            }
+
+            defeatTime = GenerateParamSet.DefeatHideTime;
+        }
+
+        if (defeatTime <= 0)
+        {
+            OnDefeatDestroy();
+        }
+        else
+        {
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, defeatTime);
+            timer.SetTimeoutCallBack(() => OnDefeatDestroy());
+            TimerManager.Instance.RegistTimer(timer);
+        }
+    }
+
+    protected void OnDefeatDestroy()
+    {
+        BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.DefeatItemParam);
+        DataManager.Instance.BattleData.AddScore(GenerateParamSet.DefeatScore);
+
+        var events = GenerateParamSet.DefeatEvents;
+        if (events != null)
+        {
+            for (int i = 0; i < events.Length; i++)
+            {
+                BattleRealEventManager.Instance.AddEvent(events[i]);
             }
         }
 
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.ENEMY, "SE_Enemy_Break01");
         Destroy();
     }
 
+    /// <summary>
+    /// 死亡ではなく強制削除
+    /// </summary>
     public void Destroy()
     {
         BattleRealEnemyManager.Instance.DestroyEnemy(this);

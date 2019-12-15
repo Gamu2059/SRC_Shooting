@@ -13,12 +13,14 @@ public class BattleHackingStageManager : ControllableMonoBehavior
         PLAYER,
         ENEMY,
         BULLET,
+        EFFECT,
     }
 
     public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
     public const string PLAYER_HOLDER = "[PlayerCharaHolder]";
     public const string ENEMY_HOLDER = "[EnemyCharaHolder]";
     public const string BULLET_HOLDER = "[BulletHolder]";
+    public const string EFFECT_HOLDER = "[EffectHolder]";
 
     #region Inspector
 
@@ -52,7 +54,11 @@ public class BattleHackingStageManager : ControllableMonoBehavior
     private Transform m_BulletHolder = default;
     public Transform BulletHolder => m_BulletHolder;
 
-    [Header("Filed")]
+    [SerializeField]
+    private Transform m_EffectHolder = default;
+    public Transform EffectHolder => m_EffectHolder;
+
+    [Header("Field")]
 
     [SerializeField]
     private Vector2 m_MinLocalFieldPosition = default;
@@ -99,15 +105,34 @@ public class BattleHackingStageManager : ControllableMonoBehavior
     /// 指定した座標から、このマネージャが疑似的に表現するビューポート座標へと変換する。
     /// フロントオブジェクト専用。
     /// </summary>
-    public Vector2 CalcViewportPosFromWorldPosition(float x, float z)
+    public Vector2 CalcViewportPosFromWorldPosition(float x, float z, bool isScaleWithLocalField)
     {
         var min = MinLocalFieldPosition;
         var max = MaxLocalFieldPosition;
         var vX = MathUtility.CalcRate(min.x, max.x, x) - 0.5f;
         var vZ = MathUtility.CalcRate(min.y, max.y, z) - 0.5f;
-        vX *= (max.x - min.x) / 2;
-        vZ *= (max.y - min.y) / 2;
+
+        if (isScaleWithLocalField)
+        {
+            vX *= (max.x - min.x) / 2;
+            vZ *= (max.y - min.y) / 2;
+        }
+
         return new Vector2(vX, vZ);
+    }
+
+    /// <summary>
+    /// このマネージャが疑似的に表現するビューポート座標へと変換する。
+    /// フロントオブジェクト専用。
+    /// </summary>
+    public Vector2 CalcViewportPosFromWorldPosition(Transform t, bool isScaleWithLocalField)
+    {
+        if (t == null)
+        {
+            return new Vector2(0.5f, 0.5f);
+        }
+
+        return CalcViewportPosFromWorldPosition(t.position.x, t.position.z, isScaleWithLocalField);
     }
 
     public Transform GetHolder(E_HOLDER_TYPE holderType)
@@ -132,6 +157,10 @@ public class BattleHackingStageManager : ControllableMonoBehavior
             case E_HOLDER_TYPE.BULLET:
                 holder = BulletHolder;
                 holderName = BULLET_HOLDER;
+                break;
+            case E_HOLDER_TYPE.EFFECT:
+                holder = EffectHolder;
+                holderName = EFFECT_HOLDER;
                 break;
         }
 

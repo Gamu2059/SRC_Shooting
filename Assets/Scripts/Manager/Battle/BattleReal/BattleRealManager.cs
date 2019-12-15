@@ -23,6 +23,7 @@ public class BattleRealManager : ControllableObject
     public BattleRealEnemyManager EnemyManager { get; private set; }
     public BattleRealBulletManager BulletManager { get; private set; }
     public BattleRealItemManager ItemManager { get; private set; }
+    public BattleRealEffectManager EffectManager { get; private set; }
     public BattleRealCollisionManager CollisionManager { get; private set; }
     public BattleRealCameraManager CameraManager { get; private set; }
 
@@ -110,6 +111,15 @@ public class BattleRealManager : ControllableObject
             m_OnEnd = EndOnDead,
         });
 
+        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.CHARGE_SHOT_PERFORMANCE)
+        {
+            m_OnStart = StartOnChargeShotPerformance,
+            m_OnUpdate = UpdateOnChargeShotPerformance,
+            m_OnLateUpdate = LateUpdateOnChargeShotPerformance,
+            m_OnFixedUpdate = FixedUpdateOnChargeShotPerformance,
+            m_OnEnd = EndOnChargeShotPerformance,
+        });
+
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE)
         {
             m_OnStart = StartOnBeforeBossBattlePerformance,
@@ -155,6 +165,15 @@ public class BattleRealManager : ControllableObject
             m_OnEnd = EndOnBeforeGameClearPerformance,
         });
 
+        m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE)
+        {
+            m_OnStart = StartOnBeginBossBattle,
+            m_OnUpdate = UpdateOnBeginBossBattle,
+            m_OnLateUpdate = LateUpdateOnBeginBossBattle,
+            m_OnFixedUpdate = FixedUpdateOnBeginBossBattle,
+            m_OnEnd = EndOnBeginBossBattle,
+        });
+
         m_StateMachine.AddState(new State<E_BATTLE_REAL_STATE>(E_BATTLE_REAL_STATE.GAME_CLEAR)
         {
             m_OnStart = StartOnGameClear,
@@ -190,6 +209,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager = new BattleRealEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
         ItemManager = new BattleRealItemManager(m_ParamSet.ItemManagerParamSet);
+        EffectManager = new BattleRealEffectManager();
         CollisionManager = new BattleRealCollisionManager();
         CameraManager = new BattleRealCameraManager();
 
@@ -201,6 +221,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnInitialize();
         BulletManager.OnInitialize();
         ItemManager.OnInitialize();
+        EffectManager.OnInitialize();
         CollisionManager.OnInitialize();
         CameraManager.OnInitialize();
 
@@ -211,6 +232,7 @@ public class BattleRealManager : ControllableObject
     {
         CameraManager.OnFinalize();
         CollisionManager.OnFinalize();
+        EffectManager.OnFinalize();
         ItemManager.OnFinalize();
         BulletManager.OnFinalize();
         EnemyManager.OnFinalize();
@@ -263,6 +285,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnStart();
         BulletManager.OnStart();
         ItemManager.OnStart();
+        EffectManager.OnStart();
         CollisionManager.OnStart();
         CameraManager.OnStart();
 
@@ -387,6 +410,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
         ItemManager.GotoPool();
+        EffectManager.GotoPool();
         CollisionManager.DestroyDrawingColliderMeshes();
 
         InputManager.OnUpdate();
@@ -397,6 +421,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
         ItemManager.OnUpdate();
+        EffectManager.OnUpdate();
         CameraManager.OnUpdate();
     }
 
@@ -409,6 +434,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
         ItemManager.OnLateUpdate();
+        EffectManager.OnLateUpdate();
         CameraManager.OnLateUpdate();
 
         // 衝突フラグクリア
@@ -453,6 +479,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
         ItemManager.OnFixedUpdate();
+        EffectManager.OnFixedUpdate();
         CameraManager.OnFixedUpdate();
     }
 
@@ -471,7 +498,14 @@ public class BattleRealManager : ControllableObject
         var battleData = DataManager.Instance.BattleData;
         if (battleData.PlayerLife < 1)
         {
-            BattleManager.Instance.GameOver();
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 1);
+            timer.SetTimeoutCallBack(() =>
+            {
+                timer = null;
+                BattleManager.Instance.GameOver();
+            });
+            TimerManager.Instance.RegistTimer(timer);
+            Time.timeScale = 0f;
         }
         else
         {
@@ -494,6 +528,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.GotoPool();
         BulletManager.GotoPool();
         ItemManager.GotoPool();
+        EffectManager.GotoPool();
         CollisionManager.DestroyDrawingColliderMeshes();
 
         //InputManager.OnUpdate();
@@ -504,6 +539,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnUpdate();
         BulletManager.OnUpdate();
         ItemManager.OnUpdate();
+        EffectManager.OnUpdate();
         CameraManager.OnUpdate();
     }
 
@@ -516,6 +552,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnLateUpdate();
         BulletManager.OnLateUpdate();
         ItemManager.OnLateUpdate();
+        EffectManager.OnLateUpdate();
         CameraManager.OnLateUpdate();
 
         // 衝突フラグクリア
@@ -540,6 +577,7 @@ public class BattleRealManager : ControllableObject
         EnemyManager.OnFixedUpdate();
         BulletManager.OnFixedUpdate();
         ItemManager.OnFixedUpdate();
+        EffectManager.OnFixedUpdate();
         CameraManager.OnFixedUpdate();
     }
 
@@ -553,12 +591,65 @@ public class BattleRealManager : ControllableObject
 
     #endregion
 
+    #region Charge Shot Performance State
+
+    private void StartOnChargeShotPerformance()
+    {
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.3f);
+        timer.SetTimeoutCallBack(() =>
+        {
+            timer.DestroyTimer();
+            RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+        });
+        TimerManager.Instance.RegistTimer(timer);
+
+        EffectManager.PauseAllEffect();
+
+        var battleManager = BattleManager.Instance;
+        var player = PlayerManager.Player;
+        var centerPos = battleManager.BattleRealStageManager.CalcViewportPosFromWorldPosition(player.transform, false);
+
+        // StageManagerは原点が中央にあるため、原点をずらす
+        centerPos += Vector2.one * 0.5f;
+
+        battleManager.BattleRealUiManager.FrontViewEffect.PlayEffect(centerPos);
+    }
+
+    private void UpdateOnChargeShotPerformance()
+    {
+
+    }
+
+    private void LateUpdateOnChargeShotPerformance()
+    {
+
+    }
+
+    private void FixedUpdateOnChargeShotPerformance()
+    {
+
+    }
+
+    private void EndOnChargeShotPerformance()
+    {
+        var battleManager = BattleManager.Instance;
+        battleManager.BattleRealUiManager.FrontViewEffect.StopEffect();
+
+        EffectManager.ResumeAllEffect();
+        PlayerManager.ChargeShot();
+    }
+
+    #endregion
+
     #region Before Boss Battle Performance State
 
+    /// <summary>
+    /// ボス戦前の演出の処理
+    /// </summary>
     private void StartOnBeforeBossBattlePerformance()
     {
-        EnemyGroupManager.CreateBossGroup();
-        RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+        // ボス戦移行は、本来はEvent関連で行う
+        BattleManager.Instance.BossBattleStart();
     }
 
     private void UpdateOnBeforeBossBattlePerformance()
@@ -573,10 +664,42 @@ public class BattleRealManager : ControllableObject
     {
     }
 
+    /// <summary>
+    /// ボス戦前の演出が終わって、ボス戦に突入する直前の処理
+    /// </summary>
     private void EndOnBeforeBossBattlePerformance()
     {
-        var bossBgmName = BattleManager.Instance.ParamSet.BgmParamSet.BossBgmName;
-        AudioManager.Instance.PlayBgm(bossBgmName);
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(true);
+    }
+
+    #endregion
+
+    #region Begin Boss Battle State
+
+    private void StartOnBeginBossBattle()
+    {
+        EnemyGroupManager.CreateBossGroup();
+        RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+    }
+
+    private void UpdateOnBeginBossBattle()
+    {
+
+    }
+
+    private void LateUpdateOnBeginBossBattle()
+    {
+
+    }
+
+    private void FixedUpdateOnBeginBossBattle()
+    {
+
+    }
+
+    private void EndOnBeginBossBattle()
+    {
+
     }
 
     #endregion
@@ -713,24 +836,93 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGameClear()
     {
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
+        PlayerManager.StopChargeShot();
 
+        BattleManager.Instance.BattleRealUiManager.PlayGameClearAnimation();
+        var hideViewWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
+        hideViewWaitTimer.SetTimeoutCallBack(() =>
+        {
+            BattleManager.Instance.BattleRealUiManager.PlayMainViewHideAnimation();
+            var resultWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
+            resultWaitTimer.SetTimeoutCallBack(() =>
+            {
+                BattleManager.Instance.BattleRealUiManager.DisplayResult();
+            });
+            TimerManager.Instance.RegistTimer(resultWaitTimer);
+        });
+        TimerManager.Instance.RegistTimer(hideViewWaitTimer);
     }
 
     private void UpdateOnGameClear()
     {
+        // 消滅の更新
+        EnemyGroupManager.GotoPool();
+        EnemyManager.GotoPool();
+        BulletManager.GotoPool();
+        ItemManager.GotoPool();
+        EffectManager.GotoPool();
+        CollisionManager.DestroyDrawingColliderMeshes();
+
+        RealTimerManager.OnUpdate();
+        EventManager.OnUpdate();
+        EnemyGroupManager.OnUpdate();
+        EnemyManager.OnUpdate();
+        BulletManager.OnUpdate();
+        ItemManager.OnUpdate();
+        EffectManager.OnUpdate();
+        CameraManager.OnUpdate();
     }
 
     private void LateUpdateOnGameClear()
     {
+        RealTimerManager.OnLateUpdate();
+        EventManager.OnLateUpdate();
+        EnemyGroupManager.OnLateUpdate();
+        EnemyManager.OnLateUpdate();
+        BulletManager.OnLateUpdate();
+        ItemManager.OnLateUpdate();
+        EffectManager.OnLateUpdate();
+        CameraManager.OnLateUpdate();
+
+        // 衝突フラグクリア
+        PlayerManager.ClearColliderFlag();
+        EnemyManager.ClearColliderFlag();
+        BulletManager.ClearColliderFlag();
+        ItemManager.ClearColliderFlag();
+
+        // 衝突情報の更新
+        PlayerManager.UpdateCollider();
+        EnemyManager.UpdateCollider();
+        BulletManager.UpdateCollider();
+        ItemManager.UpdateCollider();
+
+        // 衝突判定処理
+        CollisionManager.CheckCollision();
+        CollisionManager.DrawCollider();
+
+        // 衝突処理
+        PlayerManager.ProcessCollision();
+        EnemyManager.ProcessCollision();
+        BulletManager.ProcessCollision();
+        ItemManager.ProcessCollision();
     }
 
     private void FixedUpdateOnGameClear()
     {
+        RealTimerManager.OnFixedUpdate();
+        EventManager.OnFixedUpdate();
+        PlayerManager.OnFixedUpdate();
+        EnemyGroupManager.OnFixedUpdate();
+        EnemyManager.OnFixedUpdate();
+        BulletManager.OnFixedUpdate();
+        ItemManager.OnFixedUpdate();
+        EffectManager.OnFixedUpdate();
+        CameraManager.OnFixedUpdate();
     }
 
     private void EndOnGameClear()
     {
-
     }
 
     #endregion
@@ -739,7 +931,9 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnGameOver()
     {
-
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(false);
+        PlayerManager.StopChargeShot();
+        PlayerManager.SetPlayerActive(false);
     }
 
     private void UpdateOnGameOver()
@@ -765,7 +959,8 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnEnd()
     {
-
+        AudioManager.Instance.StopAllBgm();
+        AudioManager.Instance.StopAllSe();
     }
 
     private void UpdateOnEnd()

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06df5e708ce98954f92c5b1a8fafd6cc, type: 3}
+  m_Name: stage_common.battle_hacking_bullet
+  m_EditorClassIdentifier: 
+  m_MinOffsetFieldPosition: {x: -0.1, y: -0.1}
+  m_MaxOffsetFieldPosition: {x: 0.1, y: 0.1}
+  m_BulletDestroyEffectParam: {fileID: 11400000, guid: f5cd344032af9da48837c019e3f1fe9f,
+    type: 2}

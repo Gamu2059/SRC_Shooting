@@ -22,7 +22,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     #region Field
 
-    private BattleRealEnemyManagerParamSet m_ParamSet;
+    public BattleRealEnemyManagerParamSet ParamSet { get; private set; }
 
     private Transform m_EnemyEvacuationHolder;
 
@@ -34,11 +34,12 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// UPDATE状態の敵を保持するリスト。
     /// </summary>
-    private List<BattleRealEnemyController> m_UpdateEnemies;
-    public List<BattleRealEnemyController> Enemies => m_UpdateEnemies;
+    public List<BattleRealEnemyController> Enemies { get; private set; }
 
-    private List<BattleRealEnemyController> m_BossEnemies;
-    public List<BattleRealEnemyController> BossEnemies => m_BossEnemies;
+    /// <summary>
+    /// UPDATE状態の敵の中でもボスだけを保持するリスト。
+    /// </summary>
+    public List<BattleRealEnemyController> BossEnemies { get; private set; }
 
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
@@ -56,7 +57,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     public BattleRealEnemyManager(BattleRealEnemyManagerParamSet paramSet)
     {
-        m_ParamSet = paramSet;
+        ParamSet = paramSet;
     }
 
     #region Game Cycle
@@ -66,7 +67,8 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         base.OnInitialize();
 
         m_StandbyEnemies = new List<BattleRealEnemyController>();
-        m_UpdateEnemies = new List<BattleRealEnemyController>();
+        Enemies = new List<BattleRealEnemyController>();
+        BossEnemies = new List<BattleRealEnemyController>();
         m_GotoPoolEnemies = new List<BattleRealEnemyController>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
     }
@@ -109,7 +111,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         GotoUpdateEnemy();
 
         // Update処理
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -123,7 +125,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     public override void OnLateUpdate()
     {
         // LateUpdate処理
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -137,7 +139,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     public override void OnFixedUpdate()
     {
         // FixedUpdate処理
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -155,7 +157,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     public void ClearColliderFlag()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -168,7 +170,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     public void UpdateCollider()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -181,7 +183,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     public void ProcessCollision()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             if (enemy == null)
             {
@@ -210,7 +212,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     private void Register(BattleRealEnemyController enemy)
     {
-        if (enemy == null || m_StandbyEnemies.Contains(enemy) || m_UpdateEnemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
+        if (enemy == null || m_StandbyEnemies.Contains(enemy) || Enemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
         {
             return;
         }
@@ -249,7 +251,12 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
             }
 
             enemy.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
-            m_UpdateEnemies.Add(enemy);
+            Enemies.Add(enemy);
+
+            if (enemy.IsBoss)
+            {
+                BossEnemies.Add(enemy);
+            }
         }
 
         m_StandbyEnemies.Clear();
@@ -277,7 +284,12 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
             enemy.transform.SetParent(m_EnemyEvacuationHolder);
 
             m_GotoPoolEnemies.RemoveAt(idx);
-            m_UpdateEnemies.Remove(enemy);
+            Enemies.Remove(enemy);
+
+            if (enemy.IsBoss)
+            {
+                BossEnemies.Remove(enemy);
+            }
 
             var poolId = enemy.GetLookId();
             if (!m_PoolEnemies.ContainsKey(poolId))
@@ -426,12 +438,12 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// </summary>
     public void DestroyAllEnemy()
     {
-        foreach (var enemy in m_UpdateEnemies)
+        foreach (var enemy in Enemies)
         {
             DestroyEnemy(enemy);
         }
 
-        m_UpdateEnemies.Clear();
+        Enemies.Clear();
     }
 
     /// <summary>
@@ -445,8 +457,8 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        minPos += m_ParamSet.MinOffsetFieldPosition;
-        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+        minPos += ParamSet.MinOffsetFieldPosition;
+        maxPos += ParamSet.MaxOffsetFieldPosition;
 
         var factX = (maxPos.x - minPos.x) * x + minPos.x;
         var factZ = (maxPos.y - minPos.y) * y + minPos.y;
@@ -468,8 +480,8 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        minPos += m_ParamSet.MinOffsetFieldPosition;
-        maxPos += m_ParamSet.MaxOffsetFieldPosition;
+        minPos += ParamSet.MinOffsetFieldPosition;
+        maxPos += ParamSet.MaxOffsetFieldPosition;
 
         var pos = enemy.transform.position;
 

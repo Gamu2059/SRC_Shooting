@@ -13,12 +13,20 @@ MonoBehaviour:
   m_Name: stage1_003_paras_l_lv2.generate
   m_EditorClassIdentifier: 
   m_Hp: 150
-  m_Score: 1000
-  m_ItemCreateParam:
+  m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+    type: 2}
+  m_DamageEffectDuration: 0.01
+  m_DefeatScore: 1000
+  m_DefeatItemParam:
     ItemSpreadParams:
-    - Type: 0
-      Num: 10
+    - Type: 6
+      Num: 5
       Point: 100
-      SpreadRadius: 0.2
-    CenterCreateItemType: 7
+      SpreadRadius: 0.3
+    CenterCreateItemType: 0
   m_DefeatEvents: []
+  m_DefeatSequentialEffect:
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: b2c42e67000a0a5438928542ee3c2dfe, type: 2}
+  m_DefeatHideTime: 0

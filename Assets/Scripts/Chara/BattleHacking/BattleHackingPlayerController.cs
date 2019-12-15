@@ -47,7 +47,7 @@ public class BattleHackingPlayerController : CommandCharaController
             return;
         }
 
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hack_Shot01");
+        AudioManager.Instance.Play(BattleHackingPlayerManager.Instance.ParamSet.ShotSe);
 
         var shotParam = new CommandBulletShotParam(this);
         for (int i = 0; i < m_ShotPositions.Length; i++)
@@ -98,7 +98,13 @@ public class BattleHackingPlayerController : CommandCharaController
         }
 
         base.Dead();
-        AudioManager.Instance.PlaySe(AudioManager.E_SE_GROUP.PLAYER, "SE_Player_Hit");
+
+        var paramSet = BattleHackingPlayerManager.Instance.ParamSet;
+
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
+        BattleHackingEffectManager.Instance.CreateEffect(paramSet.DeadEffectParam, transform);
         BattleHackingManager.Instance.DeadPlayer();
+
+        gameObject.SetActive(false);
     }
 }

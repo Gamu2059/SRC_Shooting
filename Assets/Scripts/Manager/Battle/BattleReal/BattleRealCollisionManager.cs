@@ -14,6 +14,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         CheckCollisionBulletToChara();
         CheckEnemyToPlayer();
         CheckPlayerToItem();
+        CheckBulletToBullet();
     }
 
     /// <summary>
@@ -55,7 +56,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
             return Vector2.one / 2f;
         }
 
-        return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
+        return BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y, true);
     }
 
     /// <summary>
@@ -67,10 +68,8 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         var player = BattleRealPlayerManager.Instance.Player;
         var enemies = BattleRealEnemyManager.Instance.Enemies;
 
-        for (int i = 0; i < bullets.Count; i++)
+        foreach (var bullet in bullets)
         {
-            var bullet = bullets[i];
-
             // UPDATE状態にないものは飛ばす
             if (bullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
             {
@@ -89,10 +88,8 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
             }
             else
             {
-                for (int j = 0; j < enemies.Count; j++)
+                foreach (var enemy in enemies)
                 {
-                    var enemy = enemies[j];
-
                     // UPDATE状態にないものは飛ばす
                     if (enemy.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
                     {
@@ -119,9 +116,8 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         var player = BattleRealPlayerManager.Instance.Player;
         var enemies = BattleRealEnemyManager.Instance.Enemies;
 
-        for (int i = 0; i < enemies.Count; i++)
+        foreach (var enemy in enemies)
         {
-            var enemy = enemies[i];
             // UPDATE状態にないものは飛ばす
             if (enemy.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
             {
@@ -158,10 +154,8 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
         var items = BattleRealItemManager.Instance.Items;
         var player = BattleRealPlayerManager.Instance.Player;
 
-        for (int i = 0; i < items.Count; i++)
+        foreach (var item in items)
         {
-            var item = items[i];
-
             // UPDATE状態にないものは飛ばす
             if (item.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
             {
@@ -175,6 +169,48 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
                 item.SufferChara(player, attackData, targetData, hitPosList);
                 player.HitItem(item, attackData, targetData, hitPosList);
             });
+        }
+    }
+
+    /// <summary>
+    /// 弾から弾への衝突判定を行う。
+    /// </summary>
+    private void CheckBulletToBullet()
+    {
+        var playerBullets = BattleRealBulletManager.Instance.PlayerBullets;
+        var enemyBullets = BattleRealBulletManager.Instance.EnemyBullets;
+
+        // プレイヤーの弾から敵の弾へ
+        // 基本的に弾から弾へ当たるシチュエーションは、プレイヤーの弾から敵の弾へというものしかないはず
+        foreach (var playerBullet in playerBullets)
+        {
+            // UPDATE状態にないものは飛ばす
+            if (playerBullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE) {
+                continue;
+            }
+
+            // 当たらないなら飛ばす
+            if (!playerBullet.CanHitBullet())
+            {
+                continue;
+            }
+
+            foreach (var enemyBullet in enemyBullets)
+            {
+                // UPDATE状態にないものは飛ばす
+                if (enemyBullet.GetCycle() != E_POOLED_OBJECT_CYCLE.UPDATE)
+                {
+                    continue;
+                }
+
+                Collision.CheckCollide(playerBullet, enemyBullet, (attackData, targetData, hitPosList) =>
+                {
+                    attackData.IsCollide = true;
+                    targetData.IsCollide = true;
+                    enemyBullet.SufferBullet(playerBullet, attackData, targetData, hitPosList);
+                    playerBullet.HitBullet(enemyBullet, attackData, targetData, hitPosList);
+                });
+            }
         }
     }
 }

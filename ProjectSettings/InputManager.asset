@@ -86,11 +86,11 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Bomb
+    m_Name: Charge Shot
     descriptiveName: "\u30DC\u30E0\u3092\u6483\u3064"
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f
+    positiveButton: c
     altNegativeButton: 
     altPositiveButton: r
     gravity: 1000
@@ -220,7 +220,7 @@ InputManager:
     negativeButton: 
     positiveButton: joystick button 2
     altNegativeButton: 
-    altPositiveButton: joystick button 4
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

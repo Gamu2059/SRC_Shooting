@@ -48,7 +48,7 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
             return Vector2.one / 2f;
         }
 
-        return BattleHackingStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y);
+        return BattleHackingStageManager.Instance.CalcViewportPosFromWorldPosition(worldPos.x, worldPos.y, true);
     }
 
     /// <summary>

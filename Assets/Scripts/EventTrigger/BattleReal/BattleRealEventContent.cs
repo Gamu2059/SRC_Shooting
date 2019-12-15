@@ -56,14 +56,24 @@ public struct BattleRealEventContent
         GOTO_BOSS_EVENT,
 
         /// <summary>
-        /// ゲームクリア
+        /// ボス戦開始
         /// </summary>
-        GAME_CLEAR,
+        BOSS_BATTLE_START,
+
+        /// <summary>
+        /// ゲームクリア(救出なし)
+        /// </summary>
+        GAME_CLEAR_WITHOUT_HACKING_COMPLETE,
 
         /// <summary>
         /// ゲームオーバー
         /// </summary>
         GAME_OVER,
+
+        /// <summary>
+        /// ゲームクリア(救出あり)
+        /// </summary>
+        GAME_CLEAR_WITH_HACKING_COMPLETE,
     }
 
     /// <summary>
@@ -112,7 +122,7 @@ public struct BattleRealEventContent
 
     [Header("CONTROL_BGM")]
 
-    public ControlBgmParam[] ControlBgmParams;
+    public ControlSoundParam[] ControlBgmParams;
 
     [Header("OPERATE_VARIABLE")]
 
