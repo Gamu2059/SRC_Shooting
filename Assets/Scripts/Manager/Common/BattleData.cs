@@ -81,6 +81,11 @@ public class BattleData
     /// </summary>
     public float MaxEnergyCharge { get; private set; }
 
+    /// <summary>
+    /// ハッキングに成功した時のスコア単価
+    /// </summary>
+    public float HackingSuccessBonus { get; private set; }
+
     #endregion
 
     public BattleData(BattleRealPlayerLevelParamSet playerLevelParamSet)
@@ -105,6 +110,7 @@ public class BattleData
         MaxLevel = defData.MaxLevel;
         MaxEnergyCount = defData.MaxEnergyCount;
         MaxEnergyCharge = defData.MaxEnergyCharge;
+        HackingSuccessBonus = defData.HackingSuccessBonus;
 
         // 初期値が共通なものを初期化
         BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore;
@@ -282,14 +288,20 @@ public class BattleData
 
     #region Hacking Succeed Count
 
-    public void ResetHackingSucceedCount()
+    public void OnHackingResult(bool isHackingSuccess)
     {
-        HackingSucceedCount = 0;
-    }
-
-    public void IncreaseHackingSucceedCount()
-    {
-        HackingSucceedCount++;
+        if (isHackingSuccess)
+        {
+            HackingSucceedCount++;
+            if (HackingSucceedCount >= 1)
+            {
+                AddScore(HackingSuccessBonus * HackingSucceedCount);
+            }
+        }
+        else
+        {
+            HackingSucceedCount = 0;
+        }
     }
 
     #endregion

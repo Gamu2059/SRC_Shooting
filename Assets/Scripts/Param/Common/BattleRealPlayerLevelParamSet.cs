@@ -87,6 +87,10 @@ public class BattleCommonDefData
     [SerializeField]
     private float m_MaxEnergyCharge;
     public float MaxEnergyCharge => m_MaxEnergyCharge;
+
+    [SerializeField]
+    private float m_HackingSuccessBonus;
+    public float HackingSuccessBonus => m_HackingSuccessBonus;
 }
 
 /// <summary>

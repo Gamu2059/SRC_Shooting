@@ -84,8 +84,7 @@ public class BattleHackingCameraController : ControllableMonoBehavior
             }
             else
             {
-                m_IsShaking = false;
-                m_Camera.transform.localPosition = Vector3.zero;
+                StopShake();
             }
         }
     }
@@ -99,5 +98,11 @@ public class BattleHackingCameraController : ControllableMonoBehavior
         m_Freq = shakeParam.Freq;
         m_Dec = shakeParam.Dec;
         m_Duration = shakeParam.Duration;
+    }
+
+    public void StopShake()
+    {
+        m_IsShaking = false;
+        m_Camera.transform.localPosition = Vector3.zero;
     }
 }

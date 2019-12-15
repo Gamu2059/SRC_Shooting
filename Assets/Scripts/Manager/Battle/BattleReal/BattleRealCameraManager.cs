@@ -206,4 +206,12 @@ public class BattleRealCameraManager : ControllableObject
         camera = GetCameraController(E_CAMERA_TYPE.FRONT_CAMERA);
         camera.Shake(shakeParam);
     }
+
+    public void StopShake()
+    {
+        var camera = GetCameraController(E_CAMERA_TYPE.BACK_CAMERA);
+        camera.StopShake();
+        camera = GetCameraController(E_CAMERA_TYPE.FRONT_CAMERA);
+        camera.StopShake();
+    }
 }
