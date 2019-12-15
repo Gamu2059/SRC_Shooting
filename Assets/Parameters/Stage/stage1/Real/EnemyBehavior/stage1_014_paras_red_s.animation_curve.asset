@@ -64,11 +64,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 0.3
-  m_ShotStop: 5
+  m_ShotOffset: 0.9
+  m_ShotStop: 0.2
   m_ShotParam:
-    Interval: 0.5
-    Num: 1
-    Angle: 0
-    IsPlayerLook: 0
+    Interval: 0.2
+    Num: 6
+    Angle: 60
+    IsPlayerLook: 1
   m_IsStartAnimationOnStart: 1
