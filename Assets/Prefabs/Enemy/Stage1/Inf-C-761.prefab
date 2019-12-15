@@ -753,6 +753,7 @@ GameObject:
   - component: {fileID: 5356588543939126763}
   - component: {fileID: 4466927479875354137}
   - component: {fileID: 2100815176070908184}
+  - component: {fileID: 7731525274729375605}
   m_Layer: 11
   m_Name: Inf-C-761
   m_TagString: Untagged
@@ -826,6 +827,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Renderers:
   - {fileID: 8312071786650118268}
+--- !u!114 &7731525274729375605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7053677138965845869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e9878ac4b92a44bb8d84fc9f71f601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetAnimator: {fileID: 8312071786102192054}
+  m_Leap: 10
 --- !u!1 &7542114461145889742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1019,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 931365954, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
       propertyPath: m_Name
-      value: INF-C-761 (1)
+      value: INF-C-761
       objectReference: {fileID: 0}
     - target: {fileID: 931365954, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
       propertyPath: m_Layer
@@ -1066,6 +1081,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 931365955, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 12d220abf61029e47b13e95a25125495, type: 2}
     - target: {fileID: 393927559, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -1077,6 +1096,14 @@ PrefabInstance:
     - target: {fileID: 523859382, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090107747, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.40111724
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090107747, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5001043
       objectReference: {fileID: 0}
     - target: {fileID: 637719293, guid: 963df8ac45f28174b99f208a2e35802a, type: 3}
       propertyPath: m_Layer
@@ -1175,6 +1202,12 @@ PrefabInstance:
 --- !u!137 &8312071786650118268 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 393927561, guid: 963df8ac45f28174b99f208a2e35802a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8312071786831901685}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8312071786102192054 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 931365955, guid: 963df8ac45f28174b99f208a2e35802a,
     type: 3}
   m_PrefabInstance: {fileID: 8312071786831901685}
   m_PrefabAsset: {fileID: 0}
