@@ -25,9 +25,10 @@ public class FrontViewEffect : ControllableMonoBehavior
 
     #region Field
 
-    private Material m_UseInverseEffect;
-    private bool m_IsAnimatingInverseEffect;
-    private float m_InverseEffectTimeCount;
+    private float m_Duration;
+    private Material m_UseEffect;
+    private bool m_IsAnimating;
+    private float m_TimeCount;
 
     #endregion
 
@@ -35,12 +36,13 @@ public class FrontViewEffect : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_UseInverseEffect = Instantiate(m_InverseEffect);
+        m_UseEffect = Instantiate(m_InverseEffect);
+        m_Duration = m_InverseEffectRadiusCurve.Duration();
     }
 
     public override void OnFinalize()
     {
-        Destroy(m_UseInverseEffect);
+        Destroy(m_UseEffect);
 
         base.OnFinalize();
     }
@@ -49,39 +51,38 @@ public class FrontViewEffect : ControllableMonoBehavior
     {
         base.OnUpdate();
 
-        if (m_IsAnimatingInverseEffect)
+        if (m_IsAnimating)
         {
-            var maxTime = m_InverseEffectRadiusCurve.keys[m_InverseEffectRadiusCurve.keys.Length - 1].time;
-            if (m_InverseEffectTimeCount > maxTime)
+            if (m_TimeCount > m_Duration)
             {
-                StopInverseEffect();
+                StopEffect();
             }
             else
             {
-                var radius = m_InverseEffectRadiusCurve.Evaluate(m_InverseEffectTimeCount);
+                var radius = m_InverseEffectRadiusCurve.Evaluate(m_TimeCount);
                 m_RawImage.material.SetFloat("_Radius", radius);
-                m_InverseEffectTimeCount += Time.deltaTime;
+                m_TimeCount += Time.deltaTime;
             }
         }
     }
 
-    public void PlayInverseEffect(Vector2 centerPos)
+    public void PlayEffect(Vector2 centerPos)
     {
-        if (m_IsAnimatingInverseEffect)
+        if (m_IsAnimating)
         {
             return;
         }
 
-        m_IsAnimatingInverseEffect = true;
-        m_InverseEffectTimeCount = 0;
-        m_RawImage.material = m_UseInverseEffect;
+        m_IsAnimating = true;
+        m_TimeCount = 0;
+        m_RawImage.material = m_UseEffect;
         m_RawImage.material.SetFloat("_PosX", centerPos.x);
         m_RawImage.material.SetFloat("_PosY", centerPos.y);
     }
 
-    public void StopInverseEffect()
+    public void StopEffect()
     {
-        m_IsAnimatingInverseEffect = false;
+        m_IsAnimating = false;
         m_RawImage.material.SetFloat("_Radius", 100);
     }
 }

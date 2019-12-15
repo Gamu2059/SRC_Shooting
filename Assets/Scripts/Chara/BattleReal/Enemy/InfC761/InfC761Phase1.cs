@@ -44,7 +44,7 @@ public class InfC761Phase1 : BattleRealBossBehavior
 
     private E_SHOT_PHASE m_ShotPhase;
 
-    public InfC761Phase1(BattleRealEnemyController enemy, BattleRealBossBehaviorParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase1(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase1ParamSet;
     }

@@ -94,8 +94,6 @@ public class IconGageIndicator : ControllableMonoBehavior
                 if(b == null){
                     return 0;
                 }
-                Debug.Log("NowDownHP = " + b.NowDownHp);
-                Debug.Log("MaxDownHP = " + b.MaxDownHp);
                 return b.NowDownHp/b.MaxDownHp;
         }
 

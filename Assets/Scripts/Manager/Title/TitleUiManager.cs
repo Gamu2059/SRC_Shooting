@@ -36,7 +36,7 @@ public class TitleUiManager : ControllableMonoBehavior
 
 	private void GotoMenu()
 	{
-        AudioManager.Instance.StopAllBgm();
+        DataManager.Instance.BattleData.ResetData(E_STAGE.NORMAL_1);
         AudioManager.Instance.Play(m_StartSe);
         BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.STAGE1 );
 	}

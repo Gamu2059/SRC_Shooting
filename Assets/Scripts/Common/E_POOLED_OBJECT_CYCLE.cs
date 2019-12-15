@@ -18,6 +18,11 @@ public enum E_POOLED_OBJECT_CYCLE
     UPDATE,
 
     /// <summary>
+    /// プール準備状態になることを待っている状態。
+    /// </summary>
+    STANDBY_CHECK_POOL,
+
+    /// <summary>
     /// プールされる準備状態。
     /// </summary>
     STANDBY_POOL,

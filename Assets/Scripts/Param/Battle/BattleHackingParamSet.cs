@@ -26,4 +26,14 @@ public class BattleHackingParamSet : ScriptableObject
     [SerializeField]
     private BattleHackingLevelParamSet[] m_LevelParamSets;
     public BattleHackingLevelParamSet[] LevelParamSets => m_LevelParamSets;
+
+    [Header("カメラ シェイク")]
+
+    [SerializeField]
+    private CameraShakeParam m_DestroyBulletShakeParam;
+    public CameraShakeParam DestroyBulletShakeParam => m_DestroyBulletShakeParam;
+
+    [SerializeField]
+    private CameraShakeParam m_DestroyBossShakeParam;
+    public CameraShakeParam DestroyBossShakeParam => m_DestroyBossShakeParam;
 }

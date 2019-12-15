@@ -32,11 +32,12 @@ public class HackerController : BattleRealPlayerController
 
     private float shotDelay;
 
-    private BattleRealEffectController m_ChargeEffect;
+    private BattleCommonEffectController m_ChargeEffect;
     private BulletController m_Laser;
     private BulletController m_Bomb;
 
     private bool m_IsExistEnergyCharge;
+    private bool m_IsCharging;
 
     #endregion
 
@@ -46,6 +47,7 @@ public class HackerController : BattleRealPlayerController
 
         SetEnableCollider(true);
         m_Shield.gameObject.SetActive(false);
+        m_IsCharging = false;
     }
 
     public override void OnUpdate()
@@ -60,23 +62,47 @@ public class HackerController : BattleRealPlayerController
 
         if (shotDelay >= m_ShotInterval)
         {
-            var level = DataManager.Instance.BattleData.Level;
+            var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
 
             for (int i = 0; i < m_MainShotPosition.Length; i++)
             {
                 var shotParam = new BulletShotParam(this);
                 shotParam.Position = m_MainShotPosition[i].transform.position;
                 var bullet = BulletController.ShotBullet(shotParam);
-                // 現状は、レベルの値を攻撃力にしてみる
-                bullet.SetNowDamage(level + 1, E_RELATIVE.ABSOLUTE);
+
+                // 現状は、レーザータイプの通常弾だけを使う
+                bullet.SetNowDamage(levelParam.LaserTypeShotDamage);
+
+                // ダウンダメージを設定する
+                switch (bullet)
+                {
+                    case HackerBullet hackerBullet:
+                        hackerBullet.SetNowDownDamage(levelParam.LaserTypeShotDownDamage);
+                        break;
+                }
             }
             shotDelay = 0;
+        }
+    }
+
+    public override void ChargeUpdate()
+    {
+        base.ChargeUpdate();
+
+        if (!m_IsCharging)
+        {
+            ChargeStart();
         }
     }
 
     public override void ChargeStart()
     {
         base.ChargeStart();
+
+        if (IsUsingChargeShot())
+        {
+            return;
+        }
 
         var battleData = DataManager.Instance.BattleData.EnergyCount;
         m_IsExistEnergyCharge = battleData > 0;
@@ -86,17 +112,13 @@ public class HackerController : BattleRealPlayerController
             return;
         }
 
+        m_IsCharging = true;
+
         if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
         {
-            AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ChargeSe);
-
             var paramSet = BattleRealPlayerManager.Instance.ParamSet;
-            m_ChargeEffect = BattleRealEffectManager.Instance.GetPoolingBullet(paramSet.ChargePrefab, transform);
-            if (m_ChargeEffect != null)
-            {
-                m_ChargeEffect.IsAllowOwner = true;
-                m_ChargeEffect.RelatedAllowPos = paramSet.ChargeRelatedPos;
-            }
+            AudioManager.Instance.Play(paramSet.ChargeSe);
+            m_ChargeEffect = BattleRealEffectManager.Instance.CreateEffect(paramSet.ChargeEffectParam, transform);
         }
     }
 
@@ -104,10 +126,12 @@ public class HackerController : BattleRealPlayerController
     {
         base.ChargeRelease();
 
-        if (!m_IsExistEnergyCharge)
+        if (IsUsingChargeShot() || !m_IsCharging || !m_IsExistEnergyCharge)
         {
             return;
         }
+
+        m_IsCharging = false;
 
         // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
         var playerManager = BattleRealPlayerManager.Instance;
@@ -128,6 +152,11 @@ public class HackerController : BattleRealPlayerController
     {
         base.ShotLaser();
 
+        if (IsUsingChargeShot())
+        {
+            return;
+        }
+
         if (m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
         {
             return;
@@ -135,21 +164,25 @@ public class HackerController : BattleRealPlayerController
 
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            m_ChargeEffect.DestoryEffect(true);
+            m_ChargeEffect.DestroyEffect(true);
         }
 
         var param = new BulletShotParam(this);
         param.Position = m_MainShotPosition[0].transform.position;
         m_Laser = BulletController.ShotBullet(param, true);
 
-        // 現状は、レベルの値を攻撃力にしてみる
-        var level = DataManager.Instance.BattleData.Level;
-        m_Laser.SetNowDamage(level + 1, E_RELATIVE.ABSOLUTE);
+        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
+        m_Laser.SetNowDamage(levelParam.LaserDamagePerSeconds, E_RELATIVE.ABSOLUTE);
     }
 
     public override void ShotBomb()
     {
         base.ShotBomb();
+
+        if (IsUsingChargeShot())
+        {
+            return;
+        }
 
         if (m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
         {
@@ -158,7 +191,7 @@ public class HackerController : BattleRealPlayerController
 
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
-            m_ChargeEffect.DestoryEffect(true);
+            m_ChargeEffect.DestroyEffect(true);
         }
 
         var param = new BulletShotParam(this);
@@ -166,9 +199,8 @@ public class HackerController : BattleRealPlayerController
         param.BulletParamIndex = 1;
         m_Bomb = BulletController.ShotBullet(param, true);
 
-        // 現状は、レベルの値を攻撃力にしてみる
-        var level = DataManager.Instance.BattleData.Level;
-        m_Bomb.SetNowDamage((level + 1) * 100, E_RELATIVE.ABSOLUTE);
+        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
+        m_Bomb.SetNowDamage(levelParam.BombDamage, E_RELATIVE.ABSOLUTE);
     }
 
     public override void SetInvinsible()
@@ -195,5 +227,38 @@ public class HackerController : BattleRealPlayerController
         // 被弾判定と無敵判定は反対の関係
         c.SetEnableCollider(m_Critical, isEnable);
         c.SetEnableCollider(m_Shield, !isEnable);
+    }
+
+    public bool IsUsingChargeShot()
+    {
+        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        return useLaser || useBomb;
+    }
+
+    public override void StopChargeShot()
+    {
+        base.StopChargeShot();
+
+        if (m_Laser != null)
+        {
+            m_Laser.DestroyBullet();
+            m_Laser = null;
+        }
+
+        if (m_Bomb != null)
+        {
+            m_Bomb.DestroyBullet();
+            m_Bomb = null;
+        }
+
+        if (m_ChargeEffect != null)
+        {
+            m_ChargeEffect.DestroyEffect(true);
+            m_ChargeEffect = null;
+        }
+
+        m_IsCharging = false;
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
     }
 }

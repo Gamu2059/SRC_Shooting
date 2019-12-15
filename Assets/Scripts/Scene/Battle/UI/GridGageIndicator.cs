@@ -103,7 +103,6 @@ public class GridGageIndicator : ControllableMonoBehavior
     {
         rate = Mathf.Clamp01(rate);
         var enableCount = Mathf.CeilToInt(rate * m_Grids.Length);
-        Debug.Log(m_ValueType + ", " + enableCount);
         for (int i = 0; i < m_Grids.Length; i++)
         {
             var grid = m_Grids[i];

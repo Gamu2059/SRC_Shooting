@@ -187,11 +187,23 @@ public class BattleRealPlayerController : CharaController
         }
 
         base.Dead();
+
+        StopChargeShot();
+
+        // 死亡SEは色々な処理の後にしておかないと、プレイヤーSEの停止に巻き込まれる可能性がある
         AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.DeadSe);
         BattleRealManager.Instance.DeadPlayer();
     }
 
     public virtual void SetInvinsible()
+    {
+
+    }
+
+    /// <summary>
+    /// チャージやチャージショットを強制的に終了させる。
+    /// </summary>
+    public virtual void StopChargeShot()
     {
 
     }

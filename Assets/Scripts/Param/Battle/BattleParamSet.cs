@@ -50,14 +50,6 @@ public class BattleParamSet : ScriptableObject
     private PlaySoundParam m_ToRealSe;
     public PlaySoundParam ToRealSe => m_ToRealSe;
 
-    [SerializeField]
-    private OperateAisacParam m_ToHackingAisac;
-    public OperateAisacParam ToHackingAisac => m_ToHackingAisac;
-
-    [SerializeField]
-    private OperateAisacParam m_ToRealAisac;
-    public OperateAisacParam ToRealAisac => m_ToRealAisac;
-
     [Header("Game Clear")]
 
     [SerializeField]

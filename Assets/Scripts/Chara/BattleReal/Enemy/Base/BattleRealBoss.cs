@@ -25,13 +25,17 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private const string DAMAGE_COLLIDER_NAME = "Damage Collider";
 
+    private const float DOWN_HEAL_TIME = 5f;
+    private const float HACKING_SUCCESS_TIME = 3f;
+
     #region Field
 
-    protected BattleRealBossParamSet m_BossParamSet;
+    protected BattleRealBossGenerateParamSet m_BossGenerateParamSet;
+    protected BattleRealBossBehaviorParamSet m_BossBehaviorParamSet;
 
     protected StateMachine<E_PHASE> m_StateMachine;
-    protected BattleRealBossBehaviorParamSet[] m_AttackParamSets;
-    protected BattleRealBossBehaviorParamSet[] m_DownParamSets;
+    protected BattleRealBossBehaviorUnitParamSet[] m_AttackParamSets;
+    protected BattleRealBossBehaviorUnitParamSet[] m_DownParamSets;
 
     protected List<BattleRealBossBehavior> m_AttackBehaviors;
     protected List<BattleRealBossBehavior> m_DownBehaviors;
@@ -41,10 +45,15 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected Transform m_DamageCollider;
 
+    protected BattleCommonEffectController m_DownEffect;
+    protected BattleCommonEffectController m_DownPlayerTriangleEffect;
+
     protected int m_AttackPhase;
     protected int m_DownPhase;
-    public float NowDownHp{get; protected set;}
-    public float MaxDownHp{get; protected set;}
+
+    public float NowDownHp { get; protected set; }
+    public float MaxDownHp { get; protected set; }
+
     protected int m_HackingSuccessCount;
     protected List<float> m_ChangeAttackHpRates;
 
@@ -54,12 +63,17 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         base.OnSetParamSet();
 
-        if (BehaviorParamSet is BattleRealBossParamSet paramSet)
+        if (GenerateParamSet is BattleRealBossGenerateParamSet generateParamSet)
         {
-            m_BossParamSet = paramSet;
-            m_AttackParamSets = paramSet.AttackParamSets;
-            m_DownParamSets = paramSet.DownParamSets;
-            m_ChangeAttackHpRates = paramSet.ChangeAttackHpRates;
+            m_BossGenerateParamSet = generateParamSet;
+        }
+
+        if (BehaviorParamSet is BattleRealBossBehaviorParamSet behaviorParamSet)
+        {
+            m_BossBehaviorParamSet = behaviorParamSet;
+            m_AttackParamSets = behaviorParamSet.AttackParamSets;
+            m_DownParamSets = behaviorParamSet.DownParamSets;
+            m_ChangeAttackHpRates = behaviorParamSet.ChangeAttackHpRates;
         }
     }
 
@@ -213,7 +227,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     #endregion
 
-    private BattleRealBossBehavior CreateBehavior(BattleRealBossBehaviorParamSet bossBehaviorParamSet)
+    private BattleRealBossBehavior CreateBehavior(BattleRealBossBehaviorUnitParamSet bossBehaviorParamSet)
     {
         if (bossBehaviorParamSet == null)
         {
@@ -235,7 +249,7 @@ public class BattleRealBoss : BattleRealEnemyController
             return null;
         }
 
-        var cstr = type.GetConstructor(new[] { typeof(BattleRealEnemyController), typeof(BattleRealBossBehaviorParamSet) });
+        var cstr = type.GetConstructor(new[] { typeof(BattleRealEnemyController), typeof(BattleRealBossBehaviorUnitParamSet) });
         if (cstr == null)
         {
             return null;
@@ -281,6 +295,49 @@ public class BattleRealBoss : BattleRealEnemyController
         m_StateMachine.Goto(state);
     }
 
+    /// <summary>
+    /// このボスのダウンHPを回復する。回復量は0より大きくなければ処理されない。
+    /// </summary>
+    public void RecoverDownHp(float recover)
+    {
+        if (recover <= 0)
+        {
+            return;
+        }
+
+        NowDownHp = Mathf.Clamp(NowDownHp + recover, 0, MaxDownHp);
+        OnRecoverDownHp();
+    }
+
+    protected virtual void OnRecoverDownHp()
+    {
+
+    }
+
+    /// <summary>
+    /// このボスのダウンHPを削る。ダメージ量は0より大きくなければ処理されない。
+    /// </summary>
+    public void DamageDownHp(float damage)
+    {
+        if (damage <= 0)
+        {
+            return;
+        }
+
+        NowDownHp = Mathf.Clamp(NowDownHp - damage, 0, MaxDownHp);
+        OnDamageDownHp();
+
+        if (NowDownHp <= 0)
+        {
+            RequestChangeState(E_PHASE.DOWN);
+        }
+    }
+
+    protected virtual void OnDamageDownHp()
+    {
+
+    }
+
     #region Start State
 
     private void StartOnStart()
@@ -290,7 +347,7 @@ public class BattleRealBoss : BattleRealEnemyController
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
         m_CurrentDown = m_DownBehaviors[m_DownPhase];
 
-        MaxDownHp = NowDownHp = m_BossParamSet.DownHp;
+        MaxDownHp = NowDownHp = m_BossBehaviorParamSet.DownHp;
         m_HackingSuccessCount = 0;
 
         transform.position = new Vector3(0, 0, 1);
@@ -355,18 +412,23 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnDown()
     {
-        GetCollider().SetEnableCollider(m_DamageCollider, false);
-        BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
 
-        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
-
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, DOWN_HEAL_TIME);
         timer.SetTimeoutCallBack(() =>
         {
-            timer = null;
+            DestroyTimer(DOWN_KEY);
             RequestChangeState(E_PHASE.ATTACK);
         });
         RegistTimer(DOWN_KEY, timer);
+
+        GetCollider().SetEnableCollider(m_DamageCollider, false);
+
+        BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
+        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
+
+        var effectManager = BattleRealEffectManager.Instance;
+        m_DownEffect = effectManager.CreateEffect(m_BossGenerateParamSet.DownEffectParam, transform);
+        m_DownPlayerTriangleEffect = effectManager.CreateEffect(m_BossGenerateParamSet.PlayerTriangleEffectParam, transform);
 
         m_CurrentDown?.OnStart();
     }
@@ -374,6 +436,9 @@ public class BattleRealBoss : BattleRealEnemyController
     private void UpdateOnDown()
     {
         m_CurrentDown?.OnUpdate();
+
+        NowDownHp += MaxDownHp * Time.deltaTime / DOWN_HEAL_TIME;
+        NowDownHp = Math.Min(NowDownHp, MaxDownHp);
     }
 
     private void LateUpdateOnDown()
@@ -388,6 +453,10 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void EndOnDown()
     {
+        m_DownEffect?.DestroyEffect(true);
+        m_DownPlayerTriangleEffect?.DestroyEffect(true);
+
+        NowDownHp = MaxDownHp;
         m_CurrentDown?.OnEnd();
     }
 
@@ -397,7 +466,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnHackingSuccess()
     {
-        if (m_HackingSuccessCount >= m_BossParamSet.HackingCompleteNum)
+        if (m_HackingSuccessCount >= m_BossBehaviorParamSet.HackingCompleteNum)
         {
             RequestChangeState(E_PHASE.RESCUE);
             return;
@@ -405,7 +474,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
         m_HackingSuccessCount++;
         DestroyTimer(DOWN_KEY);
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 5);
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, HACKING_SUCCESS_TIME);
         timer.SetTimeoutCallBack(() =>
         {
             DestroyTimer(HACKING_SUCCESS_KEY);
@@ -413,7 +482,7 @@ public class BattleRealBoss : BattleRealEnemyController
         });
         RegistTimer(HACKING_SUCCESS_KEY, timer);
 
-        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossParamSet.ItemParam);
+        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossBehaviorParamSet.ItemParam);
     }
 
     private void UpdateOnHackingSuccess()
@@ -444,7 +513,7 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         m_AttackPhase = Mathf.Min(m_AttackPhase + 1, m_AttackBehaviors.Count - 1);
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
-        NowDownHp = m_BossParamSet.DownHp;
+        NowDownHp = m_BossBehaviorParamSet.DownHp;
         RequestChangeState(E_PHASE.ATTACK);
     }
 
@@ -565,11 +634,14 @@ public class BattleRealBoss : BattleRealEnemyController
         if (colliderType == E_COLLIDER_TYPE.CRITICAL)
         {
             var currentState = m_StateMachine.CurrentState.Key;
-            NowDownHp -= 1;
-            if (NowDownHp <= 0 && currentState == E_PHASE.ATTACK)
+            if (currentState == E_PHASE.ATTACK)
             {
-                NowDownHp = m_BossParamSet.DownHp;
-                RequestChangeState(E_PHASE.DOWN);
+                switch (sufferData.OpponentObject)
+                {
+                    case HackerBullet hackerBullet:
+                        DamageDownHp(hackerBullet.GetNowDownDamage());
+                        break;
+                }
             }
         }
     }
@@ -618,5 +690,9 @@ public class BattleRealBoss : BattleRealEnemyController
                 RequestChangeState(E_PHASE.ATTACK);
             }
         }
+    }
+
+    public virtual void DestroyPerformance()
+    {
     }
 }

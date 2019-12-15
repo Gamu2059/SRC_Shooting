@@ -36,6 +36,9 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// </summary>
     public List<BattleRealEnemyController> Enemies { get; private set; }
 
+    /// <summary>
+    /// UPDATE状態の敵の中でもボスだけを保持するリスト。
+    /// </summary>
     public List<BattleRealEnemyController> BossEnemies { get; private set; }
 
     /// <summary>
@@ -65,6 +68,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
         m_StandbyEnemies = new List<BattleRealEnemyController>();
         Enemies = new List<BattleRealEnemyController>();
+        BossEnemies = new List<BattleRealEnemyController>();
         m_GotoPoolEnemies = new List<BattleRealEnemyController>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
     }
@@ -248,6 +252,11 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
             enemy.SetCycle(E_POOLED_OBJECT_CYCLE.UPDATE);
             Enemies.Add(enemy);
+
+            if (enemy.IsBoss)
+            {
+                BossEnemies.Add(enemy);
+            }
         }
 
         m_StandbyEnemies.Clear();
@@ -276,6 +285,11 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
             m_GotoPoolEnemies.RemoveAt(idx);
             Enemies.Remove(enemy);
+
+            if (enemy.IsBoss)
+            {
+                BossEnemies.Remove(enemy);
+            }
 
             var poolId = enemy.GetLookId();
             if (!m_PoolEnemies.ContainsKey(poolId))
