@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758b53089f2cd6d4896bda520f9f58c4, type: 3}
   m_Name: inf_c_761.battle_real_boss_generate
   m_EditorClassIdentifier: 
-  m_Hp: 10
+  m_Hp: 3000
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
   m_DefeatScore: 10000
   m_DefeatItemParam:
     ItemSpreadParams:
-    - Type: 6
+    - Type: 4
       Num: 20
-      Point: 100
+      Point: 200
+      SpreadRadius: 0.5
+    - Type: 5
+      Num: 5
+      Point: 1000
       SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_DefeatEvents:
@@ -59,8 +63,8 @@ MonoBehaviour:
   m_HackingCompleteNum: 3
   m_DownHpArray:
   - 100
-  - 100
-  - 100
+  - 150
+  - 200
   m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb, type: 2}
   m_PlayerTriangleEffectParam: {fileID: 11400000, guid: ed5997dcef785994a93b25d031fa9a6c,
     type: 2}
@@ -68,13 +72,25 @@ MonoBehaviour:
   m_HackingSuccessItemParam:
     ItemSpreadParams:
     - Type: 6
-      Num: 10
+      Num: 6
       Point: 200
+      SpreadRadius: 0.5
+    - Type: 4
+      Num: 6
+      Point: 100
       SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_RescueScore: 30000
   m_RescueItemParam:
-    ItemSpreadParams: []
+    ItemSpreadParams:
+    - Type: 4
+      Num: 20
+      Point: 200
+      SpreadRadius: 0.5
+    - Type: 5
+      Num: 5
+      Point: 1000
+      SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_RescueEvents:
   - ContentName: "\u6551\u51FA\u6570+1"
@@ -98,5 +114,13 @@ MonoBehaviour:
     CountStartTimePeriodNames: []
     CallScriptParams: []
   m_RescueSequentialEffect:
-    m_Params: []
-  m_RescueHideTime: 0
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: 97ad3ebef7cd188408d03a91a4129709, type: 2}
+    - Delay: 5
+      Effect: {fileID: 11400000, guid: 34a131c3b59bdf04794d478b70474ae5, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+  m_RescueHideTime: 5

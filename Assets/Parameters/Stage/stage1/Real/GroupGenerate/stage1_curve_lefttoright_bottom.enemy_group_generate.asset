@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38b2ba784fcdb384ebd5c4dcd92dab6b, type: 3}
-  m_Name: stage1_009.enemy_group_generate
+  m_Name: stage1_curve_lefttoright_bottom.enemy_group_generate
   m_EditorClassIdentifier: 
-  m_ViewPortPos: {x: 0.5, y: 1}
+  m_ViewPortPos: {x: 0, y: 0.7}
   m_OffsetPosFromViewPort: {x: 0, y: 0}
-  m_GenerateAngle: 180
+  m_GenerateAngle: 100
   m_EnemyGroupBehaviorParamSet: {fileID: 11400000, guid: 882c0d3b7e0988b45a5221c887a24df5,
     type: 2}
   m_IndividualGenerateParamSets:
@@ -23,7 +23,16 @@ MonoBehaviour:
     m_ViewPortPos: {x: 0.5, y: 0.4}
     m_OffsetPosFromViewPort: {x: 0, y: 0}
     m_GenerateAngle: 0
-    m_EnemyGenerateParamSet: {fileID: 11400000, guid: e9127c5663a6dd24a8e01c68ba974fff,
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 8cd48c5cae73f864e93d5c68b3085075,
       type: 2}
-    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: 1343629975863284eac274c8b74aa42b,
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: cc31a06d222bd3044b8c848cff1847f0,
+      type: 2}
+  - m_GenerateTime: 0.5
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.5, y: 0.4}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 0
+    m_EnemyGenerateParamSet: {fileID: 11400000, guid: 8cd48c5cae73f864e93d5c68b3085075,
+      type: 2}
+    m_EnemyBehaviorParamSet: {fileID: 11400000, guid: cc31a06d222bd3044b8c848cff1847f0,
       type: 2}

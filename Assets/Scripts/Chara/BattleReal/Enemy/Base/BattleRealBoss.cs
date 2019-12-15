@@ -467,14 +467,15 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnHackingSuccess()
     {
+        m_HackingSuccessCount++;
+        DestroyTimer(DOWN_KEY);
+
         if (m_HackingSuccessCount >= m_BossGenerateParamSet.HackingCompleteNum)
         {
             RequestChangeState(E_PHASE.RESCUE);
             return;
         }
 
-        m_HackingSuccessCount++;
-        DestroyTimer(DOWN_KEY);
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, HACKING_SUCCESS_TIME);
         timer.SetTimeoutCallBack(() =>
         {
@@ -482,7 +483,6 @@ public class BattleRealBoss : BattleRealEnemyController
             RequestChangeState(E_PHASE.CHANGE_ATTACK);
         });
         RegistTimer(HACKING_SUCCESS_KEY, timer);
-
         BattleRealItemManager.Instance.CreateItem(transform.position, m_BossGenerateParamSet.HackingSuccessItemParam);
     }
 
@@ -503,7 +503,16 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void EndOnHackingSuccess()
     {
-        MaxDownHp = m_BossGenerateParamSet.DownHpArray[m_HackingSuccessCount];
+        if (m_HackingSuccessCount >= m_BossGenerateParamSet.HackingCompleteNum)
+        {
+            MaxDownHp = 0;
+        }
+        else
+        {
+            // ここに処理が来ているということは、HackingSuccessCountは1以上のはず
+            var idx = Mathf.Clamp(m_HackingSuccessCount - 1, 0, m_BossGenerateParamSet.DownHpArray.Length - 1);
+            MaxDownHp = m_BossGenerateParamSet.DownHpArray[idx];
+        }
     }
 
     #endregion
@@ -593,6 +602,9 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnRescue()
     {
+        // 判定の無効化
+        GetCollider().SetEnableAllCollider(false);
+
         var paramSet = m_BossGenerateParamSet;
 
         // シーケンシャルエフェクトを登録する

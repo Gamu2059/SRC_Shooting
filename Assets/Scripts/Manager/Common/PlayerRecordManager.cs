@@ -16,11 +16,21 @@ public class PlayerRecordManager : ControllableObject
     public override void OnInitialize(){
         m_PlayerRecords = new List<PlayerRecord>();
         m_MaxRecordNum = 1000;
-        AddDummyScore();
+
+        int maxScore = PlayerPrefs.GetInt("BestScore", 0);
+        m_PlayerRecords.Add(new PlayerRecord(maxScore, 1, new System.DateTime()));
     }
 
     public void AddRecord(PlayerRecord record){
-        if(m_PlayerRecords.Count + 1 > m_MaxRecordNum){
+
+        var maxScore = GetTopRecord().m_FinalScore;
+        if (record.m_FinalScore > maxScore)
+        {
+            PlayerPrefs.SetInt("BestScore", (int)record.m_FinalScore);
+            PlayerPrefs.Save();
+        }
+
+        if (m_PlayerRecords.Count + 1 > m_MaxRecordNum){
             m_PlayerRecords.RemoveAt(m_PlayerRecords.Count - 1);
             m_PlayerRecords.Add(record);
             SortRecord();
@@ -45,15 +55,15 @@ public class PlayerRecordManager : ControllableObject
     }
 
     public void ShowRecord(){
-        Debug.Log("Score Ranking ...");
-        SortRecord();
-        int i = 0;
-        foreach (PlayerRecord rec in m_PlayerRecords.GetRange(0,5))
-        {
-            i++;
-            string showStr = string.Format("{0} : Score={1} , Stage={2}, Date={3}", i, rec.m_FinalScore, ReachedStageStrFromInt(rec.m_FinalReachedStage), rec.m_PlayedDate.ToString("yyyy/MM/dd"));
-            Debug.Log(showStr);
-        }
+        //Debug.Log("Score Ranking ...");
+        //SortRecord();
+        //int i = 0;
+        //foreach (PlayerRecord rec in m_PlayerRecords.GetRange(0,5))
+        //{
+        //    i++;
+        //    string showStr = string.Format("{0} : Score={1} , Stage={2}, Date={3}", i, rec.m_FinalScore, ReachedStageStrFromInt(rec.m_FinalReachedStage), rec.m_PlayedDate.ToString("yyyy/MM/dd"));
+        //    Debug.Log(showStr);
+        //}
     }
 
     private void AddDummyScore(){
