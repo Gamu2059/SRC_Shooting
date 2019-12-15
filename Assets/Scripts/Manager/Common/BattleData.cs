@@ -209,6 +209,13 @@ public class BattleData
             {
                 addedExp %= expParamSet.NecessaryExpToLevelUpNextLevel;
                 Level++;
+
+                // レベルMAXになった時
+                if (Level >= levelNum - 1)
+                {
+                    var powerUpSe = BattleRealPlayerManager.Instance.ParamSet.PowerUpSe;
+                    AudioManager.Instance.Play(powerUpSe);
+                }
             }
 
             expParamSet = GetCurrentLevelParam();

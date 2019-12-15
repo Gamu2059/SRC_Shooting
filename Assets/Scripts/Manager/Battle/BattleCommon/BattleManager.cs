@@ -221,6 +221,17 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            m_IsDrawColliderArea = !m_IsDrawColliderArea;
+        }
     }
 
     public override void OnLateUpdate()
@@ -311,16 +322,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         BattleRealUiManager.OnUpdate();
         BattleHackingUiManager.OnUpdate();
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            RequestChangeState(E_BATTLE_STATE.GAME_OVER);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            DataManager.Instance.BattleData.AddEnergyCount(1);
-        }
     }
 
     private void LateUpdateOnRealMode()

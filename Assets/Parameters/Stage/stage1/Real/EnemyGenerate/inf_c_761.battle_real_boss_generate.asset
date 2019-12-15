@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758b53089f2cd6d4896bda520f9f58c4, type: 3}
   m_Name: inf_c_761.battle_real_boss_generate
   m_EditorClassIdentifier: 
-  m_Hp: 3000
+  m_Hp: 50
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_DefeatScore: 10000
+  m_DefeatScore: 20000
   m_DefeatItemParam:
     ItemSpreadParams:
     - Type: 4
@@ -62,9 +62,9 @@ MonoBehaviour:
   m_DefeatHideTime: 5
   m_HackingCompleteNum: 3
   m_DownHpArray:
-  - 100
-  - 150
-  - 200
+  - 1
+  - 1
+  - 1
   m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb, type: 2}
   m_PlayerTriangleEffectParam: {fileID: 11400000, guid: ed5997dcef785994a93b25d031fa9a6c,
     type: 2}
