@@ -133,6 +133,12 @@ public class BattleRealPlayerController : CharaController
     {
         base.OnEnterHitItem(hitData);
 
+        var playerColliderType = hitData.HitCollider.Transform.ColliderType;
+        if (playerColliderType != E_COLLIDER_TYPE.ITEM_GAIN)
+        {
+            return;
+        }
+
         var itemColliderType = hitData.SufferCollider.Transform.ColliderType;
         switch (itemColliderType)
         {

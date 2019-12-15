@@ -74,4 +74,8 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     [SerializeField]
     private PlaySoundParam m_DeadSe;
     public PlaySoundParam DeadSe => m_DeadSe;
+
+    [SerializeField]
+    private PlaySoundParam m_PowerUpSe;
+    public PlaySoundParam PowerUpSe => m_PowerUpSe;
 }
