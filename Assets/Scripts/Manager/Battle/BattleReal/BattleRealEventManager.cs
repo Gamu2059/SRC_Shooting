@@ -694,8 +694,11 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.BOSS_BATTLE_START:
                 ExecuteBossBattleStart();
                 break;
-            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR:
-                ExecuteGameClear();
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR_WITHOUT_HACKING_COMPLETE:
+                ExecuteGameClearWithoutHackingComplete();
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR_WITH_HACKING_COMPLETE:
+                ExecuteGameClearWithHackingComplete();
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.GAME_OVER:
                 ExecuteGameOver();
@@ -938,9 +941,14 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// ゲームクリアイベントを発行する。
     /// </summary>
-    private void ExecuteGameClear()
+    private void ExecuteGameClearWithoutHackingComplete()
     {
         BattleManager.Instance.GameClearWithoutHackingComplete();
+    }
+
+    private void ExecuteGameClearWithHackingComplete()
+    {
+        BattleManager.Instance.GameClearWithHackingComplete();
     }
 
     /// <summary>

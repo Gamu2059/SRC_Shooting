@@ -25,16 +25,24 @@ MonoBehaviour:
       SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_DefeatEvents:
-  - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2"
-    IsPassExecute: 1
-    EventType: 10
-    ExecuteTiming: 0
-    DelayExecuteTime: 0
+  - ContentName: "\u6483\u7834\u6570+1"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 1
+    DelayExecuteTime: 3
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
-    OperateVariableParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Boss Defeat
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
     CountStartTimePeriodNames: []
     CallScriptParams: []
   m_DefeatSequentialEffect:
@@ -64,11 +72,31 @@ MonoBehaviour:
       Point: 200
       SpreadRadius: 0.5
     CenterCreateItemType: 0
-  m_RescueScore: 25000
+  m_RescueScore: 30000
   m_RescueItemParam:
     ItemSpreadParams: []
     CenterCreateItemType: 0
-  m_RescueEvents: []
+  m_RescueEvents:
+  - ContentName: "\u6551\u51FA\u6570+1"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 1
+    DelayExecuteTime: 3
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Boss Rescue
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
   m_RescueSequentialEffect:
     m_Params: []
   m_RescueHideTime: 0

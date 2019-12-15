@@ -14,6 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Variables:
   - Type: 0
+    Name: Boss Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 0
+    Name: Boss Rescue
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 0
     Name: Before Boss
     IntInitValue: 0
     FloatInitValue: 0
@@ -23,3 +33,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ca7828fca0497a4fadbea6360eff82a, type: 2}
   - {fileID: 11400000, guid: 9d683c0eccde15147b5fb6f441bdc4af, type: 2}
   - {fileID: 11400000, guid: 6b0bc0695235cfd4ca17920ef1efbfda, type: 2}
+  - {fileID: 11400000, guid: 0871f65138fc42148982818c4b51ded3, type: 2}
+  - {fileID: 11400000, guid: 0599f70dbbf3fd644b9750eaa6a8ca36, type: 2}
