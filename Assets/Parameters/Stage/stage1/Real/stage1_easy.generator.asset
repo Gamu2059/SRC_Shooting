@@ -247,7 +247,7 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 27
+        CompareValue: 27.5
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
@@ -262,7 +262,7 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 27
+        CompareValue: 27.5
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
@@ -281,7 +281,7 @@ MonoBehaviour:
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
-    m_GroupGenerateParamSet: {fileID: 11400000, guid: 915d98e8e3e3b9d4f946f5659bcbc7d2,
+    m_GroupGenerateParamSet: {fileID: 11400000, guid: 0712d6067bc42d241a8bfdca813b87d2,
       type: 2}
   - m_Condition:
       IsReverse: 0
@@ -292,11 +292,26 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 29
+        CompareValue: 30.5
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
     m_GroupGenerateParamSet: {fileID: 11400000, guid: 0398afe1b017f5a42850b22b6d24bfba,
+      type: 2}
+  - m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        VariableName: Game Start
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 30.5
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_GroupGenerateParamSet: {fileID: 11400000, guid: 0712d6067bc42d241a8bfdca813b87d2,
       type: 2}
   - m_Condition:
       IsReverse: 0
@@ -312,21 +327,6 @@ MonoBehaviour:
       MultiConditionType: 0
       MultiConditions: []
     m_GroupGenerateParamSet: {fileID: 11400000, guid: 0712d6067bc42d241a8bfdca813b87d2,
-      type: 2}
-  - m_Condition:
-      IsReverse: 0
-      IsMultiCondition: 0
-      SingleCondition:
-        IsReverse: 0
-        VariableType: 3
-        VariableName: Game Start
-        CompareType: 5
-        BoolCompareType: 0
-        CompareValue: 28
-        BoolCompareValue: 0
-      MultiConditionType: 0
-      MultiConditions: []
-    m_GroupGenerateParamSet: {fileID: 11400000, guid: 915d98e8e3e3b9d4f946f5659bcbc7d2,
       type: 2}
   - m_Condition:
       IsReverse: 0
@@ -442,7 +442,7 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 61
+        CompareValue: 60
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
@@ -457,7 +457,7 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 62
+        CompareValue: 61
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
@@ -472,7 +472,7 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 63
+        CompareValue: 62
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
@@ -487,7 +487,7 @@ MonoBehaviour:
         VariableName: Game Start
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 64
+        CompareValue: 63
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
@@ -672,5 +672,35 @@ MonoBehaviour:
       MultiConditionType: 0
       MultiConditions: []
     m_GroupGenerateParamSet: {fileID: 11400000, guid: b415fd5d09fe42d459f851f7f7a8865c,
+      type: 2}
+  - m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        VariableName: Game Start
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 26
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_GroupGenerateParamSet: {fileID: 11400000, guid: 0398afe1b017f5a42850b22b6d24bfba,
+      type: 2}
+  - m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        VariableName: Game Start
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 29
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_GroupGenerateParamSet: {fileID: 11400000, guid: 0398afe1b017f5a42850b22b6d24bfba,
       type: 2}
   m_BossParamSet: {fileID: 11400000, guid: 1bb7405b8571d2149a90524ae7dd473d, type: 2}

@@ -10,18 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
-  m_Name: stage1_004_paras_l_lv1.generate
+  m_Name: stage1_up_passage_center_paras.battle_real_enemy_generate
   m_EditorClassIdentifier: 
-  m_Hp: 80
-  m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
-    type: 2}
-  m_DamageEffectDuration: 0.01
+  m_Hp: 60
   m_Score: 200
   m_ItemCreateParam:
     ItemSpreadParams: []
-    CenterCreateItemType: 0
+    CenterCreateItemType: 7
   m_DefeatEvents:
-  - ContentName: "\u30DC\u30B9\u524D\u6483\u7834"
+  - ContentName: 
     IsPassExecute: 0
     EventType: 4
     ExecuteTiming: 0
@@ -32,7 +29,7 @@ MonoBehaviour:
     ControlBgmParams: []
     OperateVariableParams:
     - VariableType: 0
-      VariableName: Before Boss
+      VariableName: Clear Count
       OperandType: 1
       BoolOperandType: 0
       OperandValueType: 0
@@ -41,8 +38,3 @@ MonoBehaviour:
       BoolOperandValue: 0
     CountStartTimePeriodNames: []
     CallScriptParams: []
-  m_DefeatSequentialEffect:
-    m_Params:
-    - Delay: 0
-      Effect: {fileID: 11400000, guid: b2c42e67000a0a5438928542ee3c2dfe, type: 2}
-  m_DefeatHideTime: 0
