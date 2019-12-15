@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2958,7 +2958,7 @@ Camera:
   m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2871
+    m_Bits: 2049
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b9b5330d550152940a6279f1ae3fcabd, type: 2}
   m_TargetDisplay: 0
@@ -4268,7 +4268,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 9015
+    m_Bits: 8193
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 32f95e42dfd2a1b48869cd17cac975c1, type: 2}
   m_TargetDisplay: 0
@@ -4420,7 +4420,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4919
+    m_Bits: 4096
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 32f95e42dfd2a1b48869cd17cac975c1, type: 2}
   m_TargetDisplay: 0
@@ -25363,7 +25363,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1847
+    m_Bits: 1024
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b9b5330d550152940a6279f1ae3fcabd, type: 2}
   m_TargetDisplay: 0
@@ -28868,7 +28868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ParamSet: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
+  m_ParamSet: {fileID: 11400000, guid: c063e9f8c509b264cbba2ea0a4d12eda, type: 2}
   m_BattleRealStageManager: {fileID: 1771546482}
   m_BattleHackingStageManager: {fileID: 1183653724}
   m_BattleRealUiManager: {fileID: 1771546480}
