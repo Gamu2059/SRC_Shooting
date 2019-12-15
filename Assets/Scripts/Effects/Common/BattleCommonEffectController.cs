@@ -55,6 +55,13 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     private float m_NowLifeTime;
     public float NowLifeTime { get; private set; }
 
+    private PlaySoundParam[] m_PlaySoundParams;
+
+    /// <summary>
+    /// 自動消去の時に呼び出されるアクション。
+    /// </summary>
+    public Action OnCompleteEffect;
+
     #endregion
 
     #region Game Cycle
@@ -108,6 +115,8 @@ public class BattleCommonEffectController : ControllableMonoBehavior
         m_IsAllowOwner = paramSet.IsAllowOwnerPosition && Owner != null;
         m_IsAutoDestroyDuration = paramSet.IsAutoDestroyDuration;
         m_Duration = paramSet.Duration;
+
+        m_PlaySoundParams = paramSet.PlaySoundParams;
     }
 
     public override void OnInitialize()
@@ -116,6 +125,13 @@ public class BattleCommonEffectController : ControllableMonoBehavior
 
         m_Duration = -1;
         m_NowLifeTime = 0;
+    }
+
+    public override void OnFinalize()
+    {
+        OnCompleteEffect = null;
+        Owner = null;
+        base.OnFinalize();
     }
 
     public override void OnStart()
@@ -135,6 +151,15 @@ public class BattleCommonEffectController : ControllableMonoBehavior
             foreach (var a in m_Animators)
             {
                 a.updateMode = AnimatorUpdateMode.UnscaledTime;
+            }
+        }
+
+        if (m_PlaySoundParams != null)
+        {
+            var auidioManager = AudioManager.Instance;
+            foreach (var p in m_PlaySoundParams)
+            {
+                auidioManager.Play(p);
             }
         }
     }
@@ -166,6 +191,8 @@ public class BattleCommonEffectController : ControllableMonoBehavior
 
         if (m_IsAutoDestroyDuration && m_Duration >= 0 && m_NowLifeTime >= m_Duration)
         {
+            OnCompleteEffect?.Invoke();
+            OnCompleteEffect = null;
             DestroyEffect(true);
         }
     }

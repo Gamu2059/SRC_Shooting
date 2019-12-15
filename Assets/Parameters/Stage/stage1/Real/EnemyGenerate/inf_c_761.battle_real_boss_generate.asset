@@ -16,13 +16,9 @@ MonoBehaviour:
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_Score: 20000
-  m_ItemCreateParam:
-    ItemSpreadParams:
-    - Type: 2
-      Num: 20
-      Point: 200
-      SpreadRadius: 0
+  m_DefeatScore: 0
+  m_DefeatItemParam:
+    ItemSpreadParams: []
     CenterCreateItemType: 0
   m_DefeatEvents:
   - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2"
@@ -37,7 +33,26 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
-  m_DefeatEffect: {fileID: 0}
+  m_DefeatSequentialEffect:
+    m_Params: []
+  m_DefeatHideTime: 0
+  m_HackingCompleteNum: 3
+  m_DownHpArray:
+  - 100
+  - 100
+  - 100
   m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb, type: 2}
   m_PlayerTriangleEffectParam: {fileID: 11400000, guid: ed5997dcef785994a93b25d031fa9a6c,
     type: 2}
+  m_ChangeAttackHpRates: []
+  m_HackingSuccessItemParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_RescueScore: 0
+  m_RescueItemParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
+  m_RescueEvents: []
+  m_RescueSequentialEffect:
+    m_Params: []
+  m_RescueHideTime: 0

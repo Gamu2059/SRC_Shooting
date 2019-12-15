@@ -538,18 +538,18 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void StartOnGameClear()
     {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_OVER);
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
 
-        m_BattleRealUiManager.SetEnableGameClear(true);
+        //m_BattleRealUiManager.SetEnableGameClear(true);
 
-        AudioManager.Instance.StopAllBgm();
-        AudioManager.Instance.Play(m_ParamSet.GameClearSe);
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-        {
-            RequestChangeState(E_BATTLE_STATE.END);
-        });
-        TimerManager.Instance.RegistTimer(timer);
+        //AudioManager.Instance.StopAllBgm();
+        //AudioManager.Instance.Play(m_ParamSet.GameClearSe);
+        //var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
+        //{
+        //    RequestChangeState(E_BATTLE_STATE.END);
+        //});
+        //TimerManager.Instance.RegistTimer(timer);
     }
 
     private void UpdateOnGameClear()

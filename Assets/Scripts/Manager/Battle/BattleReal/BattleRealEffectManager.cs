@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 /// <summary>
 /// リアルモードのエフェクトを管理する。
@@ -9,6 +10,32 @@ using System;
 [Serializable]
 public class BattleRealEffectManager : ControllableObject
 {
+    private class SequentialData
+    {
+        public List<SequentialEffectParamSet.SequentialEffectParam> Effects;
+        public Transform Owner;
+        public float NowTime;
+        public bool IsCancelOnOwnerNull;
+        public Action<BattleCommonEffectController> OnCreateEffect;
+        public bool WillDestroy;
+
+        public SequentialData(SequentialEffectParamSet effects, Transform owner, bool isCancelOnOwnerNull, Action<BattleCommonEffectController> onCreateEffect)
+        {
+            if (effects == null || effects.Params == null)
+            {
+                WillDestroy = true;
+                return;
+            }
+
+            Effects = effects.Params.ToList();
+            Owner = owner;
+            IsCancelOnOwnerNull = isCancelOnOwnerNull;
+            OnCreateEffect = onCreateEffect;
+            NowTime = 0;
+            WillDestroy = false;
+        }
+    }
+
     public static BattleRealEffectManager Instance {
         get {
             if (BattleRealManager.Instance == null)
@@ -44,6 +71,16 @@ public class BattleRealEffectManager : ControllableObject
     /// </summary>
     private List<BattleCommonEffectController> m_GotoPoolEffects;
 
+    /// <summary>
+    /// 登録状態になっただけのシーケンシャルデータ。
+    /// </summary>
+    private List<SequentialData> m_StandbySequentialDatas;
+
+    /// <summary>
+    /// 処理中のシーケンシャルデータ。
+    /// </summary>
+    private List<SequentialData> m_ProcessingSequentialDatas;
+
     #endregion
 
     public BattleRealEffectManager()
@@ -60,6 +97,8 @@ public class BattleRealEffectManager : ControllableObject
         m_UpdateEffects = new List<BattleCommonEffectController>();
         m_PoolEffects = new List<BattleCommonEffectController>();
         m_GotoPoolEffects = new List<BattleCommonEffectController>();
+        m_StandbySequentialDatas = new List<SequentialData>();
+        m_ProcessingSequentialDatas = new List<SequentialData>();
 
         BattleRealManager.Instance.OnTransitionToHacking += PauseAllEffect;
         BattleRealManager.Instance.OnTransitionToReal += ResumeAllEffect;
@@ -70,6 +109,8 @@ public class BattleRealEffectManager : ControllableObject
         BattleRealManager.Instance.OnTransitionToReal -= ResumeAllEffect;
         BattleRealManager.Instance.OnTransitionToHacking -= PauseAllEffect;
 
+        m_ProcessingSequentialDatas.Clear();
+        m_StandbySequentialDatas.Clear();
         m_StandbyEffects.Clear();
         m_UpdateEffects.Clear();
         m_PoolEffects.Clear();
@@ -109,6 +150,38 @@ public class BattleRealEffectManager : ControllableObject
 
             effect.OnUpdate();
         }
+
+        // 処理中シーケンシャルデータの処理
+        foreach (var data in m_ProcessingSequentialDatas)
+        {
+            if (data == null)
+            {
+                continue;
+            }
+
+            if (data.IsCancelOnOwnerNull && data.Owner == null)
+            {
+                data.WillDestroy = true;
+                continue;
+            }
+
+            foreach (var effect in data.Effects)
+            {
+                if (effect.Delay <= data.NowTime)
+                {
+                    var e = CreateEffect(effect.Effect, data.Owner);
+                    data.OnCreateEffect?.Invoke(e);
+                }
+            }
+
+            data.Effects.RemoveAll(d => d.Delay <= data.NowTime);
+            data.NowTime += Time.deltaTime;
+
+            if (data.Effects.Count < 1)
+            {
+                data.WillDestroy = true;
+            }
+        }
     }
 
     public override void OnLateUpdate()
@@ -137,6 +210,13 @@ public class BattleRealEffectManager : ControllableObject
                 CheckPoolEffect(effect);
             }
         }
+
+        // 削除予定シーケンシャルデータを削除
+        m_ProcessingSequentialDatas.RemoveAll(d => d.WillDestroy);
+
+        // 登録シーケンシャルデータを処理中シーケンシャルデータへ
+        m_ProcessingSequentialDatas.AddRange(m_StandbySequentialDatas);
+        m_StandbySequentialDatas.Clear();
     }
 
     #endregion
@@ -263,7 +343,7 @@ public class BattleRealEffectManager : ControllableObject
     /// <summary>
     /// エフェクトを作成する。
     /// </summary>
-    public BattleCommonEffectController CreateEffect(EffectParamSet paramSet, Transform owner)
+    public BattleCommonEffectController CreateEffect(EffectParamSet paramSet, Transform owner = null)
     {
         if (paramSet == null)
         {
@@ -280,6 +360,25 @@ public class BattleRealEffectManager : ControllableObject
         CheckStandbyEffect(poolingEffect);
 
         return poolingEffect;
+    }
+
+    /// <summary>
+    /// シーケンシャルエフェクトを登録する。
+    /// </summary>
+    public void RegisterSequentialEffect(SequentialEffectParamSet paramSet, Transform owner = null, bool isCancelOnOwnerNull = false, Action<BattleCommonEffectController> onCreateEffect = null)
+    {
+        if (paramSet == null)
+        {
+            return;
+        }
+
+        var data = new SequentialData(paramSet, owner, isCancelOnOwnerNull, onCreateEffect);
+        if (data.WillDestroy)
+        {
+            return;
+        }
+
+        m_StandbySequentialDatas.Add(data);
     }
 
     /// <summary>

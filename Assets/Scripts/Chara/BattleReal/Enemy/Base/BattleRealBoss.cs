@@ -66,6 +66,7 @@ public class BattleRealBoss : BattleRealEnemyController
         if (GenerateParamSet is BattleRealBossGenerateParamSet generateParamSet)
         {
             m_BossGenerateParamSet = generateParamSet;
+            m_ChangeAttackHpRates = generateParamSet.ChangeAttackHpRates;
         }
 
         if (BehaviorParamSet is BattleRealBossBehaviorParamSet behaviorParamSet)
@@ -73,7 +74,6 @@ public class BattleRealBoss : BattleRealEnemyController
             m_BossBehaviorParamSet = behaviorParamSet;
             m_AttackParamSets = behaviorParamSet.AttackParamSets;
             m_DownParamSets = behaviorParamSet.DownParamSets;
-            m_ChangeAttackHpRates = behaviorParamSet.ChangeAttackHpRates;
         }
     }
 
@@ -347,8 +347,8 @@ public class BattleRealBoss : BattleRealEnemyController
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
         m_CurrentDown = m_DownBehaviors[m_DownPhase];
 
-        MaxDownHp = NowDownHp = m_BossBehaviorParamSet.DownHp;
         m_HackingSuccessCount = 0;
+        MaxDownHp = NowDownHp = m_BossGenerateParamSet.DownHpArray[m_HackingSuccessCount];
 
         transform.position = new Vector3(0, 0, 1);
 
@@ -466,7 +466,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnHackingSuccess()
     {
-        if (m_HackingSuccessCount >= m_BossBehaviorParamSet.HackingCompleteNum)
+        if (m_HackingSuccessCount >= m_BossGenerateParamSet.HackingCompleteNum)
         {
             RequestChangeState(E_PHASE.RESCUE);
             return;
@@ -482,7 +482,7 @@ public class BattleRealBoss : BattleRealEnemyController
         });
         RegistTimer(HACKING_SUCCESS_KEY, timer);
 
-        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossBehaviorParamSet.ItemParam);
+        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossGenerateParamSet.HackingSuccessItemParam);
     }
 
     private void UpdateOnHackingSuccess()
@@ -502,7 +502,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void EndOnHackingSuccess()
     {
-
+        MaxDownHp = m_BossGenerateParamSet.DownHpArray[m_HackingSuccessCount];
     }
 
     #endregion
@@ -513,7 +513,7 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         m_AttackPhase = Mathf.Min(m_AttackPhase + 1, m_AttackBehaviors.Count - 1);
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
-        NowDownHp = m_BossBehaviorParamSet.DownHp;
+        RecoverDownHp(MaxDownHp);
         RequestChangeState(E_PHASE.ATTACK);
     }
 
@@ -543,27 +543,40 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnDead()
     {
+        // シーケンシャルエフェクトを登録する
+        var effect = GenerateParamSet.DefeatSequentialEffect;
+        if (effect != null)
+        {
+            BattleRealEffectManager.Instance.RegisterSequentialEffect(effect, transform);
+        }
 
+        float defeatTime = GenerateParamSet.DefeatHideTime;
+        if (defeatTime <= 0)
+        {
+            OnDefeatDestroy();
+        }
+        else
+        {
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, defeatTime);
+            timer.SetTimeoutCallBack(() => OnDefeatDestroy());
+            TimerManager.Instance.RegistTimer(timer);
+        }
     }
 
     private void UpdateOnDead()
     {
-
     }
 
     private void LateUpdateOnDead()
     {
-
     }
 
     private void FixedUpdateOnDead()
     {
-
     }
 
     private void EndOnDead()
     {
-
     }
 
     #endregion
@@ -572,7 +585,26 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnRescue()
     {
-        BattleManager.Instance.GameClear();
+        var paramSet = m_BossGenerateParamSet;
+
+        // シーケンシャルエフェクトを登録する
+        var effect = paramSet.RescueSequentialEffect;
+        if (effect != null)
+        {
+            BattleRealEffectManager.Instance.RegisterSequentialEffect(effect, transform);
+        }
+
+        float defeatTime = paramSet.RescueHideTime;
+        if (defeatTime <= 0)
+        {
+            OnRescueDestroy();
+        }
+        else
+        {
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, defeatTime);
+            timer.SetTimeoutCallBack(() => OnRescueDestroy());
+            TimerManager.Instance.RegistTimer(timer);
+        }
     }
 
     private void UpdateOnRescue()
@@ -593,6 +625,24 @@ public class BattleRealBoss : BattleRealEnemyController
     private void EndOnRescue()
     {
 
+    }
+
+    protected void OnRescueDestroy()
+    {
+        var paramSet = m_BossGenerateParamSet;
+        BattleRealItemManager.Instance.CreateItem(transform.position, paramSet.RescueItemParam);
+        DataManager.Instance.BattleData.AddScore(paramSet.RescueScore);
+
+        var events = paramSet.RescueEvents;
+        if (events != null)
+        {
+            for (int i = 0; i < events.Length; i++)
+            {
+                BattleRealEventManager.Instance.AddEvent(events[i]);
+            }
+        }
+
+        Destroy();
     }
 
     #endregion
@@ -670,10 +720,33 @@ public class BattleRealBoss : BattleRealEnemyController
         }
     }
 
-    public override void Dead()
+    protected override void OnDead()
     {
-        base.Dead();
-        BattleManager.Instance.GameClear();
+        //if (GenerateParamSet != null)
+        //{
+        //    var defeatEffect = GenerateParamSet.DefeatEffect;
+        //    if (defeatEffect != null)
+        //    {
+        //        var effect = Instantiate(defeatEffect);
+        //        effect.transform.position = transform.position;
+        //    }
+
+        //    BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.ItemCreateParam);
+
+        //    var events = GenerateParamSet.DefeatEvents;
+        //    if (events != null)
+        //    {
+        //        for (int i = 0; i < events.Length; i++)
+        //        {
+        //            DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
+        //            BattleRealEventManager.Instance.AddEvent(events[i]);
+        //        }
+        //    }
+        //}
+
+        //AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.BreakSe);
+        //Destroy();
+        RequestChangeState(E_PHASE.DEAD);
     }
 
     private void OnTransitionToReal()
