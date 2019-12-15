@@ -310,6 +310,8 @@ public class BattleRealItemManager : ControllableObject, IColliderProcess
             return;
         }
 
+        var stageManager = BattleRealStageManager.Instance;
+
         for (int i = 0; i < param.ItemSpreadParams.Length; i++)
         {
             var spreadParam = param.ItemSpreadParams[i];
@@ -335,6 +337,10 @@ public class BattleRealItemManager : ControllableObject, IColliderProcess
 
                 item.ChangeOrbital(m_ParamSet.OrbitalParam);
                 item.SetParam(pos, spreadParam.Type, spreadParam.Point, m_ParamSet.AttractRate);
+
+                // このタイミングでアイテムがフィールド外に出てても押し込める
+                stageManager.ClampMovingObjectPosition(item.transform);
+
                 CheckStandbyItem(item);
             }
         }

@@ -768,18 +768,7 @@ public class BattleRealManager : ControllableObject
     private void StartOnTransitionToReal()
     {
         var battleData = DataManager.Instance.BattleData;
-        if (BattleManager.Instance.HackingManager.IsHackingSuccess)
-        {
-            battleData.IncreaseHackingSucceedCount();
-            if (battleData.HackingSucceedCount >= 1)
-            {
-                battleData.AddScore(1000 * battleData.HackingSucceedCount);
-            }
-        }
-        else
-        {
-            battleData.ResetHackingSucceedCount();
-        }
+        battleData.OnHackingResult(BattleManager.Instance.HackingManager.IsHackingSuccess);
     }
 
     private void UpdateOnTransitionToReal()
