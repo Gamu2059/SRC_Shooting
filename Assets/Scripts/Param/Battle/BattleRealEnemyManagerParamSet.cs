@@ -40,4 +40,8 @@ public class BattleRealEnemyManagerParamSet : ScriptableObject
     [SerializeField]
     private PlaySoundParam m_DownSe;
     public PlaySoundParam DownSe => m_DownSe;
+
+    [SerializeField]
+    private PlaySoundParam m_DownReturnSe;
+    public PlaySoundParam DownReturnSe => m_DownReturnSe;
 }

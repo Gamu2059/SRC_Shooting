@@ -96,6 +96,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     public BattleHackingManager HackingManager { get; private set; }
 
+    public bool IsHackingComplete { get; private set; }
+
     #endregion
 
     #region Game Cycle
@@ -248,8 +250,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_BattleRealStageManager.gameObject.SetActive(true);
         m_BattleHackingStageManager.gameObject.SetActive(false);
         m_VideoPlayer.gameObject.SetActive(false);
-
-        m_BattleRealUiManager.SetEnableGameClear(false);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
     }
@@ -406,20 +406,23 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(true);
 
         AudioManager.Instance.Play(m_ParamSet.ToHackingSe);
+
+        m_BattleRealUiManager.PlayToHacking();
+        m_BattleHackingUiManager.PlayToHacking();
     }
 
     private void UpdateOnTransitionToHacking()
     {
         if (m_VideoPlayer.isPlaying)
         {
-            var movieTime = m_ParamSet.ToHackingMovie.length;
-            var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
+            //var movieTime = m_ParamSet.ToHackingMovie.length;
+            //var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
 
-            var fadeOutVideoValue = m_ParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
-            var fadeInVideoValue = m_ParamSet.FadeInVideoParam.Evaluate(normalizedTime);
+            //var fadeOutVideoValue = m_ParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
+            //var fadeInVideoValue = m_ParamSet.FadeInVideoParam.Evaluate(normalizedTime);
 
-            m_BattleRealUiManager.SetAlpha(fadeOutVideoValue);
-            m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
+            //m_BattleRealUiManager.SetAlpha(fadeOutVideoValue);
+            //m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
         }
         else
         {
@@ -477,22 +480,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(true);
 
         AudioManager.Instance.Play(m_ParamSet.ToRealSe);
+
+        m_BattleRealUiManager.PlayToReal();
+        m_BattleHackingUiManager.PlayToReal();
     }
 
     private void UpdateOnTransitionToReal()
     {
-        if (m_VideoPlayer.isPlaying)
-        {
-            var movieTime = m_ParamSet.ToRealMovie.length;
-            var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
-
-            var fadeOutVideoValue = m_ParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
-            var fadeInVideoValue = m_ParamSet.FadeInVideoParam.Evaluate(normalizedTime);
-
-            m_BattleHackingUiManager.SetAlpha(fadeOutVideoValue);
-            m_BattleRealUiManager.SetAlpha(fadeInVideoValue);
-        }
-        else
+        if (!m_VideoPlayer.isPlaying)
         {
             RequestChangeState(E_BATTLE_STATE.REAL_MODE);
         }
@@ -538,18 +533,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void StartOnGameClear()
     {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_OVER);
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
-
-        m_BattleRealUiManager.SetEnableGameClear(true);
-
         AudioManager.Instance.StopAllBgm();
+        AudioManager.Instance.StopAllSe();
         AudioManager.Instance.Play(m_ParamSet.GameClearSe);
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-        {
-            RequestChangeState(E_BATTLE_STATE.END);
-        });
-        TimerManager.Instance.RegistTimer(timer);
     }
 
     private void UpdateOnGameClear()
@@ -641,14 +629,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.END);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.END);
 
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1, () =>
-        {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
-        });
-        TimerManager.Instance.RegistTimer(timer);
-
         GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord((int)DataManager.Instance.BattleData.Score, 1, DateTime.Now));
         GameManager.Instance.PlayerRecordManager.ShowRecord();
+        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
     }
 
     private void UpdateOnEnd()
@@ -726,10 +709,20 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     }
 
     /// <summary>
-    /// ゲームクリアにする。
+    /// 全てのインフェストラを救出することはないままゲームクリアにする。
     /// </summary>
-	public void GameClear()
+	public void GameClearWithoutHackingComplete()
     {
+        IsHackingComplete = false;
+        RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
+    }
+
+    /// <summary>
+    /// 全てのインフェストラを救出したことにしてゲームクリアにする。
+    /// </summary>
+    public void GameClearWithHackingComplete()
+    {
+        IsHackingComplete = true;
         RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
     }
 }

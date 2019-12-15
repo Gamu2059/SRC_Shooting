@@ -31,7 +31,7 @@ MonoBehaviour:
     DamageRelative: 0
     Speed: 1
     SpeedRelative: 1
-    Accel: -2
+    Accel: -1.5
     AccelRelative: 1
     IsSearch: 0
     Lerp: 0
@@ -39,6 +39,18 @@ MonoBehaviour:
     OptionObjectParams: []
     OptionValueParams: []
   m_ItemPrefabSets:
+  - m_ItemType: 1
+    m_ItemPrefab: {fileID: 3854614799173014870, guid: 754ac781c52a28b43b85f8d2c3156518,
+      type: 3}
+  - m_ItemType: 4
+    m_ItemPrefab: {fileID: 8863478953626435349, guid: aff34331432c8c440977d4648e41fa02,
+      type: 3}
+  - m_ItemType: 5
+    m_ItemPrefab: {fileID: 8863478953626435349, guid: 0cd000c67362f1142980259d264866a4,
+      type: 3}
   - m_ItemType: 6
-    m_ItemPrefab: {fileID: 6413526307181336518, guid: c568ed182cacb5f4c9cb8b9da975022a,
+    m_ItemPrefab: {fileID: 8863478953626435349, guid: e40b5ca4295aa054db3aa247b28a38cc,
+      type: 3}
+  - m_ItemType: 7
+    m_ItemPrefab: {fileID: 8863478953626435349, guid: 95da0df0bc0537546b9eede9ff0d61c2,
       type: 3}

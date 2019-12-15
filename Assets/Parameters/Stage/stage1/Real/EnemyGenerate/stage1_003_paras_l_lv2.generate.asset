@@ -21,5 +21,8 @@ MonoBehaviour:
     ItemSpreadParams: []
     CenterCreateItemType: 0
   m_DefeatEvents: []
-  m_DefeatEffect: {fileID: 6630883398802632190, guid: 0dba00c88eb79cf4385c338430f45daa,
-    type: 3}
+  m_DefeatSequentialEffect:
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: b2c42e67000a0a5438928542ee3c2dfe, type: 2}
+  m_DefeatHideTime: 0

@@ -16,28 +16,111 @@ MonoBehaviour:
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_Score: 20000
-  m_ItemCreateParam:
+  m_DefeatScore: 10000
+  m_DefeatItemParam:
     ItemSpreadParams:
-    - Type: 2
+    - Type: 4
       Num: 20
       Point: 200
-      SpreadRadius: 0
+      SpreadRadius: 0.5
+    - Type: 5
+      Num: 5
+      Point: 1000
+      SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_DefeatEvents:
-  - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2"
+  - ContentName: "\u6483\u7834\u6570+1"
     IsPassExecute: 0
-    EventType: 10
-    ExecuteTiming: 0
-    DelayExecuteTime: 0
+    EventType: 4
+    ExecuteTiming: 1
+    DelayExecuteTime: 3
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
-    OperateVariableParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Boss Defeat
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
     CountStartTimePeriodNames: []
     CallScriptParams: []
-  m_DefeatEffect: {fileID: 0}
+  m_DefeatSequentialEffect:
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: 97ad3ebef7cd188408d03a91a4129709, type: 2}
+    - Delay: 5
+      Effect: {fileID: 11400000, guid: 34a131c3b59bdf04794d478b70474ae5, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+  m_DefeatHideTime: 5
+  m_HackingCompleteNum: 3
+  m_DownHpArray:
+  - 100
+  - 150
+  - 200
   m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb, type: 2}
   m_PlayerTriangleEffectParam: {fileID: 11400000, guid: ed5997dcef785994a93b25d031fa9a6c,
     type: 2}
+  m_ChangeAttackHpRates: []
+  m_HackingSuccessItemParam:
+    ItemSpreadParams:
+    - Type: 6
+      Num: 6
+      Point: 200
+      SpreadRadius: 0.5
+    - Type: 4
+      Num: 6
+      Point: 100
+      SpreadRadius: 0.5
+    CenterCreateItemType: 0
+  m_RescueScore: 30000
+  m_RescueItemParam:
+    ItemSpreadParams:
+    - Type: 4
+      Num: 20
+      Point: 200
+      SpreadRadius: 0.5
+    - Type: 5
+      Num: 5
+      Point: 1000
+      SpreadRadius: 0.5
+    CenterCreateItemType: 0
+  m_RescueEvents:
+  - ContentName: "\u6551\u51FA\u6570+1"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 1
+    DelayExecuteTime: 3
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: Boss Rescue
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 1
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  m_RescueSequentialEffect:
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: 97ad3ebef7cd188408d03a91a4129709, type: 2}
+    - Delay: 5
+      Effect: {fileID: 11400000, guid: 34a131c3b59bdf04794d478b70474ae5, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+  m_RescueHideTime: 5

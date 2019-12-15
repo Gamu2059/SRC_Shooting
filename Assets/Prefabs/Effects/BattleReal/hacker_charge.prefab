@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6346296629077705033}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5996861524069773490}
   - component: {fileID: 5996861524069773491}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hacker_charge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: charge
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185324247734776814, guid: 3cdbb5596184a024da6edea137d6f762,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4185324247734776813, guid: 3cdbb5596184a024da6edea137d6f762,
         type: 3}
@@ -146,6 +151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185324249354955989, guid: 3cdbb5596184a024da6edea137d6f762,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cdbb5596184a024da6edea137d6f762, type: 3}

@@ -61,14 +61,19 @@ public struct BattleRealEventContent
         BOSS_BATTLE_START,
 
         /// <summary>
-        /// ゲームクリア
+        /// ゲームクリア(救出なし)
         /// </summary>
-        GAME_CLEAR,
+        GAME_CLEAR_WITHOUT_HACKING_COMPLETE,
 
         /// <summary>
         /// ゲームオーバー
         /// </summary>
         GAME_OVER,
+
+        /// <summary>
+        /// ゲームクリア(救出あり)
+        /// </summary>
+        GAME_CLEAR_WITH_HACKING_COMPLETE,
     }
 
     /// <summary>

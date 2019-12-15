@@ -18,20 +18,4 @@ public class BattleRealBossBehaviorParamSet : BattleRealEnemyBehaviorParamSet
     [SerializeField, Tooltip("ダウンの行動パターンの配列")]
     private BattleRealBossBehaviorUnitParamSet[] m_DownParamSets;
     public BattleRealBossBehaviorUnitParamSet[] DownParamSets => m_DownParamSets;
-
-    [SerializeField]
-    private float m_DownHp;
-    public float DownHp => m_DownHp;
-
-    [SerializeField, Tooltip("何回ハッキングに成功すれば\"救出\"になるのか")]
-    private int m_HackingCompleteNum;
-    public int HackingCompleteNum => m_HackingCompleteNum;
-
-    [SerializeField, Tooltip("攻撃の行動パターンが変化するHPの割合")]
-    private List<float> m_ChangeAttackHpRates;
-    public List<float> ChangeAttackHpRates => m_ChangeAttackHpRates;
-
-    [SerializeField, Tooltip("ハッキング成功時にばらまくアイテムのパラメータ")]
-    private ItemCreateParam m_ItemParam;
-    public ItemCreateParam ItemParam => m_ItemParam;
 }

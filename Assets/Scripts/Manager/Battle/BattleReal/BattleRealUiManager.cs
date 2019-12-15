@@ -7,10 +7,19 @@ using UnityEngine.UI;
 
 public class BattleRealUiManager : ControllableMonoBehavior
 {
+    private const string TO_HACKING = "battle_real_ui_to_hacking";
+    private const string TO_REAL = "battle_real_ui_to_real";
+    private const string CLEAR_WITHOUT_HACKING_COMPLETE = "stage_clear_without_hacking_complete";
+    private const string CLEAR_WITH_HACKING_COMPLETE = "stage_clear_with_hacking_complete";
+    private const string CLEAR_CLOSE = "stage_clear_close_banner";
+
     #region Field Inspector
 
     [SerializeField]
-    private CanvasGroup m_CanvasGroup;
+    private CanvasGroup m_MainUiGroup;
+
+    [SerializeField]
+    private CanvasGroup m_ResultUiGroup;
 
     [Header("Front View")]
 
@@ -57,21 +66,34 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [SerializeField]
     private GameObject m_BossUI;
 
-
-    [Header("ゲーム終了時のやつ")]
+    [Header("Animator")]
 
     [SerializeField]
-    private GameObject m_GameClear;
+    private Animator m_MainViewAnimator;
+
+    [SerializeField]
+    private Animator m_ResultViewAnimator;
+
+    [SerializeField]
+    private Animator m_StageClearAnimator;
+
+    [Header("Result")]
+
+    [SerializeField]
+    private Text m_ResultText;
 
     #endregion
 
+    private bool m_IsShowResult;
 
     #region Game Cycle
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        SetEnableGameClear(false);
+        m_StageClearAnimator.gameObject.SetActive(false);
+        m_ResultText.gameObject.SetActive(false);
+        m_IsShowResult = false;
     }
 
     public override void OnInitialize()
@@ -129,21 +151,59 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_BossHpGage.OnUpdate();
         m_BossDownGage.OnUpdate();
         
+        if (m_IsShowResult && Input.anyKey)
+        {
+            m_IsShowResult = false;
+            m_ResultText.gameObject.SetActive(false);
+            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
+        }
     }
 
     #endregion
 
-    public void SetAlpha(float normalizedAlpha)
+    public void PlayToHacking()
     {
-        m_CanvasGroup.alpha = normalizedAlpha;
+        m_MainViewAnimator.Play(TO_HACKING, 0);
+        m_ResultViewAnimator.Play(TO_HACKING, 0);
     }
 
-    public void SetEnableGameClear(bool isEnable)
+    public void PlayToReal()
     {
-        m_GameClear.SetActive(isEnable);
+        m_MainViewAnimator.Play(TO_REAL, 0);
+        m_ResultViewAnimator.Play(TO_REAL, 0);
+    }
+
+    public void SetAlpha(float normalizedAlpha)
+    {
+        m_MainUiGroup.alpha = normalizedAlpha;
+        m_ResultUiGroup.alpha = normalizedAlpha;
     }
 
     public void SetEnableBossUI(bool isEnable){
         m_BossUI.SetActive(isEnable);
+    }
+
+    public void PlayGameClearAnimation()
+    {
+        m_StageClearAnimator.gameObject.SetActive(true);
+        if (BattleManager.Instance.IsHackingComplete)
+        {
+            m_StageClearAnimator.Play(CLEAR_WITH_HACKING_COMPLETE, 0);
+        }
+        else
+        {
+            m_StageClearAnimator.Play(CLEAR_WITHOUT_HACKING_COMPLETE, 0);
+        }
+    }
+
+    public void PlayMainViewHideAnimation()
+    {
+        m_MainViewAnimator.Play(TO_HACKING, 0);
+    }
+
+    public void DisplayResult()
+    {
+        m_ResultText.gameObject.SetActive(true);
+        m_IsShowResult = true;
     }
 }
