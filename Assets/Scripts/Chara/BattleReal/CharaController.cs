@@ -27,6 +27,7 @@ public class CharaController : BattleRealObjectBase
     private HitSufferController<BattleRealItemController> m_ItemHit;
 
     private OutRingController m_OutRingController;
+    private CharacterMoveMotionController m_MoveMotionController;
 
     #endregion
 
@@ -132,31 +133,35 @@ public class CharaController : BattleRealObjectBase
     {
         base.OnStart();
 
+        m_MoveMotionController = GetComponent<CharacterMoveMotionController>();
         m_OutRingController = GetComponentInChildren<OutRingController>(true);
-        if (m_OutRingController != null)
-        {
-            m_OutRingController.OnStart();
-        }
+
+        m_MoveMotionController?.OnStart();
+        m_OutRingController?.OnStart();
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        m_MoveMotionController?.OnUpdate();
+        m_OutRingController?.OnUpdate();
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
+
+        m_MoveMotionController?.OnLateUpdate();
+        m_OutRingController?.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
 
-        if (m_OutRingController != null)
-        {
-            m_OutRingController.OnFixedUpdate();
-        }
+        m_MoveMotionController?.OnFixedUpdate();
+        m_OutRingController?.OnFixedUpdate();
     }
 
     #endregion
