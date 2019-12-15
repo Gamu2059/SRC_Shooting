@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
-  m_Name: stage1_001_paras_s.generate
+  m_Name: stage1_002_paras_s_energy.generate
   m_EditorClassIdentifier: 
   m_Hp: 6
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
@@ -21,7 +21,7 @@ MonoBehaviour:
     ItemSpreadParams:
     - Type: 6
       Num: 1
-      Point: 100
+      Point: 200
       SpreadRadius: 0.1
     CenterCreateItemType: 0
   m_DefeatEvents: []
