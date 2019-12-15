@@ -940,7 +940,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteGameClear()
     {
-        BattleManager.Instance.GameClear();
+        BattleManager.Instance.GameClearWithoutHackingComplete();
     }
 
     /// <summary>

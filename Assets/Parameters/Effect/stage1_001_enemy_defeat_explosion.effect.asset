@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9e4b8dc684c00345b377bc238b23c5c, type: 3}
-  m_Name: inf_c_761_explosion.effect
+  m_Name: stage1_001_enemy_defeat_explosion.effect
   m_EditorClassIdentifier: 
-  m_Effect: {fileID: 6277711863487760489, guid: 8502588b209a3cb4f87acdd9d64ee0c0,
+  m_Effect: {fileID: 1864703480466232674, guid: a1ab991738d42f34b9b09197f3c248b4,
     type: 3}
   m_FirePositionRelative: 0
   m_FirePosition:
@@ -34,6 +34,6 @@ MonoBehaviour:
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
   m_IsAllowOwnerPosition: 0
   m_IsAutoDestroyDuration: 1
-  m_Duration: 5
+  m_Duration: 1.5
   m_PlaySoundParams:
   - {fileID: 11400000, guid: e3694683a0bc9cf44b95daa98fa16529, type: 2}

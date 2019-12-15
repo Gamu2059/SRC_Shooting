@@ -12,17 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758b53089f2cd6d4896bda520f9f58c4, type: 3}
   m_Name: inf_c_761.battle_real_boss_generate
   m_EditorClassIdentifier: 
-  m_Hp: 3000
+  m_Hp: 100
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_DefeatScore: 0
+  m_DefeatScore: 10000
   m_DefeatItemParam:
-    ItemSpreadParams: []
+    ItemSpreadParams:
+    - Type: 6
+      Num: 20
+      Point: 100
+      SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_DefeatEvents:
   - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2"
-    IsPassExecute: 0
+    IsPassExecute: 1
     EventType: 10
     ExecuteTiming: 0
     DelayExecuteTime: 0
@@ -34,8 +38,16 @@ MonoBehaviour:
     CountStartTimePeriodNames: []
     CallScriptParams: []
   m_DefeatSequentialEffect:
-    m_Params: []
-  m_DefeatHideTime: 0
+    m_Params:
+    - Delay: 0
+      Effect: {fileID: 11400000, guid: 97ad3ebef7cd188408d03a91a4129709, type: 2}
+    - Delay: 5
+      Effect: {fileID: 11400000, guid: 34a131c3b59bdf04794d478b70474ae5, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+    - Delay: 5.5
+      Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
+  m_DefeatHideTime: 5
   m_HackingCompleteNum: 3
   m_DownHpArray:
   - 100
@@ -46,9 +58,13 @@ MonoBehaviour:
     type: 2}
   m_ChangeAttackHpRates: []
   m_HackingSuccessItemParam:
-    ItemSpreadParams: []
+    ItemSpreadParams:
+    - Type: 6
+      Num: 10
+      Point: 200
+      SpreadRadius: 0.5
     CenterCreateItemType: 0
-  m_RescueScore: 0
+  m_RescueScore: 25000
   m_RescueItemParam:
     ItemSpreadParams: []
     CenterCreateItemType: 0

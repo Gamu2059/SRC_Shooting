@@ -426,6 +426,7 @@ public class BattleRealBoss : BattleRealEnemyController
         BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
         AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
+        Debug.Log(1111);
         var effectManager = BattleRealEffectManager.Instance;
         m_DownEffect = effectManager.CreateEffect(m_BossGenerateParamSet.DownEffectParam, transform);
         m_DownPlayerTriangleEffect = effectManager.CreateEffect(m_BossGenerateParamSet.PlayerTriangleEffectParam, transform);
@@ -561,6 +562,13 @@ public class BattleRealBoss : BattleRealEnemyController
             timer.SetTimeoutCallBack(() => OnDefeatDestroy());
             TimerManager.Instance.RegistTimer(timer);
         }
+
+        // ダウンエフェクトなどを停止
+        m_DownEffect?.DestroyEffect(true);
+        m_DownPlayerTriangleEffect?.DestroyEffect(true);
+
+        // 全弾削除
+        BattleRealBulletManager.Instance.CheckPoolBullet(this);
     }
 
     private void UpdateOnDead()
@@ -605,6 +613,13 @@ public class BattleRealBoss : BattleRealEnemyController
             timer.SetTimeoutCallBack(() => OnRescueDestroy());
             TimerManager.Instance.RegistTimer(timer);
         }
+
+        // ダウンエフェクトなどを停止
+        m_DownEffect?.DestroyEffect(true);
+        m_DownPlayerTriangleEffect?.DestroyEffect(true);
+
+        // 全弾削除
+        BattleRealBulletManager.Instance.CheckPoolBullet(this);
     }
 
     private void UpdateOnRescue()
@@ -722,30 +737,6 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected override void OnDead()
     {
-        //if (GenerateParamSet != null)
-        //{
-        //    var defeatEffect = GenerateParamSet.DefeatEffect;
-        //    if (defeatEffect != null)
-        //    {
-        //        var effect = Instantiate(defeatEffect);
-        //        effect.transform.position = transform.position;
-        //    }
-
-        //    BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.ItemCreateParam);
-
-        //    var events = GenerateParamSet.DefeatEvents;
-        //    if (events != null)
-        //    {
-        //        for (int i = 0; i < events.Length; i++)
-        //        {
-        //            DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
-        //            BattleRealEventManager.Instance.AddEvent(events[i]);
-        //        }
-        //    }
-        //}
-
-        //AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.BreakSe);
-        //Destroy();
         RequestChangeState(E_PHASE.DEAD);
     }
 

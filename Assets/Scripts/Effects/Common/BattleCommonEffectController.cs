@@ -123,7 +123,6 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_Duration = -1;
         m_NowLifeTime = 0;
     }
 

@@ -96,6 +96,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     public BattleHackingManager HackingManager { get; private set; }
 
+    public bool IsHackingComplete { get; private set; }
+
     #endregion
 
     #region Game Cycle
@@ -726,10 +728,20 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     }
 
     /// <summary>
-    /// ゲームクリアにする。
+    /// 全てのインフェストラを救出することはないままゲームクリアにする。
     /// </summary>
-	public void GameClear()
+	public void GameClearWithoutHackingComplete()
     {
+        IsHackingComplete = false;
+        RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
+    }
+
+    /// <summary>
+    /// 全てのインフェストラを救出したことにしてゲームクリアにする。
+    /// </summary>
+    public void GameClearWithoutComplete()
+    {
+        IsHackingComplete = true;
         RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
     }
 }

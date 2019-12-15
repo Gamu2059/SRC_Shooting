@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4619090178638770923}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 911410494370063768}
   - component: {fileID: 6574639096780701500}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: boss_defeat_before_explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +94,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: boss_defeat_before_explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746316304345415074, guid: 98c64652f6d0e9d48a4d921825fee2d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 797411769315969266, guid: 98c64652f6d0e9d48a4d921825fee2d6,
         type: 3}
@@ -149,6 +154,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8185541937483647673, guid: 98c64652f6d0e9d48a4d921825fee2d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 934649799420372677, guid: 98c64652f6d0e9d48a4d921825fee2d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581285577502896998, guid: 98c64652f6d0e9d48a4d921825fee2d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585429071573419690, guid: 98c64652f6d0e9d48a4d921825fee2d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709250240974421581, guid: 98c64652f6d0e9d48a4d921825fee2d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98c64652f6d0e9d48a4d921825fee2d6, type: 3}

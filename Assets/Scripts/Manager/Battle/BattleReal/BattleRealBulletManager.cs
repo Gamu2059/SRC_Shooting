@@ -350,4 +350,41 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
             CheckPoolBullet(bullet);
         }
     }
+
+    /// <summary>
+    /// 指定したキャラが撃った弾をプールに送る
+    /// </summary>
+    public void CheckPoolBullet(CharaController targetOwner)
+    {
+        if (targetOwner == null)
+        {
+            return;
+        }
+
+        foreach (var bullet in m_StandbyBullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            if (bullet.GetBulletOwner() == targetOwner)
+            {
+                CheckPoolBullet(bullet);
+            }
+        }
+
+        foreach (var bullet in Bullets)
+        {
+            if (bullet == null)
+            {
+                continue;
+            }
+
+            if (bullet.GetBulletOwner() == targetOwner)
+            {
+                CheckPoolBullet(bullet);
+            }
+        }
+    }
 }

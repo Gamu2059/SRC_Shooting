@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 610052086076322948}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 693206479154876436}
   - component: {fileID: 6277711863487760489}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: boss_defeat_explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: boss_defeat_explosion
       objectReference: {fileID: 0}
+    - target: {fileID: 1999967927216430669, guid: 78a7fc5c70c8ea746af58295fabba31e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1751329041263891477, guid: 78a7fc5c70c8ea746af58295fabba31e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -151,6 +156,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406191317502095908, guid: 78a7fc5c70c8ea746af58295fabba31e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568198051960262511, guid: 78a7fc5c70c8ea746af58295fabba31e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827335884112868304, guid: 78a7fc5c70c8ea746af58295fabba31e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338995515603855258, guid: 78a7fc5c70c8ea746af58295fabba31e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031397851278921469, guid: 78a7fc5c70c8ea746af58295fabba31e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78a7fc5c70c8ea746af58295fabba31e, type: 3}
