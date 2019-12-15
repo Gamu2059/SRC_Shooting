@@ -8382,7 +8382,7 @@ PrefabInstance:
     - target: {fileID: 2868266280824994910, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2868266280824994910, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
@@ -8412,22 +8412,22 @@ PrefabInstance:
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.2588191
+      value: -0.258819
       objectReference: {fileID: 0}
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9659258
+      value: 0.9659259
       objectReference: {fileID: 0}
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
@@ -8442,7 +8442,7 @@ PrefabInstance:
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5444058216361353658, guid: d94fbe3299eb5854fa1cb48e3a025153,
         type: 3}
@@ -28868,7 +28868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ParamSet: {fileID: 11400000, guid: c063e9f8c509b264cbba2ea0a4d12eda, type: 2}
+  m_ParamSet: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
   m_BattleRealStageManager: {fileID: 1771546482}
   m_BattleHackingStageManager: {fileID: 1183653724}
   m_BattleRealUiManager: {fileID: 1771546480}
