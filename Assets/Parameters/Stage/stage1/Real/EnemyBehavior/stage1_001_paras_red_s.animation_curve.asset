@@ -23,19 +23,28 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: -0.0015221831
-      outSlope: 0.25
+      outSlope: 0.8
       tangentMode: 65
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.09189466
     - serializedVersion: 3
-      time: 4
-      value: 1
-      inSlope: 0.25
-      outSlope: 1.5252168
-      tangentMode: 5
+      time: 1.5
+      value: 1.2
+      inSlope: 0.39865252
+      outSlope: 0.39865252
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.057382505
+      inWeight: 0.33333334
+      outWeight: 0.06616862
+    - serializedVersion: 3
+      time: 4
+      value: 1.5
+      inSlope: 0.0070755985
+      outSlope: 0.0070755985
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.100761235
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -64,10 +73,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 2
-  m_ShotStop: 10
+  m_ShotOffset: 1
+  m_ShotStop: 1
   m_ShotParam:
-    Interval: 5
+    Interval: 1
     Num: 2
     Angle: 15
     IsPlayerLook: 1

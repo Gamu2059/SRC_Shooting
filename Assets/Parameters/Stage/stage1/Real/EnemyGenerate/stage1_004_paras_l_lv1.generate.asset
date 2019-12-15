@@ -16,18 +16,10 @@ MonoBehaviour:
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_DefeatScore: 1000
-  m_DefeatItemParam:
-    ItemSpreadParams:
-    - Type: 6
-      Num: 5
-      Point: 100
-      SpreadRadius: 0.3
-    - Type: 7
-      Num: 1
-      Point: 500
-      SpreadRadius: 0.3
-    CenterCreateItemType: 7
+  m_Score: 200
+  m_ItemCreateParam:
+    ItemSpreadParams: []
+    CenterCreateItemType: 0
   m_DefeatEvents:
   - ContentName: "\u30DC\u30B9\u524D\u6483\u7834"
     IsPassExecute: 0
