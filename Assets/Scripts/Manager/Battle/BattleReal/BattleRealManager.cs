@@ -495,6 +495,10 @@ public class BattleRealManager : ControllableObject
     private void StartOnDead()
     {
         PlayerManager.SetPlayerActive(false);
+
+        // シェイクが邪魔になるので止める
+        CameraManager.StopShake();
+
         var battleData = DataManager.Instance.BattleData;
         if (battleData.PlayerLife < 1)
         {

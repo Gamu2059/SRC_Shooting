@@ -232,6 +232,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         {
             m_IsDrawColliderArea = !m_IsDrawColliderArea;
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DataManager.Instance.BattleData.AddEnergyCount(1);
+        }
     }
 
     public override void OnLateUpdate()
