@@ -416,6 +416,7 @@ public class BattleRealBoss : BattleRealEnemyController
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, DOWN_HEAL_TIME);
         timer.SetTimeoutCallBack(() =>
         {
+            AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownReturnSe);
             DestroyTimer(DOWN_KEY);
             RequestChangeState(E_PHASE.ATTACK);
         });
@@ -426,7 +427,6 @@ public class BattleRealBoss : BattleRealEnemyController
         BattleRealBulletManager.Instance.CheckPoolAllEnemyBullet();
         AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
-        Debug.Log(1111);
         var effectManager = BattleRealEffectManager.Instance;
         m_DownEffect = effectManager.CreateEffect(m_BossGenerateParamSet.DownEffectParam, transform);
         m_DownPlayerTriangleEffect = effectManager.CreateEffect(m_BossGenerateParamSet.PlayerTriangleEffectParam, transform);

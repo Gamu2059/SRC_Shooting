@@ -34,8 +34,4 @@ public class BattleHackingPlayerManagerParamSet : ScriptableObject
     [SerializeField]
     private PlaySoundParam m_ShotSe;
     public PlaySoundParam ShotSe => m_ShotSe;
-
-    [SerializeField]
-    private PlaySoundParam m_DeadSe;
-    public PlaySoundParam DeadSe => m_DeadSe;
 }
