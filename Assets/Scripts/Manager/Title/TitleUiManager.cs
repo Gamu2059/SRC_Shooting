@@ -31,6 +31,9 @@ public class TitleUiManager : ControllableMonoBehavior
     [SerializeField]
     private Animator m_CreditAnimator;
 
+    [SerializeField]
+    private Text m_BestScoreText;
+
     private int m_EnableIdx;
 
     public override void OnInitialize()
@@ -39,6 +42,16 @@ public class TitleUiManager : ControllableMonoBehavior
         DisableAllMenuForce();
         DisableAllPopupForce();
         ForcusMenu(0, true);
+
+        var bestScore = DataManager.Instance.BattleData.BestScore;
+        if (bestScore < 1)
+        {
+            m_BestScoreText.text = "";
+        }
+        else
+        {
+            m_BestScoreText.text = string.Format("Best Score : {0}", bestScore);
+        }
     }
 
     public void DisableAllMenuForce()
