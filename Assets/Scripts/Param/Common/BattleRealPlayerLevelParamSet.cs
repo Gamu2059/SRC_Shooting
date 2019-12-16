@@ -91,6 +91,14 @@ public class BattleCommonDefData
     [SerializeField]
     private float m_HackingSuccessBonus;
     public float HackingSuccessBonus => m_HackingSuccessBonus;
+
+    [SerializeField]
+    private double m_LifeBonus;
+    public double LifeBonus => m_LifeBonus;
+
+    [SerializeField]
+    private double m_PerfectHackingBonus;
+    public double PerfectHackingBonus => m_PerfectHackingBonus;
 }
 
 /// <summary>

@@ -10,7 +10,7 @@ public class PlayerRecord
     /// <summary>
     /// ゲーム終了時の最終スコア
     /// </summary>
-    public float m_FinalScore {get; private set;}
+    public double m_FinalScore {get; private set;}
 
     /// <summary>
     /// ゲーム終了時の到達ステージ
@@ -30,7 +30,7 @@ public class PlayerRecord
 
     }
 
-    public PlayerRecord(float finalScore, int reachedStage, System.DateTime date){
+    public PlayerRecord(double finalScore, int reachedStage, System.DateTime date){
         m_FinalScore = finalScore;
         m_FinalReachedStage = reachedStage;
         m_PlayedDate = date;

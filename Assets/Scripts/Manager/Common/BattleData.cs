@@ -57,9 +57,24 @@ public class BattleData
     public float EnergyCharge { get; private set; }
 
     /// <summary>
+    /// ハッキング挑戦回数
+    /// </summary>
+    public int HackingTryCount { get; private set; }
+
+    /// <summary>
     /// ハッキング成功回数
     /// </summary>
     public int HackingSucceedCount { get; private set; }
+
+    /// <summary>
+    /// このステージでのパーフェクトハッキング回数
+    /// </summary>
+    public int PerfectHackingSuccessCount { get; private set; }
+
+    /// <summary>
+    /// このステージのボスをすべて救出したかどうか
+    /// </summary>
+    public bool IsHackingComplete { get; private set; }
 
     /// <summary>
     /// 残機の最大保持数
@@ -117,7 +132,10 @@ public class BattleData
         Score = 0;
         Exp = 0;
         EnergyCharge = 0;
+        PerfectHackingSuccessCount = 0;
         HackingSucceedCount = 0;
+        HackingTryCount = 0;
+        IsHackingComplete = false;
 
         // ステージに応じて初期値が異なるものを初期化
         switch (stage)
@@ -287,6 +305,26 @@ public class BattleData
     #endregion
 
     #region Hacking Succeed Count
+
+    public void SetPerfectHackingSuccessCount(int count)
+    {
+        PerfectHackingSuccessCount = count;
+    }
+
+    public void IncreaseHackingTryCount()
+    {
+        HackingTryCount++;
+    }
+
+    public bool IsPerfectHacking()
+    {
+        return PerfectHackingSuccessCount > 0 && IsHackingComplete && PerfectHackingSuccessCount == HackingTryCount;
+    }
+
+    public void SetHackingComplete(bool isComplete)
+    {
+        IsHackingComplete = isComplete;
+    }
 
     public void OnHackingResult(bool isHackingSuccess)
     {

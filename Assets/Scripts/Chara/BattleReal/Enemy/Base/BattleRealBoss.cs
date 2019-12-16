@@ -54,6 +54,8 @@ public class BattleRealBoss : BattleRealEnemyController
     public float NowDownHp { get; protected set; }
     public float MaxDownHp { get; protected set; }
 
+    public int HackingCompleteNum { get; protected set; }
+
     protected int m_HackingSuccessCount;
     protected List<float> m_ChangeAttackHpRates;
 

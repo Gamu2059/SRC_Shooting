@@ -80,7 +80,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [Header("Result")]
 
     [SerializeField]
-    private Text m_ResultText;
+    private ResultIndicator m_ResultIndicator;
 
     #endregion
 
@@ -92,7 +92,6 @@ public class BattleRealUiManager : ControllableMonoBehavior
     {
         base.OnAwake();
         m_StageClearAnimator.gameObject.SetActive(false);
-        m_ResultText.gameObject.SetActive(false);
         m_IsShowResult = false;
     }
 
@@ -116,11 +115,13 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_WeaponIndicator.OnInitialize();
         m_BossHpGage.OnInitialize();
         m_BossDownGage.OnInitialize();
+        m_ResultIndicator.OnInitialize();
         SetEnableBossUI(false);
     }
 
     public override void OnFinalize()
     {
+        m_ResultIndicator.OnFinalize();
         m_BossDownGage.OnFinalize();
         m_BossHpGage.OnFinalize();
         m_WeaponIndicator.OnFinalize();
@@ -150,11 +151,11 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_WeaponIndicator.OnUpdate();
         m_BossHpGage.OnUpdate();
         m_BossDownGage.OnUpdate();
+        m_ResultIndicator.OnUpdate();
         
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;
-            m_ResultText.gameObject.SetActive(false);
             BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
         }
     }
@@ -186,7 +187,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     public void PlayGameClearAnimation()
     {
         m_StageClearAnimator.gameObject.SetActive(true);
-        if (BattleManager.Instance.IsHackingComplete)
+        if (DataManager.Instance.BattleData.IsHackingComplete)
         {
             m_StageClearAnimator.Play(CLEAR_WITH_HACKING_COMPLETE, 0);
         }
@@ -203,7 +204,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     public void DisplayResult()
     {
-        m_ResultText.gameObject.SetActive(true);
+        m_ResultIndicator.PlayResult();
         m_IsShowResult = true;
     }
 }
