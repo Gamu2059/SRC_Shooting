@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 /// <summary>
 /// ステートマシン。
 /// </summary>
+[Serializable]
 public class StateMachine<T> : ControllableObject
 {
     private Dictionary<T, State<T>> m_States;
