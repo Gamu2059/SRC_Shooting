@@ -87,6 +87,13 @@ public class BattleHackingPlayerManager : ControllableObject
             Player.ShotBullet();
         }
 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            BattleHackingEnemyManager.Instance.KillAllBoss();
+        }
+#endif
+
         Player.OnUpdate();
     }
 

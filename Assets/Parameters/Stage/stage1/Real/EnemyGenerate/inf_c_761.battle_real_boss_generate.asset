@@ -16,7 +16,7 @@ MonoBehaviour:
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_DefeatScore: 20000
+  m_DefeatScore: 10000
   m_DefeatItemParam:
     ItemSpreadParams:
     - Type: 4
@@ -80,7 +80,7 @@ MonoBehaviour:
       Point: 100
       SpreadRadius: 0.5
     CenterCreateItemType: 0
-  m_RescueScore: 30000
+  m_RescueScore: 20000
   m_RescueItemParam:
     ItemSpreadParams:
     - Type: 4

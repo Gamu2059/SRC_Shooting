@@ -96,8 +96,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     public BattleHackingManager HackingManager { get; private set; }
 
-    public bool IsHackingComplete { get; private set; }
-
     #endregion
 
     #region Game Cycle
@@ -195,6 +193,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         BattleHackingUiManager.OnInitialize();
 
         m_GameOverController.OnInitialize();
+
+        CalcPerfectHackingSuccessNum();
 
         RequestChangeState(E_BATTLE_STATE.START);
     }
@@ -401,6 +401,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING);
 
+        DataManager.Instance.BattleData.IncreaseHackingTryCount();
+
         m_BattleHackingStageManager.gameObject.SetActive(true);
 
         m_VideoPlayer.clip = m_ParamSet.ToHackingMovie;
@@ -535,6 +537,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     private void StartOnGameClear()
     {
+        // ステージクリアした時しか記録しない
+        var resultData = DataManager.Instance.BattleResultData;
+        var battleData = DataManager.Instance.BattleData;
+        resultData.ClacScore(battleData);
+
+        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord(resultData.TotalScore, 1, DateTime.Now));
+        GameManager.Instance.PlayerRecordManager.ShowRecord();
+
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
         AudioManager.Instance.StopAllBgm();
@@ -630,9 +640,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.END);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.END);
-
-        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord((int)DataManager.Instance.BattleData.Score, 1, DateTime.Now));
-        GameManager.Instance.PlayerRecordManager.ShowRecord();
         ExitGame();
     }
 
@@ -680,6 +687,24 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_StateMachine.Goto(state);
     }
 
+    /// <summary>
+    /// このステージでは最短で何回でハッキング完了になるかを計上する。
+    /// </summary>
+    private void CalcPerfectHackingSuccessNum()
+    {
+        var generator = m_ParamSet.BattleRealParamSet.EnemyGroupManagerParamSet.Generator;
+        int sum = 0;
+
+        foreach (var boss in generator.BossParamSet.IndividualGenerateParamSets)
+        {
+            if (boss.EnemyGenerateParamSet is BattleRealBossGenerateParamSet bossParamSet)
+            {
+                sum += bossParamSet.HackingCompleteNum;
+            }
+        }
+
+        DataManager.Instance.BattleData.SetPerfectHackingSuccessCount(sum);
+    }
 
     /// <summary>
     /// ゲームを開始する。
@@ -715,7 +740,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
 	public void GameClearWithoutHackingComplete()
     {
-        IsHackingComplete = false;
+        DataManager.Instance.BattleData.SetHackingComplete(false);
         RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
     }
 
@@ -724,7 +749,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     public void GameClearWithHackingComplete()
     {
-        IsHackingComplete = true;
+        DataManager.Instance.BattleData.SetHackingComplete(true);
         RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
     }
 
