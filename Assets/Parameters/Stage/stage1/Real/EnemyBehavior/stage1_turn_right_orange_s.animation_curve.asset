@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c693e247d6abd4e925eca8a111248e, type: 3}
-  m_Name: stage1_013_paras_red_s.animation_curve
+  m_Name: stage1_turn_right_orange_s.animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: AnimationCurveEnemy
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_EnemyLookParamSet: {fileID: 11400000, guid: 8eec20119819812438860330601666e5,
+  m_EnemyLookParamSet: {fileID: 11400000, guid: 153dd4c7257de16458514db9e17b18ee,
     type: 2}
   m_SpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 2
-      value: 2
+      value: 0.5
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 4
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -53,7 +53,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3
+      time: 2
       value: 0
       inSlope: 0
       outSlope: 0
@@ -61,14 +61,50 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.5
+      value: 90
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3.5
+      value: 45
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3.5001
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 4
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 1
-  m_ShotStop: 0.6
+  m_ShotOffset: 0
+  m_ShotStop: 0
   m_ShotParam:
-    Interval: 0.3
-    Num: 4
-    Angle: 90
-    IsPlayerLook: 1
+    Interval: 1000
+    Num: 0
+    Angle: 0
+    IsPlayerLook: 0
   m_IsStartAnimationOnStart: 1

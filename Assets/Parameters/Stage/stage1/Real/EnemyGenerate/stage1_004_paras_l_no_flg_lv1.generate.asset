@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
-  m_Name: stage1_003_paras_l_lv2.generate
+  m_Name: stage1_004_paras_l_no_flg_lv1.generate
   m_EditorClassIdentifier: 
-  m_Hp: 150
+  m_Hp: 80
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
-  m_DefeatScore: 2000
+  m_DefeatScore: 1000
   m_DefeatItemParam:
     ItemSpreadParams:
-    - Type: 1
-      Num: 1
-      Point: 1
-      SpreadRadius: 0
+    - Type: 6
+      Num: 10
+      Point: 200
+      SpreadRadius: 0.3
     CenterCreateItemType: 0
   m_DefeatEvents: []
   m_DefeatSequentialEffect:
