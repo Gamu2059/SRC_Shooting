@@ -70,6 +70,7 @@ public class BattleRealInputManager : InputManagerBase
         ChangeMode = GetButton(CHANGE_WEAPON_TYPE);
         Menu = GetButton(MENU);
 
+#if UNITY_EDITOR
         for (int i=0;i<m_DebugKey.Length;i++)
         {
             if (Input.GetKeyDown(m_DebugKey[i]))
@@ -77,6 +78,7 @@ public class BattleRealInputManager : InputManagerBase
                 Time.timeScale = i;
             }
         }
+#endif
     }
 
     public void RegistInput()
