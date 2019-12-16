@@ -15,31 +15,17 @@ MonoBehaviour:
   EventTriggerName: "\u30DC\u30B9\u6226\u958B\u59CB"
   Condition:
     IsReverse: 0
-    IsMultiCondition: 1
+    IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 3
-      VariableName: 
-      CompareType: 5
-      BoolCompareType: 0
-      CompareValue: 0
-      BoolCompareValue: 0
-    MultiConditionType: 1
-    MultiConditions:
-    - IsReverse: 0
       VariableType: 3
       VariableName: Game Start
       CompareType: 5
       BoolCompareType: 0
       CompareValue: 100
       BoolCompareValue: 0
-    - IsReverse: 0
-      VariableType: 0
-      VariableName: Before Boss
-      CompareType: 5
-      BoolCompareType: 0
-      CompareValue: 2
-      BoolCompareValue: 0
+    MultiConditionType: 1
+    MultiConditions: []
   Contents:
   - ContentName: "\u30DC\u30B9BGM"
     IsPassExecute: 0
