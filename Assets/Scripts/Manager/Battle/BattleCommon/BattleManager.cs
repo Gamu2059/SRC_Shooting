@@ -222,16 +222,17 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         base.OnUpdate();
         m_StateMachine.OnUpdate();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
-            return;
-        }
-
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.H))
         {
             m_IsDrawColliderArea = !m_IsDrawColliderArea;
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DataManager.Instance.BattleData.AddEnergyCount(1);
+        }
+#endif
     }
 
     public override void OnLateUpdate()
@@ -632,7 +633,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord((int)DataManager.Instance.BattleData.Score, 1, DateTime.Now));
         GameManager.Instance.PlayerRecordManager.ShowRecord();
-        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+        ExitGame();
     }
 
     private void UpdateOnEnd()
@@ -725,5 +726,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         IsHackingComplete = true;
         RequestChangeState(E_BATTLE_STATE.GAME_CLEAR);
+    }
+
+    public void ExitGame()
+    {
+        BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
     }
 }

@@ -252,6 +252,11 @@ public class BattleRealManager : ControllableObject
         base.OnUpdate();
 
         m_StateMachine.OnUpdate();
+
+        if (InputManager.Menu == E_INPUT_STATE.DOWN)
+        {
+            BattleManager.Instance.ExitGame();
+        }
     }
 
     public override void OnLateUpdate()
@@ -495,6 +500,10 @@ public class BattleRealManager : ControllableObject
     private void StartOnDead()
     {
         PlayerManager.SetPlayerActive(false);
+
+        // シェイクが邪魔になるので止める
+        CameraManager.StopShake();
+
         var battleData = DataManager.Instance.BattleData;
         if (battleData.PlayerLife < 1)
         {
@@ -768,18 +777,7 @@ public class BattleRealManager : ControllableObject
     private void StartOnTransitionToReal()
     {
         var battleData = DataManager.Instance.BattleData;
-        if (BattleManager.Instance.HackingManager.IsHackingSuccess)
-        {
-            battleData.IncreaseHackingSucceedCount();
-            if (battleData.HackingSucceedCount >= 1)
-            {
-                battleData.AddScore(1000 * battleData.HackingSucceedCount);
-            }
-        }
-        else
-        {
-            battleData.ResetHackingSucceedCount();
-        }
+        battleData.OnHackingResult(BattleManager.Instance.HackingManager.IsHackingSuccess);
     }
 
     private void UpdateOnTransitionToReal()

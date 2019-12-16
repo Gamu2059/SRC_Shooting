@@ -749,6 +749,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected override void OnDead()
     {
+        DestroyAllTimer();
         RequestChangeState(E_PHASE.DEAD);
     }
 

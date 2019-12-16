@@ -19,7 +19,7 @@ public class BattleData
     /// <summary>
     /// ステージ
     /// </summary>
-    public E_STAGE Stage { get; private set; }
+    public E_STATE Stage { get; private set; }
 
     /// <summary>
     /// 残機
@@ -81,6 +81,11 @@ public class BattleData
     /// </summary>
     public float MaxEnergyCharge { get; private set; }
 
+    /// <summary>
+    /// ハッキングに成功した時のスコア単価
+    /// </summary>
+    public float HackingSuccessBonus { get; private set; }
+
     #endregion
 
     public BattleData(BattleRealPlayerLevelParamSet playerLevelParamSet)
@@ -88,10 +93,10 @@ public class BattleData
         m_PlayerLevelParamSet = playerLevelParamSet;
 
         GameMode = E_GAME_MODE.STORY;
-        Stage = E_STAGE.NORMAL_1;
+        Stage = E_STATE.NORMAL_1;
     }
 
-    public void ResetData(E_STAGE stage)
+    public void ResetData(E_STATE stage)
     {
         if (m_PlayerLevelParamSet == null)
         {
@@ -105,6 +110,7 @@ public class BattleData
         MaxLevel = defData.MaxLevel;
         MaxEnergyCount = defData.MaxEnergyCount;
         MaxEnergyCharge = defData.MaxEnergyCharge;
+        HackingSuccessBonus = defData.HackingSuccessBonus;
 
         // 初期値が共通なものを初期化
         BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore;
@@ -116,10 +122,10 @@ public class BattleData
         // ステージに応じて初期値が異なるものを初期化
         switch (stage)
         {
-            case E_STAGE.EASY_0:
-            case E_STAGE.NORMAL_0:
-            case E_STAGE.HARD_0:
-            case E_STAGE.HADES_0:
+            case E_STATE.EASY_0:
+            case E_STATE.NORMAL_0:
+            case E_STATE.HARD_0:
+            case E_STATE.HADES_0:
                 InitData(m_PlayerLevelParamSet.Stage0InitData);
                 break;
             default:
@@ -282,14 +288,20 @@ public class BattleData
 
     #region Hacking Succeed Count
 
-    public void ResetHackingSucceedCount()
+    public void OnHackingResult(bool isHackingSuccess)
     {
-        HackingSucceedCount = 0;
-    }
-
-    public void IncreaseHackingSucceedCount()
-    {
-        HackingSucceedCount++;
+        if (isHackingSuccess)
+        {
+            HackingSucceedCount++;
+            if (HackingSucceedCount >= 1)
+            {
+                AddScore(HackingSuccessBonus * HackingSucceedCount);
+            }
+        }
+        else
+        {
+            HackingSucceedCount = 0;
+        }
     }
 
     #endregion

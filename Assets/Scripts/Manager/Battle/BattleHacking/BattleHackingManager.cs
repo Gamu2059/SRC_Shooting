@@ -170,6 +170,11 @@ public class BattleHackingManager : ControllableObject
         base.OnUpdate();
 
         m_StateMachine.OnUpdate();
+
+        if (InputManager.Menu == E_INPUT_STATE.DOWN)
+        {
+            BattleManager.Instance.ExitGame();
+        }
     }
 
     public override void OnLateUpdate()

@@ -142,11 +142,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
             OnChangeWeaponType?.Invoke(IsLaserType);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
-        }
-
         Player.OnUpdate();
     }
 

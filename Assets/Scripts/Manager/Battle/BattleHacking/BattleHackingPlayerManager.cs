@@ -86,12 +86,6 @@ public class BattleHackingPlayerManager : ControllableObject
         {
             Player.ShotBullet();
         }
- 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // 全ボスを殺して間接的にゲームクリアにする
-            BattleHackingEnemyManager.Instance.KillAllBoss();
-        }
 
         Player.OnUpdate();
     }
