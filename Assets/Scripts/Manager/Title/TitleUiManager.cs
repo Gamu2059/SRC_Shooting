@@ -7,37 +7,100 @@ using UnityEngine.UI;
 
 public class TitleUiManager : ControllableMonoBehavior
 {
-	[SerializeField]
-	private Button m_StartButton;
+    private const string MENU_ENABLE = "menu_enable";
+    private const string MENU_DISABLE = "menu_disable";
+    private const string MENU_ENABLE_FORCE = "menu_enable_force";
+    private const string MENU_DISABLE_FORCE = "menu_disable_force";
+
+    private const string POPUP_ENABLE = "popup_enable";
+    private const string POPUP_DISABLE = "popup_disable";
+    private const string POPUP_DISABLE_FORCE = "popup_disable_force";
+    private const string POPUP_BACK_ENABLE = "popup_back_enable";
+    private const string POPUP_BACK_DISABLE = "popup_back_disable";
+    private const string POPUP_BACK_DISABLE_FORCE = "popup_back_disable_force";
 
     [SerializeField]
-    private PlaySoundParam m_TitleBgm;
+    private Animator[] m_MenuAnimators;
 
     [SerializeField]
-    private PlaySoundParam m_StartSe;
+    private Animator m_PopupBackAnimator;
 
-	public override void OnStart()
-	{
-		base.OnStart();
+    [SerializeField]
+    private Animator m_HowtoAnimator;
 
-        AudioManager.Instance.Play(m_TitleBgm);
-        m_StartButton.onClick.AddListener( GotoMenu );
-	}
+    [SerializeField]
+    private Animator m_CreditAnimator;
 
-	public override void OnUpdate()
-	{
-		base.OnUpdate();
+    private int m_EnableIdx;
 
-		if( Input.anyKey )
-		{
-			GotoMenu();
-		}
-	}
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        DisableAllMenuForce();
+        DisableAllPopupForce();
+        ForcusMenu(0, true);
+    }
 
-	private void GotoMenu()
-	{
-        DataManager.Instance.BattleData.ResetData(E_STAGE.NORMAL_1);
-        AudioManager.Instance.Play(m_StartSe);
-        BaseSceneManager.Instance.LoadScene( BaseSceneManager.E_SCENE.STAGE1 );
-	}
+    public void DisableAllMenuForce()
+    {
+        foreach (var m in m_MenuAnimators)
+        {
+            m.Play(MENU_DISABLE_FORCE, 0);
+        }
+    }
+
+    private void EnableMenu(int idx)
+    {
+        var i = Mathf.Clamp(idx, 0, m_MenuAnimators.Length - 1);
+        var m = m_MenuAnimators[i];
+        m.Play(MENU_ENABLE_FORCE, 0);
+    }
+
+    private void DisableMenu(int idx)
+    {
+        var i = Mathf.Clamp(idx, 0, m_MenuAnimators.Length - 1);
+        var m = m_MenuAnimators[i];
+        m.Play(MENU_DISABLE, 0);
+    }
+
+    public void ForcusMenu(int idx, bool isForce = false)
+    {
+        if (m_EnableIdx != idx || isForce)
+        {
+            DisableMenu(m_EnableIdx);
+            EnableMenu(idx);
+            m_EnableIdx = idx;
+        }
+    }
+
+    public void DisableAllPopupForce()
+    {
+        m_PopupBackAnimator.Play(POPUP_BACK_DISABLE_FORCE);
+        m_HowtoAnimator.Play(POPUP_DISABLE_FORCE);
+        m_CreditAnimator.Play(POPUP_DISABLE_FORCE);
+    }
+
+    public void EnableHowto()
+    {
+        m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
+        m_HowtoAnimator.Play(POPUP_ENABLE);
+    }
+
+    public void DisableHowto()
+    {
+        m_PopupBackAnimator.Play(POPUP_BACK_DISABLE);
+        m_HowtoAnimator.Play(POPUP_DISABLE);
+    }
+
+    public void EnableCredit()
+    {
+        m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
+        m_CreditAnimator.Play(POPUP_ENABLE);
+    }
+
+    public void DisableCredit()
+    {
+        m_PopupBackAnimator.Play(POPUP_BACK_DISABLE);
+        m_CreditAnimator.Play(POPUP_DISABLE);
+    }
 }
