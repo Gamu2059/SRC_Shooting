@@ -1011,6 +1011,10 @@ public class BulletController : BattleRealObjectBase
             var sufferType = sufferData.SufferCollider.Transform.ColliderType;
             if (sufferType == E_COLLIDER_TYPE.ENEMY_BULLET)
             {
+                var basePoint = BattleRealPlayerManager.Instance.ParamSet.DestroyBulletBonusBasePoint;
+                var level = DataManager.Instance.BattleData.Level;
+
+                DataManager.Instance.BattleData.AddScore(basePoint * (level + 1));
                 DestroyBullet();
             }
         }

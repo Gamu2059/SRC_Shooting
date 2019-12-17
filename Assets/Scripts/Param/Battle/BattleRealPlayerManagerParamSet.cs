@@ -27,6 +27,10 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     private float m_PlayerSlowMoveSpeed;
     public float PlayerSlowMoveSpeed => m_PlayerSlowMoveSpeed;
 
+    [SerializeField, Tooltip("ボム/レーザーで弾を消したときのボーナス点の素点")]
+    private double m_DestroyBulletBonusBasePoint;
+    public double DestroyBulletBonusBasePoint => m_DestroyBulletBonusBasePoint;
+
     [SerializeField]
     private bool m_IsLaserType;
     public bool IsLaserType => m_IsLaserType;
