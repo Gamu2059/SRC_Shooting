@@ -384,13 +384,13 @@ public class CharaController : BattleRealObjectBase
     /// </summary>
     /// <param name="bulletNum">弾の個数</param>
     /// <param name="spreadAngle">弾同士の角度間隔</param>
-    public static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
+    public static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle, float shotAngle)
     {
         List<float> spreadAngles = new List<float>();
 
         if (bulletNum % 2 == 1)
         {
-            spreadAngles.Add(0f);
+            spreadAngles.Add(shotAngle);
 
             for (int i = 0; i < (bulletNum - 1) / 2; i++)
             {

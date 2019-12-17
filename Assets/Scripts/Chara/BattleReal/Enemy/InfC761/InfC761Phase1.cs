@@ -190,8 +190,9 @@ public class InfC761Phase1 : BattleRealBossBehavior
     protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex, int bulletParamIndex)
     {
         int num = param.Num;
-        float angle = param.Angle;
-        var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
+        float angle = param.BetweenBulletsAngle;
+        float initAngle = param.ShotAngle;
+        var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle, initAngle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;

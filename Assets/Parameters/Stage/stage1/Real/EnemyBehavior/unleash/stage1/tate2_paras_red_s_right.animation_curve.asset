@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c693e247d6abd4e925eca8a111248e, type: 3}
-  m_Name: tate2_paras_red_s.animation_curve
+  m_Name: tate2_paras_red_s_right.animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: AnimationCurveEnemy
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
@@ -23,14 +23,14 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: -0.0015221831
-      outSlope: 0.8
+      outSlope: 0.82352936
       tangentMode: 65
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.09189466
     - serializedVersion: 3
-      time: 1.5
-      value: 1.2
+      time: 0.85
+      value: 0.7
       inSlope: 0.39865252
       outSlope: 0.39865252
       tangentMode: 0
@@ -73,11 +73,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 1
-  m_ShotStop: 1
+  m_ShotOffset: 0.1
+  m_ShotStop: 20
   m_ShotParam:
-    Interval: 1
-    Num: 1
-    Angle: 0
-    IsPlayerLook: 1
+    Interval: 0.18
+    Num: 2
+    ShotAngle: 90
+    BetweenBulletsAngle: 180
+    IsPlayerLook: 0
   m_IsStartAnimationOnStart: 1

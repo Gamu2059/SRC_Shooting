@@ -7,6 +7,7 @@ public struct EnemyShotParam
 {
 	public float Interval;
 	public int Num;
-	public float Angle;
+	public float ShotAngle;
+	public float BetweenBulletsAngle;
     public bool IsPlayerLook;
 }

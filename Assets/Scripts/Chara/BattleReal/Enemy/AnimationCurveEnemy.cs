@@ -119,8 +119,9 @@ public class AnimationCurveEnemy : BattleRealEnemyController
     protected virtual void OnShot(EnemyShotParam param)
     {
         int num = param.Num;
-        float angle = param.Angle;
-        var spreadAngles = GetBulletSpreadAngles(num, angle);
+        float shotAngle = param.ShotAngle;
+        float betweenBulletAngle = param.BetweenBulletsAngle;
+        var spreadAngles = GetBulletSpreadAngles(num, betweenBulletAngle, shotAngle);
         var shotParam = new BulletShotParam(this);
         shotParam.Position = transform.position;
         shotParam.Rotation = transform.eulerAngles;

@@ -23,14 +23,14 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: -0.0015221831
-      outSlope: 0.8
+      outSlope: 0.82352936
       tangentMode: 65
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.09189466
     - serializedVersion: 3
-      time: 1.5
-      value: 1.2
+      time: 0.85
+      value: 0.7
       inSlope: 0.39865252
       outSlope: 0.39865252
       tangentMode: 0
@@ -73,11 +73,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 0
-  m_ShotStop: 0
+  m_ShotOffset: 0.1
+  m_ShotStop: 25
   m_ShotParam:
-    Interval: 1000
-    Num: 0
-    Angle: 0
+    Interval: 0.25
+    Num: 36
+    ShotAngle: 0
+    BetweenBulletsAngle: 10
     IsPlayerLook: 0
   m_IsStartAnimationOnStart: 1

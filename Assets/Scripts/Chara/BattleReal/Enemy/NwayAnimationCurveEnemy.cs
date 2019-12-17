@@ -27,7 +27,7 @@ public class NwayAnimationCurveEnemy : AnimationCurveEnemy
             return;
         }
 
-        var spreadAngles = GetBulletSpreadAngles(param.Num, param.Angle);
+        var spreadAngles = GetBulletSpreadAngles(param.Num, param.BetweenBulletsAngle, param.ShotAngle);
         var shotParam = new BulletShotParam(this);
 
         for (int i=0;i<m_WayNum;i++)
