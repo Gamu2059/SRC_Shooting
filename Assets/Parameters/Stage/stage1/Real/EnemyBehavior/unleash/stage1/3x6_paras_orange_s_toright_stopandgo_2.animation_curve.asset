@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c693e247d6abd4e925eca8a111248e, type: 3}
-  m_Name: 3x6_paras_orange_s_stopandgo.animation_curve
+  m_Name: 3x6_paras_orange_s_toright_stopandgo_2.animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: AnimationCurveEnemy
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
@@ -91,12 +91,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 2
-  m_ShotStop: 2
+  m_ShotOffset: 2.5
+  m_ShotStop: 1.28
   m_ShotParam:
-    Interval: 2
-    Num: 20
+    Interval: 0.064
+    Num: 16
     ShotAngle: 0
-    BetweenBulletsAngle: 18
+    BetweenBulletsAngle: 22.5
     IsPlayerLook: 1
   m_IsStartAnimationOnStart: 1
