@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026f26964a5298d44bb18afa601f5697, type: 3}
+  m_Name: unleash.player_level
+  m_EditorClassIdentifier: 
+  m_PlayerLevels:
+  - m_NecessaryExpToLevelUpNextLevel: 1000
+    m_LaserTypeShotDamage: 1
+    m_LaserTypeShotDownDamage: 0.5
+    m_BombTypeShotDamage: 1
+    m_BombTypeShotDownDamage: 0.5
+    m_LaserDamagePerSeconds: 150
+    m_BombDamage: 100
+  - m_NecessaryExpToLevelUpNextLevel: 2000
+    m_LaserTypeShotDamage: 1.2
+    m_LaserTypeShotDownDamage: 0.6
+    m_BombTypeShotDamage: 1.2
+    m_BombTypeShotDownDamage: 0.6
+    m_LaserDamagePerSeconds: 250
+    m_BombDamage: 200
+  - m_NecessaryExpToLevelUpNextLevel: 3000
+    m_LaserTypeShotDamage: 1.5
+    m_LaserTypeShotDownDamage: 0.75
+    m_BombTypeShotDamage: 1.5
+    m_BombTypeShotDownDamage: 0.75
+    m_LaserDamagePerSeconds: 350
+    m_BombDamage: 300
+  - m_NecessaryExpToLevelUpNextLevel: 4000
+    m_LaserTypeShotDamage: 2
+    m_LaserTypeShotDownDamage: 1
+    m_BombTypeShotDamage: 2
+    m_BombTypeShotDownDamage: 1
+    m_LaserDamagePerSeconds: 450
+    m_BombDamage: 400
+  - m_NecessaryExpToLevelUpNextLevel: 5000
+    m_LaserTypeShotDamage: 3
+    m_LaserTypeShotDownDamage: 1.5
+    m_BombTypeShotDamage: 3
+    m_BombTypeShotDownDamage: 1.5
+    m_LaserDamagePerSeconds: 600
+    m_BombDamage: 600
+  m_CommonDefData:
+    m_MaxPlayerLife: 10
+    m_MaxLevel: 5
+    m_MaxEnergyCount: 10
+    m_MaxEnergyCharge: 5000
+    m_HackingSuccessBonus: 2000
+    m_LifeBonus: 5000
+    m_PerfectHackingBonus: 10000
+  m_Stage0InitData:
+    m_InitPlayerLife: 2
+    m_InitLevel: 0
+    m_InitEnergyCount: 0
+  m_Stage1InitData:
+    m_InitPlayerLife: 0
+    m_InitLevel: 0
+    m_InitEnergyCount: 0
