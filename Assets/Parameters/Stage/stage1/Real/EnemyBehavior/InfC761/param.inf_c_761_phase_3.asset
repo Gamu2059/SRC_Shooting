@@ -54,15 +54,18 @@ MonoBehaviour:
   m_ShotParams:
   - Interval: 0
     Num: 6
-    Angle: 60
+    ShotAngle: 0
+    BetweenBulletsAngle: 60
     IsPlayerLook: 0
   - Interval: 0
     Num: 5
-    Angle: 72
+    ShotAngle: 0
+    BetweenBulletsAngle: 72
     IsPlayerLook: 1
   - Interval: 0.07
     Num: 1
-    Angle: 0
+    ShotAngle: 0
+    BetweenBulletsAngle: 0
     IsPlayerLook: 0
   m_ShotOffSets:
   - {x: 0, y: 0, z: 0}
