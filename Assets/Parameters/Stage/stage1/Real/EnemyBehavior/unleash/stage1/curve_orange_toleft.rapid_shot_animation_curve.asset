@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac507daa1f1232a49b01675eff455b2c, type: 3}
-  m_Name: curve.rapid_shot_animation_curve
+  m_Name: curve_orange_toleft.rapid_shot_animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: RapidShotAnimationCurveEnemy
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_EnemyLookParamSet: {fileID: 11400000, guid: 8eec20119819812438860330601666e5,
+  m_EnemyLookParamSet: {fileID: 11400000, guid: 153dd4c7257de16458514db9e17b18ee,
     type: 2}
   m_SpeedCurve:
     serializedVersion: 2
@@ -22,29 +22,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -0.0015221831
-      outSlope: 0.6
+      inSlope: 0.33586448
+      outSlope: 0.33333334
       tangentMode: 65
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.09189466
-    - serializedVersion: 3
-      time: 2
-      value: 1.2
-      inSlope: 0.39865252
-      outSlope: 0.39865252
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.06616862
+      outWeight: 0.04637681
     - serializedVersion: 3
       time: 3
-      value: 1.5
-      inSlope: 0.0070755985
-      outSlope: 0.0070755985
-      tangentMode: 0
+      value: 1
+      inSlope: 0.33333334
+      outSlope: 0.7979313
+      tangentMode: 5
       weightedMode: 0
-      inWeight: 0.100761235
+      inWeight: 0.031884033
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -83,12 +74,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_ShotOffset: 1
-  m_ShotStop: 0.32
+  m_ShotStop: 0.36
   m_ShotParam:
-    Interval: 0.032
-    Num: 4
-    ShotAngle: 0
-    BetweenBulletsAngle: 5
-    IsPlayerLook: 1
+    Interval: 0.036
+    Num: 9
+    ShotAngle: -80
+    BetweenBulletsAngle: 15
+    IsPlayerLook: 0
   m_RapidShotInterval: 0.1
   m_IsStartAnimationOnStart: 0
