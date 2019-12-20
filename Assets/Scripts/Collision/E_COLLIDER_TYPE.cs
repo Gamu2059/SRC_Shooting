@@ -46,6 +46,8 @@ public enum E_COLLIDER_TYPE
     /// </summary>
     ENEMY_BULLET,
 
+    ENEMY_BULLET_UNBREAK,
+
     /// <summary>
     /// 敵のレーザー
     /// </summary>

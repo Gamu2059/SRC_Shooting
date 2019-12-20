@@ -82,12 +82,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ShotOffset: 1.3
-  m_ShotStop: 1.4
+  m_ShotOffset: 1.1
+  m_ShotStop: 0.36
   m_ShotParam:
-    Interval: 0.7
-    Num: 8
+    Interval: 0.018
+    Num: 3
     ShotAngle: 0
-    BetweenBulletsAngle: 45
-    IsPlayerLook: 0
+    BetweenBulletsAngle: 7
+    IsPlayerLook: 1
   m_IsStartAnimationOnStart: 1

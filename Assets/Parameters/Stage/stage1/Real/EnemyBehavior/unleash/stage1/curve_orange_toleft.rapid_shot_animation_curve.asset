@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: curve_orange_toleft.rapid_shot_animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: RapidShotAnimationCurveEnemy
-  m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
+  m_BulletSetParam: {fileID: 11400000, guid: 2281909f5515b3f49994701a65380efb, type: 2}
   m_EnemyLookParamSet: {fileID: 11400000, guid: 153dd4c7257de16458514db9e17b18ee,
     type: 2}
   m_SpeedCurve:
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_ShotParam:
     Interval: 0.036
     Num: 9
-    ShotAngle: -95
+    ShotAngle: -120
     BetweenBulletsAngle: 25
     IsPlayerLook: 0
   m_RapidShotInterval: 0.1
