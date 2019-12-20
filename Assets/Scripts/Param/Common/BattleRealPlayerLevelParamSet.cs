@@ -63,6 +63,10 @@ public class BattleRealPlayerLevel
     [SerializeField, Tooltip("ボムの1発あたりのダメージ")]
     private float m_BombDamage;
     public float BombDamage => m_BombDamage;
+
+    [SerializeField, Tooltip("ボム/レーザーで敵弾を消したときのボーナス")]
+    private float m_DestroyBulletBonus;
+    public float DestroyBulletBonus => m_DestroyBulletBonus;
 }
 
 /// <summary>
