@@ -46,8 +46,6 @@ public enum E_COLLIDER_TYPE
     /// </summary>
     ENEMY_BULLET,
 
-    ENEMY_BULLET_UNBREAK,
-
     /// <summary>
     /// 敵のレーザー
     /// </summary>
@@ -62,4 +60,9 @@ public enum E_COLLIDER_TYPE
     /// 敵のハッキング可能コライダー。PLAYER_HACKINGと接触することでハッキング開始となる。
     /// </summary>
     ENEMY_HACKING,
+
+    /// <summary>
+    /// 敵の通常弾(ボム/レーザーで破壊不可)
+    /// </summary>
+    ENEMY_BULLET_UNBREAK,
 }
