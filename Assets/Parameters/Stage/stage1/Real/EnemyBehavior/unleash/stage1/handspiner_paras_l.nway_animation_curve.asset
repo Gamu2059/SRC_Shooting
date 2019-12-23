@@ -103,11 +103,12 @@ MonoBehaviour:
   m_ShotOffset: 2
   m_ShotStop: 6
   m_ShotParam:
-    Interval: 0.2
+    Interval: 0.08
     Num: 1
-    Angle: 0
+    ShotAngle: 0
+    BetweenBulletsAngle: 0
     IsPlayerLook: 0
   m_IsStartAnimationOnStart: 1
-  m_Num: 4
+  m_Num: 8
   m_Radius: 0.35
-  m_AngleOffset: 45
+  m_AngleOffset: 22.5

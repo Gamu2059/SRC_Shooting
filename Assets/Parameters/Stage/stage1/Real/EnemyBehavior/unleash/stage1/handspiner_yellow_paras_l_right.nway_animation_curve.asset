@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: handspiner_yellow_paras_l_right.nway_animation_curve
   m_EditorClassIdentifier: 
   m_BehaviorClass: NwayAnimationCurveEnemy
-  m_BulletSetParam: {fileID: 11400000, guid: 77adbc63cd70a144980fb791813a2ae0, type: 2}
+  m_BulletSetParam: {fileID: 11400000, guid: f03ac185d43914245aa723ef830677dd, type: 2}
   m_EnemyLookParamSet: {fileID: 11400000, guid: 5ee425089de5504448ae7c2d7dc0656b,
     type: 2}
   m_SpeedCurve:
@@ -105,9 +105,10 @@ MonoBehaviour:
   m_ShotParam:
     Interval: 0.2
     Num: 1
-    Angle: 0
+    ShotAngle: 0
+    BetweenBulletsAngle: 0
     IsPlayerLook: 0
   m_IsStartAnimationOnStart: 1
-  m_Num: 4
+  m_Num: 16
   m_Radius: 0.35
-  m_AngleOffset: 45
+  m_AngleOffset: 22.5

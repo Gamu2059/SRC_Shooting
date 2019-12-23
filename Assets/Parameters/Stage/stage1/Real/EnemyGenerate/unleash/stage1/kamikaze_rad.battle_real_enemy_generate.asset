@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e8a189f4e29bb49aff846f7b7b1ed7, type: 3}
   m_Name: kamikaze_rad.battle_real_enemy_generate
   m_EditorClassIdentifier: 
-  m_Hp: 5
+  m_Hp: 4
   m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
     type: 2}
   m_DamageEffectDuration: 0.01
@@ -21,7 +21,7 @@ MonoBehaviour:
     ItemSpreadParams:
     - Type: 6
       Num: 1
-      Point: 200
+      Point: 250
       SpreadRadius: 0
     CenterCreateItemType: 0
   m_DefeatEvents: []

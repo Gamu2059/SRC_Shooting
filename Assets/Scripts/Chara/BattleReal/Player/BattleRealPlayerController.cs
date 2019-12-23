@@ -99,6 +99,7 @@ public class BattleRealPlayerController : CharaController
         switch (hitColliderType)
         {
             case E_COLLIDER_TYPE.ENEMY_BULLET:
+            case E_COLLIDER_TYPE.ENEMY_BULLET_UNBREAK:
             case E_COLLIDER_TYPE.ENEMY_LASER:
             case E_COLLIDER_TYPE.ENEMY_BOMB:
                 if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
@@ -119,6 +120,7 @@ public class BattleRealPlayerController : CharaController
         switch (hitColliderType)
         {
             case E_COLLIDER_TYPE.ENEMY_BULLET:
+            case E_COLLIDER_TYPE.ENEMY_BULLET_UNBREAK:
             case E_COLLIDER_TYPE.ENEMY_LASER:
             case E_COLLIDER_TYPE.ENEMY_BOMB:
                 if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
