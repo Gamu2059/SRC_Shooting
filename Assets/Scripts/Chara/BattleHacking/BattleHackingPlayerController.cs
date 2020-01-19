@@ -58,8 +58,7 @@ public class BattleHackingPlayerController : CommandCharaController
                 shotParam,
                 new ConstAcceleLinearTrajectory(
                     new SimpleTrajectory(
-                        new TransformSimple(transform.localPosition, Calc.HALF_PI, 2),
-                        Calc.HALF_PI,
+                        new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
                         0.5f),
                     5),
                 0);

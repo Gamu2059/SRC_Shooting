@@ -22,3 +22,13 @@ MonoBehaviour:
     m_AnchorVelocity: {x: 0, y: 0, z: 0}
   m_LoopBeginPhase: 1
   m_AllUDFieldArray: {fileID: 11400000, guid: f21b39a1a2ee66c45932ca9fe127c919, type: 2}
+  m_ShotControllerArray:
+  - {fileID: 11400000, guid: f4b6449148420e3408f93e3f6e834dfb, type: 2}
+  - {fileID: 11400000, guid: 3cd191d7b79e2f54abe1cb834dd1b1e1, type: 2}
+  m_ShotsControllerArray:
+  - {fileID: 11400000, guid: afcd59fb2eccc174f96e9c72dcba4b0a, type: 2}
+  m_ShotParam:
+    BulletIndex: 0
+    Angle: 0
+    Speed: 0.8
+  m_HackingBossPhase: {fileID: 11400000, guid: b20901c82a179bd47bb153d3796e33d8, type: 2}

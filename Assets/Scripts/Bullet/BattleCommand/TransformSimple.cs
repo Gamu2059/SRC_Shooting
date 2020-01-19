@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class TransformSimple : object
 {
     /// <summary>
     /// 位置
     /// </summary>
-    public Vector3 m_Position;
+    public Vector2 m_Position;
 
     /// <summary>
     /// 回転角度
@@ -23,7 +24,7 @@ public class TransformSimple : object
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    public TransformSimple(Vector3 position, float angle, float scale)
+    public TransformSimple(Vector2 position, float angle, float scale)
     {
         m_Position = position;
         m_Angle = angle;

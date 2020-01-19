@@ -26,7 +26,7 @@ public class ConstAcceleLinearTrajectory : SimpleTrajectory
     public override TransformSimple GetTransform(float time)
     {
         return new TransformSimple(
-            m_BaseTransform.m_Position + (m_Speed * time + m_Acceleration * time * time / 2) * Calc.RThetaToVec3(1,m_Angle),
+            m_BaseTransform.m_Position + (m_Speed * time + m_Acceleration * time * time / 2) * Calc.RThetaToVec2(1, m_BaseTransform.m_Angle),
             m_BaseTransform.m_Angle,
             m_BaseTransform.m_Scale
             );

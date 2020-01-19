@@ -13,10 +13,10 @@ public class SimpleTrajectory : object
     /// </summary>
     public TransformSimple m_BaseTransform;
 
-    /// <summary>
-    /// 初期角度
-    /// </summary>
-    public float m_Angle;
+    ///// <summary>
+    ///// 初期角度
+    ///// </summary>
+    //public float m_Angle;
 
     /// <summary>
     /// 初速度の大きさ
@@ -38,10 +38,9 @@ public class SimpleTrajectory : object
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    public SimpleTrajectory(TransformSimple baseTransform, float angle, float speed)
+    public SimpleTrajectory(TransformSimple baseTransform, float speed)
     {
         m_BaseTransform = baseTransform;
-        m_Angle = angle;
         m_Speed = speed;
     }
 
@@ -49,7 +48,7 @@ public class SimpleTrajectory : object
     /// <summary>
     /// 引数そのものになるコンストラクタ（継承先用）
     /// </summary>
-    public SimpleTrajectory(SimpleTrajectory trajectoryBase) : this(trajectoryBase.m_BaseTransform, trajectoryBase.m_Angle, trajectoryBase.m_Speed)
+    public SimpleTrajectory(SimpleTrajectory trajectoryBase) : this(trajectoryBase.m_BaseTransform, trajectoryBase.m_Speed)
     {
 
     }
@@ -61,7 +60,7 @@ public class SimpleTrajectory : object
     public virtual TransformSimple GetTransform(float time)
     {
         return new TransformSimple(
-            m_BaseTransform.m_Position + m_Speed * time * Calc.RThetaToVec3(1, m_Angle),
+            m_BaseTransform.m_Position + m_Speed * time * Calc.RThetaToVec2(1, m_BaseTransform.m_Angle),
             m_BaseTransform.m_Angle,
             m_BaseTransform.m_Scale
             );

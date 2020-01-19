@@ -563,23 +563,23 @@ public class BattleHackingBulletController : BattleHackingObjectBase
         }
 
         // 座標を設定
-        bullet.SetPosition(shotParam.Position != null ? (Vector3)shotParam.Position : bulletOwner.transform.localPosition);
+        //bullet.SetPosition(shotParam.Position != null ? (Vector3)shotParam.Position : bulletOwner.transform.localPosition);
 
         // 回転を設定
-        bullet.SetRotation(shotParam.Rotation != null ? (Vector3)shotParam.Rotation : bulletOwner.transform.localEulerAngles);
+        //bullet.SetRotation(shotParam.Rotation != null ? (Vector3)shotParam.Rotation : bulletOwner.transform.localEulerAngles);
 
         // スケールを設定
-        bullet.SetScale(shotParam.Scale != null ? (Vector3)shotParam.Scale : bulletPrefab.transform.localScale);
+        //bullet.SetScale(shotParam.Scale != null ? (Vector3)shotParam.Scale : bulletPrefab.transform.localScale);
 
-        bullet.ResetBulletLifeTime();
-        bullet.ResetBulletParam();
+        //bullet.ResetBulletLifeTime();
+        //bullet.ResetBulletParam();
 
-        bullet.m_BulletOwner = bulletOwner;
+        //bullet.m_BulletOwner = bulletOwner;
         bullet.SetTroop(bulletOwner.GetTroop());
-        bullet.m_BulletParam = null;
-        bullet.m_BulletIndex = 0;
-        bullet.m_BulletParamIndex = 0;
-        bullet.m_OrbitalParamIndex = -1;
+        //bullet.m_BulletParam = null;
+        //bullet.m_BulletIndex = 0;
+        //bullet.m_BulletParamIndex = 0;
+        //bullet.m_OrbitalParamIndex = -1;
 
         return bullet;
     }
@@ -910,8 +910,9 @@ public class BattleHackingBulletController : BattleHackingObjectBase
 
         TransformSimple transformSimple = m_TrajectoryBase.GetTransform(m_Time);
 
-        transform.localPosition = transformSimple.m_Position;
-        transform.localEulerAngles = Calc.CalcEulerAngles(Vector3.zero, transformSimple.m_Angle);
+        transform.localPosition = new Vector3(transformSimple.m_Position.x, 0, transformSimple.m_Position.y);
+        //transform.localEulerAngles = Calc.CalcEulerAngles(Vector3.zero, transformSimple.m_Angle);
+        transform.localEulerAngles = new Vector3(0, 90 - transformSimple.m_Angle * Mathf.Rad2Deg, 0);
         transform.localScale = Vector3.one * transformSimple.m_Scale;
     }
 

@@ -62,7 +62,7 @@ public class ShunLinearTrajectory : SimpleTrajectory
         }
 
         return new TransformSimple(
-            m_BaseTransform.m_Position + Calc.RThetaToVec3(distance,m_Angle),
+            m_BaseTransform.m_Position + Calc.RThetaToVec2(distance, m_BaseTransform.m_Angle),
             m_BaseTransform.m_Angle,
             m_BaseTransform.m_Scale
             );

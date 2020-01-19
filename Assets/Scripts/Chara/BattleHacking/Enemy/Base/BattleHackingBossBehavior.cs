@@ -99,14 +99,36 @@ public class BattleHackingBossBehavior : ControllableObject
     private bool m_IsLooping = false;
 
 
+    [SerializeField, Tooltip("開始からの時刻")]
+    private float m_Time2 = 0;
+
+    [SerializeField, Tooltip("実際に発射された回数")]
+    private int m_RealShotNum = 0;
+
+    [SerializeField, Tooltip("発射操作の配列")]
+    public ShotController[] m_ShotControllerArray;
+
+    [SerializeField, Tooltip("発射操作の配列")]
+    public ShotsController[] m_ShotsControllerArray;
+
+    [SerializeField, Tooltip("")]
+    public ShotParam m_ShotParam;
+
+    [SerializeField, Tooltip("")]
+    public HackingBossPhase1 m_HackingBossPhase;
+
+
+    protected InfC761Hacker1Phase1ParamSet m_ParamSet;
+
+
     public override void OnInitialize()
     {
-        base.OnInitialize();
+        base.OnInitialize();Debug.Log("OnInitialize");
     }
 
     public override void OnFinalize()
     {
-        base.OnFinalize();
+        base.OnFinalize();Debug.Log("OnFinalize");
     }
 
     // オーバーライド前提なのでひとまずnull
@@ -120,7 +142,7 @@ public class BattleHackingBossBehavior : ControllableObject
     /// </summary>
     public override void OnStart()
     {
-        base.OnStart();
+        base.OnStart(); Debug.Log("OnStart");
 
         var paramSet = GetParamSet();
         if (paramSet == null)
@@ -133,7 +155,7 @@ public class BattleHackingBossBehavior : ControllableObject
         m_AllUDFieldArray = paramSet.AllUDFieldArray;
         m_DanmakuCountAbstractArray = paramSet.DanmakuCountAbstractArray;
 
-        m_InitPos = Enemy.transform.position;
+        m_InitPos = Enemy.transform.position;//Debug.Log(m_InitPos);
         m_MoveTime = 0;
         m_NowPhase = 0;
         m_Bezier3Points = paramSet.Bezier3Points;
@@ -149,6 +171,16 @@ public class BattleHackingBossBehavior : ControllableObject
 
             m_DanmakuCountAbstractArray[i].Awakes(uDParamsArray[i]);
         }
+
+
+        m_ShotParam = m_ParamSet.m_ShotParam;
+
+        m_ShotControllerArray = m_ParamSet.m_ShotControllerArray;
+        m_ShotsControllerArray = m_ParamSet.m_ShotsControllerArray;
+
+        m_HackingBossPhase = m_ParamSet.m_HackingBossPhase;
+
+        m_HackingBossPhase.OnStarts();
     }
 
     public override void OnUpdate()
@@ -185,14 +217,35 @@ public class BattleHackingBossBehavior : ControllableObject
             BezierPositionMovingPV();
         }
 
-        if (m_DanmakuCountAbstractArray != null)
-        {
-            foreach (DanmakuCountAbstract2 danmakuCountAbstract in m_DanmakuCountAbstractArray)
-            {
-                danmakuCountAbstract.Updates(this, m_Time);
-            }
+        //if (m_DanmakuCountAbstractArray != null)
+        //{
+        //    foreach (DanmakuCountAbstract2 danmakuCountAbstract in m_DanmakuCountAbstractArray)
+        //    {
+        //        //danmakuCountAbstract.Updates(this, m_Time);
+        //    }
+        //}
+
+        // なんで敵が倒れる時、このフィールドがnullになってしまうんだろう。
+        if (m_HackingBossPhase != null) {
+            TransformSimple transform = m_HackingBossPhase.OnUpdates(this);
+            GetEnemy().transform.localPosition = new Vector3(transform.m_Position.x, 0, transform.m_Position.y);
+            GetEnemy().transform.localEulerAngles = new Vector3(0, transform.m_Angle * Mathf.Rad2Deg, 0);
+            GetEnemy().transform.localScale = Vector3.one * transform.m_Scale;
         }
     }
+
+
+    public float GetIdealShotNum(float time)
+    {
+        return time * 20;
+    }
+
+
+    public float CalcLaunchTime()
+    {
+        return m_RealShotNum / 20.0f;
+    }
+
 
     public override void OnFixedUpdate()
     {
@@ -261,3 +314,152 @@ public class BattleHackingBossBehavior : ControllableObject
             );
     }
 }
+
+
+
+
+
+//SCWay sCWay = new SCWay();
+//sCWay.m_Way = 20;
+//SCDsp sCDsp = new SCDsp();
+//sCDsp.m_SpeedNum = 3;
+//sCDsp.m_DSpeed = 0.3f;
+
+//shotParamArray = sCWay.GetshotParam(launchTime, shotParamArray);
+//shotParamArray = sCDsp.GetshotParam(launchTime, shotParamArray);
+
+
+//public List<ShotParam> GetshotParamWay(float time, List<ShotParam> array)
+//{
+//    int arraySize = array.Count;
+//    int way = 20;
+
+//    for (int i = 0; i < arraySize; i++)
+//    {
+//        ShotParam shotParam = array[0];
+//        array.RemoveAt(0);
+
+//        for (int wayIndex = 0; wayIndex < way; wayIndex++)
+//        {
+//            float newAngle = shotParam.Angle + Calc.TWO_PI * wayIndex / way;
+
+//            array.Add(new ShotParam(shotParam.Position, newAngle, shotParam.Speed));
+//        }
+//    }
+
+//    return array;
+//}
+
+
+//public List<ShotParam> GetshotParamSpeed(float time, List<ShotParam> array)
+//{
+//    int speedNum = 3;
+//    float dSpeed = 0.3f;
+//    int arraySize = array.Count;
+
+//    for (int i = 0; i < arraySize; i++)
+//    {
+//        ShotParam shotParam = array[0];
+//        array.RemoveAt(0);
+
+//        for (int speedIndex = -(speedNum - 1); speedIndex <= speedNum - 1; speedIndex += 2)
+//        {
+//            float newSpeed = shotParam.Speed + speedIndex * dSpeed / 2;
+
+//            array.Add(new ShotParam(shotParam.Position, shotParam.Angle, newSpeed));
+//        }
+//    }
+
+//    return array;
+//}
+
+
+//m_ShotControllerArray = new ShotController[] {
+//    new SCWay(){m_Way = 20 },
+//    new SCDsp(){m_SpeedNum = 3, m_DSpeed = 0.3f}
+//};
+
+
+//for (int i = 0;i < m_ShotControllerArray.Length;i++)
+//{
+//    switch (m_ShotControllerArray[i])
+//    {
+//        case SCSwr sCSwr:
+//            m_ShotControllerArray[i] = sCSwr;
+//            break;
+
+//        default:
+//            Debug.Log("");
+//            break;
+//    }
+//}
+
+//for (int i = 0; i < m_ShotsControllerArray.Length; i++)
+//{
+//    switch (m_ShotsControllerArray[i])
+//    {
+//        case SCWay sCWay:
+//            m_ShotsControllerArray[i] = sCWay;
+//            break;
+
+//        case SCDsp sCDsp:
+//            m_ShotsControllerArray[i] = sCDsp;
+//            break;
+
+//        default:
+//            Debug.Log("");
+//            break;
+//    }
+//}
+
+
+//m_Time2 += Time.deltaTime;
+
+//// 現在のあるべき発射回数
+//int properShotNum = Mathf.FloorToInt(GetIdealShotNum(m_Time2));
+
+//// 発射されるべき回数分、弾を発射する
+//while (m_RealShotNum < properShotNum)
+//{
+//    // 発射する弾の番号にする
+//    m_RealShotNum++;
+
+//    // 発射時刻
+//    float launchTime = CalcLaunchTime();
+
+//    // 発射からの経過時間
+//    float dTime = m_Time2 - launchTime;
+
+
+//    ShotParam sP = new ShotParam(m_ShotParam);
+//    for (int i = 0; i < m_ShotControllerArray.Length; i++)
+//    {
+//        sP = m_ShotControllerArray[i].GetshotParam(launchTime, sP);
+//    }
+
+//    List<ShotParam> shotParamArray = new List<ShotParam>() {sP};
+//    for (int i = 0; i < m_ShotsControllerArray.Length; i++)
+//    {
+//        shotParamArray = m_ShotsControllerArray[i].GetshotsParam(launchTime, shotParamArray);
+//    }
+
+//    foreach (ShotParam shotParam in shotParamArray)
+//    {
+//        // この行って、等速直線運動前提だよね？でもrealPosition使ってないから問題ないか。（いらない）
+//        Vector3 realPosition = shotParam.Position + shotParam.Speed * dTime * new Vector3(Mathf.Cos(shotParam.Angle), 0, Mathf.Sin(shotParam.Angle));
+
+//        Vector3 eulerAngles = Calc.CalcEulerAngles(GetEnemy().transform.eulerAngles, shotParam.Angle);
+
+//        // 弾を撃つ
+//        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(GetEnemy(), 0, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
+//        BattleHackingBulletController.ShotBullet(
+//            bulletShotParam,
+//            new SimpleTrajectory(
+//                new TransformSimple(shotParam.Position, shotParam.Angle, 0.8f),
+//                shotParam.Angle,
+//                shotParam.Speed),
+//            dTime);
+//    }
+
+//    AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
+//}

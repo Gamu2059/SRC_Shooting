@@ -26,7 +26,7 @@ public class ArchimedesTrajectory : SimpleTrajectory
     public override TransformSimple GetTransform(float time)
     {
         return new TransformSimple(
-            m_BaseTransform.m_Position + Calc.RThetaToVec3(m_Speed * time, m_Angle + m_AngleSpeed * time),
+            m_BaseTransform.m_Position + Calc.RThetaToVec2(m_Speed * time, m_BaseTransform.m_Angle + m_AngleSpeed * time),
             m_BaseTransform.m_Angle,
             m_BaseTransform.m_Scale
             );
