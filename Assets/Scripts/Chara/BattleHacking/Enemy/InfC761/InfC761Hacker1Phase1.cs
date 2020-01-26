@@ -7,7 +7,7 @@ public class InfC761Hacker1Phase1 : InfC761Hacker1Phase
 
     #region Field
 
-    private InfC761Hacker1Phase1ParamSet m_ParamSet;
+    //private InfC761Hacker1Phase1ParamSet m_ParamSet;
 
     #endregion
 

@@ -6,19 +6,19 @@ using System;
 /// <summary>
 /// コマンドイベントの全ての弾オブジェクトの基礎クラス。
 /// </summary>
-public class CommandBulletController : BattleHackingObjectBase
+public class BattleHackingOrbitalParamBulletController : BattleHackingBulletController
 {
     #region Field Inspector
 
-    /// <summary>
-    /// この弾のグループ名。
-    /// 同じ名前同士の弾は、違うキャラから生成されたものであっても、プールから再利用される。
-    /// </summary>
-    [SerializeField]
-    private string m_BulletGroupId = "Default Bullet";
+    ///// <summary>
+    ///// この弾のグループ名。
+    ///// 同じ名前同士の弾は、違うキャラから生成されたものであっても、プールから再利用される。
+    ///// </summary>
+    //[SerializeField]
+    //private string m_BulletGroupId = "Default Bullet";
 
-    [SerializeField]
-    private bool m_IsDestoryOnCollide = false;
+    //[SerializeField]
+    //private bool m_IsDestoryOnCollide = false;
 
     #endregion
 
@@ -26,11 +26,11 @@ public class CommandBulletController : BattleHackingObjectBase
 
     #region Field
 
-    /// <summary>
-    /// この弾がプレイヤー側と敵側のどちらに属しているか。
-    /// 同じ値同士を持つ弾やキャラには被弾しない。
-    /// </summary>
-    private E_CHARA_TROOP m_Troop;
+    ///// <summary>
+    ///// この弾がプレイヤー側と敵側のどちらに属しているか。
+    ///// 同じ値同士を持つ弾やキャラには被弾しない。
+    ///// </summary>
+    //private E_CHARA_TROOP m_Troop;
 
     /// <summary>
     /// 弾を発射したキャラ。
@@ -69,11 +69,11 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     private int m_OrbitalParamIndex;
 
-    /// <summary>
-    /// この弾の状態。
-    /// </summary>
-    [SerializeField]
-    private E_POOLED_OBJECT_CYCLE m_Cycle;
+    ///// <summary>
+    ///// この弾の状態。
+    ///// </summary>
+    //[SerializeField]
+    //private E_POOLED_OBJECT_CYCLE m_Cycle;
 
     /// <summary>
     /// この弾が何秒生存しているか。
@@ -115,7 +115,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     private float m_NowLerp;
 
-    private HitSufferController<CommandCharaController> m_CharaHit;
+    //private HitSufferController<CommandCharaController> m_CharaHit;
 
     #endregion
 
@@ -123,31 +123,31 @@ public class CommandBulletController : BattleHackingObjectBase
 
     #region Getter & Setter
 
-    /// <summary>
-    /// この弾のグループ名を取得する。
-    /// 同じ名前同士の弾は、違うキャラから生成されたものであっても、プールから再利用される。
-    /// </summary>
-    public string GetBulletGroupId()
-    {
-        return m_BulletGroupId;
-    }
+    ///// <summary>
+    ///// この弾のグループ名を取得する。
+    ///// 同じ名前同士の弾は、違うキャラから生成されたものであっても、プールから再利用される。
+    ///// </summary>
+    //public string GetBulletGroupId()
+    //{
+    //    return m_BulletGroupId;
+    //}
 
-    /// <summary>
-    /// この弾がプレイヤー側と敵側のどちらに属しているか。
-    /// 同じ値同士を持つ弾やキャラには被弾しない。
-    /// </summary>
-    public E_CHARA_TROOP GetTroop()
-    {
-        return m_Troop;
-    }
+    ///// <summary>
+    ///// この弾がプレイヤー側と敵側のどちらに属しているか。
+    ///// 同じ値同士を持つ弾やキャラには被弾しない。
+    ///// </summary>
+    //public E_CHARA_TROOP GetTroop()
+    //{
+    //    return m_Troop;
+    //}
 
-    /// <summary>
-    /// この弾がプレイヤー側と敵側のどちらに属しているかを設定する。
-    /// </summary>
-    public void SetTroop(E_CHARA_TROOP troop)
-    {
-        m_Troop = troop;
-    }
+    ///// <summary>
+    ///// この弾がプレイヤー側と敵側のどちらに属しているかを設定する。
+    ///// </summary>
+    //public void SetTroop(E_CHARA_TROOP troop)
+    //{
+    //    m_Troop = troop;
+    //}
 
     /// <summary>
     /// この弾を発射したキャラを取得する。
@@ -215,21 +215,21 @@ public class CommandBulletController : BattleHackingObjectBase
         return m_OrbitalParamIndex;
     }
 
-    /// <summary>
-    /// この弾の状態を取得する。
-    /// </summary>
-    public E_POOLED_OBJECT_CYCLE GetCycle()
-    {
-        return m_Cycle;
-    }
+    ///// <summary>
+    ///// この弾の状態を取得する。
+    ///// </summary>
+    //public E_POOLED_OBJECT_CYCLE GetCycle()
+    //{
+    //    return m_Cycle;
+    //}
 
-    /// <summary>
-    /// この弾の状態を設定する。
-    /// </summary>
-    public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
-    {
-        m_Cycle = cycle;
-    }
+    ///// <summary>
+    ///// この弾の状態を設定する。
+    ///// </summary>
+    //public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
+    //{
+    //    m_Cycle = cycle;
+    //}
 
     /// <summary>
     /// この弾が何秒生存しているかを取得する。
@@ -249,13 +249,13 @@ public class CommandBulletController : BattleHackingObjectBase
         m_NowLifeTime = GetRelativeValue(relative, GetNowLifeTime(), value);
     }
 
-    /// <summary>
-    /// この弾のローカル座標を取得する。
-    /// </summary>
-    public Vector3 GetPosition()
-    {
-        return transform.localPosition;
-    }
+    ///// <summary>
+    ///// この弾のローカル座標を取得する。
+    ///// </summary>
+    //public Vector3 GetPosition()
+    //{
+    //    return transform.localPosition;
+    //}
 
     /// <summary>
     /// この弾のローカル座標を設定する。
@@ -430,7 +430,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// 弾を生成する。
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
-    private static CommandBulletController CreateBullet(CommandCharaController bulletOwner)
+    private static BattleHackingFreeTrajectoryBulletController CreateBullet(CommandCharaController bulletOwner)
     {
         if (bulletOwner == null)
         {
@@ -453,24 +453,7 @@ public class CommandBulletController : BattleHackingObjectBase
             return null;
         }
 
-        // 座標を設定
-        bullet.SetPosition(bulletOwner.transform.localPosition);
-
-        // 回転を設定
-        bullet.SetRotation(bulletOwner.transform.localEulerAngles);
-
-        // スケールを設定
-        bullet.SetScale(bulletPrefab.transform.localScale);
-
-        bullet.ResetBulletLifeTime();
-        bullet.ResetBulletParam();
-
-        bullet.m_BulletOwner = bulletOwner;
         bullet.SetTroop(bulletOwner.GetTroop());
-        bullet.m_BulletParam = null;
-        bullet.m_BulletIndex = 0;
-        bullet.m_BulletParamIndex = 0;
-        bullet.m_OrbitalParamIndex = -1;
 
         return bullet;
     }
@@ -482,7 +465,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBulletWithoutBulletParam(CommandCharaController bulletOwner, bool isCheck = true)
+    public static BattleHackingFreeTrajectoryBulletController ShotBulletWithoutBulletParam(CommandCharaController bulletOwner, bool isCheck = true)
     {
         var bullet = CreateBullet(bulletOwner);
 
@@ -505,25 +488,25 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBullet(CommandCharaController bulletOwner, bool isCheck = true)
+    public static BattleHackingFreeTrajectoryBulletController ShotBullet(CommandCharaController bulletOwner, bool isCheck = true)
     {
         var bullet = CreateBullet(bulletOwner);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+        //if (bullet == null)
+        //{
+        //    return null;
+        //}
 
-        // BulletParamを取得
-        var bulletParam = bulletOwner.GetBulletParam();
+        //// BulletParamを取得
+        //var bulletParam = bulletOwner.GetBulletParam();
 
-        if (bulletParam != null)
-        {
-            // 軌道を設定
-            bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
-        }
+        //if (bulletParam != null)
+        //{
+        //    // 軌道を設定
+        //    bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
+        //}
 
-        bullet.m_BulletParam = bulletParam;
+        //bullet.m_BulletParam = bulletParam;
 
         if (isCheck)
         {
@@ -537,7 +520,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// 指定したパラメータを用いて弾を生成する。
     /// </summary>
     /// <param name="shotParam">弾を発射させるパラメータ</param>
-    private static CommandBulletController CreateBullet(CommandBulletShotParam shotParam)
+    private static BattleHackingFreeTrajectoryBulletController CreateBullet(CommandBulletShotParam shotParam)
     {
         var bulletOwner = shotParam.BulletOwner;
 
@@ -562,24 +545,7 @@ public class CommandBulletController : BattleHackingObjectBase
             return null;
         }
 
-        // 座標を設定
-        bullet.SetPosition(shotParam.Position != null ? (Vector3)shotParam.Position : bulletOwner.transform.localPosition);
-
-        // 回転を設定
-        bullet.SetRotation(shotParam.Rotation != null ? (Vector3)shotParam.Rotation : bulletOwner.transform.localEulerAngles);
-
-        // スケールを設定
-        bullet.SetScale(shotParam.Scale != null ? (Vector3)shotParam.Scale : bulletPrefab.transform.localScale);
-
-        bullet.ResetBulletLifeTime();
-        bullet.ResetBulletParam();
-
-        bullet.m_BulletOwner = bulletOwner;
         bullet.SetTroop(bulletOwner.GetTroop());
-        bullet.m_BulletParam = null;
-        bullet.m_BulletIndex = 0;
-        bullet.m_BulletParamIndex = 0;
-        bullet.m_OrbitalParamIndex = -1;
 
         return bullet;
     }
@@ -590,7 +556,7 @@ public class CommandBulletController : BattleHackingObjectBase
     /// </summary>
     /// <param name="bulletOwner">弾を発射させるキャラ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBulletWithoutBulletParam(CommandBulletShotParam shotParam, bool isCheck = true)
+    public static BattleHackingFreeTrajectoryBulletController ShotBulletWithoutBulletParam(CommandBulletShotParam shotParam, bool isCheck = true)
     {
         var bullet = CreateBullet(shotParam);
 
@@ -607,40 +573,58 @@ public class CommandBulletController : BattleHackingObjectBase
         return bullet;
     }
 
-    /// <summary>
-    /// 指定したパラメータを用いて弾を発射する。
-    /// </summary>
-    /// <param name="shotParam">発射時のパラメータ</param>
-    /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static CommandBulletController ShotBullet(CommandBulletShotParam shotParam, bool isCheck = true)
-    {
-        var bullet = CreateBullet(shotParam);
+    ///// <summary>
+    ///// 指定したパラメータを用いて弾を発射する。
+    ///// </summary>
+    ///// <param name="shotParam">発射時のパラメータ</param>
+    ///// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
+    //public static BattleHackingBulletController ShotBullet(CommandBulletShotParam shotParam, SimpleTrajectory trajectoryBase, float dTime, bool isCheck = true)
+    //{
+    //    var bullet = CreateBullet(shotParam);
 
-        if (bullet == null)
-        {
-            return null;
-        }
+    //    //if (bullet == null)
+    //    //{
+    //    //    return null;
+    //    //}
 
-        // BulletParamを取得
-        var bulletParam = shotParam.BulletOwner.GetBulletParam(shotParam.BulletParamIndex);
-        bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
+    //    // BulletParamを取得
+    //    //var bulletParam = shotParam.BulletOwner.GetBulletParam(shotParam.BulletParamIndex);
+    //    //bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
 
-        if (bulletParam != null)
-        {
-            // 軌道を設定
-            bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
-            bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
-        }
+    //    //if (bulletParam != null)
+    //    //{
+    //    // 軌道を設定
+    //    //bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
+    //    //bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
+    //    //}
 
-        bullet.m_BulletParam = bulletParam;
+    //    //bullet.m_BulletParam = bulletParam;
 
-        if (isCheck)
-        {
-            BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
-        }
+    //    if (isCheck)
+    //    {
+    //        BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
+    //    }
 
-        return bullet;
-    }
+
+    //    // 付け加えた部分
+
+    //    //bullet.m_BasePosition = position;
+    //    //bullet.m_Speed = bulletParam.OrbitalParam.Speed;
+
+    //    // 本来は、どのクラスで初期化したかはこのクラス内からは見えない（？）
+    //    bullet.m_TrajectoryBase = trajectoryBase;
+
+    //    //switch (bullet.trajectoryBase)
+    //    //{
+    //    //    case ConstAcceleLinearMotion constAcceleLinearMotion:
+    //    //        break;
+    //    //}
+
+    //    bullet.m_Time = dTime;
+
+
+    //    return bullet;
+    //}
 
     /// <summary>
     /// この弾の軌道情報を上書きする。
@@ -680,18 +664,18 @@ public class CommandBulletController : BattleHackingObjectBase
         }
     }
 
-    /// <summary>
-    /// この弾を破棄する。
-    /// </summary>
-    public virtual void DestroyBullet()
-    {
-        DestroyAllTimer();
+    ///// <summary>
+    ///// この弾を破棄する。
+    ///// </summary>
+    //public virtual void DestroyBullet()
+    //{
+    //    DestroyAllTimer();
 
-        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
-        {
-            BattleHackingBulletManager.Instance.CheckPoolBullet(this);
-        }
-    }
+    //    if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+    //    {
+    //        BattleHackingBulletManager.Instance.CheckPoolBullet(this);
+    //    }
+    //}
 
     /// <summary>
     /// Searchがtrueかつターゲットキャラが設定されている時、ターゲットキャラの方向を向く。
@@ -809,35 +793,46 @@ public class CommandBulletController : BattleHackingObjectBase
 
     #region Game Cycle
 
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        m_CharaHit = new HitSufferController<CommandCharaController>();
-    }
+    ///// <summary>
+    ///// 発射してからの経過時間
+    ///// </summary>
+    //public float m_Time;
 
-    protected override void OnDestroyed()
-    {
-        m_CharaHit.OnFinalize();
-        m_CharaHit = null;
-        base.OnDestroyed();
-    }
+    ///// <summary>
+    ///// 弾の軌道
+    ///// </summary>
+    //public SimpleTrajectory m_TrajectoryBase;
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
 
-        m_CharaHit.OnEnter = OnEnterHitChara;
-        m_CharaHit.OnStay = OnStayHitChara;
-        m_CharaHit.OnExit = OnExitHitChara;
-    }
+    //protected override void OnAwake()
+    //{
+    //    base.OnAwake();
+    //    m_CharaHit = new HitSufferController<CommandCharaController>();
+    //}
 
-    public override void OnFinalize()
-    {
-        m_CharaHit.OnFinalize();
-        base.OnFinalize();
-    }
+    //protected override void OnDestroyed()
+    //{
+    //    m_CharaHit.OnFinalize();
+    //    m_CharaHit = null;
+    //    base.OnDestroyed();
+    //}
 
-    public override void OnUpdate()
+    //public override void OnInitialize()
+    //{
+    //    base.OnInitialize();
+
+    //    m_CharaHit.OnEnter = OnEnterHitChara;
+    //    m_CharaHit.OnStay = OnStayHitChara;
+    //    m_CharaHit.OnExit = OnExitHitChara;
+    //}
+
+    //public override void OnFinalize()
+    //{
+    //    m_CharaHit.OnFinalize();
+    //    base.OnFinalize();
+    //}
+
+    public void OnUpdates()
     {
         if (m_BulletParam == null)
         {
@@ -862,67 +857,83 @@ public class CommandBulletController : BattleHackingObjectBase
 
         if (GetNowLifeTime() > GetBulletParam().LifeTime)
         {
-            DestroyBullet();
+            //DestroyBullet();
         }
     }
 
-    public override void OnLateUpdate()
-    {
-        base.OnLateUpdate();
+    //public override void OnUpdate()
+    //{
+    //    m_Time += Time.deltaTime;
 
-        if (BattleHackingBulletManager.Instance.IsOutOfBulletField(this))
-        {
-            DestroyBullet();
-        }
-    }
+    //    //transform.localPosition = Calc.RThetaToVec3(m_Time * 0.1f, m_Time);
+
+    //    //transform.localPosition = m_BasePosition + m_Time * transform.forward;
+
+    //    TransformSimple transformSimple = m_TrajectoryBase.GetTransform(m_Time);
+
+    //    transform.localPosition = new Vector3(transformSimple.m_Position.x, 0, transformSimple.m_Position.y);
+    //    //transform.localEulerAngles = Calc.CalcEulerAngles(Vector3.zero, transformSimple.m_Angle);
+    //    transform.localEulerAngles = new Vector3(0, 90 - transformSimple.m_Angle * Mathf.Rad2Deg, 0);
+    //    transform.localScale = Vector3.one * transformSimple.m_Scale;
+    //}
+
+    //public override void OnLateUpdate()
+    //{
+    //    base.OnLateUpdate();
+
+    //    if (BattleHackingBulletManager.Instance.IsOutOfBulletField(this))
+    //    {
+    //        DestroyBullet();
+    //    }
+    //}
 
     #endregion
 
     #region Impl IColliderProcess
 
-    public override void ClearColliderFlag()
-    {
-        m_CharaHit.ClearUpdateFlag();
-    }
+    //public override void ClearColliderFlag()
+    //{
+    //    m_CharaHit.ClearUpdateFlag();
+    //}
 
-    public override void ProcessCollision()
-    {
-        m_CharaHit.ProcessCollision();
-    }
+    //public override void ProcessCollision()
+    //{
+    //    m_CharaHit.ProcessCollision();
+    //}
 
     #endregion
 
     #region Hit Chara
 
-    /// <summary>
-    /// 他のキャラに当たった時の処理。
-    /// </summary>
-    /// <param name="targetChara">他のキャラ</param>
-    /// <param name="attackData">この弾の衝突情報</param>
-    /// <param name="targetData">他のキャラの衝突情報</param>
-    /// <param name="hitPosList">衝突座標リスト</param>
-    public void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
-    {
-        m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
-    }
+    ///// <summary>
+    ///// 他のキャラに当たった時の処理。
+    ///// </summary>
+    ///// <param name="targetChara">他のキャラ</param>
+    ///// <param name="attackData">この弾の衝突情報</param>
+    ///// <param name="targetData">他のキャラの衝突情報</param>
+    ///// <param name="hitPosList">衝突座標リスト</param>
+    //public void HitChara(CommandCharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    //{
+    //    m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
+    //}
 
-    protected virtual void OnEnterHitChara(HitSufferData<CommandCharaController> hitData)
-    {
-        if (m_IsDestoryOnCollide)
-        {
-            DestroyBullet();
-        }
-    }
+    //protected virtual void OnEnterHitChara(HitSufferData<CommandCharaController> hitData)
+    //{
+    //    if (m_IsDestoryOnCollide)
+    //    {
+    //        DestroyBullet();
+    //    }
+    //}
 
-    protected virtual void OnStayHitChara(HitSufferData<CommandCharaController> hitData)
-    {
+    //protected virtual void OnStayHitChara(HitSufferData<CommandCharaController> hitData)
+    //{
 
-    }
+    //}
 
-    protected virtual void OnExitHitChara(HitSufferData<CommandCharaController> hitData)
-    {
+    //protected virtual void OnExitHitChara(HitSufferData<CommandCharaController> hitData)
+    //{
 
-    }
+    //}
 
     #endregion
 }

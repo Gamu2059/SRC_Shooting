@@ -35,4 +35,16 @@ public class BattleHackingBossBehaviorUnitParamSet : ScriptableObject
     [SerializeField, Tooltip("弾幕の抽象クラスの配列")]
     private DanmakuCountAbstract2[] m_DanmakuCountAbstractArray;
     public DanmakuCountAbstract2[] DanmakuCountAbstractArray => m_DanmakuCountAbstractArray;
+
+    [SerializeField, Tooltip("発射操作の配列")]
+    public ShotController[] m_ShotControllerArray;
+
+    [SerializeField, Tooltip("発射操作の配列")]
+    public ShotsController[] m_ShotsControllerArray;
+
+    [SerializeField, Tooltip("")]
+    public ShotParam m_ShotParam;
+
+    [SerializeField, Tooltip("")]
+    public HackingBossPhase1 m_HackingBossPhase;
 }

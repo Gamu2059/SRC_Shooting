@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Name: UnitDanmaku
+  m_EditorClassIdentifier: 
+  m_ShotControllerArray:
+  - {fileID: 11400000, guid: 18c96327f8bd7d44a8cf744cdf43177b, type: 2}
+  m_ShotsControllerArray:
+  - {fileID: 11400000, guid: c09e706fa4440494b9ee3212ab68a897, type: 2}
+  m_ShotParam:
+    BulletIndex: 1
+    Angle: 0
+    Speed: 0.6
+  m_ShotTimer: {fileID: 11400000, guid: 378e800ebf7dbcf4eb880eb4d2571e09, type: 2}
+  m_Trajectory: {fileID: 11400000, guid: 9da53ac82793c4f429530f8269f2e92f, type: 2}

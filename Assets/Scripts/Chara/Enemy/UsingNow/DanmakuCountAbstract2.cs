@@ -5,22 +5,15 @@ using UnityEngine;
 // 単純な軌道の弾幕の抽象クラス。
 // 発射回数をひたすら数えて、発射するかどうかを判定する。
 [System.Serializable]
-public abstract class DanmakuCountAbstract2 : System.Object
+public abstract class DanmakuCountAbstract2 : object
 {
 
     [SerializeField, Tooltip("何番目の弾か")]
     protected int[] m_BulletIndex;
 
-    [SerializeField, Tooltip("何番目の弾パラメータか")]
-    protected int[] m_BulletParamIndex;
-
     // 実際の今までの発射回数
     protected int m_RealShotNum = 0;
 
-
-    public Dictionary<string, int> m_IntParams = new Dictionary<string, int>();
-    public Dictionary<string, float> m_FloatParams = new Dictionary<string, float>();
-    public Dictionary<string, Vector3> m_Vector3Params = new Dictionary<string, Vector3>();
 
     public int[] m_Int;
     public float[] m_Float;
@@ -117,8 +110,19 @@ public abstract class DanmakuCountAbstract2 : System.Object
         Vector3 eulerAngles = CalcEulerAngles(enemyController.GetEnemy().transform.eulerAngles, velocityRad);
 
         // 弾の大きさを変えている。
-        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.8f);
-        CommandBulletController.ShotBullet(bulletShotParam);
+        //CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, Mathf.RoundToInt(speed * 5 - 1), 0, realPosition, eulerAngles, Vector3.one * 0.8f);
+        CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(enemyController.GetEnemy(), bulletIndex, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
+        // とりあえずパラメータは適当に
+        //BattleHackingBulletController.ShotBullet(bulletShotParam,new ShunLinearTrajectory(new TrajectoryBase(position, velocityRad, speed * 2), speed, 0.2f, 0.1f)
+        //    , dTime);
+
+        // 使っていないのでコメントアウト
+        //BattleHackingFreeTrajectoryBulletController.ShotBullet(
+        //    bulletShotParam,
+        //    new SimpleTrajectory(
+        //        new TransformSimple(position, velocityRad, 0.8f),
+        //        speed),
+        //    dTime);
     }
 
 
@@ -212,3 +216,11 @@ public abstract class DanmakuCountAbstract2 : System.Object
 //{
 
 //}
+
+
+//[SerializeField, Tooltip("何番目の弾パラメータか")]
+//protected int[] m_BulletParamIndex;
+
+//public Dictionary<string, int> m_IntParams = new Dictionary<string, int>();
+//public Dictionary<string, float> m_FloatParams = new Dictionary<string, float>();
+//public Dictionary<string, Vector3> m_Vector3Params = new Dictionary<string, Vector3>();
