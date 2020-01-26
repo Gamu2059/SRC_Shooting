@@ -62,6 +62,8 @@ public class BattleRealUiManager : ControllableMonoBehavior
     private IconGageIndicator m_BossHpGage;
     [SerializeField]
     private IconGageIndicator m_BossDownGage;
+    [SerializeField]
+    private IconCountIndicator m_BossRemainingHackingIcon;
 
     [SerializeField]
     private GameObject m_BossUI;
@@ -115,6 +117,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_WeaponIndicator.OnInitialize();
         m_BossHpGage.OnInitialize();
         m_BossDownGage.OnInitialize();
+        m_BossRemainingHackingIcon.OnInitialize();
         m_ResultIndicator.OnInitialize();
         SetEnableBossUI(false);
     }
@@ -122,6 +125,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     public override void OnFinalize()
     {
         m_ResultIndicator.OnFinalize();
+        m_BossRemainingHackingIcon.OnFinalize();
         m_BossDownGage.OnFinalize();
         m_BossHpGage.OnFinalize();
         m_WeaponIndicator.OnFinalize();
@@ -151,6 +155,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_WeaponIndicator.OnUpdate();
         m_BossHpGage.OnUpdate();
         m_BossDownGage.OnUpdate();
+        m_BossRemainingHackingIcon.OnUpdate();
         m_ResultIndicator.OnUpdate();
         
         if (m_IsShowResult && Input.anyKey)

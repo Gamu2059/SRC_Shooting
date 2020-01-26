@@ -16,6 +16,7 @@ public class IconCountIndicator : ControllableMonoBehavior
         LIFE,
         LEVEL,
         ENERGY,
+        BOSS_HACKING,
     }
 
     [SerializeField]
@@ -25,6 +26,27 @@ public class IconCountIndicator : ControllableMonoBehavior
     private E_COUNT_TYPE m_CountType;
 
     private int m_PreCount;
+
+    private BattleRealBoss m_Boss;
+
+    private BattleRealBoss GetBoss()
+    {
+        if(m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE)
+        {
+            return m_Boss;
+        }
+
+        m_Boss = null;
+        var enemies = BattleRealEnemyManager.Instance.Enemies;
+        foreach(var e in enemies)
+        {
+            if(e.IsBoss && e is BattleRealBoss boss)
+            {
+                m_Boss = boss;
+            }
+        }
+        return m_Boss;
+    }
 
     #region Game Cycle
 
@@ -65,6 +87,15 @@ public class IconCountIndicator : ControllableMonoBehavior
             case E_COUNT_TYPE.ENERGY:
                 // エナジーは1の時に1個目が表示されてほしいので、-1
                 return battleData.EnergyCount - 1;
+            case E_COUNT_TYPE.BOSS_HACKING:
+                var boss = GetBoss();
+                if(boss == null)
+                {
+                    return -1;
+                }
+                Debug.Log("HackingCompleteNum = " + boss.HackingCompleteNum);
+                Debug.Log("HackingSucceedCount = " + boss.m_HackingSuccessCount);
+                return (boss.HackingCompleteNum - boss.m_HackingSuccessCount) - 1;
         }
 
         return 0;
