@@ -56,7 +56,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     public int HackingCompleteNum { get; protected set; }
 
-    protected int m_HackingSuccessCount;
+    public int m_HackingSuccessCount { get; protected set; }
     protected List<float> m_ChangeAttackHpRates;
 
     #endregion
@@ -349,6 +349,7 @@ public class BattleRealBoss : BattleRealEnemyController
         m_CurrentAttack = m_AttackBehaviors[m_AttackPhase];
         m_CurrentDown = m_DownBehaviors[m_DownPhase];
 
+        HackingCompleteNum = m_BossGenerateParamSet.HackingCompleteNum;
         m_HackingSuccessCount = 0;
         MaxDownHp = NowDownHp = m_BossGenerateParamSet.DownHpArray[m_HackingSuccessCount];
 
