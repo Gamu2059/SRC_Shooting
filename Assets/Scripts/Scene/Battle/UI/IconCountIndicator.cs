@@ -93,8 +93,6 @@ public class IconCountIndicator : ControllableMonoBehavior
                 {
                     return -1;
                 }
-                Debug.Log("HackingCompleteNum = " + boss.HackingCompleteNum);
-                Debug.Log("HackingSucceedCount = " + boss.m_HackingSuccessCount);
                 return (boss.HackingCompleteNum - boss.m_HackingSuccessCount) - 1;
         }
 
