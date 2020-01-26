@@ -13,7 +13,7 @@ using System;
 public class CommandBulletSetParam : ScriptableObject
 {
     [SerializeField, Tooltip("弾のプレハブの配列")]
-    private BattleHackingBulletController[] m_BulletPrefabs;
+    private BattleHackingFreeTrajectoryBulletController[] m_BulletPrefabs;
 
     [SerializeField, Tooltip("弾道パラメータの配列")]
     private BulletParam[] m_BulletParams;
@@ -21,7 +21,7 @@ public class CommandBulletSetParam : ScriptableObject
     /// <summary>
     /// BulletPrefab配列を取得する。
     /// </summary>
-    public BattleHackingBulletController[] GetBulletPrefabs()
+    public BattleHackingFreeTrajectoryBulletController[] GetBulletPrefabs()
     {
         return m_BulletPrefabs;
     }

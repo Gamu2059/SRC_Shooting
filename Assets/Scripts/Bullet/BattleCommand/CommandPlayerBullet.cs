@@ -5,6 +5,6 @@ using UnityEngine;
 /// <summary>
 /// コマンドイベントのプレイヤーの弾。
 /// </summary>
-public class CommandPlayerBullet : BattleHackingBulletController
+public class CommandPlayerBullet : BattleHackingFreeTrajectoryBulletController
 {
 }

@@ -20,13 +20,16 @@ public class UnitDanmaku1 : ScriptableObject
     private ShotParam m_ShotParam;
 
     [SerializeField, Tooltip("発射タイミングオブジェクト")]
-    private ShotTimer shotTimer;
+    private ShotTimer m_ShotTimer;
+
+    [SerializeField, Tooltip("軌道の決め方のオブジェクト")]
+    private TrajectoryBase m_Trajectory;
 
 
     public void OnStarts()
     {
         // 発射タイミングオブジェクトの初期の処理をする
-        shotTimer.OnStarts();
+        m_ShotTimer.OnStarts();
 
         // 発射パラメータ初期値の位置を決める（ボクシングされているので）
         m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0.5f));
@@ -35,34 +38,42 @@ public class UnitDanmaku1 : ScriptableObject
 
     public void OnUpdates(BattleHackingBossBehavior boss, HackingBossPhaseState1 state)
     {
-        shotTimer.OnUpdates();
+        m_ShotTimer.OnUpdates();
 
-        while(shotTimer.HasNext())
+        while(m_ShotTimer.HasNextAndNext())
         {
-            shotTimer.Next();
-
-            ShotParam sP = new ShotParam(m_ShotParam);//Debug.Log(m_ShotParam.Position.m_Value);
+            ShotParam sP = new ShotParam(m_ShotParam);
             for (int i = 0; i < m_ShotControllerArray.Length; i++)
             {
-                m_ShotControllerArray[i].GetshotParam(sP, shotTimer, state);
+                m_ShotControllerArray[i].GetshotParam(sP, m_ShotTimer, state);
             }
 
             List<ShotParam> shotParamList = new List<ShotParam>() { sP };
             for (int i = 0; i < m_ShotsControllerArray.Length; i++)
             {
-                m_ShotsControllerArray[i].GetshotsParam(shotParamList, shotTimer, state);
+                m_ShotsControllerArray[i].GetshotsParam(shotParamList, m_ShotTimer, state);
             }
 
             foreach (ShotParam shotParam in shotParamList)
             {
                 // 弾を撃つ
                 CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), shotParam.BulletIndex, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
-                BattleHackingBulletController.ShotBullet(
+                BattleHackingFreeTrajectoryBulletController.ShotBullet(
                     bulletShotParam,
                     new SimpleTrajectory(
-                        new TransformSimple(shotParam.Position.Value, shotParam.Angle, 0.8f),
-                        shotParam.Speed),
-                    shotTimer.GetDTime());
+                        shotParam
+                        ),
+                    m_ShotTimer.GetDTime(),
+                    new TrajectoryBasis(
+                        new TransformSimple(
+                            shotParam.Position.m_Value,
+                            shotParam.Angle,
+                            0.8F),
+                        shotParam.Speed
+                        ),
+                    m_Trajectory,
+                    false
+                    );
             }
 
             AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
@@ -164,3 +175,7 @@ public class UnitDanmaku1 : ScriptableObject
 
 
 //List<(float realShotNum, float launchTime, float dTime)> launchDTimeList = shotTimer.OnUpdates();
+
+
+//[SerializeField, Tooltip("軌道の決め方のオブジェクト")]
+//private SimpleTrajectory m_Trajectory;

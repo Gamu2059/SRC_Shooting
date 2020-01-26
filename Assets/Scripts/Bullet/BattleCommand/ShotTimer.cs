@@ -69,22 +69,25 @@ public class ShotTimer : ScriptableObject
     }
 
 
-    public bool HasNext()
+    public bool HasNextAndNext()
     {
-        return m_IsMainPhase && m_RealShotNum < m_ProperShotNum;
-    }
+        if(m_IsMainPhase && m_RealShotNum < m_ProperShotNum)
+        {
+            // 発射する弾の番号にする
+            m_RealShotNum++;
 
+            // 発射時刻
+            m_LaunchTime = m_RealShotNum * m_ShotInterval;
 
-    public void Next()
-    {
-        // 発射する弾の番号にする
-        m_RealShotNum++;
+            // 発射からの経過時間
+            m_DTime = m_Time - m_LaunchTime;
 
-        // 発射時刻
-        m_LaunchTime = m_RealShotNum * m_ShotInterval;
-
-        // 発射からの経過時間
-        m_DTime = m_Time - m_LaunchTime;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
@@ -140,3 +143,22 @@ public class ShotTimer : ScriptableObject
 //}
 
 //return launchDTimeList;
+
+
+//public bool HasNext()
+//{
+//    return m_IsMainPhase && m_RealShotNum < m_ProperShotNum;
+//}
+
+
+//public void Next()
+//{
+//    // 発射する弾の番号にする
+//    m_RealShotNum++;
+
+//    // 発射時刻
+//    m_LaunchTime = m_RealShotNum * m_ShotInterval;
+
+//    // 発射からの経過時間
+//    m_DTime = m_Time - m_LaunchTime;
+//}

@@ -115,12 +115,14 @@ public abstract class DanmakuCountAbstract2 : object
         // とりあえずパラメータは適当に
         //BattleHackingBulletController.ShotBullet(bulletShotParam,new ShunLinearTrajectory(new TrajectoryBase(position, velocityRad, speed * 2), speed, 0.2f, 0.1f)
         //    , dTime);
-        BattleHackingBulletController.ShotBullet(
-            bulletShotParam,
-            new SimpleTrajectory(
-                new TransformSimple(position, velocityRad, 0.8f),
-                speed),
-            dTime);
+
+        // 使っていないのでコメントアウト
+        //BattleHackingFreeTrajectoryBulletController.ShotBullet(
+        //    bulletShotParam,
+        //    new SimpleTrajectory(
+        //        new TransformSimple(position, velocityRad, 0.8f),
+        //        speed),
+        //    dTime);
     }
 
 

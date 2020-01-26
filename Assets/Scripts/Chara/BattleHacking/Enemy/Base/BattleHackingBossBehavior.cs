@@ -57,10 +57,11 @@ public class BattleHackingBossBehavior : ControllableObject
     //    return BattleHackingBulletController.ShotBullet(Enemy);
     //}
 
-    public BattleHackingBulletController Shot(CommandBulletShotParam p,SimpleTrajectory trajectoryBase, Vector3 position,float dTime)
+    public BattleHackingFreeTrajectoryBulletController Shot(CommandBulletShotParam p,SimpleTrajectory trajectoryBase, Vector3 position,float dTime)
     {
         p.BulletOwner = Enemy;
-        return BattleHackingBulletController.ShotBullet(p, trajectoryBase,dTime);
+        //return BattleHackingFreeTrajectoryBulletController.ShotBullet(p, trajectoryBase, dTime);
+        return null;
     }
 
     // ボスや攻撃に関わらず共通に使いそうなので、以下に書いておく。

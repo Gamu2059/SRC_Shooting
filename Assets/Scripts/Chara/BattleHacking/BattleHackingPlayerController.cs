@@ -54,20 +54,27 @@ public class BattleHackingPlayerController : CommandCharaController
         {
             shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
             // 結構適当
-            BattleHackingBulletController.ShotBullet(
+            BattleHackingFreeTrajectoryBulletController.ShotBullet(
                 shotParam,
                 new ConstAcceleLinearTrajectory(
                     new SimpleTrajectory(
                         new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
                         0.5f),
                     5),
-                0);
+                0,
+                new TrajectoryBasis(
+                    new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
+                    0.5F
+                    ),
+                null,
+                true
+                );
         }
 
         m_ShotTimeCount = m_ShotInterval;
     }
 
-    protected override void OnEnterSufferBullet(HitSufferData<BattleHackingBulletController> sufferData)
+    protected override void OnEnterSufferBullet(HitSufferData<BattleHackingFreeTrajectoryBulletController> sufferData)
     {
         base.OnEnterSufferBullet(sufferData);
 

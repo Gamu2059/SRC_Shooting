@@ -16,7 +16,7 @@ public class CommandCharaController : BattleHackingObjectBase
     public float NowHp { get; private set; }
     public float MaxHp { get; private set; }
 
-    private HitSufferController<BattleHackingBulletController> m_BulletSuffer;
+    private HitSufferController<BattleHackingFreeTrajectoryBulletController> m_BulletSuffer;
     private HitSufferController<CommandCharaController> m_CharaSuffer;
     private HitSufferController<CommandCharaController> m_CharaHit;
 
@@ -88,7 +88,7 @@ public class CommandCharaController : BattleHackingObjectBase
     /// <summary>
     /// 指定したインデックスの弾のプレハブを取得する。
     /// </summary>
-    public BattleHackingBulletController GetBulletPrefab(int bulletIndex = 0)
+    public BattleHackingFreeTrajectoryBulletController GetBulletPrefab(int bulletIndex = 0)
     {
         int prefabCount = GetBulletPrefabsCount();
 
@@ -113,7 +113,7 @@ public class CommandCharaController : BattleHackingObjectBase
     {
         base.OnAwake();
 
-        m_BulletSuffer = new HitSufferController<BattleHackingBulletController>();
+        m_BulletSuffer = new HitSufferController<BattleHackingFreeTrajectoryBulletController>();
         m_CharaSuffer = new HitSufferController<CommandCharaController>();
         m_CharaHit = new HitSufferController<CommandCharaController>();
     }
@@ -249,22 +249,22 @@ public class CommandCharaController : BattleHackingObjectBase
     /// <param name="attackData">他の弾の衝突情報</param>
     /// <param name="targetData">このキャラの衝突情報</param>
     /// <param name="hitPosList">衝突座標リスト</param>
-    public void SufferBullet(BattleHackingBulletController attackBullet, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    public void SufferBullet(BattleHackingFreeTrajectoryBulletController attackBullet, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
         m_BulletSuffer.Put(attackBullet, attackData, targetData, hitPosList);
     }
 
-    protected virtual void OnEnterSufferBullet(HitSufferData<BattleHackingBulletController> sufferData)
+    protected virtual void OnEnterSufferBullet(HitSufferData<BattleHackingFreeTrajectoryBulletController> sufferData)
     {
 
     }
 
-    protected virtual void OnStaySufferBullet(HitSufferData<BattleHackingBulletController> sufferData)
+    protected virtual void OnStaySufferBullet(HitSufferData<BattleHackingFreeTrajectoryBulletController> sufferData)
     {
 
     }
 
-    protected virtual void OnExitSufferBullet(HitSufferData<BattleHackingBulletController> sufferData)
+    protected virtual void OnExitSufferBullet(HitSufferData<BattleHackingFreeTrajectoryBulletController> sufferData)
     {
 
     }
