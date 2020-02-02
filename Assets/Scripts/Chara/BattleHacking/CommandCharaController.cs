@@ -92,6 +92,10 @@ public class CommandCharaController : BattleHackingObjectBase
     {
         int prefabCount = GetBulletPrefabsCount();
 
+        if (GetBulletSetParam().GetBulletPrefabs() == null)
+        {
+        }
+
         if (GetBulletSetParam().GetBulletPrefabs() == null || prefabCount < 1)
         {
             return null;
@@ -99,9 +103,11 @@ public class CommandCharaController : BattleHackingObjectBase
 
         if (bulletIndex < 0 || bulletIndex >= prefabCount)
         {
+            Debug.Log("bulletIndex < 0 || bulletIndex >= prefabCount");
             bulletIndex = 0;
         }
 
+        Debug.Log("GetBulletSetParam().GetBulletPrefabs()[bulletIndex]");
         return GetBulletSetParam().GetBulletPrefabs()[bulletIndex];
     }
 

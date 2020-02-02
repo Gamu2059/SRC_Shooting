@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7292297653876647179}
   - component: {fileID: 1005732535283827408}
-  - component: {fileID: 1510414784364258221}
+  - component: {fileID: 7098989558687911602}
   m_Layer: 13
   m_Name: BattleHackingPlayerBullet
   m_TagString: Untagged
@@ -126,13 +126,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 0
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 0
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 10
     ColliderColor: {r: 1, g: 1, b: 1, a: 0}
     Transform: {fileID: 7898547469854246630}
---- !u!114 &1510414784364258221
+--- !u!114 &7098989558687911602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,12 +143,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7292297653876647168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cffeccce14488034f85f2ef2a318f6ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 989ac6d25c2a8e448a8a2e22e60e5a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletGroupId: Hacker
-  m_IsDestoryOnCollide: 1
+  m_IsDestoryOnCollide: 0
   m_Cycle: 0
+  m_Time: 0
+  m_Trajectory: {fileID: 0}
+  m_IsPlayers: 1
 --- !u!1 &8247850580784192478
 GameObject:
   m_ObjectHideFlags: 0
