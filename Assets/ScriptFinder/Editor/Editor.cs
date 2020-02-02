@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using ScriptFinder.Utilities;
 using System;
+using System.Reflection;
+using System.Linq;
 
 namespace ScriptFinder
 {
@@ -15,43 +17,43 @@ namespace ScriptFinder
             {
                 public const string SkinScriptFinder = "ScriptFinderSkin";
 
-                public const string StyleHeader              = "Header";
+                public const string StyleHeader = "Header";
                 public const string StyleFindComponentsLabel = "FindComponentsLabel";
-                public const string StyleObjectFieldLabel    = "ObjectFieldLabel";
-                public const string StyleRecurseLabel        = "RecurseLabel";
-                public const string StyleResultLabel        = "ResultLabel";
+                public const string StyleObjectFieldLabel = "ObjectFieldLabel";
+                public const string StyleRecurseLabel = "RecurseLabel";
+                public const string StyleResultLabel = "ResultLabel";
             }
             public struct Colours
             {
-                public static readonly Color BackgroundHeader        = new Color32(60, 60, 60, 255);
-                public static readonly Color BackgroundBodyOuter     = new Color32(90, 90, 90, 255);
-                public static readonly Color BackgroundBodyBorder    = new Color32(60, 60, 60, 255);
-                public static readonly Color BackgroundBodyInner     = new Color32(70, 70, 70, 255);
+                public static readonly Color BackgroundHeader = new Color32(60, 60, 60, 255);
+                public static readonly Color BackgroundBodyOuter = new Color32(90, 90, 90, 255);
+                public static readonly Color BackgroundBodyBorder = new Color32(60, 60, 60, 255);
+                public static readonly Color BackgroundBodyInner = new Color32(70, 70, 70, 255);
                 public static readonly Color BackgroundResultsBorder = new Color32(60, 60, 60, 255);
-                public static readonly Color BackgroundResultsInner  = new Color32(90, 90, 90, 255);
+                public static readonly Color BackgroundResultsInner = new Color32(90, 90, 90, 255);
 
-                public static readonly Color ButtonMatchNormalBackground   = new Color32(100, 100, 100, 255);
-                public static readonly Color ButtonMatchNormalBorder       = new Color32(80, 80, 80, 255);
-                public static readonly Color ButtonMatchNormalText         = new Color32(255, 255, 255, 255);
-                public static readonly Color ButtonMatchHoverBackground    = new Color32(130, 130, 200, 255);
-                public static readonly Color ButtonMatchHoverBorder        = new Color32(90, 90, 160, 255);
-                public static readonly Color ButtonMatchHoverText          = new Color32(255, 255, 255, 255);
+                public static readonly Color ButtonMatchNormalBackground = new Color32(100, 100, 100, 255);
+                public static readonly Color ButtonMatchNormalBorder = new Color32(80, 80, 80, 255);
+                public static readonly Color ButtonMatchNormalText = new Color32(255, 255, 255, 255);
+                public static readonly Color ButtonMatchHoverBackground = new Color32(130, 130, 200, 255);
+                public static readonly Color ButtonMatchHoverBorder = new Color32(90, 90, 160, 255);
+                public static readonly Color ButtonMatchHoverText = new Color32(255, 255, 255, 255);
                 public static readonly Color ButtonMatchSelectedBackground = new Color32(110, 110, 180, 255);
-                public static readonly Color ButtonMatchSelectedBorder     = new Color32(70, 70, 140, 255);
-                public static readonly Color ButtonMatchSelectedText       = new Color32(255, 255, 255, 255);
+                public static readonly Color ButtonMatchSelectedBorder = new Color32(70, 70, 140, 255);
+                public static readonly Color ButtonMatchSelectedText = new Color32(255, 255, 255, 255);
             }
             public struct Labels
             {
                 public const string ButtonFindMatches = "Find Components";
-                public const string ButtonSelect      = "Select";
+                public const string ButtonSelect = "Select";
 
                 public const string FileTypePrefab = ".prefab";
 
                 public const string HeaderFindComponentsSuccess = "Matches:";
-                public const string HeaderFindComponentsFail    = "No matches found.";
-                public const string HeaderScriptFinder          = "ScriptFinder";
-                public const string HeaderShouldRecurse         = "Recurse Dependencies (Warning: Very Slow)";
-                public const string HeaderTargetObjectField     = "Select Target Script";
+                public const string HeaderFindComponentsFail = "No matches found.";
+                public const string HeaderScriptFinder = "ScriptFinder";
+                public const string HeaderShouldRecurse = "Recurse Dependencies (Warning: Very Slow)";
+                public const string HeaderTargetObjectField = "Select Target Script";
 
                 public const string WindowPath = "Tools/ScriptFinder";
                 public const string WindowTitle = "ScriptFinder - © 2018 Joeb Rogers";
@@ -69,26 +71,26 @@ namespace ScriptFinder
                 public static readonly RectOffset ButtonMatch = new RectOffset
                 {
                     left = 5,
-                    top  = 6
+                    top = 6
                 };
             }
             public struct Rects
             {
                 public static readonly Rect AreaResults = new Rect(22.0f, 227.0f, 756.0f, 151.0f);
 
-                public static readonly Rect BackgroundHeader        = new Rect(0.0f, 0.0f, 800.0f, 30.0f);
-                public static readonly Rect BackgroundBodyOuter     = new Rect(0.0f, 30.0f, 800.0f, 370.0f);
-                public static readonly Rect BackgroundBodyBorder    = new Rect(10.0f, 40.0f, 780.0f, 350.0f);
-                public static readonly Rect BackgroundBodyInner     = new Rect(12.0f, 42.0f, 776.0f, 346.0f);
+                public static readonly Rect BackgroundHeader = new Rect(0.0f, 0.0f, 800.0f, 30.0f);
+                public static readonly Rect BackgroundBodyOuter = new Rect(0.0f, 30.0f, 800.0f, 370.0f);
+                public static readonly Rect BackgroundBodyBorder = new Rect(10.0f, 40.0f, 780.0f, 350.0f);
+                public static readonly Rect BackgroundBodyInner = new Rect(12.0f, 42.0f, 776.0f, 346.0f);
                 public static readonly Rect BackgroundResultsBorder = new Rect(20.0f, 225.0f, 760.0f, 155.0f);
-                public static readonly Rect BackgroundResultsInner  = new Rect(22.0f, 227.0f, 756.0f, 151.0f);
+                public static readonly Rect BackgroundResultsInner = new Rect(22.0f, 227.0f, 756.0f, 151.0f);
 
                 public static readonly Rect ButtonFindMatches = new Rect(20.0f, 160.0f, 760.0f, 20.0f);
-                public static readonly Rect ButtonMatch       = new Rect(0.0f, 0.0f, 756.0f, 30.0f);
+                public static readonly Rect ButtonMatch = new Rect(0.0f, 0.0f, 756.0f, 30.0f);
 
-                public static readonly Rect FieldTargetObject  = new Rect(20.0f, 80.0f, 762.0f, 17.0f);
+                public static readonly Rect FieldTargetObject = new Rect(20.0f, 80.0f, 762.0f, 17.0f);
                 public static readonly Rect FieldRecurseToggle = new Rect(18.0f, 135.0f, 20.0f, 20.0f);
-            }            
+            }
             public struct StyleStates
             {
                 private const int ButtonMatchBorderThickness = 4;
@@ -97,12 +99,12 @@ namespace ScriptFinder
                 {
                     background = Utility.GenerateColouredBackgroundWithBottomBorder
                     (
-                        (int)Rects.ButtonMatch.width, 
-                        (int)Rects.ButtonMatch.height, 
-                        Colours.ButtonMatchNormalBackground, 
-                        Colours.ButtonMatchNormalBorder, 
+                        (int)Rects.ButtonMatch.width,
+                        (int)Rects.ButtonMatch.height,
+                        Colours.ButtonMatchNormalBackground,
+                        Colours.ButtonMatchNormalBorder,
                         ButtonMatchBorderThickness
-                    ),                    
+                    ),
                     textColor = Colours.ButtonMatchNormalText
                 };
                 public static readonly GUIStyleState ButtonMatchHover = new GUIStyleState
@@ -134,23 +136,23 @@ namespace ScriptFinder
             {
                 public static readonly GUIStyle ButtonMatch = new GUIStyle
                 {
-                    normal    = StyleStates.ButtonMatchNormal,
-                    onNormal  = StyleStates.ButtonMatchNormal,
-                    hover     = StyleStates.ButtonMatchHover,
-                    onHover   = StyleStates.ButtonMatchHover,
+                    normal = StyleStates.ButtonMatchNormal,
+                    onNormal = StyleStates.ButtonMatchNormal,
+                    hover = StyleStates.ButtonMatchHover,
+                    onHover = StyleStates.ButtonMatchHover,
                     fontStyle = FontStyle.Bold,
-                    fontSize  = 12,
-                    padding   = Padding.ButtonMatch
+                    fontSize = 12,
+                    padding = Padding.ButtonMatch
                 };
                 public static readonly GUIStyle ButtonMatchSelected = new GUIStyle
                 {
-                    normal    = StyleStates.ButtonMatchSelected,
-                    onNormal  = StyleStates.ButtonMatchSelected,
-                    hover     = StyleStates.ButtonMatchSelected,
-                    onHover   = StyleStates.ButtonMatchSelected,
+                    normal = StyleStates.ButtonMatchSelected,
+                    onNormal = StyleStates.ButtonMatchSelected,
+                    hover = StyleStates.ButtonMatchSelected,
+                    onHover = StyleStates.ButtonMatchSelected,
                     fontStyle = FontStyle.Bold,
-                    fontSize  = 12,
-                    padding   = Padding.ButtonMatch
+                    fontSize = 12,
+                    padding = Padding.ButtonMatch
                 };
             }
 
@@ -172,11 +174,11 @@ namespace ScriptFinder
         private GUIStyle styleResultLabel;
         #endregion
 
-        private MonoScript   targetComponent;
-        private bool         shouldRecurse = false;
-        private Vector2      scrollPosition = Vector2.zero;
+        private MonoScript targetComponent;
+        private bool shouldRecurse = false;
+        private Vector2 scrollPosition = Vector2.zero;
         private List<string> results;
-        private string       selectedResult = "";
+        private string selectedResult = "";
         #endregion
 
         #region Unity Methods
@@ -195,12 +197,12 @@ namespace ScriptFinder
             wantsMouseMove = true;
 
             // Retrieve styles
-            skin                     = (GUISkin)Resources.Load(Data.AssetNames.SkinScriptFinder);
-            styleHeader              = skin.GetStyle(Data.AssetNames.StyleHeader);
-            styleObjectFieldLabel    = skin.GetStyle(Data.AssetNames.StyleObjectFieldLabel);
-            styleRecurseLabel        = skin.GetStyle(Data.AssetNames.StyleRecurseLabel);
+            skin = (GUISkin)Resources.Load(Data.AssetNames.SkinScriptFinder);
+            styleHeader = skin.GetStyle(Data.AssetNames.StyleHeader);
+            styleObjectFieldLabel = skin.GetStyle(Data.AssetNames.StyleObjectFieldLabel);
+            styleRecurseLabel = skin.GetStyle(Data.AssetNames.StyleRecurseLabel);
             styleFindComponentsLabel = skin.GetStyle(Data.AssetNames.StyleFindComponentsLabel);
-            styleResultLabel         = skin.GetStyle(Data.AssetNames.StyleResultLabel);
+            styleResultLabel = skin.GetStyle(Data.AssetNames.StyleResultLabel);
         }
 
         void OnGUI()
@@ -209,7 +211,7 @@ namespace ScriptFinder
 
             DrawGUIBackground();
             DrawGUIControls();
-            DrawGUIResults();            
+            DrawGUIResults();
         }
         #endregion
 
@@ -295,7 +297,7 @@ namespace ScriptFinder
         #region Actions
         private void ActionSearchForComponent()
         {
-            string targetPath = AssetDatabase.GetAssetPath(targetComponent);
+            var targetType = targetComponent.GetClass();
             string[] allPrefabs = GetAllPrefabs();
             results = new List<string>();
 
@@ -305,7 +307,18 @@ namespace ScriptFinder
                 string[] dependencies = AssetDatabase.GetDependencies(single, shouldRecurse);
                 foreach (string dependentAsset in dependencies)
                 {
-                    if (dependentAsset == targetPath)
+                    var asset = AssetDatabase.LoadAssetAtPath<MonoScript>(dependentAsset);
+                    if (asset == null)
+                    {
+                        continue;
+                    }
+
+                    var assetType = asset.GetClass();
+                    if (assetType == null)
+                    {
+                        continue;
+                    }
+                    if (assetType.Equals(targetType) || assetType.IsSubclassOf(targetType))
                     {
                         results.Add(prefab);
                     }
