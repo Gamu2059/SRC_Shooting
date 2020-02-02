@@ -5,35 +5,35 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータを操作するクラス。多角形全方位弾にする。弾数が増える。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/ShotController/Pol", fileName = "SCPol", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/ShotParamListControllerBase/Pol", fileName = "SCPol", order = 0)]
 [System.Serializable]
 public class SCPol : ShotsControllerInc
 {
 
-    [SerializeField, Tooltip("")]
-    public int m_N;
+    [SerializeField, Tooltip("正何角形か")]
+    public int m_VertexNum;
 
-    [SerializeField, Tooltip("")]
-    public int m_M;
+    [SerializeField, Tooltip("一辺あたりの弾の数")]
+    public int m_Density;
 
 
-    public override void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState1 state)
+    public override void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
-        float piDivN = Mathf.PI / m_N;
-        float twoPiDivN = Calc.TWO_PI / m_N;
+        float piDivN = Mathf.PI / m_VertexNum;
+        float twoPiDivN = Calc.TWO_PI / m_VertexNum;
 
         float largeR = shotParam.Speed;
 
         float r = largeR * Mathf.Cos(piDivN);
         float b = largeR * Mathf.Sin(piDivN);
 
-        for (int nI = 0; nI < m_N; nI++)
+        for (int nI = 0; nI < m_VertexNum; nI++)
         {
             float mTheta = twoPiDivN * nI + piDivN;
 
-            for (int mI = 0; mI < m_M; mI++)
+            for (int mI = 0; mI < m_Density; mI++)
             {
-                float c = b * (1 - (float)mI * 2 / m_M);
+                float c = b * (1 - (float)mI * 2 / m_Density);
 
                 float d = Mathf.Sqrt(r * r + c * c);
 

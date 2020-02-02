@@ -56,7 +56,7 @@ public class BattleHackingPlayerController : CommandCharaController
             // 結構適当
             BattleHackingFreeTrajectoryBulletController.ShotBullet(
                 shotParam,
-                new ConstAcceleLinearTrajectory(
+                new ConstAcceleLinearTrajectory1(
                     new SimpleTrajectory(
                         new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
                         0.5f),

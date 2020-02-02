@@ -5,9 +5,9 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータ操作のクラス。リストをリストにする。一対多で対応するため、弾数が増える。
 /// </summary>
-public abstract class ShotsControllerInc : ShotsController
+public abstract class ShotsControllerInc : ShotParamListControllerBase
 {
-    public override void GetshotsParam(List<ShotParam> array, ShotTimer shotTimer, HackingBossPhaseState1 state)
+    public override void GetshotsParam(List<ShotParam> array, ShotTimer shotTimer, HackingBossPhaseState state)
     {
         int arraySize = array.Count;
 
@@ -21,5 +21,5 @@ public abstract class ShotsControllerInc : ShotsController
     }
 
 
-    public abstract void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState1 state);
+    public abstract void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state);
 }

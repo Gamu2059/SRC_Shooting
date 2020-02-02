@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// アセット用単位弾幕パラメータのクラス。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/UD Fields", fileName = "OMN", order = 0)]
+//[CreateAssetMenu(menuName = "Param/Danmaku/UD Fields", fileName = "OMN", order = 0)]
 [System.Serializable]
 public class UDField : ScriptableObject
 {

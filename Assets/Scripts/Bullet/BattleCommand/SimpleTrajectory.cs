@@ -45,7 +45,8 @@ public class SimpleTrajectory : object
     public SimpleTrajectory(ShotParam shotParam)
     {
         m_BaseTransform = new TransformSimple(
-            shotParam.Position.m_Value,
+            //shotParam.Position.m_Value,
+            shotParam.Position.GetResult(),
             shotParam.Angle,
             0.8F
             );

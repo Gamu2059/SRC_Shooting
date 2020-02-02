@@ -5,9 +5,9 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータ操作のクラス。リストをリストにする。
 /// </summary>
-public abstract class ShotsController : ScriptableObject
+public abstract class ShotParamListControllerBase : ScriptableObject
 {
-    public abstract void GetshotsParam(List<ShotParam> array, ShotTimer shotTimer, HackingBossPhaseState1 state);
+    public abstract void GetshotsParam(List<ShotParam> array, ShotTimer shotTimer, HackingBossPhaseState state);
 }
 
 

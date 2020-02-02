@@ -19,7 +19,8 @@ public class ShotParam : object
     /// 基準の位置（発射位置）
     /// </summary>
     [SerializeField]
-    public Boxing1<Vector2> Position;
+    //public Boxing1<Vector2> Position;
+    public OperationVector2Base Position;
 
     /// <summary>
     /// 初期角度
@@ -34,7 +35,7 @@ public class ShotParam : object
     public float Speed;
 
 
-    public ShotParam(int bulletIndex, Boxing1<Vector2> position, float velocityRad, float speed)
+    public ShotParam(int bulletIndex, OperationVector2Base position, float velocityRad, float speed)
     {
         BulletIndex = bulletIndex;
         Position = position;
@@ -43,13 +44,13 @@ public class ShotParam : object
     }
 
 
-    public ShotParam() : this(0, new Boxing1<Vector2>(Vector2.zero), 0, 0)
+    public ShotParam() : this(0, new OperationVector2Init(Vector2.zero), 0, 0)
     {
 
     }
 
 
-    public ShotParam(ShotParam shotParam) : this(shotParam.BulletIndex, new Boxing1<Vector2>(shotParam.Position), shotParam.Angle, shotParam.Speed)
+    public ShotParam(ShotParam shotParam) : this(shotParam.BulletIndex, new OperationVector2Init(shotParam.Position.GetResult()), shotParam.Angle, shotParam.Speed)
     {
 
     }

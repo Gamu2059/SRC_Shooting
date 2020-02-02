@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// アセット用単位弾幕パラメータの配列のクラス。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/All UD Field Array", fileName = "AUDFA", order = 0)]
+//[CreateAssetMenu(menuName = "Param/Danmaku/All UD Field Array", fileName = "AUDFA", order = 0)]
 [System.Serializable]
 public class AllUDFieldArray : ScriptableObject
 {

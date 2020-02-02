@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
   m_Name: UnitDanmaku
   m_EditorClassIdentifier: 
+  m_ShotTimer: {fileID: 11400000, guid: 7e0d90622f29d8b47a79a522e88f0f5f, type: 2}
+  m_ShotParam:
+    BulletIndex: 0
+    Angle: 0
+    Speed: 0.8
   m_ShotControllerArray:
   - {fileID: 11400000, guid: 8ad6da94915a958489716ff4dc1617a7, type: 2}
   - {fileID: 11400000, guid: b74952f69171a364a81efb16b1f3a0c6, type: 2}
   m_ShotsControllerArray:
   - {fileID: 11400000, guid: 93f694db0002ca745af0f9ba950d627d, type: 2}
-  m_ShotParam:
-    BulletIndex: 0
-    Angle: 0
-    Speed: 0.8
-  m_ShotTimer: {fileID: 11400000, guid: 7e0d90622f29d8b47a79a522e88f0f5f, type: 2}
   m_Trajectory: {fileID: 0}

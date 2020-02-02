@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータを操作するクラス。全方位弾にする。弾数が増える。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/ShotController/Way", fileName = "SCWay", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/ShotParamListControllerBase/Way", fileName = "SCWay", order = 0)]
 [System.Serializable]
 public class SCWay : ShotsControllerInc
 {
@@ -14,7 +14,7 @@ public class SCWay : ShotsControllerInc
     public int m_Way;
 
 
-    public override void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState1 state)
+    public override void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
 
         for (int wayIndex = 0; wayIndex < m_Way; wayIndex++)
