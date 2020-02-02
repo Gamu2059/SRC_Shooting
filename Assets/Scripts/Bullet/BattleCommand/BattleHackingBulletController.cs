@@ -6,6 +6,7 @@ using System;
 /// <summary>
 /// コマンドイベントの全ての弾オブジェクトの基礎クラス。
 /// </summary>
+[System.Serializable]
 public class BattleHackingBulletController : BattleHackingObjectBase
 {
     #region Field Inspector

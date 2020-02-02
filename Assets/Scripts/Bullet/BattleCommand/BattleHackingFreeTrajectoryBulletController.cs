@@ -6,6 +6,7 @@ using System;
 /// <summary>
 /// コマンドイベントの全ての弾オブジェクトの基礎クラス。
 /// </summary>
+[System.Serializable]
 public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletController
 {
     #region Field Inspector
@@ -38,6 +39,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         if (bulletOwner == null)
         {
+            //Debug.Log("bulletOwner == null");
             return null;
         }
 
@@ -46,6 +48,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         if (bulletPrefab == null)
         {
+            //Debug.Log("bulletPrefab == null");
             return null;
         }
 
@@ -54,6 +57,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         if (bullet == null)
         {
+            //Debug.Log("bullet == null");
             return null;
         }
 
@@ -106,6 +110,8 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         bullet.m_Trajectory = trajectory;
 
         bullet.m_IsPlayers = isPlayers;
+
+        Debug.Log(bullet.m_TrajectoryBasis.m_Transform.m_Position);
 
 
         return bullet;

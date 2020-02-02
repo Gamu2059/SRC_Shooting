@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3362366715077073203}
   - component: {fileID: 3362366715077073213}
-  - component: {fileID: 3362366715077073202}
+  - component: {fileID: 4081211686864351618}
   m_Layer: 13
   m_Name: inf_c_761_hacker1_bullet_1
   m_TagString: Untagged
@@ -177,7 +177,7 @@ MonoBehaviour:
     ColliderWidth: 10
     ColliderColor: {r: 1, g: 0.958446, b: 0, a: 0}
     Transform: {fileID: 3362366713523454778}
---- !u!114 &3362366715077073202
+--- !u!114 &4081211686864351618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3362366715077073200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cffeccce14488034f85f2ef2a318f6ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 989ac6d25c2a8e448a8a2e22e60e5a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletGroupId: InfC761 Bullet1
   m_IsDestoryOnCollide: 0
   m_Cycle: 0
+  m_Time: 0
+  m_Trajectory: {fileID: 0}
+  m_IsPlayers: 0
 --- !u!1 &6468174637717606981
 GameObject:
   m_ObjectHideFlags: 0
