@@ -17,7 +17,9 @@ public class PlayerRecordManager : ControllableObject
         m_PlayerRecords = new List<PlayerRecord>();
         m_MaxRecordNum = 1000;
 
-        int maxScore = PlayerPrefs.GetInt("BestScore", 0);
+        SaveDataManager.Load();
+
+        int maxScore = SaveDataManager.GetInt("BestScore", 0);
         m_PlayerRecords.Add(new PlayerRecord(maxScore, 1, new System.DateTime()));
     }
 
@@ -26,8 +28,8 @@ public class PlayerRecordManager : ControllableObject
         var maxScore = GetTopRecord().m_FinalScore;
         if (record.m_FinalScore > maxScore)
         {
-            PlayerPrefs.SetInt("BestScore", (int)record.m_FinalScore);
-            PlayerPrefs.Save();
+            SaveDataManager.SetInt("BestScore", (int)record.m_FinalScore);
+            SaveDataManager.Save();
         }
 
         if (m_PlayerRecords.Count + 1 > m_MaxRecordNum){
@@ -73,7 +75,7 @@ public class PlayerRecordManager : ControllableObject
         m_PlayerRecords.Add(new PlayerRecord(4000, 4, new System.DateTime(2019, 5, 1)));
         m_PlayerRecords.Add(new PlayerRecord(5000, 5, new System.DateTime(2019, 5, 1)));
         m_PlayerRecords.Add(new PlayerRecord(6000, 6, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(9999, 7, new System.DateTime(2000, 5, 1)));
+        m_PlayerRecords.Add(new PlayerRecord(9999, 7, new System.DateTime(2019, 5, 1)));
     }
 
     private string ReachedStageStrFromInt(int stage){

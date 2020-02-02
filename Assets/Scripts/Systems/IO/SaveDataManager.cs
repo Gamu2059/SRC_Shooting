@@ -304,8 +304,9 @@ public class SaveDataManager : GlobalSingletonMonoBehavior<SaveDataManager>
         {
             return;
         }
-
+        Load();
         Clear();
+        Save();
     }
 
 #endif
