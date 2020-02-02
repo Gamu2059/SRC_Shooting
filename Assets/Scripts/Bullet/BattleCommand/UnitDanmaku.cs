@@ -7,23 +7,23 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/UnitDanmaku", fileName = "UnitDanmaku", order = 0)]
 [System.Serializable]
-public class UnitDanmaku1 : ScriptableObject
+public class UnitDanmaku : ScriptableObject
 {
-
-    [SerializeField, Tooltip("発射パラメータ操作の配列（単数→単数）")]
-    private ShotController[] m_ShotControllerArray;
-
-    [SerializeField, Tooltip("発射操作の配列（リスト→リスト）")]
-    private ShotsController[] m_ShotsControllerArray;
-
-    [SerializeField, Tooltip("発射パラメータの初期値")]
-    private ShotParam m_ShotParam;
 
     [SerializeField, Tooltip("発射タイミングオブジェクト")]
     private ShotTimer m_ShotTimer;
 
+    [SerializeField, Tooltip("発射パラメータの初期値")]
+    private ShotParam m_ShotParam;
+
+    [SerializeField, Tooltip("発射パラメータ操作の配列（単数→単数）")]
+    private ShotParamControllerBase[] m_ShotControllerArray;
+
+    [SerializeField, Tooltip("発射操作の配列（リスト→リスト）")]
+    private ShotParamListControllerBase[] m_ShotsControllerArray;
+
     [SerializeField, Tooltip("軌道の決め方のオブジェクト")]
-    private TrajectoryBase m_Trajectory;
+    private TrajectoryBase m_Trajectory; 
 
 
     public void OnStarts()
@@ -32,11 +32,12 @@ public class UnitDanmaku1 : ScriptableObject
         m_ShotTimer.OnStarts();
 
         // 発射パラメータ初期値の位置を決める（ボクシングされているので）
-        m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0.5f));
+        //m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0));
+        m_ShotParam.Position = new OperationVector2Init(new Vector2(0, 0));
     }
 
 
-    public void OnUpdates(BattleHackingBossBehavior boss, HackingBossPhaseState1 state)
+    public void OnUpdates(BattleHackingBossBehavior boss, HackingBossPhaseState state)
     {
         m_ShotTimer.OnUpdates();
 
@@ -66,7 +67,8 @@ public class UnitDanmaku1 : ScriptableObject
                     m_ShotTimer.GetDTime(),
                     new TrajectoryBasis(
                         new TransformSimple(
-                            shotParam.Position.m_Value,
+                            //shotParam.Position.m_Value,
+                            shotParam.Position.GetResult(),
                             shotParam.Angle,
                             0.8F),
                         shotParam.Speed

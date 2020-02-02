@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Param/Danmaku/UD Params Array", fileName = "UDPA", order = 0)]
+//[CreateAssetMenu(menuName = "Param/Danmaku/UD Params Array", fileName = "UDPA", order = 0)]
 [System.Serializable]
 public class UDParamsArray : ScriptableObject
 {

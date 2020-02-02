@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータを操作するクラス。発射位置を円内でブレさせる。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/ShotController/Blp", fileName = "SCBlp", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/ShotParamListControllerBase/Blp", fileName = "SCBlp", order = 0)]
 [System.Serializable]
 public class SCBlp : ShotsControllerBij
 {
@@ -14,9 +14,11 @@ public class SCBlp : ShotsControllerBij
     public float m_BlurRadius;
 
 
-    public override void GetshotsParamFor(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState1 state)
+    public override void GetshotsParamFor(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
-        shotParam.Position.Value += Random.insideUnitCircle * m_BlurRadius;
+        //shotParam.Position.Value += Random.insideUnitCircle * m_BlurRadius;
+
+        shotParam.Position = new OperationVector2Plus(new OperationVector2Base[] { shotParam.Position, new OperationVector2Init(Random.insideUnitCircle * m_BlurRadius) });
     }
 }
 

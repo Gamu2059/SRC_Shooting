@@ -5,18 +5,20 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータを操作するクラス。発射位置を、敵本体からの相対位置で指定する。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/ShotController/Bop", fileName = "SCBop", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/ShotParamControllerBase/Bop", fileName = "SCBop", order = 0)]
 [System.Serializable]
-public class SCBop : ShotController
+public class SCBop : ShotParamControllerBase
 {
 
     //[SerializeField, Tooltip("相対位置")]
     //public Vector2 m_RelativePosition;
 
 
-    public override void GetshotParam(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState1 state)
+    public override void GetshotParam(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
-        shotParam.Position.Value += state.GetTransform(shotTimer.GetLaunchTime()).m_Position;
+        //shotParam.Position.Value += state.GetTransform(shotTimer.GetLaunchTime()).m_Position;
+
+        shotParam.Position = new OperationVector2Plus(new OperationVector2Base[]{ shotParam.Position, new OperationVector2Init(state.GetTransform(shotTimer.GetLaunchTime()).m_Position) });
     }
 }
 

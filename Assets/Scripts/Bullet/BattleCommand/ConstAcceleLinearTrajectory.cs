@@ -3,32 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 等加速度直線運動する弾のパラメータ（？）。シリアライズする?。
+/// 等加速度直線運動する軌道を表すクラス。
 /// </summary>
-public class ConstAcceleLinearTrajectory : SimpleTrajectory
+[CreateAssetMenu(menuName = "Param/Danmaku/TrajectoryBase/ConstAcceleLinearTrajectory", fileName = "ConstAcceleLinearTrajectory", order = 0)]
+[System.Serializable]
+public class ConstAcceleLinearTrajectory : TrajectoryBase
 {
-
-    /// <summary>
-    /// 加速度の大きさ
-    /// </summary>
+    [SerializeField, Tooltip("加速度の大きさ")]
     public float m_Acceleration;
 
 
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    public ConstAcceleLinearTrajectory(SimpleTrajectory trajectoryBase, float acceleration) : base(trajectoryBase)
-    {
-        m_Acceleration = acceleration;
-    }
-
-
-    public override TransformSimple GetTransform(float time)
+    public override TransformSimple GetTransform(TrajectoryBasis trajectoryBasis, float time)
     {
         return new TransformSimple(
-            m_BaseTransform.m_Position + (m_Speed * time + m_Acceleration * time * time / 2) * Calc.RThetaToVec2(1, m_BaseTransform.m_Angle),
-            m_BaseTransform.m_Angle,
-            m_BaseTransform.m_Scale
+            trajectoryBasis.m_Transform.m_Position + (trajectoryBasis.m_Speed * time + m_Acceleration * time * time / 2) * Calc.RThetaToVec2(1, trajectoryBasis.m_Transform.m_Angle),
+            trajectoryBasis.m_Transform.m_Angle,
+            trajectoryBasis.m_Transform.m_Scale
             );
     }
 }

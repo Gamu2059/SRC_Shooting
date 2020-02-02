@@ -39,4 +39,10 @@ public class TransformSimple : object
     {
 
     }
+
+
+    public override string ToString()
+    {
+        return m_Position.ToString() + ", " + m_Angle.ToString() + ", " + m_Scale.ToString();
+    }
 }
