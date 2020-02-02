@@ -24,6 +24,17 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
         STAGE0 = 2,
         STAGE1 = 3,
+		STAGE2 = 4,
+		STAGE3 = 5,
+		STAGE4 = 6,
+		STAGE5 = 7,
+		STAGE6 = 8,
+
+		STORY_MENU = 9,
+		CHAPTER_MENU = 10,
+		RANKING = 11,
+		STAFF_ROLL = 12,
+		EXTRA = 13,
 	}
 
     /// <summary>
