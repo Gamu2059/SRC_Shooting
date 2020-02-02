@@ -97,7 +97,7 @@ public class ShotTimer : ScriptableObject
     /// <returns></returns>
     public float GetLaunchTime()
     {
-        return m_LaunchTime;
+        return m_InitialTime + m_LaunchTime;
     }
 
 

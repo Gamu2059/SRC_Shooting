@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 発射パラメータを操作するクラス。速度差をつける。弾数が増える。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/ShotController/Dsp", fileName = "SCDsp", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/ShotParamListControllerBase/Dsp", fileName = "SCDsp", order = 0)]
 [System.Serializable]
 public class SCDsp : ShotsControllerInc
 {
@@ -17,7 +17,7 @@ public class SCDsp : ShotsControllerInc
     public float m_DSpeed;
 
 
-    public override void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState1 state)
+    public override void GetShotParamListIn(List<ShotParam> array, ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
         for (int speedIndex = -(m_SpeedNum - 1); speedIndex <= m_SpeedNum - 1; speedIndex += 2)
         {
