@@ -20,7 +20,7 @@ public class PlayerRecordManager : ControllableObject
         SaveDataManager.Load();
 
         int maxScore = SaveDataManager.GetInt("BestScore", 0);
-        m_PlayerRecords.Add(new PlayerRecord(maxScore, 1, new System.DateTime()));
+        m_PlayerRecords.Add(new PlayerRecord("Nanashi", maxScore, 1, new System.DateTime()));
     }
 
     public void AddRecord(PlayerRecord record){
@@ -56,28 +56,6 @@ public class PlayerRecordManager : ControllableObject
         });
     }
 
-    public void ShowRecord(){
-        //Debug.Log("Score Ranking ...");
-        //SortRecord();
-        //int i = 0;
-        //foreach (PlayerRecord rec in m_PlayerRecords.GetRange(0,5))
-        //{
-        //    i++;
-        //    string showStr = string.Format("{0} : Score={1} , Stage={2}, Date={3}", i, rec.m_FinalScore, ReachedStageStrFromInt(rec.m_FinalReachedStage), rec.m_PlayedDate.ToString("yyyy/MM/dd"));
-        //    Debug.Log(showStr);
-        //}
-    }
-
-    private void AddDummyScore(){
-        m_PlayerRecords.Add(new PlayerRecord(1000, 1, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(2000, 2, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(3000, 3, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(4000, 4, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(5000, 5, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(6000, 6, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(9999, 7, new System.DateTime(2019, 5, 1)));
-    }
-
     private string ReachedStageStrFromInt(int stage){
         if(stage != 7){
             return stage.ToString();
@@ -86,8 +64,34 @@ public class PlayerRecordManager : ControllableObject
         }
     }
 
+    public PlayerRecord GetDummyRecord()
+    {
+        return new PlayerRecord("Nanashi", 1, 1, new System.DateTime(2019, 5, 1));
+    }
+
     public PlayerRecord GetTopRecord(){
         SortRecord();
         return m_PlayerRecords[0];
+    }
+
+    public List<PlayerRecord> GetRecordsInRange(int range)
+    {
+        var len = m_PlayerRecords.Count;
+
+        if(len < range)
+        {
+            var res = m_PlayerRecords.GetRange(0, len);
+            var rem = range - len;
+            while(rem != 0)
+            {
+                res.Add(GetDummyRecord());
+                rem--;
+            }
+            return res;
+        }
+        else
+        {
+            return m_PlayerRecords.GetRange(0, range);
+        }
     }
 }
