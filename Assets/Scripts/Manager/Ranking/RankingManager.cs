@@ -32,7 +32,7 @@ public class RankingManager : ControllableMonoBehavior
     [SerializeField]
     private float m_WaitCursorTime;
 
-    private TitleInputManager InputManager;
+    private TwoAxisInputManager InputManager;
     private StateMachine<E_RANKING_MENU_STATE> m_StateMachine;
 
     private bool m_EnableMove;
@@ -87,7 +87,7 @@ public class RankingManager : ControllableMonoBehavior
             m_OnEnd = EndOnSelectExit,
         });
 
-        InputManager = new TitleInputManager();
+        InputManager = new TwoAxisInputManager();
         InputManager.OnInitialize();
         m_UiManager.OnInitialize();
         m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING);
