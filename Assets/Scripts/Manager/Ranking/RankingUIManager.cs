@@ -56,7 +56,7 @@ public class RankingUIManager : ControllableMonoBehavior
     {
         var sb = new System.Text.StringBuilder();
         var rec = PlayerRecordManager.Instance.GetRecordsInRange(m_StoryRankingDisplayNum);
-        sb.Append(string.Format("{0}\n\n\n\n\n\n", "STORY RANKING"));
+        sb.Append(string.Format("<size=48>{0,-45}</size>\n\n\n\n\n\n", "STORY RANKING"));
         sb.Append(string.Format("{0,13}  {1,12}  {2,16}{3,13} {4,11}                \n\n\n\n", "RANK", "NAME", "SCORE", "STAGE", "DATE"));
         for (int i = 0; i < m_StoryRankingDisplayNum; i++)
         {
