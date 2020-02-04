@@ -634,6 +634,8 @@ MonoBehaviour:
   m_PopupBackAnimator: {fileID: 1761051437}
   m_StoryRankingAnimator: {fileID: 192333587}
   m_ChapterRankingAnimator: {fileID: 1047172396}
+  m_StoryRankingText: {fileID: 1498127467}
+  m_ChapterRankingText: {fileID: 1211367117}
 --- !u!114 &906963170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,7 +834,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.5
-  m_Text: test
+  m_Text: 
 --- !u!222 &1211367118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1213,7 +1215,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.5
-  m_Text: test
+  m_Text: 
 --- !u!222 &1498127468
 CanvasRenderer:
   m_ObjectHideFlags: 0

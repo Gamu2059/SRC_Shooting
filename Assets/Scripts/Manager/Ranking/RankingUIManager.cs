@@ -31,6 +31,12 @@ public class RankingUIManager : ControllableMonoBehavior
     [SerializeField]
     private Animator m_ChapterRankingAnimator;
 
+    [SerializeField]
+    private Text m_StoryRankingText;
+
+    [SerializeField]
+    private Text m_ChapterRankingText;
+
     private int m_EnableIdx;
 
     public override void OnInitialize()
@@ -81,6 +87,7 @@ public class RankingUIManager : ControllableMonoBehavior
 
     public void EnableStoryRanking()
     {
+        m_StoryRankingText.text = "test";
         m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
         m_StoryRankingAnimator.Play(POPUP_ENABLE);
     }
@@ -93,6 +100,7 @@ public class RankingUIManager : ControllableMonoBehavior
 
     public void EnableChapterRanking()
     {
+        m_ChapterRankingText.text = "test";
         m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
         m_ChapterRankingAnimator.Play(POPUP_ENABLE);
     }
