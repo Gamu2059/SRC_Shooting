@@ -37,6 +37,8 @@ public class RankingManager : ControllableMonoBehavior
 
     private bool m_EnableMove;
 
+    private int m_ChapterRankingOutputTextIndex;
+
     #region Game Cycle
 
     public override void OnInitialize()
@@ -91,6 +93,8 @@ public class RankingManager : ControllableMonoBehavior
         InputManager.OnInitialize();
         m_UiManager.OnInitialize();
         m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING);
+
+        m_ChapterRankingOutputTextIndex = 0;
     }
 
     public override void OnFinalize()
@@ -147,6 +151,35 @@ public class RankingManager : ControllableMonoBehavior
             }
         }
     }
+
+    private void CheckSelectChapterAction(Action onMoveRight, Action onMoveLeft)
+    {
+        if (!m_EnableMove)
+        {
+            return;
+        }
+
+        var h = InputManager.MoveDir.x;
+
+        if(h > 0.8)
+        {
+            if(onMoveRight != null)
+            {
+                PlayCursor();
+                WaitCursor();
+                onMoveRight.Invoke();
+            }
+        }else if(h < -0.8)
+        {
+            if (onMoveLeft != null)
+            {
+                PlayCursor();
+                WaitCursor();
+                onMoveLeft.Invoke();
+            }
+        }
+    }
+
 
     private void WaitCursor()
     {
@@ -264,6 +297,30 @@ public class RankingManager : ControllableMonoBehavior
 
     private void UpdateOnSelectChapter()
     {
+        CheckSelectChapterAction(
+            ()=> 
+            {
+                if (m_ChapterRankingOutputTextIndex + 1 > 8)
+                {
+                    return;
+                }
+                else
+                {
+                    m_ChapterRankingOutputTextIndex++;
+                }
+            },
+            ()=> 
+            {
+                if (m_ChapterRankingOutputTextIndex - 1 < 0)
+                {
+                    return;
+                }
+                else
+                {
+                    m_ChapterRankingOutputTextIndex--;
+                }
+            });
+        m_UiManager.SetChapterRankingOutputText(m_ChapterRankingOutputTextIndex);
         CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING));
     }
 

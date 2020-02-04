@@ -44,12 +44,20 @@ public class RankingUIManager : ControllableMonoBehavior
 
     private string m_StoryRankingOutputText;
 
+    private List<string> m_ChapterRankingOutputTexts;
+
     public override void OnInitialize()
     {
         base.OnInitialize();
         DisableAllMenuForce();
         ForcusMenu(0, true);
         m_StoryRankingOutputText = StoryRankingToString();
+
+        m_ChapterRankingOutputTexts = new List<string>();
+        for(int i = 0; i < 9; i++)
+        {
+            m_ChapterRankingOutputTexts.Add(ChapterRankingToString(i));
+        }
     }
 
     private string StoryRankingToString()
@@ -70,6 +78,32 @@ public class RankingUIManager : ControllableMonoBehavior
             }
         }
         return sb.ToString();
+    }
+
+    private string ChapterRankingToString(int chap)
+    {
+        var sb = new System.Text.StringBuilder();
+        var rec = PlayerRecordManager.Instance.GetRecordsInRange(m_StoryRankingDisplayNum);
+        sb.Append(string.Format("<size=48>{0,-45}</size>\n\n\n\n\n\n", "CHAPTER RANKING"));
+        sb.Append(string.Format("Stage {0}               \n\n\n\n", chap));
+        sb.Append(string.Format("{0,13}  {1,12}  {2,16}{3,11}                \n\n\n\n", "RANK", "NAME", "SCORE", "DATE"));
+        for (int i = 0; i < m_StoryRankingDisplayNum; i++)
+        {
+            if (i == m_StoryRankingDisplayNum - 1)
+            {
+                sb.Append(string.Format("{0,20}{1,20}{2,20:000000000}{3,20:yyyy/MM/dd}            ", i + 1, rec[i].m_PlayerName, rec[i].m_FinalScore, rec[i].m_PlayedDate));
+            }
+            else
+            {
+                sb.Append(string.Format("{0,20}{1,20}{2,20:000000000}{3,20:yyyy/MM/dd}            \n\n\n\n", i + 1, rec[i].m_PlayerName, rec[i].m_FinalScore, rec[i].m_PlayedDate));
+            }
+        }
+        return sb.ToString();
+    }
+
+    public void SetChapterRankingOutputText(int chap)
+    {
+        m_ChapterRankingText.text = m_ChapterRankingOutputTexts[chap];
     }
 
     public void DisableAllMenuForce()
@@ -126,7 +160,7 @@ public class RankingUIManager : ControllableMonoBehavior
 
     public void EnableChapterRanking()
     {
-        m_ChapterRankingText.text = "test";
+        m_ChapterRankingText.text = m_ChapterRankingOutputTexts[0];
         m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
         m_ChapterRankingAnimator.Play(POPUP_ENABLE);
     }
