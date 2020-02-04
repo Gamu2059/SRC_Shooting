@@ -9,10 +9,10 @@ public class RankingManager : ControllableMonoBehavior
 {
     private enum E_RANKING_MENU_STATE
     {
-        FORCUS_STORY,
-        SELECT_STORY,
-        FORCUS_CHAPTER,
-        SELECT_CHAPTER,
+        FORCUS_STORY_RANKING,
+        SELECT_STORY_RANKING,
+        FORCUS_CHAPTER_RANKING,
+        SELECT_CHAPTER_RANKING,
         FORCUS_EXIT,
         SELECT_EXIT,
     }
@@ -45,14 +45,14 @@ public class RankingManager : ControllableMonoBehavior
 
         m_StateMachine = new StateMachine<E_RANKING_MENU_STATE>();
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.FORCUS_STORY)
+        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING)
         {
             m_OnStart = StartOnFocusStory,
             m_OnUpdate = UpdateOnFocusStory,
             m_OnEnd = EndOnFocusStory,
         });
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.FORCUS_CHAPTER)
+        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING)
         {
             m_OnStart = StartOnFocusChapter,
             m_OnUpdate = UpdateOnFocusChapter,
@@ -66,14 +66,14 @@ public class RankingManager : ControllableMonoBehavior
             m_OnEnd = EndOnFocusExit,
         });
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.SELECT_STORY) 
+        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.SELECT_STORY_RANKING) 
         {
             m_OnStart = StartOnSelectStory,
             m_OnUpdate = UpdateOnSelectStory,
             m_OnEnd = EndOnSelectStory,
         });
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.SELECT_CHAPTER) 
+        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.SELECT_CHAPTER_RANKING) 
         { 
             m_OnStart = StartOnSelectChapter,
             m_OnUpdate = UpdateOnSelectChapter,
@@ -90,7 +90,7 @@ public class RankingManager : ControllableMonoBehavior
         InputManager = new TitleInputManager();
         InputManager.OnInitialize();
         m_UiManager.OnInitialize();
-        m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY);
+        m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING);
     }
 
     public override void OnFinalize()
@@ -203,7 +203,8 @@ public class RankingManager : ControllableMonoBehavior
 
     private void UpdateOnFocusStory()
     {
-        CheckForcusAction(null, () => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER));
+        CheckForcusAction(null, () => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING));
+        CheckSelectAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.SELECT_STORY_RANKING));
     }
 
     private void EndOnFocusStory()
@@ -217,17 +218,17 @@ public class RankingManager : ControllableMonoBehavior
 
     private void StartOnSelectStory()
     {
-
+        m_UiManager.EnableStoryRanking();
     }
 
     private void UpdateOnSelectStory()
     {
-
+        CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING));
     }
 
     private void EndOnSelectStory()
     {
-
+        m_UiManager.DisableStoryRanking();
     }
 
     #endregion
@@ -242,8 +243,9 @@ public class RankingManager : ControllableMonoBehavior
     private void UpdateOnFocusChapter()
     {
         CheckForcusAction(
-            () => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY),
+            () => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING),
             () => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_EXIT));
+        CheckSelectAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.SELECT_CHAPTER_RANKING));
     }
 
     private void EndOnFocusChapter()
@@ -257,17 +259,17 @@ public class RankingManager : ControllableMonoBehavior
 
     private void StartOnSelectChapter()
     {
-
+        m_UiManager.EnableChapterRanking();
     }
 
     private void UpdateOnSelectChapter()
     {
-
+        CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING));
     }
 
     private void EndOnSelectChapter()
     {
-
+        m_UiManager.DisableChapterRanking();
     }
 
     #endregion
@@ -281,7 +283,7 @@ public class RankingManager : ControllableMonoBehavior
 
     private void UpdateOnFocusExit()
     {
-        CheckForcusAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER), null);
+        CheckForcusAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING), null);
         CheckSelectAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.SELECT_EXIT));
     }
 
