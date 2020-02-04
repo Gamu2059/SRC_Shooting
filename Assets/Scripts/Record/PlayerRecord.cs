@@ -24,13 +24,17 @@ public class PlayerRecord
     /// <value></value>
     public System.DateTime m_PlayedDate {get; private set;}
 
-    // プレイヤーネーム
+    /// <summary>
+    /// プレイヤーネーム
+    /// </summary>
+    public string m_PlayerName { get; private set; }
 
     public PlayerRecord(){
 
     }
 
-    public PlayerRecord(double finalScore, int reachedStage, System.DateTime date){
+    public PlayerRecord(string name, double finalScore, int reachedStage, System.DateTime date){
+        m_PlayerName = name;
         m_FinalScore = finalScore;
         m_FinalReachedStage = reachedStage;
         m_PlayedDate = date;
