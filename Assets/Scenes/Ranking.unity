@@ -636,6 +636,7 @@ MonoBehaviour:
   m_ChapterRankingAnimator: {fileID: 1047172396}
   m_StoryRankingText: {fileID: 1498127467}
   m_ChapterRankingText: {fileID: 1211367117}
+  m_StoryRankingDisplayNum: 10
 --- !u!114 &906963170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,8 +1069,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 215, y: 0}
-  m_SizeDelta: {x: -1070, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1455338826
 GameObject:
@@ -1209,7 +1210,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
