@@ -63,7 +63,7 @@ public class RankingUIManager : ControllableMonoBehavior
     private string StoryRankingToString()
     {
         var sb = new System.Text.StringBuilder();
-        var rec = PlayerRecordManager.Instance.GetRecordsInRange(m_StoryRankingDisplayNum);
+        var rec = PlayerRecordManager.Instance.GetStoryModeRecordsInRange(E_DIFFICULTY.NORMAL, m_StoryRankingDisplayNum);
         sb.Append(string.Format("<size=48>{0,-45}</size>\n\n\n\n\n\n", "STORY MODE RANKING"));
         sb.Append(string.Format("{0,13}  {1,12}  {2,16}{3,13} {4,11}                \n\n\n\n", "RANK", "NAME", "SCORE", "STAGE", "DATE"));
         for (int i = 0; i < m_StoryRankingDisplayNum; i++)
@@ -83,7 +83,7 @@ public class RankingUIManager : ControllableMonoBehavior
     private string ChapterRankingToString(int chap)
     {
         var sb = new System.Text.StringBuilder();
-        var rec = PlayerRecordManager.Instance.GetRecordsInRange(m_StoryRankingDisplayNum);
+        var rec = PlayerRecordManager.Instance.GetChapterModeRecordsInRange(E_STATE.NORMAL_1, m_StoryRankingDisplayNum);
         sb.Append(string.Format("<size=48>{0,-40}</size>\n\n\n", "CHAPTER MODE RANKING"));
         sb.Append(string.Format("{0} {1,-60}\n\n\n\n", "Stage", chap));
         sb.Append(string.Format("{0,-20}{1,-21}{2,-20}{3,-22}\n\n\n\n", "RANK", "NAME", "SCORE", "DATE"));

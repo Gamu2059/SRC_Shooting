@@ -45,6 +45,29 @@ public class PlayerRecord
         return string.Format("{0:000000000}", m_FinalScore);
     }
 
+    public E_DIFFICULTY StageDifficulty()
+    {
+        if(m_FinalReachedStage == E_STATE.EASY_0 || m_FinalReachedStage == E_STATE.EASY_1 || m_FinalReachedStage == E_STATE.EASY_2 || m_FinalReachedStage == E_STATE.EASY_3 || m_FinalReachedStage == E_STATE.EASY_4
+            || m_FinalReachedStage == E_STATE.EASY_5 || m_FinalReachedStage == E_STATE.EASY_6)
+        {
+            return E_DIFFICULTY.EASY;
+        }
+        else if(m_FinalReachedStage == E_STATE.NORMAL_0 || m_FinalReachedStage == E_STATE.NORMAL_1 || m_FinalReachedStage == E_STATE.NORMAL_2 || m_FinalReachedStage == E_STATE.NORMAL_3 || m_FinalReachedStage == E_STATE.NORMAL_4
+            || m_FinalReachedStage == E_STATE.NORMAL_5 || m_FinalReachedStage == E_STATE.NORMAL_6)
+        {
+            return E_DIFFICULTY.NORMAL;
+        }
+        else if(m_FinalReachedStage == E_STATE.HARD_0 || m_FinalReachedStage == E_STATE.HARD_1 || m_FinalReachedStage == E_STATE.HARD_2 || m_FinalReachedStage == E_STATE.HARD_3 || m_FinalReachedStage == E_STATE.HARD_4
+            || m_FinalReachedStage == E_STATE.HARD_5 || m_FinalReachedStage == E_STATE.HARD_6)
+        {
+            return E_DIFFICULTY.HARD;
+        }
+        else
+        {
+            return E_DIFFICULTY.HADES;
+        }
+    }
+
     public string FinalReachedStageToString()
     {
         if(m_FinalReachedStage == E_STATE.EASY_0 || m_FinalReachedStage == E_STATE.NORMAL_0 || m_FinalReachedStage == E_STATE.HARD_0 || m_FinalReachedStage == E_STATE.HADES_0)
