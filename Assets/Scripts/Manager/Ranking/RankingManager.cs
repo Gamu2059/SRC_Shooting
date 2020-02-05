@@ -300,7 +300,7 @@ public class RankingManager : ControllableMonoBehavior
         CheckSelectChapterAction(
             ()=> 
             {
-                if (m_ChapterRankingOutputTextIndex + 1 > 7)
+                if (m_ChapterRankingOutputTextIndex + 1 > 6)
                 {
                     return;
                 }

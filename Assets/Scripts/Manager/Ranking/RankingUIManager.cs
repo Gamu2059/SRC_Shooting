@@ -54,7 +54,7 @@ public class RankingUIManager : ControllableMonoBehavior
         m_StoryRankingOutputText = StoryRankingToString();
 
         m_ChapterRankingOutputTexts = new List<string>();
-        for(int i = 0; i < 8; i++)
+        for(int i = 0; i < 7; i++)
         {
             m_ChapterRankingOutputTexts.Add(ChapterRankingToString(i));
         }
@@ -70,11 +70,11 @@ public class RankingUIManager : ControllableMonoBehavior
         {
             if (i == m_StoryRankingDisplayNum - 1)
             {
-                sb.Append(string.Format("{0,20}{1,20}{2,20:000000000}{3,10}{4,20:yyyy/MM/dd}            ", i + 1, rec[i].m_PlayerName, rec[i].m_FinalScore, rec[i].m_FinalReachedStage, rec[i].m_PlayedDate));
+                sb.Append(string.Format("{0,20}{1,20}{2,20}{3,10}{4,20}            ", i + 1, rec[i].m_PlayerName, rec[i].FinalScoreToString(), rec[i].FinalReachedStageToString(), rec[i].PlayedDateToString()));
             }
             else
             {
-                sb.Append(string.Format("{0,20}{1,20}{2,20:000000000}{3,10}{4,20:yyyy/MM/dd}            \n\n\n\n", i + 1, rec[i].m_PlayerName, rec[i].m_FinalScore, rec[i].m_FinalReachedStage, rec[i].m_PlayedDate));
+                sb.Append(string.Format("{0,20}{1,20}{2,20}{3,10}{4,20}            \n\n\n\n", i + 1, rec[i].m_PlayerName, rec[i].FinalScoreToString(), rec[i].FinalReachedStageToString(), rec[i].PlayedDateToString()));
             }
         }
         return sb.ToString();
@@ -91,11 +91,11 @@ public class RankingUIManager : ControllableMonoBehavior
         {
             if (i == m_StoryRankingDisplayNum - 1)
             {
-                sb.Append(string.Format("{0,-20}{1,-20}{2,-20:000000000}{3,-22:yyyy/MM/dd}", i + 1, rec[i].m_PlayerName, rec[i].m_FinalScore, rec[i].m_PlayedDate));
+                sb.Append(string.Format("{0,-20}{1,-20}{2,-20}{3,-22}", i + 1, rec[i].m_PlayerName, rec[i].FinalScoreToString(), rec[i].PlayedDateToString()));
             }
             else
             {
-                sb.Append(string.Format("{0,-20}{1,-20}{2,-20:000000000}{3,-22:yyyy/MM/dd}\n\n\n\n", i + 1, rec[i].m_PlayerName, rec[i].m_FinalScore, rec[i].m_PlayedDate));
+                sb.Append(string.Format("{0,-20}{1,-20}{2,-20}{3,-22}\n\n\n\n", i + 1, rec[i].m_PlayerName, rec[i].FinalScoreToString(), rec[i].PlayedDateToString()));
             }
         }
         return sb.ToString();

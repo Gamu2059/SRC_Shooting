@@ -542,7 +542,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         var battleData = DataManager.Instance.BattleData;
         resultData.ClacScore(battleData);
 
-        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord("Nanashi", resultData.TotalScore, 1, DateTime.Now));
+        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_STATE.NORMAL_1, DateTime.Now));
 
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);

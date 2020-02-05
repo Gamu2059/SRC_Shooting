@@ -20,7 +20,7 @@ public class PlayerRecordManager : ControllableObject
         SaveDataManager.Load();
 
         int maxScore = SaveDataManager.GetInt("BestScore", 0);
-        m_PlayerRecords.Add(new PlayerRecord("Nanashi", maxScore, 1, new System.DateTime()));
+        m_PlayerRecords.Add(new PlayerRecord("Nanashi", maxScore, E_STATE.NORMAL_1, new System.DateTime()));
     }
 
     public void AddRecord(PlayerRecord record){
@@ -66,7 +66,7 @@ public class PlayerRecordManager : ControllableObject
 
     public PlayerRecord GetDummyRecord()
     {
-        return new PlayerRecord("Nanashi", 1, 1, new System.DateTime(2019, 5, 1));
+        return new PlayerRecord("Nanashi", 1, E_STATE.NORMAL_1, new System.DateTime(2019, 5, 1));
     }
 
     public PlayerRecord GetTopRecord(){
