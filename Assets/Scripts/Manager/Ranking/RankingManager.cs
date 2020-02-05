@@ -37,7 +37,9 @@ public class RankingManager : ControllableMonoBehavior
 
     private bool m_EnableMove;
 
-    private int m_ChapterRankingOutputTextIndex;
+    private int m_OutputTextIndexHorizontal;
+
+    private int m_OutputTextIndexVertical;
 
     #region Game Cycle
 
@@ -94,7 +96,8 @@ public class RankingManager : ControllableMonoBehavior
         m_UiManager.OnInitialize();
         m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING);
 
-        m_ChapterRankingOutputTextIndex = 0;
+        m_OutputTextIndexHorizontal = 0;
+        m_OutputTextIndexVertical = 0;
     }
 
     public override void OnFinalize()
@@ -152,7 +155,7 @@ public class RankingManager : ControllableMonoBehavior
         }
     }
 
-    private void CheckSelectChapterAction(Action onMoveRight, Action onMoveLeft)
+    private void CheckSelectActionHorizontal(Action onMoveRight, Action onMoveLeft)
     {
         if (!m_EnableMove)
         {
@@ -256,11 +259,36 @@ public class RankingManager : ControllableMonoBehavior
 
     private void UpdateOnSelectStory()
     {
+        CheckForcusAction(
+            ()=> 
+            { 
+                if(m_OutputTextIndexVertical - 1 < 0)
+                {
+                    return;
+                }
+                else
+                {
+                    m_OutputTextIndexVertical--;
+                }
+            },
+            ()=> 
+            {
+                if(m_OutputTextIndexVertical + 1 > 3)
+                {
+                    return;
+                }
+                else
+                {
+                    m_OutputTextIndexVertical++;
+                }
+            });
+        m_UiManager.SetStoryModeRankingOutputText(m_OutputTextIndexVertical);
         CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING));
     }
 
     private void EndOnSelectStory()
     {
+        m_OutputTextIndexVertical = 0;
         m_UiManager.DisableStoryRanking();
     }
 
@@ -297,35 +325,64 @@ public class RankingManager : ControllableMonoBehavior
 
     private void UpdateOnSelectChapter()
     {
-        CheckSelectChapterAction(
+        CheckForcusAction(
             ()=> 
             {
-                if (m_ChapterRankingOutputTextIndex + 1 > 6)
+                if(m_OutputTextIndexVertical - 1 < 0)
                 {
                     return;
                 }
                 else
                 {
-                    m_ChapterRankingOutputTextIndex++;
+                    m_OutputTextIndexVertical--;
+                }
+            },
+            ()=>
+            {
+                if(m_OutputTextIndexVertical + 1 > 3)
+                {
+                    return;
+                }
+                else
+                {
+                    m_OutputTextIndexVertical++;
+                }
+            });
+        CheckSelectActionHorizontal(
+            ()=> 
+            {
+                if (m_OutputTextIndexHorizontal + 1 > 6)
+                {
+                    return;
+                }
+                else
+                {
+                    m_OutputTextIndexHorizontal++;
                 }
             },
             ()=> 
             {
-                if (m_ChapterRankingOutputTextIndex - 1 < 0)
+                if (m_OutputTextIndexHorizontal - 1 < 0)
                 {
                     return;
                 }
                 else
                 {
-                    m_ChapterRankingOutputTextIndex--;
+                    m_OutputTextIndexHorizontal--;
                 }
             });
-        m_UiManager.SetChapterRankingOutputText(m_ChapterRankingOutputTextIndex);
+        var idx = m_OutputTextIndexHorizontal + (m_OutputTextIndexVertical * 7);
+        if(idx < 28)
+        {
+            m_UiManager.SetChapterModeRankingOutputText(idx);
+        }
         CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING));
     }
 
     private void EndOnSelectChapter()
     {
+        m_OutputTextIndexVertical = 0;
+        m_OutputTextIndexHorizontal = 0;
         m_UiManager.DisableChapterRanking();
     }
 

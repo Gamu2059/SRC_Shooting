@@ -38,37 +38,58 @@ public class RankingUIManager : ControllableMonoBehavior
     private Text m_ChapterRankingText;
 
     [SerializeField]
-    private int m_StoryRankingDisplayNum;
+    private int m_RankingDisplayNum;
 
     private int m_EnableIdx;
 
-    private string m_StoryRankingOutputText;
+    private List<string> m_StoryModeRankingOutputTexts;
 
-    private List<string> m_ChapterRankingOutputTexts;
+    private List<string> m_ChapterModeRankingOutputTexts;
 
     public override void OnInitialize()
     {
         base.OnInitialize();
         DisableAllMenuForce();
         ForcusMenu(0, true);
-        m_StoryRankingOutputText = StoryRankingToString();
 
-        m_ChapterRankingOutputTexts = new List<string>();
-        for(int i = 0; i < 7; i++)
+        InitStoryModeRankingOutputTexts();
+        InitChapterModeRankingOutputTexts();
+    }
+
+    private void InitStoryModeRankingOutputTexts()
+    {
+        m_StoryModeRankingOutputTexts = new List<string>();
+        foreach(E_DIFFICULTY di in System.Enum.GetValues(typeof(E_DIFFICULTY)))
         {
-            m_ChapterRankingOutputTexts.Add(ChapterRankingToString(i));
+            m_StoryModeRankingOutputTexts.Add(GetStoryModeRankingToString(di));
         }
     }
 
-    private string StoryRankingToString()
+    private string GetStoryModeRankingToString(E_DIFFICULTY difficulty)
     {
         var sb = new System.Text.StringBuilder();
-        var rec = PlayerRecordManager.Instance.GetStoryModeRecordsInRange(E_DIFFICULTY.NORMAL, m_StoryRankingDisplayNum);
-        sb.Append(string.Format("<size=48>{0,-45}</size>\n\n\n\n\n\n", "STORY MODE RANKING"));
-        sb.Append(string.Format("{0,13}  {1,12}  {2,16}{3,13} {4,11}                \n\n\n\n", "RANK", "NAME", "SCORE", "STAGE", "DATE"));
-        for (int i = 0; i < m_StoryRankingDisplayNum; i++)
+        var rec = PlayerRecordManager.Instance.GetStoryModeRecordsInRange(difficulty, m_RankingDisplayNum);
+
+        sb.Append(string.Format("<size=48>{0,-45}</size>\n\n\n", "STORY MODE RANKING"));
+        switch (difficulty)
         {
-            if (i == m_StoryRankingDisplayNum - 1)
+            case E_DIFFICULTY.EASY:
+                sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY"));
+                break;
+            case E_DIFFICULTY.NORMAL:
+                sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL"));
+                break;
+            case E_DIFFICULTY.HARD:
+                sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD"));
+                break;
+            case E_DIFFICULTY.HADES:
+                sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES"));
+                break;
+        }
+        sb.Append(string.Format("{0,13}  {1,12}  {2,16}{3,13} {4,11}                \n\n\n\n", "RANK", "NAME", "SCORE", "STAGE", "DATE"));
+        for (int i = 0; i < m_RankingDisplayNum; i++)
+        {
+            if (i == m_RankingDisplayNum - 1)
             {
                 sb.Append(string.Format("{0,20}{1,20}{2,20}{3,10}{4,20}            ", i + 1, rec[i].m_PlayerName, rec[i].FinalScoreToString(), rec[i].FinalReachedStageToString(), rec[i].PlayedDateToString()));
             }
@@ -80,16 +101,134 @@ public class RankingUIManager : ControllableMonoBehavior
         return sb.ToString();
     }
 
-    private string ChapterRankingToString(int chap)
+    private void InitChapterModeRankingOutputTexts()
+    {
+        m_ChapterModeRankingOutputTexts = new List<string>();
+        foreach(E_STATE st in System.Enum.GetValues(typeof(E_STATE))){
+            m_ChapterModeRankingOutputTexts.Add(GetChapterModeRankingToString(st));
+        }
+    }
+
+    private string GetChapterModeRankingToString(E_STATE stage)
     {
         var sb = new System.Text.StringBuilder();
-        var rec = PlayerRecordManager.Instance.GetChapterModeRecordsInRange(E_STATE.NORMAL_1, m_StoryRankingDisplayNum);
+        var rec = PlayerRecordManager.Instance.GetChapterModeRecordsInRange(stage,  m_RankingDisplayNum);
         sb.Append(string.Format("<size=48>{0,-40}</size>\n\n\n", "CHAPTER MODE RANKING"));
-        sb.Append(string.Format("{0} {1,-60}\n\n\n\n", "Stage", chap));
-        sb.Append(string.Format("{0,-20}{1,-21}{2,-20}{3,-22}\n\n\n\n", "RANK", "NAME", "SCORE", "DATE"));
-        for (int i = 0; i < m_StoryRankingDisplayNum; i++)
+
+        var num = stage.GetHashCode();
+        if(0 <= num && num < 7)
         {
-            if (i == m_StoryRankingDisplayNum - 1)
+            switch(num % 7)
+            {
+                case 0:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE0"));
+                    break;
+                case 1:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE1"));
+                    break;
+                case 2:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE2"));
+                    break;
+                case 3:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE3"));
+                    break;
+                case 4:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE4"));
+                    break;
+                case 5:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE5"));
+                    break;
+                case 6:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "EASY STAGE6"));
+                    break;
+            }
+        }
+        else if(7 <= num && num < 14)
+        {
+            switch (num % 7)
+            {
+                case 0:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE0"));
+                    break;
+                case 1:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE1"));
+                    break;
+                case 2:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE2"));
+                    break;
+                case 3:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE3"));
+                    break;
+                case 4:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE4"));
+                    break;
+                case 5:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE5"));
+                    break;
+                case 6:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "NORMAL STAGE6"));
+                    break;
+            }
+        }
+        else if(14 <= num && num < 21)
+        {
+            switch (num % 7)
+            {
+                case 0:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE0"));
+                    break;
+                case 1:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE1"));
+                    break;
+                case 2:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE2"));
+                    break;
+                case 3:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE3"));
+                    break;
+                case 4:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE4"));
+                    break;
+                case 5:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE5"));
+                    break;
+                case 6:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HARD STAGE6"));
+                    break;
+            }
+        }
+        else
+        {
+            switch (num % 7)
+            {
+                case 0:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE0"));
+                    break;
+                case 1:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE1"));
+                    break;
+                case 2:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE2"));
+                    break;
+                case 3:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE3"));
+                    break;
+                case 4:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE4"));
+                    break;
+                case 5:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE5"));
+                    break;
+                case 6:
+                    sb.Append(string.Format("{0,-60}\n\n\n\n", "HADES STAGE6"));
+                    break;
+            }
+        }
+
+        sb.Append(string.Format("{0,-20}{1,-21}{2,-20}{3,-22}\n\n\n\n", "RANK", "NAME", "SCORE", "DATE"));
+        for (int i = 0; i < m_RankingDisplayNum; i++)
+        {
+            if (i == m_RankingDisplayNum - 1)
             {
                 sb.Append(string.Format("{0,-20}{1,-20}{2,-20}{3,-22}", i + 1, rec[i].m_PlayerName, rec[i].FinalScoreToString(), rec[i].PlayedDateToString()));
             }
@@ -101,9 +240,14 @@ public class RankingUIManager : ControllableMonoBehavior
         return sb.ToString();
     }
 
-    public void SetChapterRankingOutputText(int chap)
+    public void SetStoryModeRankingOutputText(int idx)
     {
-        m_ChapterRankingText.text = m_ChapterRankingOutputTexts[chap];
+        m_StoryRankingText.text = m_StoryModeRankingOutputTexts[idx];
+    }
+
+    public void SetChapterModeRankingOutputText(int idx)
+    {
+        m_ChapterRankingText.text = m_ChapterModeRankingOutputTexts[idx];
     }
 
     public void DisableAllMenuForce()
@@ -147,7 +291,7 @@ public class RankingUIManager : ControllableMonoBehavior
 
     public void EnableStoryRanking()
     {
-        m_StoryRankingText.text = m_StoryRankingOutputText;
+        m_StoryRankingText.text = m_StoryModeRankingOutputTexts[0];
         m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
         m_StoryRankingAnimator.Play(POPUP_ENABLE);
     }
@@ -160,7 +304,7 @@ public class RankingUIManager : ControllableMonoBehavior
 
     public void EnableChapterRanking()
     {
-        m_ChapterRankingText.text = m_ChapterRankingOutputTexts[0];
+        m_ChapterRankingText.text = m_ChapterModeRankingOutputTexts[0];
         m_PopupBackAnimator.Play(POPUP_BACK_ENABLE);
         m_ChapterRankingAnimator.Play(POPUP_ENABLE);
     }
