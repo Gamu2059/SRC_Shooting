@@ -111,8 +111,6 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         bullet.m_IsPlayers = isPlayers;
 
-        Debug.Log(bullet.m_TrajectoryBasis.m_Transform.m_Position);
-
 
         return bullet;
     }

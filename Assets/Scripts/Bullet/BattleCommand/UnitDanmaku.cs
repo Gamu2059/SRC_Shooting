@@ -13,17 +13,23 @@ public class UnitDanmaku : ScriptableObject
     [SerializeField, Tooltip("発射タイミングオブジェクト")]
     private ShotTimer m_ShotTimer;
 
-    [SerializeField, Tooltip("発射パラメータの初期値")]
-    private ShotParam m_ShotParam;
+    [SerializeField, Tooltip("操作を含めた演算")]
+    private OperationIntProcBase[] m_OperationIntProcBaseArray;
 
-    [SerializeField, Tooltip("発射パラメータ操作の配列（単数→単数）")]
-    private ShotParamControllerBase[] m_ShotControllerArray;
+    [SerializeField, Tooltip("操作を含めた演算")]
+    private OperationFloatProcBase[] m_OperationFloatProcBaseArray;
 
-    [SerializeField, Tooltip("発射操作の配列（リスト→リスト）")]
-    private ShotParamListControllerBase[] m_ShotsControllerArray;
+    [SerializeField, Tooltip("操作を含めた演算")]
+    private OperationVector2ProcBase[] m_OperationVector2ProcBaseArray;
+
+    [SerializeField, Tooltip("多重forループ")]
+    private IntMultiLoop m_IntMultiLoop;
+
+    [SerializeField, Tooltip("発射パラメータ（演算）")]
+    private ShotParamOperation m_ShotParamOperation;
 
     [SerializeField, Tooltip("軌道の決め方のオブジェクト")]
-    private TrajectoryBase m_Trajectory; 
+    private TrajectoryBase m_Trajectory;
 
 
     public void OnStarts()
@@ -31,9 +37,20 @@ public class UnitDanmaku : ScriptableObject
         // 発射タイミングオブジェクトの初期の処理をする
         m_ShotTimer.OnStarts();
 
-        // 発射パラメータ初期値の位置を決める（ボクシングされているので）
-        //m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0));
-        m_ShotParam.Position = new OperationVector2Init(new Vector2(0, 0));
+        foreach (OperationIntProcBase operationIntProcBase in m_OperationIntProcBaseArray)
+        {
+            operationIntProcBase.Init();
+        }
+
+        foreach (OperationFloatProcBase operationFloatProcBase in m_OperationFloatProcBaseArray)
+        {
+            operationFloatProcBase.Init();
+        }
+
+        foreach (OperationVector2ProcBase operationVector2ProcBase in m_OperationVector2ProcBaseArray)
+        {
+            operationVector2ProcBase.Init();
+        }
     }
 
 
@@ -41,41 +58,47 @@ public class UnitDanmaku : ScriptableObject
     {
         m_ShotTimer.OnUpdates();
 
-        while(m_ShotTimer.HasNextAndNext())
+        while (m_ShotTimer.HasNextAndNext())
         {
-            ShotParam sP = new ShotParam(m_ShotParam);
-            for (int i = 0; i < m_ShotControllerArray.Length; i++)
+            state.m_ArgumentTime.Value = m_ShotTimer.GetLaunchTime();
+
+            foreach (OperationIntProcBase operationIntProcBase in m_OperationIntProcBaseArray)
             {
-                m_ShotControllerArray[i].GetshotParam(sP, m_ShotTimer, state);
+                operationIntProcBase.Process();
             }
 
-            List<ShotParam> shotParamList = new List<ShotParam>() { sP };
-            for (int i = 0; i < m_ShotsControllerArray.Length; i++)
+            foreach (OperationFloatProcBase operationFloatProcBase in m_OperationFloatProcBaseArray)
             {
-                m_ShotsControllerArray[i].GetshotsParam(shotParamList, m_ShotTimer, state);
+                operationFloatProcBase.Process();
             }
 
-            foreach (ShotParam shotParam in shotParamList)
+            foreach (OperationVector2ProcBase operationVector2ProcBase in m_OperationVector2ProcBaseArray)
             {
-                // 弾を撃つ
-                CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), shotParam.BulletIndex, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
-                BattleHackingFreeTrajectoryBulletController.ShotBullet(
-                    bulletShotParam,
-                    new SimpleTrajectory(
-                        shotParam
-                        ),
-                    m_ShotTimer.GetDTime(),
-                    new TrajectoryBasis(
-                        new TransformSimple(
-                            //shotParam.Position.m_Value,
-                            shotParam.Position.GetResult(),
-                            shotParam.Angle,
-                            0.8F),
-                        shotParam.Speed
-                        ),
-                    m_Trajectory,
-                    false
-                    );
+                operationVector2ProcBase.Process();
+            }
+
+            if (m_IntMultiLoop.Init())
+            {
+                do
+                {
+                    // 弾を撃つ
+                    CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), m_ShotParamOperation.BulletIndex.GetResultInt(), 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
+                    BattleHackingFreeTrajectoryBulletController.ShotBullet(
+                        bulletShotParam,
+                        null,
+                        m_ShotTimer.GetDTime(),
+                        new TrajectoryBasis(
+                            new TransformSimple(
+                                m_ShotParamOperation.Position.GetResultVector2(),
+                                m_ShotParamOperation.Angle.GetResultFloat(),
+                                m_ShotParamOperation.Scale.GetResultFloat()),
+                            m_ShotParamOperation.Speed.GetResultFloat()
+                            ),
+                        null,
+                        false
+                        );
+                }
+                while (m_IntMultiLoop.Process());
             }
 
             AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
@@ -181,3 +204,84 @@ public class UnitDanmaku : ScriptableObject
 
 //[SerializeField, Tooltip("軌道の決め方のオブジェクト")]
 //private SimpleTrajectory m_Trajectory;
+
+
+//[SerializeField, Tooltip("同時発射処理")]
+//private OperationIntConstant m_ShotLoopOperation;
+
+//[SerializeField, Tooltip("ループのための数列")]
+//private SeqIntLinear m_ShotLoopSeq;
+
+//[SerializeField, Tooltip("今までの発射回数（演算）")]
+//private OperationIntConstant m_ShotNumOperation;
+
+
+//[SerializeField, Tooltip("条件付き操作の演算")]
+//private OperationIntProcCondLinear m_ShotLoopConditional;
+
+
+//m_LaunchTime.SetValueFloat(m_ShotTimer.GetLaunchTime());
+
+//m_BossPosition.SetValueVector2(state.GetTransform(m_LaunchTime.GetResultFloat()).m_Position);
+
+
+//[SerializeField, Tooltip("発射パラメータの初期値")]
+//private ShotParam m_ShotParam;
+
+//[SerializeField, Tooltip("発射パラメータ操作の配列（単数→単数）")]
+//private ShotParamControllerBase[] m_ShotControllerArray;
+
+//[SerializeField, Tooltip("発射操作の配列（リスト→リスト）")]
+//private ShotParamListControllerBase[] m_ShotsControllerArray;
+
+
+//[SerializeField, Tooltip("発射時刻")]
+//private OperationFloatVariable m_LaunchTime;
+
+//[SerializeField, Tooltip("発射時の敵本体の位置")]
+//private OperationVector2Base m_BossPosition;
+
+//[SerializeField, Tooltip("自機の位置")]
+//private OperationVector2Variable m_PlayerPosition;
+
+
+// 発射パラメータ初期値の位置を決める（ボクシングされているので）
+//m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0));
+//m_ShotParam.Position = new OperationVector2Init(new Vector2(0, 0));
+
+
+//ShotParam sP = new ShotParam(m_ShotParam);
+//for (int i = 0; i < m_ShotControllerArray.Length; i++)
+//{
+//    m_ShotControllerArray[i].GetshotParam(sP, m_ShotTimer, state);
+//}
+
+//List<ShotParam> shotParamList = new List<ShotParam>() { sP };
+//for (int i = 0; i < m_ShotsControllerArray.Length; i++)
+//{
+//    m_ShotsControllerArray[i].GetshotsParam(shotParamList, m_ShotTimer, state);
+//}
+
+//foreach (ShotParam shotParam in shotParamList)
+//{
+//    //// 弾を撃つ
+//    //CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), shotParam.BulletIndex, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
+//    //BattleHackingFreeTrajectoryBulletController.ShotBullet(
+//    //    bulletShotParam,
+//    //    //new SimpleTrajectory(
+//    //    //    shotParam
+//    //    //    ),
+//    //    null,
+//    //    m_ShotTimer.GetDTime(),
+//    //    new TrajectoryBasis(
+//    //        new TransformSimple(
+//    //            //shotParam.Position.m_Value,
+//    //            shotParam.Position.GetResult(),
+//    //            shotParam.Angle,
+//    //            0.8F),
+//    //        shotParam.Speed
+//    //        ),
+//    //    m_Trajectory,
+//    //    false
+//    //    );
+//}

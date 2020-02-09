@@ -34,6 +34,16 @@ public class ShotTimer : ScriptableObject
     private float m_DTime;
 
 
+    [SerializeField, Tooltip("前フレームの時刻を表す変数")]
+    private OperationFloatBase m_PreviousTimeOperation;
+
+    [SerializeField, Tooltip("時刻を表す変数")]
+    private OperationFloatBase m_TimeVariableOperation;
+
+    [SerializeField, Tooltip("ローカル時刻を表す変数")]
+    private OperationFloatVariable m_PhaseTimeVariable;
+
+
     public void OnStarts()
     {
         m_IsMainPhase = false;

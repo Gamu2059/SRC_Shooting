@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10195286e6edbd0439e27512a67a6ac1, type: 3}
+  m_Name: ShotParam
+  m_EditorClassIdentifier: 
+  BulletIndex: {fileID: 11400000, guid: bd29ed83e97b7e54eb820710a4d19eba, type: 2}
+  Position: {fileID: 11400000, guid: 71d2e04c254bcbc489d636b27c9e2d3b, type: 2}
+  Angle: {fileID: 11400000, guid: fe5f6b505c0010b47afa452283d96251, type: 2}
+  Scale: {fileID: 11400000, guid: af00a9a7fc465f946952f413ec64e12a, type: 2}
+  Speed: {fileID: 11400000, guid: 5aee16beb0c64274d89107f8322e0da9, type: 2}
