@@ -20,7 +20,7 @@ public class SCSwr : ShotParamControllerBase
     public override void GetshotParam(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
         //shotParam.Angle += m_Angle + m_AngleSpeed * shotTimer.GetLaunchTime();
-        shotParam.Angle += m_AngleSpeed * shotTimer.GetLaunchTime();
+        //shotParam.Angle += m_AngleSpeed * shotTimer.GetLaunchTime();
     }
 }
 

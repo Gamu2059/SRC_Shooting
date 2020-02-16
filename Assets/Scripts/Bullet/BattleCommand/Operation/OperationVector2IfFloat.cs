@@ -25,19 +25,21 @@ public class OperationVector2IfFloat : OperationVector2Base
     /// <summary>
     /// 最も大きい値の域に属する場合
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("m_LastBranchValue")]
     [SerializeField]
     private OperationVector2Base m_LastBranchValue;
 
     /// <summary>
     /// ローカルなfloat値
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("m_LocalFloat")]
     [SerializeField]
-    private OperationFloatVariable m_PhaseTime;
+    private OperationFloatVariable m_LocalFloat;
 
 
     public override Vector2 GetResultVector2()
     {
-        m_PhaseTime.Value = m_Float.GetResultFloat();
+        m_LocalFloat.Value = m_Float.GetResultFloat();
 
         for (int i = 0;i < m_BranchArray.Length;i++)
         {
@@ -45,7 +47,7 @@ public class OperationVector2IfFloat : OperationVector2Base
             {
                 for (int j = 0; j < i; j++)
                 {
-                    m_PhaseTime.Value -= m_BranchArray[j].m_Float.GetResultFloat();
+                    m_LocalFloat.Value -= m_BranchArray[j].m_Float.GetResultFloat();
                 }
 
                 return m_BranchArray[i].m_Vector2.GetResultVector2();
@@ -54,7 +56,7 @@ public class OperationVector2IfFloat : OperationVector2Base
 
         for (int j = 0; j < m_BranchArray.Length; j++)
         {
-            m_PhaseTime.Value -= m_BranchArray[j].m_Float.GetResultFloat();
+            m_LocalFloat.Value -= m_BranchArray[j].m_Float.GetResultFloat();
         }
 
         return m_LastBranchValue.GetResultVector2();

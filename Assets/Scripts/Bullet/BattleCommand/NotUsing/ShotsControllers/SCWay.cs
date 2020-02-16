@@ -19,11 +19,11 @@ public class SCWay : ShotsControllerInc
 
         for (int wayIndex = 0; wayIndex < m_Way; wayIndex++)
         {
-            ShotParam anotherShotParam = new ShotParam(shotParam);
+            //ShotParam anotherShotParam = new ShotParam(shotParam);
 
-            anotherShotParam.Angle += Calc.TWO_PI * wayIndex / m_Way;
+            //anotherShotParam.Angle += Calc.TWO_PI * wayIndex / m_Way;
 
-            array.Add(anotherShotParam);
+            //array.Add(anotherShotParam);
         }
     }
 }

@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a76c9d76d4af464387df3e854772902, type: 3}
+  m_Script: {fileID: 11500000, guid: a07ae3a83581ff2408ebcece4a68f0a4, type: 3}
   m_Name: ShotAngle
   m_EditorClassIdentifier: 
-  m_Vector2: {fileID: 11400000, guid: 5e1bd574a68a2a445a3683f0997d8364, type: 2}
+  m_OperationArray:
+  - {fileID: 11400000, guid: 43401e9f8d17af0458d64b2b83038186, type: 2}
+  - {fileID: 11400000, guid: 467fc1fc9aae4954e942d2da49d52a4f, type: 2}
+  m_Minus: []

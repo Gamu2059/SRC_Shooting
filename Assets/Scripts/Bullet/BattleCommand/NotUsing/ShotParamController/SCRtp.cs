@@ -24,7 +24,7 @@ public class SCRtp : ShotParamControllerBase
     {
         //shotParam.Position.Value += Calc.RThetaToVec2(m_Radius, m_Angle + m_AngleSpeed * shotTimer.GetLaunchTime());
 
-        shotParam.Position = new OperationVector2Plus(new OperationVector2Base1[] { shotParam.Position, new OperationVector2Init(Calc.RThetaToVec2(m_Radius, m_Angle + m_AngleSpeed * shotTimer.GetLaunchTime())) });
+        //shotParam.Position = new OperationVector2Plus(new OperationVector2Base1[] { shotParam.Position, new OperationVector2Init(Calc.RThetaToVec2(m_Radius, m_Angle + m_AngleSpeed * shotTimer.GetLaunchTime())) });
     }
 }
 

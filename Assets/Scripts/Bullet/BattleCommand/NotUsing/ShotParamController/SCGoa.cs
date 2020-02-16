@@ -12,6 +12,6 @@ public class SCGoa : ShotParamControllerBase
 
     public override void GetshotParam(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
-        shotParam.Angle += Calc.GOLDEN_ANGLE * shotTimer.GetRealShotNum();
+        //shotParam.Angle += Calc.GOLDEN_ANGLE * shotTimer.GetRealShotNum();
     }
 }

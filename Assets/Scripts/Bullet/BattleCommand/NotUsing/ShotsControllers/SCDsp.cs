@@ -21,11 +21,11 @@ public class SCDsp : ShotsControllerInc
     {
         for (int speedIndex = -(m_SpeedNum - 1); speedIndex <= m_SpeedNum - 1; speedIndex += 2)
         {
-            ShotParam anotherShotParam = new ShotParam(shotParam);
+            //ShotParam anotherShotParam = new ShotParam(shotParam);
 
-            anotherShotParam.Speed += speedIndex * m_DSpeed / 2;
+            //anotherShotParam.Speed += speedIndex * m_DSpeed / 2;
 
-            array.Add(anotherShotParam);
+            //array.Add(anotherShotParam);
         }
     }
 }

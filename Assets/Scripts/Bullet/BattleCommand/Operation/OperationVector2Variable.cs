@@ -14,12 +14,13 @@ public class OperationVector2Variable : OperationVector2Base
     /// 値
     /// </summary>
     //[SerializeField]
-    private Vector2 m_Value;
+    //private Vector2 Value;
+    public Vector2 Value { get; set; }
 
 
     public override Vector2 GetResultVector2()
     {
-        return m_Value;
+        return Value;
     }
 
 
@@ -28,6 +29,6 @@ public class OperationVector2Variable : OperationVector2Base
     /// </summary>
     public void SetValueVector2(Vector2 value)
     {
-        m_Value = value;
+        Value = value;
     }
 }

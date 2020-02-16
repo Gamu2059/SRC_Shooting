@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 敵や弾の物理的な状態を表す演算を表すクラス。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/operation/transform", fileName = "TransformOperation", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/operation/transform/transform", fileName = "TransformOperation", order = 0)]
 [System.Serializable]
 public class TransformOperation : ScriptableObject
 {
@@ -26,7 +26,7 @@ public class TransformOperation : ScriptableObject
     /// 大きさ
     /// </summary>
     [SerializeField]
-    private OperationFloatBase m_Speed;
+    private OperationFloatBase m_Scale;
 
 
     /// <summary>
@@ -34,6 +34,6 @@ public class TransformOperation : ScriptableObject
     /// </summary>
     public TransformSimple GetResultValues()
     {
-        return new TransformSimple(m_Position.GetResultVector2(), m_Angle.GetResultFloat(), m_Speed.GetResultFloat());
+        return new TransformSimple(m_Position.GetResultVector2(), m_Angle.GetResultFloat(), m_Scale.GetResultFloat());
     }
 }

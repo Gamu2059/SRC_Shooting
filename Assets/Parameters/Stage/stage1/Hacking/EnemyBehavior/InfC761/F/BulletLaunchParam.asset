@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54d4717108837741bab6f70ed347605, type: 3}
+  m_Name: BulletLaunchParam
+  m_EditorClassIdentifier: 
+  BulletIndex: {fileID: 11400000, guid: d9d28ae5e680dc0418dca64d69116627, type: 2}
+  Position: {fileID: 11400000, guid: 6cbfabacc380f8f4b9ba60c61969002d, type: 2}
+  Angle: {fileID: 11400000, guid: 2303781c2c1161a4b8dbb8260b5629a5, type: 2}
+  Scale: {fileID: 11400000, guid: 21f858a87e576294cbe94933d695a36d, type: 2}
+  Velocity: {fileID: 11400000, guid: 5f60bcf43295ade4e859cb90024ea053, type: 2}
+  AngleSpeed: {fileID: 11400000, guid: 1380360f766b9f84e9bd14658ed02f4c, type: 2}
+  ScaleSpeed: {fileID: 11400000, guid: 5522a8c9b0b56234eb7f1dea9bd0fed0, type: 2}

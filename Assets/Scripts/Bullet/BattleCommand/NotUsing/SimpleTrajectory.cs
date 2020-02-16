@@ -50,7 +50,7 @@ public class SimpleTrajectory : object
             shotParam.Angle,
             0.8F
             );
-        m_Speed = shotParam.Speed;
+        //m_Speed = shotParam.Speed;
     }
 
 

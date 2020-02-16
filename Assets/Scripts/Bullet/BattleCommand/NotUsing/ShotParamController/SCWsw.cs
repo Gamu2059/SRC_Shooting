@@ -19,9 +19,9 @@ public class SCWsw : ShotParamControllerBase
 
     public override void GetshotParam(ShotParam shotParam, ShotTimer shotTimer, HackingBossPhaseState state)
     {
-        int remainedM = m_Numerator * shotTimer.GetRealShotNum() % m_Denominator;
+        //int remainedM = m_Numerator * shotTimer.GetRealShotNum() % m_Denominator;
 
-        shotParam.Angle += Calc.TWO_PI * remainedM / m_Denominator;
+        //shotParam.Angle += Calc.TWO_PI * remainedM / m_Denominator;
     }
 }
 

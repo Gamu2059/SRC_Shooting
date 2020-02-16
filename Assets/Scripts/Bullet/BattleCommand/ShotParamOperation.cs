@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 弾を発射する時のパラメータを表すクラス。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/operation/shotParam", fileName = "ShotParamOperation", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/operation/shotParam/shotParam", fileName = "ShotParamOperation", order = 0)]
 [System.Serializable]
 public class ShotParamOperation : ScriptableObject
 {
@@ -34,11 +34,29 @@ public class ShotParamOperation : ScriptableObject
     [SerializeField]
     public OperationFloatBase Scale;
 
+    ///// <summary>
+    ///// 初速度の大きさ
+    ///// </summary>
+    //[SerializeField]
+    //public OperationFloatBase Speed;
+
     /// <summary>
-    /// 初速度の大きさ
+    /// 速度ベクトル
     /// </summary>
     [SerializeField]
-    public OperationFloatBase Speed;
+    public OperationVector2Base Velocity;
+
+    /// <summary>
+    /// 回転速度
+    /// </summary>
+    [SerializeField]
+    public OperationFloatBase AngleSpeed;
+
+    /// <summary>
+    /// 大きさの変化速度
+    /// </summary>
+    [SerializeField]
+    public OperationFloatBase ScaleSpeed;
 }
 
 

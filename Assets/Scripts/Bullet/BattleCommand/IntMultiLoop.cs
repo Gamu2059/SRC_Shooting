@@ -8,8 +8,9 @@ using UnityEngine;
 [System.Serializable]
 public class IntMultiLoop : object
 {
+
     [SerializeField]
-    private OperationIntProcCondLinear[] m_OperationArray;
+    private ForBase[] m_OperationArray;
 
 
     /// <summary>
