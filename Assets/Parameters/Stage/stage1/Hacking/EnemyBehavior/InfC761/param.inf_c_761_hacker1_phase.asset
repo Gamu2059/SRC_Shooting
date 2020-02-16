@@ -13,19 +13,4 @@ MonoBehaviour:
   m_Name: param.inf_c_761_hacker1_phase
   m_EditorClassIdentifier: 
   m_BehaviorClass: InfC761Hacker1Phase1
-  m_Bezier3Points:
-  - m_Time: 1
-    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
-    m_AnchorVelocity: {x: 0, y: 0, z: 0}
-  - m_Time: 1
-    m_AnchorPosition: {x: 0, y: 0, z: 0.5}
-    m_AnchorVelocity: {x: 0, y: 0, z: 0}
-  m_LoopBeginPhase: 1
-  m_AllUDFieldArray: {fileID: 11400000, guid: f21b39a1a2ee66c45932ca9fe127c919, type: 2}
-  m_ShotControllerArray: []
-  m_ShotsControllerArray: []
-  m_ShotParam:
-    BulletIndex: 0
-    Angle: 0
-    Speed: 0
-  m_HackingBossPhase: {fileID: 11400000, guid: b20901c82a179bd47bb153d3796e33d8, type: 2}
+  m_HackingBossPhase: {fileID: 11400000, guid: 6a28bb9ed3605314aa24faa7cafda60e, type: 2}

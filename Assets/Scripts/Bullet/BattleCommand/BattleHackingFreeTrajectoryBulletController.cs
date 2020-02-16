@@ -32,7 +32,15 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// </summary>
     /// <param name="shotParam">発射時のパラメータ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static BattleHackingFreeTrajectoryBulletController ShotBullet(CommandBulletShotParam shotParam, SimpleTrajectory trajectoryBase, float dTime, TrajectoryBasis trajectoryBasis, TrajectoryBase trajectory, bool isPlayers, bool isCheck = true)
+    public static BattleHackingFreeTrajectoryBulletController ShotBullet(
+        CommandBulletShotParam shotParam,
+        float dTime,
+        ShotParam shotParam2,
+        OperationFloatVariable timeOperation,
+        ShotParamOperationVariable launchParam,
+        TransformOperation transformOperation,
+        bool isCheck = true
+        )
     {
 
         var bulletOwner = shotParam.BulletOwner;
@@ -89,29 +97,15 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         }
 
 
-        // 付け加えた部分
-
-        //bullet.m_BasePosition = position;
-        //bullet.m_Speed = bulletParam.OrbitalParam.Speed;
-
-        // 本来は、どのクラスで初期化したかはこのクラス内からは見えない（？）
-        bullet.m_TrajectoryBase = trajectoryBase;
-
-        //switch (bullet.trajectoryBase)
-        //{
-        //    case ConstAcceleLinearMotion constAcceleLinearMotion:
-        //        break;
-        //}
+        bullet.m_ShotParam = shotParam2;
 
         bullet.m_Time = dTime;
 
-        bullet.m_TrajectoryBasis = trajectoryBasis;
+        bullet.m_TimeOperation = timeOperation;
 
-        bullet.m_Trajectory = trajectory;
+        bullet.m_LaunchParam = launchParam;
 
-        bullet.m_IsPlayers = isPlayers;
-
-        Debug.Log(bullet.m_TrajectoryBasis.m_Transform.m_Position);
+        bullet.m_TransformOperation = transformOperation;
 
 
         return bullet;
@@ -134,32 +128,31 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
     #region Game Cycle
 
+
     /// <summary>
-    /// 発射してからの経過時間
+    /// 発射してからの経過時間（保存用）
     /// </summary>
     public float m_Time;
 
     /// <summary>
-    /// 弾の軌道
+    /// 発射からの時刻を表す変数（入力用）
     /// </summary>
-    public SimpleTrajectory m_TrajectoryBase;
-
+    public OperationFloatVariable m_TimeOperation;
 
     /// <summary>
-    /// 弾の軌道の基礎情報
+    /// 発射時の発射パラメータ（保存用）
     /// </summary>
-    public TrajectoryBasis m_TrajectoryBasis;
+    public ShotParam m_ShotParam;
 
     /// <summary>
-    /// 弾の軌道
+    /// 発射時のパラメータを表す変数（入力用）
     /// </summary>
-    public TrajectoryBase m_Trajectory;
+    public ShotParamOperationVariable m_LaunchParam;
 
     /// <summary>
-    /// プレイヤーの弾かどうか
+    /// 弾の物理的な状態（取得用）
     /// </summary>
-    public bool m_IsPlayers;
-
+    public TransformOperation m_TransformOperation;
 
 
     public override void OnInitialize()
@@ -173,41 +166,37 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
     public override void OnUpdate()
     {
+        // 時刻を更新する
         m_Time += Time.deltaTime;
 
-        //TransformSimple transformSimple = m_TrajectoryBase.GetTransform(m_Time);
+        // この弾の物理的な状態
         TransformSimple transformSimple;
 
-        // プレイヤーの弾なら
-        if (m_IsPlayers)
+        // 軌道が等速直線運動なら
+        if (m_TransformOperation == null)
         {
+            // 発射パラメータのみによってこの弾の物理的な状態を決定する
             transformSimple = new TransformSimple(
-                m_TrajectoryBasis.m_Transform.m_Position + (m_TrajectoryBasis.m_Speed * m_Time + 5 * m_Time * m_Time / 2) * Calc.RThetaToVec2(1, m_TrajectoryBasis.m_Transform.m_Angle),
-                m_TrajectoryBasis.m_Transform.m_Angle,
-                m_TrajectoryBasis.m_Transform.m_Scale
+                m_ShotParam.ShotPosition + m_ShotParam.Velocity * m_Time,
+                m_ShotParam.Angle + m_ShotParam.AngleSpeed * m_Time,
+                m_ShotParam.Scale + m_ShotParam.ScaleSpeed * m_Time
                 );
         }
-        // 敵の弾なら
+        // 軌道が等速直線運動以外なら
         else
         {
-            // 軌道が等速直線運動なら
-            if (m_Trajectory == null)
-            {
-                transformSimple = new TransformSimple(
-                    m_TrajectoryBasis.m_Transform.m_Position + (m_TrajectoryBasis.m_Speed * m_Time) * Calc.RThetaToVec2(1, m_TrajectoryBasis.m_Transform.m_Angle),
-                    m_TrajectoryBasis.m_Transform.m_Angle,
-                    m_TrajectoryBasis.m_Transform.m_Scale
-                    );
-            }
-            // 軌道が等速直線運動以外なら
-            else
-            {
-                transformSimple = m_Trajectory.GetTransform(m_TrajectoryBasis, m_Time);
-            }
+            // 時刻を外部に反映させる
+            m_TimeOperation.Value = m_Time;
+
+            // 発射パラメータを外部に反映させる
+            m_LaunchParam.SetShotParam(m_ShotParam);
+
+            // この弾の物理的な状態を外部の演算により求める
+            transformSimple = m_TransformOperation.GetResultValues();
         }
 
+        // 実際にこの弾の物理的な状態を更新する
         transform.localPosition = new Vector3(transformSimple.m_Position.x, 0, transformSimple.m_Position.y);
-        //transform.localEulerAngles = Calc.CalcEulerAngles(Vector3.zero, transformSimple.m_Angle);
         transform.localEulerAngles = new Vector3(0, 90 - transformSimple.m_Angle * Mathf.Rad2Deg, 0);
         transform.localScale = Vector3.one * transformSimple.m_Scale;
     }
@@ -305,3 +294,122 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 //transform.localPosition = Calc.RThetaToVec3(m_Time * 0.1f, m_Time);
 
 //transform.localPosition = m_BasePosition + m_Time * transform.forward;
+
+
+//TransformSimple transformSimple = m_TrajectoryBase.GetTransform(m_Time);
+
+//m_LaunchPosition.Value = m_ShotParam.ShotPosition;
+//m_LaunchAngle.Value = m_ShotParam.Angle;
+//m_LaunchScale.Value = m_ShotParam.Scale;
+//m_LaunchSpeed.Value = m_ShotParam.Speed;
+
+//m_LaunchParam.Position.Value = m_ShotParam.ShotPosition;
+//m_LaunchParam.Angle.Value = m_ShotParam.Angle;
+//m_LaunchParam.Scale.Value = m_ShotParam.Scale;
+//m_LaunchParam.Speed.Value = m_ShotParam.Speed;
+
+
+///// <summary>
+///// 発射時の位置を表す変数（入力用）
+///// </summary>
+//public OperationVector2Variable m_LaunchPosition;
+
+///// <summary>
+///// 発射時の角度を表す変数（入力用）
+///// </summary>
+//public OperationFloatVariable m_LaunchAngle;
+
+///// <summary>
+///// 発射時の大きさを表す変数（入力用）
+///// </summary>
+//public OperationFloatVariable m_LaunchScale;
+
+///// <summary>
+///// 発射時の速さを表す変数（入力用）
+///// </summary>
+//public OperationFloatVariable m_LaunchSpeed;
+
+
+//bullet.m_LaunchPosition = launchPosition;
+//bullet.m_LaunchAngle = launchAngle;
+//bullet.m_LaunchScale = launchScale;
+//bullet.m_LaunchSpeed = launchSpeed;
+
+
+//OperationVector2Variable launchPosition,
+//OperationFloatVariable launchAngle,
+//OperationFloatVariable launchScale,
+//OperationFloatVariable launchSpeed,
+
+
+//transformSimple = new TransformSimple(
+//    m_TrajectoryBasis.m_Transform.m_Position + (m_TrajectoryBasis.m_Speed * m_Time) * Calc.RThetaToVec2(1, m_TrajectoryBasis.m_Transform.m_Angle),
+//    m_TrajectoryBasis.m_Transform.m_Angle,
+//    m_TrajectoryBasis.m_Transform.m_Scale
+//    );
+
+
+//SimpleTrajectory trajectoryBase,
+
+//TrajectoryBasis trajectoryBasis,
+//TrajectoryBase trajectory,
+//bool isPlayers,
+
+
+// 付け加えた部分
+
+//bullet.m_BasePosition = position;
+//bullet.m_Speed = bulletParam.OrbitalParam.Speed;
+
+//// 本来は、どのクラスで初期化したかはこのクラス内からは見えない（？）
+//bullet.m_TrajectoryBase = trajectoryBase;
+
+//switch (bullet.trajectoryBase)
+//{
+//    case ConstAcceleLinearMotion constAcceleLinearMotion:
+//        break;
+//}
+
+//bullet.m_TrajectoryBasis = trajectoryBasis;
+
+//bullet.m_Trajectory = trajectory;
+
+//bullet.m_IsPlayers = isPlayers;
+
+
+///// <summary>
+///// 弾の軌道
+///// </summary>
+//public SimpleTrajectory m_TrajectoryBase;
+
+///// <summary>
+///// 弾の軌道の基礎情報
+///// </summary>
+//public TrajectoryBasis m_TrajectoryBasis;
+
+///// <summary>
+///// 弾の軌道
+///// </summary>
+//public TrajectoryBase m_Trajectory;
+
+///// <summary>
+///// プレイヤーの弾かどうか
+///// </summary>
+//public bool m_IsPlayers;
+
+
+//// プレイヤーの弾なら
+//if (false)
+//{
+//    //transformSimple = new TransformSimple(
+//    //    m_TrajectoryBasis.m_Transform.m_Position + (m_TrajectoryBasis.m_Speed * m_Time + 5 * m_Time * m_Time / 2) * Calc.RThetaToVec2(1, m_TrajectoryBasis.m_Transform.m_Angle),
+//    //    m_TrajectoryBasis.m_Transform.m_Angle,
+//    //    m_TrajectoryBasis.m_Transform.m_Scale
+//    //    );
+//}
+//// 敵の弾なら
+//else
+//{
+
+
+//transform.localEulerAngles = Calc.CalcEulerAngles(Vector3.zero, transformSimple.m_Angle);

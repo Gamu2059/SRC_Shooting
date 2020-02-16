@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02673ed0a2af3524f95cc3b51368e0b2, type: 3}
+  m_Name: BlurPosition
+  m_EditorClassIdentifier: 
+  m_Radius: {fileID: 11400000, guid: 77ec2f09bc64ed04d85aa0768bfe5177, type: 2}
+  m_InitProcessVector2: {fileID: 11400000, guid: 60a68bc3e3d26ab4f9508e6086036dc0,
+    type: 2}

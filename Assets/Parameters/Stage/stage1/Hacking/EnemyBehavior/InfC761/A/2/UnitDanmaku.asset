@@ -12,14 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
   m_Name: UnitDanmaku
   m_EditorClassIdentifier: 
+  m_ShotTimer: {fileID: 11400000, guid: 378e800ebf7dbcf4eb880eb4d2571e09, type: 2}
+  m_ShotParam:
+    BulletIndex: 1
+    Angle: 0
+    Speed: 0.6
   m_ShotControllerArray:
   - {fileID: 11400000, guid: 385ac592cd21d54438a62e87af140286, type: 2}
   - {fileID: 11400000, guid: 18c96327f8bd7d44a8cf744cdf43177b, type: 2}
   m_ShotsControllerArray:
   - {fileID: 11400000, guid: c09e706fa4440494b9ee3212ab68a897, type: 2}
-  m_ShotParam:
+  m_OperationIntProcBaseArray: []
+  m_OperationFloatProcBaseArray: []
+  m_IntMultiLoop:
+    m_OperationArray:
+    - {fileID: 11400000, guid: e7464029de33e124a813034938241c6d, type: 2}
+  m_ShotParamOperation:
     BulletIndex: 1
-    Angle: 0
-    Speed: 0.6
-  m_ShotTimer: {fileID: 11400000, guid: 378e800ebf7dbcf4eb880eb4d2571e09, type: 2}
-  m_Trajectory: {fileID: 11400000, guid: 9da53ac82793c4f429530f8269f2e92f, type: 2}
+    Position: {fileID: 11400000, guid: 6206044463379ed42a41f8360cde6b61, type: 2}
+    Angle: {fileID: 11400000, guid: 8bb0e76ef355ab345a11738e33f1e4fe, type: 2}
+    Speed: {fileID: 11400000, guid: 21e3d9c5c0763a24bbf271232db7daae, type: 2}
+  m_LaunchTime: {fileID: 11400000, guid: 9914a88ad4165c145bc0ce781f98b1c9, type: 2}
+  m_BossPosition: {fileID: 11400000, guid: 6206044463379ed42a41f8360cde6b61, type: 2}
+  m_PlayerPosition: {fileID: 11400000, guid: 2b88b9f6a568bf04baf046d1fae22741, type: 2}
+  m_Trajectory: {fileID: 0}

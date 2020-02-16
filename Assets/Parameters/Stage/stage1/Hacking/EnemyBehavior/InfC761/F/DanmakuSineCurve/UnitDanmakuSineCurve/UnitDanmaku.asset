@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Name: UnitDanmaku
+  m_EditorClassIdentifier: 
+  m_ShotTimerOperation: {fileID: 11400000, guid: 76d4386bb3093e840b6f5f347fe0be20,
+    type: 2}
+  m_ForShottimer: {fileID: 11400000, guid: 77739b25af691a448ad9783536fd11d7, type: 2}
+  m_InitProcessBaseArray: []
+  m_IntMultiLoop:
+    m_OperationArray:
+    - {fileID: 11400000, guid: 77739b25af691a448ad9783536fd11d7, type: 2}
+    - {fileID: 11400000, guid: ab6273bc1106ca849844aaad3f72f1f9, type: 2}
+  m_ShotParamOperation: {fileID: 11400000, guid: 08a8f8db4158b7b46899add4d28b13fd,
+    type: 2}
+  m_DTimeOperation: {fileID: 11400000, guid: dc9f40d34c04b6e4e836c7df50a3600d, type: 2}
+  m_TimeOperation: {fileID: 0}
+  m_LaunchParam: {fileID: 0}
+  m_TransformOperation: {fileID: 0}
