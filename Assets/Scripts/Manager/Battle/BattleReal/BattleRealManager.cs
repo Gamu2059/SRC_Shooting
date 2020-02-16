@@ -657,8 +657,10 @@ public class BattleRealManager : ControllableObject
     /// </summary>
     private void StartOnBeforeBossBattlePerformance()
     {
-        // ボス戦移行は、本来はEvent関連で行う
-        BattleManager.Instance.BossBattleStart();
+        var a = new BattleRealEventContent() {
+            EventType = BattleRealEventContent.E_EVENT_TYPE.BOSS_BATTLE_START
+        };
+        BattleRealEventManager.Instance.ExecuteEvent(a);
     }
 
     private void UpdateOnBeforeBossBattlePerformance()

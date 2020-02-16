@@ -264,6 +264,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(false);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
+
+        BattleRealUiManager.PlayStartTelop();
     }
 
     private void UpdateOnStart()
@@ -542,8 +544,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         var battleData = DataManager.Instance.BattleData;
         resultData.ClacScore(battleData);
 
-        GameManager.Instance.PlayerRecordManager.AddRecord(new PlayerRecord(resultData.TotalScore, 1, DateTime.Now));
-        GameManager.Instance.PlayerRecordManager.ShowRecord();
+        GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_STATE.NORMAL_1, DateTime.Now));
 
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
@@ -719,7 +720,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     public void GotoBossEvent()
     {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
+        BattleRealUiManager.PlayWarningTelop(() =>
+        {
+            RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
+        });
     }
 
     public void BossBattleStart()

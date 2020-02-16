@@ -9,44 +9,117 @@ public class PlayerRecordManager : ControllableObject
 {
     public static PlayerRecordManager Instance => GameManager.Instance.PlayerRecordManager;
 
-    private List<PlayerRecord> m_PlayerRecords;
+    private Dictionary<E_DIFFICULTY, List<PlayerRecord>> m_StoryModePlayerRecords;
+    private Dictionary<E_STATE, List<PlayerRecord>> m_ChapterModePlayerRecords;
 
     private int m_MaxRecordNum;
 
     public override void OnInitialize(){
-        m_PlayerRecords = new List<PlayerRecord>();
+        m_StoryModePlayerRecords = new Dictionary<E_DIFFICULTY, List<PlayerRecord>> 
+        {
+            {E_DIFFICULTY.EASY, new List<PlayerRecord>() },
+            {E_DIFFICULTY.NORMAL, new List<PlayerRecord>() },
+            {E_DIFFICULTY.HARD, new List<PlayerRecord>() },
+            {E_DIFFICULTY.HADES, new List<PlayerRecord>() }
+        };
+        m_ChapterModePlayerRecords = new Dictionary<E_STATE, List<PlayerRecord>>
+        {
+            { E_STATE.EASY_0, new List<PlayerRecord>() },
+            { E_STATE.EASY_1, new List<PlayerRecord>() },
+            { E_STATE.EASY_2, new List<PlayerRecord>() },
+            { E_STATE.EASY_3, new List<PlayerRecord>() },
+            { E_STATE.EASY_4, new List<PlayerRecord>() },
+            { E_STATE.EASY_5, new List<PlayerRecord>() },
+            { E_STATE.EASY_6, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_0, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_1, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_2, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_3, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_4, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_5, new List<PlayerRecord>() },
+            { E_STATE.NORMAL_6, new List<PlayerRecord>() },
+            { E_STATE.HARD_0, new List<PlayerRecord>() },
+            { E_STATE.HARD_1, new List<PlayerRecord>() },
+            { E_STATE.HARD_2, new List<PlayerRecord>() },
+            { E_STATE.HARD_3, new List<PlayerRecord>() },
+            { E_STATE.HARD_4, new List<PlayerRecord>() },
+            { E_STATE.HARD_5, new List<PlayerRecord>() },
+            { E_STATE.HARD_6, new List<PlayerRecord>() },
+            { E_STATE.HADES_0, new List<PlayerRecord>() },
+            { E_STATE.HADES_1, new List<PlayerRecord>() },
+            { E_STATE.HADES_2, new List<PlayerRecord>() },
+            { E_STATE.HADES_3, new List<PlayerRecord>() },
+            { E_STATE.HADES_4, new List<PlayerRecord>() },
+            { E_STATE.HADES_5, new List<PlayerRecord>() },
+            { E_STATE.HADES_6, new List<PlayerRecord>() }
+        };
+        
         m_MaxRecordNum = 1000;
 
-        int maxScore = PlayerPrefs.GetInt("BestScore", 0);
-        m_PlayerRecords.Add(new PlayerRecord(maxScore, 1, new System.DateTime()));
+        SaveDataManager.Load();
+        int maxScore = SaveDataManager.GetInt("BestScore", 0);
+        m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL].Add(new PlayerRecord("Nanashi", maxScore, E_STATE.NORMAL_1, new System.DateTime()));
     }
 
-    public void AddRecord(PlayerRecord record){
+    public void AddStoryModeRecord(PlayerRecord record)
+    {
+        void f(E_DIFFICULTY d) {
+            var recs = m_StoryModePlayerRecords[d];
 
-        var maxScore = GetTopRecord().m_FinalScore;
-        if (record.m_FinalScore > maxScore)
+            var maxScore = GetTopRecord(recs).m_FinalScore;
+            if(record.m_FinalScore > maxScore)
+            {
+                SaveDataManager.SetInt("BestScore", (int)record.m_FinalScore);
+                SaveDataManager.Save();
+            }
+
+            if(recs.Count + 1 > m_MaxRecordNum)
+            {
+                recs.RemoveAt(recs.Count - 1);
+                recs.Add(record);
+                SortRecord(recs);
+            }
+            else
+            {
+                recs.Add(record);
+                SortRecord(recs);
+            }
+        }
+
+        f(record.StageDifficulty());
+    }
+
+    public void AddChapterModeRecord(PlayerRecord record)
+    {
+        void f(E_STATE s)
         {
-            PlayerPrefs.SetInt("BestScore", (int)record.m_FinalScore);
-            PlayerPrefs.Save();
+            var recs = m_ChapterModePlayerRecords[s];
+            if (recs.Count + 1 > m_MaxRecordNum)
+            {
+                recs.RemoveAt(recs.Count - 1);
+                recs.Add(record);
+                SortRecord(recs);
+            }
+            else
+            {
+                recs.Add(record);
+                SortRecord(recs);
+            }
         }
 
-        if (m_PlayerRecords.Count + 1 > m_MaxRecordNum){
-            m_PlayerRecords.RemoveAt(m_PlayerRecords.Count - 1);
-            m_PlayerRecords.Add(record);
-            SortRecord();
-        }else{
-            m_PlayerRecords.Add(record);
-            SortRecord();
-        }
+        f(record.m_FinalReachedStage);
     }
 
-    private void SortRecord(){
-        m_PlayerRecords.Sort((a, b) => {
-            if(b.m_FinalScore > a.m_FinalScore){
+    private void SortRecord(List<PlayerRecord> records)
+    {
+        records.Sort((a, b) => {
+            if (b.m_FinalScore > a.m_FinalScore)
+            {
                 return 1;
             }
 
-            if(b.m_FinalScore < a.m_FinalScore){
+            if (b.m_FinalScore < a.m_FinalScore)
+            {
                 return -1;
             }
 
@@ -54,38 +127,69 @@ public class PlayerRecordManager : ControllableObject
         });
     }
 
-    public void ShowRecord(){
-        //Debug.Log("Score Ranking ...");
-        //SortRecord();
-        //int i = 0;
-        //foreach (PlayerRecord rec in m_PlayerRecords.GetRange(0,5))
-        //{
-        //    i++;
-        //    string showStr = string.Format("{0} : Score={1} , Stage={2}, Date={3}", i, rec.m_FinalScore, ReachedStageStrFromInt(rec.m_FinalReachedStage), rec.m_PlayedDate.ToString("yyyy/MM/dd"));
-        //    Debug.Log(showStr);
-        //}
+    public PlayerRecord GetDummyRecord(string name = "Nanashi", double score = 1, E_STATE stage = E_STATE.NORMAL_1, System.DateTime date = new System.DateTime())
+    {
+        return new PlayerRecord(name, score, stage, date);
     }
 
-    private void AddDummyScore(){
-        m_PlayerRecords.Add(new PlayerRecord(1000, 1, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(2000, 2, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(3000, 3, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(4000, 4, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(5000, 5, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(6000, 6, new System.DateTime(2019, 5, 1)));
-        m_PlayerRecords.Add(new PlayerRecord(9999, 7, new System.DateTime(2000, 5, 1)));
+    public PlayerRecord GetTopRecord(List<PlayerRecord> recs)
+    {
+        SortRecord(recs);
+        return recs[0];
     }
 
-    private string ReachedStageStrFromInt(int stage){
-        if(stage != 7){
-            return stage.ToString();
-        }else{
-            return "All Clear!";
+    public PlayerRecord GetTopRecord()
+    {
+        SortRecord(m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL]);
+        return m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL][0];
+    }
+
+
+    public List<PlayerRecord> GetStoryModeRecordsInRange(E_DIFFICULTY difficulty, int range)
+    {
+        var recs = m_StoryModePlayerRecords[difficulty];
+        SortRecord(recs);
+
+        var len = recs.Count;
+
+        if(len < range)
+        {
+            var res = recs.GetRange(0, len);
+            var rem = range - len;
+            while (rem != 0)
+            {
+                res.Add(GetDummyRecord("Nanashi", 1, E_STATE.NORMAL_1, new System.DateTime(2019, 5, 1)));
+                rem--;
+            }
+            return res;
+        }
+        else
+        {
+            return recs.GetRange(0, range);
         }
     }
 
-    public PlayerRecord GetTopRecord(){
-        SortRecord();
-        return m_PlayerRecords[0];
+    public List<PlayerRecord> GetChapterModeRecordsInRange(E_STATE stage, int range)
+    {
+        var recs = m_ChapterModePlayerRecords[stage];
+        SortRecord(recs);
+
+        var len = recs.Count;
+
+        if (len < range)
+        {
+            var res = recs.GetRange(0, len);
+            var rem = range - len;
+            while (rem != 0)
+            {
+                res.Add(GetDummyRecord("Nanashi", 1, stage, new System.DateTime(2019, 5, 1)));
+                rem--;
+            }
+            return res;
+        }
+        else
+        {
+            return recs.GetRange(0, range);
+        }
     }
 }

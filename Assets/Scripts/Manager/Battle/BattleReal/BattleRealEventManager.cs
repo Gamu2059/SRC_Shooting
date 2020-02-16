@@ -935,6 +935,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteBossBattleStart()
     {
+        m_BossStartTimePeriod.CountStart();
         BattleManager.Instance.BossBattleStart();
     }
 
