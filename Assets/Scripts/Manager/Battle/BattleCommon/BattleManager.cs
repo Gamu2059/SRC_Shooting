@@ -264,6 +264,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_VideoPlayer.gameObject.SetActive(false);
 
         RequestChangeState(E_BATTLE_STATE.REAL_MODE);
+
+        BattleRealUiManager.PlayStartTelop();
     }
 
     private void UpdateOnStart()
@@ -718,7 +720,10 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     public void GotoBossEvent()
     {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
+        BattleRealUiManager.PlayWarningTelop(() =>
+        {
+            RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
+        });
     }
 
     public void BossBattleStart()

@@ -43,7 +43,7 @@ Shader "UI/Additive"
         Lighting Off
         ZWrite Off
         ZTest [unity_GUIZTestMode]
-        Blend One One
+        Blend SrcAlpha One
         ColorMask [_ColorMask]
 
         Pass
