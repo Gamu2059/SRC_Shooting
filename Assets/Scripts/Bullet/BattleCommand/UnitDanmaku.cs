@@ -10,34 +10,31 @@ using UnityEngine;
 public class UnitDanmaku : ScriptableObject
 {
 
+    [UnityEngine.Serialization.FormerlySerializedAs("m_MultiForLoop")]
     [SerializeField, Tooltip("多重forループ")]
-    private IntMultiLoop m_IntMultiLoop;
+    private MultiForLoop m_MultiForLoop;
 
+    [UnityEngine.Serialization.FormerlySerializedAs("m_ShotParam")]
     [SerializeField, Tooltip("発射パラメータ（演算）")]
-    private ShotParamOperation m_ShotParamOperation;
+    private ShotParamOperation m_ShotParam;
 
-    [SerializeField, Tooltip("発射から現在までの時刻を表す変数")]
-    public OperationFloatBase m_DTimeOperation;
-
-    [SerializeField, Tooltip("発射からの時刻を表す変数")]
-    public OperationFloatVariable m_TimeOperation;
-
-    [SerializeField, Tooltip("発射時のパラメータを表す変数")]
-    public ShotParamOperationVariable m_LaunchParam;
-
+    [UnityEngine.Serialization.FormerlySerializedAs("m_BulletTransform")]
     [SerializeField, Tooltip("弾の物理的な状態")]
-    public TransformOperation m_TransformOperation;
+    public TransformOperation m_BulletTransform;
 
 
     public void OnStarts()
     {
-
+        m_MultiForLoop.Setup();
     }
 
 
-    public void OnUpdates(BattleHackingBossBehavior boss, HackingBossPhaseState state)
+    public void OnUpdates(
+        BattleHackingBossBehavior boss,
+        CommonOperationVariable commonOperationVariable
+        )
     {
-        if (m_IntMultiLoop.Init())
+        if (m_MultiForLoop.Init())
         {
             do
             {
@@ -45,24 +42,24 @@ public class UnitDanmaku : ScriptableObject
                 BattleHackingFreeTrajectoryBulletController.ShotBullet(
                     new CommandBulletShotParam(
                         boss.GetEnemy(),
-                        m_ShotParamOperation.BulletIndex.GetResultInt(),
+                        m_ShotParam.BulletIndex.GetResultInt(),
                         0, 0, Vector3.zero, Vector3.zero, Vector3.zero),
-                    m_DTimeOperation.GetResultFloat(),
+                    commonOperationVariable.m_DTimeOperation.GetResultFloat(),
                     new ShotParam(
-                        m_ShotParamOperation.BulletIndex.GetResultInt(),
-                        m_ShotParamOperation.Position.GetResultVector2(),
-                        m_ShotParamOperation.Angle.GetResultFloat(),
-                        m_ShotParamOperation.Scale.GetResultFloat(),
-                        m_ShotParamOperation.Velocity.GetResultVector2(),
-                        m_ShotParamOperation.AngleSpeed.GetResultFloat(),
-                        m_ShotParamOperation.ScaleSpeed.GetResultFloat()
+                        m_ShotParam.BulletIndex.GetResultInt(),
+                        m_ShotParam.Position.GetResultVector2(),
+                        m_ShotParam.Angle.GetResultFloat(),
+                        m_ShotParam.Scale.GetResultFloat(),
+                        m_ShotParam.Velocity.GetResultVector2(),
+                        m_ShotParam.AngleSpeed.GetResultFloat(),
+                        m_ShotParam.ScaleSpeed.GetResultFloat()
                         ),
-                    m_TimeOperation,
-                    m_LaunchParam,
-                    m_TransformOperation
+                    commonOperationVariable.m_TimeOperation,
+                    commonOperationVariable.m_LaunchParam,
+                    m_BulletTransform
                     );
             }
-            while (m_IntMultiLoop.Process());
+            while (m_MultiForLoop.Process());
 
             // このフレーム内で1つでも弾が発射されたら、このフレーム内で1回だけ発射音を鳴らす。
             AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);

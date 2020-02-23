@@ -12,17 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
   m_Name: UnitDanmaku
   m_EditorClassIdentifier: 
-  m_ShotTimerOperation: {fileID: 11400000, guid: 76d4386bb3093e840b6f5f347fe0be20,
-    type: 2}
-  m_ForShottimer: {fileID: 11400000, guid: 77739b25af691a448ad9783536fd11d7, type: 2}
-  m_InitProcessBaseArray: []
-  m_IntMultiLoop:
+  m_MultiForLoop:
     m_OperationArray:
     - {fileID: 11400000, guid: 77739b25af691a448ad9783536fd11d7, type: 2}
     - {fileID: 11400000, guid: ab6273bc1106ca849844aaad3f72f1f9, type: 2}
-  m_ShotParamOperation: {fileID: 11400000, guid: 08a8f8db4158b7b46899add4d28b13fd,
-    type: 2}
-  m_DTimeOperation: {fileID: 11400000, guid: dc9f40d34c04b6e4e836c7df50a3600d, type: 2}
-  m_TimeOperation: {fileID: 0}
-  m_LaunchParam: {fileID: 0}
-  m_TransformOperation: {fileID: 0}
+  m_ShotParam: {fileID: 11400000, guid: 08a8f8db4158b7b46899add4d28b13fd, type: 2}
+  m_BulletTransform: {fileID: 0}

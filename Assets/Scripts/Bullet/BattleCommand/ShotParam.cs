@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 弾を発射する時のパラメータを表すクラス。
+/// 弾を発射する時のパラメータの具体的な値を表すクラス。
 /// </summary>
 [System.Serializable]
 public class ShotParam : object
@@ -13,69 +13,70 @@ public class ShotParam : object
     /// 弾の見た目の種類
     /// </summary>
     [SerializeField]
-    public int BulletIndex;
+    public int BulletIndex { set; get; }
 
     /// <summary>
     /// 基準の位置（発射位置）
     /// </summary>
     [SerializeField]
-    //public Boxing1<Vector2> Position;
-    public OperationVector2Base1 Position;
-
-    /// <summary>
-    /// 基準の位置（発射位置）
-    /// </summary>
-    [SerializeField]
-    //public Boxing1<Vector2> Position;
-    public Vector2 ShotPosition;
+    public Vector2 Position { set; get; }
 
     /// <summary>
     /// 初期角度
     /// </summary>
     [SerializeField]
-    public float Angle;
+    public float Angle { set; get; }
 
     /// <summary>
     /// 初期の大きさ
     /// </summary>
     [SerializeField]
-    public float Scale;
-
-    ///// <summary>
-    ///// 初速度の大きさ
-    ///// </summary>
-    //[SerializeField]
-    //public float Speed;
+    public float Scale { set; get; }
 
     /// <summary>
     /// 速度ベクトル
     /// </summary>
     [SerializeField]
-    public Vector2 Velocity;
+    public Vector2 Velocity { set; get; }
 
     /// <summary>
     /// 回転速度
     /// </summary>
     [SerializeField]
-    public float AngleSpeed;
+    public float AngleSpeed { set; get; }
 
     /// <summary>
     /// 大きさの変化速度
     /// </summary>
     [SerializeField]
-    public float ScaleSpeed;
+    public float ScaleSpeed { set; get; }
 
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public ShotParam(int bulletIndex, Vector2 position, float velocityRad, float scale, Vector2 velocity, float angleSpeed, float scaleSpeed)
     {
         BulletIndex = bulletIndex;
-        ShotPosition = position;
+        Position = position;
         Angle = velocityRad;
         Scale = scale;
-        //Speed = speed;
         Velocity = velocity;
         AngleSpeed = angleSpeed;
         ScaleSpeed = scaleSpeed;
+    }
+
+
+    /// <summary>
+    /// 慣性に従って動くとした時、与えられた時間分経過した時の物理的状態を取得する。
+    /// </summary>
+    public TransformSimple GetTransformInertially(float time)
+    {
+        return new TransformSimple(
+            Position + Velocity * time,
+            Angle + AngleSpeed * time,
+            Scale + ScaleSpeed * time
+            );
     }
 }
 
@@ -127,3 +128,18 @@ public class ShotParam : object
 //{
 
 //}
+
+
+///// <summary>
+///// 初速度の大きさ
+///// </summary>
+//[SerializeField]
+//public float Speed;
+
+
+///// <summary>
+///// 基準の位置（発射位置）
+///// </summary>
+//[SerializeField]
+////public Boxing1<Vector2> Position;
+//public OperationVector2Base1 Position;
