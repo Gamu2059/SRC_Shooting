@@ -645,7 +645,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 15.000015}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: -600, y: -329.99997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &86809442
@@ -1590,6 +1590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 238740153}
   - component: {fileID: 238740154}
+  - component: {fileID: 238740155}
   m_Layer: 5
   m_Name: Story
   m_TagString: Untagged
@@ -1651,6 +1652,59 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 1
+--- !u!114 &238740155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238740152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10eea829194136847afcd949cbf28e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StoryModeRankingTextSets:
+  - m_NameText: {fileID: 435404370}
+    m_ScoreText: {fileID: 425570055}
+    m_ChapterText: {fileID: 167192115}
+    m_DateText: {fileID: 875514573}
+  - m_NameText: {fileID: 217180669}
+    m_ScoreText: {fileID: 873344351}
+    m_ChapterText: {fileID: 1247864586}
+    m_DateText: {fileID: 1600758584}
+  - m_NameText: {fileID: 1536577030}
+    m_ScoreText: {fileID: 2065755130}
+    m_ChapterText: {fileID: 1723634714}
+    m_DateText: {fileID: 192743428}
+  - m_NameText: {fileID: 1944450547}
+    m_ScoreText: {fileID: 756066038}
+    m_ChapterText: {fileID: 59428366}
+    m_DateText: {fileID: 1291743432}
+  - m_NameText: {fileID: 823482001}
+    m_ScoreText: {fileID: 2063703488}
+    m_ChapterText: {fileID: 1743350667}
+    m_DateText: {fileID: 271410176}
+  - m_NameText: {fileID: 2128331835}
+    m_ScoreText: {fileID: 1417350515}
+    m_ChapterText: {fileID: 1049513395}
+    m_DateText: {fileID: 1808947779}
+  - m_NameText: {fileID: 56420310}
+    m_ScoreText: {fileID: 1398256166}
+    m_ChapterText: {fileID: 29482624}
+    m_DateText: {fileID: 1020778037}
+  - m_NameText: {fileID: 1101671409}
+    m_ScoreText: {fileID: 478126340}
+    m_ChapterText: {fileID: 603340397}
+    m_DateText: {fileID: 1563508194}
+  - m_NameText: {fileID: 829811967}
+    m_ScoreText: {fileID: 358142764}
+    m_ChapterText: {fileID: 461655125}
+    m_DateText: {fileID: 2146195428}
+  - m_NameText: {fileID: 709293702}
+    m_ScoreText: {fileID: 2092203671}
+    m_ChapterText: {fileID: 2092203671}
+    m_DateText: {fileID: 116565327}
 --- !u!1 &271410174
 GameObject:
   m_ObjectHideFlags: 0
@@ -4492,6 +4546,8 @@ GameObject:
   m_Component:
   - component: {fileID: 906963168}
   - component: {fileID: 906963171}
+  - component: {fileID: 906963170}
+  - component: {fileID: 906963169}
   m_Layer: 0
   m_Name: '[Ranking Scene]'
   m_TagString: Untagged
@@ -4513,6 +4569,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &906963169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906963167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40114f25269fb0e4b8051760a6f99f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StoryModeRankingTextSetManager: {fileID: 238740155}
+  m_IsStoryModeRankingAppear: 1
+  m_ChapterModeRankingTextSetManager: {fileID: 1285215544}
+  m_IsChapterModeRankingAppear: 0
+--- !u!114 &906963170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906963167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d6128cda7537245b882c923bc80d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiManager: {fileID: 906963169}
+  m_CursorSe: {fileID: 11400000, guid: bee20d5bda485084e92e585bac8663cf, type: 2}
+  m_OkSe: {fileID: 11400000, guid: 63e49934ea1c436429172ee073a230c8, type: 2}
+  m_CancelSe: {fileID: 11400000, guid: 9985097bc0ff5f24bb8a7d659fc8f14f, type: 2}
+  m_WaitCursorTime: 8
 --- !u!114 &906963171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4527,7 +4616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Scene: 11
   m_SceneCycle: 0
-  m_ManagerList: []
+  m_ManagerList:
+  - {fileID: 906963169}
 --- !u!1 &958373561
 GameObject:
   m_ObjectHideFlags: 0
@@ -6022,6 +6112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1285215542}
   - component: {fileID: 1285215543}
+  - component: {fileID: 1285215544}
   m_Layer: 5
   m_Name: Chapter
   m_TagString: Untagged
@@ -6083,6 +6174,49 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &1285215544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285215541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260c9e5a2a85c194a9ade3cb21d63cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChapterModeRankingTextSets:
+  - m_NameText: {fileID: 140246052}
+    m_ScoreText: {fileID: 86809444}
+    m_DateText: {fileID: 2056259527}
+  - m_NameText: {fileID: 871322145}
+    m_ScoreText: {fileID: 229288585}
+    m_DateText: {fileID: 305673121}
+  - m_NameText: {fileID: 39570932}
+    m_ScoreText: {fileID: 608495462}
+    m_DateText: {fileID: 1127831468}
+  - m_NameText: {fileID: 119786668}
+    m_ScoreText: {fileID: 464573689}
+    m_DateText: {fileID: 614706517}
+  - m_NameText: {fileID: 549063785}
+    m_ScoreText: {fileID: 1318962629}
+    m_DateText: {fileID: 2119997919}
+  - m_NameText: {fileID: 734913270}
+    m_ScoreText: {fileID: 1819697697}
+    m_DateText: {fileID: 173240037}
+  - m_NameText: {fileID: 638052396}
+    m_ScoreText: {fileID: 895322652}
+    m_DateText: {fileID: 1799660613}
+  - m_NameText: {fileID: 1164469928}
+    m_ScoreText: {fileID: 1262692315}
+    m_DateText: {fileID: 623033189}
+  - m_NameText: {fileID: 1295214161}
+    m_ScoreText: {fileID: 1451915448}
+    m_DateText: {fileID: 1879406103}
+  - m_NameText: {fileID: 1944282704}
+    m_ScoreText: {fileID: 655856930}
+    m_DateText: {fileID: 1770350479}
 --- !u!1 &1291743430
 GameObject:
   m_ObjectHideFlags: 0
