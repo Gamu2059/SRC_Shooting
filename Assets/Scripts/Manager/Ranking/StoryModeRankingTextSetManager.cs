@@ -40,4 +40,12 @@ public class StoryModeRankingTextSetManager : MonoBehaviour
     {
         
     }
+
+    public void SetStoryModeRaningText(List<PlayerRecord> recs)
+    {
+        for(int i=0; i<m_StoryModeRankingTextSets.Length; i++)
+        {
+            m_StoryModeRankingTextSets[i].SetTextFromPlayerRecord(recs[i]);
+        }
+    }
 }

@@ -69,6 +69,8 @@ public class RankingUIManager : ControllableMonoBehavior
 
         m_StoryModeRankingTextSetManager.gameObject.SetActive(m_IsStoryModeRankingAppear);
         m_ChapterModeRankingTextSetManager.gameObject.SetActive(m_IsChapterModeRankingAppear);
+
+        m_StoryModeRankingTextSetManager.SetStoryModeRaningText(PlayerRecordManager.Instance.GetStoryModeRecordsInRange(E_DIFFICULTY.NORMAL, 10));
     }
 
     private void InitStoryModeRankingOutputTexts()
