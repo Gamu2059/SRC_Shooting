@@ -14,6 +14,7 @@ public class BattleRealBoss : BattleRealEnemyController
         ATTACK,
         DOWN,
         HACKING_SUCCESS,
+        HACKING_FAILURE,
         CHANGE_ATTACK,
         DEAD,
         RESCUE,
@@ -128,6 +129,15 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnLateUpdate = LateUpdateOnHackingSuccess,
             m_OnFixedUpdate = FixedUpdateOnHackingSuccess,
             m_OnEnd = EndOnHackingSuccess,
+        });
+
+        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.HACKING_FAILURE)
+        {
+            m_OnStart = StartOnHackingFailure,
+            m_OnUpdate = UpdateOnHackingFailure,
+            m_OnLateUpdate = LateUpdateOnHackingFailure,
+            m_OnFixedUpdate = FixedUpdateOnHackingFailure,
+            m_OnEnd = EndOnHackingFailure,
         });
 
         m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.CHANGE_ATTACK)
@@ -487,6 +497,7 @@ public class BattleRealBoss : BattleRealEnemyController
         });
         RegistTimer(HACKING_SUCCESS_KEY, timer);
         BattleRealItemManager.Instance.CreateItem(transform.position, m_BossGenerateParamSet.HackingSuccessItemParam);
+        BattleRealEffectManager.Instance.CreateEffect(m_BossGenerateParamSet.HackingSuccessEffectParam, transform);
     }
 
     private void UpdateOnHackingSuccess()
@@ -516,6 +527,36 @@ public class BattleRealBoss : BattleRealEnemyController
             var idx = Mathf.Clamp(m_HackingSuccessCount - 1, 0, m_BossGenerateParamSet.DownHpArray.Length - 1);
             MaxDownHp = m_BossGenerateParamSet.DownHpArray[idx];
         }
+    }
+
+    #endregion
+
+    #region Hacking Failure State
+
+    private void StartOnHackingFailure()
+    {
+        BattleRealEffectManager.Instance.CreateEffect(m_BossGenerateParamSet.HackingFailureEffectParam, transform);
+        RequestChangeState(E_PHASE.ATTACK);
+    }
+
+    private void UpdateOnHackingFailure()
+    {
+
+    }
+
+    private void LateUpdateOnHackingFailure()
+    {
+
+    }
+
+    private void FixedUpdateOnHackingFailure()
+    {
+
+    }
+
+    private void EndOnHackingFailure()
+    {
+
     }
 
     #endregion
@@ -767,7 +808,7 @@ public class BattleRealBoss : BattleRealEnemyController
             }
             else
             {
-                RequestChangeState(E_PHASE.ATTACK);
+                RequestChangeState(E_PHASE.HACKING_FAILURE);
             }
         }
     }
