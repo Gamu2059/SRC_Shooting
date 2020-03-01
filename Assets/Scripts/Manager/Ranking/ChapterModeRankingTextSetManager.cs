@@ -36,4 +36,12 @@ public class ChapterModeRankingTextSetManager : MonoBehaviour
     {
         
     }
+
+    public void SetChapterModeRankingText(List<PlayerRecord> recs)
+    {
+        for(int i=0; i<m_ChapterModeRankingTextSets.Length; i++)
+        {
+            m_ChapterModeRankingTextSets[i].SetTextFromPlayerRecord(recs[i]);
+        }
+    }
 }
