@@ -10,9 +10,6 @@ using UnityEngine;
 public class ForShottimer : ForBase
 {
 
-    ////[SerializeField, Tooltip("現在のあるべき発射回数")]
-    //private int m_ProperShotNum;
-
     [SerializeField, Tooltip("このゲームで共通の変数群")]
     private CommonOperationVariable m_CommonOperationVariable;
 
@@ -21,9 +18,6 @@ public class ForShottimer : ForBase
 
     [SerializeField, Tooltip("発射時刻を表す演算")]
     private OperationFloatBase m_LaunchTimeOperation;
-
-    //[SerializeField, Tooltip("理想的な発射回数を表す演算")]
-    //private OperationIntBase m_ProperShotNumOperation;
 
 
     public override void Setup()
@@ -103,3 +97,10 @@ public class ForShottimer : ForBase
 //// 現在のあるべき発射回数
 //m_CommonOperationVariable.m_ArgumentTime.Value = m_CommonOperationVariable.m_Time.GetResultFloat();
 //m_ProperShotNum = m_ProperShotNumOperation.GetResultInt();
+
+
+////[SerializeField, Tooltip("現在のあるべき発射回数")]
+//private int m_ProperShotNum;
+
+//[SerializeField, Tooltip("理想的な発射回数を表す演算")]
+//private OperationIntBase m_ProperShotNumOperation;

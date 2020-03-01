@@ -68,7 +68,6 @@ public class ShotParamOperation : ScriptableObject
     /// <summary>
     /// 回転速度
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("AngleSpeed")]
     [SerializeField]
     public OperationFloatBase m_AngleSpeed;
     public OperationFloatBase AngleSpeed

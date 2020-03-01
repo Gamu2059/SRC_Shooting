@@ -14,23 +14,23 @@ public class OperationIntQuotient : OperationIntBase
     /// 割られる数
     /// </summary>
     [SerializeField]
-    private OperationFloatBase m_DividendOfQuotient;
+    private OperationFloatBase m_Dividend;
 
     /// <summary>
     /// 割る数
     /// </summary>
     [SerializeField]
-    private OperationFloatBase m_DivisorOfQuotient;
+    private OperationFloatBase m_Divisor;
 
 
     public override float GetResultFloat()
     {
-        return Mathf.Floor(m_DividendOfQuotient.GetResultFloat() / m_DivisorOfQuotient.GetResultFloat());
+        return Mathf.Floor(m_Dividend.GetResultFloat() / m_Divisor.GetResultFloat());
     }
 
 
     public override int GetResultInt()
     {
-        return Mathf.FloorToInt(m_DividendOfQuotient.GetResultFloat() / m_DivisorOfQuotient.GetResultFloat());
+        return Mathf.FloorToInt(m_Dividend.GetResultFloat() / m_Divisor.GetResultFloat());
     }
 }

@@ -10,12 +10,6 @@ using UnityEngine;
 public class DomainFloatConnected : DomainFloatBase
 {
 
-    ///// <summary>
-    ///// 値
-    ///// </summary>
-    //[SerializeField]
-    //private OperationFloatBase m_Value;
-
     /// <summary>
     /// 最小値
     /// </summary>
@@ -68,3 +62,12 @@ public class DomainFloatConnected : DomainFloatBase
         return b1 && b2;
     }
 }
+
+
+
+
+///// <summary>
+///// 値
+///// </summary>
+//[SerializeField]
+//private OperationFloatBase m_Value;

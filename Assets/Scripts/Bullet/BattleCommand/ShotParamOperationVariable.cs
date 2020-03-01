@@ -13,7 +13,7 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 弾の見た目の種類
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("BulletIndex")]
+    //[UnityEngine.Serialization.FormerlySerializedAs("BulletIndex")]
     [SerializeField]
     private OperationIntVariable m_BulletIndex;
     public OperationIntVariable BulletIndex

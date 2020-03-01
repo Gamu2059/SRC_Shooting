@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa2aa138c09a474b89eb4ad584a4629, type: 3}
+  m_Script: {fileID: 11500000, guid: a07ae3a83581ff2408ebcece4a68f0a4, type: 3}
   m_Name: '[s] LaunchTimeRemainder2'
   m_EditorClassIdentifier: 
-  m_Multiple:
-  - {fileID: 11400000, guid: eaca4596f3b2eb14aa5da668e3b85210, type: 2}
-  - {fileID: 11400000, guid: 5fc6157c79937fd438dc6d9800097291, type: 2}
-  m_Divide: []
+  m_Plus:
+  - {fileID: 11400000, guid: 9a65d91bcf073424aae88a030142a8b5, type: 2}
+  - {fileID: 11400000, guid: 1d606977e274ed54c9c9daa219483493, type: 2}
+  m_Minus: []

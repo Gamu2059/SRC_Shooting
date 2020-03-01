@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 剰余を求める演算を表すクラス。
+/// int型の剰余の値によって条件分岐させ、float型の値を返す演算を表すクラス。
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/operation/float/modulo", fileName = "OperationFloatModulo", order = 0)]
 [System.Serializable]
@@ -11,20 +11,23 @@ public class OperationFloatModulo : OperationFloatBase
 {
 
     /// <summary>
-    /// 割られる数
+    /// この値によって条件分岐する
     /// </summary>
     [SerializeField]
-    private OperationFloatBase m_Dividend;
+    private OperationIntBase m_If;
 
     /// <summary>
-    /// 割る数
+    /// 条件分岐の配列
     /// </summary>
     [SerializeField]
-    private OperationFloatBase m_Divisor;
+    private OperationFloatBase[] m_BranchValueArray;
 
 
     public override float GetResultFloat()
     {
-        return m_Dividend.GetResultFloat() % m_Divisor.GetResultFloat();
+        // 剰余
+        int remainder = m_If.GetResultInt() % m_BranchValueArray.Length;
+
+        return m_BranchValueArray[remainder].GetResultFloat();
     }
 }

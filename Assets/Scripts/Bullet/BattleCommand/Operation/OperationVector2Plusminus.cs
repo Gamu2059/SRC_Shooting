@@ -13,14 +13,14 @@ public class OperationVector2Plusminus : OperationVector2Base
     /// <summary>
     /// 足す値の配列
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("m_OperationPlus")]
+    //[UnityEngine.Serialization.FormerlySerializedAs("m_OperationPlus")]
     [SerializeField]
     private OperationVector2Base[] m_Plus;
 
     /// <summary>
     /// 引く値の配列
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("m_OperationMinus")]
+    //[UnityEngine.Serialization.FormerlySerializedAs("m_OperationMinus")]
     [SerializeField]
     private OperationVector2Base[] m_Minus;
 

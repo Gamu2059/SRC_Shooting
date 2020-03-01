@@ -31,14 +31,28 @@ public class OperationFloatJuncInt : OperationFloatBase
 
     public override float GetResultFloat()
     {
-        for (int i = 0; i < m_BranchValueArray.Length; i++)
-        {
-            if (m_If.GetResultInt() == i)
-            {
-                return m_BranchValueArray[i].GetResultFloat();
-            }
-        }
+        int index = m_If.GetResultInt();
 
-        return m_LastBranchValue.GetResultFloat();
+        if (0 <= index && index < m_BranchValueArray.Length)
+        {
+            return m_BranchValueArray[index].GetResultFloat();
+        }
+        else
+        {
+            return m_LastBranchValue.GetResultFloat();
+        }
     }
 }
+
+
+
+
+//for (int i = 0; i < m_BranchValueArray.Length; i++)
+//{
+//    if (m_If.GetResultInt() == i)
+//    {
+//        return m_BranchValueArray[i].GetResultFloat();
+//    }
+//}
+
+//return m_LastBranchValue.GetResultFloat();
