@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10195286e6edbd0439e27512a67a6ac1, type: 3}
   m_Name: ShotParam
   m_EditorClassIdentifier: 
-  BulletIndex: {fileID: 11400000, guid: 8f40a01f2b20ff94a94ebde710b66821, type: 2}
-  Position: {fileID: 11400000, guid: 03c294830c9e26043b3052e81e055e15, type: 2}
-  Angle: {fileID: 11400000, guid: cf2ee2ca434fe27429730489f052c908, type: 2}
-  Scale: {fileID: 11400000, guid: 12f38634e94d6704088c7286c3b8f39d, type: 2}
-  Velocity: {fileID: 11400000, guid: 8e0a5f4134c0fc14b83500ca1a4b5ca8, type: 2}
-  AngleSpeed: {fileID: 11400000, guid: 73feec47628524d4583ff89675ffb720, type: 2}
-  ScaleSpeed: {fileID: 11400000, guid: 3ae27fe3610fcab4d9424cea8168999f, type: 2}
+  m_BulletIndex: {fileID: 11400000, guid: 8f40a01f2b20ff94a94ebde710b66821, type: 2}
+  m_Position: {fileID: 11400000, guid: 03c294830c9e26043b3052e81e055e15, type: 2}
+  m_Angle: {fileID: 11400000, guid: cf2ee2ca434fe27429730489f052c908, type: 2}
+  m_Scale: {fileID: 11400000, guid: 12f38634e94d6704088c7286c3b8f39d, type: 2}
+  m_Velocity: {fileID: 11400000, guid: 8e0a5f4134c0fc14b83500ca1a4b5ca8, type: 2}
+  m_AngleSpeed: {fileID: 11400000, guid: 73feec47628524d4583ff89675ffb720, type: 2}
+  m_ScaleSpeed: {fileID: 11400000, guid: 3ae27fe3610fcab4d9424cea8168999f, type: 2}

@@ -13,8 +13,9 @@ public class OperationFloatPlusminus : OperationFloatBase
     /// <summary>
     /// 足す値の配列
     /// </summary>
+    //[UnityEngine.Serialization.FormerlySerializedAs("m_OperationArray")]
     [SerializeField]
-    private OperationFloatBase[] m_OperationArray;
+    private OperationFloatBase[] m_Plus;
 
     /// <summary>
     /// 引く値の配列
@@ -27,14 +28,16 @@ public class OperationFloatPlusminus : OperationFloatBase
     {
         float resultPlus = 0;
 
-        foreach (OperationFloatBase operation in m_OperationArray)
+        if (m_Plus != null)
         {
-            resultPlus += operation.GetResultFloat();
+            foreach (OperationFloatBase operation in m_Plus)
+            {
+                resultPlus += operation.GetResultFloat();
+            }
         }
 
         float resultMinus = 0;
 
-        // なぜかnullになったので
         if (m_Minus != null)
         {
             foreach (OperationFloatBase operation in m_Minus)

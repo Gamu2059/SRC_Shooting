@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa2aa138c09a474b89eb4ad584a4629, type: 3}
+  m_Name: WayAngle
+  m_EditorClassIdentifier: 
+  m_Multiple:
+  - {fileID: 11400000, guid: fd5dfeccbebc2774b8a49cdd02a023b9, type: 2}
+  - {fileID: 11400000, guid: aa3dafee9a122ee439e774af348bf543, type: 2}
+  m_Divide:
+  - {fileID: 11400000, guid: 63d89405521d5d949a9d10e6a186b45b, type: 2}

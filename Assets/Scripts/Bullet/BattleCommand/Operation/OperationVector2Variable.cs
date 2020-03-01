@@ -13,8 +13,6 @@ public class OperationVector2Variable : OperationVector2Base
     /// <summary>
     /// 値
     /// </summary>
-    //[SerializeField]
-    //private Vector2 Value;
     public Vector2 Value { get; set; }
 
 
@@ -22,13 +20,16 @@ public class OperationVector2Variable : OperationVector2Base
     {
         return Value;
     }
-
-
-    /// <summary>
-    /// 値を書き換える
-    /// </summary>
-    public void SetValueVector2(Vector2 value)
-    {
-        Value = value;
-    }
 }
+
+
+
+
+
+///// <summary>
+///// 値を書き換える
+///// </summary>
+//public void SetValueVector2(Vector2 value)
+//{
+//    Value = value;
+//}

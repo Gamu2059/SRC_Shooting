@@ -23,6 +23,12 @@ public class ForZeroone : ForBase
     private OperationIntBase m_TimeNum;
 
 
+    public override void Setup()
+    {
+
+    }
+
+
     public override void Init()
     {
         m_Value.Value = 0;

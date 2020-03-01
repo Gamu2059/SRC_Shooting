@@ -13,59 +13,97 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 弾の見た目の種類
     /// </summary>
+    //[UnityEngine.Serialization.FormerlySerializedAs("BulletIndex")]
     [SerializeField]
-    public OperationIntVariable BulletIndex;
+    private OperationIntVariable m_BulletIndex;
+    public OperationIntVariable BulletIndex
+    {
+        set { m_BulletIndex = value; }
+        get { return m_BulletIndex; }
+    }
 
     /// <summary>
     /// 発射位置
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("Position")]
     [SerializeField]
-    public OperationVector2Variable Position;
+    private OperationVector2Variable m_Position;
+    public OperationVector2Variable Position
+    {
+        set { m_Position = value; }
+        get { return m_Position; }
+    }
 
     /// <summary>
     /// 発射角度
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("Angle")]
     [SerializeField]
-    public OperationFloatVariable Angle;
+    private OperationFloatVariable m_Angle;
+    public OperationFloatVariable Angle
+    {
+        set { m_Angle = value; }
+        get { return m_Angle; }
+    }
 
     /// <summary>
     /// 大きさ
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("Scale")]
     [SerializeField]
-    public OperationFloatVariable Scale;
-
-    ///// <summary>
-    ///// 初速度の大きさ
-    ///// </summary>
-    //[SerializeField]
-    //public OperationFloatVariable Speed;
+    private OperationFloatVariable m_Scale;
+    public OperationFloatVariable Scale
+    {
+        set { m_Scale = value; }
+        get { return m_Scale; }
+    }
 
     /// <summary>
     /// 速度ベクトル
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("Velocity")]
     [SerializeField]
-    public OperationVector2Variable Velocity;
+    private OperationVector2Variable m_Velocity;
+    public OperationVector2Variable Velocity
+    {
+        set { m_Velocity = value; }
+        get { return m_Velocity; }
+    }
 
     /// <summary>
     /// 回転速度
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("AngleSpeed")]
     [SerializeField]
-    public OperationFloatVariable AngleSpeed;
+    private OperationFloatVariable m_AngleSpeed;
+    public OperationFloatVariable AngleSpeed
+    {
+        set { m_AngleSpeed = value; }
+        get { return m_AngleSpeed; }
+    }
 
     /// <summary>
     /// 大きさの変化速度
     /// </summary>
+    [UnityEngine.Serialization.FormerlySerializedAs("ScaleSpeed")]
     [SerializeField]
-    public OperationFloatVariable ScaleSpeed;
+    private OperationFloatVariable m_ScaleSpeed;
+    public OperationFloatVariable ScaleSpeed
+    {
+        set { m_ScaleSpeed = value; }
+        get { return m_ScaleSpeed; }
+    }
 
 
-    public void SetShotParam(ShotParam shotParam)
+    /// <summary>
+    /// 具体的な発射パラメータの値をセットする。
+    /// </summary>
+    public void SetValue(ShotParam shotParam)
     {
         BulletIndex.Value = shotParam.BulletIndex;
-        Position.Value = shotParam.ShotPosition;
+        Position.Value = shotParam.Position;
         Angle.Value = shotParam.Angle;
         Scale.Value = shotParam.Scale;
-        //Speed.Value = shotParam.Speed;
         Velocity.Value = shotParam.Velocity;
         AngleSpeed.Value = shotParam.AngleSpeed;
         ScaleSpeed.Value = shotParam.ScaleSpeed;
@@ -95,3 +133,10 @@ public class ShotParamOperationVariable : ScriptableObject
 //{
 
 //}
+
+
+///// <summary>
+///// 初速度の大きさ
+///// </summary>
+//[SerializeField]
+//public OperationFloatVariable Speed;

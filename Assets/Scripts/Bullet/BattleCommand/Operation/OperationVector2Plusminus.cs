@@ -13,28 +13,30 @@ public class OperationVector2Plusminus : OperationVector2Base
     /// <summary>
     /// 足す値の配列
     /// </summary>
+    //[UnityEngine.Serialization.FormerlySerializedAs("m_OperationPlus")]
     [SerializeField]
-    private OperationVector2Base[] m_OperationPlus;
+    private OperationVector2Base[] m_Plus;
 
     /// <summary>
     /// 引く値の配列
     /// </summary>
+    //[UnityEngine.Serialization.FormerlySerializedAs("m_OperationMinus")]
     [SerializeField]
-    private OperationVector2Base[] m_OperationMinus;
+    private OperationVector2Base[] m_Minus;
 
 
     public override Vector2 GetResultVector2()
     {
         Vector2 PlusResult = Vector2.zero;
 
-        foreach (OperationVector2Base plus in m_OperationPlus)
+        foreach (OperationVector2Base plus in m_Plus)
         {
             PlusResult += plus.GetResultVector2();
         }
 
         Vector2 minusResult = Vector2.zero;
 
-        foreach (OperationVector2Base minus in m_OperationMinus)
+        foreach (OperationVector2Base minus in m_Minus)
         {
             minusResult += minus.GetResultVector2();
         }

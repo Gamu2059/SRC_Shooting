@@ -30,19 +30,22 @@ public class TransformSimple : object
         m_Angle = angle;
         m_Scale = scale;
     }
-
-
-    /// <summary>
-    /// コンストラクタ（クローン用）
-    /// </summary>
-    public TransformSimple(TransformSimple transform) : this(transform.m_Position, transform.m_Angle, transform.m_Scale)
-    {
-
-    }
-
-
-    public override string ToString()
-    {
-        return m_Position.ToString() + ", " + m_Angle.ToString() + ", " + m_Scale.ToString();
-    }
 }
+
+
+
+
+
+///// <summary>
+///// コンストラクタ（クローン用）
+///// </summary>
+//public TransformSimple(TransformSimple transform) : this(transform.m_Position, transform.m_Angle, transform.m_Scale)
+//{
+
+//}
+
+
+//public override string ToString()
+//{
+//    return m_Position.ToString() + ", " + m_Angle.ToString() + ", " + m_Scale.ToString();
+//}

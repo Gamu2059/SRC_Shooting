@@ -23,7 +23,7 @@ public class TrajectoryBasis : object
     /// </summary>
     public TrajectoryBasis(TransformSimple baseTransform, float speed)
     {
-        m_Transform = new TransformSimple(baseTransform);
+        //m_Transform = new TransformSimple(baseTransform);
         m_Speed = speed;
     }
 }
