@@ -29,6 +29,12 @@ public class ForOnceRandom : ForOnceBase
     private OperationFloatBase m_Max;
 
 
+    public override void Setup()
+    {
+
+    }
+
+
     public override void Do()
     {
         m_FloatValue.Value = Random.Range(m_Min.GetResultFloat(), m_Max.GetResultFloat());

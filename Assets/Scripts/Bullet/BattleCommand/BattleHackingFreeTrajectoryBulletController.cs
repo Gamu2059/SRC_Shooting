@@ -132,27 +132,27 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// <summary>
     /// 発射してからの経過時間（保存用）
     /// </summary>
-    public float m_Time;
+    private float m_Time;
 
     /// <summary>
     /// 発射からの時刻を表す変数（入力用）
     /// </summary>
-    public OperationFloatVariable m_TimeOperation;
+    private OperationFloatVariable m_TimeOperation;
 
     /// <summary>
     /// 発射時の発射パラメータ（保存用）
     /// </summary>
-    public ShotParam m_ShotParam;
+    private ShotParam m_ShotParam;
 
     /// <summary>
     /// 発射時のパラメータを表す変数（入力用）
     /// </summary>
-    public ShotParamOperationVariable m_LaunchParam;
+    private ShotParamOperationVariable m_LaunchParam;
 
     /// <summary>
     /// 弾の物理的な状態（取得用）
     /// </summary>
-    public TransformOperation m_TransformOperation;
+    private TransformOperation m_TransformOperation;
 
 
     public override void OnInitialize()
@@ -176,11 +176,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         if (m_TransformOperation == null)
         {
             // 発射パラメータのみによってこの弾の物理的な状態を決定する
-            transformSimple = new TransformSimple(
-                m_ShotParam.ShotPosition + m_ShotParam.Velocity * m_Time,
-                m_ShotParam.Angle + m_ShotParam.AngleSpeed * m_Time,
-                m_ShotParam.Scale + m_ShotParam.ScaleSpeed * m_Time
-                );
+            transformSimple = m_ShotParam.GetTransformInertially(m_Time);
         }
         // 軌道が等速直線運動以外なら
         else
@@ -189,10 +185,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             m_TimeOperation.Value = m_Time;
 
             // 発射パラメータを外部に反映させる
-            m_LaunchParam.SetShotParam(m_ShotParam);
+            m_LaunchParam.SetValue(m_ShotParam);
 
-            // この弾の物理的な状態を外部の演算により求める
-            transformSimple = m_TransformOperation.GetResultValues();
+            // この弾の物理的な状態を外部の演算により求める（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
+            transformSimple = m_TransformOperation.GetResultTransform(m_ShotParam, m_Time);
         }
 
         // 実際にこの弾の物理的な状態を更新する
@@ -413,3 +409,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
 
 //transform.localEulerAngles = Calc.CalcEulerAngles(Vector3.zero, transformSimple.m_Angle);
+
+
+//transformSimple = new TransformSimple(
+//    m_ShotParam.Position + m_ShotParam.Velocity * m_Time,
+//    m_ShotParam.Angle + m_ShotParam.AngleSpeed * m_Time,
+//    m_ShotParam.Scale + m_ShotParam.ScaleSpeed * m_Time
+//    );

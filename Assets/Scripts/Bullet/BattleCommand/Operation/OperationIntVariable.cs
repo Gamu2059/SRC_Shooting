@@ -13,7 +13,6 @@ public class OperationIntVariable : OperationIntBase
     /// <summary>
     /// 値
     /// </summary>
-    //[SerializeField]
     public int Value { get; set; }
 
 

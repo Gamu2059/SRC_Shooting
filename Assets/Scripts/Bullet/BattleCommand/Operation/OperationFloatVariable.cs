@@ -13,22 +13,23 @@ public class OperationFloatVariable : OperationFloatBase
     /// <summary>
     /// 値
     /// </summary>
-    //[SerializeField]
-    //private float m_Value
-    public float Value { get; set; }
+    public float Value{ get; set; }
 
 
     public override float GetResultFloat()
     {
         return Value;
     }
-
-
-    ///// <summary>
-    ///// 値を書き換える
-    ///// </summary>
-    //public void SetValueFloat(float value)
-    //{
-    //    Value = value;
-    //}
 }
+
+
+
+
+
+///// <summary>
+///// 値を書き換える
+///// </summary>
+//public void SetValueFloat(float value)
+//{
+//    Value = value;
+//}

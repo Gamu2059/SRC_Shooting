@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ba31dad4546f7468b6f668e0e6ab17, type: 3}
   m_Name: ForShottimer
   m_EditorClassIdentifier: 
-  m_PreviousTimeOperation: {fileID: 11400000, guid: 54a4c6879f6919744888e02a6c367e3e,
+  m_CommonOperationVariable: {fileID: 11400000, guid: fbbafff66a6429d43bfbee90bb49da3e,
     type: 2}
-  m_TimeOperation: {fileID: 11400000, guid: 091e181df4c6bf94c9b49fe4ad54ec9c, type: 2}
-  m_LaunchTimeVariable: {fileID: 11400000, guid: d5e88b76825d45c4dbbe0239daee3490,
-    type: 2}
-  m_DTimeVariable: {fileID: 11400000, guid: dc9f40d34c04b6e4e836c7df50a3600d, type: 2}
-  m_RealShotNumVariable: {fileID: 11400000, guid: 6d45709eef7903c44982219d6a91b31e,
+  m_RealShotNumVariable: {fileID: 11400000, guid: fa84c5a0aa8001c4f9f616cb45b7d613,
     type: 2}
   m_LaunchTimeOperation: {fileID: 11400000, guid: ec3731fdeae12af449338893b34f9c27,
     type: 2}
