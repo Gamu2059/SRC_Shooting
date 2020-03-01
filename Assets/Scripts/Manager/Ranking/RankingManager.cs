@@ -218,7 +218,7 @@ public class RankingManager : ControllableMonoBehavior
 
     private void StartOnFocusBoard()
     {
-        //m_UiManager.ForcusMenu(0);
+        m_UiManager.ForcusMenu(0);
     }
 
     private void UpdateOnFocusBoard()
@@ -239,6 +239,7 @@ public class RankingManager : ControllableMonoBehavior
             {
                 if (m_OutputTextIndexVertical + 1 > 3)
                 {
+                    Debug.Log("Vertical: 無理");
                     return;
                 }
                 else
@@ -251,6 +252,7 @@ public class RankingManager : ControllableMonoBehavior
             {
                 if (m_OutputTextIndexHorizontal + 1 > 7)
                 {
+                    Debug.Log("Horizontal: 無理");
                     return;
                 }
                 else
@@ -273,6 +275,7 @@ public class RankingManager : ControllableMonoBehavior
         if (idx < 32)
         {
             m_UiManager.SetRankingText(idx);
+            //Debug.Log(idx);
         }
         CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_EXIT));
     }
@@ -307,13 +310,13 @@ public class RankingManager : ControllableMonoBehavior
 
     private void StartOnFocusExit()
     {
-        m_UiManager.ForcusMenu(0);
+        m_UiManager.ForcusMenu(1);
     }
 
     private void UpdateOnFocusExit()
     {
-        CheckForcusActionVertical(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_BOARD), null);
-        CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.SELECT_EXIT));
+        CheckCancelAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.FORCUS_BOARD));
+        CheckSelectAction(() => m_StateMachine.Goto(E_RANKING_MENU_STATE.SELECT_EXIT));
     }
 
     private void EndOnFocusExit()

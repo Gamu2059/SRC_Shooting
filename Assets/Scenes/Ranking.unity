@@ -4587,6 +4587,8 @@ MonoBehaviour:
   m_IsStoryModeRankingAppear: 0
   m_ChapterModeRankingTextSetManager: {fileID: 1285215544}
   m_IsChapterModeRankingAppear: 0
+  m_ChapterText: {fileID: 1682922266}
+  m_DifficultyText: {fileID: 1569841214}
 --- !u!114 &906963170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4603,7 +4605,7 @@ MonoBehaviour:
   m_CursorSe: {fileID: 11400000, guid: bee20d5bda485084e92e585bac8663cf, type: 2}
   m_OkSe: {fileID: 11400000, guid: 63e49934ea1c436429172ee073a230c8, type: 2}
   m_CancelSe: {fileID: 11400000, guid: 9985097bc0ff5f24bb8a7d659fc8f14f, type: 2}
-  m_WaitCursorTime: 8
+  m_WaitCursorTime: 0.25
 --- !u!114 &906963171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7771,7 +7773,7 @@ GameObject:
   - component: {fileID: 1569841215}
   - component: {fileID: 1569841214}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Difficulty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8230,7 +8232,7 @@ GameObject:
   - component: {fileID: 1682922267}
   - component: {fileID: 1682922266}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Chapter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

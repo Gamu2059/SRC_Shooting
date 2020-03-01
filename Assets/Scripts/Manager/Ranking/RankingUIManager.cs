@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,12 @@ public class RankingUIManager : ControllableMonoBehavior
 
     [SerializeField]
     private bool m_IsChapterModeRankingAppear;
+
+    [SerializeField]
+    private Text m_ChapterText;
+
+    [SerializeField]
+    private Text m_DifficultyText;
 
     private Dictionary<int, List<PlayerRecord>> m_Records;
 
@@ -87,13 +94,71 @@ public class RankingUIManager : ControllableMonoBehavior
 
     public void SetRankingText(int idx)
     {
-        if(idx % 8 == 0)
+        Debug.Log(idx);
+        if (idx % 8 == 0)
         {
+            m_StoryModeRankingTextSetManager.gameObject.SetActive(true);
+            m_ChapterModeRankingTextSetManager.gameObject.SetActive(false);
             m_StoryModeRankingTextSetManager.SetStoryModeRaningText(m_Records[idx]);
         }
         else
         {
+            m_StoryModeRankingTextSetManager.gameObject.SetActive(false);
+            m_ChapterModeRankingTextSetManager.gameObject.SetActive(true);
             m_ChapterModeRankingTextSetManager.SetChapterModeRankingText(m_Records[idx]);
+        }
+
+        m_ChapterText.text = GetChapterText(idx);
+        m_DifficultyText.text = GetDifficultyText(idx);
+    }
+
+    private string GetDifficultyText(int idx)
+    {
+        if (0 <= idx && idx < 8)
+        {
+            return "EASY";
+        }
+        else if(8 <= idx && idx < 16)
+        {
+            return "NORMAL";
+        }
+        else if(16 <= idx && idx < 24)
+        {
+            return "HARD";
+        }
+        else if(24 <= idx && idx < 32)
+        {
+            return "HADES";
+        }
+        else
+        {
+            return "DIFFICULTY";
+        }
+    }
+            
+    private string GetChapterText(int idx)
+    {
+        var c = idx % 8;
+        switch (c)
+        {
+            case 0:
+                return "STORY";
+            case 1:
+                return "CHAPTER 0";
+            case 2:
+                return "CHAPTER 1";
+            case 3:
+                return "CHAPTER 2";
+            case 4:
+                return "CHAPTER 3";
+            case 5:
+                return "CHAPTER 4";
+            case 6:
+                return "CHAPTER 5";
+            case 7:
+                return "CHAPTER 6";
+            default:
+                return "CHAPTER";
         }
     }
 
