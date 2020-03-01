@@ -39,6 +39,9 @@ public class RankingManager : ControllableMonoBehavior
 
     private int m_OutputTextIndexVertical;
 
+    [SerializeField]
+    private bool m_OpenChap6;
+
     #region Game Cycle
 
     public override void OnInitialize()
@@ -255,7 +258,14 @@ public class RankingManager : ControllableMonoBehavior
                 }
                 else
                 {
-                    m_OutputTextIndexHorizontal++;
+                    if(m_OutputTextIndexHorizontal + 1 > 6 && !m_OpenChap6)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        m_OutputTextIndexHorizontal++;
+                    }                   
                 }
             },
             () =>
