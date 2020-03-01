@@ -2,7 +2,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,13 +21,7 @@ public class RankingUIManager : ControllableMonoBehavior
     private StoryModeRankingTextSetManager m_StoryModeRankingTextSetManager;
 
     [SerializeField]
-    private bool m_IsStoryModeRankingAppear;
-
-    [SerializeField]
     private ChapterModeRankingTextSetManager m_ChapterModeRankingTextSetManager;
-
-    [SerializeField]
-    private bool m_IsChapterModeRankingAppear;
 
     [SerializeField]
     private Text m_ChapterText;
@@ -38,7 +31,7 @@ public class RankingUIManager : ControllableMonoBehavior
 
     private Dictionary<int, List<PlayerRecord>> m_Records;
 
-    private int m_DisplayIndex;
+    private int m_RecordIndex;
 
     public override void OnInitialize()
     {
@@ -83,18 +76,12 @@ public class RankingUIManager : ControllableMonoBehavior
             { 30, PlayerRecordManager.Instance.GetChapterModeRecordsInRange(E_STATE.HADES_5, 10) },
             { 31, PlayerRecordManager.Instance.GetChapterModeRecordsInRange(E_STATE.HADES_6, 10) }
         };
-
-        m_DisplayIndex = 0;
-
-        //m_StoryModeRankingTextSetManager.gameObject.SetActive(m_IsStoryModeRankingAppear);
-        //m_ChapterModeRankingTextSetManager.gameObject.SetActive(m_IsChapterModeRankingAppear);
-
-        SetRankingText(m_DisplayIndex);
+        m_RecordIndex = 0;
+        SetRankingText(m_RecordIndex);
     }
 
     public void SetRankingText(int idx)
     {
-        Debug.Log(idx);
         if (idx % 8 == 0)
         {
             m_StoryModeRankingTextSetManager.gameObject.SetActive(true);
