@@ -17,7 +17,7 @@ public class BattleRealPlayableManager : ControllableMonoBehavior
                 return null;
             }
 
-            return BattleManager.Instance.BattleRealPlayableManager;
+            return null;
         }
     }
 

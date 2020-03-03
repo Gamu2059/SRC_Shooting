@@ -38,12 +38,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     private BattleHackingUiManager m_BattleHackingUiManager = default;
     public BattleHackingUiManager BattleHackingUiManager => m_BattleHackingUiManager;
 
-    [Header("PlayableManager")]
-
-    [SerializeField]
-    private BattleRealPlayableManager m_BattleRealPlayableManager = default;
-    public BattleRealPlayableManager BattleRealPlayableManager => m_BattleRealPlayableManager;
-
     [Header("Camera")]
 
     [SerializeField]
@@ -187,8 +181,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         RealManager.OnInitialize();
         HackingManager.OnInitialize();
 
-        BattleRealPlayableManager.OnInitialize();
-
         BattleRealUiManager.OnInitialize();
         BattleHackingUiManager.OnInitialize();
 
@@ -205,8 +197,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
         BattleHackingUiManager.OnFinalize();
         BattleRealUiManager.OnFinalize();
-
-        BattleRealPlayableManager.OnFinalize();
 
         HackingManager.OnFinalize();
         RealManager.OnFinalize();
@@ -695,6 +685,11 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         var generator = m_ParamSet.BattleRealParamSet.EnemyGroupManagerParamSet.Generator;
         int sum = 0;
+
+        if (generator.BossParamSet == null)
+        {
+            return;
+        }
 
         foreach (var boss in generator.BossParamSet.IndividualGenerateParamSets)
         {

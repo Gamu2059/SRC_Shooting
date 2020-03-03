@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class SequenceController : ControllableMonoBehavior
 {
-    [SerializeField]
-    private SequenceGroup m_RootGroup;
-
     private Stack<SequenceGroup> m_GroupStack;
     private SequenceGroup m_CurrentGroup;
     private SequenceUnit m_CurrentUnit;
@@ -18,6 +15,8 @@ public class SequenceController : ControllableMonoBehavior
     {
         base.OnInitialize();
         m_GroupStack = new Stack<SequenceGroup>();
+        m_CurrentGroup = null;
+        m_CurrentUnit = null;
     }
 
     public override void OnFinalize()
@@ -25,23 +24,6 @@ public class SequenceController : ControllableMonoBehavior
         m_GroupStack.Clear();
         m_GroupStack = null;
         base.OnFinalize();
-    }
-
-    private void Start()
-    {
-        OnInitialize();
-        OnStart();
-    }
-
-    private void Update()
-    {
-        OnUpdate();
-    }
-
-    public override void OnStart()
-    {
-        base.OnStart();
-        BuildSequence(m_RootGroup);
     }
 
     public override void OnUpdate()
@@ -63,7 +45,7 @@ public class SequenceController : ControllableMonoBehavior
     /// <summary>
     /// 処理階層をルートから始める
     /// </summary>
-    private void BuildSequence(SequenceGroup rootGroup)
+    public void BuildSequence(SequenceGroup rootGroup)
     {
         if (rootGroup == null)
         {
