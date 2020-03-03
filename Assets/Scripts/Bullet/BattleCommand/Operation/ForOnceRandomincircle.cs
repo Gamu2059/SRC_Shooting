@@ -23,6 +23,12 @@ public class ForOnceRandomincircle : ForOnceBase
     private OperationFloatBase m_Radius;
 
 
+    public override void Setup()
+    {
+
+    }
+
+
     public override void Do()
     {
         Vector2Value.Value = Random.insideUnitCircle * m_Radius.GetResultFloat();

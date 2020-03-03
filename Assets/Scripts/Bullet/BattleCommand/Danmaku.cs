@@ -22,11 +22,17 @@ public class Danmaku : ScriptableObject
     }
 
 
-    public void OnUpdates(BattleHackingBossBehavior boss, HackingBossPhaseState state)
+    public void OnUpdates(
+        BattleHackingBossBehavior boss,
+        CommonOperationVariable commonOperationVariable
+        )
     {
         foreach (UnitDanmaku unitDanmaku in m_UnitDanmakuArray)
         {
-            unitDanmaku.OnUpdates(boss, state);
+            unitDanmaku.OnUpdates(
+                boss,
+                commonOperationVariable
+                );
         }
     }
 }

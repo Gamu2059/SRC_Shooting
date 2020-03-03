@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5273981ef0bbe6945828d5767ba5da28, type: 3}
+  m_Name: '[v2] BossPositionJunc'
+  m_EditorClassIdentifier: 
+  m_If: {fileID: 11400000, guid: 233e79aaedbc73d42a4d81dd0e4a2b85, type: 2}
+  m_BranchArray:
+  - m_DomainFloat: {fileID: 11400000, guid: a6b2d9d32ea2d0440bc5cdd55dd78fc2, type: 2}
+    m_Vector2: {fileID: 11400000, guid: 704f1a9ed85e8794290f852340c11031, type: 2}
+  m_LastBranchValue: {fileID: 11400000, guid: d6f0dfc01f6f57d47b1c6310e0ccd1ce, type: 2}

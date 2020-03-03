@@ -29,6 +29,14 @@ public class BattleRealBossGenerateParamSet : BattleRealEnemyGenerateParamSet
     private EffectParamSet m_PlayerTriangleEffectParam;
     public EffectParamSet PlayerTriangleEffectParam => m_PlayerTriangleEffectParam;
 
+    [SerializeField, Tooltip("ハッキング失敗時のエフェクト")]
+    private EffectParamSet m_HackingFailureEffectParam;
+    public EffectParamSet HackingFailureEffectParam => m_HackingFailureEffectParam;
+
+    [SerializeField, Tooltip("ハッキング成功時のエフェクト")]
+    private EffectParamSet m_HackingSuccessEffectParam;
+    public EffectParamSet HackingSuccessEffectParam => m_HackingSuccessEffectParam;
+
     [SerializeField, Tooltip("攻撃の行動パターンが変化するHPの割合")]
     private List<float> m_ChangeAttackHpRates;
     public List<float> ChangeAttackHpRates => m_ChangeAttackHpRates;
