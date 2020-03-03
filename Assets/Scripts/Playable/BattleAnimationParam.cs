@@ -14,10 +14,6 @@ public struct BattleAnimationParam
     {
         public bool Use;
 
-        public bool IsNormalized;
-
-        public E_RELATIVE RelativeType;
-
         public AnimationCurve AnimationValue;
 
         public float EndValue;
@@ -26,9 +22,6 @@ public struct BattleAnimationParam
     [Serializable]
     public struct BattleAnimationVectorParam
     {
-        [Tooltip("ワールド空間かローカル空間か ただし、Scaleは常にローカル")]
-        public Space SpaceType;
-
         public FloatParam XParam;
 
         public FloatParam YParam;
@@ -40,11 +33,9 @@ public struct BattleAnimationParam
 
     public BattleAnimationVectorParam Position;
 
+    [Space()]
+
     public bool UseRotation;
 
     public BattleAnimationVectorParam Rotation;
-
-    public bool UseScale;
-
-    public BattleAnimationVectorParam Scale;
 }

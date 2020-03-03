@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SequenceUnitLeap : MonoBehaviour
+public class SequenceUnitLerpAnimation : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

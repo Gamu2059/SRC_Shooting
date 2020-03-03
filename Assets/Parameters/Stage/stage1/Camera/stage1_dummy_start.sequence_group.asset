@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: stage1_load_battle.battle_real_event_trigger
+  m_Script: {fileID: 11500000, guid: 4b60a3c397f4cbd468f095117a4d0b7a, type: 3}
+  m_Name: stage1_dummy_start.sequence_group
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30B7\u30FC\u30F3\u8AAD\u8FBC\u6642"
-  Condition:
+  m_Elements:
+  - {fileID: 11400000, guid: 2e836c8342bf58e4b97ec53fbf6e3327, type: 2}
+  m_RoopOutCondition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
@@ -22,34 +23,44 @@ MonoBehaviour:
       UseGeneralTimePeriod: 1
       GeneralTimePeriod: 0
       VariableName: 
-      CompareType: 0
+      CompareType: 5
       BoolCompareType: 0
-      CompareValue: 0
+      CompareValue: 4
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
-  Contents:
-  - ContentName: "\u30B9\u30C6\u30FC\u30B8BGM\u518D\u751F"
+  m_OnStartEvent:
+    ContentName: 
     IsPassExecute: 0
-    EventType: 3
-    ExecuteTiming: 1
+    EventType: 0
+    ExecuteTiming: 0
     DelayExecuteTime: 0
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []
-    ControlBgmParams:
-    - ControlType: 0
-      PlaySoundParam: {fileID: 11400000, guid: 1179a74477bd7d54385bd660f6f8c5f0, type: 2}
-      StopSoundGroup: 0
-      OperateAisacParam: {fileID: 0}
+    ControlBgmParams: []
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
-  - ContentName: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8"
+  m_OnLoopedEvent:
+    ContentName: 
     IsPassExecute: 0
-    EventType: 7
-    ExecuteTiming: 1
-    DelayExecuteTime: 12
+    EventType: 0
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  m_OnEndEvent:
+    ContentName: 
+    IsPassExecute: 0
+    EventType: 0
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []

@@ -14,6 +14,13 @@ public class BattleRealEventManager : ControllableObject
     private const string GAME_START_TIME_PERIOD_NAME = "Game Start";
     private const string BOSS_START_TIME_PERIOD_NAME = "Boss Start";
 
+    private readonly Dictionary<E_GENERAL_TIME_PERIOD, string> m_GeneralTimePeriodNames = new Dictionary<E_GENERAL_TIME_PERIOD, string>()
+    {
+        { E_GENERAL_TIME_PERIOD.BATTLE_LOADED, BATTLE_LOADED_TIME_PRERIOD_NAME },
+        { E_GENERAL_TIME_PERIOD.GAME_START, GAME_START_TIME_PERIOD_NAME },
+        { E_GENERAL_TIME_PERIOD.BOSS_START, BOSS_START_TIME_PERIOD_NAME }
+    };
+
     #region Field
 
     private BattleRealEventTriggerParamSet m_ParamSet;
@@ -571,12 +578,30 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private bool CompareTimePeriod(ref EventTriggerCondition condition)
     {
-        if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(condition.VariableName))
+        if (m_TimePeriods == null)
         {
             return false;
         }
 
-        var period = m_TimePeriods[condition.VariableName];
+        string name = null;
+        if (condition.UseGeneralTimePeriod)
+        {
+            if (m_GeneralTimePeriodNames.ContainsKey(condition.GeneralTimePeriod))
+            {
+                name = m_GeneralTimePeriodNames[condition.GeneralTimePeriod];
+            }
+        }
+        else
+        {
+            name = condition.VariableName;
+        }
+
+        if (!m_TimePeriods.ContainsKey(name))
+        {
+            return false;
+        }
+
+        var period = m_TimePeriods[name];
         if (period == null || !period.IsStart)
         {
             return false;

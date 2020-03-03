@@ -157,7 +157,7 @@ public class BattleRealPlayableBase : ControllableMonoBehavior
                 }
             }
 
-            PlayableDirector.SetReferenceValue(BattleAnimationPlayableAsset.PLAYABLE_OBJECT, this);
+            //PlayableDirector.SetReferenceValue(BattleAnimationPlayableAsset.PLAYABLE_OBJECT, this);
         }
 
         PlayableDirector.Play();

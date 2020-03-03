@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 制御フローの複数処理機構。
 /// </summary>
-[Serializable]
+[Serializable, CreateAssetMenu(menuName = "Param/Sequence/Group/Default", fileName = "default.sequence_group.asset", order = 0)]
 public class SequenceGroup : SequenceElement
 {
     [SerializeField]

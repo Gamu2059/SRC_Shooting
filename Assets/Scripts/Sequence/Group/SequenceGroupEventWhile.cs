@@ -60,7 +60,6 @@ public class SequenceGroupEventWhile : SequenceGroup
         {
             return true;
         }
-
         return BattleRealEventManager.Instance.IsMeetRootCondition(ref m_RoopOutCondition);
     }
 }
