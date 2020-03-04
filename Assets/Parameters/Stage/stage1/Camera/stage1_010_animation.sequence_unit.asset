@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0ea5f6bf510a4385178209d523e82, type: 3}
   m_Name: stage1_010_animation.sequence_unit
   m_EditorClassIdentifier: 
-  m_ApplyInterruptEnd: 0
-  m_InterruptEndFunc: {fileID: 0}
+  m_ApplyInterruptEnd: 1
+  m_InterruptEndFunc: {fileID: 11400000, guid: 867bda7483df2c5488ecfe4a07d0cc7d, type: 2}
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []

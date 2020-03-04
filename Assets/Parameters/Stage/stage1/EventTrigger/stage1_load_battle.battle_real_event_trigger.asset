@@ -32,7 +32,7 @@ MonoBehaviour:
   - ContentName: "\u30B9\u30C6\u30FC\u30B8BGM\u518D\u751F"
     IsPassExecute: 0
     EventType: 3
-    ExecuteTiming: 1
+    ExecuteTiming: 0
     DelayExecuteTime: 0
     AppearEnemyIndex: 0
     ControlCameraParams: []
@@ -52,6 +52,20 @@ MonoBehaviour:
     DelayExecuteTime: 12
     AppearEnemyIndex: 0
     ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  - ContentName: "\u30AB\u30E1\u30E9\u30B7\u30FC\u30B1\u30F3\u30B9"
+    IsPassExecute: 0
+    EventType: 1
+    ExecuteTiming: 1
+    DelayExecuteTime: 4
+    AppearEnemyIndex: 0
+    ControlCameraParams:
+    - CameraType: 0
+      SequenceGroup: {fileID: 11400000, guid: a5ca8f0f4ce3dc44c8b792403123b222, type: 2}
     ControlObjectParams: []
     ControlBgmParams: []
     OperateVariableParams: []

@@ -50,8 +50,6 @@ public class SequenceUnitLerp : SequenceUnit
         }
 
         nextUnit.GetStartTransform(Target, out m_NextWorldPosition, out m_NextEulerAngles);
-        Debug.Log(m_OnStartEulerAngles);
-        Debug.Log(m_NextEulerAngles);
 
         if (m_CalcNearRotation)
         {
@@ -62,8 +60,6 @@ public class SequenceUnitLerp : SequenceUnit
             m_OnStartEulerAngles = new Vector3(x.Item1, y.Item1, z.Item1);
             m_NextEulerAngles = new Vector3(x.Item2, y.Item2, z.Item2);
         }
-        Debug.Log(m_OnStartEulerAngles);
-        Debug.Log(m_NextEulerAngles);
     }
 
     protected override void OnUpdate(float deltaTime)

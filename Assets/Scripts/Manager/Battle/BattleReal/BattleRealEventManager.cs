@@ -703,9 +703,6 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_CAMERA:
                 ExecuteControlCamera(eventContent.ControlCameraParams);
                 break;
-            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
-                ExecuteControlObject(eventContent.ControlObjectParams);
-                break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_BGM:
                 ExecuteControlBgm(eventContent.ControlBgmParams);
                 break;
@@ -757,32 +754,7 @@ public class BattleRealEventManager : ControllableObject
             var camera = BattleRealCameraManager.Instance.GetCameraController(param.CameraType);
             if (camera != null)
             {
-                camera.StartTimeline(param.CameraTimelineParam);
-            }
-        }
-    }
-
-    /// <summary>
-    /// オブジェクトを制御する。
-    /// </summary>
-    private void ExecuteControlObject(ControlObjectParam[] controlObjectParams)
-    {
-        foreach (var param in controlObjectParams)
-        {
-            switch (param.ControlObjectType)
-            {
-                case E_CONTROL_OBJECT_TYPE.START:
-                    BattleRealPlayableManager.Instance.StartPlayable(param.Name);
-                    break;
-                case E_CONTROL_OBJECT_TYPE.PAUSE:
-                    BattleRealPlayableManager.Instance.PausePlayable(param.Name);
-                    break;
-                case E_CONTROL_OBJECT_TYPE.RESUME:
-                    BattleRealPlayableManager.Instance.ResumePlayable(param.Name);
-                    break;
-                case E_CONTROL_OBJECT_TYPE.STOP:
-                    BattleRealPlayableManager.Instance.StopPlayable(param.Name);
-                    break;
+                camera.BuildSequence(param.SequenceGroup);
             }
         }
     }

@@ -285,6 +285,9 @@ public class BattleRealManager : ControllableObject
         // このタイミングでBattle Loadedがカウント開始する
         EventManager.OnStart();
 
+        CameraManager.RegisterCamera(BattleManager.Instance.BattleRealBackCamera, E_CAMERA_TYPE.BACK_CAMERA);
+        CameraManager.RegisterCamera(BattleManager.Instance.BattleRealFrontCamera, E_CAMERA_TYPE.FRONT_CAMERA);
+
         PlayerManager.OnStart();
         EnemyGroupManager.OnStart();
         EnemyManager.OnStart();
@@ -293,9 +296,6 @@ public class BattleRealManager : ControllableObject
         EffectManager.OnStart();
         CollisionManager.OnStart();
         CameraManager.OnStart();
-
-        CameraManager.RegisterCamera(BattleManager.Instance.BattleRealBackCamera, E_CAMERA_TYPE.BACK_CAMERA);
-        CameraManager.RegisterCamera(BattleManager.Instance.BattleRealFrontCamera, E_CAMERA_TYPE.FRONT_CAMERA);
 
         m_StateMachine.Goto(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME);
     }
@@ -715,8 +715,6 @@ public class BattleRealManager : ControllableObject
 
     private void StartOnTransitionToHacking()
     {
-        CameraManager.PauseCamera(E_CAMERA_TYPE.BACK_CAMERA);
-        CameraManager.PauseCamera(E_CAMERA_TYPE.FRONT_CAMERA);
         OnTransitionToHacking?.Invoke();
     }
 
@@ -795,8 +793,6 @@ public class BattleRealManager : ControllableObject
 
     private void EndOnTransitionToReal()
     {
-        CameraManager.ResumeCamera(E_CAMERA_TYPE.BACK_CAMERA);
-        CameraManager.ResumeCamera(E_CAMERA_TYPE.FRONT_CAMERA);
         OnTransitionToReal?.Invoke();
     }
 

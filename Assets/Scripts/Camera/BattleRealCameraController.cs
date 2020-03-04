@@ -7,11 +7,20 @@ using UnityEngine;
 /// <summary>
 /// リアルモードのカメラコントローラ。
 /// </summary>
-public class BattleRealCameraController : BattleRealPlayableBase
+public class BattleRealCameraController : ControllableMonoBehavior
 {
+    #region Field Inspector
+
     [SerializeField]
     private Camera m_Camera;
     public Camera Camera => m_Camera;
+
+    [SerializeField]
+    private SequenceController m_SequenceController;
+
+    #endregion
+
+    #region Field
 
     private float m_XAmp;
     private float m_YAmp;
@@ -22,9 +31,33 @@ public class BattleRealCameraController : BattleRealPlayableBase
     private bool m_IsShaking;
     private float m_ShakeTimeCount;
 
+    #endregion
+
+    #region Game Cycle
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        m_SequenceController.OnInitialize();
+    }
+
+    public override void OnFinalize()
+    {
+        m_SequenceController.OnFinalize();
+        base.OnFinalize();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        m_SequenceController.OnStart();
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        m_SequenceController.OnUpdate();
 
         if (m_IsShaking)
         {
@@ -47,6 +80,25 @@ public class BattleRealCameraController : BattleRealPlayableBase
                 StopShake();
             }
         }
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+        m_SequenceController.OnLateUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+        m_SequenceController.OnFixedUpdate();
+    }
+
+    #endregion
+
+    public void BuildSequence(SequenceGroup sequenceGroup)
+    {
+        m_SequenceController.BuildSequence(sequenceGroup);
     }
 
     public void Shake(CameraShakeParam shakeParam)
