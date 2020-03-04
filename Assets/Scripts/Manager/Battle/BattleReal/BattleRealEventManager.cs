@@ -8,11 +8,26 @@ using System;
 /// </summary>
 public class BattleRealEventManager : ControllableObject
 {
-    public static BattleRealEventManager Instance => BattleRealManager.Instance.EventManager;
+    public static BattleRealEventManager Instance {
+        get {
+            if (BattleRealManager.Instance == null)
+            {
+                return null;
+            }
+            return BattleRealManager.Instance.EventManager;
+        }
+    }
 
     private const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     private const string GAME_START_TIME_PERIOD_NAME = "Game Start";
     private const string BOSS_START_TIME_PERIOD_NAME = "Boss Start";
+
+    private readonly Dictionary<E_GENERAL_TIME_PERIOD, string> m_GeneralTimePeriodNames = new Dictionary<E_GENERAL_TIME_PERIOD, string>()
+    {
+        { E_GENERAL_TIME_PERIOD.BATTLE_LOADED, BATTLE_LOADED_TIME_PRERIOD_NAME },
+        { E_GENERAL_TIME_PERIOD.GAME_START, GAME_START_TIME_PERIOD_NAME },
+        { E_GENERAL_TIME_PERIOD.BOSS_START, BOSS_START_TIME_PERIOD_NAME }
+    };
 
     #region Field
 
@@ -571,12 +586,30 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private bool CompareTimePeriod(ref EventTriggerCondition condition)
     {
-        if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(condition.VariableName))
+        if (m_TimePeriods == null)
         {
             return false;
         }
 
-        var period = m_TimePeriods[condition.VariableName];
+        string name = null;
+        if (condition.UseGeneralTimePeriod)
+        {
+            if (m_GeneralTimePeriodNames.ContainsKey(condition.GeneralTimePeriod))
+            {
+                name = m_GeneralTimePeriodNames[condition.GeneralTimePeriod];
+            }
+        }
+        else
+        {
+            name = condition.VariableName;
+        }
+
+        if (!m_TimePeriods.ContainsKey(name))
+        {
+            return false;
+        }
+
+        var period = m_TimePeriods[name];
         if (period == null || !period.IsStart)
         {
             return false;
@@ -670,9 +703,6 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_CAMERA:
                 ExecuteControlCamera(eventContent.ControlCameraParams);
                 break;
-            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
-                ExecuteControlObject(eventContent.ControlObjectParams);
-                break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_BGM:
                 ExecuteControlBgm(eventContent.ControlBgmParams);
                 break;
@@ -724,32 +754,7 @@ public class BattleRealEventManager : ControllableObject
             var camera = BattleRealCameraManager.Instance.GetCameraController(param.CameraType);
             if (camera != null)
             {
-                camera.StartTimeline(param.CameraTimelineParam);
-            }
-        }
-    }
-
-    /// <summary>
-    /// オブジェクトを制御する。
-    /// </summary>
-    private void ExecuteControlObject(ControlObjectParam[] controlObjectParams)
-    {
-        foreach (var param in controlObjectParams)
-        {
-            switch (param.ControlObjectType)
-            {
-                case E_CONTROL_OBJECT_TYPE.START:
-                    BattleRealPlayableManager.Instance.StartPlayable(param.Name);
-                    break;
-                case E_CONTROL_OBJECT_TYPE.PAUSE:
-                    BattleRealPlayableManager.Instance.PausePlayable(param.Name);
-                    break;
-                case E_CONTROL_OBJECT_TYPE.RESUME:
-                    BattleRealPlayableManager.Instance.ResumePlayable(param.Name);
-                    break;
-                case E_CONTROL_OBJECT_TYPE.STOP:
-                    BattleRealPlayableManager.Instance.StopPlayable(param.Name);
-                    break;
+                camera.BuildSequence(param.SequenceGroup);
             }
         }
     }

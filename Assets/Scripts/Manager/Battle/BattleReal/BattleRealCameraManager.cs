@@ -55,6 +55,14 @@ public class BattleRealCameraManager : ControllableObject
         base.OnFinalize();
     }
 
+    public override void OnStart()
+    {
+        base.OnStart();
+
+        StartCamera(m_BackCamera);
+        StartCamera(m_FrontCamera);
+    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -71,6 +79,14 @@ public class BattleRealCameraManager : ControllableObject
         LateUpdateCamera(m_FrontCamera);
     }
 
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+
+        FixedUpdateCamera(m_BackCamera);
+        FixedUpdateCamera(m_FrontCamera);
+    }
+
     #endregion
 
     /// <summary>
@@ -83,7 +99,6 @@ public class BattleRealCameraManager : ControllableObject
             return;
         }
 
-        camera.SetCycle(E_OBJECT_CYCLE.STANDBY_UPDATE);
         camera.OnInitialize();
 
         if (cameraType == E_CAMERA_TYPE.BACK_CAMERA)
@@ -96,24 +111,14 @@ public class BattleRealCameraManager : ControllableObject
         }
     }
 
-    public void PauseCamera(E_CAMERA_TYPE cameraType)
+    private void StartCamera(BattleRealCameraController controller)
     {
-        var camera = GetCameraController(cameraType);
-        if (camera == null)
+        if (controller == null)
         {
             return;
         }
 
-        camera.PauseTimeline();
-    }
-
-    public void ResumeCamera(E_CAMERA_TYPE cameraType)
-    {
-        var camera = GetCameraController(cameraType);
-        if (camera == null)
-        {
-            return;
-        }
+        controller.OnStart();
     }
 
     private void UpdateCamera(BattleRealCameraController controller)
@@ -121,12 +126,6 @@ public class BattleRealCameraManager : ControllableObject
         if (controller == null)
         {
             return;
-        }
-
-        if (controller.GetCycle() == E_OBJECT_CYCLE.STANDBY_UPDATE)
-        {
-            controller.OnStart();
-            controller.SetCycle(E_OBJECT_CYCLE.UPDATE);
         }
 
         controller.OnUpdate();
@@ -159,7 +158,6 @@ public class BattleRealCameraManager : ControllableObject
             return;
         }
 
-        controller.SetCycle(E_OBJECT_CYCLE.DESTROYED);
         controller.OnFinalize();
     }
 
