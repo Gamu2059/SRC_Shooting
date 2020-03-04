@@ -10,6 +10,7 @@ namespace Stage1
         private Renderer m_WhiteOutRenderer;
         private Color m_Color;
 
+        private string m_ObjectName;
         private float m_Duration;
         private MaterialPropertyBlock m_PropBlock;
         private int m_ColorPropId;
@@ -19,6 +20,7 @@ namespace Stage1
             base.OnInitialize();
 
             m_ParamSet.ApplyFloatParam("Duration", ref m_Duration);
+            m_ParamSet.ApplyStringParam("Object Name", ref m_ObjectName);
         }
 
         public override void OnFinalize()
@@ -32,7 +34,14 @@ namespace Stage1
             base.OnStart();
 
             m_PropBlock = new MaterialPropertyBlock();
-            m_WhiteOut = GameObject.Find("WhiteOut");
+            m_WhiteOut = GameObject.Find(m_ObjectName);
+
+            if (m_WhiteOut == null)
+            {
+                DestroyScript();
+                return;
+            }
+
             m_ColorPropId = Shader.PropertyToID("_Color");
             m_WhiteOutRenderer = m_WhiteOut.GetComponent<Renderer>();
             m_WhiteOutRenderer.GetPropertyBlock(m_PropBlock);

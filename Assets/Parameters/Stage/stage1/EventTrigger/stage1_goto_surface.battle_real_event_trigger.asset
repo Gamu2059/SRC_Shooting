@@ -19,12 +19,12 @@ MonoBehaviour:
     SingleCondition:
       IsReverse: 0
       VariableType: 3
-      UseGeneralTimePeriod: 1
-      GeneralTimePeriod: 1
-      VariableName: 
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: Goto Surface
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 68
+      CompareValue: 12
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
@@ -59,5 +59,45 @@ MonoBehaviour:
         FloatValue: 0.5
         BoolValue: 0
         StringValue: 
+        Vector2Value: {x: 0, y: 0}
+        Vector3Value: {x: 0, y: 0, z: 0}
+  - ContentName: "\u30DB\u30EF\u30A4\u30C8\u30A2\u30A6\u30C8\u524A\u9664"
+    IsPassExecute: 0
+    EventType: 6
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams:
+    - CameraType: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
+          type: 2}
+        TrackBindParams: []
+        ReferenceBindParams:
+        - ReferenceName: BackEnd Camera
+          BindTargetName: BackCamera
+          BindTargetComponentType: Transform
+        IsDestroyEndTimeline: 0
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams:
+    - ScriptName: Stage1.WhiteOutController
+      ScriptArguments:
+      - Type: 1
+        Name: Duration
+        IntValue: 0
+        FloatValue: 0.5
+        BoolValue: 0
+        StringValue: 
+        Vector2Value: {x: 0, y: 0}
+        Vector3Value: {x: 0, y: 0, z: 0}
+      - Type: 3
+        Name: Object Name
+        IntValue: 0
+        FloatValue: 0
+        BoolValue: 0
+        StringValue: WhiteOut
         Vector2Value: {x: 0, y: 0}
         Vector3Value: {x: 0, y: 0, z: 0}

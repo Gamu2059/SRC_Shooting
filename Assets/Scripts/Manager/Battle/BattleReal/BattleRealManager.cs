@@ -657,10 +657,6 @@ public class BattleRealManager : ControllableObject
     /// </summary>
     private void StartOnBeforeBossBattlePerformance()
     {
-        var a = new BattleRealEventContent() {
-            EventType = BattleRealEventContent.E_EVENT_TYPE.BOSS_BATTLE_START
-        };
-        BattleRealEventManager.Instance.ExecuteEvent(a);
     }
 
     private void UpdateOnBeforeBossBattlePerformance()

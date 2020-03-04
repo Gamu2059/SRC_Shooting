@@ -8,7 +8,15 @@ using System;
 /// </summary>
 public class BattleRealEventManager : ControllableObject
 {
-    public static BattleRealEventManager Instance => BattleRealManager.Instance.EventManager;
+    public static BattleRealEventManager Instance {
+        get {
+            if (BattleRealManager.Instance == null)
+            {
+                return null;
+            }
+            return BattleRealManager.Instance.EventManager;
+        }
+    }
 
     private const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     private const string GAME_START_TIME_PERIOD_NAME = "Game Start";

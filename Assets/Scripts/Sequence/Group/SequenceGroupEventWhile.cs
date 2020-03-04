@@ -12,49 +12,12 @@ using System;
 
 public class SequenceGroupEventWhile : SequenceGroup
 {
+    [Header("Loop Parameter")]
+
     [SerializeField]
     private EventTriggerRootCondition m_RoopOutCondition;
 
-    [SerializeField]
-    private BattleRealEventContent m_OnStartEvent;
-
-    [SerializeField]
-    private BattleRealEventContent m_OnLoopedEvent;
-
-    [SerializeField]
-    private BattleRealEventContent m_OnEndEvent;
-
-    public override void OnStart()
-    {
-        base.OnStart();
-
-        if (BattleRealEventManager.Instance != null)
-        {
-            BattleRealEventManager.Instance.ExecuteEvent(m_OnStartEvent);
-        }
-    }
-
-    public override void OnLooped()
-    {
-        base.OnLooped();
-
-        if (BattleRealEventManager.Instance != null)
-        {
-            BattleRealEventManager.Instance.ExecuteEvent(m_OnLoopedEvent);
-        }
-    }
-
-    public override void OnEnd()
-    {
-        base.OnEnd();
-
-        if (BattleRealEventManager.Instance != null)
-        {
-            BattleRealEventManager.Instance.ExecuteEvent(m_OnEndEvent);
-        }
-    }
-
-    public override bool IsEnd()
+    public override bool IsEndGroup()
     {
         if (BattleRealEventManager.Instance == null)
         {

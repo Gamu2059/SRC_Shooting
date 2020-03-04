@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -9,6 +11,8 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/Sequence/Unit/Animation", fileName = "animation.sequence_unit.asset", order = 0)]
 public class SequenceUnitAnimation : SequenceUnit
 {
+    [Header("Animation Parameter")]
+
     [SerializeField]
     private Vector3 m_InitWorldPosition;
 
@@ -21,33 +25,29 @@ public class SequenceUnitAnimation : SequenceUnit
     [SerializeField]
     private BattleAnimationParam m_AnimationParam;
 
-    private float m_CurrentTime;
-
-    public override void OnStart(Transform target)
+    protected override void OnStart()
     {
-        base.OnStart(target);
-        m_CurrentTime = 0;
+        base.OnStart();
 
-        target.position = m_InitWorldPosition;
-        target.eulerAngles = m_InitEulerAngles;
+        Target.position = m_InitWorldPosition;
+        Target.eulerAngles = m_InitEulerAngles;
     }
 
-    public override void OnUpdate(Transform target, float deltaTime)
+    protected override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate(target, deltaTime);
-        m_CurrentTime += deltaTime;
-        ApplyAnimation(target);
+        base.OnUpdate(deltaTime);
+        ApplyAnimation(Target);
     }
 
-    public override void OnEnd(Transform target)
+    protected override void OnEnd()
     {
-        ApplyEndValue(target);
-        base.OnEnd(target);
+        ApplyEndValue(Target);
+        base.OnEnd();
     }
 
-    public override bool IsEnd()
+    protected override bool IsEnd()
     {
-        return m_CurrentTime >= m_Duration;
+        return CurrentTime >= m_Duration;
     }
 
     public override void GetStartTransform(Transform target, out Vector3 position, out Vector3 rotate)
@@ -60,12 +60,12 @@ public class SequenceUnitAnimation : SequenceUnit
     {
         if (m_AnimationParam.UsePosition)
         {
-            target.position = GetAnimVector(ref m_AnimationParam.Position, m_CurrentTime, ref m_InitWorldPosition);
+            target.position = GetAnimVector(ref m_AnimationParam.Position, CurrentTime, ref m_InitWorldPosition);
         }
 
         if (m_AnimationParam.UseRotation)
         {
-            target.eulerAngles = GetAnimVector(ref m_AnimationParam.Rotation, m_CurrentTime, ref m_InitEulerAngles);
+            target.eulerAngles = GetAnimVector(ref m_AnimationParam.Rotation, CurrentTime, ref m_InitEulerAngles);
         }
     }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 [System.Serializable]
 public struct CallScriptParam
 {
-    [Tooltip("スクリプト名")]
+    [Tooltip("スクリプト名(name spaceを含む)")]
     public string ScriptName;
 
     [Tooltip("スクリプトに渡す引数")]

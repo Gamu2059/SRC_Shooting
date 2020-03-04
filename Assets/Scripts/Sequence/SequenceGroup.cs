@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -12,43 +14,82 @@ public class SequenceGroup : SequenceElement
     [SerializeField]
     private List<SequenceElement> m_Elements;
 
-    private int m_CurrentIndex;
-    public int CurretIndex => m_CurrentIndex;
+    [Header("Sequence Option")]
+
+    [SerializeField]
+    private SequenceOptionFunc[] m_OnStartOptions;
+
+    [SerializeField]
+    private SequenceOptionFunc[] m_OnEndOptions;
+
+    [SerializeField]
+    private SequenceOptionFunc[] m_OnLoopedOptions;
+
+    public int CurrentIndex { get; private set; }
+    protected SequenceController Controller { get; private set; }
 
     /// <summary>
     /// これに入ってきた時に呼び出される。
     /// 初期化処理等を行う。
     /// </summary>
-    public virtual void OnStart()
+    public void OnStartGroup(SequenceController controller)
     {
-        m_CurrentIndex = 0;
+        CurrentIndex = 0;
+        Controller = controller;
+
+        if (m_OnStartOptions == null)
+        {
+            return;
+        }
+
+        foreach (var option in m_OnStartOptions)
+        {
+            option?.Call();
+        }
+
+        OnStart();
     }
 
     /// <summary>
     /// これのループ部分に差し掛かった時に呼び出される。
     /// フラグの初期化処理等を行う。
     /// </summary>
-    public virtual void OnLooped()
+    public void OnLoopedGroup()
     {
-        m_CurrentIndex = 0;
+        CurrentIndex = 0;
+
+        if (m_OnLoopedOptions == null)
+        {
+            return;
+        }
+
+        foreach (var option in m_OnLoopedOptions)
+        {
+            option?.Call();
+        }
+
+        OnLooped();
     }
 
     /// <summary>
     /// これから出ていく時に呼び出される。
     /// 終了処理等を行う。
     /// </summary>
-    public virtual void OnEnd()
+    public void OnEndGroup()
     {
+        OnEnd();
 
-    }
+        if (m_OnEndOptions == null)
+        {
+            return;
+        }
 
-    /// <summary>
-    /// このグループが終了するかどうかを判定する。
-    /// 終了する場合はtrueを返す。
-    /// </summary>
-    public virtual bool IsEnd()
-    {
-        return true;
+        foreach (var option in m_OnEndOptions)
+        {
+            option?.Call();
+        }
+
+        Controller = null;
     }
 
     /// <summary>
@@ -56,7 +97,7 @@ public class SequenceGroup : SequenceElement
     /// </summary>
     public void Forward()
     {
-        m_CurrentIndex++;
+        CurrentIndex++;
     }
 
     /// <summary>
@@ -64,7 +105,7 @@ public class SequenceGroup : SequenceElement
     /// </summary>
     public SequenceElement GetCurrentReferenceElement()
     {
-        return GetReferenceElementAt(m_CurrentIndex);
+        return GetReferenceElementAt(CurrentIndex);
     }
 
     /// <summary>
@@ -72,7 +113,7 @@ public class SequenceGroup : SequenceElement
     /// </summary>
     public SequenceElement GetNextReferenceElement()
     {
-        return GetReferenceElementAt(m_CurrentIndex + 1);
+        return GetReferenceElementAt(CurrentIndex + 1);
     }
 
     /// <summary>
@@ -92,4 +133,23 @@ public class SequenceGroup : SequenceElement
     {
         return m_Elements == null || index >= m_Elements.Count;
     }
+
+    #region Have to Override Method
+
+    public virtual void OnStart() { }
+
+    public virtual void OnLooped() { }
+
+    public virtual void OnEnd() { }
+
+    /// <summary>
+    /// このグループが終了するかどうかを判定する。
+    /// 終了する場合はtrueを返す。
+    /// </summary>
+    public virtual bool IsEndGroup()
+    {
+        return true;
+    }
+
+    #endregion
 }

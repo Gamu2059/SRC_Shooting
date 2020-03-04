@@ -35,8 +35,8 @@ public class SequenceController : ControllableMonoBehavior
             return;
         }
 
-        m_CurrentUnit.OnUpdate(transform, Time.deltaTime);
-        if (m_CurrentUnit.IsEnd())
+        m_CurrentUnit.OnUpdateUnit(Time.deltaTime);
+        if (m_CurrentUnit.IsEndUnit())
         {
             GoNextUnit(true, false);
         }
@@ -53,7 +53,7 @@ public class SequenceController : ControllableMonoBehavior
         }
 
         m_CurrentGroup = Instantiate(rootGroup);
-        m_CurrentGroup.OnStart();
+        m_CurrentGroup.OnStartGroup(this);
         GoNextUnit(false, false);
     }
 
@@ -78,12 +78,12 @@ public class SequenceController : ControllableMonoBehavior
 
         if (nextReferenceElement == null)
         {
-            if (m_CurrentGroup.IsLastOver(m_CurrentGroup.CurretIndex))
+            if (m_CurrentGroup.IsLastOver(m_CurrentGroup.CurrentIndex))
             {
                 // 次が無いのでグループの終了判定を見る
-                if (m_CurrentGroup.IsEnd())
+                if (m_CurrentGroup.IsEndGroup())
                 {
-                    m_CurrentGroup.OnEnd();
+                    m_CurrentGroup.OnEndGroup();
 
                     if (m_GroupStack.Count > 0)
                     {
@@ -103,7 +103,7 @@ public class SequenceController : ControllableMonoBehavior
                     if (!isSelfLoop)
                     {
                         // 自分自身の最初に戻って次を探す
-                        m_CurrentGroup.OnLooped();
+                        m_CurrentGroup.OnLoopedGroup();
                         GoNextUnit(false, true);
                     }
                     else
@@ -129,17 +129,17 @@ public class SequenceController : ControllableMonoBehavior
             // 次のUnitがGroupだった場合は、スタックに入れてさらに下の階層をたどる
             m_GroupStack.Push(m_CurrentGroup);
             m_CurrentGroup = Instantiate(nextReferenceGroup);
-            m_CurrentGroup.OnStart();
+            m_CurrentGroup.OnStartGroup(this);
             GoNextUnit(false, false);
             return;
         }
 
-        m_CurrentUnit?.OnEnd(transform);
+        m_CurrentUnit?.OnEndUnit();
 
         if (nextReferenceElement is SequenceUnit nextReferenceUnit)
         {
             m_CurrentUnit = Instantiate(nextReferenceUnit);
-            m_CurrentUnit.OnStart(transform);
+            m_CurrentUnit.OnStartUnit(transform, this);
         }
         else
         {
@@ -157,7 +157,7 @@ public class SequenceController : ControllableMonoBehavior
             return null;
         }
 
-        return GetNextReferenceUnit(m_CurrentGroup.CurretIndex + 1, false);
+        return GetNextReferenceUnit(m_CurrentGroup.CurrentIndex + 1, false);
     }
 
     private SequenceUnit GetNextReferenceUnit(int index, bool isSelfLoop)
@@ -173,7 +173,7 @@ public class SequenceController : ControllableMonoBehavior
             if (m_CurrentGroup.IsLastOver(index))
             {
                 // グループの末端まで行った
-                if (m_CurrentGroup.IsEnd())
+                if (m_CurrentGroup.IsEndGroup())
                 {
                     if (m_GroupStack.Count < 1)
                     {

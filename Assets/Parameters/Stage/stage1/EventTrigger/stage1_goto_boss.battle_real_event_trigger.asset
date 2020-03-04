@@ -15,21 +15,63 @@ MonoBehaviour:
   EventTriggerName: "\u30DC\u30B9\u5230\u7740"
   Condition:
     IsReverse: 0
-    IsMultiCondition: 0
+    IsMultiCondition: 1
     SingleCondition:
       IsReverse: 0
       VariableType: 3
-      VariableName: Game Start
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions:
+    - IsReverse: 0
+      VariableType: 3
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 1
+      VariableName: 
       CompareType: 5
       BoolCompareType: 0
       CompareValue: 100
       BoolCompareValue: 0
-    MultiConditionType: 1
-    MultiConditions: []
+    - IsReverse: 0
+      VariableType: 2
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: Goto Boss
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 1
   Contents:
   - ContentName: "\u30DC\u30B9\u5230\u7740"
     IsPassExecute: 0
     EventType: 8
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams:
+    - CameraType: 0
+      CameraTimelineParam:
+        TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
+          type: 2}
+        TrackBindParams: []
+        ReferenceBindParams:
+        - ReferenceName: BackEnd Camera
+          BindTargetName: BackCamera
+          BindTargetComponentType: Transform
+        IsDestroyEndTimeline: 0
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  - ContentName: "\u6642\u9593\u5DEE\u3067\u30DC\u30B9\u6226\u7A81\u5165"
+    IsPassExecute: 0
+    EventType: 9
     ExecuteTiming: 0
     DelayExecuteTime: 0
     AppearEnemyIndex: 0

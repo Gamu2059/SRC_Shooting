@@ -715,10 +715,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// </summary>
     public void GotoBossEvent()
     {
-        BattleRealUiManager.PlayWarningTelop(() =>
-        {
-            RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
-        });
+        BattleRealUiManager.PlayWarningTelop();
+        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
     }
 
     public void BossBattleStart()
