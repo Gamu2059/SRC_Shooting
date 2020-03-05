@@ -676,7 +676,6 @@ public class BattleRealManager : ControllableObject
     /// </summary>
     private void EndOnBeforeBossBattlePerformance()
     {
-        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(true);
     }
 
     #endregion
@@ -686,6 +685,7 @@ public class BattleRealManager : ControllableObject
     private void StartOnBeginBossBattle()
     {
         EnemyGroupManager.CreateBossGroup();
+        BattleManager.Instance.BattleRealUiManager.SetEnableBossUI(true);
         RequestChangeState(E_BATTLE_REAL_STATE.GAME);
     }
 

@@ -622,6 +622,8 @@ public class BattleRealBoss : BattleRealEnemyController
 
         // 全弾削除
         BattleRealBulletManager.Instance.CheckPoolBullet(this);
+
+        ExecuteDefeatEvent();
     }
 
     private void UpdateOnDead()
@@ -646,6 +648,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     private void StartOnRescue()
     {
+
         // 判定の無効化
         GetCollider().SetEnableAllCollider(false);
 
@@ -676,6 +679,8 @@ public class BattleRealBoss : BattleRealEnemyController
 
         // 全弾削除
         BattleRealBulletManager.Instance.CheckPoolBullet(this);
+
+        ExecuteResuceEvent();
     }
 
     private void UpdateOnRescue()
@@ -698,13 +703,9 @@ public class BattleRealBoss : BattleRealEnemyController
 
     }
 
-    protected void OnRescueDestroy()
+    protected void ExecuteResuceEvent()
     {
-        var paramSet = m_BossGenerateParamSet;
-        BattleRealItemManager.Instance.CreateItem(transform.position, paramSet.RescueItemParam);
-        DataManager.Instance.BattleData.AddScore(paramSet.RescueScore);
-
-        var events = paramSet.RescueEvents;
+        var events = m_BossGenerateParamSet.RescueEvents;
         if (events != null)
         {
             for (int i = 0; i < events.Length; i++)
@@ -712,6 +713,13 @@ public class BattleRealBoss : BattleRealEnemyController
                 BattleRealEventManager.Instance.AddEvent(events[i]);
             }
         }
+    }
+
+    protected void OnRescueDestroy()
+    {
+        var paramSet = m_BossGenerateParamSet;
+        BattleRealItemManager.Instance.CreateItem(transform.position, paramSet.RescueItemParam);
+        DataManager.Instance.BattleData.AddScore(paramSet.RescueScore);
 
         Destroy();
     }
@@ -793,6 +801,8 @@ public class BattleRealBoss : BattleRealEnemyController
 
     protected override void OnDead()
     {
+        // ボスの場合はステートマシンで死亡を管理しているため親の処理は無視する
+        // base.OnDead();
         DestroyAllTimer();
         RequestChangeState(E_PHASE.DEAD);
     }
