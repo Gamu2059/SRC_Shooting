@@ -260,6 +260,8 @@ public class BattleRealEnemyController : CharaController
             timer.SetTimeoutCallBack(() => OnDefeatDestroy());
             TimerManager.Instance.RegistTimer(timer);
         }
+
+        ExecuteDefeatEvent();
     }
 
     protected void OnDefeatDestroy()
@@ -267,6 +269,11 @@ public class BattleRealEnemyController : CharaController
         BattleRealItemManager.Instance.CreateItem(transform.position, GenerateParamSet.DefeatItemParam);
         DataManager.Instance.BattleData.AddScore(GenerateParamSet.DefeatScore);
 
+        Destroy();
+    }
+
+    protected void ExecuteDefeatEvent()
+    {
         var events = GenerateParamSet.DefeatEvents;
         if (events != null)
         {
@@ -275,8 +282,6 @@ public class BattleRealEnemyController : CharaController
                 BattleRealEventManager.Instance.AddEvent(events[i]);
             }
         }
-
-        Destroy();
     }
 
     /// <summary>

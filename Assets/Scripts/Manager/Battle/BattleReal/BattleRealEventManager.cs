@@ -18,16 +18,29 @@ public class BattleRealEventManager : ControllableObject
         }
     }
 
+    #region Readonly or Const Field
+
+    private const string BOSS_DEFEAT_INT_NAME = "Boss Defeat";
+    private const string BOSS_RESCUE_INT_NAME = "Boss Rescue";
+
     private const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     private const string GAME_START_TIME_PERIOD_NAME = "Game Start";
     private const string BOSS_START_TIME_PERIOD_NAME = "Boss Start";
+
+    private readonly Dictionary<E_GENERAL_INT_VARIABLE, string> m_GeneralIntNames = new Dictionary<E_GENERAL_INT_VARIABLE, string>()
+    {
+        { E_GENERAL_INT_VARIABLE.BOSS_DEFEAT, BOSS_DEFEAT_INT_NAME },
+        { E_GENERAL_INT_VARIABLE.BOSS_RESCUE, BOSS_RESCUE_INT_NAME },
+    };
 
     private readonly Dictionary<E_GENERAL_TIME_PERIOD, string> m_GeneralTimePeriodNames = new Dictionary<E_GENERAL_TIME_PERIOD, string>()
     {
         { E_GENERAL_TIME_PERIOD.BATTLE_LOADED, BATTLE_LOADED_TIME_PRERIOD_NAME },
         { E_GENERAL_TIME_PERIOD.GAME_START, GAME_START_TIME_PERIOD_NAME },
-        { E_GENERAL_TIME_PERIOD.BOSS_START, BOSS_START_TIME_PERIOD_NAME }
+        { E_GENERAL_TIME_PERIOD.BOSS_START, BOSS_START_TIME_PERIOD_NAME },
     };
+
+    #endregion
 
     #region Field
 
@@ -41,10 +54,6 @@ public class BattleRealEventManager : ControllableObject
     private List<BattleRealEventTriggerParam> m_EventParams;
     private List<BattleRealEventTriggerParam> m_GotoDestroyEventParams;
 
-    private EventTriggerTimePeriod m_BattleLoadedTimePeriod;
-    private EventTriggerTimePeriod m_GameStartTimePeriod;
-    private EventTriggerTimePeriod m_BossStartTimePeriod;
-
     private List<BattleRealEventContent> m_WaitExecuteParams;
 
     private List<EventControllableScript> m_UpdateScripts;
@@ -52,6 +61,8 @@ public class BattleRealEventManager : ControllableObject
     private List<EventControllableScript> m_GotoDestroyScripts;
 
     #endregion
+
+    #region Game Cycle
 
     public BattleRealEventManager(BattleRealEventTriggerParamSet paramSet)
     {
@@ -62,16 +73,34 @@ public class BattleRealEventManager : ControllableObject
     {
         base.OnInitialize();
 
-        m_IntVariables = new Dictionary<string, int>();
-        m_FloatVariables = new Dictionary<string, float>();
-        m_BoolVariables = new Dictionary<string, bool>();
-        m_TimePeriods = new Dictionary<string, EventTriggerTimePeriod>();
-
         if (m_ParamSet == null)
         {
             Debug.LogWarning("EventTriggerParamSetがありません");
             return;
         }
+
+        InitVariable();
+        InitTimePeriod();
+
+        m_EventParams = new List<BattleRealEventTriggerParam>();
+        m_GotoDestroyEventParams = new List<BattleRealEventTriggerParam>();
+        m_EventParams.AddRange(m_ParamSet.Params);
+
+        m_WaitExecuteParams = new List<BattleRealEventContent>();
+
+        m_UpdateScripts = new List<EventControllableScript>();
+        m_GotoDestroyScripts = new List<EventControllableScript>();
+    }
+
+    private void InitVariable()
+    {
+        m_IntVariables = new Dictionary<string, int>();
+        m_FloatVariables = new Dictionary<string, float>();
+        m_BoolVariables = new Dictionary<string, bool>();
+
+        // 組み込み系の追加
+        m_IntVariables.Add(BOSS_DEFEAT_INT_NAME, 0);
+        m_IntVariables.Add(BOSS_RESCUE_INT_NAME, 0);
 
         foreach (var variable in m_ParamSet.Variables)
         {
@@ -88,27 +117,21 @@ public class BattleRealEventManager : ControllableObject
                     break;
             }
         }
+    }
 
-        m_BattleLoadedTimePeriod = new EventTriggerTimePeriod();
-        m_GameStartTimePeriod = new EventTriggerTimePeriod();
-        m_BossStartTimePeriod = new EventTriggerTimePeriod();
-        m_TimePeriods.Add(BATTLE_LOADED_TIME_PRERIOD_NAME, m_BattleLoadedTimePeriod);
-        m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, m_GameStartTimePeriod);
-        m_TimePeriods.Add(BOSS_START_TIME_PERIOD_NAME, m_BossStartTimePeriod);
+    private void InitTimePeriod()
+    {
+        m_TimePeriods = new Dictionary<string, EventTriggerTimePeriod>();
+
+        // 組み込み系の追加
+        m_TimePeriods.Add(BATTLE_LOADED_TIME_PRERIOD_NAME, new EventTriggerTimePeriod());
+        m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, new EventTriggerTimePeriod());
+        m_TimePeriods.Add(BOSS_START_TIME_PERIOD_NAME, new EventTriggerTimePeriod());
 
         foreach (var periodName in m_ParamSet.TimePeriodNames)
         {
             m_TimePeriods.Add(periodName, new EventTriggerTimePeriod());
         }
-
-        m_EventParams = new List<BattleRealEventTriggerParam>();
-        m_GotoDestroyEventParams = new List<BattleRealEventTriggerParam>();
-        m_EventParams.AddRange(m_ParamSet.Params);
-
-        m_WaitExecuteParams = new List<BattleRealEventContent>();
-
-        m_UpdateScripts = new List<EventControllableScript>();
-        m_GotoDestroyScripts = new List<EventControllableScript>();
     }
 
     public override void OnFinalize()
@@ -126,7 +149,7 @@ public class BattleRealEventManager : ControllableObject
     public override void OnStart()
     {
         base.OnStart();
-        m_BattleLoadedTimePeriod.CountStart();
+        CountStartTimePeriod(BATTLE_LOADED_TIME_PRERIOD_NAME);
     }
 
     public override void OnUpdate()
@@ -216,18 +239,67 @@ public class BattleRealEventManager : ControllableObject
         }
     }
 
+    #endregion
+
+    #region General Variable TimePeriod
+
+    private string GetGeneralIntName(E_GENERAL_INT_VARIABLE type)
+    {
+        return m_GeneralIntNames != null && m_GeneralIntNames.ContainsKey(type) ? m_GeneralIntNames[type] : null;
+    }
+
+    private string GetGeneralTimePeriodName(E_GENERAL_TIME_PERIOD type)
+    {
+        return m_GeneralTimePeriodNames != null && m_GeneralTimePeriodNames.ContainsKey(type) ? m_GeneralTimePeriodNames[type] : null;
+    }
+
+    #endregion
+
+    #region Variable TimePeriod Operation
+
+    /// <summary>
+    /// int型イベント変数が存在するかどうか。
+    /// 存在する場合はtrueを返す。
+    /// </summary>
+    public bool ExistInt(string name)
+    {
+        return m_IntVariables != null && m_IntVariables.ContainsKey(name);
+    }
+
+    /// <summary>
+    /// float型イベント変数が存在するかどうか。
+    /// 存在する場合はtrueを返す。
+    /// </summary>
+    public bool ExistFloat(string name)
+    {
+        return m_FloatVariables != null && m_FloatVariables.ContainsKey(name);
+    }
+
+    /// <summary>
+    /// bool型イベント変数が存在するかどうか。
+    /// 存在する場合はtrueを返す。
+    /// </summary>
+    public bool ExistBool(string name)
+    {
+        return m_BoolVariables != null && m_BoolVariables.ContainsKey(name);
+    }
+
+    /// <summary>
+    /// タイムピリオドが存在するかどうか。
+    /// 存在する場合はtrueを返す。
+    /// </summary>
+    public bool ExistTimePeriod(string name)
+    {
+        return m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
+    }
+
     /// <summary>
     /// int型イベント変数の値を取得する。
     /// 名前が存在しなければデフォルト値を返す。
     /// </summary>
     public int GetInt(string name, int _default = 0)
     {
-        if (m_IntVariables == null || !m_IntVariables.ContainsKey(name))
-        {
-            return _default;
-        }
-
-        return m_IntVariables[name];
+        return ExistInt(name) ? m_IntVariables[name] : _default;
     }
 
     /// <summary>
@@ -236,12 +308,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public float GetFloat(string name, float _default = 0f)
     {
-        if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(name))
-        {
-            return _default;
-        }
-
-        return m_FloatVariables[name];
+        return ExistFloat(name) ? m_FloatVariables[name] : _default;
     }
 
     /// <summary>
@@ -250,12 +317,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public bool GetBool(string name, bool _default = false)
     {
-        if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(name))
-        {
-            return _default;
-        }
-
-        return m_BoolVariables[name];
+        return ExistBool(name) ? m_BoolVariables[name] : _default;
     }
 
     /// <summary>
@@ -264,12 +326,10 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void SetInt(string name, int value)
     {
-        if (m_IntVariables == null || !m_IntVariables.ContainsKey(name))
+        if (ExistInt(name))
         {
-            return;
+            m_IntVariables[name] = value;
         }
-
-        m_IntVariables[name] = value;
     }
 
     /// <summary>
@@ -278,12 +338,10 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void SetFloat(string name, float value)
     {
-        if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(name))
+        if (ExistFloat(name))
         {
-            return;
+            m_FloatVariables[name] = value;
         }
-
-        m_FloatVariables[name] = value;
     }
 
     /// <summary>
@@ -292,12 +350,10 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void SetBool(string name, bool value)
     {
-        if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(name))
+        if (ExistBool(name))
         {
-            return;
+            m_BoolVariables[name] = value;
         }
-
-        m_BoolVariables[name] = value;
     }
 
     /// <summary>
@@ -306,13 +362,12 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void CalcInt(string name, int value, E_OPERAND_TYPE operandType)
     {
-        if (m_IntVariables == null || !m_IntVariables.ContainsKey(name))
+        if (!ExistInt(name))
         {
             return;
         }
 
-        int v = GetInt(name);
-
+        var v = GetInt(name);
         switch (operandType)
         {
             case E_OPERAND_TYPE.ADD:
@@ -325,9 +380,19 @@ public class BattleRealEventManager : ControllableObject
                 SetInt(name, v * value);
                 break;
             case E_OPERAND_TYPE.DIV:
+                if (value == 0)
+                {
+                    Debug.LogWarningFormat("{0} : value is 0. cannot calc div.", GetType().Name);
+                    return;
+                }
                 SetInt(name, v / value);
                 break;
             case E_OPERAND_TYPE.MOD:
+                if (value == 0)
+                {
+                    Debug.LogWarningFormat("{0} : value is 0. cannot calc mod.", GetType().Name);
+                    return;
+                }
                 SetInt(name, v % value);
                 break;
             case E_OPERAND_TYPE.SUBSTITUTE:
@@ -342,12 +407,12 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void CalcFloat(string name, float value, E_OPERAND_TYPE operandType)
     {
-        if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(name))
+        if (!ExistFloat(name))
         {
             return;
         }
 
-        float v = GetFloat(name);
+        var v = GetFloat(name);
 
         switch (operandType)
         {
@@ -361,9 +426,19 @@ public class BattleRealEventManager : ControllableObject
                 SetFloat(name, v * value);
                 break;
             case E_OPERAND_TYPE.DIV:
+                if (value == 0)
+                {
+                    Debug.LogWarningFormat("{0} : value is 0. cannot calc div.", GetType().Name);
+                    return;
+                }
                 SetFloat(name, v / value);
                 break;
             case E_OPERAND_TYPE.MOD:
+                if (value == 0)
+                {
+                    Debug.LogWarningFormat("{0} : value is 0. cannot calc mod.", GetType().Name);
+                    return;
+                }
                 SetFloat(name, v % value);
                 break;
             case E_OPERAND_TYPE.SUBSTITUTE:
@@ -378,12 +453,12 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void CalcBool(string name, bool value, E_BOOL_OPERAND_TYPE operandType)
     {
-        if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(name))
+        if (!ExistBool(name))
         {
             return;
         }
 
-        bool v = GetBool(name);
+        var v = GetBool(name);
 
         switch (operandType)
         {
@@ -413,6 +488,151 @@ public class BattleRealEventManager : ControllableObject
                 break;
         }
     }
+
+    /// <summary>
+    /// 指定したタイムピリオドを取得する。
+    /// 名前が存在しなければnullを返す。
+    /// </summary>
+    public EventTriggerTimePeriod GetTimePeriod(string name)
+    {
+        return ExistTimePeriod(name) ? m_TimePeriods[name] : null;
+    }
+
+    /// <summary>
+    /// 指定したタイムピリオドをカウントし始める。
+    /// 名前が存在しなければ無視する。
+    /// </summary>
+    public void CountStartTimePeriod(string name)
+    {
+        if (ExistTimePeriod(name))
+        {
+            m_TimePeriods[name].CountStart();
+        }
+    }
+
+    /// <summary>
+    /// int型イベント変数の比較演算を行う。
+    /// </summary>
+    private bool CompareInt(ref EventTriggerCondition condition)
+    {
+        var name = condition.UseGeneralIntVariable ? GetGeneralIntName(condition.GeneralIntVariable) : condition.VariableName;
+        if (!ExistInt(name))
+        {
+            return false;
+        }
+
+        var value = m_IntVariables[name];
+        switch (condition.CompareType)
+        {
+            case E_COMPARE_TYPE.EQUAL:
+                return value == condition.CompareValue;
+            case E_COMPARE_TYPE.NOT_EQUAL:
+                return value != condition.CompareValue;
+            case E_COMPARE_TYPE.LESS_THAN:
+                return value < condition.CompareValue;
+            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
+                return value <= condition.CompareValue;
+            case E_COMPARE_TYPE.MORE_THAN:
+                return value > condition.CompareValue;
+            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
+                return value >= condition.CompareValue;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// float型イベント変数の比較演算を行う。
+    /// </summary>
+    private bool CompareFloat(ref EventTriggerCondition condition)
+    {
+        var name = condition.VariableName;
+        if (!ExistFloat(name))
+        {
+            return false;
+        }
+
+        var value = m_FloatVariables[name];
+        switch (condition.CompareType)
+        {
+            case E_COMPARE_TYPE.EQUAL:
+                return value == condition.CompareValue;
+            case E_COMPARE_TYPE.NOT_EQUAL:
+                return value != condition.CompareValue;
+            case E_COMPARE_TYPE.LESS_THAN:
+                return value < condition.CompareValue;
+            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
+                return value <= condition.CompareValue;
+            case E_COMPARE_TYPE.MORE_THAN:
+                return value > condition.CompareValue;
+            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
+                return value >= condition.CompareValue;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// bool型イベント変数の比較演算を行う。
+    /// </summary>
+    private bool CompareBool(ref EventTriggerCondition condition)
+    {
+        var name = condition.VariableName;
+        if (!ExistBool(name))
+        {
+            return false;
+        }
+
+        var value = m_BoolVariables[name];
+        switch (condition.BoolCompareType)
+        {
+            case E_BOOL_COMPARE_TYPE.EQUAL:
+                return value == condition.BoolCompareValue;
+            case E_BOOL_COMPARE_TYPE.NOT_EQUAL:
+                return value != condition.BoolCompareValue;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// タイムピリオドの比較演算を行う。
+    /// </summary>
+    private bool CompareTimePeriod(ref EventTriggerCondition condition)
+    {
+        var name = condition.UseGeneralTimePeriod ? GetGeneralTimePeriodName(condition.GeneralTimePeriod) : condition.VariableName;
+        if (!ExistTimePeriod(name))
+        {
+            return false;
+        }
+
+        var period = m_TimePeriods[name];
+        if (period == null || !period.IsStart)
+        {
+            return false;
+        }
+
+        var value = period.GetPeriod();
+        switch (condition.CompareType)
+        {
+            case E_COMPARE_TYPE.EQUAL:
+                return value == condition.CompareValue;
+            case E_COMPARE_TYPE.NOT_EQUAL:
+                return value != condition.CompareValue;
+            case E_COMPARE_TYPE.LESS_THAN:
+                return value < condition.CompareValue;
+            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
+                return value <= condition.CompareValue;
+            case E_COMPARE_TYPE.MORE_THAN:
+                return value > condition.CompareValue;
+            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
+                return value >= condition.CompareValue;
+        }
+
+        return false;
+    }
+
+    #endregion
 
     private void DestroyEventTrigger()
     {
@@ -498,143 +718,6 @@ public class BattleRealEventManager : ControllableObject
     }
 
     /// <summary>
-    /// int型の比較演算を行う。
-    /// </summary>
-    private bool CompareInt(ref EventTriggerCondition condition)
-    {
-        if (m_IntVariables == null || !m_IntVariables.ContainsKey(condition.VariableName))
-        {
-            return false;
-        }
-
-        var value = m_IntVariables[condition.VariableName];
-        switch (condition.CompareType)
-        {
-            case E_COMPARE_TYPE.EQUAL:
-                return value == condition.CompareValue;
-            case E_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.CompareValue;
-            case E_COMPARE_TYPE.LESS_THAN:
-                return value < condition.CompareValue;
-            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
-                return value <= condition.CompareValue;
-            case E_COMPARE_TYPE.MORE_THAN:
-                return value > condition.CompareValue;
-            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
-                return value >= condition.CompareValue;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// float型の比較演算を行う。
-    /// </summary>
-    private bool CompareFloat(ref EventTriggerCondition condition)
-    {
-        if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(condition.VariableName))
-        {
-            return false;
-        }
-
-        var value = m_FloatVariables[condition.VariableName];
-
-        switch (condition.CompareType)
-        {
-            case E_COMPARE_TYPE.EQUAL:
-                return value == condition.CompareValue;
-            case E_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.CompareValue;
-            case E_COMPARE_TYPE.LESS_THAN:
-                return value < condition.CompareValue;
-            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
-                return value <= condition.CompareValue;
-            case E_COMPARE_TYPE.MORE_THAN:
-                return value > condition.CompareValue;
-            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
-                return value >= condition.CompareValue;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// bool型の比較演算を行う。
-    /// </summary>
-    private bool CompareBool(ref EventTriggerCondition condition)
-    {
-        if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(condition.VariableName))
-        {
-            return false;
-        }
-
-        var value = m_BoolVariables[condition.VariableName];
-
-        switch (condition.BoolCompareType)
-        {
-            case E_BOOL_COMPARE_TYPE.EQUAL:
-                return value == condition.BoolCompareValue;
-            case E_BOOL_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.BoolCompareValue;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// タイムピリオドの比較演算を行う。
-    /// </summary>
-    private bool CompareTimePeriod(ref EventTriggerCondition condition)
-    {
-        if (m_TimePeriods == null)
-        {
-            return false;
-        }
-
-        string name = null;
-        if (condition.UseGeneralTimePeriod)
-        {
-            if (m_GeneralTimePeriodNames.ContainsKey(condition.GeneralTimePeriod))
-            {
-                name = m_GeneralTimePeriodNames[condition.GeneralTimePeriod];
-            }
-        }
-        else
-        {
-            name = condition.VariableName;
-        }
-
-        if (!m_TimePeriods.ContainsKey(name))
-        {
-            return false;
-        }
-
-        var period = m_TimePeriods[name];
-        if (period == null || !period.IsStart)
-        {
-            return false;
-        }
-
-        var value = period.GetPeriod();
-        switch (condition.CompareType)
-        {
-            case E_COMPARE_TYPE.EQUAL:
-                return value == condition.CompareValue;
-            case E_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.CompareValue;
-            case E_COMPARE_TYPE.LESS_THAN:
-                return value < condition.CompareValue;
-            case E_COMPARE_TYPE.LESS_THAN_EQUAL:
-                return value <= condition.CompareValue;
-            case E_COMPARE_TYPE.MORE_THAN:
-                return value > condition.CompareValue;
-            case E_COMPARE_TYPE.MORE_THAN_EQUAL:
-                return value >= condition.CompareValue;
-        }
-        return false;
-    }
-
-    /// <summary>
     /// EventParamを追加する。
     /// </summary>
     public void AddEventParam(BattleRealEventTriggerParam param)
@@ -690,6 +773,8 @@ public class BattleRealEventManager : ControllableObject
         }
     }
 
+    #region Execute Event
+
     /// <summary>
     /// イベントを実行する。
     /// </summary>
@@ -705,6 +790,9 @@ public class BattleRealEventManager : ControllableObject
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_BGM:
                 ExecuteControlBgm(eventContent.ControlBgmParams);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
+                // 何もしない
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
                 ExecuteOperateVariable(eventContent.OperateVariableParams);
@@ -801,15 +889,14 @@ public class BattleRealEventManager : ControllableObject
             switch (param.VariableType)
             {
                 case E_EVENT_TRIGGER_VARIABLE_TYPE.INT:
-                    if (m_IntVariables == null || !m_IntVariables.ContainsKey(param.VariableName))
+                    if (!ExistInt(param.VariableName))
                     {
                         Debug.LogError("該当する変数がありません。 type : int, name : " + param.VariableName);
                         break;
                     }
 
-                    int intValue = (int)param.OperandValue;
-
-                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                    var intValue = (int)param.OperandValue;
+                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE)
                     {
                         intValue = GetInt(param.OperandValueName, (int)param.OperandValue);
                     }
@@ -818,15 +905,14 @@ public class BattleRealEventManager : ControllableObject
                     break;
 
                 case E_EVENT_TRIGGER_VARIABLE_TYPE.FLOAT:
-                    if (m_FloatVariables == null || !m_FloatVariables.ContainsKey(param.VariableName))
+                    if (!ExistFloat(param.VariableName))
                     {
                         Debug.LogError("該当する変数がありません。 type : float, name : " + param.VariableName);
                         break;
                     }
 
-                    float floatValue = param.OperandValue;
-
-                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                    var floatValue = param.OperandValue;
+                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE)
                     {
                         floatValue = GetFloat(param.OperandValueName, param.OperandValue);
                     }
@@ -835,15 +921,14 @@ public class BattleRealEventManager : ControllableObject
                     break;
 
                 case E_EVENT_TRIGGER_VARIABLE_TYPE.BOOL:
-                    if (m_BoolVariables == null || !m_BoolVariables.ContainsKey(param.VariableName))
+                    if (!ExistBool(param.VariableName))
                     {
                         Debug.LogError("該当する変数がありません。 type : bool, name : " + param.VariableName);
                         break;
                     }
 
-                    bool boolValue = param.BoolOperandValue;
-
-                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE && m_IntVariables.ContainsKey(param.OperandValueName))
+                    var boolValue = param.BoolOperandValue;
+                    if (param.OperandValueType == E_OPERAND_VALUE_TYPE.VARIABLE)
                     {
                         boolValue = GetBool(param.OperandValueName, param.BoolOperandValue);
                     }
@@ -861,13 +946,13 @@ public class BattleRealEventManager : ControllableObject
     {
         foreach (var name in timePeriodNames)
         {
-            if (m_TimePeriods == null || !m_TimePeriods.ContainsKey(name))
+            if (!ExistTimePeriod(name))
             {
                 Debug.LogError("該当するタイムピリオドがありません。 TimePeriodName : " + name);
-                return;
+                break;
             }
 
-            m_TimePeriods[name].CountStart();
+            CountStartTimePeriod(name);
         }
     }
 
@@ -882,7 +967,7 @@ public class BattleRealEventManager : ControllableObject
 
             if (type == null || !type.IsSubclassOf(typeof(EventControllableScript)))
             {
-                return;
+                break;
             }
 
             var script = (EventControllableScript)Activator.CreateInstance(type);
@@ -923,7 +1008,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteGameStart()
     {
-        m_GameStartTimePeriod.CountStart();
+        CountStartTimePeriod(GAME_START_TIME_PERIOD_NAME);
         BattleManager.Instance.GameStart();
     }
 
@@ -940,7 +1025,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteBossBattleStart()
     {
-        m_BossStartTimePeriod.CountStart();
+        CountStartTimePeriod(BOSS_START_TIME_PERIOD_NAME);
         BattleManager.Instance.BossBattleStart();
     }
 
@@ -964,4 +1049,6 @@ public class BattleRealEventManager : ControllableObject
     {
         BattleManager.Instance.GameOver();
     }
+
+    #endregion
 }

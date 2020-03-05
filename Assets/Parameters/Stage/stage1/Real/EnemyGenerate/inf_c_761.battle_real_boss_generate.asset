@@ -29,11 +29,31 @@ MonoBehaviour:
       SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_DefeatEvents:
+  - ContentName: "\u30DC\u30B9\u7D42\u4E86"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 2
+      VariableName: Boss End
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 0
+      BoolOperandValue: 1
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
   - ContentName: "\u6483\u7834\u6570+1"
     IsPassExecute: 0
     EventType: 4
     ExecuteTiming: 1
-    DelayExecuteTime: 3
+    DelayExecuteTime: 8
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []
@@ -97,11 +117,31 @@ MonoBehaviour:
       SpreadRadius: 0.5
     CenterCreateItemType: 0
   m_RescueEvents:
+  - ContentName: "\u30DC\u30B9\u7D42\u4E86"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    AppearEnemyIndex: 0
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    OperateVariableParams:
+    - VariableType: 2
+      VariableName: Boss End
+      OperandType: 1
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 0
+      BoolOperandValue: 1
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
   - ContentName: "\u6551\u51FA\u6570+1"
     IsPassExecute: 0
     EventType: 4
     ExecuteTiming: 1
-    DelayExecuteTime: 3
+    DelayExecuteTime: 8
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []
