@@ -38,6 +38,13 @@ public enum E_MULTI_CONDITION_TYPE
 }
 
 [Serializable]
+public enum E_GENERAL_INT_VARIABLE
+{
+    BOSS_DEFEAT,
+    BOSS_RESCUE,
+}
+
+[Serializable]
 public enum E_GENERAL_TIME_PERIOD
 {
     BATTLE_LOADED,
@@ -57,6 +64,10 @@ public struct EventTriggerCondition
     public bool IsReverse;
 
     public E_VARIABLE_TYPE VariableType;
+
+    public bool UseGeneralIntVariable;
+
+    public E_GENERAL_INT_VARIABLE GeneralIntVariable;
 
     public bool UseGeneralTimePeriod;
 
