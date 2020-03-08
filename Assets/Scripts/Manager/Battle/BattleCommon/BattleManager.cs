@@ -8,8 +8,18 @@ using UnityEngine.Video;
 /// バトル画面のマネージャーを管理する上位マネージャ。
 /// メイン画面とコマンド画面の切り替えを主に管理する。
 /// </summary>
-public class BattleManager : SingletonMonoBehavior<BattleManager>
+public partial class BattleManager : ControllableMonoBehavior
 {
+    #region Define
+
+    private class BattleManagerState : State<E_BATTLE_STATE, BattleManager>
+    {
+        public BattleManagerState(E_BATTLE_STATE state) : base(state) { }
+        public BattleManagerState(E_BATTLE_STATE state, StateCycleBase<BattleManager> cycle) : base(state, cycle) { }
+    }
+
+    #endregion
+
     #region Field Inspector
 
     [Header("ParamSet")]
@@ -84,11 +94,15 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     #region Field
 
-    private StateMachine<E_BATTLE_STATE> m_StateMachine;
+    private StateMachine<E_BATTLE_STATE, BattleManager> m_StateMachine;
+
+    private Action<E_BATTLE_STATE> m_OnChangeState;
 
     public BattleRealManager RealManager { get; private set; }
 
     public BattleHackingManager HackingManager { get; private set; }
+
+    public bool IsReadyBeforeShow { get; private set; }
 
     #endregion
 
@@ -98,54 +112,15 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         base.OnInitialize();
 
-        m_StateMachine = new StateMachine<E_BATTLE_STATE>();
+        m_StateMachine = new StateMachine<E_BATTLE_STATE, BattleManager>();
 
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.START)
-        {
-            m_OnStart = StartOnStart,
-            m_OnUpdate = UpdateOnStart,
-            m_OnLateUpdate = LateUpdateOnStart,
-            m_OnFixedUpdate = FixedUpdateOnStart,
-            m_OnEnd = EndOnStart,
-        });
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.START, new StartState(this)));
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.REAL_MODE, new RealModeState(this)));
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.HACKING_MODE, new HackingModeState(this)));
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.TRANSITION_TO_REAL, new ToRealState(this)));
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.TRANSITION_TO_HACKING, new ToHackingState(this)));
 
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.REAL_MODE)
-        {
-            m_OnStart = StartOnRealMode,
-            m_OnUpdate = UpdateOnRealMode,
-            m_OnLateUpdate = LateUpdateOnRealMode,
-            m_OnFixedUpdate = FixedUpdateOnRealMode,
-            m_OnEnd = EndOnRealMode,
-        });
-
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.HACKING_MODE)
-        {
-            m_OnStart = StartOnHackingMode,
-            m_OnUpdate = UpdateOnHackingMode,
-            m_OnLateUpdate = LateUpdateOnHackingMode,
-            m_OnFixedUpdate = FixedUpdateOnHackingMode,
-            m_OnEnd = EndOnHackingMode,
-        });
-
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_REAL)
-        {
-            m_OnStart = StartOnTransitionToReal,
-            m_OnUpdate = UpdateOnTransitionToReal,
-            m_OnLateUpdate = LateUpdateOnTransitionToReal,
-            m_OnFixedUpdate = FixedUpdateOnTransitionToReal,
-            m_OnEnd = EndOnTransitionToReal,
-        });
-
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.TRANSITION_TO_HACKING)
-        {
-            m_OnStart = StartOnTransitionToHacking,
-            m_OnUpdate = UpdateOnTransitionToHacking,
-            m_OnLateUpdate = LateUpdateOnTransitionToHacking,
-            m_OnFixedUpdate = FixedUpdateOnTransitionToHacking,
-            m_OnEnd = EndOnTransitionToHacking,
-        });
-
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_CLEAR)
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.GAME_CLEAR)
         {
             m_OnStart = StartOnGameClear,
             m_OnUpdate = UpdateOnGameClear,
@@ -154,7 +129,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_OnEnd = EndOnGameClear,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.GAME_OVER)
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.GAME_OVER)
         {
             m_OnStart = StartOnGameOver,
             m_OnUpdate = UpdateOnGameOver,
@@ -163,20 +138,13 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             m_OnEnd = EndOnGameOver,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_STATE>(E_BATTLE_STATE.END)
-        {
-            m_OnStart = StartOnEnd,
-            m_OnUpdate = UpdateOnEnd,
-            m_OnLateUpdate = LateUpdateOnEnd,
-            m_OnFixedUpdate = FixedUpdateOnEnd,
-            m_OnEnd = EndOnEnd,
-        });
+        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.END, new EndState(this)));
 
         BattleRealStageManager.OnInitialize();
         BattleHackingStageManager.OnInitialize();
 
-        RealManager = new BattleRealManager(m_ParamSet.BattleRealParamSet);
-        HackingManager = new BattleHackingManager(m_ParamSet.BattleHackingParamSet);
+        RealManager = new BattleRealManager(this, m_ParamSet.BattleRealParamSet);
+        HackingManager = new BattleHackingManager(this, m_ParamSet.BattleHackingParamSet);
 
         RealManager.OnInitialize();
         HackingManager.OnInitialize();
@@ -187,12 +155,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         m_GameOverController.OnInitialize();
 
         CalcPerfectHackingSuccessNum();
-
-        RequestChangeState(E_BATTLE_STATE.START);
     }
 
     public override void OnFinalize()
     {
+        m_OnChangeState = null;
+
         m_GameOverController.OnFinalize();
 
         BattleHackingUiManager.OnFinalize();
@@ -210,6 +178,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     public override void OnUpdate()
     {
         base.OnUpdate();
+
         m_StateMachine.OnUpdate();
 
 #if UNITY_EDITOR
@@ -235,292 +204,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         base.OnFixedUpdate();
         m_StateMachine.OnFixedUpdate();
-    }
-
-    #endregion
-
-    #region Start State
-
-    private void StartOnStart()
-    {
-        RealManager.OnStart();
-        HackingManager.OnStart();
-
-        BattleRealUiManager.OnStart();
-        BattleHackingUiManager.OnStart();
-
-        m_BattleRealStageManager.gameObject.SetActive(true);
-        m_BattleHackingStageManager.gameObject.SetActive(false);
-        m_VideoPlayer.gameObject.SetActive(false);
-
-        RequestChangeState(E_BATTLE_STATE.REAL_MODE);
-
-        BattleRealUiManager.PlayStartTelop();
-    }
-
-    private void UpdateOnStart()
-    {
-        RealManager.OnUpdate();
-        HackingManager.OnUpdate();
-
-        BattleRealUiManager.OnUpdate();
-        BattleHackingUiManager.OnUpdate();
-    }
-
-    private void LateUpdateOnStart()
-    {
-        RealManager.OnLateUpdate();
-        HackingManager.OnLateUpdate();
-
-        BattleRealUiManager.OnLateUpdate();
-        BattleHackingUiManager.OnLateUpdate();
-    }
-
-    private void FixedUpdateOnStart()
-    {
-        RealManager.OnFixedUpdate();
-        HackingManager.OnFixedUpdate();
-
-        BattleRealUiManager.OnFixedUpdate();
-        BattleHackingUiManager.OnFixedUpdate();
-    }
-
-    private void EndOnStart()
-    {
-
-    }
-
-    #endregion
-
-    #region Real Mode State
-
-    private void StartOnRealMode()
-    {
-        AudioManager.Instance.OperateAisac(E_AISAC_TYPE.AISAC_HACK, E_CUE_SHEET.BGM, 0);
-
-        m_BattleRealUiManager.SetAlpha(1);
-        m_BattleHackingUiManager.SetAlpha(0);
-    }
-
-    private void UpdateOnRealMode()
-    {
-        if (m_IsStartHackingMode)
-        {
-            m_IsStartHackingMode = false;
-            RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
-        }
-
-        RealManager.OnUpdate();
-        HackingManager.OnUpdate();
-
-        BattleRealUiManager.OnUpdate();
-        BattleHackingUiManager.OnUpdate();
-    }
-
-    private void LateUpdateOnRealMode()
-    {
-        RealManager.OnLateUpdate();
-        HackingManager.OnLateUpdate();
-
-        BattleRealUiManager.OnLateUpdate();
-        BattleHackingUiManager.OnLateUpdate();
-    }
-
-    private void FixedUpdateOnRealMode()
-    {
-        RealManager.OnFixedUpdate();
-        HackingManager.OnFixedUpdate();
-
-        BattleRealUiManager.OnFixedUpdate();
-        BattleHackingUiManager.OnFixedUpdate();
-    }
-
-    private void EndOnRealMode()
-    {
-
-    }
-
-    #endregion
-
-    #region Hacking Mode State
-
-    private void StartOnHackingMode()
-    {
-        AudioManager.Instance.OperateAisac(E_AISAC_TYPE.AISAC_HACK, E_CUE_SHEET.BGM, 1);
-
-        m_BattleHackingUiManager.SetAlpha(1);
-        m_BattleRealUiManager.SetAlpha(0);
-    }
-
-    private void UpdateOnHackingMode()
-    {
-        RealManager.OnUpdate();
-        HackingManager.OnUpdate();
-
-        BattleRealUiManager.OnUpdate();
-        BattleHackingUiManager.OnUpdate();
-    }
-
-    private void LateUpdateOnHackingMode()
-    {
-        RealManager.OnLateUpdate();
-        HackingManager.OnLateUpdate();
-
-        BattleRealUiManager.OnLateUpdate();
-        BattleHackingUiManager.OnLateUpdate();
-    }
-
-    private void FixedUpdateOnHackingMode()
-    {
-        RealManager.OnFixedUpdate();
-        HackingManager.OnFixedUpdate();
-
-        BattleRealUiManager.OnFixedUpdate();
-        BattleHackingUiManager.OnFixedUpdate();
-    }
-
-    private void EndOnHackingMode()
-    {
-
-    }
-
-    #endregion
-
-    #region Transition To Hacking State
-
-    private void StartOnTransitionToHacking()
-    {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_HACKING);
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING);
-
-        DataManager.Instance.BattleData.IncreaseHackingTryCount();
-
-        m_BattleHackingStageManager.gameObject.SetActive(true);
-
-        m_VideoPlayer.clip = m_ParamSet.ToHackingMovie;
-        m_VideoPlayer.Play();
-        m_VideoPlayer.gameObject.SetActive(true);
-
-        AudioManager.Instance.Play(m_ParamSet.ToHackingSe);
-
-        m_BattleRealUiManager.PlayToHacking();
-        m_BattleHackingUiManager.PlayToHacking();
-    }
-
-    private void UpdateOnTransitionToHacking()
-    {
-        if (m_VideoPlayer.isPlaying)
-        {
-            //var movieTime = m_ParamSet.ToHackingMovie.length;
-            //var normalizedTime = (float)(m_VideoPlayer.time / movieTime);
-
-            //var fadeOutVideoValue = m_ParamSet.FadeOutVideoParam.Evaluate(normalizedTime);
-            //var fadeInVideoValue = m_ParamSet.FadeInVideoParam.Evaluate(normalizedTime);
-
-            //m_BattleRealUiManager.SetAlpha(fadeOutVideoValue);
-            //m_BattleHackingUiManager.SetAlpha(fadeInVideoValue);
-        }
-        else
-        {
-            RequestChangeState(E_BATTLE_STATE.HACKING_MODE);
-        }
-
-        RealManager.OnUpdate();
-        HackingManager.OnUpdate();
-
-        BattleRealUiManager.OnUpdate();
-        BattleHackingUiManager.OnUpdate();
-    }
-
-    private void LateUpdateOnTransitionToHacking()
-    {
-        RealManager.OnLateUpdate();
-        HackingManager.OnLateUpdate();
-
-        BattleRealUiManager.OnLateUpdate();
-        BattleHackingUiManager.OnLateUpdate();
-    }
-
-    private void FixedUpdateOnTransitionToHacking()
-    {
-        RealManager.OnFixedUpdate();
-        HackingManager.OnFixedUpdate();
-
-        BattleRealUiManager.OnFixedUpdate();
-        BattleHackingUiManager.OnFixedUpdate();
-    }
-
-    private void EndOnTransitionToHacking()
-    {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.STAY_HACKING);
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.GAME);
-
-        m_BattleRealStageManager.gameObject.SetActive(false);
-        m_VideoPlayer.gameObject.SetActive(false);
-        m_VideoPlayer.Stop();
-    }
-
-    #endregion
-
-    #region Transition To Real State
-
-    private void StartOnTransitionToReal()
-    {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TRANSITION_TO_REAL);
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL);
-
-        m_BattleRealStageManager.gameObject.SetActive(true);
-
-        m_VideoPlayer.clip = m_ParamSet.ToRealMovie;
-        m_VideoPlayer.Play();
-        m_VideoPlayer.gameObject.SetActive(true);
-
-        AudioManager.Instance.Play(m_ParamSet.ToRealSe);
-
-        m_BattleRealUiManager.PlayToReal();
-        m_BattleHackingUiManager.PlayToReal();
-    }
-
-    private void UpdateOnTransitionToReal()
-    {
-        if (!m_VideoPlayer.isPlaying)
-        {
-            RequestChangeState(E_BATTLE_STATE.REAL_MODE);
-        }
-
-        RealManager.OnUpdate();
-        HackingManager.OnUpdate();
-
-        BattleRealUiManager.OnUpdate();
-        BattleHackingUiManager.OnUpdate();
-    }
-
-    private void LateUpdateOnTransitionToReal()
-    {
-        RealManager.OnLateUpdate();
-        HackingManager.OnLateUpdate();
-
-        BattleRealUiManager.OnLateUpdate();
-        BattleHackingUiManager.OnLateUpdate();
-    }
-
-    private void FixedUpdateOnTransitionToReal()
-    {
-        RealManager.OnFixedUpdate();
-        HackingManager.OnFixedUpdate();
-
-        BattleRealUiManager.OnFixedUpdate();
-        BattleHackingUiManager.OnFixedUpdate();
-    }
-
-    private void EndOnTransitionToReal()
-    {
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME);
-
-        m_BattleHackingStageManager.gameObject.SetActive(false);
-        m_VideoPlayer.gameObject.SetActive(false);
-        m_VideoPlayer.Stop();
     }
 
     #endregion
@@ -625,49 +308,31 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
 
     #endregion
 
-    #region End State
 
-    private void StartOnEnd()
+    public void OnBeforeShow()
     {
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.END);
-        HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.END);
-        ExitGame();
+        IsReadyBeforeShow = false;
+        RequestChangeState(E_BATTLE_STATE.START);
     }
 
-    private void UpdateOnEnd()
-    {
-        RealManager.OnUpdate();
-        HackingManager.OnUpdate();
-
-        BattleRealUiManager.OnUpdate();
-        BattleHackingUiManager.OnUpdate();
-    }
-
-    private void LateUpdateOnEnd()
-    {
-        RealManager.OnLateUpdate();
-        HackingManager.OnLateUpdate();
-
-        BattleRealUiManager.OnLateUpdate();
-        BattleHackingUiManager.OnLateUpdate();
-    }
-
-    private void FixedUpdateOnEnd()
-    {
-        RealManager.OnFixedUpdate();
-        HackingManager.OnFixedUpdate();
-
-        BattleRealUiManager.OnFixedUpdate();
-        BattleHackingUiManager.OnFixedUpdate();
-    }
-
-    private void EndOnEnd()
+    public void OnAfterShow()
     {
 
     }
 
-    #endregion
+    public void OnBeforeHide()
+    {
+        Time.timeScale = 1;
+    }
 
+    public void OnAfterHide()
+    {
+
+    }
+
+    /// <summary>
+    /// BattleManagerのステートを変更する。
+    /// </summary>
     public void RequestChangeState(E_BATTLE_STATE state)
     {
         if (m_StateMachine == null)
@@ -676,6 +341,14 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         }
 
         m_StateMachine.Goto(state);
+    }
+
+    /// <summary>
+    /// BattleManagerのステート変更時に呼び出すコールバックを設定する。
+    /// </summary>
+    public void SetChangeStateCallback(Action<E_BATTLE_STATE> callback)
+    {
+        m_OnChangeState += callback;
     }
 
     /// <summary>
@@ -708,15 +381,6 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     public void GameStart()
     {
 
-    }
-
-    /// <summary>
-    /// ボスイベントに遷移する。
-    /// </summary>
-    public void GotoBossEvent()
-    {
-        BattleRealUiManager.PlayWarningTelop();
-        RealManager.RequestChangeState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE);
     }
 
     public void BossBattleStart()

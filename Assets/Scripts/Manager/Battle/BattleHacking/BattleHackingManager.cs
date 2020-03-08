@@ -7,9 +7,21 @@ using System;
 /// バトルのハッキングモードの処理を管理する。
 /// </summary>
 [Serializable]
-public class BattleHackingManager : ControllableObject
+public partial class BattleHackingManager : ControllableObject
 {
+    #region Define
+
+    private class BattleHackingManagerState : State<E_BATTLE_HACKING_STATE, BattleHackingManager>
+    {
+        public BattleHackingManagerState(E_BATTLE_HACKING_STATE state) : base(state) { }
+        public BattleHackingManagerState(E_BATTLE_HACKING_STATE state, StateCycleBase<BattleHackingManager> cycle) : base(state, cycle) { }
+    }
+
+    #endregion
+
     private const float GAME_OVER_DURATION = 1f;
+
+    public static BattleHackingManager Instance { get; private set; }
 
     #region Field
 
@@ -17,7 +29,8 @@ public class BattleHackingManager : ControllableObject
 
     private BattleHackingLevelParamSet m_LevelParamSet;
 
-    private StateMachine<E_BATTLE_HACKING_STATE> m_StateMachine;
+    private BattleManager m_BattleManager;
+    private StateMachine<E_BATTLE_HACKING_STATE, BattleHackingManager> m_StateMachine;
 
     public BattleHackingInputManager InputManager { get; private set; }
     public BattleHackingTimerManager HackingTimerManager { get; private set; }
@@ -40,11 +53,11 @@ public class BattleHackingManager : ControllableObject
 
     #endregion
 
-    public static BattleHackingManager Instance => BattleManager.Instance.HackingManager;
-
-    public BattleHackingManager(BattleHackingParamSet paramSet)
+    public BattleHackingManager(BattleManager battleManager, BattleHackingParamSet paramSet)
     {
+        m_BattleManager = battleManager;
         m_ParamSet = paramSet;
+        Instance = this;
     }
 
     #region Game Cycyle
@@ -53,9 +66,9 @@ public class BattleHackingManager : ControllableObject
     {
         base.OnInitialize();
 
-        m_StateMachine = new StateMachine<E_BATTLE_HACKING_STATE>();
+        m_StateMachine = new StateMachine<E_BATTLE_HACKING_STATE, BattleHackingManager>();
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.TRANSITION_TO_REAL)
         {
             m_OnStart = StartOnTransitionToReal,
             m_OnUpdate = UpdateOnTransitionToReal,
@@ -64,7 +77,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnTransitionToReal,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.START)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.START)
         {
             m_OnStart = StartOnStart,
             m_OnUpdate = UpdateOnStart,
@@ -73,7 +86,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnStart,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.STAY_REAL)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.STAY_REAL)
         {
             m_OnStart = StartOnStayReal,
             m_OnUpdate = UpdateOnStayReal,
@@ -82,7 +95,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnStayReal,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING)
         {
             m_OnStart = StartOnTransitionToHacking,
             m_OnUpdate = UpdateOnTransitionToHacking,
@@ -91,7 +104,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnTransitionToHacking,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.GAME)
         {
             m_OnStart = StartOnGame,
             m_OnUpdate = UpdateOnGame,
@@ -100,7 +113,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnGame,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME_CLEAR)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.GAME_CLEAR)
         {
             m_OnStart = StartOnGameClear,
             m_OnUpdate = UpdateOnGameClear,
@@ -109,7 +122,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnGameClear,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.GAME_OVER)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.GAME_OVER)
         {
             m_OnStart = StartOnGameOver,
             m_OnUpdate = UpdateOnGameOver,
@@ -118,7 +131,7 @@ public class BattleHackingManager : ControllableObject
             m_OnEnd = EndOnGameOver,
         });
 
-        m_StateMachine.AddState(new State<E_BATTLE_HACKING_STATE>(E_BATTLE_HACKING_STATE.END)
+        m_StateMachine.AddState(new BattleHackingManagerState(E_BATTLE_HACKING_STATE.END)
         {
             m_OnStart = StartOnEnd,
             m_OnUpdate = UpdateOnEnd,
@@ -133,7 +146,7 @@ public class BattleHackingManager : ControllableObject
         EnemyManager = new BattleHackingEnemyManager(m_ParamSet.EnemyManagerParamSet);
         BulletManager = new BattleHackingBulletManager(m_ParamSet.BulletManagerParamSet);
         EffectManager = new BattleHackingEffectManager();
-        CollisionManager = new BattleHackingCollisionManager();
+        CollisionManager = new BattleHackingCollisionManager(m_BattleManager.ParamSet.ColliderMaterial);
         CameraManager = new BattleHackingCameraManager();
 
         InputManager.OnInitialize();
@@ -145,8 +158,8 @@ public class BattleHackingManager : ControllableObject
         CollisionManager.OnInitialize();
         CameraManager.OnInitialize();
 
-        CameraManager.RegisterCamera(BattleManager.Instance.BattleHackingBackCamera, E_CAMERA_TYPE.BACK_CAMERA);
-        CameraManager.RegisterCamera(BattleManager.Instance.BattleHackingFrontCamera, E_CAMERA_TYPE.FRONT_CAMERA);
+        CameraManager.RegisterCamera(m_BattleManager.BattleHackingBackCamera, E_CAMERA_TYPE.BACK_CAMERA);
+        CameraManager.RegisterCamera(m_BattleManager.BattleHackingFrontCamera, E_CAMERA_TYPE.FRONT_CAMERA);
 
         RequestChangeState(E_BATTLE_HACKING_STATE.START);
     }
@@ -173,7 +186,7 @@ public class BattleHackingManager : ControllableObject
 
         if (InputManager.Menu == E_INPUT_STATE.DOWN)
         {
-            BattleManager.Instance.ExitGame();
+            m_BattleManager.ExitGame();
         }
     }
 
@@ -267,7 +280,7 @@ public class BattleHackingManager : ControllableObject
         BulletManager.OnPutAway();
         EffectManager.OnPutAway();
 
-        BattleManager.Instance.BattleHackingUiManager.GridHoleEffect.StopEffect();
+        m_BattleManager.BattleHackingUiManager.GridHoleEffect.StopEffect();
     }
 
     #endregion
@@ -473,7 +486,7 @@ public class BattleHackingManager : ControllableObject
             destroyBossTimer.SetTimeoutCallBack(() =>
             {
                 destroyBossTimer = null;
-                BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+                m_BattleManager.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
             });
             TimerManager.Instance.RegistTimer(destroyBossTimer);
 
@@ -528,7 +541,7 @@ public class BattleHackingManager : ControllableObject
         waitTimer.SetTimeoutCallBack(() =>
         {
             waitTimer = null;
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
+            m_BattleManager.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_REAL);
         });
         TimerManager.Instance.RegistTimer(waitTimer);
     }

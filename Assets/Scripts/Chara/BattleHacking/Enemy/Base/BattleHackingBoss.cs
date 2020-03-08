@@ -8,6 +8,8 @@ using System;
 /// </summary>
 public class BattleHackingBoss : BattleHackingEnemyController
 {
+    #region Define
+
     public enum E_PHASE
     {
         START,
@@ -17,12 +19,20 @@ public class BattleHackingBoss : BattleHackingEnemyController
         END,
     }
 
+    private class BattleHackingBossState : State<E_PHASE, BattleHackingBoss>
+    {
+        public BattleHackingBossState(E_PHASE state) : base(state) { }
+        public BattleHackingBossState(E_PHASE state, StateCycleBase<BattleHackingBoss> cycle) : base(state, cycle) { }
+    }
+
+    #endregion
+
     #region Field
 
     public BattleHackingBossGenerateParamSet BossGenerateParamSet { get; private set; }
     public BattleHackingBossBehaviorParamSet BossBehaviorParamSet { get; private set; }
 
-    protected StateMachine<E_PHASE> m_StateMachine;
+    protected StateMachine<E_PHASE, BattleHackingBoss> m_StateMachine;
     protected BattleHackingBossBehaviorUnitParamSet[] m_BehaviorParamSets;
     protected BattleHackingBossBehaviorUnitParamSet m_DeadParamSet;
 
@@ -61,9 +71,9 @@ public class BattleHackingBoss : BattleHackingEnemyController
 
         m_Behaviors = new List<BattleHackingBossBehavior>();
 
-        m_StateMachine = new StateMachine<E_PHASE>();
+        m_StateMachine = new StateMachine<E_PHASE, BattleHackingBoss>();
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.START)
+        m_StateMachine.AddState(new BattleHackingBossState(E_PHASE.START)
         {
             m_OnStart = StartOnStart,
             m_OnUpdate = UpdateOnStart,
@@ -72,7 +82,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
             m_OnEnd = EndOnStart,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.ATTACK)
+        m_StateMachine.AddState(new BattleHackingBossState(E_PHASE.ATTACK)
         {
             m_OnStart = StartOnAttack,
             m_OnUpdate = UpdateOnAttack,
@@ -81,7 +91,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
             m_OnEnd = EndOnAttack,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.CHANGE_ATTACK)
+        m_StateMachine.AddState(new BattleHackingBossState(E_PHASE.CHANGE_ATTACK)
         {
             m_OnStart = StartOnChangeAttack,
             m_OnUpdate = UpdateOnChangeAttack,
@@ -90,7 +100,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
             m_OnEnd = EndOnChangeAttack,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.DEAD)
+        m_StateMachine.AddState(new BattleHackingBossState(E_PHASE.DEAD)
         {
             m_OnStart = StartOnDead,
             m_OnUpdate = UpdateOnDead,
@@ -99,7 +109,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
             m_OnEnd = EndOnDead,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.END)
+        m_StateMachine.AddState(new BattleHackingBossState(E_PHASE.END)
         {
             m_OnStart = StartOnEnd,
             m_OnUpdate = UpdateOnEnd,

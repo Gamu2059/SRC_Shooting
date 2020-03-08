@@ -7,7 +7,7 @@ using System;
 /// ステートマシンで使用するステート。
 /// Created by Sho Yamagami.
 /// </summary>
-public class State<T> : ControllableObject
+public class State<T, U> : ControllableObject
 {
     public T Key { get; private set; }
 
@@ -17,7 +17,7 @@ public class State<T> : ControllableObject
     public Action m_OnFixedUpdate;
     public Action m_OnEnd;
 
-    private StateCycleBase m_StateCycle;
+    private StateCycleBase<U> m_StateCycle;
 
     public State(T key)
     {
@@ -25,7 +25,7 @@ public class State<T> : ControllableObject
         m_StateCycle = null;
     }
 
-    public State(T key, StateCycleBase stateCycle)
+    public State(T key, StateCycleBase<U> stateCycle)
     {
         Key = key;
         m_StateCycle = stateCycle;

@@ -93,6 +93,6 @@ public class GameOverController : ControllableMonoBehavior
             return;
         }
 
-        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
+        BattleRealManager.Instance.End();
     }
 }

@@ -8,15 +8,7 @@ using System;
 /// </summary>
 public class BattleRealEventManager : ControllableObject
 {
-    public static BattleRealEventManager Instance {
-        get {
-            if (BattleRealManager.Instance == null)
-            {
-                return null;
-            }
-            return BattleRealManager.Instance.EventManager;
-        }
-    }
+    public static BattleRealEventManager Instance { get; private set; }
 
     #region Readonly or Const Field
 
@@ -44,6 +36,7 @@ public class BattleRealEventManager : ControllableObject
 
     #region Field
 
+    private BattleRealManager m_BattleRealManager;
     private BattleRealEventTriggerParamSet m_ParamSet;
 
     private Dictionary<string, int> m_IntVariables;
@@ -62,12 +55,14 @@ public class BattleRealEventManager : ControllableObject
 
     #endregion
 
-    #region Game Cycle
-
-    public BattleRealEventManager(BattleRealEventTriggerParamSet paramSet)
+    public BattleRealEventManager(BattleRealManager battleRealManager, BattleRealEventTriggerParamSet paramSet)
     {
+        m_BattleRealManager = battleRealManager;
         m_ParamSet = paramSet;
+        Instance = this;
     }
+
+    #region Game Cycle
 
     public override void OnInitialize()
     {
@@ -142,6 +137,7 @@ public class BattleRealEventManager : ControllableObject
         m_TimePeriods = null;
         m_EventParams = null;
         m_GotoDestroyEventParams = null;
+        Instance = null;
 
         base.OnFinalize();
     }
@@ -807,7 +803,7 @@ public class BattleRealEventManager : ControllableObject
                 ExecuteGameStart();
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.GOTO_BOSS_EVENT:
-                ExecuteGotoBossEvent();
+                // 何もしない
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.BOSS_BATTLE_START:
                 ExecuteBossBattleStart();
@@ -1009,15 +1005,7 @@ public class BattleRealEventManager : ControllableObject
     private void ExecuteGameStart()
     {
         CountStartTimePeriod(GAME_START_TIME_PERIOD_NAME);
-        BattleManager.Instance.GameStart();
-    }
-
-    /// <summary>
-    /// ボス戦開始前イベントを発行する。
-    /// </summary>
-    private void ExecuteGotoBossEvent()
-    {
-        BattleManager.Instance.GotoBossEvent();
+        m_BattleRealManager.GameStart();
     }
 
     /// <summary>
@@ -1026,7 +1014,7 @@ public class BattleRealEventManager : ControllableObject
     private void ExecuteBossBattleStart()
     {
         CountStartTimePeriod(BOSS_START_TIME_PERIOD_NAME);
-        BattleManager.Instance.BossBattleStart();
+        m_BattleRealManager.BossBattleStart();
     }
 
     /// <summary>
@@ -1034,12 +1022,12 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteGameClearWithoutHackingComplete()
     {
-        BattleManager.Instance.GameClearWithoutHackingComplete();
+        m_BattleRealManager.GameClearWithoutHackingComplete();
     }
 
     private void ExecuteGameClearWithHackingComplete()
     {
-        BattleManager.Instance.GameClearWithHackingComplete();
+        m_BattleRealManager.GameClearWithHackingComplete();
     }
 
     /// <summary>
@@ -1047,7 +1035,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteGameOver()
     {
-        BattleManager.Instance.GameOver();
+        m_BattleRealManager.GameOver();
     }
 
     #endregion
