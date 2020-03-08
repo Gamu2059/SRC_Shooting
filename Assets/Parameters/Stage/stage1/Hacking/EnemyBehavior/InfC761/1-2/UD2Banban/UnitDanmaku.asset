@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Name: UnitDanmaku
+  m_EditorClassIdentifier: 
+  m_MultiForLoop:
+    m_ForArray:
+    - {fileID: 11400000, guid: 905f2c941498046488a49e234e7caaae, type: 2}
+    - {fileID: 11400000, guid: ea910a54cc33bef4688754e32ab3ea4d, type: 2}
+    - {fileID: 11400000, guid: 860bd55d54b8b0848afaf424900f649d, type: 2}
+  m_ShotParam: {fileID: 11400000, guid: 79f96e23d535719428651e43276565c6, type: 2}
+  m_BulletTransform: {fileID: 11400000, guid: f55285b220e17574598c575d3c3cc18c, type: 2}

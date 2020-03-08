@@ -45,11 +45,40 @@ public class TransformOperation : ScriptableObject
 
 
     /// <summary>
+    /// 不透明度
+    /// </summary>
+    [SerializeField]
+    private OperationFloatBase m_Opacity;
+    public OperationFloatBase Opacity
+    {
+        set { m_Opacity = value; }
+        get { return m_Opacity; }
+    }
+
+    /// <summary>
+    /// 衝突判定があるかどうか
+    /// </summary>
+    [SerializeField]
+    private OperationBoolBase m_CanCollide;
+    public OperationBoolBase CanCollide
+    {
+        set { m_CanCollide = value; }
+        get { return m_CanCollide; }
+    }
+
+
+    /// <summary>
     /// 演算結果を取得する
     /// </summary>
     public TransformSimple GetResultTransform()
     {
-        return new TransformSimple(m_Position.GetResultVector2(), m_Angle.GetResultFloat(), m_Scale.GetResultFloat());
+        return new TransformSimple(
+            m_Position.GetResultVector2(),
+            m_Angle.GetResultFloat(),
+            m_Scale.GetResultFloat(),
+            m_Opacity != null ? m_Opacity.GetResultFloat() : 1,
+            m_CanCollide != null ? m_CanCollide.GetResultBool() : true
+            );
     }
 
 
@@ -91,6 +120,28 @@ public class TransformOperation : ScriptableObject
             scale = m_Scale.GetResultFloat();
         }
 
-        return new TransformSimple(position, angle, scale);
+        float opacity;
+
+        if (m_Opacity == null)
+        {
+            opacity = shotParam.Opacity;
+        }
+        else
+        {
+            opacity = m_Opacity.GetResultFloat();
+        }
+
+        bool canCollide;
+
+        if (m_CanCollide == null)
+        {
+            canCollide = shotParam.CanCollide;
+        }
+        else
+        {
+            canCollide = m_CanCollide.GetResultBool();
+        }
+
+        return new TransformSimple(position, angle, scale, opacity, canCollide);
     }
 }

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23faa18cca4c18142b812c79396f81bb, type: 3}
+  m_Name: '[s] RemainderTime'
+  m_EditorClassIdentifier: 
+  m_Dividend: {fileID: 11400000, guid: 6b898c469a6c9b1448b7f4e335926765, type: 2}
+  m_Divisor: {fileID: 11400000, guid: 71bb125dc6e39e648a1e87961dbc3578, type: 2}

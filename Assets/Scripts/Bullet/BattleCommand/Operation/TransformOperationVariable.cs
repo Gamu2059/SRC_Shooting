@@ -34,6 +34,12 @@ public class TransformOperationVariable : ScriptableObject
     /// </summary>
     public TransformSimple GetResultValues()
     {
-        return new TransformSimple(m_Position.GetResultVector2(), m_Angle.GetResultFloat(), m_Scale.GetResultFloat());
+        return new TransformSimple(
+            m_Position.GetResultVector2(),
+            m_Angle.GetResultFloat(),
+            m_Scale.GetResultFloat(),
+            1,
+            true
+            );
     }
 }

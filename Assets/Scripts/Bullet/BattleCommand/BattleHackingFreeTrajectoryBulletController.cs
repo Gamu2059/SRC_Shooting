@@ -30,12 +30,11 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// <summary>
     /// 指定したパラメータを用いて弾を発射する。
     /// </summary>
-    /// <param name="shotParam">発射時のパラメータ</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
     public static BattleHackingFreeTrajectoryBulletController ShotBullet(
-        CommandBulletShotParam shotParam,
+        CommandCharaController shotOwner,
         float dTime,
-        ShotParam shotParam2,
+        ShotParamOperation shotParamOperation,
         OperationFloatVariable timeOperation,
         ShotParamOperationVariable launchParam,
         TransformOperation transformOperation,
@@ -43,20 +42,18 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         )
     {
 
-        var bulletOwner = shotParam.BulletOwner;
+        var bulletOwner = new CommandBulletShotParam(shotOwner).BulletOwner;
 
         if (bulletOwner == null)
         {
-            //Debug.Log("bulletOwner == null");
             return null;
         }
 
         // プレハブを取得
-        var bulletPrefab = bulletOwner.GetBulletPrefab(shotParam.BulletIndex);
+        var bulletPrefab = bulletOwner.GetBulletPrefab(shotParamOperation.BulletIndex.GetResultInt());
 
         if (bulletPrefab == null)
         {
-            //Debug.Log("bulletPrefab == null");
             return null;
         }
 
@@ -65,7 +62,6 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         if (bullet == null)
         {
-            //Debug.Log("bullet == null");
             return null;
         }
 
@@ -73,31 +69,13 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         //ここまでがCreateBulletメソッドでしていた部分
 
-        //if (bullet == null)
-        //{
-        //    return null;
-        //}
-
-        // BulletParamを取得
-        //var bulletParam = shotParam.BulletOwner.GetBulletParam(shotParam.BulletParamIndex);
-        //bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
-
-        //if (bulletParam != null)
-        //{
-        // 軌道を設定
-        //bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
-        //bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
-        //}
-
-        //bullet.m_BulletParam = bulletParam;
-
         if (isCheck)
         {
             BattleHackingBulletManager.Instance.CheckStandbyBullet(bullet);
         }
 
 
-        bullet.m_ShotParam = shotParam2;
+        bullet.m_ShotParam = new ShotParam(shotParamOperation);
 
         bullet.m_Time = dTime;
 
@@ -106,6 +84,9 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         bullet.m_LaunchParam = launchParam;
 
         bullet.m_TransformOperation = transformOperation;
+
+
+        bullet.spriteRenderer = (SpriteRenderer)bullet.gameObject.GetComponentInChildren(typeof(SpriteRenderer));
 
 
         return bullet;
@@ -154,6 +135,21 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// </summary>
     private TransformOperation m_TransformOperation;
 
+    /// <summary>
+    /// 衝突判定があるかどうか
+    /// </summary>
+    public bool HasCollision { get; private set; }
+
+    /// <summary>
+    /// この弾に対応するスプライトレンダラー
+    /// </summary>
+    private SpriteRenderer spriteRenderer;
+
+    /// <summary>
+    /// ゲーム全体で共通の変数
+    /// </summary>
+    public static CommonOperationVariable CommonOperationVar { get; set; }
+
 
     public override void OnInitialize()
     {
@@ -192,16 +188,30 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         }
 
         // 実際にこの弾の物理的な状態を更新する
-        transform.localPosition = new Vector3(transformSimple.m_Position.x, 0, transformSimple.m_Position.y);
-        transform.localEulerAngles = new Vector3(0, 90 - transformSimple.m_Angle * Mathf.Rad2Deg, 0);
-        transform.localScale = Vector3.one * transformSimple.m_Scale;
+
+        transform.localPosition = new Vector3(transformSimple.Position.x, 0, transformSimple.Position.y);
+        transform.localEulerAngles = new Vector3(0, 90 - transformSimple.Angle * Mathf.Rad2Deg, 0);
+        transform.localScale = Vector3.one * transformSimple.Scale;
+
+        spriteRenderer.color = new Color(1, 1, 1, transformSimple.Opacity);
+        HasCollision = transformSimple.CanCollide;
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
 
-        if (BattleHackingBulletManager.Instance.IsOutOfBulletField(this))
+        //if (BattleHackingBulletManager.Instance.IsOutOfBulletField(this))
+        //{
+        //    DestroyBullet();
+        //}
+
+        Vector3 position = transform.localPosition;
+
+        if (
+            position.x < CommonOperationVar.PositionXMin.GetResultFloat() || CommonOperationVar.PositionXMax.GetResultFloat() < position.x ||
+            position.z < CommonOperationVar.PositionYMin.GetResultFloat() || CommonOperationVar.PositionYMax.GetResultFloat() < position.z
+            )
         {
             DestroyBullet();
         }
@@ -416,3 +426,45 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 //    m_ShotParam.Angle + m_ShotParam.AngleSpeed * m_Time,
 //    m_ShotParam.Scale + m_ShotParam.ScaleSpeed * m_Time
 //    );
+
+
+//// 弾の不透明度を更新する
+//float alpha;
+//if (m_Time <= 0.2F)
+//{
+//    alpha = m_Time * 5;
+//}
+//else
+//{
+//    alpha = 1;
+//}
+//spriteRenderer.color = new Color(1, 1, 1, alpha);
+
+//// 衝突判定があるかどうかを更新する
+//HasCollision = 1 < m_Time;
+
+
+///// <param name="shotParam">発射時のパラメータ</param>
+
+//var bulletOwner = shotParam.BulletOwner;
+
+//var bulletPrefab = bulletOwner.GetBulletPrefab(shotParam.BulletIndex);
+
+
+//if (bullet == null)
+//{
+//    return null;
+//}
+
+// BulletParamを取得
+//var bulletParam = shotParam.BulletOwner.GetBulletParam(shotParam.BulletParamIndex);
+//bullet.m_BulletParamIndex = shotParam.BulletParamIndex;
+
+//if (bulletParam != null)
+//{
+// 軌道を設定
+//bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
+//bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
+//}
+
+//bullet.m_BulletParam = bulletParam;

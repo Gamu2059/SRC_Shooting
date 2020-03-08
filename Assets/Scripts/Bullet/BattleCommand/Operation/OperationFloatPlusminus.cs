@@ -13,7 +13,6 @@ public class OperationFloatPlusminus : OperationFloatBase
     /// <summary>
     /// 足す値の配列
     /// </summary>
-    //[UnityEngine.Serialization.FormerlySerializedAs("m_OperationArray")]
     [SerializeField]
     private OperationFloatBase[] m_Plus;
 

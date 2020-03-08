@@ -25,6 +25,8 @@ public class HackingBossPhase : ScriptableObject
         m_CommonOperationVariable.OnStarts();
 
         m_DanmakuArray.OnStarts();
+
+        BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
     }
 
 

@@ -57,12 +57,16 @@ public class BattleHackingBossBehavior : ControllableObject
     //    return BattleHackingBulletController.ShotBullet(Enemy);
     //}
 
-    public BattleHackingFreeTrajectoryBulletController Shot(CommandBulletShotParam p,SimpleTrajectory trajectoryBase, Vector3 position,float dTime)
-    {
-        p.BulletOwner = Enemy;
-        //return BattleHackingFreeTrajectoryBulletController.ShotBullet(p, trajectoryBase, dTime);
-        return null;
-    }
+    //public BattleHackingFreeTrajectoryBulletController Shot(
+    //    CommandBulletShotParam p,
+    //    //SimpleTrajectory trajectoryBase,
+    //    Vector3 position,
+    //    float dTime)
+    //{
+    //    p.BulletOwner = Enemy;
+    //    //return BattleHackingFreeTrajectoryBulletController.ShotBullet(p, trajectoryBase, dTime);
+    //    return null;
+    //}
 
     // ボスや攻撃に関わらず共通に使いそうなので、以下に書いておく。
 
@@ -108,9 +112,9 @@ public class BattleHackingBossBehavior : ControllableObject
         // なんで敵が倒れる時、このフィールドがnullになってしまうんだろう。
         if (m_HackingBossPhase != null) {
             TransformSimple transform = m_HackingBossPhase.OnUpdates(this);
-            GetEnemy().transform.localPosition = new Vector3(transform.m_Position.x, 0, transform.m_Position.y);
-            GetEnemy().transform.localEulerAngles = new Vector3(0, transform.m_Angle * Mathf.Rad2Deg, 0);
-            GetEnemy().transform.localScale = Vector3.one * transform.m_Scale;
+            GetEnemy().transform.localPosition = new Vector3(transform.Position.x, 0, transform.Position.y);
+            GetEnemy().transform.localEulerAngles = new Vector3(0, transform.Angle * Mathf.Rad2Deg, 0);
+            GetEnemy().transform.localScale = Vector3.one * transform.Scale;
         }
     }
 }
