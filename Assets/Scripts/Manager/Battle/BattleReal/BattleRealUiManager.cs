@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class BattleRealUiManager : ControllableMonoBehavior
 {
@@ -68,6 +69,17 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [SerializeField]
     private GameObject m_BossUI;
 
+    [Header("Telop Indicator")]
+
+    [SerializeField]
+    private TelopEffectIndicator m_StartTelop;
+
+    [SerializeField]
+    private TelopEffectIndicator m_WarningTelop;
+
+    [SerializeField]
+    private TelopEffectIndicator m_ClearTelop;
+
     [Header("Animator")]
 
     [SerializeField]
@@ -87,6 +99,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
     #endregion
 
     private bool m_IsShowResult;
+
 
     #region Game Cycle
 
@@ -119,11 +132,20 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_BossDownGage.OnInitialize();
         m_BossRemainingHackingIndicator.OnInitialize();
         m_ResultIndicator.OnInitialize();
+
+        m_StartTelop.OnInitialize();
+        m_WarningTelop.OnInitialize();
+        m_ClearTelop.OnInitialize();
+
         SetEnableBossUI(false);
     }
 
     public override void OnFinalize()
     {
+        m_ClearTelop.OnFinalize();
+        m_WarningTelop.OnFinalize();
+        m_StartTelop.OnFinalize();
+
         m_ResultIndicator.OnFinalize();
         m_BossRemainingHackingIndicator.OnFinalize();
         m_BossDownGage.OnFinalize();
@@ -157,11 +179,15 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_BossDownGage.OnUpdate();
         m_BossRemainingHackingIndicator.OnUpdate();
         m_ResultIndicator.OnUpdate();
+
+        m_StartTelop.OnUpdate();
+        m_WarningTelop.OnUpdate();
+        m_ClearTelop.OnUpdate();
         
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
+            BattleRealManager.Instance.End();
         }
     }
 
@@ -191,15 +217,31 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     public void PlayGameClearAnimation()
     {
-        m_StageClearAnimator.gameObject.SetActive(true);
-        if (DataManager.Instance.BattleData.IsHackingComplete)
-        {
-            m_StageClearAnimator.Play(CLEAR_WITH_HACKING_COMPLETE, 0);
-        }
-        else
-        {
-            m_StageClearAnimator.Play(CLEAR_WITHOUT_HACKING_COMPLETE, 0);
-        }
+        //m_StageClearAnimator.gameObject.SetActive(true);
+        //if (DataManager.Instance.BattleData.IsHackingComplete)
+        //{
+        //    m_StageClearAnimator.Play(CLEAR_WITH_HACKING_COMPLETE, 0);
+        //}
+        //else
+        //{
+        //    m_StageClearAnimator.Play(CLEAR_WITHOUT_HACKING_COMPLETE, 0);
+        //}
+        PlayClearTelop();
+    }
+
+    public void PlayStartTelop(Action onEnd = null)
+    {
+        m_StartTelop.Play(null, false, onEnd);
+    }
+
+    public void PlayWarningTelop(Action onEnd = null)
+    {
+        m_WarningTelop.Play(null, false, onEnd);
+    }
+
+    public void PlayClearTelop(Action onEnd = null)
+    {
+        m_ClearTelop.Play(DataManager.Instance.BattleData.IsHackingComplete ? "Hacking Complete" : null, false, onEnd);
     }
 
     public void PlayMainViewHideAnimation()

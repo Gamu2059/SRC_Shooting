@@ -70,7 +70,19 @@ public class BattleHackingStageManager : ControllableMonoBehavior
 
     #endregion
 
-    public static BattleHackingStageManager Instance => BattleManager.Instance.BattleHackingStageManager;
+    public static BattleHackingStageManager Instance { get; private set; }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        Instance = this;
+    }
+
+    public override void OnFinalize()
+    {
+        Instance = null;
+        base.OnFinalize();
+    }
 
     /// <summary>
     /// 指定したオブジェクトの座標が、フィールド領域の外にあるかどうかを判定する。

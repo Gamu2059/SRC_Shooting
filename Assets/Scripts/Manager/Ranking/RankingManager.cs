@@ -7,6 +7,8 @@ using System;
 
 public class RankingManager : ControllableMonoBehavior
 {
+    #region Define
+
     private enum E_RANKING_MENU_STATE
     {
         FORCUS_BOARD,
@@ -14,6 +16,16 @@ public class RankingManager : ControllableMonoBehavior
         FORCUS_EXIT,
         SELECT_EXIT,
     }
+
+    private class StateCycle : StateCycleBase<RankingManager, E_RANKING_MENU_STATE> { }
+
+    private class RankingManagerState : State<E_RANKING_MENU_STATE, RankingManager>
+    {
+        public RankingManagerState(E_RANKING_MENU_STATE state, RankingManager target) : base(state, target) { }
+        public RankingManagerState(E_RANKING_MENU_STATE state, RankingManager target, StateCycle cycle) : base(state, target, cycle) { }
+    }
+
+    #endregion
 
     [SerializeField]
     private RankingUIManager m_UiManager;
@@ -31,7 +43,7 @@ public class RankingManager : ControllableMonoBehavior
     private float m_WaitCursorTime;
 
     private TwoAxisInputManager InputManager;
-    private StateMachine<E_RANKING_MENU_STATE> m_StateMachine;
+    private StateMachine<E_RANKING_MENU_STATE, RankingManager> m_StateMachine;
 
     private bool m_EnableMove;
 
@@ -48,30 +60,30 @@ public class RankingManager : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_StateMachine = new StateMachine<E_RANKING_MENU_STATE>();
+        m_StateMachine = new StateMachine<E_RANKING_MENU_STATE, RankingManager>();
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.FORCUS_BOARD)
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_BOARD, this)
         {
             m_OnStart = StartOnFocusBoard,
             m_OnUpdate = UpdateOnFocusBoard,
             m_OnEnd = EndOnFocusBoard,
         });
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.FORCUS_EXIT)
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_EXIT, this)
         {
             m_OnStart = StartOnFocusExit,
             m_OnUpdate = UpdateOnFocusExit,
             m_OnEnd = EndOnFocusExit,
         });
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.SELECT_BOARD) 
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_BOARD, this) 
         {
             m_OnStart = StartOnSelectBoard,
             m_OnUpdate = UpdateOnSelectBoard,
             m_OnEnd = EndOnSelectBoard,
         });
 
-        m_StateMachine.AddState(new State<E_RANKING_MENU_STATE>(E_RANKING_MENU_STATE.SELECT_EXIT) 
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_EXIT, this)
         { 
             m_OnStart = StartOnSelectExit,
             m_OnUpdate = UpdateOnSelectExit,

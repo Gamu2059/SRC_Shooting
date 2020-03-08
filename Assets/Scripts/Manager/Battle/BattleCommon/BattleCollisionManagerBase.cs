@@ -12,11 +12,15 @@ public abstract class BattleCollisionManagerBase : ControllableObject
     private int m_ColorId;
     private LinkedList<Mesh> m_Meshes;
 
+    public BattleCollisionManagerBase(Material collisionMaterial)
+    {
+        m_CollisionMaterial = collisionMaterial;
+    }
+
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        m_CollisionMaterial = BattleManager.Instance.ParamSet.ColliderMaterial;
         m_PropertyBlock = new MaterialPropertyBlock();
         m_ColorId = Shader.PropertyToID("_Color");
         m_Meshes = new LinkedList<Mesh>();
@@ -98,10 +102,10 @@ public abstract class BattleCollisionManagerBase : ControllableObject
                     break;
             }
 
-            if (BattleManager.Instance.m_IsDrawOutSideColliderArea)
-            {
-                DrawOutSideRect(cData);
-            }
+            //if (BattleManager.Instance.m_IsDrawOutSideColliderArea)
+            //{
+            //    DrawOutSideRect(cData);
+            //}
         }
     }
 

@@ -263,7 +263,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - ColliderType: 1
+  - IsDisable: 0
+    IsTriggerCollider: 0
+    ColliderType: 1
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 5
@@ -286,3 +288,5 @@ MonoBehaviour:
   m_ShotPositions:
   - {fileID: 1217217349087042395}
   - {fileID: 890750065456389134}
+  m_ShotParamOperation: {fileID: 11400000, guid: 4791be9094809db4fbe2fcd9538d029c,
+    type: 2}

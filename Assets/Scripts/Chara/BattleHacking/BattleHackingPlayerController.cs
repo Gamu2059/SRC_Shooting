@@ -16,6 +16,11 @@ public class BattleHackingPlayerController : CommandCharaController
     [SerializeField, Tooltip("弾を撃つ基準点")]
     private Transform[] m_ShotPositions = default;
 
+
+    [SerializeField, Tooltip("発射パラメータ（演算）")]
+    private ShotParamOperation m_ShotParamOperation;
+
+
     private float m_ShotTimeCount;
 
     public override void OnStart()
@@ -53,21 +58,36 @@ public class BattleHackingPlayerController : CommandCharaController
         for (int i = 0; i < m_ShotPositions.Length; i++)
         {
             shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
+            Vector2 basePosition = m_ShotPositions[i].position;
+            //Debug.Log(basePosition.x.ToString() + ", " + basePosition.y.ToString());
+            Vector2 localPositionVector2 = new Vector2(transform.localPosition.x, transform.localPosition.z);
             // 結構適当
             BattleHackingFreeTrajectoryBulletController.ShotBullet(
                 shotParam,
-                new ConstAcceleLinearTrajectory1(
-                    new SimpleTrajectory(
-                        new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
-                        0.5f),
-                    5),
+                //new ConstAcceleLinearTrajectory1(
+                //    new SimpleTrajectory(
+                //        new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
+                //        0.5f),
+                //    5),
                 0,
-                new TrajectoryBasis(
-                    new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
-                    0.5F
+                //new TrajectoryBasis(
+                //    new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
+                //    0.5F
+                //    ),
+                //null,
+                //false,
+                new ShotParam(
+                    m_ShotParamOperation.BulletIndex.GetResultInt(),
+                    m_ShotParamOperation.Position.GetResultVector2() + localPositionVector2,
+                    m_ShotParamOperation.Angle.GetResultFloat(),
+                    m_ShotParamOperation.Scale.GetResultFloat(),
+                    m_ShotParamOperation.Velocity.GetResultVector2(),
+                    m_ShotParamOperation.AngleSpeed.GetResultFloat(),
+                    m_ShotParamOperation.ScaleSpeed.GetResultFloat()
                     ),
                 null,
-                true
+                null,
+                null
                 );
         }
 
@@ -98,10 +118,10 @@ public class BattleHackingPlayerController : CommandCharaController
 
     public override void Dead()
     {
-        if (BattleManager.Instance.m_PlayerNotDead)
-        {
-            return;
-        }
+        //if (BattleManager.Instance.m_PlayerNotDead)
+        //{
+        //    return;
+        //}
 
         base.Dead();
 

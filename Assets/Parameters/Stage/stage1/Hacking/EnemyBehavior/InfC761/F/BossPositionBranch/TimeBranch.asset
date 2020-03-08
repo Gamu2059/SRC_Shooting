@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d32fc4f8c7ccb46bd1b341631b3889, type: 3}
+  m_Name: TimeBranch
+  m_EditorClassIdentifier: 
+  m_Float: {fileID: 11400000, guid: d5e88b76825d45c4dbbe0239daee3490, type: 2}
+  m_BranchArray:
+  - m_Vector2: {fileID: 11400000, guid: 8a506b7be5cb43c4cac0b3ed0824bde6, type: 2}
+    m_Float: {fileID: 11400000, guid: 773714851bd15924d92d3aebe17ad036, type: 2}
+  m_LastBranchValue: {fileID: 11400000, guid: 52d974ca0a67aaf4dbd0a08666a5c971, type: 2}
+  m_LocalFloat: {fileID: 11400000, guid: 9041f4ebb44336c418ab7ac6797bf8c6, type: 2}

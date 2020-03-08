@@ -10,74 +10,58 @@ using UnityEngine;
 public class UnitDanmaku : ScriptableObject
 {
 
-    [SerializeField, Tooltip("発射タイミングオブジェクト")]
-    private ShotTimer m_ShotTimer;
+    [UnityEngine.Serialization.FormerlySerializedAs("m_MultiForLoop")]
+    [SerializeField, Tooltip("多重forループ")]
+    private MultiForLoop m_MultiForLoop;
 
-    [SerializeField, Tooltip("発射パラメータの初期値")]
-    private ShotParam m_ShotParam;
+    [UnityEngine.Serialization.FormerlySerializedAs("m_ShotParam")]
+    [SerializeField, Tooltip("発射パラメータ（演算）")]
+    private ShotParamOperation m_ShotParam;
 
-    [SerializeField, Tooltip("発射パラメータ操作の配列（単数→単数）")]
-    private ShotParamControllerBase[] m_ShotControllerArray;
-
-    [SerializeField, Tooltip("発射操作の配列（リスト→リスト）")]
-    private ShotParamListControllerBase[] m_ShotsControllerArray;
-
-    [SerializeField, Tooltip("軌道の決め方のオブジェクト")]
-    private TrajectoryBase m_Trajectory; 
+    [UnityEngine.Serialization.FormerlySerializedAs("m_BulletTransform")]
+    [SerializeField, Tooltip("弾の物理的な状態")]
+    public TransformOperation m_BulletTransform;
 
 
     public void OnStarts()
     {
-        // 発射タイミングオブジェクトの初期の処理をする
-        m_ShotTimer.OnStarts();
-
-        // 発射パラメータ初期値の位置を決める（ボクシングされているので）
-        //m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0));
-        m_ShotParam.Position = new OperationVector2Init(new Vector2(0, 0));
+        m_MultiForLoop.Setup();
     }
 
 
-    public void OnUpdates(BattleHackingBossBehavior boss, HackingBossPhaseState state)
+    public void OnUpdates(
+        BattleHackingBossBehavior boss,
+        CommonOperationVariable commonOperationVariable
+        )
     {
-        m_ShotTimer.OnUpdates();
-
-        while(m_ShotTimer.HasNextAndNext())
+        if (m_MultiForLoop.Init())
         {
-            ShotParam sP = new ShotParam(m_ShotParam);
-            for (int i = 0; i < m_ShotControllerArray.Length; i++)
-            {
-                m_ShotControllerArray[i].GetshotParam(sP, m_ShotTimer, state);
-            }
-
-            List<ShotParam> shotParamList = new List<ShotParam>() { sP };
-            for (int i = 0; i < m_ShotsControllerArray.Length; i++)
-            {
-                m_ShotsControllerArray[i].GetshotsParam(shotParamList, m_ShotTimer, state);
-            }
-
-            foreach (ShotParam shotParam in shotParamList)
+            do
             {
                 // 弾を撃つ
-                CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), shotParam.BulletIndex, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
                 BattleHackingFreeTrajectoryBulletController.ShotBullet(
-                    bulletShotParam,
-                    new SimpleTrajectory(
-                        shotParam
+                    new CommandBulletShotParam(
+                        boss.GetEnemy(),
+                        m_ShotParam.BulletIndex.GetResultInt(),
+                        0, 0, Vector3.zero, Vector3.zero, Vector3.zero),
+                    commonOperationVariable.m_DTimeOperation.GetResultFloat(),
+                    new ShotParam(
+                        m_ShotParam.BulletIndex.GetResultInt(),
+                        m_ShotParam.Position.GetResultVector2(),
+                        m_ShotParam.Angle.GetResultFloat(),
+                        m_ShotParam.Scale.GetResultFloat(),
+                        m_ShotParam.Velocity.GetResultVector2(),
+                        m_ShotParam.AngleSpeed.GetResultFloat(),
+                        m_ShotParam.ScaleSpeed.GetResultFloat()
                         ),
-                    m_ShotTimer.GetDTime(),
-                    new TrajectoryBasis(
-                        new TransformSimple(
-                            //shotParam.Position.m_Value,
-                            shotParam.Position.GetResult(),
-                            shotParam.Angle,
-                            0.8F),
-                        shotParam.Speed
-                        ),
-                    m_Trajectory,
-                    false
+                    commonOperationVariable.m_TimeOperation,
+                    commonOperationVariable.m_LaunchParam,
+                    m_BulletTransform
                     );
             }
+            while (m_MultiForLoop.Process());
 
+            // このフレーム内で1つでも弾が発射されたら、このフレーム内で1回だけ発射音を鳴らす。
             AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
         }
     }
@@ -181,3 +165,223 @@ public class UnitDanmaku : ScriptableObject
 
 //[SerializeField, Tooltip("軌道の決め方のオブジェクト")]
 //private SimpleTrajectory m_Trajectory;
+
+
+//[SerializeField, Tooltip("同時発射処理")]
+//private OperationIntConstant m_ShotLoopOperation;
+
+//[SerializeField, Tooltip("ループのための数列")]
+//private SeqIntLinear m_ShotLoopSeq;
+
+//[SerializeField, Tooltip("今までの発射回数（演算）")]
+//private OperationIntConstant m_ShotNumOperation;
+
+
+//[SerializeField, Tooltip("条件付き操作の演算")]
+//private OperationIntProcCondLinear m_ShotLoopConditional;
+
+
+//m_LaunchTime.SetValueFloat(m_ShotTimer.GetLaunchTime());
+
+//m_BossPosition.SetValueVector2(state.GetTransform(m_LaunchTime.GetResultFloat()).m_Position);
+
+
+//[SerializeField, Tooltip("発射パラメータの初期値")]
+//private ShotParam m_ShotParam;
+
+//[SerializeField, Tooltip("発射パラメータ操作の配列（単数→単数）")]
+//private ShotParamControllerBase[] m_ShotControllerArray;
+
+//[SerializeField, Tooltip("発射操作の配列（リスト→リスト）")]
+//private ShotParamListControllerBase[] m_ShotsControllerArray;
+
+
+//[SerializeField, Tooltip("発射時刻")]
+//private OperationFloatVariable m_LaunchTime;
+
+//[SerializeField, Tooltip("発射時の敵本体の位置")]
+//private OperationVector2Base m_BossPosition;
+
+//[SerializeField, Tooltip("自機の位置")]
+//private OperationVector2Variable m_PlayerPosition;
+
+
+// 発射パラメータ初期値の位置を決める（ボクシングされているので）
+//m_ShotParam.Position = new Boxing1<Vector2>(new Vector2(0, 0));
+//m_ShotParam.Position = new OperationVector2Init(new Vector2(0, 0));
+
+
+//ShotParam sP = new ShotParam(m_ShotParam);
+//for (int i = 0; i < m_ShotControllerArray.Length; i++)
+//{
+//    m_ShotControllerArray[i].GetshotParam(sP, m_ShotTimer, state);
+//}
+
+//List<ShotParam> shotParamList = new List<ShotParam>() { sP };
+//for (int i = 0; i < m_ShotsControllerArray.Length; i++)
+//{
+//    m_ShotsControllerArray[i].GetshotsParam(shotParamList, m_ShotTimer, state);
+//}
+
+//foreach (ShotParam shotParam in shotParamList)
+//{
+//    //// 弾を撃つ
+//    //CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), shotParam.BulletIndex, 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
+//    //BattleHackingFreeTrajectoryBulletController.ShotBullet(
+//    //    bulletShotParam,
+//    //    //new SimpleTrajectory(
+//    //    //    shotParam
+//    //    //    ),
+//    //    null,
+//    //    m_ShotTimer.GetDTime(),
+//    //    new TrajectoryBasis(
+//    //        new TransformSimple(
+//    //            //shotParam.Position.m_Value,
+//    //            shotParam.Position.GetResult(),
+//    //            shotParam.Angle,
+//    //            0.8F),
+//    //        shotParam.Speed
+//    //        ),
+//    //    m_Trajectory,
+//    //    false
+//    //    );
+//}
+
+
+///// <summary>
+///// 発射時の位置を表す変数
+///// </summary>
+//public OperationVector2Variable m_LaunchPosition;
+
+///// <summary>
+///// 発射時の角度を表す変数
+///// </summary>
+//public OperationFloatVariable m_LaunchAngle;
+
+///// <summary>
+///// 発射時の大きさを表す変数
+///// </summary>
+//public OperationFloatVariable m_LaunchScale;
+
+///// <summary>
+///// 発射時の速さを表す変数
+///// </summary>
+//public OperationFloatVariable m_LaunchSpeed;
+
+
+//m_LaunchPosition,
+//m_LaunchAngle,
+//m_LaunchScale,
+//m_LaunchSpeed,
+
+
+//[SerializeField, Tooltip("軌道の決め方のオブジェクト")]
+//private TrajectoryBase m_Trajectory;
+
+
+//CommandBulletShotParam bulletShotParam = new CommandBulletShotParam(boss.GetEnemy(), m_ShotParamOperation.BulletIndex.GetResultInt(), 0, 0, Vector3.zero, Vector3.zero, Vector3.zero);
+
+
+//null,
+
+//new TrajectoryBasis(
+//    new TransformSimple(
+//        m_ShotParamOperation.Position.GetResultVector2(),
+//        m_ShotParamOperation.Angle.GetResultFloat(),
+//        m_ShotParamOperation.Scale.GetResultFloat()),
+//        m_ShotParamOperation.Angle.GetResultFloat()
+//    ),
+//null,
+//false,
+
+
+//state.m_ArgumentTime.Value = m_ShotTimer.GetLaunchTime();
+
+
+//m_ShotTimer.GetDTime(),
+
+
+//[SerializeField, Tooltip("発射タイミングオブジェクト")]
+//private ShotTimer m_ShotTimer;
+
+
+//// 発射タイミングオブジェクトの初期の処理をする
+//m_ShotTimer.OnStarts();
+
+
+//m_ShotTimer.OnUpdates();
+
+//while (m_ShotTimer.HasNextAndNext())
+
+
+//[SerializeField, Tooltip("操作を含めた演算")]
+//private OperationIntProcBase[] m_OperationIntProcBaseArray;
+
+//[SerializeField, Tooltip("操作を含めた演算")]
+//private OperationFloatProcBase[] m_OperationFloatProcBaseArray;
+
+//[SerializeField, Tooltip("操作を含めた演算")]
+//private OperationVector2ProcBase[] m_OperationVector2ProcBaseArray;
+
+
+//foreach (OperationIntProcBase operationIntProcBase in m_OperationIntProcBaseArray)
+//{
+//    operationIntProcBase.Init();
+//}
+
+//foreach (OperationFloatProcBase operationFloatProcBase in m_OperationFloatProcBaseArray)
+//{
+//    operationFloatProcBase.Init();
+//}
+
+//foreach (OperationVector2ProcBase operationVector2ProcBase in m_OperationVector2ProcBaseArray)
+//{
+//    operationVector2ProcBase.Init();
+//}
+
+
+//foreach (OperationIntProcBase operationIntProcBase in m_OperationIntProcBaseArray)
+//{
+//    operationIntProcBase.Process();
+//}
+
+//foreach (OperationFloatProcBase operationFloatProcBase in m_OperationFloatProcBaseArray)
+//{
+//    operationFloatProcBase.Process();
+//}
+
+//foreach (OperationVector2ProcBase operationVector2ProcBase in m_OperationVector2ProcBaseArray)
+//{
+//    operationVector2ProcBase.Process();
+//}
+
+
+//[SerializeField, Tooltip("発射タイミングオブジェクト")]
+//private OperationIntProcCondShottimer m_ShotTimerOperation;
+
+//[SerializeField, Tooltip("発射タイミングオブジェクト")]
+//private ForShottimer m_ForShottimer;
+
+//[SerializeField, Tooltip("InitProcess動作のあるオブジェクト")]
+//private InitProcessBase[] m_InitProcessBaseArray;
+
+
+//foreach (InitProcessBase initProcessBase in m_InitProcessBaseArray)
+//{
+//    initProcessBase.Init();
+//}
+
+
+//for (m_ShotTimerOperation.Init(); m_ShotTimerOperation.IsTrue(); m_ShotTimerOperation.Process())
+//for (m_ForShottimer.Init(); m_ForShottimer.IsTrue(); m_ForShottimer.Process())
+//for (bool b = true; b; b = false)
+//{
+//if (m_InitProcessBaseArray != null)
+//{
+//    foreach (InitProcessBase initProcessBase in m_InitProcessBaseArray)
+//    {
+//        initProcessBase.Process();
+//    }
+//}
+
+//}

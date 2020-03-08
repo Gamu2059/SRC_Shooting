@@ -11,6 +11,6 @@ public struct ControlCameraParam
     [Tooltip("カメラタイプ")]
     public E_CAMERA_TYPE CameraType;
 
-    [Tooltip("カメラのタイムラインパラメータ")]
-    public TimelineParam CameraTimelineParam;
+    [Tooltip("カメラを動かすためのシーケンス")]
+    public SequenceGroup SequenceGroup;
 }

@@ -187,10 +187,10 @@ public class BattleRealPlayerController : CharaController
 
     public override void Dead()
     {
-        if (BattleManager.Instance.m_PlayerNotDead)
-        {
-            return;
-        }
+        //if (BattleManager.Instance.m_PlayerNotDead)
+        //{
+        //    return;
+        //}
 
         base.Dead();
 

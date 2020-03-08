@@ -167,6 +167,7 @@ public class AudioManager : ControllableMonoBehavior
         }
 
         source.cueName = playSoundParam.CueName;
+        source.player.SetStartTime(Math.Max(playSoundParam.StartTime, 0));
         source.Play();
     }
 
