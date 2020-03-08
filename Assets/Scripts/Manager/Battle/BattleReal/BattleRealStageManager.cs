@@ -86,7 +86,19 @@ public class BattleRealStageManager : ControllableMonoBehavior
 
     #endregion
 
-    public static BattleRealStageManager Instance => BattleManager.Instance.BattleRealStageManager;
+    public static BattleRealStageManager Instance { get; private set; }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        Instance = this;
+    }
+
+    public override void OnFinalize()
+    {
+        Instance = null;
+        base.OnFinalize();
+    }
 
     /// <summary>
     /// 指定したオブジェクトの座標が、フィールド領域の外にあるかどうかを判定する。

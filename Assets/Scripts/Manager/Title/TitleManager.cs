@@ -7,6 +7,8 @@ using System;
 
 public class TitleManager : ControllableMonoBehavior
 {
+    #region Define
+
     private enum E_MENU_STATE
     {
         FORCUS_PLAY,
@@ -18,6 +20,16 @@ public class TitleManager : ControllableMonoBehavior
         FORCUS_EXIT,
         SELECT_EXIT,
     }
+
+    private class StateCycle : StateCycleBase<TitleManager, E_MENU_STATE> { }
+
+    private class InnerState : State<E_MENU_STATE, TitleManager>
+    {
+        public InnerState(E_MENU_STATE state, TitleManager target) : base(state, target) { }
+        public InnerState(E_MENU_STATE state, TitleManager target, StateCycle cycle) : base(state, target, cycle) { }
+    }
+
+    #endregion
 
     [SerializeField]
     private TitleUiManager m_UiManager;
@@ -53,7 +65,7 @@ public class TitleManager : ControllableMonoBehavior
     private float m_WaitCursorTime;
 
     private TitleInputManager InputManager;
-    private StateMachine<E_MENU_STATE> m_StateMachine;
+    private StateMachine<E_MENU_STATE, TitleManager> m_StateMachine;
 
     private bool m_EnableMove;
 
@@ -63,56 +75,56 @@ public class TitleManager : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_StateMachine = new StateMachine<E_MENU_STATE>();
+        m_StateMachine = new StateMachine<E_MENU_STATE, TitleManager>();
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.FORCUS_PLAY)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.FORCUS_PLAY, this)
         {
             m_OnStart = StartOnForcusPlay,
             m_OnUpdate = UpdateOnForcusPlay,
             m_OnEnd = EndOnForcusPlay,
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.FORCUS_HOWTO)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.FORCUS_HOWTO, this)
         {
             m_OnStart = StartOnForcusHowto,
             m_OnUpdate = UpdateOnForcusHowto,
             m_OnEnd = EndOnForcusHowto,
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.FORCUS_CREDIT)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.FORCUS_CREDIT, this)
         {
             m_OnStart = StartOnForcusCredit,
             m_OnUpdate = UpdateOnForcusCredit,
             m_OnEnd = EndOnForcusCredit,
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.FORCUS_EXIT)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.FORCUS_EXIT, this)
         {
             m_OnStart = StartOnForcusExit,
             m_OnUpdate = UpdateOnForcusExit,
             m_OnEnd = EndOnForcusExit
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.SELECT_PLAY)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.SELECT_PLAY, this)
         {
             m_OnStart = StartOnSelectPlay,
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.SELECT_HOWTO)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.SELECT_HOWTO, this)
         {
             m_OnStart = StartOnSelectHowto,
             m_OnUpdate = UpdateOnSelectHowto,
             m_OnEnd = EndOnSelectHowto
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.SELECT_CREDIT)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.SELECT_CREDIT, this)
         {
             m_OnStart = StartOnSelectCredit,
             m_OnUpdate = UpdateOnSelectCredit,
             m_OnEnd = EndOnSelectCredit
         });
 
-        m_StateMachine.AddState(new State<E_MENU_STATE>(E_MENU_STATE.SELECT_EXIT)
+        m_StateMachine.AddState(new InnerState(E_MENU_STATE.SELECT_EXIT, this)
         {
             m_OnStart = StartOnSelectExit,
             m_OnUpdate = UpdateOnSelectExit,

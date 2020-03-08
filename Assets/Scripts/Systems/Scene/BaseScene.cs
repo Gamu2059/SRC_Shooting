@@ -154,7 +154,7 @@ public class BaseScene : ControllableMonoBehavior
 	/// </summary>
 	public virtual void OnBeforeHide( Action onComplete )
 	{
-		EventUtility.SafeInvokeAction( onComplete );
+		onComplete?.Invoke();
 	}
 
 	/// <summary>
@@ -162,7 +162,7 @@ public class BaseScene : ControllableMonoBehavior
 	/// </summary>
 	public virtual void OnAfterHide( Action onComplete )
 	{
-		EventUtility.SafeInvokeAction( onComplete );
+		onComplete?.Invoke();
 	}
 
 	/// <summary>
@@ -170,7 +170,7 @@ public class BaseScene : ControllableMonoBehavior
 	/// </summary>
 	public virtual void OnBeforeShow( Action onComplete )
 	{
-		EventUtility.SafeInvokeAction( onComplete );
+		onComplete?.Invoke();
 	}
 
 	/// <summary>
@@ -178,7 +178,7 @@ public class BaseScene : ControllableMonoBehavior
 	/// </summary>
 	public virtual void OnAfterShow( Action onComplete )
 	{
-		EventUtility.SafeInvokeAction( onComplete );
+		onComplete?.Invoke();
 	}
 
 	public void OnInitializeManagers()
@@ -189,5 +189,20 @@ public class BaseScene : ControllableMonoBehavior
 	public void OnFinalizeManagers()
 	{
 		m_ManagerList.ForEach( ( m ) => m.OnFinalize() );
+	}
+
+	/// <summary>
+	/// シーンに固有で登録されているマネージャの中から、型が一致するものを取得する。
+	/// 複数の型と一致する場合、一番最初に一致したものだけを取得する。
+	/// </summary>
+	public T GetManager<T>() where T : ControllableMonoBehavior
+	{
+		if (m_ManagerList == null)
+		{
+			return null;
+		}
+
+		var manager = m_ManagerList.Find( m => m is T);
+		return manager as T;
 	}
 }

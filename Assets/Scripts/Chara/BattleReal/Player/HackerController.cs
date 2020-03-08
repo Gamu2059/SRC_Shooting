@@ -145,7 +145,7 @@ public class HackerController : BattleRealPlayerController
         }
 
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
-        BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT_PERFORMANCE);
+        BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT);
     }
 
     public override void ShotLaser()

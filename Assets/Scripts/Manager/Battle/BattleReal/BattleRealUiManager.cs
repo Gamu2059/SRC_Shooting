@@ -100,6 +100,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     private bool m_IsShowResult;
 
+
     #region Game Cycle
 
     protected override void OnAwake()
@@ -186,7 +187,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;
-            BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.END);
+            BattleRealManager.Instance.End();
         }
     }
 

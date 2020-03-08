@@ -8,6 +8,8 @@ using System;
 /// </summary>
 public class BattleRealBoss : BattleRealEnemyController
 {
+    #region Define
+
     public enum E_PHASE
     {
         START,
@@ -20,6 +22,16 @@ public class BattleRealBoss : BattleRealEnemyController
         RESCUE,
         END,
     }
+
+    private class StateCycle : StateCycleBase<BattleRealBoss, E_PHASE> { }
+
+    private class InnerState : State<E_PHASE, BattleRealBoss>
+    {
+        public InnerState(E_PHASE state, BattleRealBoss target) : base(state, target) { }
+        public InnerState(E_PHASE state, BattleRealBoss target, StateCycle cycle) : base(state, target, cycle) { }
+    }
+
+    #endregion
 
     private const string DOWN_KEY = "Down";
     private const string HACKING_SUCCESS_KEY = "Hacking";
@@ -34,7 +46,7 @@ public class BattleRealBoss : BattleRealEnemyController
     protected BattleRealBossGenerateParamSet m_BossGenerateParamSet;
     protected BattleRealBossBehaviorParamSet m_BossBehaviorParamSet;
 
-    protected StateMachine<E_PHASE> m_StateMachine;
+    protected StateMachine<E_PHASE, BattleRealBoss> m_StateMachine;
     protected BattleRealBossBehaviorUnitParamSet[] m_AttackParamSets;
     protected BattleRealBossBehaviorUnitParamSet[] m_DownParamSets;
 
@@ -93,9 +105,9 @@ public class BattleRealBoss : BattleRealEnemyController
         m_AttackBehaviors = new List<BattleRealBossBehavior>();
         m_DownBehaviors = new List<BattleRealBossBehavior>();
 
-        m_StateMachine = new StateMachine<E_PHASE>();
+        m_StateMachine = new StateMachine<E_PHASE, BattleRealBoss>();
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.START)
+        m_StateMachine.AddState(new InnerState(E_PHASE.START, this)
         {
             m_OnStart = StartOnStart,
             m_OnUpdate = UpdateOnStart,
@@ -104,7 +116,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnStart,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.ATTACK)
+        m_StateMachine.AddState(new InnerState(E_PHASE.ATTACK, this)
         {
             m_OnStart = StartOnAttack,
             m_OnUpdate = UpdateOnAttack,
@@ -113,7 +125,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnAttack,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.DOWN)
+        m_StateMachine.AddState(new InnerState(E_PHASE.DOWN, this)
         {
             m_OnStart = StartOnDown,
             m_OnUpdate = UpdateOnDown,
@@ -122,7 +134,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnDown,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.HACKING_SUCCESS)
+        m_StateMachine.AddState(new InnerState(E_PHASE.HACKING_SUCCESS, this)
         {
             m_OnStart = StartOnHackingSuccess,
             m_OnUpdate = UpdateOnHackingSuccess,
@@ -131,7 +143,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnHackingSuccess,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.HACKING_FAILURE)
+        m_StateMachine.AddState(new InnerState(E_PHASE.HACKING_FAILURE, this)
         {
             m_OnStart = StartOnHackingFailure,
             m_OnUpdate = UpdateOnHackingFailure,
@@ -140,7 +152,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnHackingFailure,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.CHANGE_ATTACK)
+        m_StateMachine.AddState(new InnerState(E_PHASE.CHANGE_ATTACK, this)
         {
             m_OnStart = StartOnChangeAttack,
             m_OnUpdate = UpdateOnChangeAttack,
@@ -149,7 +161,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnChangeAttack,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.DEAD)
+        m_StateMachine.AddState(new InnerState(E_PHASE.DEAD, this)
         {
             m_OnStart = StartOnDead,
             m_OnUpdate = UpdateOnDead,
@@ -158,7 +170,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnDead,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.RESCUE)
+        m_StateMachine.AddState(new InnerState(E_PHASE.RESCUE, this)
         {
             m_OnStart = StartOnRescue,
             m_OnUpdate = UpdateOnRescue,
@@ -167,7 +179,7 @@ public class BattleRealBoss : BattleRealEnemyController
             m_OnEnd = EndOnRescue,
         });
 
-        m_StateMachine.AddState(new State<E_PHASE>(E_PHASE.END)
+        m_StateMachine.AddState(new InnerState(E_PHASE.END, this)
         {
             m_OnStart = StartOnEnd,
             m_OnUpdate = UpdateOnEnd,
@@ -792,7 +804,7 @@ public class BattleRealBoss : BattleRealEnemyController
                     if (colliderType == E_COLLIDER_TYPE.PLAYER_HACKING)
                     {
                         BattleHackingManager.Instance.SetHackingLevel(m_AttackPhase);
-                        BattleManager.Instance.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+                        BattleRealManager.Instance.ToHacking();
                     }
                 }
                 break;

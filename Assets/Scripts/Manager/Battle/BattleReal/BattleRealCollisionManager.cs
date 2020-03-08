@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class BattleRealCollisionManager : BattleCollisionManagerBase
 {
-    public static BattleRealCollisionManager Instance => BattleRealManager.Instance.CollisionManager;
+    public static BattleRealCollisionManager Instance { get; private set; }
+
+    public BattleRealCollisionManager(Material collisionMaterial) : base(collisionMaterial)
+    {
+        Instance = this;
+    }
+
+    public override void OnFinalize()
+    {
+        Instance = null;
+        base.OnFinalize();
+    }
 
     /// <summary>
     /// 衝突をチェックする。
@@ -22,10 +33,11 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
     /// </summary>
     public override void DrawCollider()
     {
-        if (!BattleManager.Instance.m_IsDrawColliderArea)
-        {
-            return;
-        }
+        return;
+        //if (!BattleManager.Instance.m_IsDrawColliderArea)
+        //{
+        //    return;
+        //}
 
         var player = BattleRealPlayerManager.Instance.Player;
         DrawCollider(player);
@@ -51,7 +63,7 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase
 
     protected override Vector2 CalcViewportPos(Vector2 worldPos)
     {
-        if (BattleManager.Instance == null || BattleRealStageManager.Instance == null)
+        if (BattleRealStageManager.Instance == null)
         {
             return Vector2.one / 2f;
         }

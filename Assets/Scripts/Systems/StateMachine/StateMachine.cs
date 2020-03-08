@@ -8,17 +8,17 @@ using System;
 /// ステートマシン。
 /// </summary>
 [Serializable]
-public class StateMachine<T> : ControllableObject
+public class StateMachine<T, U> : ControllableObject
 {
-    private Dictionary<T, State<T>> m_States;
+    private Dictionary<T, State<T, U>> m_States;
 
-    public State<T> CurrentState { get; private set; }
-    private State<T> m_PreState;
-    private State<T> m_NextState;
+    public State<T, U> CurrentState { get; private set; }
+    private State<T, U> m_PreState;
+    private State<T, U> m_NextState;
 
     public StateMachine()
     {
-        m_States = new Dictionary<T, State<T>>();
+        m_States = new Dictionary<T, State<T, U>>();
         CurrentState = null;
         m_PreState = null;
         m_NextState = null;
@@ -63,7 +63,7 @@ public class StateMachine<T> : ControllableObject
         CurrentState?.OnFixedUpdate();
     }
 
-    public void AddState(State<T> state)
+    public void AddState(State<T, U> state)
     {
         if (state == null)
         {
