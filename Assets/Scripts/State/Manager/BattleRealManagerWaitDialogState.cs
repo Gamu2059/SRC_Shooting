@@ -1,7 +1,6 @@
 ﻿partial class BattleRealManager
 {
-    private class WaitDialogState : StateCycleBase<BattleRealManager>
+    private class WaitDialogState : StateCycle
     {
-        public WaitDialogState(BattleRealManager target) : base(target) { }
     }
 }

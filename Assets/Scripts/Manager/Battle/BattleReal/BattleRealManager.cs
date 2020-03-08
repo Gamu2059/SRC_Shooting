@@ -7,14 +7,16 @@ using System;
 /// バトルのリアルモードの処理を管理する。
 /// </summary>
 [Serializable]
-public partial class BattleRealManager : ControllableObject
+public partial class BattleRealManager : ControllableObject, IStateCallback<E_BATTLE_REAL_STATE>
 {
     #region Define
 
-    private class BattleRealManagerState : State<E_BATTLE_REAL_STATE, BattleRealManager>
+    private class StateCycle : StateCycleBase<BattleRealManager, E_BATTLE_REAL_STATE> { }
+
+    private class InnerState : State<E_BATTLE_REAL_STATE, BattleRealManager>
     {
-        public BattleRealManagerState(E_BATTLE_REAL_STATE state) : base(state) { }
-        public BattleRealManagerState(E_BATTLE_REAL_STATE state, StateCycleBase<BattleRealManager> cycle) : base(state, cycle) { }
+        public InnerState(E_BATTLE_REAL_STATE state, BattleRealManager target) : base(state, target) { }
+        public InnerState(E_BATTLE_REAL_STATE state, BattleRealManager target, StateCycle cycle) : base(state, target, cycle) { }
     }
 
     #endregion
@@ -27,6 +29,8 @@ public partial class BattleRealManager : ControllableObject
     private BattleRealParamSet m_ParamSet;
 
     private StateMachine<E_BATTLE_REAL_STATE, BattleRealManager> m_StateMachine;
+
+    private Action<E_BATTLE_REAL_STATE> m_OnChangeState;
 
     public BattleRealInputManager InputManager { get; private set; }
     public BattleRealTimerManager RealTimerManager { get; private set; }
@@ -62,61 +66,14 @@ public partial class BattleRealManager : ControllableObject
 
         m_StateMachine = new StateMachine<E_BATTLE_REAL_STATE, BattleRealManager>();
 
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.START, new StartState(this)));
-        //m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME)
-        //{
-        //    m_OnStart = StartOnBeforeBeginGame,
-        //    m_OnUpdate = UpdateOnBeforeBeginGame,
-        //    m_OnLateUpdate = LateUpdateOnBeforeBeginGame,
-        //    m_OnFixedUpdate = FixedUpdateOnBeforeBeginGame,
-        //    m_OnEnd = EndOnBeforeBeginGame,
-        //});
-
-        //m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.BEFORE_BEGIN_GAME_PERFORMANCE)
-        //{
-        //    m_OnStart = StartOnBeforeBeginGamePerformance,
-        //    m_OnUpdate = UpdateOnBeforeBeginGamePerformance,
-        //    m_OnLateUpdate = LateUpdateOnBeforeBeginGamePerformance,
-        //    m_OnFixedUpdate = FixedUpdateOnBeforeBeginGamePerformance,
-        //    m_OnEnd = EndOnBeforeBeginGamePerformance,
-        //});
-
-        //m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.BEGIN_GAME)
-        //{
-        //    m_OnStart = StartOnBeginGame,
-        //    m_OnUpdate = UpdateOnBeginGame,
-        //    m_OnLateUpdate = LateUpdateOnBeginGame,
-        //    m_OnFixedUpdate = FixedUpdateOnBeginGame,
-        //    m_OnEnd = EndOnBeginGame,
-        //});
-
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.GAME, new GameState(this)));
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.DEAD, new DeadState(this)));
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.CHARGE_SHOT, new ChargeShotState(this)));
-
-        //m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.BEFORE_BOSS_BATTLE_PERFORMANCE)
-        //{
-        //    m_OnStart = StartOnBeforeBossBattlePerformance,
-        //    m_OnUpdate = UpdateOnBeforeBossBattlePerformance,
-        //    m_OnLateUpdate = LateUpdateOnBeforeBossBattlePerformance,
-        //    m_OnFixedUpdate = FixedUpdateOnBeforeBossBattlePerformance,
-        //    m_OnEnd = EndOnBeforeBossBattlePerformance,
-        //});
-
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.TO_HACKING, new ToHackingState(this)));
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.STAY_HACKING, new StayHackingState(this)));
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.FROM_HACKING, new FromHackingState(this)));
-
-        //m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.BEFORE_GAME_CLEAR_PERFORMANCE)
-        //{
-        //    m_OnStart = StartOnBeforeGameClearPerformance,
-        //    m_OnUpdate = UpdateOnBeforeGameClearPerformance,
-        //    m_OnLateUpdate = LateUpdateOnBeforeGameClearPerformance,
-        //    m_OnFixedUpdate = FixedUpdateOnBeforeGameClearPerformance,
-        //    m_OnEnd = EndOnBeforeGameClearPerformance,
-        //});
-
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE)
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.START, this, new StartState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME, this, new GameState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.DEAD, this, new DeadState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.CHARGE_SHOT, this, new ChargeShotState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.TO_HACKING, this, new ToHackingState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.STAY_HACKING, this, new StayHackingState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.FROM_HACKING, this, new FromHackingState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE, this)
         {
             m_OnStart = StartOnBeginBossBattle,
             m_OnUpdate = UpdateOnBeginBossBattle,
@@ -124,10 +81,9 @@ public partial class BattleRealManager : ControllableObject
             m_OnFixedUpdate = FixedUpdateOnBeginBossBattle,
             m_OnEnd = EndOnBeginBossBattle,
         });
-
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.GAME_CLEAR, new GameClearState(this)));
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.GAME_OVER, new GameOverState(this)));
-        m_StateMachine.AddState(new BattleRealManagerState(E_BATTLE_REAL_STATE.END, new EndState(this)));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME_CLEAR, this, new GameClearState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME_OVER, this, new GameOverState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.END, this, new EndState()));
 
         InputManager = new BattleRealInputManager();
         RealTimerManager = new BattleRealTimerManager();
@@ -153,11 +109,15 @@ public partial class BattleRealManager : ControllableObject
         CollisionManager.OnInitialize();
         CameraManager.OnInitialize();
 
-        m_StateMachine.Goto(E_BATTLE_REAL_STATE.START);
+        RequestChangeState(E_BATTLE_REAL_STATE.START);
+
+        m_BattleManager.SetChangeStateCallback(OnChangeStateBattleManager);
     }
 
     public override void OnFinalize()
     {
+        m_OnChangeState = null;
+
         CameraManager.OnFinalize();
         CollisionManager.OnFinalize();
         EffectManager.OnFinalize();
@@ -171,6 +131,8 @@ public partial class BattleRealManager : ControllableObject
         InputManager.OnFinalize();
 
         m_StateMachine.OnFinalize();
+
+        Instance = null;
 
         base.OnFinalize();
     }
@@ -234,6 +196,11 @@ public partial class BattleRealManager : ControllableObject
 
     #endregion
 
+    private void OnChangeStateBattleManager(E_BATTLE_STATE nextState)
+    {
+        Debug.Log(nextState);
+    }
+
     /// <summary>
     /// BattleRealManagerのステートを変更する。
     /// </summary>
@@ -245,6 +212,19 @@ public partial class BattleRealManager : ControllableObject
         }
 
         m_StateMachine.Goto(state);
+    }
+    
+    /// <summary>
+    /// BattleRealManagerのステート変更時に呼び出すコールバックを設定する。
+    /// </summary>
+    public void SetChangeStateCallback(Action<E_BATTLE_REAL_STATE> callback)
+    {
+        m_OnChangeState += callback;
+    }
+
+    public void OnChangeState(E_BATTLE_REAL_STATE state)
+    {
+        m_OnChangeState?.Invoke(state);
     }
 
     /// <summary>
@@ -262,7 +242,7 @@ public partial class BattleRealManager : ControllableObject
 
     public void ToHacking()
     {
-        m_BattleManager.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+        m_BattleManager.RequestChangeState(E_BATTLE_STATE.TO_HACKING);
     }
 
     public void BossBattleStart()

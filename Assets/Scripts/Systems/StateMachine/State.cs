@@ -10,6 +10,7 @@ using System;
 public class State<T, U> : ControllableObject
 {
     public T Key { get; private set; }
+    public U Target { get; private set; }
 
     public Action m_OnStart;
     public Action m_OnUpdate;
@@ -17,18 +18,22 @@ public class State<T, U> : ControllableObject
     public Action m_OnFixedUpdate;
     public Action m_OnEnd;
 
-    private StateCycleBase<U> m_StateCycle;
+    private StateCycleBase<U, T> m_StateCycle;
 
-    public State(T key)
+    public State(T key, U target)
     {
         Key = key;
+        Target = target;
         m_StateCycle = null;
     }
 
-    public State(T key, StateCycleBase<U> stateCycle)
+    public State(T key, U target, StateCycleBase<U, T> stateCycle)
     {
         Key = key;
+        Target = target;
         m_StateCycle = stateCycle;
+        m_StateCycle.SetState(Key);
+        m_StateCycle.SetTarget(Target);
     }
 
     public override void OnInitialize()
@@ -58,6 +63,11 @@ public class State<T, U> : ControllableObject
         else
         {
             m_OnStart?.Invoke();
+        }
+
+        if (Target != null && Target is IStateCallback<T> callback)
+        {
+            callback.OnChangeState(Key);
         }
     }
 

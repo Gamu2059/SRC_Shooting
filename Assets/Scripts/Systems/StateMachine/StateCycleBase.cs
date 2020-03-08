@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateCycleBase<T> : ControllableObject
+public class StateCycleBase<T, U> : ControllableObject
 {
     protected T Target { get; private set; }
+    protected U State { get; private set; }
 
-    public StateCycleBase(T target)
+    public virtual void OnEnd()
+    {
+    }
+
+    public void SetTarget(T target)
     {
         Target = target;
     }
 
-    public virtual void OnEnd()
+    public void SetState(U state)
     {
+        State = state;
     }
 }

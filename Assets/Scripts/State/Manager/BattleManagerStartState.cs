@@ -1,9 +1,7 @@
 ﻿partial class BattleManager
 {
-    private class StartState : StateCycleBase<BattleManager>
+    private class StartState : StateCycle
     {
-        public StartState(BattleManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();
@@ -19,7 +17,7 @@
 
             Target.RequestChangeState(E_BATTLE_STATE.REAL_MODE);
 
-            Target.BattleRealUiManager.PlayStartTelop();
+            //Target.BattleRealUiManager.PlayStartTelop();
 
             Target.IsReadyBeforeShow = true;
         }

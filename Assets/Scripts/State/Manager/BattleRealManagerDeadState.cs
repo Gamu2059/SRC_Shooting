@@ -2,10 +2,8 @@
 
 partial class BattleRealManager
 {
-    private class DeadState : StateCycleBase<BattleRealManager>
+    private class DeadState : StateCycle
     {
-        public DeadState(BattleRealManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();

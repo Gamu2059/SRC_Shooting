@@ -1,9 +1,7 @@
 ﻿partial class BattleManager
 {
-    private class EndState : StateCycleBase<BattleManager>
+    private class EndState : StateCycle
     {
-        public EndState(BattleManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();

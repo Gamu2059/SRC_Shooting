@@ -1,7 +1,6 @@
 ﻿partial class BattleRealManager
 {
-    private class StayHackingState : StateCycleBase<BattleRealManager>
+    private class StayHackingState : StateCycle
     {
-        public StayHackingState(BattleRealManager target) : base(target) { }
     }
 }

@@ -1,9 +1,7 @@
 ﻿partial class BattleManager
 {
-    private class ToHackingState : StateCycleBase<BattleManager>
+    private class ToHackingState : StateCycle
     {
-        public ToHackingState(BattleManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();

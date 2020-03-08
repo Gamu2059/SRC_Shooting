@@ -2,10 +2,8 @@
 
 partial class BattleRealManager
 {
-    private class ChargeShotState : StateCycleBase<BattleRealManager>
+    private class ChargeShotState : StateCycle
     {
-        public ChargeShotState(BattleRealManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();

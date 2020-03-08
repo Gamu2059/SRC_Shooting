@@ -1,7 +1,6 @@
 ﻿partial class BattleRealManager
 {
-    private class OpenMenuState : StateCycleBase<BattleRealManager>
+    private class OpenMenuState : StateCycle
     {
-        public OpenMenuState(BattleRealManager target) : base(target) { }
     }
 }

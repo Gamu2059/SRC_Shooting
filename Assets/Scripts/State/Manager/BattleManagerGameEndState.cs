@@ -1,7 +1,6 @@
 ﻿partial class BattleManager
 {
-    private class GameEndState : StateCycleBase<BattleManager>
+    private class GameEndState : StateCycle
     {
-        public GameEndState(BattleManager target) : base(target) { }
     }
 }

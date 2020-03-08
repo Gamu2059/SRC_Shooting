@@ -1,9 +1,7 @@
 ﻿partial class BattleRealManager
 {
-    private class StartState : StateCycleBase<BattleRealManager>
+    private class StartState : StateCycle
     {
-        public StartState(BattleRealManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();

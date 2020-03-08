@@ -1,7 +1,6 @@
 ﻿partial class BattleRealManager
 {
-    private class WaitCutSceneState : StateCycleBase<BattleRealManager>
+    private class WaitCutSceneState : StateCycle
     {
-        public WaitCutSceneState(BattleRealManager target) : base(target) { }
     }
 }

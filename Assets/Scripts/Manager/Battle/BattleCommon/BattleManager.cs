@@ -8,14 +8,16 @@ using UnityEngine.Video;
 /// バトル画面のマネージャーを管理する上位マネージャ。
 /// メイン画面とコマンド画面の切り替えを主に管理する。
 /// </summary>
-public partial class BattleManager : ControllableMonoBehavior
+public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_BATTLE_STATE>
 {
     #region Define
 
-    private class BattleManagerState : State<E_BATTLE_STATE, BattleManager>
+    private class StateCycle : StateCycleBase<BattleManager, E_BATTLE_STATE> { }
+
+    private class InnerState : State<E_BATTLE_STATE, BattleManager>
     {
-        public BattleManagerState(E_BATTLE_STATE state) : base(state) { }
-        public BattleManagerState(E_BATTLE_STATE state, StateCycleBase<BattleManager> cycle) : base(state, cycle) { }
+        public InnerState(E_BATTLE_STATE state, BattleManager target) : base(state, target) { }
+        public InnerState(E_BATTLE_STATE state, BattleManager target, StateCycle cycle) : base(state, target, cycle) { }
     }
 
     #endregion
@@ -114,13 +116,13 @@ public partial class BattleManager : ControllableMonoBehavior
 
         m_StateMachine = new StateMachine<E_BATTLE_STATE, BattleManager>();
 
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.START, new StartState(this)));
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.REAL_MODE, new RealModeState(this)));
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.HACKING_MODE, new HackingModeState(this)));
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.TRANSITION_TO_REAL, new ToRealState(this)));
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.TRANSITION_TO_HACKING, new ToHackingState(this)));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.START, this, new StartState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.REAL_MODE, this, new RealModeState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.HACKING_MODE, this, new HackingModeState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.TO_REAL, this, new ToRealState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.TO_HACKING, this, new ToHackingState()));
 
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.GAME_CLEAR)
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.GAME_CLEAR, this)
         {
             m_OnStart = StartOnGameClear,
             m_OnUpdate = UpdateOnGameClear,
@@ -129,7 +131,7 @@ public partial class BattleManager : ControllableMonoBehavior
             m_OnEnd = EndOnGameClear,
         });
 
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.GAME_OVER)
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.GAME_OVER, this)
         {
             m_OnStart = StartOnGameOver,
             m_OnUpdate = UpdateOnGameOver,
@@ -138,7 +140,7 @@ public partial class BattleManager : ControllableMonoBehavior
             m_OnEnd = EndOnGameOver,
         });
 
-        m_StateMachine.AddState(new BattleManagerState(E_BATTLE_STATE.END, new EndState(this)));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.END, this, new EndState()));
 
         BattleRealStageManager.OnInitialize();
         BattleHackingStageManager.OnInitialize();
@@ -349,6 +351,11 @@ public partial class BattleManager : ControllableMonoBehavior
     public void SetChangeStateCallback(Action<E_BATTLE_STATE> callback)
     {
         m_OnChangeState += callback;
+    }
+
+    public void OnChangeState(E_BATTLE_STATE state)
+    {
+        m_OnChangeState?.Invoke(state);
     }
 
     /// <summary>

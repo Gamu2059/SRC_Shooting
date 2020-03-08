@@ -1,7 +1,6 @@
 ﻿partial class BattleRealManager
 {
-    private class WaitTalkState : StateCycleBase<BattleRealManager>
+    private class WaitTalkState : StateCycle
     {
-        public WaitTalkState(BattleRealManager target) : base(target) { }
     }
 }

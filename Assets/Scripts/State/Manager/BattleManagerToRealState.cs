@@ -1,9 +1,7 @@
 ﻿partial class BattleManager
 {
-    private class ToRealState : StateCycleBase<BattleManager>
+    private class ToRealState : StateCycle
     {
-        public ToRealState(BattleManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();

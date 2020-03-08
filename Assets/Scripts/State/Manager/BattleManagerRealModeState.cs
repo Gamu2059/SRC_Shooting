@@ -1,9 +1,7 @@
 ﻿partial class BattleManager
 {
-    private partial class RealModeState : StateCycleBase<BattleManager>
+    private partial class RealModeState : StateCycle
     {
-        public RealModeState(BattleManager target) : base(target) { }
-
         public override void OnStart()
         {
             base.OnStart();
@@ -18,7 +16,7 @@
             if (Target.m_IsStartHackingMode)
             {
                 Target.m_IsStartHackingMode = false;
-                Target.RequestChangeState(E_BATTLE_STATE.TRANSITION_TO_HACKING);
+                Target.RequestChangeState(E_BATTLE_STATE.TO_HACKING);
             }
 
             Target.RealManager.OnUpdate();

@@ -19,10 +19,12 @@ public class RankingManager : ControllableMonoBehavior
         SELECT_EXIT,
     }
 
+    private class StateCycle : StateCycleBase<RankingManager, E_RANKING_MENU_STATE> { }
+
     private class RankingManagerState : State<E_RANKING_MENU_STATE, RankingManager>
     {
-        public RankingManagerState(E_RANKING_MENU_STATE state) : base(state) { }
-        public RankingManagerState(E_RANKING_MENU_STATE state, StateCycleBase<RankingManager> cycle) : base(state, cycle) { }
+        public RankingManagerState(E_RANKING_MENU_STATE state, RankingManager target) : base(state, target) { }
+        public RankingManagerState(E_RANKING_MENU_STATE state, RankingManager target, StateCycle cycle) : base(state, target, cycle) { }
     }
 
     #endregion
@@ -59,42 +61,42 @@ public class RankingManager : ControllableMonoBehavior
 
         m_StateMachine = new StateMachine<E_RANKING_MENU_STATE, RankingManager>();
 
-        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING)
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_STORY_RANKING, this)
         {
             m_OnStart = StartOnFocusStory,
             m_OnUpdate = UpdateOnFocusStory,
             m_OnEnd = EndOnFocusStory,
         });
 
-        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING)
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_CHAPTER_RANKING, this)
         {
             m_OnStart = StartOnFocusChapter,
             m_OnUpdate = UpdateOnFocusChapter,
             m_OnEnd = EndOnFocusChapter,
         });
 
-        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_EXIT)
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.FORCUS_EXIT, this)
         {
             m_OnStart = StartOnFocusExit,
             m_OnUpdate = UpdateOnFocusExit,
             m_OnEnd = EndOnFocusExit,
         });
 
-        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_STORY_RANKING) 
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_STORY_RANKING, this) 
         {
             m_OnStart = StartOnSelectStory,
             m_OnUpdate = UpdateOnSelectStory,
             m_OnEnd = EndOnSelectStory,
         });
 
-        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_CHAPTER_RANKING) 
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_CHAPTER_RANKING, this)
         { 
             m_OnStart = StartOnSelectChapter,
             m_OnUpdate = UpdateOnSelectChapter,
             m_OnEnd = EndOnSelectChapter,
         });
 
-        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_EXIT) 
+        m_StateMachine.AddState(new RankingManagerState(E_RANKING_MENU_STATE.SELECT_EXIT, this)
         { 
             m_OnStart = StartOnSelectExit,
             m_OnUpdate = UpdateOnSelectExit,
