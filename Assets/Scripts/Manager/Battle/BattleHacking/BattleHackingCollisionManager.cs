@@ -88,6 +88,7 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase
                 {
                     attackData.IsCollide = true;
                     targetData.IsCollide = true;
+                    if(bullet.HasCollision) // 追加した1行
                     player.SufferBullet(bullet, attackData, targetData, null);
                     bullet.HitChara(player, attackData, targetData, null);
                 });

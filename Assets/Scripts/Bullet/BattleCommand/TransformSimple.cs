@@ -2,33 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+/// <summary>
+/// 弾の物理的な状態を表すクラス。
+/// </summary>
 public class TransformSimple : object
 {
     /// <summary>
     /// 位置
     /// </summary>
-    public Vector2 m_Position;
+    public Vector2 Position { get; private set; }
 
     /// <summary>
     /// 回転角度
     /// </summary>
-    public float m_Angle;
+    public float Angle { get; private set; }
 
     /// <summary>
     /// 大きさ
     /// </summary>
-    public float m_Scale;
+    public float Scale { get; private set; }
+
+    /// <summary>
+    /// 不透明度
+    /// </summary>
+    public float Opacity { get; private set; }
+
+    /// <summary>
+    /// 衝突判定があるかどうか
+    /// </summary>
+    public bool CanCollide { get; private set; }
 
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    public TransformSimple(Vector2 position, float angle, float scale)
+    public TransformSimple(
+        Vector2 position,
+        float angle,
+        float scale,
+        float opacity,
+        bool canCollide
+        )
     {
-        m_Position = position;
-        m_Angle = angle;
-        m_Scale = scale;
+        Position = position;
+        Angle = angle;
+        Scale = scale;
+        Opacity = opacity;
+        CanCollide = canCollide;
     }
 }
 

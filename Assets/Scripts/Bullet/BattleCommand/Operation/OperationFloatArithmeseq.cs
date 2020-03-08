@@ -13,12 +13,16 @@ public class OperationFloatArithmeseq : OperationFloatBase
     /// <summary>
     /// 初項
     /// </summary>
+    [Header("初項")]
+    [Header("")]
+    [Header("等差数列の項の値を求める演算")]
     [SerializeField]
     private OperationFloatBase m_A0;
 
     /// <summary>
     /// 公差
     /// </summary>
+    [Header("公差")]
     [SerializeField]
     private OperationFloatBase m_D;
 
@@ -26,6 +30,7 @@ public class OperationFloatArithmeseq : OperationFloatBase
     /// 何項目の値を求めるのか
     /// </summary>
     [SerializeField]
+    [Header("何項目の値を求めるのか")]
     private OperationFloatBase m_N;
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 弾を発射する時のパラメータの具体的な値を表すクラス。
 /// </summary>
-[System.Serializable]
+//[System.Serializable]
 public class ShotParam : object
 {
 
@@ -13,57 +13,71 @@ public class ShotParam : object
     /// 弾の見た目の種類
     /// </summary>
     [SerializeField]
-    public int BulletIndex { set; get; }
+    public int BulletIndex { get; private set; }
 
     /// <summary>
     /// 基準の位置（発射位置）
     /// </summary>
     [SerializeField]
-    public Vector2 Position { set; get; }
+    public Vector2 Position { get; private set; }
 
     /// <summary>
     /// 初期角度
     /// </summary>
     [SerializeField]
-    public float Angle { set; get; }
+    public float Angle { get; private set; }
 
     /// <summary>
     /// 初期の大きさ
     /// </summary>
     [SerializeField]
-    public float Scale { set; get; }
+    public float Scale { get; private set; }
 
     /// <summary>
     /// 速度ベクトル
     /// </summary>
     [SerializeField]
-    public Vector2 Velocity { set; get; }
+    public Vector2 Velocity { get; private set; }
 
     /// <summary>
     /// 回転速度
     /// </summary>
     [SerializeField]
-    public float AngleSpeed { set; get; }
+    public float AngleSpeed { get; private set; }
 
     /// <summary>
     /// 大きさの変化速度
     /// </summary>
     [SerializeField]
-    public float ScaleSpeed { set; get; }
+    public float ScaleSpeed { get; private set; }
+
+    /// <summary>
+    /// 弾の不透明度
+    /// </summary>
+    [SerializeField]
+    public float Opacity { get; private set; }
+
+    /// <summary>
+    /// 衝突判定があるかどうか
+    /// </summary>
+    [SerializeField]
+    public bool CanCollide { get; private set; }
 
 
     /// <summary>
-    /// コンストラクタ
+    /// コンストラクタ（演算オブジェクトから）
     /// </summary>
-    public ShotParam(int bulletIndex, Vector2 position, float velocityRad, float scale, Vector2 velocity, float angleSpeed, float scaleSpeed)
+    public ShotParam(ShotParamOperation shotParamOperation)
     {
-        BulletIndex = bulletIndex;
-        Position = position;
-        Angle = velocityRad;
-        Scale = scale;
-        Velocity = velocity;
-        AngleSpeed = angleSpeed;
-        ScaleSpeed = scaleSpeed;
+        BulletIndex = shotParamOperation.BulletIndex.GetResultInt();
+        Position = shotParamOperation.Position.GetResultVector2();
+        Angle = shotParamOperation.Angle.GetResultFloat();
+        Scale = shotParamOperation.Scale.GetResultFloat();
+        Velocity = shotParamOperation.Velocity.GetResultVector2();
+        AngleSpeed = shotParamOperation.AngleSpeed.GetResultFloat();
+        ScaleSpeed = shotParamOperation.ScaleSpeed?.GetResultFloat() ?? 0;
+        Opacity = shotParamOperation.Opacity?.GetResultFloat() ?? 1;
+        CanCollide = shotParamOperation.CanCollide?.GetResultBool() ?? true;
     }
 
 
@@ -75,7 +89,9 @@ public class ShotParam : object
         return new TransformSimple(
             Position + Velocity * time,
             Angle + AngleSpeed * time,
-            Scale + ScaleSpeed * time
+            Scale + ScaleSpeed * time,
+            Opacity,
+            CanCollide
             );
     }
 }
@@ -143,3 +159,30 @@ public class ShotParam : object
 //[SerializeField]
 ////public Boxing1<Vector2> Position;
 //public OperationVector2Base1 Position;
+
+
+///// <summary>
+///// コンストラクタ
+///// </summary>
+//public ShotParam(
+//    int bulletIndex,
+//    Vector2 position,
+//    float velocityRad,
+//    float scale,
+//    Vector2 velocity,
+//    float angleSpeed,
+//    float? scaleSpeed,
+//    float? opacity,
+//    bool? canCollide
+//    )
+//{
+//    BulletIndex = bulletIndex;
+//    Position = position;
+//    Angle = velocityRad;
+//    Scale = scale;
+//    Velocity = velocity;
+//    AngleSpeed = angleSpeed;
+//    ScaleSpeed = scaleSpeed ?? 0;
+//    Opacity = opacity ?? 1;
+//    CanCollide = canCollide ?? true;
+//}

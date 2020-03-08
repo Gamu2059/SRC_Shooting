@@ -13,7 +13,6 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 弾の見た目の種類
     /// </summary>
-    //[UnityEngine.Serialization.FormerlySerializedAs("BulletIndex")]
     [SerializeField]
     private OperationIntVariable m_BulletIndex;
     public OperationIntVariable BulletIndex
@@ -25,7 +24,6 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 発射位置
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("Position")]
     [SerializeField]
     private OperationVector2Variable m_Position;
     public OperationVector2Variable Position
@@ -37,7 +35,6 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 発射角度
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("Angle")]
     [SerializeField]
     private OperationFloatVariable m_Angle;
     public OperationFloatVariable Angle
@@ -49,7 +46,6 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 大きさ
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("Scale")]
     [SerializeField]
     private OperationFloatVariable m_Scale;
     public OperationFloatVariable Scale
@@ -61,7 +57,6 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 速度ベクトル
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("Velocity")]
     [SerializeField]
     private OperationVector2Variable m_Velocity;
     public OperationVector2Variable Velocity
@@ -73,7 +68,6 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 回転速度
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("AngleSpeed")]
     [SerializeField]
     private OperationFloatVariable m_AngleSpeed;
     public OperationFloatVariable AngleSpeed
@@ -85,13 +79,36 @@ public class ShotParamOperationVariable : ScriptableObject
     /// <summary>
     /// 大きさの変化速度
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("ScaleSpeed")]
     [SerializeField]
     private OperationFloatVariable m_ScaleSpeed;
     public OperationFloatVariable ScaleSpeed
     {
         set { m_ScaleSpeed = value; }
         get { return m_ScaleSpeed; }
+    }
+
+
+    /// <summary>
+    /// 不透明度
+    /// </summary>
+    [SerializeField]
+    private OperationFloatVariable m_Opacity;
+    public OperationFloatVariable Opacity
+    {
+        set { m_Opacity = value; }
+        get { return m_Opacity; }
+    }
+
+
+    /// <summary>
+    /// 衝突判定があるかどうか
+    /// </summary>
+    [SerializeField]
+    private OperationBoolVariable m_CanCollide;
+    public OperationBoolVariable CanCollide
+    {
+        set { m_CanCollide = value; }
+        get { return m_CanCollide; }
     }
 
 
@@ -106,7 +123,8 @@ public class ShotParamOperationVariable : ScriptableObject
         Scale.Value = shotParam.Scale;
         Velocity.Value = shotParam.Velocity;
         AngleSpeed.Value = shotParam.AngleSpeed;
-        ScaleSpeed.Value = shotParam.ScaleSpeed;
+        Opacity.Value = shotParam.Opacity;
+        CanCollide.Value = shotParam.CanCollide;
     }
 }
 

@@ -14,7 +14,7 @@ public class ShotParamOperation : ScriptableObject
     /// 弾の見た目の種類
     /// </summary>
     [SerializeField]
-    public OperationIntBase m_BulletIndex;
+    private OperationIntBase m_BulletIndex;
     public OperationIntBase BulletIndex
     {
         set { m_BulletIndex = value; }
@@ -25,7 +25,7 @@ public class ShotParamOperation : ScriptableObject
     /// 発射位置
     /// </summary>
     [SerializeField]
-    public OperationVector2Base m_Position;
+    private OperationVector2Base m_Position;
     public OperationVector2Base Position
     {
         set { m_Position = value; }
@@ -36,7 +36,7 @@ public class ShotParamOperation : ScriptableObject
     /// 発射角度
     /// </summary>
     [SerializeField]
-    public OperationFloatBase m_Angle;
+    private OperationFloatBase m_Angle;
     public OperationFloatBase Angle
     {
         set { m_Angle = value; }
@@ -47,7 +47,7 @@ public class ShotParamOperation : ScriptableObject
     /// 大きさ
     /// </summary>
     [SerializeField]
-    public OperationFloatBase m_Scale;
+    private OperationFloatBase m_Scale;
     public OperationFloatBase Scale
     {
         set { m_Scale = value; }
@@ -58,7 +58,7 @@ public class ShotParamOperation : ScriptableObject
     /// 速度ベクトル
     /// </summary>
     [SerializeField]
-    public OperationVector2Base m_Velocity;
+    private OperationVector2Base m_Velocity;
     public OperationVector2Base Velocity
     {
         set { m_Velocity = value; }
@@ -69,7 +69,7 @@ public class ShotParamOperation : ScriptableObject
     /// 回転速度
     /// </summary>
     [SerializeField]
-    public OperationFloatBase m_AngleSpeed;
+    private OperationFloatBase m_AngleSpeed;
     public OperationFloatBase AngleSpeed
     {
         set { m_AngleSpeed = value; }
@@ -79,13 +79,35 @@ public class ShotParamOperation : ScriptableObject
     /// <summary>
     /// 大きさの変化速度
     /// </summary>
-    [UnityEngine.Serialization.FormerlySerializedAs("ScaleSpeed")]
     [SerializeField]
-    public OperationFloatBase m_ScaleSpeed;
+    private OperationFloatBase m_ScaleSpeed;
     public OperationFloatBase ScaleSpeed
     {
         set { m_ScaleSpeed = value; }
         get { return m_ScaleSpeed; }
+    }
+
+
+    /// <summary>
+    /// 不透明度
+    /// </summary>
+    [SerializeField]
+    private OperationFloatBase m_Opacity;
+    public OperationFloatBase Opacity
+    {
+        set { m_Opacity = value; }
+        get { return m_Opacity; }
+    }
+
+    /// <summary>
+    /// 衝突判定があるかどうか
+    /// </summary>
+    [SerializeField]
+    private OperationBoolBase m_CanCollide;
+    public OperationBoolBase CanCollide
+    {
+        set { m_CanCollide = value; }
+        get { return m_CanCollide; }
     }
 }
 

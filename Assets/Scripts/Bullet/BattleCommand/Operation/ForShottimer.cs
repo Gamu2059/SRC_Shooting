@@ -45,13 +45,13 @@ public class ForShottimer : ForBase
         m_RealShotNumVariable.Value++;
 
         // 現在、既に次の発射がされているかどうか
-        if (m_LaunchTimeOperation.GetResultFloat() <= m_CommonOperationVariable.m_Time.GetResultFloat())
+        if (m_LaunchTimeOperation.GetResultFloat() <= m_CommonOperationVariable.Time.GetResultFloat())
         {
             // 発射時刻
-            m_CommonOperationVariable.m_ArgumentTime.Value = m_LaunchTimeOperation.GetResultFloat();
+            m_CommonOperationVariable.ArgumentTime.Value = m_LaunchTimeOperation.GetResultFloat();
 
             // 発射からの経過時間
-            m_CommonOperationVariable.m_DTimeOperation.Value = m_CommonOperationVariable.m_Time.GetResultFloat() - m_CommonOperationVariable.m_ArgumentTime.Value;
+            m_CommonOperationVariable.DTimeOperation.Value = m_CommonOperationVariable.Time.GetResultFloat() - m_CommonOperationVariable.ArgumentTime.Value;
 
             return true;
         }

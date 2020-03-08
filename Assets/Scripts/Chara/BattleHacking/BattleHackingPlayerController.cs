@@ -20,6 +20,9 @@ public class BattleHackingPlayerController : CommandCharaController
     [SerializeField, Tooltip("発射パラメータ（演算）")]
     private ShotParamOperation m_ShotParamOperation;
 
+    [SerializeField, Tooltip("発射位置を表す変数オブジェクト")]
+    private OperationVector2Variable m_ShotPositionVariable;
+
 
     private float m_ShotTimeCount;
 
@@ -54,44 +57,23 @@ public class BattleHackingPlayerController : CommandCharaController
 
         AudioManager.Instance.Play(BattleHackingPlayerManager.Instance.ParamSet.ShotSe);
 
-        var shotParam = new CommandBulletShotParam(this);
         for (int i = 0; i < m_ShotPositions.Length; i++)
         {
-            shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
-            Vector2 basePosition = m_ShotPositions[i].position;
-            //Debug.Log(basePosition.x.ToString() + ", " + basePosition.y.ToString());
-            Vector2 localPositionVector2 = new Vector2(transform.localPosition.x, transform.localPosition.z);
-            // 結構適当
+            // 自機本体の位置を外部に知らせる
+            m_ShotPositionVariable.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[i].position.x, 0);
+
+            // 弾を発射する
             BattleHackingFreeTrajectoryBulletController.ShotBullet(
-                shotParam,
-                //new ConstAcceleLinearTrajectory1(
-                //    new SimpleTrajectory(
-                //        new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
-                //        0.5f),
-                //    5),
+                this,
                 0,
-                //new TrajectoryBasis(
-                //    new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
-                //    0.5F
-                //    ),
-                //null,
-                //false,
-                new ShotParam(
-                    m_ShotParamOperation.BulletIndex.GetResultInt(),
-                    m_ShotParamOperation.Position.GetResultVector2() + localPositionVector2,
-                    m_ShotParamOperation.Angle.GetResultFloat(),
-                    m_ShotParamOperation.Scale.GetResultFloat(),
-                    m_ShotParamOperation.Velocity.GetResultVector2(),
-                    m_ShotParamOperation.AngleSpeed.GetResultFloat(),
-                    m_ShotParamOperation.ScaleSpeed.GetResultFloat()
-                    ),
+                m_ShotParamOperation,
                 null,
                 null,
                 null
                 );
         }
 
-        m_ShotTimeCount = m_ShotInterval;
+        m_ShotTimeCount += m_ShotInterval;
     }
 
     protected override void OnEnterSufferBullet(HitSufferData<BattleHackingFreeTrajectoryBulletController> sufferData)
@@ -134,3 +116,41 @@ public class BattleHackingPlayerController : CommandCharaController
         gameObject.SetActive(false);
     }
 }
+
+
+
+
+//new ConstAcceleLinearTrajectory1(
+//    new SimpleTrajectory(
+//        new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
+//        0.5f),
+//    5),
+
+
+//new TrajectoryBasis(
+//    new TransformSimple(new Vector2(transform.localPosition.x, transform.localPosition.z), Calc.HALF_PI, 2),
+//    0.5F
+//    ),
+//null,
+//false,
+//new ShotParam(
+//    m_ShotParamOperation.BulletIndex.GetResultInt(),
+//    m_ShotParamOperation.Position.GetResultVector2() + localPositionVector2,
+//    m_ShotParamOperation.Angle.GetResultFloat(),
+//    m_ShotParamOperation.Scale.GetResultFloat(),
+//    m_ShotParamOperation.Velocity.GetResultVector2(),
+//    m_ShotParamOperation.AngleSpeed.GetResultFloat(),
+//    m_ShotParamOperation.ScaleSpeed != null ? m_ShotParamOperation.ScaleSpeed.GetResultFloat() : 0,
+//    m_ShotParamOperation.Opacity != null ? m_ShotParamOperation.Opacity.GetResultFloat() : 1,
+//    m_ShotParamOperation.CanCollide != null ? m_ShotParamOperation.CanCollide.GetResultBool() : true
+//    ),
+
+
+//var shotParam = new CommandBulletShotParam(this);
+
+//shotParam.Position = m_ShotPositions[i].position - transform.parent.position;
+//Vector2 basePosition = m_ShotPositions[i].position;
+//Debug.Log(i.ToString() + " : " + basePosition.x.ToString() + ", " + basePosition.y.ToString() +
+//    "\nparent : " + transform.parent.position.x.ToString() + ", " + transform.parent.position.y.ToString() + ", " + transform.parent.position.z.ToString());
+//Vector2 localPositionVector2 = new Vector2(transform.localPosition.x, transform.localPosition.z);
+//Debug.Log(localPositionVector2.x.ToString() + ", " + localPositionVector2.y.ToString());

@@ -10,15 +10,12 @@ using UnityEngine;
 public class UnitDanmaku : ScriptableObject
 {
 
-    [UnityEngine.Serialization.FormerlySerializedAs("m_MultiForLoop")]
     [SerializeField, Tooltip("多重forループ")]
     private MultiForLoop m_MultiForLoop;
 
-    [UnityEngine.Serialization.FormerlySerializedAs("m_ShotParam")]
     [SerializeField, Tooltip("発射パラメータ（演算）")]
     private ShotParamOperation m_ShotParam;
 
-    [UnityEngine.Serialization.FormerlySerializedAs("m_BulletTransform")]
     [SerializeField, Tooltip("弾の物理的な状態")]
     public TransformOperation m_BulletTransform;
 
@@ -40,22 +37,11 @@ public class UnitDanmaku : ScriptableObject
             {
                 // 弾を撃つ
                 BattleHackingFreeTrajectoryBulletController.ShotBullet(
-                    new CommandBulletShotParam(
-                        boss.GetEnemy(),
-                        m_ShotParam.BulletIndex.GetResultInt(),
-                        0, 0, Vector3.zero, Vector3.zero, Vector3.zero),
-                    commonOperationVariable.m_DTimeOperation.GetResultFloat(),
-                    new ShotParam(
-                        m_ShotParam.BulletIndex.GetResultInt(),
-                        m_ShotParam.Position.GetResultVector2(),
-                        m_ShotParam.Angle.GetResultFloat(),
-                        m_ShotParam.Scale.GetResultFloat(),
-                        m_ShotParam.Velocity.GetResultVector2(),
-                        m_ShotParam.AngleSpeed.GetResultFloat(),
-                        m_ShotParam.ScaleSpeed.GetResultFloat()
-                        ),
-                    commonOperationVariable.m_TimeOperation,
-                    commonOperationVariable.m_LaunchParam,
+                    boss.GetEnemy(),
+                    commonOperationVariable.DTimeOperation.GetResultFloat(),
+                    m_ShotParam,
+                    commonOperationVariable.TimeOperation,
+                    commonOperationVariable.LaunchParam,
                     m_BulletTransform
                     );
             }
@@ -385,3 +371,25 @@ public class UnitDanmaku : ScriptableObject
 //}
 
 //}
+
+
+//[UnityEngine.Serialization.FormerlySerializedAs("m_BulletTransform")]
+
+
+//new ShotParam(
+//    m_ShotParam.BulletIndex.GetResultInt(),
+//    m_ShotParam.Position.GetResultVector2(),
+//    m_ShotParam.Angle.GetResultFloat(),
+//    m_ShotParam.Scale.GetResultFloat(),
+//    m_ShotParam.Velocity.GetResultVector2(),
+//    m_ShotParam.AngleSpeed.GetResultFloat(),
+//    m_ShotParam.ScaleSpeed != null ? m_ShotParam.ScaleSpeed.GetResultFloat() : 0,
+//    m_ShotParam.Opacity != null ? m_ShotParam.Opacity.GetResultFloat() : 1,
+//    m_ShotParam.CanCollide != null ? m_ShotParam.CanCollide.GetResultBool() : true
+//    ),
+
+
+//new CommandBulletShotParam(
+//    boss.GetEnemy(),
+//    m_ShotParam.BulletIndex.GetResultInt()
+//    ),
