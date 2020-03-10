@@ -240,6 +240,33 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_BattleManager.GameStart();
     }
 
+    /// <summary>
+    /// カットシーンを表示する。
+    /// </summary>
+    public void ShowCutscene()
+    {
+        // CutsceneManager.ShowCutscene();
+        // カットシーン終了時の処理を追加したりもする
+    }
+
+    /// <summary>
+    /// 会話を表示する。
+    /// </summary>
+    public void ShowTalk()
+    {
+        // TalkManager.ShowTalk();
+        // 会話終了時の処理を追加したりもする
+    }
+
+    /// <summary>
+    /// ダイアログを表示する。
+    /// </summary>
+    public void ShowDialog()
+    {
+        // DialogManager.ShowDialog();
+        // ダイアログ終了時の処理を追加したりもする
+    }
+
     public void ToHacking()
     {
         m_BattleManager.RequestChangeState(E_BATTLE_STATE.TO_HACKING);

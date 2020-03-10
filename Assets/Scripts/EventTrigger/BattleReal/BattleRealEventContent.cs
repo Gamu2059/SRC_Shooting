@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
-/// EventTriggerの実行内容。
+/// リアルモードのEventの実行内容。
 /// </summary>
-[System.Serializable]
+[Serializable]
 public struct BattleRealEventContent
 {
     public enum E_EVENT_TYPE
@@ -74,6 +75,21 @@ public struct BattleRealEventContent
         /// ゲームクリア(救出あり)
         /// </summary>
         GAME_CLEAR_WITH_HACKING_COMPLETE,
+
+        /// <summary>
+        /// カットシーンを表示する
+        /// </summary>
+        SHOW_CUTSCENE,
+
+        /// <summary>
+        /// 会話を表示する
+        /// </summary>
+        SHOW_TALK,
+
+        /// <summary>
+        /// ダイアログを表示する
+        /// </summary>
+        SHOW_DIALOG,
     }
 
     /// <summary>
@@ -123,6 +139,18 @@ public struct BattleRealEventContent
     [Header("CONTROL_BGM")]
 
     public ControlSoundParam[] ControlBgmParams;
+
+    [Header("Show Cutscene")]
+
+    public ShowCutsceneParam ShowCutsceneParam;
+
+    [Header("Show Talk")]
+
+    public ShowTalkParam ShowTalkParam;
+
+    [Header("Show Dialog")]
+
+    public ShowDialogParam ShowDialogParam;
 
     [Header("OPERATE_VARIABLE")]
 

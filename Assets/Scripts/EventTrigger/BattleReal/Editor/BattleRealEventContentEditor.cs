@@ -25,13 +25,13 @@ public class BattleRealEventContentEditor : Editor
 		base.OnInspectorGUI();
 
 		EditorGUILayout.Space();
-		EditorGUILayout.LabelField( "Expansion" );
+		EditorGUILayout.LabelField("Expansion");
 
-		m_IsShowingSort = EditorGUILayout.Toggle( "Is Showing Sorting List", m_IsShowingSort );
+		m_IsShowingSort = EditorGUILayout.Toggle("Is Showing Sorting List", m_IsShowingSort);
 
-		if( m_IsShowingSort )
+		if (m_IsShowingSort)
 		{
-			foreach( var l in m_ListFields )
+			foreach (var l in m_ListFields)
 			{
 				l.DoLayoutList();
 			}

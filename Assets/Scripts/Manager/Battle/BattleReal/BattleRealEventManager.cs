@@ -790,6 +790,15 @@ public class BattleRealEventManager : ControllableObject
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
                 // 何もしない
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.SHOW_CUTSCENE:
+                ExecuteShowCutscene(eventContent.ShowCutsceneParam);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.SHOW_TALK:
+                ExecuteShowTalk(eventContent.ShowTalkParam);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.SHOW_DIALOG:
+                ExecuteShowDialog(eventContent.ShowDialogParam);
+                break;
             case BattleRealEventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
                 ExecuteOperateVariable(eventContent.OperateVariableParams);
                 break;
@@ -873,6 +882,30 @@ public class BattleRealEventManager : ControllableObject
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// カットシーンを表示する。
+    /// </summary>
+    private void ExecuteShowCutscene(ShowCutsceneParam showCutsceneParam)
+    {
+        BattleRealManager.Instance.ShowCutscene();
+    }
+
+    /// <summary>
+    /// 会話を表示する。
+    /// </summary>
+    private void ExecuteShowTalk(ShowTalkParam showTalkParam)
+    {
+        BattleRealManager.Instance.ShowTalk();
+    }
+
+    /// <summary>
+    /// ダイアログを表示する。
+    /// </summary>
+    private void ExecuteShowDialog(ShowDialogParam showDialogParam)
+    {
+        BattleRealManager.Instance.ShowDialog();
     }
 
     /// <summary>
