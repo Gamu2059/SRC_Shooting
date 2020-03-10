@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 /// </summary>
 public class FadePlayableBehaviour : PlayableBehaviour
 {
-    public FadePlayableAsset.FadeData FadeData;
+    public FadeParam FadeParam;
 
     // Called when the owning graph starts playing
     public override void OnGraphStart(Playable playable)
@@ -31,14 +31,7 @@ public class FadePlayableBehaviour : PlayableBehaviour
             return;
         }
 
-        if (FadeData.IsFadeOut)
-        {
-            FadeManager.Instance.FadeOut(FadeData.Duration, FadeData.FadeOutColor);
-        }
-        else
-        {
-            FadeManager.Instance.FadeIn(FadeData.Duration);
-        }
+        FadeManager.Instance.Fade(FadeParam);
     }
 
     // Called when the state of the playable is set to Paused

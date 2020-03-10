@@ -29,7 +29,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     private BattleRealParamSet m_ParamSet;
 
     private StateMachine<E_BATTLE_REAL_STATE, BattleRealManager> m_StateMachine;
-
     private Action<E_BATTLE_REAL_STATE> m_OnChangeState;
 
     public BattleRealInputManager InputManager { get; private set; }
@@ -48,6 +47,8 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     public Action OnTransitionToHacking;
     public Action OnTransitionToReal;
+
+    private CutsceneCaller m_CutsceneCaller;
 
     #endregion
 
@@ -73,6 +74,9 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.TO_HACKING, this, new ToHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.STAY_HACKING, this, new StayHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.FROM_HACKING, this, new FromHackingState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_CUTSCENE, this, new WaitCutSceneState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_TALK, this, new WaitTalkState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_DIALOG, this, new WaitDialogState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE, this)
         {
             m_OnStart = StartOnBeginBossBattle,
@@ -109,6 +113,8 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         CollisionManager.OnInitialize();
         CameraManager.OnInitialize();
 
+        m_CutsceneCaller = null;
+
         RequestChangeState(E_BATTLE_REAL_STATE.START);
 
         m_BattleManager.SetChangeStateCallback(OnChangeStateBattleManager);
@@ -116,6 +122,9 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     public override void OnFinalize()
     {
+        m_CutsceneCaller?.StopCutscene();
+        m_CutsceneCaller = null;
+
         m_OnChangeState = null;
 
         CameraManager.OnFinalize();
@@ -213,7 +222,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
         m_StateMachine.Goto(state);
     }
-    
+
     /// <summary>
     /// BattleRealManagerのステート変更時に呼び出すコールバックを設定する。
     /// </summary>
@@ -243,10 +252,35 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     /// <summary>
     /// カットシーンを表示する。
     /// </summary>
-    public void ShowCutscene()
+    public void ShowCutscene(ShowCutsceneParam showCutsceneParam)
     {
-        // CutsceneManager.ShowCutscene();
-        // カットシーン終了時の処理を追加したりもする
+        // 使い切りのはずのインスタンスが存在しているということはカットシーンの重複呼び出しであると解釈する
+        if (m_CutsceneCaller != null)
+        {
+            Debug.LogWarning("カットシーンが存在している時にカットシーンを呼び出すことは禁止しています。");
+            return;
+        }
+
+        m_CutsceneCaller = new CutsceneCaller(showCutsceneParam.CutsceneName,
+            controller =>
+            {
+                RequestChangeState(E_BATTLE_REAL_STATE.WAIT_CUTSCENE);
+            },
+            () =>
+            {
+                m_CutsceneCaller = null;
+                EventManager.AddEventParam(showCutsceneParam.OnCompletedEvent);
+
+                if (showCutsceneParam.AutoChangeToGameState)
+                {
+                    RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+                }
+            },
+            () =>
+            {
+                m_CutsceneCaller = null;
+                Debug.LogWarningFormat("カットシーンの呼び出しに失敗しました。 name : {0}", showCutsceneParam.CutsceneName);
+            });
     }
 
     /// <summary>

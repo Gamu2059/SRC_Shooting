@@ -90,6 +90,16 @@ public struct BattleRealEventContent
         /// ダイアログを表示する
         /// </summary>
         SHOW_DIALOG,
+
+        /// <summary>
+        /// リアルモードのステートを変更する
+        /// </summary>
+        CHANGE_BATTLE_REAL_STATE,
+
+        /// <summary>
+        /// フェードを制御する
+        /// </summary>
+        FADE,
     }
 
     /// <summary>
@@ -151,6 +161,14 @@ public struct BattleRealEventContent
     [Header("Show Dialog")]
 
     public ShowDialogParam ShowDialogParam;
+
+    [Header("Change Battle Real State")]
+
+    public E_BATTLE_REAL_STATE ChangeState;
+
+    [Header("Fade")]
+
+    public FadeParam FadeParam;
 
     [Header("OPERATE_VARIABLE")]
 

@@ -12,21 +12,13 @@ using System;
 [Serializable]
 public class FadePlayableAsset : PlayableAsset
 {
-    [Serializable]
-    public struct FadeData
-    {
-        public bool IsFadeOut;
-        public float Duration;
-        public Color FadeOutColor;
-    }
-
     [SerializeField]
-    private FadeData m_FadeData;
+    private FadeParam m_FadeParam;
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
     {
         var behaviour = new FadePlayableBehaviour();
-        behaviour.FadeData = m_FadeData;
+        behaviour.FadeParam = m_FadeParam;
         return ScriptPlayable<FadePlayableBehaviour>.Create(graph, behaviour);
     }
 }

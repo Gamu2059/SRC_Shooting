@@ -114,6 +114,39 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
     #endregion
 
     /// <summary>
+    /// フェードパラメータを使ってフェードする。
+    /// フェードが開始できなかった場合、falseを返す。
+    /// </summary>
+    public bool Fade(FadeParam fadeParam, Action onComplete = null)
+    {
+        bool result = false;
+        if (fadeParam.IsFadeOut)
+        {
+            if (fadeParam.UseAnimation)
+            {
+                result = FadeOut(fadeParam.RateCurve, fadeParam.FadeOutColor, onComplete);
+            }
+            else
+            {
+                result =FadeOut(fadeParam.Duration, fadeParam.FadeOutColor, onComplete);
+            }
+        }
+        else
+        {
+            if (fadeParam.UseAnimation)
+            {
+                result = FadeIn(fadeParam.RateCurve, onComplete);
+            }
+            else
+            {
+                result = FadeIn(fadeParam.Duration, onComplete);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
     /// 画面を特定の色で塗りつぶす。
     /// フェードが開始できなかった場合、falseを返す。
     /// </summary>
@@ -131,6 +164,30 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
             onComplete?.Invoke();
         };
         m_FadeData = new FadeData(duration, m_FadeImage.color, color, completeAction);
+        m_FadeData.Start();
+        IsFading = true;
+
+        return true;
+    }
+
+    /// <summary>
+    /// 画面を特定の色で塗りつぶす。
+    /// フェードが開始できなかった場合、falseを返す。
+    /// </summary>
+    public bool FadeOut(AnimationCurve rateCurve, Color color, Action onComplete = null)
+    {
+        if (IsFading)
+        {
+            return false;
+        }
+
+        Action completeAction = () => {
+            IsFading = false;
+            m_FadeData = null;
+            m_FadeImage.color = color;
+            onComplete?.Invoke();
+        };
+        m_FadeData = new FadeData(rateCurve, m_FadeImage.color, color, completeAction);
         m_FadeData.Start();
         IsFading = true;
 
@@ -164,6 +221,33 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
         return true;
     }
 
+    /// <summary>
+    /// 画面の塗りつぶしを消す。
+    /// フェードが開始できなかった場合、falseを返す。
+    /// </summary>
+    public bool FadeIn(AnimationCurve rateCurve, Action onComplete = null)
+    {
+        if (IsFading)
+        {
+            return false;
+        }
+
+        var color = m_FadeImage.color;
+        color.a = 0;
+
+        Action completeAction = () => {
+            IsFading = false;
+            m_FadeData = null;
+            m_FadeImage.color = color;
+            onComplete?.Invoke();
+        };
+        m_FadeData = new FadeData(rateCurve, m_FadeImage.color, color, completeAction);
+        m_FadeData.Start();
+        IsFading = true;
+
+        return true;
+    }
+
     private class FadeData
     {
         private enum E_PHASE
@@ -175,6 +259,8 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
 
         private float m_CurrentTime;
         private float m_Duration;
+        private bool m_UseRateCurve;
+        private AnimationCurve m_RateCurve;
         private Color m_StartColor;
         private Color m_EndColor;
         private Action m_OnComplete;
@@ -183,7 +269,20 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
         public FadeData(float duration, Color startColor, Color endColor, Action onComplete)
         {
             m_CurrentTime = 0;
+            m_UseRateCurve = false;
             m_Duration = duration;
+            m_StartColor = startColor;
+            m_EndColor = endColor;
+            m_OnComplete = onComplete;
+            m_Phase = E_PHASE.STANDBY_START;
+        }
+
+        public FadeData(AnimationCurve curve, Color startColor, Color endColor, Action onComplete)
+        {
+            m_CurrentTime = 0;
+            m_UseRateCurve = true;
+            m_RateCurve = curve;
+            m_Duration = m_RateCurve.Duration();
             m_StartColor = startColor;
             m_EndColor = endColor;
             m_OnComplete = onComplete;
@@ -227,6 +326,11 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
             }
 
             var rate = m_CurrentTime / m_Duration;
+            if (m_UseRateCurve)
+            {
+                rate = m_RateCurve.Evaluate(m_CurrentTime);
+            }
+
             var r = (m_EndColor.r - m_StartColor.r) * rate + m_StartColor.r;
             var g = (m_EndColor.g - m_StartColor.g) * rate + m_StartColor.g;
             var b = (m_EndColor.b - m_StartColor.b) * rate + m_StartColor.b;

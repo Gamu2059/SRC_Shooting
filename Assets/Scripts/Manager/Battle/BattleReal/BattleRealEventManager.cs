@@ -718,6 +718,11 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public void AddEventParam(BattleRealEventTriggerParam param)
     {
+        if (param == null)
+        {
+            return;
+        }
+
         var condition = param.Condition;
         if (condition.IsMultiCondition && condition.MultiConditions == null)
         {
@@ -798,6 +803,12 @@ public class BattleRealEventManager : ControllableObject
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.SHOW_DIALOG:
                 ExecuteShowDialog(eventContent.ShowDialogParam);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.CHANGE_BATTLE_REAL_STATE:
+                ExecuteChangeBattleRealState(eventContent.ChangeState);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.FADE:
+                ExecuteFade(eventContent.FadeParam);
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
                 ExecuteOperateVariable(eventContent.OperateVariableParams);
@@ -889,7 +900,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteShowCutscene(ShowCutsceneParam showCutsceneParam)
     {
-        BattleRealManager.Instance.ShowCutscene();
+        BattleRealManager.Instance.ShowCutscene(showCutsceneParam);
     }
 
     /// <summary>
@@ -906,6 +917,24 @@ public class BattleRealEventManager : ControllableObject
     private void ExecuteShowDialog(ShowDialogParam showDialogParam)
     {
         BattleRealManager.Instance.ShowDialog();
+    }
+
+    /// <summary>
+    /// リアルモードのステートを変更する。
+    /// </summary>
+    private void ExecuteChangeBattleRealState(E_BATTLE_REAL_STATE changeState)
+    {
+        m_BattleRealManager.RequestChangeState(changeState);
+    }
+
+    private void ExecuteFade(FadeParam fadeParam)
+    {
+        if (FadeManager.Instance == null)
+        {
+            return;
+        }
+
+        FadeManager.Instance.Fade(fadeParam);
     }
 
     /// <summary>
