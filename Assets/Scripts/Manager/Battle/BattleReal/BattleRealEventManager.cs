@@ -716,26 +716,42 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// EventParamを追加する。
     /// </summary>
-    public void AddEventParam(BattleRealEventTriggerParam param)
+    public void AddEventParam(BattleRealEventTriggerParam[] parameters)
     {
-        if (param == null)
+        if (parameters == null)
         {
             return;
         }
 
-        var condition = param.Condition;
+        foreach(var parameter in parameters)
+        {
+            AddEventParam(parameter);
+        }
+    }
+
+    /// <summary>
+    /// EventParamを追加する。
+    /// </summary>
+    public void AddEventParam(BattleRealEventTriggerParam parameter)
+    {
+        if (parameter == null)
+        {
+            return;
+        }
+
+        var condition = parameter.Condition;
         if (condition.IsMultiCondition && condition.MultiConditions == null)
         {
             return;
         }
 
-        var contents = param.Contents;
+        var contents = parameter.Contents;
         if (contents == null || contents.Length < 1)
         {
             return;
         }
 
-        m_EventParams.Add(param);
+        m_EventParams.Add(parameter);
     }
 
     /// <summary>
@@ -908,7 +924,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteShowTalk(ShowTalkParam showTalkParam)
     {
-        BattleRealManager.Instance.ShowTalk();
+        BattleRealManager.Instance.ShowTalk(showTalkParam);
     }
 
     /// <summary>
@@ -916,7 +932,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteShowDialog(ShowDialogParam showDialogParam)
     {
-        BattleRealManager.Instance.ShowDialog();
+        BattleRealManager.Instance.ShowDialog(showDialogParam);
     }
 
     /// <summary>
@@ -927,6 +943,9 @@ public class BattleRealEventManager : ControllableObject
         m_BattleRealManager.RequestChangeState(changeState);
     }
 
+    /// <summary>
+    /// フェードを制御する。
+    /// </summary>
     private void ExecuteFade(FadeParam fadeParam)
     {
         if (FadeManager.Instance == null)

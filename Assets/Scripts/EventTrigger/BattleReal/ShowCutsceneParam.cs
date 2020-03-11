@@ -18,5 +18,5 @@ public struct ShowCutsceneParam
     public bool AutoChangeToGameState;
 
     [Tooltip("カットシーン終了時に実行するイベント")]
-    public BattleRealEventTriggerParam OnCompletedEvent;
+    public BattleRealEventTriggerParam[] OnCompletedEvents;
 }

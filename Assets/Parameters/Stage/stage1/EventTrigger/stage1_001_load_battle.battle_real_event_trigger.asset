@@ -47,7 +47,11 @@ MonoBehaviour:
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
-      OnCompletedEvent: {fileID: 0}
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
     ChangeState: 0
     FadeParam:
       IsFadeOut: 0
@@ -64,10 +68,10 @@ MonoBehaviour:
     CountStartTimePeriodNames: []
     CallScriptParams: []
   - ContentName: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8"
-    IsPassExecute: 1
+    IsPassExecute: 0
     EventType: 7
     ExecuteTiming: 1
-    DelayExecuteTime: 12
+    DelayExecuteTime: 8
     AppearEnemyIndex: 0
     ControlCameraParams: []
     ControlObjectParams: []
@@ -75,7 +79,11 @@ MonoBehaviour:
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
-      OnCompletedEvent: {fileID: 0}
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
     ChangeState: 0
     FadeParam:
       IsFadeOut: 0
@@ -105,7 +113,11 @@ MonoBehaviour:
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
-      OnCompletedEvent: {fileID: 0}
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
     ChangeState: 0
     FadeParam:
       IsFadeOut: 0
@@ -135,8 +147,12 @@ MonoBehaviour:
     ShowCutsceneParam:
       CutsceneName: sc0101
       AutoChangeToGameState: 1
-      OnCompletedEvent: {fileID: 11400000, guid: 92ad084fd80b247459bda9d35f4f6b75,
-        type: 2}
+      OnCompletedEvents:
+      - {fileID: 11400000, guid: 92ad084fd80b247459bda9d35f4f6b75, type: 2}
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
     ChangeState: 0
     FadeParam:
       IsFadeOut: 0
