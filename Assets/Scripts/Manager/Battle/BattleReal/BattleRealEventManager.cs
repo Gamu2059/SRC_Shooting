@@ -716,21 +716,42 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// EventParamを追加する。
     /// </summary>
-    public void AddEventParam(BattleRealEventTriggerParam param)
+    public void AddEventParam(BattleRealEventTriggerParam[] parameters)
     {
-        var condition = param.Condition;
+        if (parameters == null)
+        {
+            return;
+        }
+
+        foreach(var parameter in parameters)
+        {
+            AddEventParam(parameter);
+        }
+    }
+
+    /// <summary>
+    /// EventParamを追加する。
+    /// </summary>
+    public void AddEventParam(BattleRealEventTriggerParam parameter)
+    {
+        if (parameter == null)
+        {
+            return;
+        }
+
+        var condition = parameter.Condition;
         if (condition.IsMultiCondition && condition.MultiConditions == null)
         {
             return;
         }
 
-        var contents = param.Contents;
+        var contents = parameter.Contents;
         if (contents == null || contents.Length < 1)
         {
             return;
         }
 
-        m_EventParams.Add(param);
+        m_EventParams.Add(parameter);
     }
 
     /// <summary>
@@ -789,6 +810,21 @@ public class BattleRealEventManager : ControllableObject
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
                 // 何もしない
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.SHOW_CUTSCENE:
+                ExecuteShowCutscene(eventContent.ShowCutsceneParam);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.SHOW_TALK:
+                ExecuteShowTalk(eventContent.ShowTalkParam);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.SHOW_DIALOG:
+                ExecuteShowDialog(eventContent.ShowDialogParam);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.CHANGE_BATTLE_REAL_STATE:
+                ExecuteChangeBattleRealState(eventContent.ChangeState);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.FADE:
+                ExecuteFade(eventContent.FadeParam);
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.OPERATE_VARIABLE:
                 ExecuteOperateVariable(eventContent.OperateVariableParams);
@@ -873,6 +909,51 @@ public class BattleRealEventManager : ControllableObject
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// カットシーンを表示する。
+    /// </summary>
+    private void ExecuteShowCutscene(ShowCutsceneParam showCutsceneParam)
+    {
+        BattleRealManager.Instance.ShowCutscene(showCutsceneParam);
+    }
+
+    /// <summary>
+    /// 会話を表示する。
+    /// </summary>
+    private void ExecuteShowTalk(ShowTalkParam showTalkParam)
+    {
+        BattleRealManager.Instance.ShowTalk(showTalkParam);
+    }
+
+    /// <summary>
+    /// ダイアログを表示する。
+    /// </summary>
+    private void ExecuteShowDialog(ShowDialogParam showDialogParam)
+    {
+        BattleRealManager.Instance.ShowDialog(showDialogParam);
+    }
+
+    /// <summary>
+    /// リアルモードのステートを変更する。
+    /// </summary>
+    private void ExecuteChangeBattleRealState(E_BATTLE_REAL_STATE changeState)
+    {
+        m_BattleRealManager.RequestChangeState(changeState);
+    }
+
+    /// <summary>
+    /// フェードを制御する。
+    /// </summary>
+    private void ExecuteFade(FadeParam fadeParam)
+    {
+        if (FadeManager.Instance == null)
+        {
+            return;
+        }
+
+        FadeManager.Instance.Fade(fadeParam);
     }
 
     /// <summary>
