@@ -11,9 +11,9 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 {
     #region Define
 
-    private class StateCycle : StateCycleBase<BattleRealManager, E_BATTLE_REAL_STATE> { }
+    public class StateCycle : StateCycleBase<BattleRealManager, E_BATTLE_REAL_STATE> { }
 
-    private class InnerState : State<E_BATTLE_REAL_STATE, BattleRealManager>
+    public class InnerState : State<E_BATTLE_REAL_STATE, BattleRealManager>
     {
         public InnerState(E_BATTLE_REAL_STATE state, BattleRealManager target) : base(state, target) { }
         public InnerState(E_BATTLE_REAL_STATE state, BattleRealManager target, StateCycle cycle) : base(state, target, cycle) { }

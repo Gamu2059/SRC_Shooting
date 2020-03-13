@@ -31,10 +31,6 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     public BattleRealPlayerController Player { get; private set; }
 
-    public bool IsLaserType { get; private set; }
-
-    public Action<bool> OnChangeWeaponType;
-
     #endregion
 
     public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
@@ -56,18 +52,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         m_RegisteredPlayer = player;
     }
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-
-        IsLaserType = ParamSet.IsLaserType;
-    }
-
-    public override void OnFinalize()
-    {
-        OnChangeWeaponType = null;
-        base.OnFinalize();
-    }
+    #region Game Cycle
 
     public override void OnStart()
     {
@@ -86,102 +71,30 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
         Player.transform.SetParent(m_PlayerCharaHolder);
         InitPlayerPosition();
+        Player.SetParamSet(ParamSet);
         Player.OnInitialize();
         Player.OnStart();
     }
 
     public override void OnUpdate()
     {
-        if (Player == null)
-        {
-            return;
-        }
-
-        var input = BattleRealInputManager.Instance;
-
-        var moveDir = input.MoveDir;
-        if (moveDir.x != 0 || moveDir.y != 0)
-        {
-            float speed = 0;
-            if (input.Slow == E_INPUT_STATE.STAY)
-            {
-                speed = ParamSet.PlayerSlowMoveSpeed;
-            }
-            else
-            {
-                speed = ParamSet.PlayerBaseMoveSpeed;
-            }
-
-            var move = moveDir.ToVector3XZ() * speed * Time.deltaTime;
-            Player.transform.Translate(move, Space.World);
-        }
-
-        // 移動直後に位置制限を掛ける
-        RestrictPlayerPosition();
-
-        if (input.Shot == E_INPUT_STATE.STAY)
-        {
-            Player.ShotBullet();
-        }
-
-        switch (input.ChargeShot)
-        {
-            case E_INPUT_STATE.DOWN:
-            case E_INPUT_STATE.STAY:
-                Player.ChargeUpdate();
-                break;
-            case E_INPUT_STATE.UP:
-                Player.ChargeRelease();
-                break;
-        }
-
-        if (input.ChangeMode == E_INPUT_STATE.DOWN)
-        {
-            IsLaserType = !IsLaserType;
-            Player.ChangeWeapon();
-            OnChangeWeaponType?.Invoke(IsLaserType);
-        }
-
-        Player.OnUpdate();
+        base.OnUpdate();
+        Player?.OnUpdate();
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-
-        if (Player == null)
-        {
-            return;
-        }
-
-        Player.OnLateUpdate();
+        Player?.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-
-        if (Player == null)
-        {
-            return;
-        }
-
-        Player.OnFixedUpdate();
+        Player?.OnFixedUpdate();
     }
 
-    /// <summary>
-    /// キャラの座標を動体フィールド領域に制限する。
-    /// </summary>
-    private void RestrictPlayerPosition()
-    {
-        if (Player == null)
-        {
-            return;
-        }
-
-        var stageManager = BattleRealStageManager.Instance;
-        stageManager.ClampMovingObjectPosition(Player.transform);
-    }
+    #endregion
 
     public void InitPlayerPosition()
     {
@@ -256,7 +169,7 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
     {
         if (Player != null)
         {
-            if (IsLaserType)
+            if (Player.IsLaserType)
             {
                 Player.ShotLaser();
                 BattleRealCameraManager.Instance.Shake(ParamSet.LaserShakeParam);

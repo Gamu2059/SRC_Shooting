@@ -19,7 +19,7 @@ public class BattleData
     /// <summary>
     /// ステージ
     /// </summary>
-    public E_STATE Stage { get; private set; }
+    public E_STAGE Stage { get; private set; }
 
     /// <summary>
     /// 残機
@@ -108,10 +108,10 @@ public class BattleData
         m_PlayerLevelParamSet = playerLevelParamSet;
 
         GameMode = E_GAME_MODE.STORY;
-        Stage = E_STATE.NORMAL_1;
+        Stage = E_STAGE.NORMAL_1;
     }
 
-    public void ResetData(E_STATE stage)
+    public void ResetData(E_STAGE stage)
     {
         if (m_PlayerLevelParamSet == null)
         {
@@ -140,10 +140,10 @@ public class BattleData
         // ステージに応じて初期値が異なるものを初期化
         switch (stage)
         {
-            case E_STATE.EASY_0:
-            case E_STATE.NORMAL_0:
-            case E_STATE.HARD_0:
-            case E_STATE.HADES_0:
+            case E_STAGE.EASY_0:
+            case E_STAGE.NORMAL_0:
+            case E_STAGE.HARD_0:
+            case E_STAGE.HADES_0:
                 InitData(m_PlayerLevelParamSet.Stage0InitData);
                 break;
             default:

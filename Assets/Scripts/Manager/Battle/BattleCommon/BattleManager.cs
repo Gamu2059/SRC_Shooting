@@ -219,7 +219,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         var battleData = DataManager.Instance.BattleData;
         resultData.ClacScore(battleData);
 
-        GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_STATE.NORMAL_1, DateTime.Now));
+        GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_STAGE.NORMAL_1, DateTime.Now));
 
         RealManager.RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
         HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);

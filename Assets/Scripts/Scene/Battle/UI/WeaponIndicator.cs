@@ -13,20 +13,34 @@ public class WeaponIndicator : ControllableMonoBehavior
     [SerializeField]
     private Animator m_IconAnimator;
 
+    private bool m_SetupCallback;
+
     #region Game Cycle
 
     public override void OnInitialize()
     {
         base.OnInitialize();
-
-        BattleRealPlayerManager.Instance.OnChangeWeaponType += OnChangeWeaponType;
+        m_SetupCallback = false;
     }
 
     public override void OnFinalize()
     {
-        BattleRealPlayerManager.Instance.OnChangeWeaponType -= OnChangeWeaponType;
+        if (BattleRealPlayerManager.Instance.Player != null)
+        {
+            BattleRealPlayerManager.Instance.Player.OnChangeWeaponType -= OnChangeWeaponType;
+        }
 
         base.OnFinalize();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        if (BattleRealPlayerManager.Instance.Player != null && !m_SetupCallback)
+        {
+            m_SetupCallback = true;
+            BattleRealPlayerManager.Instance.Player.OnChangeWeaponType += OnChangeWeaponType;
+        }
     }
 
     #endregion
