@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3742b18b28a2e014db5c2ca912539422, type: 3}
-  m_Name: stage1_006_option001.sequence_option
+  m_Name: stage1_back_camera_006_option001.sequence_option
   m_EditorClassIdentifier: 
   m_CallEvent:
     ContentName: "\u30BF\u30A4\u30E0\u30D4\u30EA\u30AA\u30C9"
@@ -18,10 +18,31 @@ MonoBehaviour:
     EventType: 5
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams: []
     CountStartTimePeriodNames:
     - Goto Surface
