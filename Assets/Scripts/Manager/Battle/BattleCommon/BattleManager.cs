@@ -24,6 +24,9 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     #region Field Inspector
 
+    [SerializeField, Tooltip("緊急で用意した難易度設定パラメータ 本番使用はしません")]
+    private E_DIFFICULTY m_Difficulty = E_DIFFICULTY.NORMAL;
+
     [Header("ParamSet")]
 
     [SerializeField]
@@ -155,6 +158,8 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         BattleHackingUiManager.OnInitialize();
 
         m_GameOverController.OnInitialize();
+
+        DataManager.Instance.BattleData.SetDifficulty(m_Difficulty);
 
         CalcPerfectHackingSuccessNum();
     }

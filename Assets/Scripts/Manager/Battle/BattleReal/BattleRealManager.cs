@@ -29,7 +29,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     private BattleRealParamSet m_ParamSet;
 
     private StateMachine<E_BATTLE_REAL_STATE, BattleRealManager> m_StateMachine;
-
     private Action<E_BATTLE_REAL_STATE> m_OnChangeState;
 
     public BattleRealInputManager InputManager { get; private set; }
@@ -48,6 +47,16 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     public Action OnTransitionToHacking;
     public Action OnTransitionToReal;
+
+    /// <summary>
+    /// カットシーン呼び出し制御用インスタンス
+    /// </summary>
+    private CutsceneCaller m_CutsceneCaller;
+
+    /// <summary>
+    /// 会話呼び出し制御用インスタンス
+    /// </summary>
+    private TalkCaller m_TalkCaller;
 
     #endregion
 
@@ -73,6 +82,9 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.TO_HACKING, this, new ToHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.STAY_HACKING, this, new StayHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.FROM_HACKING, this, new FromHackingState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_CUTSCENE, this, new WaitCutSceneState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_TALK, this, new WaitTalkState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_DIALOG, this, new WaitDialogState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE, this)
         {
             m_OnStart = StartOnBeginBossBattle,
@@ -109,6 +121,9 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         CollisionManager.OnInitialize();
         CameraManager.OnInitialize();
 
+        m_CutsceneCaller = null;
+        m_TalkCaller = null;
+
         RequestChangeState(E_BATTLE_REAL_STATE.START);
 
         m_BattleManager.SetChangeStateCallback(OnChangeStateBattleManager);
@@ -116,6 +131,12 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     public override void OnFinalize()
     {
+        m_TalkCaller?.StopTalk();
+        m_TalkCaller = null;
+
+        m_CutsceneCaller?.StopCutscene();
+        m_CutsceneCaller = null;
+
         m_OnChangeState = null;
 
         CameraManager.OnFinalize();
@@ -213,7 +234,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
         m_StateMachine.Goto(state);
     }
-    
+
     /// <summary>
     /// BattleRealManagerのステート変更時に呼び出すコールバックを設定する。
     /// </summary>
@@ -238,6 +259,83 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     public void GameStart()
     {
         m_BattleManager.GameStart();
+    }
+
+    /// <summary>
+    /// カットシーンを表示する。
+    /// </summary>
+    public void ShowCutscene(ShowCutsceneParam showCutsceneParam)
+    {
+        // 使い切りのはずのインスタンスが存在しているということはカットシーンの重複呼び出しであると解釈する
+        if (m_CutsceneCaller != null)
+        {
+            Debug.LogWarning("カットシーンが存在している時にカットシーンを呼び出すことは禁止しています。");
+            return;
+        }
+
+        m_CutsceneCaller = new CutsceneCaller(showCutsceneParam.CutsceneName,
+            controller =>
+            {
+                RequestChangeState(E_BATTLE_REAL_STATE.WAIT_CUTSCENE);
+            },
+            () =>
+            {
+                m_CutsceneCaller = null;
+                EventManager.AddEventParam(showCutsceneParam.OnCompletedEvents);
+
+                if (showCutsceneParam.AutoChangeToGameState)
+                {
+                    RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+                }
+            },
+            () =>
+            {
+                m_CutsceneCaller = null;
+                Debug.LogWarningFormat("カットシーンの呼び出しに失敗しました。 name : {0}", showCutsceneParam.CutsceneName);
+            });
+    }
+
+    /// <summary>
+    /// 会話を表示する。
+    /// </summary>
+    public void ShowTalk(ShowTalkParam showTalkParam)
+    {
+        // 使い切りのはずのインスタンスが存在しているということは会話の重複呼び出しであると解釈する
+        if (m_TalkCaller != null)
+        {
+            Debug.LogWarning("会話中に会話を呼び出すことは禁止しています。");
+            return;
+        }
+
+        m_TalkCaller = new TalkCaller(showTalkParam.ScenarioLabel,
+            () =>
+            {
+                RequestChangeState(E_BATTLE_REAL_STATE.WAIT_TALK);
+            },
+            () =>
+            {
+                m_TalkCaller = null;
+                EventManager.AddEventParam(showTalkParam.OnCompletedEvents);
+
+                if (showTalkParam.AutoChangeToGameState)
+                {
+                    RequestChangeState(E_BATTLE_REAL_STATE.GAME);
+                }
+            },
+            () =>
+            {
+                m_TalkCaller = null;
+                Debug.LogWarningFormat("会話の呼び出しに失敗しました。 name : {0}", showTalkParam.ScenarioLabel);
+            });
+    }
+
+    /// <summary>
+    /// ダイアログを表示する。
+    /// </summary>
+    public void ShowDialog(ShowDialogParam showDialogParam)
+    {
+        // DialogManager.ShowDialog();
+        // ダイアログ終了時の処理を追加したりもする
     }
 
     public void ToHacking()
