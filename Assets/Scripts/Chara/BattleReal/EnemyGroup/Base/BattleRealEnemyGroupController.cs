@@ -19,7 +19,7 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
     private List<EnemyIndividualGenerateParamSet> m_IndividualParamSets;
     private List<EnemyIndividualGenerateParamSet> m_RemoveIndividualParamSets;
 
-    private List<BattleRealEnemyController> m_CreatedEnemyControllers;
+    private List<BattleRealEnemyBase> m_CreatedEnemyControllers;
 
     private float m_CreateEnemyCount;
 
@@ -46,7 +46,7 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
         base.OnInitialize();
         m_IndividualParamSets = new List<EnemyIndividualGenerateParamSet>();
         m_RemoveIndividualParamSets = new List<EnemyIndividualGenerateParamSet>();
-        m_CreatedEnemyControllers = new List<BattleRealEnemyController>();
+        m_CreatedEnemyControllers = new List<BattleRealEnemyBase>();
     }
 
     public override void OnFinalize()
@@ -166,9 +166,10 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
             return;
         }
 
-        var generateParamSet = individualParamSet.EnemyGenerateParamSet;
-        var behaviorParamSet = individualParamSet.EnemyBehaviorParamSet;
-        var enemy = BattleRealEnemyManager.Instance.CreateEnemy(generateParamSet, behaviorParamSet);
+        //var generateParamSet = individualParamSet.EnemyGenerateParamSet;
+        //var behaviorParamSet = individualParamSet.EnemyBehaviorParamSet;
+        var enemyParam = individualParamSet.EnemyParam;
+        var enemy = BattleRealEnemyManager.Instance.CreateEnemy(enemyParam);
         if (enemy == null)
         {
             return;

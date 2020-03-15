@@ -123,7 +123,7 @@ public class Smasher1Boss1 : System.Object
     //}
 
 
-    public void Updates(BattleRealEnemyController enemyController)
+    public void Updates(BattleRealEnemyBase enemyController)
     {
         if (m_AttackChange)
         {

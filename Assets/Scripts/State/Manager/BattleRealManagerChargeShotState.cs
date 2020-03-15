@@ -15,23 +15,23 @@ partial class BattleRealManager
             });
             TimerManager.Instance.RegistTimer(timer);
 
-            Target.EffectManager.PauseAllEffect();
+            BattleRealEffectManager.Instance.PauseAllEffect();
 
-            var player = Target.PlayerManager.Player;
-            var centerPos = Target.m_BattleManager.BattleRealStageManager.CalcViewportPosFromWorldPosition(player.transform, false);
+            var player = BattleRealPlayerManager.Instance.Player;
+            var centerPos = BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(player.transform, false);
 
             // StageManagerは原点が中央にあるため、原点をずらす
             centerPos += Vector2.one * 0.5f;
 
-            Target.m_BattleManager.BattleRealUiManager.FrontViewEffect.PlayEffect(centerPos);
+            BattleRealUiManager.Instance.FrontViewEffect.PlayEffect(centerPos);
         }
 
         public override void OnEnd()
         {
             base.OnEnd();
-            Target.m_BattleManager.BattleRealUiManager.FrontViewEffect.StopEffect();
-            Target.EffectManager.ResumeAllEffect();
-            Target.PlayerManager.ChargeShot();
+            BattleRealUiManager.Instance.FrontViewEffect.StopEffect();
+            BattleRealEffectManager.Instance.ResumeAllEffect();
+            BattleRealPlayerManager.Instance.ChargeShot();
         }
     }
 }

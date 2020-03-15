@@ -27,7 +27,7 @@ public class WeaponIndicator : ControllableMonoBehavior
     {
         if (BattleRealPlayerManager.Instance.Player != null)
         {
-            BattleRealPlayerManager.Instance.Player.OnChangeWeaponType -= OnChangeWeaponType;
+            BattleRealPlayerManager.Instance.Player.ChangeWeaponTypeAction -= OnChangeWeaponType;
         }
 
         base.OnFinalize();
@@ -39,7 +39,7 @@ public class WeaponIndicator : ControllableMonoBehavior
         if (BattleRealPlayerManager.Instance.Player != null && !m_SetupCallback)
         {
             m_SetupCallback = true;
-            BattleRealPlayerManager.Instance.Player.OnChangeWeaponType += OnChangeWeaponType;
+            BattleRealPlayerManager.Instance.Player.ChangeWeaponTypeAction += OnChangeWeaponType;
         }
     }
 

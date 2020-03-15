@@ -6,10 +6,8 @@ using System.Linq;
 /// <summary>
 /// リアルモードのアイテムを管理するマネージャ。
 /// </summary>
-public class BattleRealItemManager : ControllableObject, IColliderProcess
+public class BattleRealItemManager : Singleton<BattleRealItemManager>, IColliderProcess
 {
-    public static BattleRealItemManager Instance => BattleRealManager.Instance.ItemManager;
-
     #region Field
 
     private BattleRealItemManagerParamSet m_ParamSet;
@@ -44,10 +42,17 @@ public class BattleRealItemManager : ControllableObject, IColliderProcess
 
     #endregion
 
-
-    public BattleRealItemManager(BattleRealItemManagerParamSet paramSet)
+    public static BattleRealItemManager Builder(BattleRealManager realManager, BattleRealItemManagerParamSet param)
     {
-        m_ParamSet = paramSet;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleRealItemManagerParamSet param)
+    {
+        m_ParamSet = param;
     }
 
     #region Game Cycle

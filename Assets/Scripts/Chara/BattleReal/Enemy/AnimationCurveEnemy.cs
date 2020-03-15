@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationCurveEnemy : BattleRealEnemyController
+public class AnimationCurveEnemy : BattleRealEnemyBase
 {
     protected AnimationCurve m_SpeedCurve;
     protected AnimationCurve m_AngleSpeedCurve;
@@ -25,15 +25,15 @@ public class AnimationCurveEnemy : BattleRealEnemyController
     {
         base.OnSetParamSet();
 
-        if (BehaviorParamSet is AnimationCurveEnemyParamSet paramSet)
-        {
-            m_SpeedCurve = paramSet.SpeedCurve;
-            m_AngleSpeedCurve = paramSet.AngleSpeedCurve;
-            m_ShotParam = paramSet.ShotParam;
-            m_ShotOffset = paramSet.ShotOffset;
-            m_ShotStop = paramSet.ShotStop;
-            m_IsRingAnimationOnStart = paramSet.IsStartAnimationOnStart;
-        }
+        //if (BehaviorParamSet is AnimationCurveEnemyParamSet paramSet)
+        //{
+        //    m_SpeedCurve = paramSet.SpeedCurve;
+        //    m_AngleSpeedCurve = paramSet.AngleSpeedCurve;
+        //    m_ShotParam = paramSet.ShotParam;
+        //    m_ShotOffset = paramSet.ShotOffset;
+        //    m_ShotStop = paramSet.ShotStop;
+        //    m_IsRingAnimationOnStart = paramSet.IsStartAnimationOnStart;
+        //}
     }
 
     public override void OnStart()
@@ -51,7 +51,7 @@ public class AnimationCurveEnemy : BattleRealEnemyController
         m_NowSpeed = 0;
         m_NowAngleSpeed = 0;
 
-        m_IsLookMoveDir = false;
+        IsLookMoveDir = false;
 
         if(m_IsRingAnimationOnStart)
         {

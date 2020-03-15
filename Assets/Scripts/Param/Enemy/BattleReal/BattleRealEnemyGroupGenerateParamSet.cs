@@ -57,6 +57,10 @@ public class EnemyIndividualGenerateParamSet
     public float GenerateAngle => m_GenerateAngle;
 
     [SerializeField]
+    private BattleRealEnemyParamBase m_EnemyParam;
+    public BattleRealEnemyParamBase EnemyParam => m_EnemyParam;
+
+    [SerializeField]
     private BattleRealEnemyGenerateParamSet m_EnemyGenerateParamSet = default;
     public BattleRealEnemyGenerateParamSet EnemyGenerateParamSet => m_EnemyGenerateParamSet;
 

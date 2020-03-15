@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ryukeiningyo : BattleRealEnemyController
+public class Ryukeiningyo : BattleRealEnemyBase
 {
 
     // 発射間隔

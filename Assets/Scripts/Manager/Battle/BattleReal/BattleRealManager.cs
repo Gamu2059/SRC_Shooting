@@ -21,32 +21,11 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     #endregion
 
-    public static BattleRealManager Instance { get; private set; }
-
     #region Field
 
-    private BattleManager m_BattleManager;
     private BattleRealParamSet m_ParamSet;
-
     private StateMachine<E_BATTLE_REAL_STATE, BattleRealManager> m_StateMachine;
-    private Action<E_BATTLE_REAL_STATE> m_OnChangeState;
-
-    public BattleRealInputManager InputManager { get; private set; }
-    public BattleRealTimerManager RealTimerManager { get; private set; }
-    public BattleRealEventManager EventManager { get; private set; }
-    public BattleRealPlayerManager PlayerManager { get; private set; }
-    public BattleRealEnemyGroupManager EnemyGroupManager { get; private set; }
-    public BattleRealEnemyManager EnemyManager { get; private set; }
-    public BattleRealBulletManager BulletManager { get; private set; }
-    public BattleRealItemManager ItemManager { get; private set; }
-    public BattleRealEffectManager EffectManager { get; private set; }
-    public BattleRealCollisionManager CollisionManager { get; private set; }
-    public BattleRealCameraManager CameraManager { get; private set; }
-
     private bool m_IsPlayerDead;
-
-    public Action OnTransitionToHacking;
-    public Action OnTransitionToReal;
 
     /// <summary>
     /// カットシーン呼び出し制御用インスタンス
@@ -60,11 +39,37 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     #endregion
 
-    public BattleRealManager(BattleManager battleManager, BattleRealParamSet paramSet)
+    #region Open Callback
+
+    public Action<E_BATTLE_REAL_STATE> ChangeStateAction { get; set; }
+
+    #endregion
+
+    #region Closed Callback
+
+    private Action<E_BATTLE_STATE> RequestChangeStateBattleManagerAction { get; set; }
+    private Action ForceExitGameAction { get; set; }
+
+    #endregion
+
+    public static BattleRealManager Builder(BattleManager battleManager, BattleRealParamSet param)
     {
-        m_BattleManager = battleManager;
+        var manager = new BattleRealManager();
+        manager.SetParam(param);
+        manager.SetCallback(battleManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleRealParamSet paramSet)
+    {
         m_ParamSet = paramSet;
-        Instance = this;
+    }
+
+    private void SetCallback(BattleManager manager)
+    {
+        RequestChangeStateBattleManagerAction += manager.RequestChangeState;
+        ForceExitGameAction += manager.ExitGame;
     }
 
     #region Game Cycle
@@ -74,7 +79,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         base.OnInitialize();
 
         m_StateMachine = new StateMachine<E_BATTLE_REAL_STATE, BattleRealManager>();
-
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.START, this, new StartState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME, this, new GameState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.DEAD, this, new DeadState()));
@@ -85,48 +89,25 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_CUTSCENE, this, new WaitCutSceneState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_TALK, this, new WaitTalkState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.WAIT_DIALOG, this, new WaitDialogState()));
-        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.BEGIN_BOSS_BATTLE, this)
-        {
-            m_OnStart = StartOnBeginBossBattle,
-            m_OnUpdate = UpdateOnBeginBossBattle,
-            m_OnLateUpdate = LateUpdateOnBeginBossBattle,
-            m_OnFixedUpdate = FixedUpdateOnBeginBossBattle,
-            m_OnEnd = EndOnBeginBossBattle,
-        });
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME_CLEAR, this, new GameClearState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME_OVER, this, new GameOverState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.END, this, new EndState()));
 
-        InputManager = new BattleRealInputManager();
-        RealTimerManager = new BattleRealTimerManager();
-        EventManager = new BattleRealEventManager(this, m_ParamSet.EventTriggerParamSet);
-        PlayerManager = new BattleRealPlayerManager(m_ParamSet.PlayerManagerParamSet);
-        EnemyGroupManager = new BattleRealEnemyGroupManager(m_ParamSet.EnemyGroupManagerParamSet);
-        EnemyManager = new BattleRealEnemyManager(m_ParamSet.EnemyManagerParamSet);
-        BulletManager = new BattleRealBulletManager(m_ParamSet.BulletManagerParamSet);
-        ItemManager = new BattleRealItemManager(m_ParamSet.ItemManagerParamSet);
-        EffectManager = new BattleRealEffectManager();
-        CollisionManager = new BattleRealCollisionManager(m_BattleManager.ParamSet.ColliderMaterial);
-        CameraManager = new BattleRealCameraManager();
-
-        InputManager.OnInitialize();
-        RealTimerManager.OnInitialize();
-        EventManager.OnInitialize();
-        PlayerManager.OnInitialize();
-        EnemyGroupManager.OnInitialize();
-        EnemyManager.OnInitialize();
-        BulletManager.OnInitialize();
-        ItemManager.OnInitialize();
-        EffectManager.OnInitialize();
-        CollisionManager.OnInitialize();
-        CameraManager.OnInitialize();
+        BattleRealInputManager.Builder();
+        BattleRealTimerManager.Builder();
+        BattleRealEventManager.Builder(this, m_ParamSet.EventTriggerParamSet);
+        BattleRealPlayerManager.Builder(this, m_ParamSet.PlayerManagerParamSet);
+        BattleRealEnemyGroupManager.Builder();
+        BattleRealEnemyManager.Builder(this, m_ParamSet.EnemyManagerParamSet);
+        BattleRealBulletManager.Builder(this, m_ParamSet.BulletManagerParamSet);
+        BattleRealItemManager.Builder(this, m_ParamSet.ItemManagerParamSet);
+        BattleRealEffectManager.Builder(this);
+        BattleRealCollisionManager.Builder();
+        BattleRealCameraManager.Instance.OnInitialize();
+        BattleRealUiManager.Instance.OnInitialize();
 
         m_CutsceneCaller = null;
         m_TalkCaller = null;
-
-        RequestChangeState(E_BATTLE_REAL_STATE.START);
-
-        m_BattleManager.SetChangeStateCallback(OnChangeStateBattleManager);
     }
 
     public override void OnFinalize()
@@ -137,115 +118,57 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_CutsceneCaller?.StopCutscene();
         m_CutsceneCaller = null;
 
-        m_OnChangeState = null;
+        ForceExitGameAction = null;
+        RequestChangeStateBattleManagerAction = null;
+        ChangeStateAction = null;
 
-        CameraManager.OnFinalize();
-        CollisionManager.OnFinalize();
-        EffectManager.OnFinalize();
-        ItemManager.OnFinalize();
-        BulletManager.OnFinalize();
-        EnemyManager.OnFinalize();
-        EnemyGroupManager.OnFinalize();
-        PlayerManager.OnFinalize();
-        EventManager.OnFinalize();
-        RealTimerManager.OnFinalize();
-        InputManager.OnFinalize();
-
+        BattleRealUiManager.Instance.OnFinalize();
+        BattleRealCameraManager.Instance.OnFinalize();
+        BattleRealCollisionManager.Instance.OnFinalize();
+        BattleRealEffectManager.Instance.OnFinalize();
+        BattleRealItemManager.Instance.OnFinalize();
+        BattleRealBulletManager.Instance.OnFinalize();
+        BattleRealEnemyManager.Instance.OnFinalize();
+        BattleRealEnemyGroupManager.Instance.OnFinalize();
+        BattleRealPlayerManager.Instance.OnFinalize();
+        BattleRealEventManager.Instance.OnFinalize();
+        BattleRealTimerManager.Instance.OnFinalize();
+        BattleRealInputManager.Instance.OnFinalize();
         m_StateMachine.OnFinalize();
-
-        Instance = null;
-
         base.OnFinalize();
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-
         m_StateMachine.OnUpdate();
 
-        if (InputManager.Menu == E_INPUT_STATE.DOWN)
+        if (BattleRealInputManager.Instance.Menu == E_INPUT_STATE.DOWN)
         {
-            m_BattleManager.ExitGame();
+            ForceExitGameAction?.Invoke();
         }
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-
         m_StateMachine.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-
         m_StateMachine.OnFixedUpdate();
     }
 
     #endregion
-
-    #region Begin Boss Battle State
-
-    private void StartOnBeginBossBattle()
-    {
-        EnemyGroupManager.CreateBossGroup();
-        m_BattleManager.BattleRealUiManager.SetEnableBossUI(true);
-        RequestChangeState(E_BATTLE_REAL_STATE.GAME);
-    }
-
-    private void UpdateOnBeginBossBattle()
-    {
-
-    }
-
-    private void LateUpdateOnBeginBossBattle()
-    {
-
-    }
-
-    private void FixedUpdateOnBeginBossBattle()
-    {
-
-    }
-
-    private void EndOnBeginBossBattle()
-    {
-
-    }
-
-    #endregion
-
-    private void OnChangeStateBattleManager(E_BATTLE_STATE nextState)
-    {
-        Debug.Log(nextState);
-    }
 
     /// <summary>
     /// BattleRealManagerのステートを変更する。
     /// </summary>
     public void RequestChangeState(E_BATTLE_REAL_STATE state)
     {
-        if (m_StateMachine == null)
-        {
-            return;
-        }
-
-        m_StateMachine.Goto(state);
-    }
-
-    /// <summary>
-    /// BattleRealManagerのステート変更時に呼び出すコールバックを設定する。
-    /// </summary>
-    public void SetChangeStateCallback(Action<E_BATTLE_REAL_STATE> callback)
-    {
-        m_OnChangeState += callback;
-    }
-
-    public void OnChangeState(E_BATTLE_REAL_STATE state)
-    {
-        m_OnChangeState?.Invoke(state);
+        m_StateMachine?.Goto(state);
     }
 
     /// <summary>
@@ -254,11 +177,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     public void DeadPlayer()
     {
         m_IsPlayerDead = true;
-    }
-
-    public void GameStart()
-    {
-        m_BattleManager.GameStart();
     }
 
     /// <summary>
@@ -281,7 +199,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
             () =>
             {
                 m_CutsceneCaller = null;
-                EventManager.AddEventParam(showCutsceneParam.OnCompletedEvents);
+                BattleRealEventManager.Instance.AddEventParam(showCutsceneParam.OnCompletedEvents);
 
                 if (showCutsceneParam.AutoChangeToGameState)
                 {
@@ -315,7 +233,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
             () =>
             {
                 m_TalkCaller = null;
-                EventManager.AddEventParam(showTalkParam.OnCompletedEvents);
+                BattleRealEventManager.Instance.AddEventParam(showTalkParam.OnCompletedEvents);
 
                 if (showTalkParam.AutoChangeToGameState)
                 {
@@ -338,33 +256,33 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         // ダイアログ終了時の処理を追加したりもする
     }
 
-    public void ToHacking()
-    {
-        m_BattleManager.RequestChangeState(E_BATTLE_STATE.TO_HACKING);
-    }
-
-    public void BossBattleStart()
-    {
-        m_BattleManager.BossBattleStart();
-    }
-
     public void GameClearWithoutHackingComplete()
     {
-        m_BattleManager.GameClearWithoutHackingComplete();
+        DataManager.Instance.BattleData.SetHackingComplete(false);
+        RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
     }
 
     public void GameClearWithHackingComplete()
     {
-        m_BattleManager.GameClearWithHackingComplete();
+        DataManager.Instance.BattleData.SetHackingComplete(true);
+        RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
     }
 
     public void GameOver()
     {
-        m_BattleManager.GameOver();
+        RequestChangeState(E_BATTLE_REAL_STATE.GAME_OVER);
+    }
+
+    /// <summary>
+    /// ハッキング開始をリクエストする。
+    /// </summary>
+    public void RequestStartHacking()
+    {
+        RequestChangeStateBattleManagerAction?.Invoke(E_BATTLE_STATE.TO_HACKING);
     }
 
     public void End()
     {
-        m_BattleManager.RequestChangeState(E_BATTLE_STATE.END);
+        RequestChangeStateBattleManagerAction?.Invoke(E_BATTLE_STATE.END);
     }
 }

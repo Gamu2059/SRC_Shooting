@@ -7,19 +7,8 @@ using System;
 /// ハッキングモードのエフェクトを管理する。
 /// </summary>
 [Serializable]
-public class BattleHackingEffectManager : ControllableObject
+public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
 {
-    public static BattleHackingEffectManager Instance {
-        get {
-            if (BattleHackingManager.Instance == null)
-            {
-                return null;
-            }
-
-            return BattleHackingManager.Instance.EffectManager;
-        }
-    }
-
     #region Field
 
     private Transform m_EffectHolder;
@@ -46,9 +35,11 @@ public class BattleHackingEffectManager : ControllableObject
 
     #endregion
 
-    public BattleHackingEffectManager()
+    public static BattleHackingEffectManager Builder()
     {
-
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
     }
 
     #region Game Cycle

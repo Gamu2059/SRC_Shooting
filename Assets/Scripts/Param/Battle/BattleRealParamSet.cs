@@ -18,10 +18,6 @@ public class BattleRealParamSet : ScriptableObject
     public BattleRealPlayerManagerParamSet PlayerManagerParamSet => m_PlayerManagerParamSet;
 
     [SerializeField]
-    private BattleRealEnemyGroupManagerParamSet m_EnemyGroupManagerParamSet;
-    public BattleRealEnemyGroupManagerParamSet EnemyGroupManagerParamSet => m_EnemyGroupManagerParamSet;
-
-    [SerializeField]
     private BattleRealEnemyManagerParamSet m_EnemyManagerParamSet;
     public BattleRealEnemyManagerParamSet EnemyManagerParamSet => m_EnemyManagerParamSet;
 

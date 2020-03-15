@@ -58,7 +58,7 @@ public class BattleRealItemController : BattleRealObjectBase
 
     public int ItemPoint { get; private set; }
 
-    private HitSufferController<CharaController> m_CharaSuffer;
+    private HitSufferController<BattleRealCharaController> m_CharaSuffer;
 
     #endregion
 
@@ -196,7 +196,7 @@ public class BattleRealItemController : BattleRealObjectBase
     {
         base.OnAwake();
 
-        m_CharaSuffer = new HitSufferController<CharaController>();
+        m_CharaSuffer = new HitSufferController<BattleRealCharaController>();
     }
 
     protected override void OnDestroyed()
@@ -387,12 +387,12 @@ public class BattleRealItemController : BattleRealObjectBase
     /// <param name="attackData">他のキャラの衝突情報</param>
     /// <param name="targetData">このキャラの衝突情報</param>
     /// <param name="hitPosList">衝突座標リスト</param>
-    public void SufferChara(CharaController attackChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    public void SufferChara(BattleRealCharaController attackChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
         m_CharaSuffer.Put(attackChara, attackData, targetData, hitPosList);
     }
 
-    protected virtual void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    protected virtual void OnEnterSufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
         var selfColliderType = sufferData.SufferCollider.Transform.ColliderType;
         if (selfColliderType == E_COLLIDER_TYPE.ITEM_GAIN)
@@ -401,12 +401,12 @@ public class BattleRealItemController : BattleRealObjectBase
         }
     }
 
-    protected virtual void OnStaySufferChara(HitSufferData<CharaController> sufferData)
+    protected virtual void OnStaySufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
 
     }
 
-    protected virtual void OnExitSufferChara(HitSufferData<CharaController> sufferData)
+    protected virtual void OnExitSufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
 
     }

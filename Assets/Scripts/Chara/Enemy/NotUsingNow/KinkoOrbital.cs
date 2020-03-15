@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoOrbital : BattleRealEnemyController
+public class KinkoOrbital : BattleRealEnemyBase
 {
     // 発射間隔
     [SerializeField]

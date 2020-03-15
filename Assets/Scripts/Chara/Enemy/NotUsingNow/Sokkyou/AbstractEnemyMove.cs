@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public abstract class AbstractEnemyMove : BattleRealEnemyController
+public abstract class AbstractEnemyMove : BattleRealEnemyBase
 {
     // その形態になってからの経過時間// 起動してからの経過時間(時刻)
     protected float m_Time;

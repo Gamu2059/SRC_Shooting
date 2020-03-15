@@ -103,7 +103,7 @@ public class UDAswObject : System.Object
 
 
     // Update is called once per frame
-    public void Updates(BattleRealEnemyController enemyController,float time)
+    public void Updates(BattleRealEnemyBase enemyController,float time)
     {
         Judge(time);
 
@@ -220,7 +220,7 @@ public class UDAswObject : System.Object
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
+    public void ShotBullets(BattleRealEnemyBase enemyController, float launchTime, float dTime)
     {
 
         float pastRad = angleSpeed * launchTime;

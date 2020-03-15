@@ -11,7 +11,7 @@ public class EchoBulletIndexGenerater
     public const int INDEX_MAX_VALUE = 10000;
 
     private int m_CurrentIndex = 0;
-    private Dictionary<int, List<CharaController>> m_HitHistory;
+    private Dictionary<int, List<BattleRealCharaController>> m_HitHistory;
 
     public static EchoBulletIndexGenerater Instance {
         get;
@@ -21,7 +21,7 @@ public class EchoBulletIndexGenerater
     private EchoBulletIndexGenerater()
     {
         m_CurrentIndex = 0;
-        m_HitHistory = new Dictionary<int, List<CharaController>>();
+        m_HitHistory = new Dictionary<int, List<BattleRealCharaController>>();
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class EchoBulletIndexGenerater
     /// <summary>
     /// 指定したインデックスの弾に対して被弾したキャラを登録する。
     /// </summary>
-    public void RegisterHitChara(int index, CharaController chara)
+    public void RegisterHitChara(int index, BattleRealCharaController chara)
     {
         if (chara == null)
         {
@@ -98,7 +98,7 @@ public class EchoBulletIndexGenerater
 
         if (!m_HitHistory.ContainsKey(index))
         {
-            m_HitHistory.Add(index, new List<CharaController>());
+            m_HitHistory.Add(index, new List<BattleRealCharaController>());
         }
 
         if (m_HitHistory[index].Contains(chara))
@@ -112,7 +112,7 @@ public class EchoBulletIndexGenerater
     /// <summary>
     /// 指定したインデックスに対してキャラが登録されているかどうかを返す。
     /// </summary>
-    public bool IsRegisteredChara(int index, CharaController chara)
+    public bool IsRegisteredChara(int index, BattleRealCharaController chara)
     {
         if (chara == null || !m_HitHistory.ContainsKey(index))
         {

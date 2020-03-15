@@ -17,21 +17,32 @@ public class HackingEnemyHpIndicator : MonoBehaviour
     private float m_TargetNowHp;
     private float m_TargetMaxHp;
 
-    private BattleHackingEnemyController GetTarget(){
-        foreach (var enemy in BattleHackingEnemyManager.Instance.Enemies)
+    private BattleHackingEnemyController GetTarget()
+    {
+
+        if (BattleHackingEnemyManager.Instance == null)
         {
-            if(enemy.IsBoss){
+            return null;
+        }
+
+        var bossEnemies = BattleHackingEnemyManager.Instance.BossEnemies;
+        foreach (var enemy in bossEnemies)
+        {
+            if (enemy.IsBoss)
+            {
                 return enemy;
             }
         }
         return null;
     }
 
-    public void ResetIndicator(){
+    public void ResetIndicator()
+    {
         m_Target = GetTarget();
 
-        if(m_Target == null){
-            return;    
+        if (m_Target == null)
+        {
+            return;
         }
 
         m_TargetNowHp = m_Target.NowHp;
@@ -49,15 +60,19 @@ public class HackingEnemyHpIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(BattleHackingManager.Instance == null){
+        if (BattleHackingEnemyManager.Instance == null)
+        {
             return;
         }
-
-        if(m_Target == null){
+        if (m_Target == null)
+        {
             ResetIndicator();
-        }else{
+        }
+        else
+        {
             float currentNowHp = m_Target.NowHp;
-            if(m_TargetNowHp != currentNowHp){
+            if (m_TargetNowHp != currentNowHp)
+            {
                 m_TargetNowHp = currentNowHp;
                 m_OutText.text = m_OutText.text = string.Format("{0}/{1}", m_TargetNowHp, m_TargetMaxHp);
             }

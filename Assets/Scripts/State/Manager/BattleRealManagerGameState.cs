@@ -5,71 +5,75 @@
         public override void OnStart()
         {
             base.OnStart();
+            BattleRealUiManager.Instance.SetAlpha(1);
             Target.m_IsPlayerDead = false;
-            Target.InputManager.RegistInput();
+            BattleRealInputManager.Instance.RegistInput();
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
             // 消滅の更新
-            Target.EnemyGroupManager.GotoPool();
-            Target.EnemyManager.GotoPool();
-            Target.BulletManager.GotoPool();
-            Target.ItemManager.GotoPool();
-            Target.EffectManager.GotoPool();
-            Target.CollisionManager.DestroyDrawingColliderMeshes();
+            BattleRealEnemyGroupManager.Instance.GotoPool();
+            BattleRealEnemyManager.Instance.GotoPool();
+            BattleRealBulletManager.Instance.GotoPool();
+            BattleRealItemManager.Instance.GotoPool();
+            BattleRealEffectManager.Instance.GotoPool();
+            BattleRealCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
-            Target.InputManager.OnUpdate();
-            Target.RealTimerManager.OnUpdate();
-            Target.EventManager.OnUpdate();
-            Target.PlayerManager.OnUpdate();
-            Target.EnemyGroupManager.OnUpdate();
-            Target.EnemyManager.OnUpdate();
-            Target.BulletManager.OnUpdate();
-            Target.ItemManager.OnUpdate();
-            Target.EffectManager.OnUpdate();
-            Target.CameraManager.OnUpdate();
+            BattleRealInputManager.Instance.OnUpdate();
+            BattleRealTimerManager.Instance.OnUpdate();
+            BattleRealEventManager.Instance.OnUpdate();
+            BattleRealPlayerManager.Instance.OnUpdate();
+            BattleRealEnemyGroupManager.Instance.OnUpdate();
+            BattleRealEnemyManager.Instance.OnUpdate();
+            BattleRealBulletManager.Instance.OnUpdate();
+            BattleRealItemManager.Instance.OnUpdate();
+            BattleRealEffectManager.Instance.OnUpdate();
+            BattleRealCameraManager.Instance.OnUpdate();
+            BattleRealUiManager.Instance.OnUpdate();
         }
 
         public override void OnLateUpdate()
         {
             base.OnLateUpdate();
-            Target.RealTimerManager.OnLateUpdate();
-            Target.EventManager.OnLateUpdate();
-            Target.PlayerManager.OnLateUpdate();
-            Target.EnemyGroupManager.OnLateUpdate();
-            Target.EnemyManager.OnLateUpdate();
-            Target.BulletManager.OnLateUpdate();
-            Target.ItemManager.OnLateUpdate();
-            Target.EffectManager.OnLateUpdate();
-            Target.CameraManager.OnLateUpdate();
+            BattleRealTimerManager.Instance.OnLateUpdate();
+            BattleRealEventManager.Instance.OnLateUpdate();
+            //BattleRealPlayerManager.Instance.OnLateUpdate();
+            BattleRealEnemyGroupManager.Instance.OnLateUpdate();
+            BattleRealEnemyManager.Instance.OnLateUpdate();
+            BattleRealBulletManager.Instance.OnLateUpdate();
+            BattleRealItemManager.Instance.OnLateUpdate();
+            BattleRealEffectManager.Instance.OnLateUpdate();
+            BattleRealCameraManager.Instance.OnLateUpdate();
+            BattleRealUiManager.Instance.OnLateUpdate();
 
             // 衝突フラグクリア
-            Target.PlayerManager.ClearColliderFlag();
-            Target.EnemyManager.ClearColliderFlag();
-            Target.BulletManager.ClearColliderFlag();
-            Target.ItemManager.ClearColliderFlag();
+            BattleRealPlayerManager.Instance.ClearColliderFlag();
+            BattleRealEnemyManager.Instance.ClearColliderFlag();
+            BattleRealBulletManager.Instance.ClearColliderFlag();
+            BattleRealItemManager.Instance.ClearColliderFlag();
 
             // 衝突情報の更新
-            Target.PlayerManager.UpdateCollider();
-            Target.EnemyManager.UpdateCollider();
-            Target.BulletManager.UpdateCollider();
-            Target.ItemManager.UpdateCollider();
+            BattleRealPlayerManager.Instance.UpdateCollider();
+            BattleRealEnemyManager.Instance.UpdateCollider();
+            BattleRealBulletManager.Instance.UpdateCollider();
+            BattleRealItemManager.Instance.UpdateCollider();
 
             // 衝突判定処理
-            Target.CollisionManager.CheckCollision();
-            Target.CollisionManager.DrawCollider();
+            BattleRealCollisionManager.Instance.CheckCollision();
+            BattleRealCollisionManager.Instance.DrawCollider();
 
             // 衝突処理
-            Target.PlayerManager.ProcessCollision();
-            Target.EnemyManager.ProcessCollision();
-            Target.BulletManager.ProcessCollision();
-            Target.ItemManager.ProcessCollision();
+            BattleRealPlayerManager.Instance.ProcessCollision();
+            BattleRealEnemyManager.Instance.ProcessCollision();
+            BattleRealBulletManager.Instance.ProcessCollision();
+            BattleRealItemManager.Instance.ProcessCollision();
 
             CheckDeadPlayer();
         }
 
+        // この処理はPull型通知だが、いずれPush型通知でプレイヤーの死亡を処理するように作り直す
         private void CheckDeadPlayer()
         {
             if (Target.m_IsPlayerDead)
@@ -81,21 +85,22 @@
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            Target.RealTimerManager.OnFixedUpdate();
-            Target.EventManager.OnFixedUpdate();
-            Target.PlayerManager.OnFixedUpdate();
-            Target.EnemyGroupManager.OnFixedUpdate();
-            Target.EnemyManager.OnFixedUpdate();
-            Target.BulletManager.OnFixedUpdate();
-            Target.ItemManager.OnFixedUpdate();
-            Target.EffectManager.OnFixedUpdate();
-            Target.CameraManager.OnFixedUpdate();
+            BattleRealTimerManager.Instance.OnFixedUpdate();
+            BattleRealEventManager.Instance.OnFixedUpdate();
+            BattleRealPlayerManager.Instance.OnFixedUpdate();
+            BattleRealEnemyGroupManager.Instance.OnFixedUpdate();
+            BattleRealEnemyManager.Instance.OnFixedUpdate();
+            BattleRealBulletManager.Instance.OnFixedUpdate();
+            BattleRealItemManager.Instance.OnFixedUpdate();
+            BattleRealEffectManager.Instance.OnFixedUpdate();
+            BattleRealCameraManager.Instance.OnFixedUpdate();
+            BattleRealUiManager.Instance.OnFixedUpdate();
         }
 
         public override void OnEnd()
         {
             base.OnEnd();
-            Target.InputManager.RemoveInput();
+            BattleRealInputManager.Instance.RemoveInput();
         }
     }
 }

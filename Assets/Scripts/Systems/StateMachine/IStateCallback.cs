@@ -1,4 +1,6 @@
-﻿public interface IStateCallback<T>
+﻿using System;
+
+public interface IStateCallback<T>
 {
-    void OnChangeState(T state);
+    Action<T> ChangeStateAction { get; set; }
 }

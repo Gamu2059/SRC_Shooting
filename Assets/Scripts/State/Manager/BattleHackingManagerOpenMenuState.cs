@@ -1,18 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BattleHackingManagerOpenMenuState : MonoBehaviour
+﻿partial class BattleHackingManager
 {
-    // Start is called before the first frame update
-    void Start()
+    private class OpenMenuState : StateCycle
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

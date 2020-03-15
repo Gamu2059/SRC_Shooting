@@ -11,13 +11,26 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/Sequence/Unit/Animation", fileName = "animation.sequence_unit.asset", order = 0)]
 public class SequenceUnitAnimation : SequenceUnit
 {
+    #region Define
+
+    [Serializable]
+    private struct InitData
+    {
+        public Vector3 Data;
+        public bool IsPassX;
+        public bool IsPassY;
+        public bool IsPassZ;
+    }
+
+    #endregion
+
     [Header("Animation Parameter")]
 
     [SerializeField]
-    private Vector3 m_InitWorldPosition;
+    private InitData m_InitializeWorldPosition;
 
     [SerializeField]
-    private Vector3 m_InitEulerAngles;
+    private InitData m_InitializeEulerAngles;
 
     [SerializeField]
     private float m_Duration;
@@ -25,12 +38,17 @@ public class SequenceUnitAnimation : SequenceUnit
     [SerializeField]
     private BattleAnimationParam m_AnimationParam;
 
+    private Vector3 m_CalcedInitPosition;
+    private Vector3 m_CalcedInitRotation;
+
     protected override void OnStart()
     {
         base.OnStart();
 
-        Target.position = m_InitWorldPosition;
-        Target.eulerAngles = m_InitEulerAngles;
+        m_CalcedInitPosition = GetInitData(Target.position, m_InitializeWorldPosition);
+        m_CalcedInitRotation = GetInitData(Target.eulerAngles, m_InitializeEulerAngles);
+        Target.position = m_CalcedInitPosition;
+        Target.eulerAngles = m_CalcedInitRotation;
     }
 
     protected override void OnUpdate(float deltaTime)
@@ -52,20 +70,40 @@ public class SequenceUnitAnimation : SequenceUnit
 
     public override void GetStartTransform(Transform target, out Vector3 position, out Vector3 rotate)
     {
-        position = m_InitWorldPosition;
-        rotate = m_InitWorldPosition;
+        position = GetInitData(target.position, m_InitializeWorldPosition);
+        rotate = GetInitData(target.eulerAngles, m_InitializeEulerAngles);
+    }
+
+    private Vector3 GetInitData(Vector3 origin, InitData initData)
+    {
+        if (!initData.IsPassX)
+        {
+            origin.x = initData.Data.x;
+        }
+
+        if (!initData.IsPassY)
+        {
+            origin.y = initData.Data.y;
+        }
+
+        if (!initData.IsPassZ)
+        {
+            origin.z = initData.Data.z;
+        }
+
+        return origin;
     }
 
     private void ApplyAnimation(Transform target)
     {
         if (m_AnimationParam.UsePosition)
         {
-            target.position = GetAnimVector(ref m_AnimationParam.Position, CurrentTime, ref m_InitWorldPosition);
+            target.position = GetAnimVector(ref m_AnimationParam.Position, CurrentTime, ref m_CalcedInitPosition);
         }
 
         if (m_AnimationParam.UseRotation)
         {
-            target.eulerAngles = GetAnimVector(ref m_AnimationParam.Rotation, CurrentTime, ref m_InitEulerAngles);
+            target.eulerAngles = GetAnimVector(ref m_AnimationParam.Rotation, CurrentTime, ref m_CalcedInitRotation);
         }
     }
 
@@ -73,12 +111,12 @@ public class SequenceUnitAnimation : SequenceUnit
     {
         if (m_AnimationParam.UsePosition)
         {
-            target.position = GetEndVector(ref m_AnimationParam.Position, ref m_InitWorldPosition);
+            target.position = GetEndVector(ref m_AnimationParam.Position, ref m_CalcedInitPosition);
         }
 
         if (m_AnimationParam.UseRotation)
         {
-            target.eulerAngles = GetEndVector(ref m_AnimationParam.Rotation, ref m_InitEulerAngles);
+            target.eulerAngles = GetEndVector(ref m_AnimationParam.Rotation, ref m_CalcedInitRotation);
         }
     }
 

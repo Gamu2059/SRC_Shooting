@@ -32,7 +32,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
     private int m_NumberOfShotRapidLargeBulletToUnder;
     private int m_NumberOfMove;
 
-    public InfC761Phase3(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet){
+    public InfC761Phase3(BattleRealEnemyBase enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet){
         m_ParamSet = paramSet as InfC761Phase3ParamSet;
     }
 
@@ -137,7 +137,7 @@ public class InfC761Phase3 : BattleRealBossBehavior
     {
         int num = param.Num;
         float angle = param.Angle;
-        var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
+        var spreadAngles = BattleRealCharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;

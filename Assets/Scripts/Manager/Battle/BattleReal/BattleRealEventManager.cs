@@ -6,10 +6,8 @@ using System;
 /// <summary>
 /// BattleRealのイベントトリガを管理するマネージャ。
 /// </summary>
-public class BattleRealEventManager : ControllableObject
+public class BattleRealEventManager : Singleton<BattleRealEventManager>
 {
-    public static BattleRealEventManager Instance { get; private set; }
-
     #region Readonly or Const Field
 
     private const string BOSS_DEFEAT_INT_NAME = "Boss Defeat";
@@ -17,7 +15,6 @@ public class BattleRealEventManager : ControllableObject
 
     private const string BATTLE_LOADED_TIME_PRERIOD_NAME = "Battle Loaded";
     private const string GAME_START_TIME_PERIOD_NAME = "Game Start";
-    private const string BOSS_START_TIME_PERIOD_NAME = "Boss Start";
 
     private readonly Dictionary<E_GENERAL_INT_VARIABLE, string> m_GeneralIntNames = new Dictionary<E_GENERAL_INT_VARIABLE, string>()
     {
@@ -29,14 +26,12 @@ public class BattleRealEventManager : ControllableObject
     {
         { E_GENERAL_TIME_PERIOD.BATTLE_LOADED, BATTLE_LOADED_TIME_PRERIOD_NAME },
         { E_GENERAL_TIME_PERIOD.GAME_START, GAME_START_TIME_PERIOD_NAME },
-        { E_GENERAL_TIME_PERIOD.BOSS_START, BOSS_START_TIME_PERIOD_NAME },
     };
 
     #endregion
 
     #region Field
 
-    private BattleRealManager m_BattleRealManager;
     private BattleRealEventTriggerParamSet m_ParamSet;
 
     private Dictionary<string, int> m_IntVariables;
@@ -55,11 +50,41 @@ public class BattleRealEventManager : ControllableObject
 
     #endregion
 
-    public BattleRealEventManager(BattleRealManager battleRealManager, BattleRealEventTriggerParamSet paramSet)
+    #region Closed Callback
+
+    private Action<E_BATTLE_REAL_STATE> RequestChangeStateBattleRealManager { get; set; }
+    private Action<ShowCutsceneParam> ShowCutsceneAction { get; set; }
+    private Action<ShowTalkParam> ShowTalkAction { get; set; }
+    private Action<ShowDialogParam> ShowDialogAction { get; set; }
+    private Action GameClearWithoutHackingCompleteAction { get; set; }
+    private Action GameClearWithHackingCompleteAction { get; set; }
+    private Action GameOverAction { get; set; }
+
+    #endregion
+
+    public static BattleRealEventManager Builder(BattleRealManager realManager, BattleRealEventTriggerParamSet param)
     {
-        m_BattleRealManager = battleRealManager;
-        m_ParamSet = paramSet;
-        Instance = this;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.SetCallback(realManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleRealEventTriggerParamSet param)
+    {
+        m_ParamSet = param;
+    }
+
+    private void SetCallback(BattleRealManager manager)
+    {
+        RequestChangeStateBattleRealManager += manager.RequestChangeState;
+        ShowCutsceneAction += manager.ShowCutscene;
+        ShowTalkAction += manager.ShowTalk;
+        ShowDialogAction += manager.ShowDialog;
+        GameClearWithoutHackingCompleteAction += manager.GameClearWithoutHackingComplete;
+        GameClearWithHackingCompleteAction += manager.GameClearWithHackingComplete;
+        GameOverAction += manager.GameOver;
     }
 
     #region Game Cycle
@@ -121,7 +146,6 @@ public class BattleRealEventManager : ControllableObject
         // 組み込み系の追加
         m_TimePeriods.Add(BATTLE_LOADED_TIME_PRERIOD_NAME, new EventTriggerTimePeriod());
         m_TimePeriods.Add(GAME_START_TIME_PERIOD_NAME, new EventTriggerTimePeriod());
-        m_TimePeriods.Add(BOSS_START_TIME_PERIOD_NAME, new EventTriggerTimePeriod());
 
         foreach (var periodName in m_ParamSet.TimePeriodNames)
         {
@@ -131,13 +155,20 @@ public class BattleRealEventManager : ControllableObject
 
     public override void OnFinalize()
     {
+        GameOverAction = null;
+        GameClearWithHackingCompleteAction = null;
+        GameClearWithoutHackingCompleteAction = null;
+        ShowDialogAction = null;
+        ShowTalkAction = null;
+        ShowCutsceneAction = null;
+        RequestChangeStateBattleRealManager = null;
+
         m_IntVariables = null;
         m_FloatVariables = null;
         m_BoolVariables = null;
         m_TimePeriods = null;
         m_EventParams = null;
         m_GotoDestroyEventParams = null;
-        Instance = null;
 
         base.OnFinalize();
     }
@@ -286,7 +317,14 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     public bool ExistTimePeriod(string name)
     {
-        return m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
+        try
+        {
+            return m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
+        } catch(ArgumentException e)
+        {
+            Debug.LogError(name);
+            return false;
+        }
     }
 
     /// <summary>
@@ -800,7 +838,13 @@ public class BattleRealEventManager : ControllableObject
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
-                ExecuteApperEnemyGroup(eventContent.AppearEnemyIndex);
+                ExecuteApperEnemyGroup(eventContent.EnemyGroupGenerateParamSet);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.MOVE_PLAYER_BY_SEQUENCE:
+                ExecuteMovePlayerBySequence(eventContent.MovePlayerSequenceGroup);
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.RESTRICT_PLAYER_POSITION:
+                ExecuteRestrictPlayerPosition();
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_CAMERA:
                 ExecuteControlCamera(eventContent.ControlCameraParams);
@@ -842,7 +886,7 @@ public class BattleRealEventManager : ControllableObject
                 // 何もしない
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.BOSS_BATTLE_START:
-                ExecuteBossBattleStart();
+                // 何もしない
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.GAME_CLEAR_WITHOUT_HACKING_COMPLETE:
                 ExecuteGameClearWithoutHackingComplete();
@@ -859,9 +903,19 @@ public class BattleRealEventManager : ControllableObject
     /// <summary>
     /// 敵を出現させる。
     /// </summary>
-    private void ExecuteApperEnemyGroup(int appearEnemyGroupIndex)
+    private void ExecuteApperEnemyGroup(BattleRealEnemyGroupGenerateParamSet enemyGroupGenerateParamSet)
     {
-        BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(appearEnemyGroupIndex);
+        BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(enemyGroupGenerateParamSet);
+    }
+
+    private void ExecuteMovePlayerBySequence(SequenceGroup sequenceGroup)
+    {
+        BattleRealPlayerManager.Instance.MovePlayerBySequence(sequenceGroup);
+    }
+
+    private void ExecuteRestrictPlayerPosition()
+    {
+        BattleRealPlayerManager.Instance.RestrictPlayerPosition();
     }
 
     /// <summary>
@@ -916,7 +970,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteShowCutscene(ShowCutsceneParam showCutsceneParam)
     {
-        BattleRealManager.Instance.ShowCutscene(showCutsceneParam);
+        ShowCutsceneAction?.Invoke(showCutsceneParam);
     }
 
     /// <summary>
@@ -924,7 +978,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteShowTalk(ShowTalkParam showTalkParam)
     {
-        BattleRealManager.Instance.ShowTalk(showTalkParam);
+        ShowTalkAction?.Invoke(showTalkParam);
     }
 
     /// <summary>
@@ -932,15 +986,12 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteShowDialog(ShowDialogParam showDialogParam)
     {
-        BattleRealManager.Instance.ShowDialog(showDialogParam);
+        ShowDialogAction?.Invoke(showDialogParam);
     }
 
-    /// <summary>
-    /// リアルモードのステートを変更する。
-    /// </summary>
-    private void ExecuteChangeBattleRealState(E_BATTLE_REAL_STATE changeState)
+    private void ExecuteChangeBattleRealState(E_BATTLE_REAL_STATE state)
     {
-        m_BattleRealManager.RequestChangeState(changeState);
+        RequestChangeStateBattleRealManager?.Invoke(state);
     }
 
     /// <summary>
@@ -1086,16 +1137,6 @@ public class BattleRealEventManager : ControllableObject
     private void ExecuteGameStart()
     {
         CountStartTimePeriod(GAME_START_TIME_PERIOD_NAME);
-        m_BattleRealManager.GameStart();
-    }
-
-    /// <summary>
-    /// ボス戦開始イベントを発行する。
-    /// </summary>
-    private void ExecuteBossBattleStart()
-    {
-        CountStartTimePeriod(BOSS_START_TIME_PERIOD_NAME);
-        m_BattleRealManager.BossBattleStart();
     }
 
     /// <summary>
@@ -1103,12 +1144,12 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteGameClearWithoutHackingComplete()
     {
-        m_BattleRealManager.GameClearWithoutHackingComplete();
+        GameClearWithoutHackingCompleteAction?.Invoke();
     }
 
     private void ExecuteGameClearWithHackingComplete()
     {
-        m_BattleRealManager.GameClearWithHackingComplete();
+        GameClearWithHackingCompleteAction?.Invoke();
     }
 
     /// <summary>
@@ -1116,7 +1157,7 @@ public class BattleRealEventManager : ControllableObject
     /// </summary>
     private void ExecuteGameOver()
     {
-        m_BattleRealManager.GameOver();
+        GameOverAction?.Invoke();
     }
 
     #endregion

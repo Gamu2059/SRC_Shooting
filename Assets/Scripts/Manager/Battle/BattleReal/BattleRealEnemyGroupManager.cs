@@ -8,19 +8,9 @@ using System;
 /// リアルモードの敵キャラを管理する。
 /// </summary>
 [Serializable]
-public class BattleRealEnemyGroupManager : ControllableObject
+public class BattleRealEnemyGroupManager : Singleton<BattleRealEnemyGroupManager>
 {
-    public static BattleRealEnemyGroupManager Instance => BattleRealManager.Instance.EnemyGroupManager;
-
-    /// <summary>
-    /// 消滅可能になるまでの最小時間
-    /// </summary>
-    [SerializeField]
-    private float m_CanOutTime;
-
     #region Field
-
-    private BattleRealEnemyGroupManagerParamSet m_ParamSet;
 
     private Transform m_EnemyGroupHolder;
     private Transform m_EnemyEvacuationHolder;
@@ -47,9 +37,11 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
     #endregion
 
-    public BattleRealEnemyGroupManager(BattleRealEnemyGroupManagerParamSet paramSet)
+    public static BattleRealEnemyGroupManager Builder()
     {
-        m_ParamSet = paramSet;
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
     }
 
     #region Game Cycle
@@ -80,7 +72,6 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyGroupHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY_GROUP);
-        BuildEnemyGroupAppearEvents();
     }
 
     public override void OnUpdate()
@@ -283,38 +274,20 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public void CreateEnemyGroup(int enemyGroupIndex)
+    public void CreateEnemyGroup(BattleRealEnemyGroupGenerateParamSet groupGenerateParamSet)
     {
-        var paramSets = m_ParamSet.Generator.Contents;
-        if (enemyGroupIndex < 0 || enemyGroupIndex >= paramSets.Length)
+        if (groupGenerateParamSet == null)
         {
             return;
         }
 
-        var groupParam = paramSets[enemyGroupIndex].GroupGenerateParamSet;
-        var enemyGroup = GetPoolingEnemyGroup(groupParam);
+        var enemyGroup = GetPoolingEnemyGroup(groupGenerateParamSet);
         if (enemyGroup == null)
         {
             return;
         }
 
-        enemyGroup.SetParamSet(groupParam);
-        CheckStandByEnemyGroup(enemyGroup);
-    }
-
-    /// <summary>
-    /// ボスを作成する。
-    /// </summary>
-    public void CreateBossGroup()
-    {
-        var groupParam = m_ParamSet.Generator.BossParamSet;
-        var enemyGroup = GetPoolingEnemyGroup(groupParam);
-        if (enemyGroup == null)
-        {
-            return;
-        }
-
-        enemyGroup.SetParamSet(groupParam);
+        enemyGroup.SetParamSet(groupGenerateParamSet);
         CheckStandByEnemyGroup(enemyGroup);
     }
 
@@ -339,30 +312,5 @@ public class BattleRealEnemyGroupManager : ControllableObject
         }
 
         m_UpdateEnemyGroups.Clear();
-    }
-
-    /// <summary>
-    /// 敵の生成イベントをEventManagerに投げる
-    /// </summary>
-    private void BuildEnemyGroupAppearEvents()
-    {
-        if (m_ParamSet == null || m_ParamSet.Generator == null)
-        {
-            return;
-        }
-
-        var groups = m_ParamSet.Generator.Contents;
-        for (int i = 0; i < groups.Length; i++)
-        {
-            var param = groups[i];
-            var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();
-            eventParam.Condition = param.Condition;
-            var content = new BattleRealEventContent();
-            content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;
-            content.AppearEnemyIndex = i;
-            eventParam.Contents = new[] { content };
-
-            BattleRealEventManager.Instance.AddEventParam(eventParam);
-        }
     }
 }

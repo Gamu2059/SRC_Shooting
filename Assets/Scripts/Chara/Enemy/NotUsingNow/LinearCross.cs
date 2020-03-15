@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LinearCross : BattleRealEnemyController
+public class LinearCross : BattleRealEnemyBase
 {
 
     // 発射間隔

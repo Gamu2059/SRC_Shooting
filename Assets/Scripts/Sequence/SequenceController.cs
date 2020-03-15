@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// ある単一のオブジェクトをシーケンスを用いて制御する
@@ -10,6 +11,11 @@ public class SequenceController : ControllableMonoBehavior
     private Stack<SequenceGroup> m_GroupStack;
     private SequenceGroup m_CurrentGroup;
     private SequenceUnit m_CurrentUnit;
+
+    /// <summary>
+    /// 指定したシーケンスを終えた時に呼ばれるコールバック
+    /// </summary>
+    public Action OnEndSequence;
 
     public override void OnInitialize()
     {
@@ -21,6 +27,7 @@ public class SequenceController : ControllableMonoBehavior
 
     public override void OnFinalize()
     {
+        OnEndSequence = null;
         m_GroupStack.Clear();
         m_GroupStack = null;
         base.OnFinalize();
@@ -96,6 +103,7 @@ public class SequenceController : ControllableMonoBehavior
                         // もう何もないので処理を止める
                         m_CurrentGroup = null;
                         m_CurrentUnit = null;
+                        OnEndSequence?.Invoke();
                     }
                 }
                 else
@@ -112,6 +120,7 @@ public class SequenceController : ControllableMonoBehavior
                         Debug.LogErrorFormat("{0} : 無限ループが発生したため終了します", GetType().Name);
                         m_CurrentGroup = null;
                         m_CurrentUnit = null;
+                        OnEndSequence?.Invoke();
                     }
                 }
             }

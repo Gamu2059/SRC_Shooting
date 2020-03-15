@@ -38,12 +38,12 @@ public class BulletController : BattleRealObjectBase
     /// <summary>
     /// 弾を発射したキャラ。
     /// </summary>
-    private CharaController m_BulletOwner;
+    private BattleRealCharaController m_BulletOwner;
 
     /// <summary>
     /// 弾の標的となっているキャラ。
     /// </summary>
-    private CharaController m_Target;
+    private BattleRealCharaController m_Target;
 
     /// <summary>
     /// 発射したキャラの何番目の弾か。
@@ -126,7 +126,7 @@ public class BulletController : BattleRealObjectBase
 
     private HitSufferController<BulletController> m_BulletSuffer;
     private HitSufferController<BulletController> m_BulletHit;
-    private HitSufferController<CharaController> m_CharaHit;
+    private HitSufferController<BattleRealCharaController> m_CharaHit;
 
     #endregion
 
@@ -161,7 +161,7 @@ public class BulletController : BattleRealObjectBase
     /// <summary>
     /// この弾を発射したキャラを取得する。
     /// </summary>
-    public CharaController GetBulletOwner()
+    public BattleRealCharaController GetBulletOwner()
     {
         return m_BulletOwner;
     }
@@ -169,7 +169,7 @@ public class BulletController : BattleRealObjectBase
     /// <summary>
     /// この弾の標的となっているキャラを取得する。
     /// </summary>
-    public CharaController GetTarget()
+    public BattleRealCharaController GetTarget()
     {
         return m_Target;
     }
@@ -177,7 +177,7 @@ public class BulletController : BattleRealObjectBase
     /// <summary>
     /// この弾の標的となっているキャラを設定する。
     /// </summary>
-    public void SetTarget(CharaController target)
+    public void SetTarget(BattleRealCharaController target)
     {
         m_Target = target;
     }
@@ -440,7 +440,7 @@ public class BulletController : BattleRealObjectBase
     /// </summary>
     /// <param name="owner">弾を発射させるキャラ</param>
     /// <param name="isBomb">ボムかどうか</param>
-    private static BulletController CreateBullet(CharaController owner, bool isBomb)
+    private static BulletController CreateBullet(BattleRealCharaController owner, bool isBomb)
     {
         if (owner == null)
         {
@@ -503,7 +503,7 @@ public class BulletController : BattleRealObjectBase
     /// <param name="owner">弾を発射させるキャラ</param>
     /// <param name="isBomb">ボムかどうか</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static BulletController ShotBulletWithoutBulletParam(CharaController owner, bool isBomb = false, bool isCheck = true)
+    public static BulletController ShotBulletWithoutBulletParam(BattleRealCharaController owner, bool isBomb = false, bool isCheck = true)
     {
         var bullet = CreateBullet(owner, isBomb);
 
@@ -527,7 +527,7 @@ public class BulletController : BattleRealObjectBase
     /// <param name="owner">弾を発射させるキャラ</param>
     /// <param name="isBomb">ボムかどうか</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
-    public static BulletController ShotBullet(CharaController owner, bool isBomb = false, bool isCheck = true)
+    public static BulletController ShotBullet(BattleRealCharaController owner, bool isBomb = false, bool isCheck = true)
     {
         var bullet = CreateBullet(owner, isBomb);
 
@@ -810,7 +810,7 @@ public class BulletController : BattleRealObjectBase
     /// <summary>
     /// この弾の最も近くにいる敵を探し出す。
     /// </summary>
-    public CharaController GetNearestEnemy()
+    public BattleRealCharaController GetNearestEnemy()
     {
         if (m_Troop == E_CHARA_TROOP.ENEMY)
         {
@@ -819,7 +819,7 @@ public class BulletController : BattleRealObjectBase
         else
         {
             var enemies = BattleRealEnemyManager.Instance.Enemies;
-            CharaController nearestEnemy = null;
+            BattleRealCharaController nearestEnemy = null;
             float minSqrDist = float.MaxValue;
 
             foreach (var enemy in enemies)
@@ -870,7 +870,7 @@ public class BulletController : BattleRealObjectBase
 
         m_BulletSuffer = new HitSufferController<BulletController>();
         m_BulletHit = new HitSufferController<BulletController>();
-        m_CharaHit = new HitSufferController<CharaController>();
+        m_CharaHit = new HitSufferController<BattleRealCharaController>();
     }
 
     protected override void OnDestroyed()
@@ -1068,22 +1068,22 @@ public class BulletController : BattleRealObjectBase
     /// <param name="attackData">この弾の衝突情報</param>
     /// <param name="targetData">他のキャラの衝突情報</param>
     /// <param name="hitPosList">衝突座標リスト</param>
-    public void HitChara(CharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
+    public void HitChara(BattleRealCharaController targetChara, ColliderData attackData, ColliderData targetData, List<Vector2> hitPosList)
     {
         m_CharaHit.Put(targetChara, attackData, targetData, hitPosList);
     }
 
-    protected virtual void OnEnterHitChara(HitSufferData<CharaController> hitData)
+    protected virtual void OnEnterHitChara(HitSufferData<BattleRealCharaController> hitData)
     {
 
     }
 
-    protected virtual void OnStayHitChara(HitSufferData<CharaController> hitData)
+    protected virtual void OnStayHitChara(HitSufferData<BattleRealCharaController> hitData)
     {
 
     }
 
-    protected virtual void OnExitHitChara(HitSufferData<CharaController> hitData)
+    protected virtual void OnExitHitChara(HitSufferData<BattleRealCharaController> hitData)
     {
 
     }

@@ -12,12 +12,12 @@ public class NwayAnimationCurveEnemy : AnimationCurveEnemy
     {
         base.OnSetParamSet();
 
-        if (BehaviorParamSet is NwayAnimationCurveEnemyParamSet paramSet)
-        {
-            m_WayNum = paramSet.Num;
-            m_WayRadius = paramSet.Radius;
-            m_WayAngleOffset = paramSet.AngleOffset;
-        }
+        //if (BehaviorParamSet is NwayAnimationCurveEnemyParamSet paramSet)
+        //{
+        //    m_WayNum = paramSet.Num;
+        //    m_WayRadius = paramSet.Radius;
+        //    m_WayAngleOffset = paramSet.AngleOffset;
+        //}
     }
 
     protected override void OnShot(EnemyShotParam param)

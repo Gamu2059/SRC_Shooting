@@ -36,7 +36,7 @@ MonoBehaviour:
     EventType: 3
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams:
@@ -70,9 +70,9 @@ MonoBehaviour:
   - ContentName: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8"
     IsPassExecute: 0
     EventType: 7
-    ExecuteTiming: 1
-    DelayExecuteTime: 8
-    AppearEnemyIndex: 0
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
@@ -104,7 +104,7 @@ MonoBehaviour:
     EventType: 1
     ExecuteTiming: 1
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams:
     - CameraType: 0
       SequenceGroup: {fileID: 11400000, guid: a5ca8f0f4ce3dc44c8b792403123b222, type: 2}
@@ -138,7 +138,7 @@ MonoBehaviour:
     EventType: 13
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams:
     - CameraType: 0
       SequenceGroup: {fileID: 11400000, guid: a5ca8f0f4ce3dc44c8b792403123b222, type: 2}

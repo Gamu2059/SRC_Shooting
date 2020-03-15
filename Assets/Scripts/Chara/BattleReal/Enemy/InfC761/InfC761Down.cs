@@ -23,7 +23,7 @@ public class InfC761Down : BattleRealBossBehavior
 
     private float m_ShotTimeCount;
 
-    public InfC761Down(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Down(BattleRealEnemyBase enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761DownParamSet;
     }

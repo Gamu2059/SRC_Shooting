@@ -8,7 +8,7 @@ public class BattleRealEnemyBulletBase : BulletController
     protected bool m_IsDestoryOnHitOther;
     public bool IsDestoryOnHitOther => m_IsDestoryOnHitOther;
 
-    protected override void OnEnterHitChara(HitSufferData<CharaController> hitData)
+    protected override void OnEnterHitChara(HitSufferData<BattleRealCharaController> hitData)
     {
         base.OnEnterHitChara(hitData);
 

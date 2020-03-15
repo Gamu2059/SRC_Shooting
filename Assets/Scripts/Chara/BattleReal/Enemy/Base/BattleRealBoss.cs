@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// リアルモードの複数の動作を持つボスの動きを定義したコントローラ
 /// </summary>
-public class BattleRealBoss : BattleRealEnemyController
+public class BattleRealBoss : BattleRealEnemyBase
 {
     #region Define
 
@@ -71,6 +71,7 @@ public class BattleRealBoss : BattleRealEnemyController
 
     public int m_HackingSuccessCount { get; protected set; }
     protected List<float> m_ChangeAttackHpRates;
+    protected BattleHackingLevelParamSet[] m_HackingLevelParamSets;
 
     #endregion
 
@@ -78,18 +79,19 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         base.OnSetParamSet();
 
-        if (GenerateParamSet is BattleRealBossGenerateParamSet generateParamSet)
-        {
-            m_BossGenerateParamSet = generateParamSet;
-            m_ChangeAttackHpRates = generateParamSet.ChangeAttackHpRates;
-        }
+        //if (GenerateParamSet is BattleRealBossGenerateParamSet generateParamSet)
+        //{
+        //    m_BossGenerateParamSet = generateParamSet;
+        //    m_ChangeAttackHpRates = generateParamSet.ChangeAttackHpRates;
+        //    m_HackingLevelParamSets = generateParamSet.HackingLevelParamSets;
+        //}
 
-        if (BehaviorParamSet is BattleRealBossBehaviorParamSet behaviorParamSet)
-        {
-            m_BossBehaviorParamSet = behaviorParamSet;
-            m_AttackParamSets = behaviorParamSet.AttackParamSets;
-            m_DownParamSets = behaviorParamSet.DownParamSets;
-        }
+        //if (BehaviorParamSet is BattleRealBossBehaviorParamSet behaviorParamSet)
+        //{
+        //    m_BossBehaviorParamSet = behaviorParamSet;
+        //    m_AttackParamSets = behaviorParamSet.AttackParamSets;
+        //    m_DownParamSets = behaviorParamSet.DownParamSets;
+        //}
     }
 
     #region Game Cycle
@@ -98,8 +100,8 @@ public class BattleRealBoss : BattleRealEnemyController
     {
         base.OnInitialize();
 
-        m_IsLookMoveDir = false;
-        m_WillDestroyOnOutOfEnemyField = false;
+        IsLookMoveDir = false;
+        WillDestroyOnOutOfEnemyField = false;
         IsBoss = true;
 
         m_AttackBehaviors = new List<BattleRealBossBehavior>();
@@ -192,14 +194,14 @@ public class BattleRealBoss : BattleRealEnemyController
         InitializeDownBehaviors();
 
         m_DamageCollider = transform.Find(DAMAGE_COLLIDER_NAME, false);
-        BattleRealManager.Instance.OnTransitionToReal += OnTransitionToReal;
+        BattleRealEnemyManager.Instance.FromHackingAction += OnTransitionToReal;
 
         RequestChangeState(E_PHASE.START);
     }
 
     public override void OnFinalize()
     {
-        BattleRealManager.Instance.OnTransitionToReal -= OnTransitionToReal;
+        BattleRealEnemyManager.Instance.FromHackingAction -= OnTransitionToReal;
         m_DamageCollider = null;
 
         if (m_DownBehaviors != null)
@@ -273,7 +275,7 @@ public class BattleRealBoss : BattleRealEnemyController
             return null;
         }
 
-        var cstr = type.GetConstructor(new[] { typeof(BattleRealEnemyController), typeof(BattleRealBossBehaviorUnitParamSet) });
+        var cstr = type.GetConstructor(new[] { typeof(BattleRealEnemyBase), typeof(BattleRealBossBehaviorUnitParamSet) });
         if (cstr == null)
         {
             return null;
@@ -610,13 +612,13 @@ public class BattleRealBoss : BattleRealEnemyController
     private void StartOnDead()
     {
         // シーケンシャルエフェクトを登録する
-        var effect = GenerateParamSet.DefeatSequentialEffect;
+        var effect = Param.DefeatSequentialEffect;
         if (effect != null)
         {
             BattleRealEffectManager.Instance.RegisterSequentialEffect(effect, transform);
         }
 
-        float defeatTime = GenerateParamSet.DefeatHideTime;
+        float defeatTime = Param.DefeatHideTime;
         if (defeatTime <= 0)
         {
             OnDefeatDestroy();
@@ -787,7 +789,7 @@ public class BattleRealBoss : BattleRealEnemyController
         }
     }
 
-    protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    protected override void OnEnterSufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
         base.OnEnterSufferChara(sufferData);
 
@@ -803,8 +805,9 @@ public class BattleRealBoss : BattleRealEnemyController
                     var colliderType = sufferData.HitCollider.Transform.ColliderType;
                     if (colliderType == E_COLLIDER_TYPE.PLAYER_HACKING)
                     {
-                        BattleHackingManager.Instance.SetHackingLevel(m_AttackPhase);
-                        BattleRealManager.Instance.ToHacking();
+                        var index = Math.Min(m_HackingLevelParamSets.Length - 1, m_HackingSuccessCount);
+                        HackingDataHolder.HackingLevelParamSet = m_HackingLevelParamSets[index];
+                        BattleRealEnemyManager.Instance.RequestToHacking();
                     }
                 }
                 break;
@@ -824,7 +827,7 @@ public class BattleRealBoss : BattleRealEnemyController
         var currentState = m_StateMachine.CurrentState.Key;
         if (currentState == E_PHASE.DOWN)
         {
-            if (BattleHackingManager.Instance.IsHackingSuccess)
+            if (HackingDataHolder.IsHackingSuccess)
             {
                 RequestChangeState(E_PHASE.HACKING_SUCCESS);
             }

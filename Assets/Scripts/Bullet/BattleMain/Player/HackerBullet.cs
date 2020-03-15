@@ -22,7 +22,7 @@ public class HackerBullet : BulletController
         m_IsLookMoveDir = false;
     }
 
-    protected override void OnEnterHitChara(HitSufferData<CharaController> hitData)
+    protected override void OnEnterHitChara(HitSufferData<BattleRealCharaController> hitData)
     {
         base.OnEnterHitChara(hitData);
 

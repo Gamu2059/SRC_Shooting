@@ -8,8 +8,10 @@ using System.Linq;
 /// リアルモードのエフェクトを管理する。
 /// </summary>
 [Serializable]
-public class BattleRealEffectManager : ControllableObject
+public class BattleRealEffectManager : Singleton<BattleRealEffectManager>
 {
+    #region Define
+
     private class SequentialData
     {
         public List<SequentialEffectParamSet.SequentialEffectParam> Effects;
@@ -36,16 +38,7 @@ public class BattleRealEffectManager : ControllableObject
         }
     }
 
-    public static BattleRealEffectManager Instance {
-        get {
-            if (BattleRealManager.Instance == null)
-            {
-                return null;
-            }
-
-            return BattleRealManager.Instance.EffectManager;
-        }
-    }
+    #endregion
 
     #region Field
 
@@ -83,9 +76,17 @@ public class BattleRealEffectManager : ControllableObject
 
     #endregion
 
-    public BattleRealEffectManager()
+    public static BattleRealEffectManager Builder(BattleRealManager realManager)
     {
+        var manager = Create();
+        manager.SetCallback(realManager);
+        manager.OnInitialize();
+        return manager;
+    }
 
+    private void SetCallback(BattleRealManager manager)
+    {
+        manager.ChangeStateAction += OnChangeStateBattleRealManager;
     }
 
     #region Game Cycle
@@ -99,16 +100,10 @@ public class BattleRealEffectManager : ControllableObject
         m_GotoPoolEffects = new List<BattleCommonEffectController>();
         m_StandbySequentialDatas = new List<SequentialData>();
         m_ProcessingSequentialDatas = new List<SequentialData>();
-
-        BattleRealManager.Instance.OnTransitionToHacking += PauseAllEffect;
-        BattleRealManager.Instance.OnTransitionToReal += ResumeAllEffect;
     }
 
     public override void OnFinalize()
     {
-        BattleRealManager.Instance.OnTransitionToReal -= ResumeAllEffect;
-        BattleRealManager.Instance.OnTransitionToHacking -= PauseAllEffect;
-
         m_ProcessingSequentialDatas.Clear();
         m_StandbySequentialDatas.Clear();
         m_StandbyEffects.Clear();
@@ -427,6 +422,21 @@ public class BattleRealEffectManager : ControllableObject
         foreach (var e in m_UpdateEffects)
         {
             e.Stop(isImmediate);
+        }
+    }
+
+    private void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
+    {
+        switch (state)
+        {
+            case E_BATTLE_REAL_STATE.TO_HACKING:
+                PauseAllEffect();
+                break;
+            case E_BATTLE_REAL_STATE.FROM_HACKING:
+                ResumeAllEffect();
+                break;
+            default:
+                break;
         }
     }
 }

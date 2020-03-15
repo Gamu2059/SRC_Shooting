@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードのプレイヤーコントローラ
 /// </summary>
-public partial class BattleRealPlayerController : CharaController
+public partial class BattleRealPlayerController : BattleRealCharaController
 {
     #region Define
 
@@ -82,17 +82,29 @@ public partial class BattleRealPlayerController : CharaController
     private StateMachine<E_STATE, BattleRealPlayerController> m_StateMachine;
     private BattleRealPlayerManagerParamSet m_ParamSet;
 
+    private SequenceController m_SequenceController;
+    private SequenceGroup m_SequenceGroup;
+
     private float m_ShotDelay;
     private BattleCommonEffectController m_ChargeEffect;
     private BulletController m_Laser;
     private BulletController m_Bomb;
     private bool m_IsExistEnergyCharge;
 
-
     public bool IsLaserType { get; private set; }
-    public Action<bool> OnChangeWeaponType;
+    public bool IsRestrictPosition;
 
+    #endregion
 
+    #region Open Callback
+
+    public Action<bool> ChangeWeaponTypeAction { get; set; }
+
+    #endregion
+
+    #region Closed Callback
+
+    private Action DeadPlayerAction { get; set; }
 
     #endregion
 
@@ -117,9 +129,17 @@ public partial class BattleRealPlayerController : CharaController
 
         Troop = E_CHARA_TROOP.PLAYER;
         IsLaserType = m_ParamSet == null ? true : m_ParamSet.IsLaserType;
+        IsRestrictPosition = false;
 
         SetEnableCollider(true);
         m_Shield.gameObject.SetActive(false);
+
+        m_SequenceController = GetComponent<SequenceController>();
+        if (m_SequenceController == null)
+        {
+            m_SequenceController = gameObject.AddComponent<SequenceController>();
+        }
+        m_SequenceController?.OnInitialize();
 
         // とりあえずNON_GAMEへ遷移して待機しておく
         RequestChangeState(E_STATE.GAME);
@@ -127,7 +147,8 @@ public partial class BattleRealPlayerController : CharaController
 
     public override void OnFinalize()
     {
-        OnChangeWeaponType = null;
+        m_SequenceController?.OnFinalize();
+        ChangeWeaponTypeAction = null;
         m_StateMachine.OnFinalize();
         base.OnFinalize();
     }
@@ -169,9 +190,14 @@ public partial class BattleRealPlayerController : CharaController
         stageManager.ClampMovingObjectPosition(transform);
     }
 
-    public void SetParamSet(BattleRealPlayerManagerParamSet paramSet)
+    public void SetParam(BattleRealPlayerManagerParamSet param)
     {
-        m_ParamSet = paramSet;
+        m_ParamSet = param;
+    }
+
+    public void SetCallback(BattleRealPlayerManager manager)
+    {
+        DeadPlayerAction += manager.OnDeadPlayer;
     }
 
     public bool IsUsingChargeShot()
@@ -258,7 +284,7 @@ public partial class BattleRealPlayerController : CharaController
         }
 
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
-        BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT);
+        //BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT);
     }
 
     /// <summary>
@@ -401,7 +427,7 @@ public partial class BattleRealPlayerController : CharaController
         }
     }
 
-    protected override void OnEnterSufferChara(HitSufferData<CharaController> sufferData)
+    protected override void OnEnterSufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
         base.OnEnterSufferChara(sufferData);
 
@@ -490,6 +516,12 @@ public partial class BattleRealPlayerController : CharaController
 
         // 死亡SEは色々な処理の後にしておかないと、プレイヤーSEの停止に巻き込まれる可能性がある
         AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.DeadSe);
-        BattleRealManager.Instance.DeadPlayer();
+        DeadPlayerAction?.Invoke();
+    }
+
+    public void MoveBySequence(SequenceGroup sequenceGroup)
+    {
+        m_SequenceGroup = sequenceGroup;
+        RequestChangeState(E_STATE.SEQUENCE);
     }
 }

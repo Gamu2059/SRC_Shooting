@@ -100,6 +100,16 @@ public struct BattleRealEventContent
         /// フェードを制御する
         /// </summary>
         FADE,
+
+        /// <summary>
+        /// プレイヤーをシーケンスコントローラで制御する
+        /// </summary>
+        MOVE_PLAYER_BY_SEQUENCE,
+
+        /// <summary>
+        /// プレイヤーの移動位置をフィールド内に制限する
+        /// </summary>
+        RESTRICT_PLAYER_POSITION,
     }
 
     /// <summary>
@@ -136,7 +146,11 @@ public struct BattleRealEventContent
 
     [Header("APPEAR_ENEMY")]
 
-    public int AppearEnemyIndex;
+    public BattleRealEnemyGroupGenerateParamSet EnemyGroupGenerateParamSet;
+
+    [Header("MOVE_PLAYER_BY_SEQUENCE")]
+
+    public SequenceGroup MovePlayerSequenceGroup;
 
     [Header("CONTROL_CAMERA")]
 

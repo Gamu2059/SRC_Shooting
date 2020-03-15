@@ -8,10 +8,8 @@ using System.Linq;
 /// リアルモードの弾を管理する。
 /// </summary>
 [Serializable]
-public class BattleRealBulletManager : ControllableObject, IColliderProcess
+public class BattleRealBulletManager : Singleton<BattleRealBulletManager>, IColliderProcess
 {
-    public static BattleRealBulletManager Instance => BattleRealManager.Instance.BulletManager;
-
     #region Field
 
     private BattleRealBulletManagerParamSet m_ParamSet;
@@ -50,9 +48,30 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
 
     #endregion
 
-    public BattleRealBulletManager(BattleRealBulletManagerParamSet paramSet)
+    #region Open Callback
+
+    public Action ToHackingAction { get; set; }
+    public Action FromHackingAction { get; set; }
+
+    #endregion
+
+    public static BattleRealBulletManager Builder(BattleRealManager realManager, BattleRealBulletManagerParamSet param)
+    {
+        var manager = Create();
+        manager.SetParam(param);
+        manager.SetCallback(realManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleRealBulletManagerParamSet paramSet)
     {
         m_ParamSet = paramSet;
+    }
+
+    private void SetCallback(BattleRealManager manager)
+    {
+        manager.ChangeStateAction += OnChangeStateBattleRealManager;
     }
 
     #region Game Cycle
@@ -354,7 +373,7 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 指定したキャラが撃った弾をプールに送る
     /// </summary>
-    public void CheckPoolBullet(CharaController targetOwner)
+    public void CheckPoolBullet(BattleRealCharaController targetOwner)
     {
         if (targetOwner == null)
         {
@@ -385,6 +404,21 @@ public class BattleRealBulletManager : ControllableObject, IColliderProcess
             {
                 CheckPoolBullet(bullet);
             }
+        }
+    }
+
+    private void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
+    {
+        switch(state)
+        {
+            case E_BATTLE_REAL_STATE.TO_HACKING:
+                ToHackingAction?.Invoke();
+                break;
+            case E_BATTLE_REAL_STATE.FROM_HACKING:
+                FromHackingAction?.Invoke();
+                break;
+            default:
+                break;
         }
     }
 }

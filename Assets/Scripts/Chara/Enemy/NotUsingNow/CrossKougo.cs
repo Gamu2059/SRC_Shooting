@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrossKougo : BattleRealEnemyController
+public class CrossKougo : BattleRealEnemyBase
 {
 
     // 発射間隔

@@ -31,8 +31,11 @@ partial class BattleRealPlayerController
                 Target.transform.Translate(move, Space.World);
             }
 
-            // 移動直後に位置制限を掛ける
-            Target.RestrictPosition();
+            if (Target.IsRestrictPosition)
+            {
+                // 移動直後に位置制限を掛ける
+                Target.RestrictPosition();
+            }
 
             if (input.Shot == E_INPUT_STATE.STAY)
             {
@@ -43,7 +46,7 @@ partial class BattleRealPlayerController
             {
                 Target.IsLaserType = !Target.IsLaserType;
                 Target.ChangeWeapon();
-                Target.OnChangeWeaponType?.Invoke(Target.IsLaserType);
+                Target.ChangeWeaponTypeAction?.Invoke(Target.IsLaserType);
             }
 
             if (input.ChargeShot == E_INPUT_STATE.DOWN)

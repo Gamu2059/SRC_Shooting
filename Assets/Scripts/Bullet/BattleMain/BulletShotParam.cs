@@ -12,7 +12,7 @@ public struct BulletShotParam
 	/// <summary>
 	/// 弾を発射させるキャラ。
 	/// </summary>
-	public CharaController BulletOwner;
+	public BattleRealCharaController BulletOwner;
 
 	/// <summary>
 	/// 弾を発射させるキャラの何番目の弾を発射させるか。
@@ -51,7 +51,7 @@ public struct BulletShotParam
 	/// 弾の発射パラメータ。
 	/// </summary>
 	/// <param name="shotOwner">弾を発射させるキャラ</param>
-	public BulletShotParam( CharaController shotOwner ) : this( shotOwner, 0 )
+	public BulletShotParam( BattleRealCharaController shotOwner ) : this( shotOwner, 0 )
 	{
 	}
 
@@ -60,7 +60,7 @@ public struct BulletShotParam
 	/// </summary>
 	/// <param name="shotOwner">弾を発射させるキャラ</param>
 	/// <param name="bulletIndex">弾を発射させるキャラの何番目の弾を発射させるか</param>
-	public BulletShotParam( CharaController shotOwner, int bulletIndex ) : this( shotOwner, bulletIndex, 0, -1 )
+	public BulletShotParam( BattleRealCharaController shotOwner, int bulletIndex ) : this( shotOwner, bulletIndex, 0, -1 )
 	{
 	}
 
@@ -71,7 +71,7 @@ public struct BulletShotParam
 	/// <param name="bulletIndex">弾を発射させるキャラの何番目の弾を発射させるか</param>
 	/// <param name="bulletParamIndex">弾を発射させるキャラの何番目のBulletParamを使用するか</param>
 	/// <param name="orbitalIndex">BulletParamの何番目のOrbitalParamを使用するか</param>
-	public BulletShotParam( CharaController shotOwner, int bulletIndex, int bulletParamIndex, int orbitalIndex ) : this( shotOwner, bulletIndex, bulletParamIndex, orbitalIndex, null, null, null )
+	public BulletShotParam( BattleRealCharaController shotOwner, int bulletIndex, int bulletParamIndex, int orbitalIndex ) : this( shotOwner, bulletIndex, bulletParamIndex, orbitalIndex, null, null, null )
 	{
 	}
 
@@ -85,7 +85,7 @@ public struct BulletShotParam
 	/// <param name="position">どの場所から弾が発射するか</param>
 	/// <param name="rotation">どの角度から弾が発射するか</param>
 	/// <param name="scale">どのスケールで発射するか</param>
-	public BulletShotParam( CharaController shotOwner, int bulletIndex, int bulletParamIndex, int orbitalIndex, Vector3? position, Vector3? rotation, Vector3? scale )
+	public BulletShotParam( BattleRealCharaController shotOwner, int bulletIndex, int bulletParamIndex, int orbitalIndex, Vector3? position, Vector3? rotation, Vector3? scale )
 	{
 		BulletOwner = shotOwner;
 		BulletIndex = bulletIndex;

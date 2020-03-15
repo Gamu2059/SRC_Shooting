@@ -7,7 +7,7 @@ using UniRx;
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
-public class BattleHackingPlayerManager : ControllableObject
+public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
 {
     #region Field
 
@@ -19,11 +19,23 @@ public class BattleHackingPlayerManager : ControllableObject
 
     #endregion
 
-    public static BattleHackingPlayerManager Instance => BattleHackingManager.Instance.PlayerManager;
-
-    public BattleHackingPlayerManager(BattleHackingPlayerManagerParamSet paramSet)
+    public static BattleHackingPlayerManager Builder(BattleHackingManager hackingManager, BattleHackingPlayerManagerParamSet param)
     {
-        ParamSet = paramSet;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.SetCallback(hackingManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleHackingPlayerManagerParamSet param)
+    {
+        ParamSet = param;
+    }
+
+    private void SetCallback(BattleHackingManager manager)
+    {
+
     }
 
     public override void OnInitialize()
@@ -169,5 +181,10 @@ public class BattleHackingPlayerManager : ControllableObject
         {
             Player.ProcessCollision();
         }
+    }
+
+    public void DeadPlayer()
+    {
+        //m_IsDeadPlayer = true;
     }
 }

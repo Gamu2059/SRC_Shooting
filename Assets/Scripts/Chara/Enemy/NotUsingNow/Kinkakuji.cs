@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kinkakuji : BattleRealEnemyController
+public class Kinkakuji : BattleRealEnemyBase
 {
 
     // 発射間隔

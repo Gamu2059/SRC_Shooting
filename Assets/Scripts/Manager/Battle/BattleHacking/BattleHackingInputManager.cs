@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleHackingInputManager : InputManagerBase
+public class BattleHackingInputManager : InputManagerBase<BattleHackingInputManager>
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -10,8 +10,6 @@ public class BattleHackingInputManager : InputManagerBase
     private const string SHOT = "Shot";
     private const string SLOW = "Slow";
     private const string MENU = "Menu";
-
-    public static BattleHackingInputManager Instance => BattleHackingManager.Instance.InputManager;
 
     public Vector2 MoveDir { get; private set; }
 
@@ -22,6 +20,13 @@ public class BattleHackingInputManager : InputManagerBase
     public E_INPUT_STATE Slow { get; private set; }
 
     public E_INPUT_STATE Menu { get; private set; }
+
+    public static BattleHackingInputManager Builder()
+    {
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
+    }
 
     public override void OnUpdate()
     {

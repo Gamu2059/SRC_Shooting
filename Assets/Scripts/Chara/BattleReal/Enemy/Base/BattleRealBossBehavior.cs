@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BattleRealBossBehavior : ControllableObject
 {
-    protected BattleRealEnemyController Enemy { get; private set; }
+    protected BattleRealEnemyBase Enemy { get; private set; }
     protected BattleRealBossBehaviorUnitParamSet BehaviorParamSet { get; private set; }
 
-    public BattleRealBossBehavior(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet)
+    public BattleRealBossBehavior(BattleRealEnemyBase enemy, BattleRealBossBehaviorUnitParamSet paramSet)
     {
         Enemy = enemy;
         BehaviorParamSet = paramSet;

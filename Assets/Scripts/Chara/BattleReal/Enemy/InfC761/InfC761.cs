@@ -19,9 +19,9 @@ public class InfC761 : BattleRealBoss
     {
         base.OnSetParamSet();
 
-        if (BehaviorParamSet is InfC761ParamSet paramSet)
-        {
-            m_InfC761ParamSet = paramSet;
-        }
+        //if (BehaviorParamSet is InfC761ParamSet paramSet)
+        //{
+        //    m_InfC761ParamSet = paramSet;
+        //}
     }
 }

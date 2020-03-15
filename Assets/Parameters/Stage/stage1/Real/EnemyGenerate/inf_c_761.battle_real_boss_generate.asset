@@ -34,10 +34,30 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams:
     - VariableType: 2
       VariableName: Boss End
@@ -54,10 +74,30 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 1
     DelayExecuteTime: 8
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams:
     - VariableType: 0
       VariableName: Boss Defeat
@@ -80,7 +120,6 @@ MonoBehaviour:
     - Delay: 5.5
       Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
   m_DefeatHideTime: 5
-  m_HackingCompleteNum: 3
   m_DownHpArray:
   - 50
   - 50
@@ -122,10 +161,30 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams:
     - VariableType: 2
       VariableName: Boss End
@@ -142,10 +201,30 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 1
     DelayExecuteTime: 8
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams:
     - VariableType: 0
       VariableName: Boss Rescue
@@ -168,3 +247,8 @@ MonoBehaviour:
     - Delay: 5.5
       Effect: {fileID: 11400000, guid: 9ab017a3bd3b19d4cbeaba3c75e5547d, type: 2}
   m_RescueHideTime: 5
+  m_HackingCompleteNum: 3
+  m_HackingLevelParamSets:
+  - {fileID: 11400000, guid: 138f571f6c9003642bc0a9b9126b29a2, type: 2}
+  - {fileID: 11400000, guid: 1a19522e2833a48419860e4f5e19b23f, type: 2}
+  - {fileID: 11400000, guid: 3c5a7d61399efb24b9959c43ec7b5897, type: 2}

@@ -7,18 +7,8 @@ using UnityEngine;
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
-public class BattleRealPlayerManager : ControllableObject, IColliderProcess
+public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColliderProcess
 {
-    public static BattleRealPlayerManager Instance {
-        get {
-            if (BattleRealManager.Instance == null)
-            {
-                return null;
-            }
-
-            return BattleRealManager.Instance.PlayerManager;
-        }
-    }
 
     #region Field
 
@@ -33,9 +23,17 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     #endregion
 
-    public BattleRealPlayerManager(BattleRealPlayerManagerParamSet paramSet)
+    public static BattleRealPlayerManager Builder(BattleRealManager realManager, BattleRealPlayerManagerParamSet param)
     {
-        ParamSet = paramSet;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleRealPlayerManagerParamSet param)
+    {
+        ParamSet = param;
     }
 
     /// <summary>
@@ -70,8 +68,8 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         }
 
         Player.transform.SetParent(m_PlayerCharaHolder);
-        InitPlayerPosition();
-        Player.SetParamSet(ParamSet);
+        SetInitPlayerPosition();
+        Player.SetParam(ParamSet);
         Player.OnInitialize();
         Player.OnStart();
     }
@@ -96,29 +94,45 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
 
     #endregion
 
-    public void InitPlayerPosition()
+    /// <summary>
+    /// ゲーム開始時位置にプレイヤーをセットする。
+    /// </summary>
+    public void SetInitPlayerPosition()
     {
         if (Player == null)
         {
             return;
         }
 
-        var pos = GetInitAppearPosition();
+        var pos = GetPosFromViewportPosition(ParamSet.InitAppearViewportPosition);
+        Player.transform.position = pos;
+    }
+
+    /// <summary>
+    /// リスポーン位置にプレイヤーをセットする。
+    /// </summary>
+    public void SetRespawnPlayerPosition()
+    {
+        if (Player == null)
+        {
+            return;
+        }
+
+        var pos = GetPosFromViewportPosition(ParamSet.RespawnViewportPosition);
         Player.transform.position = pos;
     }
 
     /// <summary>
     /// 動体フィールド領域のビューポート座標から、実際の初期出現座標を取得する。
     /// </summary>
-    private Vector3 GetInitAppearPosition()
+    private Vector3 GetPosFromViewportPosition(Vector2 viewportPos)
     {
         var stageManager = BattleRealStageManager.Instance;
         var minPos = stageManager.MinLocalFieldPosition;
         var maxPos = stageManager.MaxLocalFieldPosition;
-        var initViewPos = ParamSet.InitAppearViewportPosition;
 
-        var factX = (maxPos.x - minPos.x) * initViewPos.x + minPos.x;
-        var factZ = (maxPos.y - minPos.y) * initViewPos.y + minPos.y;
+        var factX = (maxPos.x - minPos.x) * viewportPos.x + minPos.x;
+        var factZ = (maxPos.y - minPos.y) * viewportPos.y + minPos.y;
         var pos = new Vector3(factX, ParamDef.BASE_Y_POS, factZ);
         pos += m_PlayerCharaHolder.position;
 
@@ -187,6 +201,24 @@ public class BattleRealPlayerManager : ControllableObject, IColliderProcess
         if (Player != null)
         {
             Player.StopChargeShot();
+        }
+    }
+
+    public void OnDeadPlayer()
+    {
+
+    }
+
+    public void MovePlayerBySequence(SequenceGroup sequenceGroup)
+    {
+        Player?.MoveBySequence(sequenceGroup);
+    }
+
+    public void RestrictPlayerPosition()
+    {
+        if (Player != null)
+        {
+            Player.IsRestrictPosition = true;
         }
     }
 }

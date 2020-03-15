@@ -27,8 +27,8 @@ public class BattleRealPlayerLaser : BulletController
 
         m_IsLookMoveDir = false;
 
-        BattleRealManager.Instance.OnTransitionToHacking += OnPause;
-        BattleRealManager.Instance.OnTransitionToReal += OnResume;
+        BattleRealBulletManager.Instance.ToHackingAction += OnPause;
+        BattleRealBulletManager.Instance.FromHackingAction += OnResume;
 
         m_Animator.updateMode = AnimatorUpdateMode.Normal;
         m_Animator.enabled = false;
@@ -48,9 +48,8 @@ public class BattleRealPlayerLaser : BulletController
 
     public override void OnFinalize()
     {
-        BattleRealManager.Instance.OnTransitionToHacking -= OnPause;
-        BattleRealManager.Instance.OnTransitionToReal -= OnResume;
-
+        BattleRealBulletManager.Instance.FromHackingAction -= OnResume;
+        BattleRealBulletManager.Instance.ToHackingAction -= OnPause;
         base.OnFinalize();
     }
 

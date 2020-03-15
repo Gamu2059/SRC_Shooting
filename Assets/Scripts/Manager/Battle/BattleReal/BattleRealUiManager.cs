@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class BattleRealUiManager : ControllableMonoBehavior
+public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 {
     private const string TO_HACKING = "battle_real_ui_to_hacking";
     private const string TO_REAL = "battle_real_ui_to_real";
@@ -100,6 +100,16 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     private bool m_IsShowResult;
 
+    #region Closed Callback
+
+    private Action EndAction { get; set; }
+
+    #endregion
+
+    public void SetCallback(BattleRealManager manager)
+    {
+        EndAction += manager.End;
+    }
 
     #region Game Cycle
 
@@ -142,6 +152,8 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     public override void OnFinalize()
     {
+        EndAction = null;
+
         m_ClearTelop.OnFinalize();
         m_WarningTelop.OnFinalize();
         m_StartTelop.OnFinalize();
@@ -187,7 +199,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;
-            BattleRealManager.Instance.End();
+            EndAction?.Invoke();
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// タイマーを管理する。
 /// </summary>
-public abstract class TimerManagerBase : ControllableObject
+public abstract class TimerManagerBase<T> : Singleton<T> where T : TimerManagerBase<T>, new()
 {
 	protected TimerController m_TimerController;
 

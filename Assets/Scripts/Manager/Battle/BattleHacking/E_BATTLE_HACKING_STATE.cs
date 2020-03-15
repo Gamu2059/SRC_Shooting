@@ -1,9 +1,9 @@
 ﻿public enum E_BATTLE_HACKING_STATE
 {
     START,
-    TRANSITION_TO_REAL,
+    TO_REAL,
     STAY_REAL,
-    TRANSITION_TO_HACKING,
+    FROM_REAL,
     GAME,
     GAME_CLEAR,
     GAME_OVER,
