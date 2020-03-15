@@ -77,7 +77,7 @@ public class ShotParam : object
         AngleSpeed = shotParamOperation.AngleSpeed.GetResultFloat();
         ScaleSpeed = shotParamOperation.ScaleSpeed?.GetResultFloat() ?? 0;
         Opacity = shotParamOperation.Opacity?.GetResultFloat() ?? 1;
-        CanCollide = shotParamOperation.CanCollide?.GetResultBool() ?? false;
+        CanCollide = shotParamOperation.CanCollide?.GetResultBool() ?? true;
     }
 
 
