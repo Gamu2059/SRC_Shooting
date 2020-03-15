@@ -57,20 +57,23 @@ public class BattleHackingPlayerController : CommandCharaController
 
         AudioManager.Instance.Play(BattleHackingPlayerManager.Instance.ParamSet.ShotSe);
 
-        for (int i = 0; i < m_ShotPositions.Length; i++)
+        for(int j = 0;j < 1; j++)
         {
-            // 自機本体の位置を外部に知らせる
-            m_ShotPositionVariable.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[i].position.x, 0);
+            for (int i = 0; i < m_ShotPositions.Length; i++)
+            {
+                // 自機本体の位置を外部に知らせる
+                m_ShotPositionVariable.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[i].position.x, 0);
 
-            // 弾を発射する
-            BattleHackingFreeTrajectoryBulletController.ShotBullet(
-                this,
-                0,
-                m_ShotParamOperation,
-                null,
-                null,
-                null
-                );
+                // 弾を発射する
+                BattleHackingFreeTrajectoryBulletController.ShotBullet(
+                    this,
+                    0,
+                    m_ShotParamOperation,
+                    null,
+                    null,
+                    null
+                    );
+            }
         }
 
         m_ShotTimeCount += m_ShotInterval;

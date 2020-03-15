@@ -132,7 +132,7 @@ MonoBehaviour:
     ColliderShape: 0
     Direction: 0
     ColliderWidth: 10
-    ColliderColor: {r: 1, g: 1, b: 1, a: 0}
+    ColliderColor: {r: 1, g: 1, b: 1, a: 1}
     Transform: {fileID: 7898547469854246630}
 --- !u!114 &7098989558687911602
 MonoBehaviour:
@@ -149,9 +149,6 @@ MonoBehaviour:
   m_BulletGroupId: Hacker
   m_IsDestoryOnCollide: 1
   m_Cycle: 0
-  m_Time: 0
-  m_Trajectory: {fileID: 0}
-  m_IsPlayers: 1
 --- !u!1 &8247850580784192478
 GameObject:
   m_ObjectHideFlags: 0

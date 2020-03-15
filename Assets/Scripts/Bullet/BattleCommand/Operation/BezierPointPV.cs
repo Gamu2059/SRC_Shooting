@@ -10,17 +10,6 @@ public class BezierPointPV : object
 {
 
     /// <summary>
-    /// 所要時間
-    /// </summary>
-    [SerializeField]
-    private OperationFloatBase m_T;
-    public OperationFloatBase T
-    {
-        set { m_T = value; }
-        get { return m_T; }
-    }
-
-    /// <summary>
     /// 位置ベクトル
     /// </summary>
     [SerializeField]
@@ -40,5 +29,16 @@ public class BezierPointPV : object
     {
         set { m_Velocity = value; }
         get { return m_Velocity; }
+    }
+
+    /// <summary>
+    /// 所要時間
+    /// </summary>
+    [SerializeField]
+    private OperationFloatBase m_T;
+    public OperationFloatBase T
+    {
+        set { m_T = value; }
+        get { return m_T; }
     }
 }
