@@ -8,11 +8,11 @@ using System;
 /// </summary>
 public class BattleRealEnemyBehaviorUnit : ScriptableObject, IControllableGameCycle
 {
-    protected BattleRealEnemyBase m_Enemy { get; private set; }
+    protected BattleRealEnemyBase Enemy { get; private set; }
 
     public void SetEnemy(BattleRealEnemyBase enemy)
     {
-        m_Enemy = enemy;
+        Enemy = enemy;
     }
 
     public virtual void OnInitialize() { }

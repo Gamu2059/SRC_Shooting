@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// 敵グループの生成パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyGroupGenerate", fileName = "param.battle_real_enemy_group_generate.asset")]
+[Obsolete, Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyGroupGenerate_old", fileName = "param.battle_real_enemy_group_generate.asset")]
 public class BattleRealEnemyGroupGenerateParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("敵グループの生成ビューポート座標")]

@@ -2,26 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using BattleReal.EnemyGenerator;
 
+/// <summary>
+/// 敵グループの制御クラス。
+/// </summary>
 [Serializable]
 public class BattleRealEnemyGroupController : ControllableMonoBehavior
 {
     #region Field
 
-    private BattleRealEnemyGroupGenerateParamSet m_GenerateParamSet;
-    protected BattleRealEnemyGroupGenerateParamSet GenerateParamSet => m_GenerateParamSet;
-
-    private BattleRealEnemyGroupBehaviorParamSet m_BehaviorParamSet;
-    protected BattleRealEnemyGroupBehaviorParamSet BehaviorParamSet => m_BehaviorParamSet;
-
+    protected BattleRealEnemyGroupParam Param { get; private set; }
+    protected BattleRealEnemyGenerator EnemyGenerator { get; private set; }
+    protected BattleRealEnemyGroupBehaviorUnit Behavior { get; private set; }
     private E_POOLED_OBJECT_CYCLE m_Cycle;
-
-    private List<EnemyIndividualGenerateParamSet> m_IndividualParamSets;
-    private List<EnemyIndividualGenerateParamSet> m_RemoveIndividualParamSets;
-
-    private List<BattleRealEnemyBase> m_CreatedEnemyControllers;
-
-    private float m_CreateEnemyCount;
 
     #endregion
 
@@ -41,33 +35,30 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
     #region Game Cycle
 
+    public void SetParam(BattleRealEnemyGroupParam param)
+    {
+        Param = param;
+        OnSetParam();
+    }
+
+    protected virtual void OnSetParam()
+    {
+
+    }
+
     public override void OnInitialize()
     {
         base.OnInitialize();
-        m_IndividualParamSets = new List<EnemyIndividualGenerateParamSet>();
-        m_RemoveIndividualParamSets = new List<EnemyIndividualGenerateParamSet>();
-        m_CreatedEnemyControllers = new List<BattleRealEnemyBase>();
     }
 
     public override void OnFinalize()
     {
-        for (int i = 0; i < m_CreatedEnemyControllers.Count; i++)
-        {
-            var enemy = m_CreatedEnemyControllers[i];
-            if (enemy != null)
-            {
-                enemy.Destroy();
-            }
-        }
-        m_CreatedEnemyControllers.Clear();
-        m_CreatedEnemyControllers = null;
-        m_IndividualParamSets.Clear();
-        m_IndividualParamSets = null;
-        m_RemoveIndividualParamSets = null;
-
-        m_BehaviorParamSet = null;
-        m_GenerateParamSet = null;
-
+        Behavior?.OnEnd();
+        EnemyGenerator?.OnEnd();
+        Behavior?.OnFinalize();
+        EnemyGenerator?.OnFinalize();
+        Behavior = null;
+        EnemyGenerator = null;
         base.OnFinalize();
     }
 
@@ -75,135 +66,45 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
     {
         base.OnStart();
 
-        if (m_GenerateParamSet != null)
+        if (Param == null)
         {
-            var individualParamSets = m_GenerateParamSet.IndividualGenerateParamSets;
-            m_IndividualParamSets.AddRange(individualParamSets);
+            Debug.LogWarningFormat("BattleRealEnemyGroupParam is null.");
+            Destory();
+            return;
         }
 
-        var viewPortPos = m_GenerateParamSet.ViewPortPos;
-        var offsetPos = m_GenerateParamSet.OffsetPosFromViewPort;
+        EnemyGenerator = Instantiate(Param.EnemyGenerator);
+        Behavior = Instantiate(Param.Behavior);
+
+        var viewPortPos = Param.ViewPortPos;
+        var offsetPos = Param.OffsetPosFromViewPort;
         var pos = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
         pos += offsetPos.ToVector3XZ();
-        transform.position = pos;
 
         var angles = transform.eulerAngles;
-        angles.y = m_GenerateParamSet.GenerateAngle;
-        transform.eulerAngles = angles;
+        angles.y = Param.GenerateAngle;
 
-        m_CreateEnemyCount = 0;
+        transform.SetPositionAndRotation(pos, Quaternion.Euler(angles));
+
+        EnemyGenerator.SetEnemyGroup(this);
+        Behavior.SetEnemyGroup(this);
+
+        EnemyGenerator.OnInitialize();
+        Behavior.OnInitialize();
+
+        EnemyGenerator.OnStart();
+        Behavior.OnStart();
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
 
-        for (int i = 0; i < m_IndividualParamSets.Count; i++)
-        {
-            var paramSet = m_IndividualParamSets[i];
-            if (m_CreateEnemyCount >= paramSet.GenerateTime)
-            {
-                CreateEnemy(paramSet);
-                m_RemoveIndividualParamSets.Add(paramSet);
-            }
-        }
-
-        if (m_RemoveIndividualParamSets.Count > 0)
-        {
-            foreach (var paramSet in m_RemoveIndividualParamSets)
-            {
-                m_IndividualParamSets.Remove(paramSet);
-            }
-            m_RemoveIndividualParamSets.Clear();
-        }
-
-        m_CreateEnemyCount += Time.deltaTime;
-    }
-
-    public override void OnLateUpdate()
-    {
-        base.OnLateUpdate();
-
-        if (m_GenerateParamSet == null)
-        {
-            Destory();
-            return;
-        }
-
-        int removedNum = 0;
-        for (int i = 0; i < m_CreatedEnemyControllers.Count; i++)
-        {
-            if (m_CreatedEnemyControllers[i] == null)
-            {
-                removedNum++;
-            }
-        }
-
-        if (removedNum >= m_GenerateParamSet.IndividualGenerateParamSets.Length)
-        {
-            Destory();
-        }
+        EnemyGenerator?.OnUpdate();
+        Behavior?.OnUpdate();
     }
 
     #endregion
-
-    public void SetParamSet(BattleRealEnemyGroupGenerateParamSet paramSet)
-    {
-        m_GenerateParamSet = paramSet;
-        m_BehaviorParamSet = m_GenerateParamSet.EnemyGroupBehaviorParamSet;
-        OnSetParamSet();
-    }
-
-    protected virtual void OnSetParamSet()
-    {
-
-    }
-
-    private void CreateEnemy(EnemyIndividualGenerateParamSet individualParamSet)
-    {
-        if (individualParamSet == null)
-        {
-            return;
-        }
-
-        //var generateParamSet = individualParamSet.EnemyGenerateParamSet;
-        //var behaviorParamSet = individualParamSet.EnemyBehaviorParamSet;
-        var enemyParam = individualParamSet.EnemyParam;
-        var enemy = BattleRealEnemyManager.Instance.CreateEnemy(enemyParam);
-        if (enemy == null)
-        {
-            return;
-        }
-        m_CreatedEnemyControllers.Add(enemy);
-
-        var enemyT = enemy.transform;
-        enemyT.SetParent(transform);
-
-        var viewPortPos = individualParamSet.ViewPortPos;
-        var offsetPos = individualParamSet.OffsetPosFromViewPort;
-        var pos = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
-        pos += offsetPos.ToVector3XZ();
-
-        if (individualParamSet.Relative == E_RELATIVE.RELATIVE)
-        {
-            enemyT.localPosition = pos;
-            var angles = enemyT.localEulerAngles;
-            angles.y = individualParamSet.GenerateAngle;
-            enemyT.localEulerAngles = angles;
-        }
-        else
-        {
-            enemyT.position = pos;
-            var angles = enemyT.eulerAngles;
-            angles.y = individualParamSet.GenerateAngle;
-            enemyT.eulerAngles = angles;
-        }
-
-        // あくまでY軸は基準に合わせる
-        pos = enemyT.position;
-        pos.y = ParamDef.BASE_Y_POS;
-        enemyT.position = pos;
-    }
 
     public void Destory()
     {

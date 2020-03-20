@@ -11,6 +11,12 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Boss/BossParam", fileName = "param.battle_real_boss.asset")]
 public class BattleRealBossParam : BattleRealEnemyParamBase
 {
+    [Header("振る舞いパラメータ")]
+
+    [SerializeField, Tooltip("振る舞いパラメータ")]
+    private BattleRealBossBehaviorSet[] m_BehaviorSets;
+    public BattleRealBossBehaviorSet[] BehaviorSets => m_BehaviorSets;
+
     [Header("初期化時パラメータ")]
 
     [SerializeField, Tooltip("初期化時に発行するイベント 個数0の場合、何もしない")]
@@ -27,9 +33,31 @@ public class BattleRealBossParam : BattleRealEnemyParamBase
     private BattleRealEventContent[] m_OnStartBehaviorEvents;
     public BattleRealEventContent[] OnStartBehaviorEvents => m_OnStartBehaviorEvents;
 
+    #region Down
+
+    [Header("ダウン時パラメータ")]
+
+    [SerializeField, Tooltip("ダウンした瞬間のエフェクト")]
+    private EffectParamSet m_DownEffectParam;
+    public EffectParamSet DownEffectParam => m_DownEffectParam;
+
+    [SerializeField, Tooltip("ダウン中にプレイヤー側につくエフェクト")]
+    private EffectParamSet m_PlayerTriangleEffectParam;
+    public EffectParamSet PlayerTriangleEffectParam => m_PlayerTriangleEffectParam;
+
+    [SerializeField, Tooltip("ハッキング失敗時のエフェクト")]
+    private EffectParamSet m_HackingFailureEffectParam;
+    public EffectParamSet HackingFailureEffectParam => m_HackingFailureEffectParam;
+
+    [SerializeField, Tooltip("ハッキング成功時のエフェクト")]
+    private EffectParamSet m_HackingSuccessEffectParam;
+    public EffectParamSet HackingSuccessEffectParam => m_HackingSuccessEffectParam;
+
+    #endregion
+
     #region Defeat
 
-    [Header("撃破パラメータ")]
+    [Header("撃破時パラメータ")]
 
     [SerializeField, Tooltip("撃破時の獲得スコア")]
     private int m_DefeatScore;
@@ -50,6 +78,32 @@ public class BattleRealBossParam : BattleRealEnemyParamBase
     [SerializeField, Tooltip("撃破時の敵非表示タイミング")]
     private float m_DefeatHideTime;
     public override float DefeatHideTime => m_DefeatHideTime;
+
+    #endregion
+
+    #region Rescue
+
+    [Header("救出時パラメータ")]
+
+    [SerializeField, Tooltip("救出時の獲得スコア")]
+    private int m_RescueScore;
+    public int RescueScore => m_RescueScore;
+
+    [SerializeField, Tooltip("救出時のドロップアイテム")]
+    private ItemCreateParam m_RescueItemParam;
+    public ItemCreateParam RescueItemParam => m_RescueItemParam;
+
+    [SerializeField, Tooltip("救出時のイベント")]
+    private BattleRealEventContent[] m_RescueEvents;
+    public BattleRealEventContent[] RescueEvents => m_RescueEvents;
+
+    [SerializeField, Tooltip("救出時の一連のエフェクト")]
+    private SequentialEffectParamSet m_RescueSequentialEffect;
+    public SequentialEffectParamSet RescueSequentialEffect => m_RescueSequentialEffect;
+
+    [SerializeField, Tooltip("救出時の敵非表示タイミング")]
+    private float m_RescueHideTime;
+    public float RescueHideTime => m_RescueHideTime;
 
     #endregion
 }

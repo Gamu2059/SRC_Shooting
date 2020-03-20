@@ -80,7 +80,10 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
                 continue;
             }
 
-            effect.OnStart();
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                effect.OnStart();
+            }
         }
 
         GotoUpdateFromStandby();
@@ -93,7 +96,10 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
                 continue;
             }
 
-            effect.OnUpdate();
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                effect.OnUpdate();
+            }
         }
     }
 
@@ -107,7 +113,10 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
                 continue;
             }
 
-            effect.OnLateUpdate();
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                effect.OnLateUpdate();
+            }
         }
 
         // 除外判定
@@ -176,13 +185,13 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var bullet = m_GotoPoolEffects[idx];
-            bullet.OnFinalize();
-            bullet.Cycle = E_POOLED_OBJECT_CYCLE.POOLED;
-            bullet.gameObject.SetActive(false);
+            var effect = m_GotoPoolEffects[idx];
+            effect.OnFinalize();
+            effect.Cycle = E_POOLED_OBJECT_CYCLE.POOLED;
+            effect.gameObject.SetActive(false);
             m_GotoPoolEffects.RemoveAt(idx);
-            m_UpdateEffects.Remove(bullet);
-            m_PoolEffects.Add(bullet);
+            m_UpdateEffects.Remove(effect);
+            m_PoolEffects.Add(effect);
         }
 
         m_GotoPoolEffects.Clear();
@@ -244,7 +253,7 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
     /// プールからエフェクトを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    public BattleCommonEffectController GetPoolingEffect(BattleCommonEffectController effectPrefab)
+    private BattleCommonEffectController GetPoolingEffect(BattleCommonEffectController effectPrefab)
     {
         if (effectPrefab == null)
         {
@@ -300,15 +309,8 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
     /// </summary>
     public void PauseAllEffect()
     {
-        foreach (var e in m_StandbyEffects)
-        {
-            e.Pause();
-        }
-
-        foreach (var e in m_UpdateEffects)
-        {
-            e.Pause();
-        }
+        m_StandbyEffects.ForEach(e => e.Pause());
+        m_UpdateEffects.ForEach(e => e.Pause());
     }
 
     /// <summary>
@@ -316,15 +318,8 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
     /// </summary>
     public void ResumeAllEffect()
     {
-        foreach (var e in m_StandbyEffects)
-        {
-            e.Resume();
-        }
-
-        foreach (var e in m_UpdateEffects)
-        {
-            e.Resume();
-        }
+        m_StandbyEffects.ForEach(e => e.Resume());
+        m_UpdateEffects.ForEach(e => e.Resume());
     }
 
     /// <summary>
@@ -333,14 +328,39 @@ public class BattleHackingEffectManager : Singleton<BattleHackingEffectManager>
     /// </summary>
     public void StopAllEffect(bool isImmediate)
     {
+        m_StandbyEffects.ForEach(e => e.Stop(isImmediate));
+        m_UpdateEffects.ForEach(e => e.Stop(isImmediate));
+    }
+
+    /// <summary>
+    /// 全てのエフェクトを破棄する。
+    /// </summary>
+    public void DestroyAllEffect(bool isImmediate)
+    {
+        m_StandbyEffects.ForEach(e => e.Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
+        m_UpdateEffects.ForEach(e => e.DestroyEffect(isImmediate));
+    }
+
+    /// <summary>
+    /// 指定したオーナーを持つエフェクトを破棄する。
+    /// </summary>
+    public void DestroyEffectByOwner(Transform owner, bool isImmediate)
+    {
+        // DestroyEffectを呼び出しても意味がないので、サイクルを上書きして破棄にもっていく
         foreach (var e in m_StandbyEffects)
         {
-            e.Stop(isImmediate);
+            if (e.Owner == owner)
+            {
+                e.Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_POOL;
+            }
         }
 
         foreach (var e in m_UpdateEffects)
         {
-            e.Stop(isImmediate);
+            if (e.Owner == owner)
+            {
+                e.DestroyEffect(isImmediate);
+            }
         }
     }
 }

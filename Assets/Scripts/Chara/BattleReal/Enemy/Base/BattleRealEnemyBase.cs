@@ -185,6 +185,7 @@ public class BattleRealEnemyBase : BattleRealCharaController
 
     #endregion
 
+    #region Suffer
 
     protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
@@ -249,6 +250,8 @@ public class BattleRealEnemyBase : BattleRealCharaController
             m_MaterialEffect.ChangeMaterial(mat, dur);
         }
     }
+
+    #endregion
 
     public sealed override void Dead()
     {

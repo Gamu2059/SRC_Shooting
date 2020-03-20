@@ -17,6 +17,11 @@ public class BattleData
     public E_GAME_MODE GameMode { get; private set; }
 
     /// <summary>
+    /// 難易度
+    /// </summary>
+    public E_DIFFICULTY Difficulty { get; private set; }
+
+    /// <summary>
     /// ステージ
     /// </summary>
     public E_STAGE Stage { get; private set; }
@@ -343,4 +348,9 @@ public class BattleData
     }
 
     #endregion
+
+    public void SetDifficulty(E_DIFFICULTY difficulty)
+    {
+        Difficulty = difficulty;
+    }
 }

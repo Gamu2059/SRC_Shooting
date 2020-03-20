@@ -13,6 +13,11 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
     private enum E_STATE
     {
         /// <summary>
+        /// 生成直後に遷移するステート
+        /// </summary>
+        START,
+
+        /// <summary>
         /// 移動したり攻撃したりするためのステート
         /// </summary>
         BEHAVIOR,
@@ -59,23 +64,10 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
         base.OnInitialize();
 
         m_StateMachine = new StateMachine<E_STATE, BattleRealEnemyController>();
+        m_StateMachine.AddState(new InnerState(E_STATE.START, this, new StartState()));
         m_StateMachine.AddState(new InnerState(E_STATE.BEHAVIOR, this, new BehaviorState()));
         m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
-
-        if (m_EnemyParam != null && m_EnemyParam.OnInitializeEvents != null)
-        {
-            BattleRealEventManager.Instance.AddEvent(m_EnemyParam.OnInitializeEvents);
-        }
-
-        if (m_EnemyParam != null && m_EnemyParam.OnInitializeSequence)
-        {
-            RequestChangeState(E_STATE.SEQUENCE);
-        }
-        else
-        {
-            RequestChangeState(E_STATE.BEHAVIOR);
-        }
 
         m_EnemyBehavior = null;
         if (m_EnemyParam != null && m_EnemyParam.Behavior != null)

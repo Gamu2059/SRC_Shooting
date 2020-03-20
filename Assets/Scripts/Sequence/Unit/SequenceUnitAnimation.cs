@@ -26,10 +26,10 @@ public class SequenceUnitAnimation : SequenceUnit
 
     [Header("Animation Parameter")]
 
-    [SerializeField]
+    [SerializeField, Tooltip("WorldPosition とは書いてありますが、SpaceTypeによって座標系は変わります")]
     private InitData m_InitializeWorldPosition;
 
-    [SerializeField]
+    [SerializeField, Tooltip("EulerAngles とは書いてありますが、SpaceTypeによって座標系は変わります")]
     private InitData m_InitializeEulerAngles;
 
     [SerializeField]
@@ -45,10 +45,20 @@ public class SequenceUnitAnimation : SequenceUnit
     {
         base.OnStart();
 
-        m_CalcedInitPosition = GetInitData(Target.position, m_InitializeWorldPosition);
-        m_CalcedInitRotation = GetInitData(Target.eulerAngles, m_InitializeEulerAngles);
-        Target.position = m_CalcedInitPosition;
-        Target.eulerAngles = m_CalcedInitRotation;
+        var pos = m_SpaceType == Space.World ? Target.position : Target.localPosition;
+        var rot = m_SpaceType == Space.World ? Target.eulerAngles : Target.localEulerAngles;
+        m_CalcedInitPosition = GetInitData(pos, m_InitializeWorldPosition);
+        m_CalcedInitRotation = GetInitData(rot, m_InitializeEulerAngles);
+
+        if (m_SpaceType == Space.World)
+        {
+            Target.SetPositionAndRotation(m_CalcedInitPosition, Quaternion.Euler(m_CalcedInitRotation));
+        }
+        else
+        {
+            Target.localPosition = m_CalcedInitPosition;
+            Target.localEulerAngles = m_CalcedInitRotation;
+        }
     }
 
     protected override void OnUpdate(float deltaTime)
@@ -68,8 +78,14 @@ public class SequenceUnitAnimation : SequenceUnit
         return CurrentTime >= m_Duration;
     }
 
-    public override void GetStartTransform(Transform target, out Vector3 position, out Vector3 rotate)
+    public override void GetStartTransform(Transform target, out Space spaceType, out Vector3 position, out Vector3 rotate)
     {
+        // スペースタイプによって解釈が変わるため難しい
+        var pos = m_SpaceType == Space.World ? Target.position : Target.localPosition;
+        var rot = m_SpaceType == Space.World ? Target.eulerAngles : Target.localEulerAngles;
+        m_CalcedInitPosition = GetInitData(pos, m_InitializeWorldPosition);
+        m_CalcedInitRotation = GetInitData(rot, m_InitializeEulerAngles);
+        spaceType = m_SpaceType;
         position = GetInitData(target.position, m_InitializeWorldPosition);
         rotate = GetInitData(target.eulerAngles, m_InitializeEulerAngles);
     }

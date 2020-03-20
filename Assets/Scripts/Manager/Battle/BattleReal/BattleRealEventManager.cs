@@ -838,7 +838,7 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
-                ExecuteApperEnemyGroup(eventContent.EnemyGroupGenerateParamSet);
+                ExecuteApperEnemyGroup(eventContent.EnemyGroupParam);
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.MOVE_PLAYER_BY_SEQUENCE:
                 ExecuteMovePlayerBySequence(eventContent.MovePlayerSequenceGroup);
@@ -903,9 +903,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// <summary>
     /// 敵を出現させる。
     /// </summary>
-    private void ExecuteApperEnemyGroup(BattleRealEnemyGroupGenerateParamSet enemyGroupGenerateParamSet)
+    private void ExecuteApperEnemyGroup(BattleRealEnemyGroupParam enemyGroupParam)
     {
-        BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(enemyGroupGenerateParamSet);
+        BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(enemyGroupParam);
     }
 
     private void ExecuteMovePlayerBySequence(SequenceGroup sequenceGroup)

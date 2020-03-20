@@ -146,7 +146,8 @@ public struct BattleRealEventContent
 
     [Header("APPEAR_ENEMY")]
 
-    public BattleRealEnemyGroupGenerateParamSet EnemyGroupGenerateParamSet;
+    public BattleRealEnemyGroupParam EnemyGroupParam;
+    //public BattleRealEnemyGroupGenerateParamSet EnemyGroupGenerateParamSet;
 
     [Header("MOVE_PLAYER_BY_SEQUENCE")]
 

@@ -24,6 +24,9 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     #region Field Inspector
 
+    [SerializeField, Tooltip("緊急で用意した難易度設定パラメータ 本番使用はしません")]
+    private E_DIFFICULTY m_Difficulty = E_DIFFICULTY.NORMAL;
+
     [Header("ParamSet")]
 
     [SerializeField]
@@ -93,6 +96,8 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
         m_GameOverController.OnInitialize();
         m_GameOverController.EndAction += m_RealManager.End;
+
+        DataManager.Instance.BattleData.SetDifficulty(m_Difficulty);
 
         CalcPerfectHackingSuccessNum();
     }
@@ -184,16 +189,17 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         var generator = m_ParamSet.BattleRealParamSet.EnemyManagerParamSet.Generator;
         int sum = 0;
 
-        foreach (var group in generator.Contents)
-        {
-            foreach (var enemy in group.GroupGenerateParamSet.IndividualGenerateParamSets)
-            {
-                if (enemy.EnemyGenerateParamSet is BattleRealBossGenerateParamSet bossParamSet)
-                {
-                    sum += bossParamSet.HackingCompleteNum;
-                }
-            }
-        }
+        //現状は、理論的に計上不可能
+        //foreach (var group in generator.Contents)
+        //{
+        //    foreach (var enemy in group.GroupGenerateParamSet.IndividualGenerateParamSets)
+        //    {
+        //        if (enemy.EnemyGenerateParamSet is BattleRealBossGenerateParamSet bossParamSet)
+        //        {
+        //            sum += bossParamSet.HackingCompleteNum;
+        //        }
+        //    }
+        //}
 
         DataManager.Instance.BattleData.SetPerfectHackingSuccessCount(sum);
     }

@@ -11,6 +11,9 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/Sequence/Unit/Default", fileName = "default.sequence_unit.asset", order = 0)]
 public class SequenceUnit : SequenceElement
 {
+    [SerializeField, Tooltip("シーケンスさせる座標系")]
+    protected Space m_SpaceType;
+
     [Header("End Parameter")]
 
     [SerializeField, Tooltip("終了条件に先立って、割り込み終了関数を適用するかどうか")]
@@ -118,8 +121,9 @@ public class SequenceUnit : SequenceElement
     /// <summary>
     /// これに入ってきた時のトランスフォームの座標と回転を予測する。
     /// </summary>
-    public virtual void GetStartTransform(Transform target, out Vector3 position, out Vector3 rotate)
+    public virtual void GetStartTransform(Transform target, out Space spaceType, out Vector3 position, out Vector3 rotate)
     {
+        spaceType = m_SpaceType;
         position = target.position;
         rotate = target.eulerAngles;
     }

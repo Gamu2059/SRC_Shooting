@@ -9,7 +9,7 @@ using System;
 /// アニメーションカーブによって動く敵のNway版。
 /// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/NwayAnimationCurve", fileName = "param.battle_real_enemy_behavior.asset")]
-public class NwayAnimationCurveBehavior : AnimationCurveBehavior
+public class NwayAnimationCurveBehavior : BattleRealEnemyAnimationCurveBehavior
 {
     #region Field Inspector
 
@@ -44,9 +44,9 @@ public class NwayAnimationCurveBehavior : AnimationCurveBehavior
             return;
         }
 
-        var transform = m_Enemy.transform;
+        var transform = Enemy.transform;
         var spreadAngles = BattleRealCharaController.GetBulletSpreadAngles(param.Num, param.Angle);
-        var shotParam = new BulletShotParam(m_Enemy);
+        var shotParam = new BulletShotParam(Enemy);
 
         for (int i = 0; i < m_WayNum; i++)
         {

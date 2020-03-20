@@ -16,8 +16,12 @@ public class BattleRealEnemyGroupGenerator : ScriptableObject
         public EventTriggerRootCondition Condition => m_Condition;
 
         [SerializeField]
-        private BattleRealEnemyGroupGenerateParamSet m_GroupGenerateParamSet;
-        public BattleRealEnemyGroupGenerateParamSet GroupGenerateParamSet => m_GroupGenerateParamSet;
+        private BattleRealEnemyGroupParam m_Param;
+        public BattleRealEnemyGroupParam Param => m_Param;
+
+        //[SerializeField]
+        //private BattleRealEnemyGroupGenerateParamSet m_GroupGenerateParamSet;
+        //public BattleRealEnemyGroupGenerateParamSet GroupGenerateParamSet => m_GroupGenerateParamSet;
     }
 
     [SerializeField]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public class InfC761Phase1 : BattleRealBossBehavior
 {
     public enum E_PHASE{

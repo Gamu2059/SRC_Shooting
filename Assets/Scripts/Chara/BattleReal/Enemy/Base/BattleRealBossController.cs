@@ -13,6 +13,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     private enum E_STATE
     {
         /// <summary>
+        /// 生成直後に遷移するステート
+        /// </summary>
+        START,
+
+        /// <summary>
         /// 移動したり攻撃したりするためのステート
         /// </summary>
         BEHAVIOR,
@@ -23,7 +28,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         DOWN_BEHAVIOR,
 
         /// <summary>
-        /// 移動や攻撃等を変更するためのステート
+        /// 攻撃等のフェーズを変化させる時に遷移するステート
         /// </summary>
         CHANGE_BEHAVIOR,
 
@@ -51,11 +56,6 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         /// 救出された時に遷移するステート
         /// </summary>
         RESCUE,
-
-        /// <summary>
-        /// 全て終えた時に遷移するステート
-        /// </summary>
-        END,
     }
 
     private class StateCycle : StateCycleBase<BattleRealBossController, E_STATE> { }
@@ -66,19 +66,55 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         public InnerState(E_STATE state, BattleRealBossController target, StateCycle cycle) : base(state, target, cycle) { }
     }
 
+    /// <summary>
+    /// ボスのコントローラで保持するためのクラス。
+    /// </summary>
+    private class BehaviorSet
+    {
+        public BattleRealEnemyBehaviorUnit Behavior;
+        public BattleRealEnemyBehaviorUnit DownBehavior;
+        public BattleHackingLevelParamSet HackingLevelParamSet;
+        public int DownHp;
+        public float DownHealTime;
+        public float HpRateThresholdNextBehavior;
+        public ItemCreateParam HackingSuccessItemParam;
+        public SequenceGroup StartSequenceGroup;
+    }
+
+    #endregion
+
+    #region Readonly
+
+    /// <summary>
+    /// 振る舞い変更に掛かる時間
+    /// </summary>
+    private const float CHANGE_BEHAVIOR_DURATION = 2f;
+
+    /// <summary>
+    /// このボスに存在する、プレイヤーが触れると被弾するコライダーの名前
+    /// </summary>
+    private const string DAMAGE_COLLIDER_NAME = "Damage Collider";
+
     #endregion
 
     #region Field
 
     private StateMachine<E_STATE, BattleRealBossController> m_StateMachine;
     private BattleRealBossParam m_BossParam;
-    private BattleRealEnemyBehaviorUnit m_CurrentBehavior;
-    private BattleRealEnemyBehaviorUnit m_CurrentDownBehavior;
+    private List<BehaviorSet> m_BehaviorSets;
+
+    private SequenceGroup m_ReservedSequenceGroup;
+
+    private int m_CurrentBehaviorSetIndex;
+    private BehaviorSet m_CurrentBehaviorSet;
 
     public float NowDownHp { get; private set; }
     public float MaxDownHp { get; private set; }
     public int HackingCompleteNum { get; private set; }
     public int HackingSuccessCount { get; private set; }
+
+    private Transform m_DamageCollider;
+    private int m_CarryOverHackingBossDamage;
 
     #endregion
 
@@ -103,11 +139,65 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
         m_StateMachine.AddState(new InnerState(E_STATE.RESCUE, this, new RescueState()));
-        m_StateMachine.AddState(new InnerState(E_STATE.END, this, new EndState()));
+
+        m_DamageCollider = transform.Find(DAMAGE_COLLIDER_NAME, false);
+        if (m_DamageCollider == null)
+        {
+            Debug.LogWarningFormat("[{0}] : ダメージコライダーを見つけることができませんでした。 要求する名前 : {1}", GetType().Name, DAMAGE_COLLIDER_NAME);
+        }
+
+        m_CarryOverHackingBossDamage = 0;
+        m_ReservedSequenceGroup = null;
+        InitializeBehaviorSet();
+
+        RequestChangeState(E_STATE.START);
+    }
+
+    private void InitializeBehaviorSet()
+    {
+        m_BehaviorSets = new List<BehaviorSet>();
+        for (var i = 0; i < m_BossParam.BehaviorSets.Length; i++)
+        {
+            var originBehaviorSet = m_BossParam.BehaviorSets[i];
+            var behaviorSet = new BehaviorSet()
+            {
+                Behavior = Instantiate(originBehaviorSet.Behavior),
+                DownBehavior = Instantiate(originBehaviorSet.DownBehavior),
+                HackingLevelParamSet = Instantiate(originBehaviorSet.HackingLevelParamSet),
+                DownHp = originBehaviorSet.DownHp,
+                DownHealTime = originBehaviorSet.DownHealTime,
+                HpRateThresholdNextBehavior = originBehaviorSet.HpRateThresholdNextBehavior,
+                HackingSuccessItemParam = originBehaviorSet.HackingSuccessItemParam,
+                StartSequenceGroup = originBehaviorSet.StartSequenceGroup,
+            };
+
+            behaviorSet.Behavior.SetEnemy(this);
+            behaviorSet.DownBehavior.SetEnemy(this);
+            behaviorSet.Behavior.OnInitialize();
+            behaviorSet.DownBehavior.OnInitialize();
+
+            m_BehaviorSets.Add(behaviorSet);
+        }
     }
 
     public override void OnFinalize()
     {
+        // 自身が作成したエフェクトを全て破棄する
+        BattleRealEffectManager.Instance.DestroyEffectByOwner(transform, true);
+
+        m_CurrentBehaviorSetIndex = -1;
+        m_CurrentBehaviorSet = null;
+        if (m_BehaviorSets != null)
+        {
+            foreach(var behaviorSet in m_BehaviorSets)
+            {
+                behaviorSet.DownBehavior?.OnFinalize();
+                behaviorSet.Behavior?.OnFinalize();
+            }
+            m_BehaviorSets.Clear();
+            m_BehaviorSets = null;
+        }
+
         m_StateMachine.OnFinalize();
         base.OnFinalize();
     }
@@ -171,8 +261,8 @@ public partial class BattleRealBossController : BattleRealEnemyBase
                     var colliderType = sufferData.HitCollider.Transform.ColliderType;
                     if (colliderType == E_COLLIDER_TYPE.PLAYER_HACKING)
                     {
-                        var index = Math.Min(m_HackingLevelParamSets.Length - 1, m_HackingSuccessCount);
-                        HackingDataHolder.HackingLevelParamSet = m_HackingLevelParamSets[index];
+                        HackingDataHolder.HackingLevelParamSet = m_CurrentBehaviorSet.HackingLevelParamSet;
+                        HackingDataHolder.CarryOverHackingBossDamage = m_CarryOverHackingBossDamage;
                         BattleRealEnemyManager.Instance.RequestToHacking();
                     }
                 }
@@ -234,27 +324,76 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     }
 
     /// <summary>
-    /// ハッキングモードから帰ってきた時の処理
+    /// 指定したインデックスの振る舞いに切り替える。
     /// </summary>
-    private void OnFromHacking()
+    private void ChangeBehaviorSet(int index)
     {
-        var currentState = m_StateMachine.CurrentState.Key;
-        if (currentState == E_STATE.DOWN_BEHAVIOR)
+        if (m_BehaviorSets == null)
         {
-            if (HackingDataHolder.IsHackingSuccess)
-            {
-                RequestChangeState(E_STATE.HACKING_SUCCESS);
-            }
-            else
-            {
-                RequestChangeState(E_STATE.HACKING_FAILURE);
-            }
+            return;
+        }
+
+        if (index < 0 || index >= m_BehaviorSets.Count)
+        {
+            return;
+        }
+
+        var behaviorSet = m_BehaviorSets[index];
+        if (behaviorSet == null)
+        {
+            Debug.LogWarningFormat("[{0}] : BehaviorSet is null. index : {1}", GetType().Name, index);
+            return;
+        }
+
+        m_CurrentBehaviorSetIndex = index;
+        m_CurrentBehaviorSet = behaviorSet;
+
+        if (MaxDownHp > 0)
+        {
+            var rate = NowDownHp / MaxDownHp;
+            MaxDownHp = m_CurrentBehaviorSet.DownHp;
+            NowDownHp = m_CurrentBehaviorSet.DownHp * rate;
+        }
+        else
+        {
+            MaxDownHp = m_CurrentBehaviorSet.DownHp;
+            NowDownHp = 0;
         }
     }
 
+    /// <summary>
+    /// シーケンスによる制御を開始する。
+    /// </summary>
+    private void StartSequence(SequenceGroup sequenceGroup)
+    {
+        if (sequenceGroup == null)
+        {
+            return;
+        }
+
+        m_ReservedSequenceGroup = sequenceGroup;
+        RequestChangeState(E_STATE.SEQUENCE);
+    }
+
+    /// <summary>
+    /// HPが0になって死亡した時の処理。
+    /// </summary>
     protected sealed override void OnDead()
     {
         base.OnDead();
         RequestChangeState(E_STATE.DEAD);
+    }
+
+    protected void OnRescueDestroy()
+    {
+        BattleRealItemManager.Instance.CreateItem(transform.position, m_BossParam.RescueItemParam);
+        DataManager.Instance.BattleData.AddScore(m_BossParam.RescueScore);
+
+        Destroy();
+    }
+
+    protected void ExecuteResuceEvent()
+    {
+        BattleRealEventManager.Instance.AddEvent(m_BossParam.RescueEvents);
     }
 }

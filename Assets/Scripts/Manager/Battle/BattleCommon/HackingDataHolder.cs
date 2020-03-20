@@ -12,12 +12,12 @@ public static class HackingDataHolder
     /// <summary>
     /// ハッキングモードの生成に必要なデータ。
     /// </summary>
-    public static BattleHackingLevelParamSet HackingLevelParamSet;
+    public static BattleHackingLevelParamSet HackingLevelParamSet = null;
 
     /// <summary>
-    /// ハッキングモードでの結果データ。
+    /// 前回から持ち越したハッキングモードのボスのダメージ。
     /// </summary>
-    public static bool HackingResultData;
+    public static int CarryOverHackingBossDamage = 0;
 
     /// <summary>
     /// ハッキングが成功したかどうか。

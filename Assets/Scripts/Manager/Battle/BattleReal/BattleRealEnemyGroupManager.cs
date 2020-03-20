@@ -183,36 +183,36 @@ public class BattleRealEnemyGroupManager : Singleton<BattleRealEnemyGroupManager
     /// プールから敵グループを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    private BattleRealEnemyGroupController GetPoolingEnemyGroup(BattleRealEnemyGroupGenerateParamSet groupGenerateParamSet)
+    private BattleRealEnemyGroupController GetPoolingEnemyGroup(BattleRealEnemyGroupParam enemyGroupParam)
     {
-        if (groupGenerateParamSet == null)
+        if (enemyGroupParam == null)
         {
             return null;
         }
 
-        var behaviorClass = groupGenerateParamSet.EnemyGroupBehaviorParamSet.BehaviorClass;
-        Type behaviorType = null;
+        //var behaviorClass = groupGenerateParamSet.EnemyGroupBehaviorParamSet.BehaviorClass;
+        //Type behaviorType = null;
 
-        try
-        {
-            behaviorType = Type.GetType(behaviorClass);
-        }
-        catch (Exception)
-        {
-            return null;
-        }
+        //try
+        //{
+        //    behaviorType = Type.GetType(behaviorClass);
+        //}
+        //catch (Exception)
+        //{
+        //    return null;
+        //}
 
-        if (behaviorType == null)
-        {
-            return null;
-        }
+        //if (behaviorType == null)
+        //{
+        //    return null;
+        //}
 
         BattleRealEnemyGroupController enemyGroup = null;
 
         for (int i = 0; i < m_PoolEnemyGroups.Count; i++)
         {
             var pooledGroup = m_PoolEnemyGroups[i];
-            if (pooledGroup != null && pooledGroup.GetType().Equals(behaviorType))
+            if (pooledGroup != null && pooledGroup is BattleRealEnemyGroupController)
             {
                 enemyGroup = pooledGroup;
                 break;
@@ -221,12 +221,12 @@ public class BattleRealEnemyGroupManager : Singleton<BattleRealEnemyGroupManager
 
         if (enemyGroup == null)
         {
-            var groupObj = new GameObject(behaviorClass);
-            enemyGroup = groupObj.AddComponent(behaviorType) as BattleRealEnemyGroupController;
+            var groupObj = new GameObject("EnemyGroup");
+            enemyGroup = groupObj.AddComponent<BattleRealEnemyGroupController>();
 
             if (enemyGroup == null)
             {
-                Debug.LogError(behaviorClass + "は、BattleRealEnemyGroupControllerを継承していません。");
+                //Debug.LogError(behaviorClass + "は、BattleRealEnemyGroupControllerを継承していません。");
                 GameObject.Destroy(groupObj);
                 return null;
             }
@@ -274,20 +274,20 @@ public class BattleRealEnemyGroupManager : Singleton<BattleRealEnemyGroupManager
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public void CreateEnemyGroup(BattleRealEnemyGroupGenerateParamSet groupGenerateParamSet)
+    public void CreateEnemyGroup(BattleRealEnemyGroupParam enemyGroupParam)
     {
-        if (groupGenerateParamSet == null)
+        if (enemyGroupParam == null)
         {
             return;
         }
 
-        var enemyGroup = GetPoolingEnemyGroup(groupGenerateParamSet);
+        var enemyGroup = GetPoolingEnemyGroup(enemyGroupParam);
         if (enemyGroup == null)
         {
             return;
         }
 
-        enemyGroup.SetParamSet(groupGenerateParamSet);
+        enemyGroup.SetParam(enemyGroupParam);
         CheckStandByEnemyGroup(enemyGroup);
     }
 

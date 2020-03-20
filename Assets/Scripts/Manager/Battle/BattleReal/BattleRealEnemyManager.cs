@@ -457,7 +457,7 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
             var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();
             var content = new BattleRealEventContent();
             content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;
-            content.EnemyGroupGenerateParamSet = param.GroupGenerateParamSet;
+            content.EnemyGroupParam = param.Param;
             eventParam.Condition = param.Condition;
             eventParam.Contents = new[] { content };
             BattleRealEventManager.Instance.AddEventParam(eventParam);

@@ -23,6 +23,10 @@ public class BattleRealBossBehaviorSet
     private BattleHackingLevelParamSet m_HackingLevelParamSet;
     public BattleHackingLevelParamSet HackingLevelParamSet => m_HackingLevelParamSet;
 
+    [SerializeField, Tooltip("この振る舞いに切り替わった時に用いるシーケンスデータ")]
+    private SequenceGroup m_StartSequenceGroup;
+    public SequenceGroup StartSequenceGroup => m_StartSequenceGroup;
+
     [SerializeField, Tooltip("この振る舞いでのダウンHP")]
     private int m_DownHp;
     public int DownHp => m_DownHp;
@@ -34,4 +38,8 @@ public class BattleRealBossBehaviorSet
     [SerializeField, Tooltip("次の振る舞いセットへと遷移するHPの割合 これを下回ると次の振る舞いへと遷移する"), Range(0, 1)]
     private float m_HpRateThresholdNextBehavior;
     public float HpRateThresholdNextBehavior => m_HpRateThresholdNextBehavior;
+
+    [SerializeField, Tooltip("ハッキング成功時にばらまくアイテムのパラメータ")]
+    private ItemCreateParam m_HackingSuccessItemParam;
+    public ItemCreateParam HackingSuccessItemParam => m_HackingSuccessItemParam;
 }

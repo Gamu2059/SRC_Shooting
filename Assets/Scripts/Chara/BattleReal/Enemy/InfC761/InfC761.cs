@@ -7,6 +7,7 @@ using System.Reflection;
 /// <summary>
 /// Inf-C-761のコントローラ
 /// </summary>
+[Obsolete]
 public class InfC761 : BattleRealBoss
 {
     #region Field
