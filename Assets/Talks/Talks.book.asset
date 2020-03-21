@@ -70,19 +70,81 @@ MonoBehaviour:
       debugIndex: 2
       strings:
       - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
       - 
       - 
       - 
       - 
-      - 
-      - 
-      - 
-      - "\u3042\u3044\u3046\u3048\u304A\n\u3053\u308C\u306F\u30C6\u30B9\u30C8\u3067\u5FA1\u5EA7\u308B"
+      - "\u30A2\u30AA\u30A4\uFF01\n\u8868\u5C64\u3078\u306F\u53F3\u3001\u4E0A\u304C\u6700\u77ED\u3088\uFF01"
+      - Next
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 3
       debugIndex: 3
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - EndPage
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
+      - 
+      - 
+      - 
+      - 
+      - "\u6575\u306F\u591A\u3044\u3051\u3069\u3001\u3042\u3093\u305F\u306A\u3089\u51FA\u6765\u308B\u308F\uFF01"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
       strings:
       - EndScenario
       isEmpty: 0
@@ -90,7 +152,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/Talks/Talks.xls:Stage1
     type: 1
-    textLength: 106
+    textLength: 165
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -123,9 +185,27 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - "\u30A2\u30AB\u30A4"
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - 
+      - -500
+      - 
+      - Bottom
+      - .7
+      - 
+      - C-aca1.png
+      - 
+      - 2D
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     name: Assets/Talks/Talks.xls:Character
     type: 1
-    textLength: 154
+    textLength: 184
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -194,9 +274,39 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - Left
+      - Character
+      - -400
+      - 0
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Right
+      - Character
+      - 400
+      - 0
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - Center
+      - Character
+      - 0
+      - 0
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     name: Assets/Talks/Talks.xls:Layer
     type: 1
-    textLength: 109
+    textLength: 162
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -541,32 +651,94 @@ MonoBehaviour:
       debugIndex: 2
       strings:
       - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
       - 
       - 
       - 
       - 
-      - 
-      - 
-      - 
-      - "\u3042\u3044\u3046\u3048\u304A\n\u3053\u308C\u306F\u30C6\u30B9\u30C8\u3067\u5FA1\u5EA7\u308B"
+      - "\u30A2\u30AA\u30A4\uFF01\n\u8868\u5C64\u3078\u306F\u53F3\u3001\u4E0A\u304C\u6700\u77ED\u3088\uFF01"
+      - Next
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 3
       debugIndex: 3
       strings:
-      - EndScenario
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 4
       debugIndex: 4
+      strings:
+      - EndPage
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
+      - 
+      - 
+      - 
+      - 
+      - "\u6575\u306F\u591A\u3044\u3051\u3069\u3001\u3042\u3093\u305F\u306A\u3089\u51FA\u6765\u308B\u308F\uFF01"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
       strings: []
       isEmpty: 1
       isCommentOut: 0
       debugInfo: 
     name: Assets/Talks/Talks.xls:Stage1
     type: 1
-    textLength: 106
+    textLength: 165
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
