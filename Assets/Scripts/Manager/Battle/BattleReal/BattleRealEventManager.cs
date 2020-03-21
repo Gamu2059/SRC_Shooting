@@ -855,6 +855,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
                 // 何もしない
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_TELOP_UI:
+                ExecuteControlTelop(eventContent.ControlTelopParam);
+                break;
             case BattleRealEventContent.E_EVENT_TYPE.SHOW_CUTSCENE:
                 ExecuteShowCutscene(eventContent.ShowCutsceneParam);
                 break;
@@ -962,6 +965,25 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
                     AudioManager.Instance.StopAllSe();
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// リアルモードのテロップUIを制御する。
+    /// </summary>
+    private void ExecuteControlTelop(ControlTelopParam controlTelopParam)
+    {
+        switch(controlTelopParam.TargetTelopType)
+        {
+            case E_TELOP_TYPE.START_TELOP:
+                BattleRealUiManager.Instance.PlayStartTelop();
+                break;
+            case E_TELOP_TYPE.WARNING_TELOP:
+                BattleRealUiManager.Instance.PlayWarningTelop();
+                break;
+            case E_TELOP_TYPE.GAME_CLEAR_TELOP:
+                BattleRealUiManager.Instance.PlayClearTelop();
+                break;
         }
     }
 

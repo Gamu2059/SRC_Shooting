@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードのボスのパラメータ。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Boss/BossParam", fileName = "param.battle_real_boss.asset")]
+[Serializable]
 public class BattleRealBossParam : BattleRealEnemyParamBase
 {
     [Header("振る舞いパラメータ")]

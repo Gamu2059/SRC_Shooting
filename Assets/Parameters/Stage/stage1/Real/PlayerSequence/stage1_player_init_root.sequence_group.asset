@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e676eab4e9ed9c844b402d6867814a85, type: 3}
   m_Name: stage1_player_init_root.sequence_group
   m_EditorClassIdentifier: 
-  m_Elements: []
+  m_Elements:
+  - {fileID: 11400000, guid: 5e0ed9e3fa2a56747a51e2a9150dd295, type: 2}
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_OnLoopedOptions: []

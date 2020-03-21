@@ -39,8 +39,8 @@ namespace BattleReal.EnemyGenerator
             public float GenerateAngle => m_GenerateAngle;
 
             [SerializeField, Tooltip("生成する敵のパラメータ。nullにしておくとデフォルトの敵のパラメータで生成する。")]
-            private BattleRealEnemyParamBase m_EnemyParam;
-            public BattleRealEnemyParamBase EnemyParam => m_EnemyParam;
+            private BattleRealEnemyParamSetBase m_ParamSet;
+            public BattleRealEnemyParamSetBase ParamSet => m_ParamSet;
         }
 
         #endregion
@@ -48,8 +48,8 @@ namespace BattleReal.EnemyGenerator
         #region Field Inspector
 
         [SerializeField]
-        private BattleRealEnemyParamBase m_DefaultEnemyParam;
-        public BattleRealEnemyParamBase DefaultEnemyParam => m_DefaultEnemyParam;
+        private BattleRealEnemyParamSetBase m_DefaultParamSet;
+        public BattleRealEnemyParamSetBase DefaultParamSet => m_DefaultParamSet;
 
         [SerializeField]
         private IndividualParam[] m_IndividualParams;
@@ -108,7 +108,7 @@ namespace BattleReal.EnemyGenerator
                 return;
             }
 
-            var enemyParam = param.EnemyParam != null ? param.EnemyParam : DefaultEnemyParam;
+            var enemyParam = param.ParamSet != null ? param.ParamSet : DefaultParamSet;
             var enemy = BattleRealEnemyManager.Instance.CreateEnemy(enemyParam);
             if (enemy == null)
             {

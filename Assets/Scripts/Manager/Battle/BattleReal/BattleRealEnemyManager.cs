@@ -406,10 +406,18 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public BattleRealEnemyBase CreateEnemy(BattleRealEnemyParamBase param)
+    public BattleRealEnemyBase CreateEnemy(BattleRealEnemyParamSetBase paramSet)
     {
+        if (paramSet == null)
+        {
+            return null;
+        }
+
+        var difficulty = DataManager.Instance.BattleData.Difficulty;
+        var param = paramSet.GetEnemyParam(difficulty);
         if (param == null)
         {
+            Debug.LogWarningFormat("EnemyParamBase is not found. file:{0}, difficulty:{1}", paramSet.name, difficulty);
             return null;
         }
 
@@ -419,18 +427,30 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
             return null;
         }
 
-        BattleRealEnemyBase enemy = null;
-        if (param is BattleRealEnemyParam)
+        var controllerClassName = paramSet.GetControllerClassName();
+        Type controllerType = null;
+
+        try
         {
-            enemy = enemyObj.AddComponent<BattleRealEnemyController>();
+            controllerType = Type.GetType(controllerClassName);
         }
-        else if (param is BattleRealBossParam)
+        catch (Exception)
         {
-            enemy = enemyObj.AddComponent<BattleRealBoss>();
+            Debug.LogWarningFormat("指定したクラス名のクラスを認識できませんでした。 {0}", controllerClassName);
+            return null;
         }
+
+        if (controllerType == null)
+        {
+            Debug.LogWarningFormat("指定したクラス名のクラス情報は取得できませんでした。 {0}", controllerClassName);
+            return null;
+        }
+
+        BattleRealEnemyBase enemy = enemyObj.AddComponent(controllerType) as BattleRealEnemyBase;
 
         if (enemy == null)
         {
+            Debug.LogWarningFormat("指定したクラスは敵コンポーネントではありません。{0}", controllerClassName);
             GameObject.Destroy(enemyObj);
             return null;
         }

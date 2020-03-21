@@ -110,6 +110,11 @@ public struct BattleRealEventContent
         /// プレイヤーの移動位置をフィールド内に制限する
         /// </summary>
         RESTRICT_PLAYER_POSITION,
+
+        /// <summary>
+        /// テロップUIを制御する
+        /// </summary>
+        CONTROL_TELOP_UI,
     }
 
     /// <summary>
@@ -164,6 +169,10 @@ public struct BattleRealEventContent
     [Header("CONTROL_BGM")]
 
     public ControlSoundParam[] ControlBgmParams;
+
+    [Header("CONTROL_TELOP_UI")]
+
+    public ControlTelopParam ControlTelopParam;
 
     [Header("Show Cutscene")]
 

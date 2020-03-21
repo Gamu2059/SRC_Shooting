@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91201f4ed5c7adb42a51159df391dd9f, type: 3}
   m_Name: stage1_normal_001.battle_real_enemy_group
   m_EditorClassIdentifier: 
-  m_ViewPortPos: {x: 0, y: 0}
+  m_ViewPortPos: {x: 0.5, y: -0.3}
   m_OffsetPosFromViewPort: {x: 0, y: 0}
   m_GenerateAngle: 0
-  m_EnemyGenerator: {fileID: 0}
-  m_Behavior: {fileID: 0}
+  m_EnemyGenerator: {fileID: 11400000, guid: 56d34070babab6940b9a62e07145e1af, type: 2}
+  m_Behavior: {fileID: 11400000, guid: 8401d7a5c7b39b54db7e0176eedfad4b, type: 2}

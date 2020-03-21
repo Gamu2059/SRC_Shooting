@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// リアルモードの敵のパラメータの基底クラス。
 /// </summary>
-public abstract class BattleRealEnemyParamBase : ScriptableObject
+public abstract class BattleRealEnemyParamBase
 {
     [Header("基本パラメータ")]
 

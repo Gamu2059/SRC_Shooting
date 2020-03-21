@@ -92,14 +92,6 @@ public class BattleRealEnemyBase : BattleRealCharaController
         BattleRealEnemyManager.RegisterEnemy(this);
     }
 
-    //public void SetParamSet(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
-    //{
-    //    GenerateParamSet = generateParamSet;
-    //    BehaviorParamSet = behaviorParamSet;
-    //    SetBulletSetParam(BehaviorParamSet.BulletSetParam);
-    //    OnSetParamSet();
-    //}
-
     public void SetParam(BattleRealEnemyParamBase param)
     {
         Param = param;
@@ -166,7 +158,7 @@ public class BattleRealEnemyBase : BattleRealCharaController
         PrePosition = pos;
         if (IsLookMoveDir)
         {
-            transform.LookAt(transform.position + 100 * MoveDir.ToVector3XZ());
+            transform.LookAt(transform.position + MoveDir.ToVector3XZ(), transform.up);
         }
 
         IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfField(this);

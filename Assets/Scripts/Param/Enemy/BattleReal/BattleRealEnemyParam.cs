@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードの敵のパラメータ。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyParam", fileName = "param.battle_real_enemy.asset")]
+[Serializable]
 public class BattleRealEnemyParam : BattleRealEnemyParamBase
 {
     [Header("初期化時パラメータ")]

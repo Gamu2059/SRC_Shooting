@@ -15,9 +15,6 @@ public class SequenceUnitLerp : SequenceUnit
     [Header("Lerp Parameter")]
 
     [SerializeField]
-    private Space m_SpaceType = Space.World;
-
-    [SerializeField]
     private float m_Duration;
 
     [SerializeField]

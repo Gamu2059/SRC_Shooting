@@ -16,8 +16,8 @@ namespace BattleReal.EnemyGenerator
         #region Field Inspector
 
         [SerializeField, Tooltip("生成したい敵のパラメータ")]
-        private BattleRealEnemyParamBase m_EnemyParam;
-        public BattleRealEnemyParamBase EnemyParam => m_EnemyParam;
+        private BattleRealEnemyParamSetBase m_ParamSet;
+        public BattleRealEnemyParamSetBase ParamSet => m_ParamSet;
 
         [SerializeField, Tooltip("EnemyGroupがある場所に対しての相対的な開始座標")]
         private Vector2 m_BeginPosition;
@@ -112,7 +112,7 @@ namespace BattleReal.EnemyGenerator
 
         private void Generate()
         {
-            var enemy = BattleRealEnemyManager.Instance.CreateEnemy(EnemyParam);
+            var enemy = BattleRealEnemyManager.Instance.CreateEnemy(ParamSet);
             if (enemy == null)
             {
                 return;

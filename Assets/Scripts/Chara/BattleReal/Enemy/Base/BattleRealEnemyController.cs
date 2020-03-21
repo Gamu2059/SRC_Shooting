@@ -76,6 +76,8 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
             m_EnemyBehavior.SetEnemy(this);
         }
         m_EnemyBehavior?.OnInitialize();
+
+        RequestChangeState(E_STATE.START);
     }
 
     public override void OnFinalize()

@@ -112,27 +112,69 @@ public class SequenceUnitAnimation : SequenceUnit
 
     private void ApplyAnimation(Transform target)
     {
-        if (m_AnimationParam.UsePosition)
+        var usePos = m_AnimationParam.UsePosition;
+        var useRot = m_AnimationParam.UseRotation;
+
+        if(!usePos && !useRot)
         {
-            target.position = GetAnimVector(ref m_AnimationParam.Position, CurrentTime, ref m_CalcedInitPosition);
+            return;
         }
 
-        if (m_AnimationParam.UseRotation)
+        var pos = m_SpaceType == Space.World ? target.position : target.localPosition;
+        var rot = m_SpaceType == Space.World ? target.eulerAngles : target.localEulerAngles;
+
+        if (usePos)
         {
-            target.eulerAngles = GetAnimVector(ref m_AnimationParam.Rotation, CurrentTime, ref m_CalcedInitRotation);
+            pos = GetAnimVector(ref m_AnimationParam.Position, CurrentTime, ref pos);
+        }
+
+        if (useRot)
+        {
+            rot = GetAnimVector(ref m_AnimationParam.Rotation, CurrentTime, ref rot);
+        }
+
+        if (m_SpaceType == Space.World)
+        {
+            target.SetPositionAndRotation(pos, Quaternion.Euler(rot));
+        }
+        else
+        {
+            target.localPosition = pos;
+            target.localEulerAngles = rot;
         }
     }
 
     private void ApplyEndValue(Transform target)
     {
-        if (m_AnimationParam.UsePosition)
+        var usePos = m_AnimationParam.UsePosition;
+        var useRot = m_AnimationParam.UseRotation;
+
+        if (!usePos && !useRot)
         {
-            target.position = GetEndVector(ref m_AnimationParam.Position, ref m_CalcedInitPosition);
+            return;
         }
 
-        if (m_AnimationParam.UseRotation)
+        var pos = m_SpaceType == Space.World ? target.position : target.localPosition;
+        var rot = m_SpaceType == Space.World ? target.eulerAngles : target.localEulerAngles;
+
+        if (usePos)
         {
-            target.eulerAngles = GetEndVector(ref m_AnimationParam.Rotation, ref m_CalcedInitRotation);
+            pos = GetEndVector(ref m_AnimationParam.Position, ref pos);
+        }
+
+        if (useRot)
+        {
+            rot = GetEndVector(ref m_AnimationParam.Rotation, ref rot);
+        }
+
+        if (m_SpaceType == Space.World)
+        {
+            target.SetPositionAndRotation(pos, Quaternion.Euler(rot));
+        }
+        else
+        {
+            target.localPosition = pos;
+            target.localEulerAngles = rot;
         }
     }
 
