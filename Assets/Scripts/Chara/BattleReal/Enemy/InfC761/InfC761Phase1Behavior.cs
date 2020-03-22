@@ -127,7 +127,7 @@ public class InfC761Phase1Behavior : BattleRealEnemyBehaviorUnit
 
     #region Game Cycle
 
-    public override void OnStart()
+    protected override void OnStart()
     {
         base.OnStart();
 
@@ -154,13 +154,13 @@ public class InfC761Phase1Behavior : BattleRealEnemyBehaviorUnit
         RequestChangeState(E_STATE.START);
     }
 
-    public override void OnUpdate()
+    protected override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
         m_StateMachine.OnUpdate();
     }
 
-    public override void OnEnd()
+    protected override void OnEnd()
     {
         m_StateMachine.OnFinalize();
         m_StateMachine = null;

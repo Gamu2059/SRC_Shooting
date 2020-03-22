@@ -78,8 +78,7 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
         var viewPortPos = Param.ViewPortPos;
         var offsetPos = Param.OffsetPosFromViewPort;
-        var pos = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y);
-        pos += offsetPos.ToVector3XZ();
+        var pos = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewPortPos.x, viewPortPos.y) + offsetPos;
 
         var angles = transform.eulerAngles;
         angles.y = Param.GenerateAngle;
@@ -102,6 +101,22 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
         EnemyGenerator?.OnUpdate();
         Behavior?.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        base.OnLateUpdate();
+
+        EnemyGenerator?.OnLateUpdate();
+        Behavior?.OnUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+
+        EnemyGenerator?.OnFixedUpdate();
+        Behavior?.OnFixedUpdate();
     }
 
     #endregion

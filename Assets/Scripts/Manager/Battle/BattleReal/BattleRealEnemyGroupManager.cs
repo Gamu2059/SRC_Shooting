@@ -118,6 +118,23 @@ public class BattleRealEnemyGroupManager : Singleton<BattleRealEnemyGroupManager
         }
     }
 
+
+
+    public override void OnFixedUpdate()
+    {
+        // FixedUpdate処理
+        foreach (var enemyGroup in m_UpdateEnemyGroups)
+        {
+            if (enemyGroup == null)
+            {
+                CheckPoolEnemyGroup(enemyGroup);
+                continue;
+            }
+
+            enemyGroup.OnFixedUpdate();
+        }
+    }
+
     #endregion
 
     /// <summary>

@@ -47,7 +47,12 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
 
     private StateMachine<E_STATE, BattleRealEnemyController> m_StateMachine;
     private BattleRealEnemyParam m_EnemyParam;
-    private BattleRealEnemyBehaviorUnit m_EnemyBehavior;
+
+    private E_ENEMY_BEHAVIOR_TYPE m_BehaviorType;
+    private BattleRealEnemyBehaviorUnit m_Behavior;
+    private BattleRealEnemyBehaviorGroup m_BehaviorGroup;
+
+    private BattleRealEnemyBehaviorController m_BehaviorController;
 
     #endregion
 
@@ -69,21 +74,37 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
         m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
 
-        m_EnemyBehavior = null;
-        if (m_EnemyParam != null && m_EnemyParam.Behavior != null)
+        m_Behavior = null;
+        m_BehaviorGroup = null;
+        if (m_EnemyParam != null)
         {
-            m_EnemyBehavior = Instantiate(m_EnemyParam.Behavior);
-            m_EnemyBehavior.SetEnemy(this);
+            m_BehaviorType = m_EnemyParam.BehaviorType;
+            if (m_BehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT)
+            {
+                if (m_EnemyParam.Behavior != null)
+                {
+                    m_Behavior = Instantiate(m_EnemyParam.Behavior);
+                }
+            }
+            else
+            {
+                m_BehaviorGroup = m_EnemyParam.BehaviorGroup;
+            }
         }
-        m_EnemyBehavior?.OnInitialize();
+
+        m_BehaviorController = new BattleRealEnemyBehaviorController(this);
+        m_BehaviorController.OnInitialize();
 
         RequestChangeState(E_STATE.START);
     }
 
     public override void OnFinalize()
     {
-        m_EnemyBehavior?.OnFinalize();
-        m_EnemyBehavior = null;
+        m_BehaviorController.OnFinalize();
+        m_BehaviorController = null;
+
+        m_BehaviorGroup = null;
+        m_Behavior = null;
         m_StateMachine.OnFinalize();
         base.OnFinalize();
     }

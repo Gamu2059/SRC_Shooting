@@ -17,8 +17,8 @@ public class BattleRealEnemyGroupParam : ScriptableObject
     public Vector2 ViewPortPos => m_ViewPortPos;
 
     [SerializeField, Tooltip("敵グループのビュポート座標からのオフセット座標")]
-    private Vector2 m_OffsetPosFromViewPort;
-    public Vector2 OffsetPosFromViewPort => m_OffsetPosFromViewPort;
+    private Vector3 m_OffsetPosFromViewPort;
+    public Vector3 OffsetPosFromViewPort => m_OffsetPosFromViewPort;
 
     [SerializeField, Tooltip("敵グループの生成角度")]
     private float m_GenerateAngle;

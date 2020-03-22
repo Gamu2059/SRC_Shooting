@@ -6,7 +6,9 @@ partial class BattleRealBossController
 {
     private class BehaviorState : StateCycle
     {
+        private bool m_UseBehavior;
         private BattleRealEnemyBehaviorUnit m_Behavior;
+        private BattleRealEnemyBehaviorController m_BehaviorController;
 
         public override void OnStart()
         {
@@ -15,38 +17,64 @@ partial class BattleRealBossController
             // 通常ではダメージコライダーを有効にする
             Target.GetCollider().SetEnableCollider(Target.m_DamageCollider, true);
 
-            m_Behavior = null;
+            m_UseBehavior = false;
             if (Target.m_CurrentBehaviorSet != null)
             {
+                m_UseBehavior = Target.m_CurrentBehaviorSet.BehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT;
                 m_Behavior = Target.m_CurrentBehaviorSet.Behavior;
+                m_BehaviorController = Target.m_BehaviorController;
+                if (m_UseBehavior)
+                {
+                    m_Behavior.OnStartUnit(Target, null);
+                }
+                else
+                {
+                    m_BehaviorController.BuildBehavior(Target.m_CurrentBehaviorSet.BehaviorGroup);
+                }
             }
-
-            m_Behavior?.OnStart();
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
-            m_Behavior?.OnUpdate();
+
+            if (m_UseBehavior)
+            {
+                m_Behavior?.OnUpdateUnit(Time.deltaTime);
+            }
+            else
+            {
+                m_BehaviorController?.OnUpdate();
+            }
         }
 
         public override void OnLateUpdate()
         {
             base.OnLateUpdate();
-            m_Behavior?.OnLateUpdate();
-            CheckChangeBehavior();
-        }
 
-        public override void OnFixedUpdate()
-        {
-            base.OnFixedUpdate();
-            m_Behavior?.OnFixedUpdate();
+            if (m_UseBehavior)
+            {
+                m_Behavior?.OnLateUpdateUnit(Time.deltaTime);
+            }
+            else
+            {
+                m_BehaviorController?.OnLateUpdate();
+            }
+            CheckChangeBehavior();
         }
 
         public override void OnEnd()
         {
+            if (m_UseBehavior)
+            {
+                m_Behavior?.OnEndUnit();
+            }
+            else
+            {
+                m_BehaviorController?.OnEndUnit();
+            }
+
             base.OnEnd();
-            m_Behavior?.OnEnd();
         }
 
         private void CheckChangeBehavior()

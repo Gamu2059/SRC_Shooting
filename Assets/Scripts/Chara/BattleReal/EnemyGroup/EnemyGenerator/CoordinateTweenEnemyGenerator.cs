@@ -10,7 +10,7 @@ namespace BattleReal.EnemyGenerator
     /// <summary>
     /// 2点の座標を指定して、その間に敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/CoorinateTween", fileName = "coordinate_tween.battle_real_enemy_generator.asset", order = 1)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/CoorinateTween", fileName = "coordinate_tween.battle_real_enemy_generator.asset", order = 10)]
     public class CoordinateTweenEnemyGenerator : BattleRealEnemyGenerator
     {
         #region Field Inspector
@@ -49,8 +49,9 @@ namespace BattleReal.EnemyGenerator
 
         private bool m_IsCountOffset;
         private float m_GenerateTimeCount;
-        private int m_GenerateNumCount;
+        private int m_GeneratedEnemyCount;
         private Vector2 m_DeltaPosition;
+        private List<BattleRealEnemyBase> m_GeneratedEnemies;
 
         #endregion
 
@@ -62,7 +63,8 @@ namespace BattleReal.EnemyGenerator
 
             m_IsCountOffset = true;
             m_GenerateTimeCount = 0;
-            m_GenerateNumCount = 0;
+            m_GeneratedEnemyCount = 0;
+            m_GeneratedEnemies = new List<BattleRealEnemyBase>();
 
             if (GenerateNum < 2)
             {
@@ -74,11 +76,30 @@ namespace BattleReal.EnemyGenerator
             }
         }
 
-        public override void OnUpdate()
+        public override void OnLateUpdate()
         {
-            base.OnUpdate();
+            base.OnLateUpdate();
 
-            if (m_GenerateNumCount >= GenerateNum)
+            if (GenerateNum < 1)
+            {
+                EnemyGroup.Destory();
+                return;
+            }
+
+            if (m_GeneratedEnemyCount > 0 && m_GeneratedEnemies.Count < 1)
+            {
+                EnemyGroup.Destory();
+                return;
+            }
+
+            m_GeneratedEnemies.RemoveAll(e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+
+            if (m_GeneratedEnemyCount >= GenerateNum)
             {
                 return;
             }
@@ -93,7 +114,7 @@ namespace BattleReal.EnemyGenerator
                 }
                 else
                 {
-                    m_GenerateTimeCount += Time.deltaTime;
+                    m_GenerateTimeCount += Time.fixedDeltaTime;
                 }
             }
             else
@@ -101,10 +122,10 @@ namespace BattleReal.EnemyGenerator
                 if (m_GenerateTimeCount >= GenerateInterval)
                 {
                     Generate();
-                    m_GenerateNumCount++;
-                    m_GenerateTimeCount -= GenerateOffsetTime;
+                    m_GeneratedEnemyCount++;
+                    m_GenerateTimeCount -= GenerateInterval;
                 }
-                m_GenerateTimeCount += Time.deltaTime;
+                m_GenerateTimeCount += Time.fixedDeltaTime;
             }
         }
 
@@ -119,14 +140,15 @@ namespace BattleReal.EnemyGenerator
             }
 
             var enemyT = enemy.transform;
-            enemyT.SetParent(EnemyGroup.transform);
+            enemyT.SetParent(EnemyGroup.transform, false);
 
-            var pos = (GenerateNum < 2 ? m_DeltaPosition : m_DeltaPosition * m_GenerateNumCount) + BeginPosition;
-            var angles = enemyT.localEulerAngles;
-            angles.y = GenerateAngle;
+            var pos = (GenerateNum < 2 ? m_DeltaPosition : m_DeltaPosition * m_GeneratedEnemyCount) + BeginPosition;
+            var angles = new Vector3(0, GenerateAngle, 0);
 
             enemyT.localPosition = pos;
             enemyT.localEulerAngles = angles;
+
+            m_GeneratedEnemies.Add(enemy);
         }
     }
 }

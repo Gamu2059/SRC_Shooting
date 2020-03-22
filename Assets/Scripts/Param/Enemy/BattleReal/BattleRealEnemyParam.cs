@@ -27,9 +27,17 @@ public class BattleRealEnemyParam : BattleRealEnemyParamBase
     private BattleRealEventContent[] m_OnStartBehaviorEvents;
     public BattleRealEventContent[] OnStartBehaviorEvents => m_OnStartBehaviorEvents;
 
+    [SerializeField, Tooltip("移動、攻撃のパラメータのタイプ")]
+    private E_ENEMY_BEHAVIOR_TYPE m_BehaviorType;
+    public E_ENEMY_BEHAVIOR_TYPE BehaviorType => m_BehaviorType;
+
     [SerializeField, Tooltip("移動、攻撃の具体的な処理を決定するパラメータ Noneの場合、何もしない敵になる")]
     private BattleRealEnemyBehaviorUnit m_Behavior;
     public BattleRealEnemyBehaviorUnit Behavior => m_Behavior;
+
+    [SerializeField, Tooltip("移動、攻撃の具体的な処理を決定するパラメータのグループ")]
+    private BattleRealEnemyBehaviorGroup m_BehaviorGroup;
+    public BattleRealEnemyBehaviorGroup BehaviorGroup => m_BehaviorGroup;
 
     [Header("撃破パラメータ")]
 

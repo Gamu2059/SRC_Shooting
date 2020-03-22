@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -6,26 +8,61 @@ using System;
 /// <summary>
 /// リアルモードの敵を動かすための振る舞いの基底クラス。
 /// </summary>
-public class BattleRealEnemyBehaviorUnit : ScriptableObject, IControllableGameCycle
+public class BattleRealEnemyBehaviorUnit : BattleRealEnemyBehaviorElement
 {
-    protected BattleRealEnemyBase Enemy { get; private set; }
+    [Header("End Parameter")]
 
-    public void SetEnemy(BattleRealEnemyBase enemy)
+    [SerializeField, Tooltip("割り込み終了関数によって終了しなかった場合の、デフォルトの終了値")]
+    private bool m_DefaultEndValue;
+
+    protected BattleRealEnemyBase Enemy { get; private set; }
+    protected BattleRealEnemyBehaviorController Controller { get; private set; }
+    protected float CurrentTime { get; private set; }
+
+    public void OnStartUnit(BattleRealEnemyBase enemy, BattleRealEnemyBehaviorController controller)
     {
         Enemy = enemy;
+        Controller = controller;
+        CurrentTime = 0;
+
+        OnStart();
     }
 
-    public virtual void OnInitialize() { }
+    public void OnUpdateUnit(float deltaTime)
+    {
+        CurrentTime += deltaTime;
+        OnUpdate(deltaTime);
+    }
 
-    public virtual void OnFinalize() { }
+    public void OnLateUpdateUnit(float deltaTime)
+    {
+        OnLateUpdate(deltaTime);
+    }
 
-    public virtual void OnStart() { }
+    public void OnEndUnit() 
+    {
+        OnEnd();
 
-    public virtual void OnUpdate() { }
+        Controller = null;
+        Enemy = null;
+    }
 
-    public virtual void OnLateUpdate() { }
+    public bool IsEndUnit()
+    {
+        return IsEnd();
+    }
 
-    public virtual void OnFixedUpdate() { }
+    #region Have to Override Method
 
-    public virtual void OnEnd() { }
+    protected virtual void OnStart() { }
+
+    protected virtual void OnUpdate(float deltaTime) { }
+
+    protected virtual void OnLateUpdate(float deltaTime) { }
+
+    protected virtual void OnEnd() { }
+
+    protected virtual bool IsEnd() { return m_DefaultEndValue; }
+
+    #endregion
 }

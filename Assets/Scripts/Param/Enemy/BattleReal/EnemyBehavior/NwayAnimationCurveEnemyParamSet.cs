@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyBehavior/NwayAnimationCurve", fileName = "behavior.nway_animation_curve.asset")]
-
+[Serializable, Obsolete]
 public class NwayAnimationCurveEnemyParamSet : AnimationCurveEnemyParamSet
 {
     [Header("N way Param")]

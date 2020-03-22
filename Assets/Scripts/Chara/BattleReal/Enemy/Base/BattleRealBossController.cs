@@ -71,8 +71,12 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     /// </summary>
     private class BehaviorSet
     {
+        public E_ENEMY_BEHAVIOR_TYPE BehaviorType;
         public BattleRealEnemyBehaviorUnit Behavior;
+        public BattleRealEnemyBehaviorGroup BehaviorGroup;
+        public E_ENEMY_BEHAVIOR_TYPE DownBehaviorType;
         public BattleRealEnemyBehaviorUnit DownBehavior;
+        public BattleRealEnemyBehaviorGroup DownBehaviorGroup;
         public BattleHackingLevelParamSet HackingLevelParamSet;
         public int DownHp;
         public float DownHealTime;
@@ -108,6 +112,9 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     private int m_CurrentBehaviorSetIndex;
     private BehaviorSet m_CurrentBehaviorSet;
 
+    private BattleRealEnemyBehaviorController m_BehaviorController;
+    private BattleRealEnemyBehaviorController m_DownBehaviorController;
+
     public float NowDownHp { get; private set; }
     public float MaxDownHp { get; private set; }
     public int HackingCompleteNum { get; private set; }
@@ -131,6 +138,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         base.OnInitialize();
 
         m_StateMachine = new StateMachine<E_STATE, BattleRealBossController>();
+        m_StateMachine.AddState(new InnerState(E_STATE.START, this, new StartState()));
         m_StateMachine.AddState(new InnerState(E_STATE.BEHAVIOR, this, new BehaviorState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DOWN_BEHAVIOR, this, new DownBehaviorState()));
         m_StateMachine.AddState(new InnerState(E_STATE.CHANGE_BEHAVIOR, this, new ChangeBehaviorState()));
@@ -148,6 +156,12 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
         m_CarryOverHackingBossDamage = 0;
         m_ReservedSequenceGroup = null;
+        
+        m_BehaviorController = new BattleRealEnemyBehaviorController(this);
+        m_DownBehaviorController = new BattleRealEnemyBehaviorController(this);
+        m_BehaviorController.OnInitialize();
+        m_DownBehaviorController.OnInitialize();
+
         InitializeBehaviorSet();
 
         RequestChangeState(E_STATE.START);
@@ -159,22 +173,35 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         for (var i = 0; i < m_BossParam.BehaviorSets.Length; i++)
         {
             var originBehaviorSet = m_BossParam.BehaviorSets[i];
-            var behaviorSet = new BehaviorSet()
-            {
-                Behavior = Instantiate(originBehaviorSet.Behavior),
-                DownBehavior = Instantiate(originBehaviorSet.DownBehavior),
-                HackingLevelParamSet = Instantiate(originBehaviorSet.HackingLevelParamSet),
-                DownHp = originBehaviorSet.DownHp,
-                DownHealTime = originBehaviorSet.DownHealTime,
-                HpRateThresholdNextBehavior = originBehaviorSet.HpRateThresholdNextBehavior,
-                HackingSuccessItemParam = originBehaviorSet.HackingSuccessItemParam,
-                StartSequenceGroup = originBehaviorSet.StartSequenceGroup,
-            };
+            var behaviorSet = new BehaviorSet();
 
-            behaviorSet.Behavior.SetEnemy(this);
-            behaviorSet.DownBehavior.SetEnemy(this);
-            behaviorSet.Behavior.OnInitialize();
-            behaviorSet.DownBehavior.OnInitialize();
+            if (originBehaviorSet.BehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT)
+            {
+                behaviorSet.Behavior = Instantiate(originBehaviorSet.Behavior);
+                behaviorSet.Behavior.OnStartUnit(this, null);
+            }
+            else
+            {
+                // BehaviorControllerでInstantiateするので参照代入
+                behaviorSet.BehaviorGroup = originBehaviorSet.BehaviorGroup;
+            }
+
+            if (originBehaviorSet.DownBehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT)
+            {
+                behaviorSet.DownBehavior = Instantiate(originBehaviorSet.DownBehavior);
+                behaviorSet.DownBehavior.OnStartUnit(this, null);
+            }
+            else
+            {
+                behaviorSet.DownBehaviorGroup = originBehaviorSet.DownBehaviorGroup;
+            }
+
+            behaviorSet.HackingLevelParamSet = Instantiate(originBehaviorSet.HackingLevelParamSet);
+            behaviorSet.DownHp = originBehaviorSet.DownHp;
+            behaviorSet.DownHealTime = originBehaviorSet.DownHealTime;
+            behaviorSet.HpRateThresholdNextBehavior = originBehaviorSet.HpRateThresholdNextBehavior;
+            behaviorSet.HackingSuccessItemParam = originBehaviorSet.HackingSuccessItemParam;
+            behaviorSet.StartSequenceGroup = originBehaviorSet.StartSequenceGroup;
 
             m_BehaviorSets.Add(behaviorSet);
         }
@@ -182,6 +209,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
     public override void OnFinalize()
     {
+        m_DownBehaviorController.OnFinalize();
+        m_BehaviorController.OnFinalize();
+        m_DownBehaviorController = null;
+        m_BehaviorController = null;
+
         // 自身が作成したエフェクトを全て破棄する
         BattleRealEffectManager.Instance.DestroyEffectByOwner(transform, true);
 
@@ -189,11 +221,6 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_CurrentBehaviorSet = null;
         if (m_BehaviorSets != null)
         {
-            foreach(var behaviorSet in m_BehaviorSets)
-            {
-                behaviorSet.DownBehavior?.OnFinalize();
-                behaviorSet.Behavior?.OnFinalize();
-            }
             m_BehaviorSets.Clear();
             m_BehaviorSets = null;
         }

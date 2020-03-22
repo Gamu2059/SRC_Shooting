@@ -60,7 +60,10 @@ namespace BattleReal.EnemyGenerator
         #region Field
 
         private List<IndividualParam> m_GenerateParams;
+        private int m_GenerateReserveEnemyNum;
         private float m_GenerateEnemyTimeCount;
+        private int m_GeneratedEnemyCount;
+        private List<BattleRealEnemyBase> m_GeneratedEnemies;
 
         #endregion
 
@@ -72,22 +75,43 @@ namespace BattleReal.EnemyGenerator
 
             m_GenerateEnemyTimeCount = 0;
             m_GenerateParams = new List<IndividualParam>();
+            m_GeneratedEnemies = new List<BattleRealEnemyBase>();
             if (IndividualParams != null)
             {
                 m_GenerateParams.AddRange(IndividualParams);
             }
+            m_GenerateReserveEnemyNum = m_GenerateParams.Count;
         }
 
-        public override void OnUpdate()
+        public override void OnLateUpdate()
         {
-            base.OnUpdate();
+            base.OnLateUpdate();
+
+            if (m_GenerateReserveEnemyNum < 1)
+            {
+                EnemyGroup.Destory();
+                return;
+            }
+
+            if (m_GeneratedEnemyCount > 0 && m_GeneratedEnemies.Count < 1)
+            {
+                EnemyGroup.Destory();
+                return;
+            }
+
+            m_GeneratedEnemies.RemoveAll( e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
 
             if (m_GenerateParams.Count < 1)
             {
                 return;
             }
 
-            foreach(var param in m_GenerateParams)
+            foreach (var param in m_GenerateParams)
             {
                 if (m_GenerateEnemyTimeCount >= param.GenerateTime)
                 {
@@ -95,14 +119,16 @@ namespace BattleReal.EnemyGenerator
                 }
             }
 
-            m_GenerateEnemyTimeCount += Time.deltaTime;
-            m_GenerateParams.RemoveAll( p => m_GenerateEnemyTimeCount >= p.GenerateTime);
+            m_GenerateEnemyTimeCount += Time.fixedDeltaTime;
+            m_GenerateParams.RemoveAll(p => m_GenerateEnemyTimeCount >= p.GenerateTime);
         }
 
         #endregion
 
         private void Generate(IndividualParam param)
         {
+            m_GeneratedEnemyCount++;
+
             if (param == null)
             {
                 return;
@@ -126,17 +152,14 @@ namespace BattleReal.EnemyGenerator
             if (param.Relative == E_RELATIVE.RELATIVE)
             {
                 enemyT.localPosition = pos;
-                var angles = enemyT.localEulerAngles;
-                angles.y = param.GenerateAngle;
-                enemyT.localEulerAngles = angles;
+                enemyT.localEulerAngles = new Vector3(0, param.GenerateAngle, 0);
             }
             else
             {
-                enemyT.position = pos;
-                var angles = enemyT.eulerAngles;
-                angles.y = param.GenerateAngle;
-                enemyT.eulerAngles = angles;
+                enemyT.SetPositionAndRotation(pos, Quaternion.Euler(0, param.GenerateAngle, 0));
             }
+
+            m_GeneratedEnemies.Add(enemy);
         }
     }
 }

@@ -116,7 +116,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     protected override void OnAwake()
     {
         base.OnAwake();
-        m_StageClearAnimator.gameObject.SetActive(false);
         m_IsShowResult = false;
     }
 

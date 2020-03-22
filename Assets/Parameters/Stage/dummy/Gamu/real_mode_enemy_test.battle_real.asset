@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e28ba1d5e92e54fad91b8cf4993aa8, type: 3}
+  m_Name: real_mode_enemy_test.battle_real
+  m_EditorClassIdentifier: 
+  m_PlayerManagerParamSet: {fileID: 11400000, guid: fe7a12beb108a1e448c52753a600b9c4,
+    type: 2}
+  m_EnemyManagerParamSet: {fileID: 11400000, guid: f9201a8742ccbe4408ff918db9dc9501,
+    type: 2}
+  m_BulletManagerParamSet: {fileID: 11400000, guid: 0eb7c58effc165f4ea0f01adcd55a9ae,
+    type: 2}
+  m_ItemManagerParamSet: {fileID: 11400000, guid: ab30d5993a4622b48bc610f7a5b3a0e5,
+    type: 2}
+  m_EventTriggerParamSet: {fileID: 11400000, guid: d805e1ff62f90304f9986da0afb6c54a,
+    type: 2}
+  m_ControlBgmParam:
+    ControlType: 0
+    PlaySoundParam: {fileID: 0}
+    StopSoundGroup: 0
+    OperateAisacParam: {fileID: 0}

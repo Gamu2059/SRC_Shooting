@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427135, b: 0.5645232, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -350,8 +350,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 1
   m_PeriodSpeed: 1
@@ -475,8 +475,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 1
   m_Way: 0
@@ -592,6 +592,7 @@ MonoBehaviour:
   m_IndicatorType: 1
   m_UpdateInterval: 0.5
   m_OutText: {fileID: 24299995}
+  m_IndicateTemplate: 
 --- !u!114 &24299995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,8 +682,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 1
   angleAcceleration: 5
@@ -795,8 +796,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -983,8 +984,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 0.2
   m_AngleSpeed: 1
   m_BulletSpeed: 10
@@ -1116,8 +1117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -1231,8 +1232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.1
   circleRadius: 15
@@ -1429,6 +1430,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CanvasGroup: {fileID: 221366188}
+  m_GridHoleEffect: {fileID: 0}
+  m_ModeIndicator: {fileID: 0}
+  m_StageIndicator: {fileID: 0}
+  m_BestScoreIndicator: {fileID: 0}
+  m_ScoreIndicator: {fileID: 0}
+  m_TimeIndicator: {fileID: 0}
+  m_BonusTimeIndicator: {fileID: 0}
+  m_BossHpIndicator: {fileID: 0}
+  m_MainViewAnimator: {fileID: 0}
 --- !u!1 &233687470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,6 +1615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0b9005506fa4f920d3073235f4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Camera: {fileID: 0}
+  m_SequenceController: {fileID: 0}
 --- !u!114 &235440767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,6 +1893,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0b9005506fa4f920d3073235f4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Camera: {fileID: 0}
+  m_SequenceController: {fileID: 0}
 --- !u!114 &260737164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2020,8 +2034,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2134,8 +2148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 1
   way: 4
@@ -2361,8 +2375,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2479,8 +2493,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2605,8 +2619,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 3.14
@@ -2720,8 +2734,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   shotNum: 0
   m_BulletSpeed: 10
@@ -2863,8 +2877,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -3066,8 +3080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_Danmaku:
     m_AttackNum: 0
     m_AttackFormNum: 0
@@ -3389,8 +3403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 3
   m_Way: 0
@@ -3408,8 +3422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.04
   way: 4
@@ -3429,8 +3443,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.04
   way: 4
@@ -3580,8 +3594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 1
   m_way: 20
@@ -6825,8 +6839,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 1000
-  m_MaxHp: 1000
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_PhaseTime:
   - 8
   m_DanmakuPhase: 0
@@ -6958,8 +6972,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 1000
   way: 30
@@ -7106,8 +7120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.03
   circleRadius: 20
@@ -7419,8 +7433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   realShotNum: 0
   m_AngleSpeed: 1
@@ -7530,8 +7544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7646,8 +7660,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7835,8 +7849,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.01
   circleRadiusPhaseSpeed: 1
@@ -8013,8 +8027,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -8700,8 +8714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   shotInterval: 1000
   shotTime: 0
   nowRad: 0
@@ -8823,6 +8837,7 @@ MonoBehaviour:
   m_IndicatorType: 1
   m_UpdateInterval: 0.5
   m_OutText: {fileID: 1067568319}
+  m_IndicateTemplate: 
 --- !u!114 &1067568319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8912,8 +8927,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   shotInterval: 1000
   shotTime: 0
   nowRad: 0
@@ -9027,8 +9042,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -9140,8 +9155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.05
   m_AngleSpeed: 2
@@ -9253,8 +9268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 0.1
   m_AngleSpeed: 1
   m_BulletSpeed: 10
@@ -9789,6 +9804,7 @@ MonoBehaviour:
   m_PlayerCharaHolder: {fileID: 1181454857}
   m_EnemyCharaHolder: {fileID: 483837413}
   m_BulletHolder: {fileID: 1385185427}
+  m_EffectHolder: {fileID: 0}
   m_MinLocalFieldPosition: {x: -0.8, y: -0.99}
   m_MaxLocalFieldPosition: {x: 0.8, y: 0.99}
 --- !u!1 &1200572587
@@ -9838,8 +9854,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_BulletSpeed: 10
 --- !u!65 &1200572590
@@ -10125,8 +10141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10426,8 +10442,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10539,8 +10555,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.05
   way: 5
@@ -10654,8 +10670,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10806,8 +10822,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.1
   way: 4
@@ -10921,8 +10937,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_PhaseTime: []
   m_DanmakuPhase: 0
   m_LocalPositionBezier0: []
@@ -11049,8 +11065,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_OmniShotInterval: 1000
   m_KinkoShotInterval: 1000
   m_OmniShotTime: 0
@@ -11350,8 +11366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_PhaseTime:
   - 5
   m_DanmakuPhase: 0
@@ -11483,8 +11499,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11678,9 +11694,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0429f0497a3755f4d9b4e6d09b5cb0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CanvasGroup: {fileID: 1630913268}
-  m_GameOver: {fileID: 768187896}
-  m_GameClear: {fileID: 636927708}
+  m_MainUiGroup: {fileID: 0}
+  m_ResultUiGroup: {fileID: 0}
+  m_FrontViewEffect: {fileID: 0}
+  m_ModeIndicator: {fileID: 0}
+  m_StageIndicator: {fileID: 0}
+  m_BestScoreIndicator: {fileID: 0}
+  m_ScoreIndicator: {fileID: 0}
+  m_LifeIndicator: {fileID: 0}
+  m_LevelIcon: {fileID: 0}
+  m_LevelGage: {fileID: 0}
+  m_EnergyIcon: {fileID: 0}
+  m_EnergyGage: {fileID: 0}
+  m_WeaponIndicator: {fileID: 0}
+  m_BossHpGage: {fileID: 0}
+  m_BossDownGage: {fileID: 0}
+  m_BossRemainingHackingIndicator: {fileID: 0}
+  m_BossUI: {fileID: 0}
+  m_StartTelop: {fileID: 0}
+  m_WarningTelop: {fileID: 0}
+  m_ClearTelop: {fileID: 0}
+  m_MainViewAnimator: {fileID: 0}
+  m_ResultViewAnimator: {fileID: 0}
+  m_StageClearAnimator: {fileID: 0}
+  m_ResultIndicator: {fileID: 0}
 --- !u!4 &1637613260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7071806974053814476, guid: dd972c705f691794281cf03ea9915c3d,
@@ -11734,8 +11771,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11850,8 +11887,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11964,8 +12001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 10
   m_PeriodSpeed: 1
@@ -12107,8 +12144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12227,6 +12264,7 @@ MonoBehaviour:
   m_EnemyCharaHolder: {fileID: 489073846}
   m_BulletHolder: {fileID: 1037270276}
   m_ItemHolder: {fileID: 1409171911}
+  m_EffectHolder: {fileID: 0}
   m_MinLocalFieldPosition: {x: -0.81, y: -1}
   m_MaxLocalFieldPosition: {x: 0.81, y: 1}
 --- !u!114 &1771546481
@@ -12289,8 +12327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12409,8 +12447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1
   m_ShotTime: 0
   m_NowRad: 0
@@ -12523,8 +12561,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -12637,8 +12675,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_BasePos: {x: 0, y: 0, z: 0}
@@ -12844,8 +12882,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 3
   m_Way: 0
@@ -12863,8 +12901,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.1
   way: 4
@@ -12885,8 +12923,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.1
   way: 4
@@ -12999,8 +13037,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 0.1
   m_ShotTime: 0
   m_NowRad: 0
@@ -13114,8 +13152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -13254,8 +13292,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 5000
-  m_MaxHp: 5000
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_Danmaku:
     m_AttackNum: 2
     m_AttackFormNum: 0
@@ -13449,8 +13487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -13779,8 +13817,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   kinkoShotInterval: 0.1
   kinkoAngleSpeed: 1
@@ -13966,8 +14004,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_RealShotNum: -1
   m_BulletNum: 100
   m_Bullet: []
@@ -14095,8 +14133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   SineshotInterval: 0.1
   Sineway: 8
@@ -14277,8 +14315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -14578,8 +14616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.05
   m_AngleSpeed: 2
@@ -14598,8 +14636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.015
   relativeLaunchPos: {x: 5, y: 0, z: 0}
@@ -14766,15 +14804,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Difficulty: 1
   m_ParamSet: {fileID: 11400000, guid: 547331156a18dbd49a174ed2b1cd9b81, type: 2}
-  m_BattleRealStageManager: {fileID: 1771546480}
-  m_BattleHackingStageManager: {fileID: 1183653724}
-  m_BattleRealUiManager: {fileID: 1630913269}
-  m_BattleHackingUiManager: {fileID: 221366189}
-  m_BattleRealPlayableManager: {fileID: 1771546481}
-  m_BattleRealFrontCamera: {fileID: 0}
-  m_BattleRealBackCamera: {fileID: 0}
   m_VideoPlayer: {fileID: 2009328465}
+  m_GameOverController: {fileID: 0}
   m_IsStartHackingMode: 1
   m_PlayerNotDead: 1
   m_IsDrawColliderArea: 1
@@ -14791,7 +14824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b5a0e473421004cb3b20532676027c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Scene: 5
+  m_Scene: 15
   m_SceneCycle: 0
   m_ManagerList:
   - {fileID: 2075168771}

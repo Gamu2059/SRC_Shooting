@@ -12,10 +12,6 @@ public class BattleRealEnemyBase : BattleRealCharaController
 
     protected BattleRealEnemyParamBase Param { get; private set; }
 
-    //protected BattleRealEnemyGenerateParamSet GenerateParamSet { get; private set; }
-
-    //protected BattleRealEnemyBehaviorParamSet BehaviorParamSet { get; private set; }
-
     protected Vector2 PrePosition { get; private set; }
 
     protected Vector2 MoveDir { get; private set; }
@@ -132,6 +128,15 @@ public class BattleRealEnemyBase : BattleRealCharaController
     protected virtual void OnInitializeCollider()
     {
         GetCollider().SetEnableAllCollider(true);
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+
+        // OnInitializeの時点では生成直後であり、その後に生成側で座標を初期化している可能性がある
+        // そのためサイクルに乗った最初の時にPrePositionを初期化する
+        PrePosition = transform.position.ToVector2XZ();
     }
 
     public override void OnFinalize()
