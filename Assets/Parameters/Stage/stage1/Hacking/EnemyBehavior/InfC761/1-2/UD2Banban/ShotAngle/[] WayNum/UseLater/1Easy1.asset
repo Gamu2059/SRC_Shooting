@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188a515b565e7a049a2134dd6ecc5ad0, type: 3}
+  m_Name: 1Easy1
+  m_EditorClassIdentifier: 
+  m_If: {fileID: 11400000, guid: 11985ad37c6c9e04ab1424e7d5f6d9dd, type: 2}
+  m_BranchValueArray:
+  - {fileID: 11400000, guid: 364d2357666b74c409b80622c9c736d5, type: 2}
+  - {fileID: 11400000, guid: 9270f17dd40fa86408d99448ee6761d7, type: 2}
+  - {fileID: 11400000, guid: 3945d9d1c081edc43ac871ead5182b86, type: 2}
+  - {fileID: 11400000, guid: b3a620b20c4959d49ac6baf730ac2e9b, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 線形補間する演算を表すクラス。
+/// 線形補間する演算を表すクラス。（作成途中）
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/operation/float/linearinterpo", fileName = "OperationFloatLinearinterpo", order = 0)]
 [System.Serializable]

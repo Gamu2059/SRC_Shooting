@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d88388f042d837418d382261f4fdca6, type: 3}
+  m_Script: {fileID: 11500000, guid: c35a123b43e2d4a4babd69795849e6db, type: 3}
   m_Name: '[s] LaunchInterval'
   m_EditorClassIdentifier: 
-  m_Value: 0.3
+  m_Easy: {fileID: 11400000, guid: 06aa32042c836b1408212665e8284035, type: 2}
+  m_Normal: {fileID: 11400000, guid: 070a1ecfc8fd4c94eb7d5c3a890ac407, type: 2}
+  m_Hard: {fileID: 11400000, guid: b0b3b39ca62c78f46a8ccc7f327c6b07, type: 2}
+  m_Hades: {fileID: 11400000, guid: 1fc368a58bb9d6246a8b02527e81e2cb, type: 2}

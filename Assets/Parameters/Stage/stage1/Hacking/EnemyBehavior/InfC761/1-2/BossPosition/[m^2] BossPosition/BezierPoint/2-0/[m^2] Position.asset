@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ac4de0019b9394ab7d52fa1b6c6d74, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d48a80fdc6da14391cc0675d5ffd3d, type: 3}
   m_Name: '[m^2] Position'
   m_EditorClassIdentifier: 
-  m_Value: {x: -0.4, y: 0.2}
+  m_Easy: {fileID: 11400000, guid: 6dff7a7e20dc8364086ef1cbbb6d5455, type: 2}
+  m_Normal: {fileID: 11400000, guid: 1fea58665c4340042b9b12ea20891356, type: 2}
+  m_Hard: {fileID: 11400000, guid: 43c3e8e25b749da4b913ef2d6f2c7518, type: 2}
+  m_Hades: {fileID: 11400000, guid: c3cf8a74eda34904486fe4369c7c1f8b, type: 2}

@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43a5aaf5b7416c4fbcbf393ce6ab81f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b67474f15a99fd4bb624aa0889a487d, type: 3}
   m_Name: '[_cycle] LaunchNum'
   m_EditorClassIdentifier: 
-  m_Value: 10
+  m_Easy: {fileID: 11400000, guid: 339181583e6e0834d843807e260d8b67, type: 2}
+  m_Normal: {fileID: 11400000, guid: 4e20b8cfc92426d48bb387d61d467458, type: 2}
+  m_Hard: {fileID: 11400000, guid: 3dcc37a86c1f4b446b3f3bd4d870dfb9, type: 2}
+  m_Hades: {fileID: 11400000, guid: 2c7ed939a8249dd4ea6b50a8d21b1437, type: 2}
