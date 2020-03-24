@@ -99,7 +99,7 @@ namespace BattleReal.EnemyGenerator
                 return;
             }
 
-            m_GeneratedEnemies.RemoveAll( e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
+            m_GeneratedEnemies.RemoveAll(e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
         }
 
         public override void OnFixedUpdate()
@@ -119,8 +119,8 @@ namespace BattleReal.EnemyGenerator
                 }
             }
 
-            m_GenerateEnemyTimeCount += Time.fixedDeltaTime;
             m_GenerateParams.RemoveAll(p => m_GenerateEnemyTimeCount >= p.GenerateTime);
+            m_GenerateEnemyTimeCount += Time.fixedDeltaTime;
         }
 
         #endregion
