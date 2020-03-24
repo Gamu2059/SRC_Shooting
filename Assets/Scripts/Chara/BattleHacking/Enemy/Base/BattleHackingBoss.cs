@@ -43,6 +43,11 @@ public class BattleHackingBoss : BattleHackingEnemyController
     protected BattleHackingBossBehavior m_CurrentBehavior;
     protected int m_AttackPhase;
 
+    public float CurrentRemainTime { get; protected set; }
+    public float MaxRemainTime { get; protected set; }
+    public float CurrentRemainBonusTime { get; protected set; }
+    public float MaxRemainBonusTime { get; protected set; }
+
     #endregion
 
     protected override void OnSetParamSet()
@@ -234,6 +239,12 @@ public class BattleHackingBoss : BattleHackingEnemyController
 
     private void StartOnStart()
     {
+        CurrentRemainTime = 20;
+        MaxRemainTime = 20;
+        // ボーナスタイムはアイテムの取得数に応じる
+        CurrentRemainBonusTime = 10;
+        MaxRemainBonusTime = 10;
+
         m_AttackPhase = 0;
         m_CurrentBehavior = m_Behaviors[m_AttackPhase];
 
@@ -274,6 +285,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
     private void UpdateOnAttack()
     {
         m_CurrentBehavior?.OnUpdate();
+        UpdateRemainTime();
     }
 
     private void LateUpdateOnAttack()
@@ -382,11 +394,32 @@ public class BattleHackingBoss : BattleHackingEnemyController
 
     #endregion
 
+    private void UpdateRemainTime()
+    {
+        if (CurrentRemainBonusTime <= 0)
+        {
+            CurrentRemainTime -= Time.deltaTime;
+            if (CurrentRemainTime <= 0)
+            {
+                CurrentRemainTime = 0;
+                BattleHackingEnemyManager.Instance.Timeout();
+            }
+        }
+        else
+        {
+            CurrentRemainBonusTime -= Time.deltaTime;
+            if (CurrentRemainBonusTime <= 0)
+            {
+                CurrentRemainBonusTime = 0;
+            }
+        }
+    }
+
     public override void Dead()
     {
         base.Dead();
 
-        BattleHackingManager.Instance.DeadBoss();
+        BattleHackingEnemyManager.Instance.DeadBoss();
         RequestChangeState(E_PHASE.DEAD);
     }
 }

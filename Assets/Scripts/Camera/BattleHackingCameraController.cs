@@ -24,8 +24,6 @@ public class BattleHackingCameraController : ControllableMonoBehavior
 
     #region Field
 
-    private E_OBJECT_CYCLE m_Cycle;
-
     private float m_XAmp;
     private float m_YAmp;
     private float m_Freq;
@@ -34,20 +32,6 @@ public class BattleHackingCameraController : ControllableMonoBehavior
 
     private bool m_IsShaking;
     private float m_ShakeTimeCount;
-
-    #endregion
-
-    #region Get & Set
-
-    public E_OBJECT_CYCLE GetCycle()
-    {
-        return m_Cycle;
-    }
-
-    public void SetCycle(E_OBJECT_CYCLE value)
-    {
-        m_Cycle = value;
-    }
 
     #endregion
 

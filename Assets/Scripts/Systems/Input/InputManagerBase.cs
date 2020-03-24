@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InputManagerBase : ControllableObject
+public abstract class InputManagerBase<T> : Singleton<T> where T : InputManagerBase<T>, new()
 {
     private class ButtonData
     {

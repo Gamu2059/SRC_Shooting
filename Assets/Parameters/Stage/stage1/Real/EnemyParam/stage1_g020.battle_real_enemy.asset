@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da0582c4515ada419261774b0b9e77a, type: 3}
+  m_Name: stage1_g020.battle_real_enemy
+  m_EditorClassIdentifier: 
+  m_ControllerType: 0
+  m_ControllerClassName: 
+  m_Params:
+  - Difficulty: 1
+    Param:
+      m_Hp: 2
+      m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946,
+        type: 2}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 8eec20119819812438860330601666e5,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 0}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 0
+      m_Behavior: {fileID: 11400000, guid: f4cfc64fc0c5db04f9310266f32e6b6e, type: 2}
+      m_BehaviorGroup: {fileID: 0}
+      m_DefeatScore: 0
+      m_DefeatItemParam:
+        ItemSpreadParams: []
+        CenterCreateItemType: 2
+      m_DefeatEvents: []
+      m_DefeatSequentialEffect:
+        m_Params: []
+      m_DefeatHideTime: 0

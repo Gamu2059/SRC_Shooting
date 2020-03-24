@@ -9,157 +9,59 @@ using System;
 /// リアルモードのカメラの管理をする。
 /// </summary>
 [Serializable]
-public class BattleRealCameraManager : ControllableObject
+public class BattleRealCameraManager : SingletonMonoBehavior<BattleRealCameraManager>
 {
-    public static BattleRealCameraManager Instance => BattleRealManager.Instance.CameraManager;
-
+    [SerializeField]
     private BattleRealCameraController m_BackCamera;
+    
+    [SerializeField]
     private BattleRealCameraController m_FrontCamera;
-
-    #region Get Set
-
-    public Camera GetBackCamera()
-    {
-        if (m_BackCamera != null)
-        {
-            return m_BackCamera.Camera;
-        }
-
-        return null;
-    }
-
-    public Camera GetFrontCamera()
-    {
-        if (m_FrontCamera != null)
-        {
-            return m_FrontCamera.Camera;
-        }
-
-        return null;
-    }
-
-    #endregion
 
     #region Game Cycle
 
     public override void OnInitialize()
     {
         base.OnInitialize();
+        m_BackCamera.OnInitialize();
+        m_FrontCamera.OnInitialize();
     }
 
     public override void OnFinalize()
     {
-        DestroyCamera(m_FrontCamera);
-        DestroyCamera(m_BackCamera);
-
+        m_FrontCamera.OnFinalize();
+        m_BackCamera.OnFinalize();
         base.OnFinalize();
     }
 
     public override void OnStart()
     {
         base.OnStart();
-
-        StartCamera(m_BackCamera);
-        StartCamera(m_FrontCamera);
+        m_BackCamera.OnStart();
+        m_FrontCamera.OnStart();
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-
-        UpdateCamera(m_BackCamera);
-        UpdateCamera(m_FrontCamera);
+        m_BackCamera.OnUpdate();
+        m_FrontCamera.OnUpdate();
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-
-        LateUpdateCamera(m_BackCamera);
-        LateUpdateCamera(m_FrontCamera);
+        m_BackCamera.OnLateUpdate();
+        m_FrontCamera.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-
-        FixedUpdateCamera(m_BackCamera);
-        FixedUpdateCamera(m_FrontCamera);
+        m_BackCamera.OnFixedUpdate();
+        m_FrontCamera.OnFixedUpdate();
     }
 
     #endregion
-
-    /// <summary>
-    /// カメラを登録する。
-    /// </summary>
-    public void RegisterCamera(BattleRealCameraController camera, E_CAMERA_TYPE cameraType)
-    {
-        if (camera == null)
-        {
-            return;
-        }
-
-        camera.OnInitialize();
-
-        if (cameraType == E_CAMERA_TYPE.BACK_CAMERA)
-        {
-            m_BackCamera = camera;
-        }
-        else
-        {
-            m_FrontCamera = camera;
-        }
-    }
-
-    private void StartCamera(BattleRealCameraController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnStart();
-    }
-
-    private void UpdateCamera(BattleRealCameraController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnUpdate();
-    }
-
-    private void LateUpdateCamera(BattleRealCameraController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnLateUpdate();
-    }
-
-    private void FixedUpdateCamera(BattleRealCameraController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnFixedUpdate();
-    }
-
-    private void DestroyCamera(BattleRealCameraController controller)
-    {
-        if (controller == null)
-        {
-            return;
-        }
-
-        controller.OnFinalize();
-    }
 
     public BattleRealCameraController GetCameraController(E_CAMERA_TYPE cameraType)
     {

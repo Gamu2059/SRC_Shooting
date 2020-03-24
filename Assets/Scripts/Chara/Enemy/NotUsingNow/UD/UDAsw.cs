@@ -49,7 +49,7 @@ public class UDAsw : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleRealEnemyBase enemyController, float launchTime, float dTime)
     {
 
         float pastRad = m_AngleSpeed * launchTime;

@@ -67,30 +67,45 @@ public class GridGageIndicator : ControllableMonoBehavior
 
     private float GetValueRate()
     {
-        var hackingManager = BattleHackingManager.Instance;
+        var boss = GetBoss();
+        if (boss == null)
+        {
+            return 0;
+        }
+
+        var hackingBoss = boss as BattleHackingBoss;
+
         switch (m_ValueType)
         {
             case E_VALUE_TYPE.TIME:
-                var nowTime = hackingManager.CurrentRemainTime;
-                var maxTime = hackingManager.MaxRemainTime;
-                if (maxTime <= 0)
+                if (hackingBoss != null)
                 {
-                    return 0;
+                    var nowTime = hackingBoss.CurrentRemainTime;
+                    var maxTime = hackingBoss.MaxRemainTime;
+                    if (maxTime <= 0)
+                    {
+                        return 0;
+                    }
+                    return nowTime / maxTime;
+
                 }
-                return nowTime / maxTime;
+                break;
 
             case E_VALUE_TYPE.BONUS_TIME:
-                var nowBonusTime = hackingManager.CurrentRemainBonusTime;
-                var maxBonusTime = hackingManager.MaxRemainBonusTime;
-                if (maxBonusTime <= 0)
+                if (hackingBoss != null)
                 {
-                    return 0;
+                    var nowBonusTime = hackingBoss.CurrentRemainBonusTime;
+                    var maxBonusTime = hackingBoss.MaxRemainBonusTime;
+                    if (maxBonusTime <= 0)
+                    {
+                        return 0;
+                    }
+                    return nowBonusTime / maxBonusTime;
                 }
-                return nowBonusTime / maxBonusTime;
+                break;
 
             case E_VALUE_TYPE.BOSS_HP:
-                var boss = GetBoss();
-                if (boss == null)
+                if (boss.MaxHp <= 0)
                 {
                     return 0;
                 }

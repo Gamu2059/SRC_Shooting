@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class DanmakuPolymorphism : System.Object
 {
     // 毎フレーム行う処理
-    public abstract void Updates(BattleRealEnemyController enemyController);
+    public abstract void Updates(BattleRealEnemyBase enemyController);
 }

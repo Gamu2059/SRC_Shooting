@@ -27,9 +27,9 @@ public class IconCountIndicator : ControllableMonoBehavior
 
     private int m_PreCount;
 
-    private BattleRealBoss m_Boss;
+    private BattleRealBossController m_Boss;
 
-    private BattleRealBoss GetBoss()
+    private BattleRealBossController GetBoss()
     {
         if(m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
@@ -40,9 +40,9 @@ public class IconCountIndicator : ControllableMonoBehavior
         var enemies = BattleRealEnemyManager.Instance.Enemies;
         foreach(var e in enemies)
         {
-            if(e.IsBoss && e is BattleRealBoss boss)
+            if(e.IsBoss && e is BattleRealBossController boss)
             {
-                m_Boss = boss;
+                return m_Boss = boss;
             }
         }
         return m_Boss;
@@ -93,7 +93,7 @@ public class IconCountIndicator : ControllableMonoBehavior
                 {
                     return -1;
                 }
-                return (boss.HackingCompleteNum - boss.m_HackingSuccessCount) - 1;
+                return (boss.HackingCompleteNum - boss.HackingSuccessCount) - 1;
         }
 
         return 0;

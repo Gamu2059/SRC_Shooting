@@ -8,6 +8,7 @@ using System;
 /// <summary>
 /// INF-C-761の二つ目の行動パラメータのセット。
 /// </summary>
+[Obsolete]
 [Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase2Old", fileName = "param.inf_c_761_phase_2_OLD.asset")]
 public class InfC761Phase2ParamSetOld : BattleRealBossBehaviorUnitParamSet
 {

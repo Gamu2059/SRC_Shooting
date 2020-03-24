@@ -7,6 +7,7 @@ using System;
 
 /// <summary>
 /// ある座標を中心として、その円周上を移動する。
+/// Space.Worldしか許容しない。
 /// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/Sequence/Unit/PolarAnimation", fileName = "polar_animation.sequence_unit.asset", order = 2)]
 public class SequenceUnitPolarAnimation : SequenceUnit
@@ -160,7 +161,7 @@ public class SequenceUnitPolarAnimation : SequenceUnit
         rotation = Quaternion.LookRotation(f, u);
     }
 
-    public override void GetStartTransform(Transform target, out Vector3 position, out Vector3 rotate)
+    public override void GetStartTransform(Transform target, out Space spaceType, out Vector3 position, out Vector3 rotate)
     {
         var upAxisMatrix = Matrix4x4.Rotate(Quaternion.Euler(m_PolarRotation.x, m_PolarRotation.y, m_PolarRotation.z));
         var up = upAxisMatrix.MultiplyVector(Vector3.up);
@@ -168,7 +169,13 @@ public class SequenceUnitPolarAnimation : SequenceUnit
         Vector3 pos;
         Quaternion rotation;
         Apply(upAxisMatrix, up, m_StartSpeed, m_AngleOffset * Mathf.Deg2Rad, target.rotation, out pos, out rotation);
+        spaceType = Space.World;
         position = pos;
         rotate = rotation.eulerAngles;
+    }
+
+    private void OnValidate()
+    {
+        m_SpaceType = Space.World;
     }
 }

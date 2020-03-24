@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TwoAxisInputManager : InputManagerBase
+public class TwoAxisInputManager : InputManagerBase<TwoAxisInputManager>
 {
     private const string VERTICAL = "Vertical";
     private const string HORIZONTAL = "Horizontal";

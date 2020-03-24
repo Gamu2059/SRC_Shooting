@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 12
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,7 +62,6 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
-    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -77,16 +76,10 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVREnvironmentSampleCount: 500
-    m_PVREnvironmentReferencePointCount: 2048
-    m_PVRFilteringMode: 2
-    m_PVRDenoiserTypeDirect: 0
-    m_PVRDenoiserTypeIndirect: 0
-    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVREnvironmentMIS: 0
+    m_PVRFilteringMode: 2
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -94,8 +87,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ExportTrainingData: 0
-    m_TrainingDataDestination: TrainingData
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -218,7 +210,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -302,16 +293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5a5d7565e089b48828faa6bd273baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   shotInterval: 1000
   shotTime: 0
   nowRad: 0
@@ -358,7 +342,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -453,16 +436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a690af6878ddc4695f72ced10aae6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_Danmaku:
     m_AttackNum: 0
     m_AttackFormNum: 0
@@ -471,7 +447,6 @@ MonoBehaviour:
     m_AttackChange: 0
     m_AttackIncrease: 0
     m_FormChangeArray: 
-    m_UDParamsArrayArray: {fileID: 0}
     m_AllUDFieldArrayArray: {fileID: 0}
 --- !u!65 &123351124
 BoxCollider:
@@ -511,7 +486,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -564,16 +538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526d7d9ffade81a4f8a79f7f4b67d048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -618,7 +585,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -685,16 +651,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d145a12dff914289527d666b03096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 1
   m_Way: 0
@@ -737,7 +696,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -804,16 +762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1302cae170a3fc4f840d5bc916d7ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_BasePos: {x: 0, y: 0, z: 0}
@@ -858,7 +809,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -925,16 +875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7f1e63d16bca8408fd1854b65730d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -980,7 +923,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1062,16 +1004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58827905e90255546be9fb998a3849da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 1000
-  m_MaxHp: 1000
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_PhaseTime:
   - 8
   m_DanmakuPhase: 0
@@ -1136,7 +1071,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1282,16 +1216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d225a43ee1b471643b135fe8fee7d557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 1
   way: 4
@@ -1338,7 +1265,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1405,16 +1331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e6f6addd8aeb4ab2fc058dfa00df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -1462,7 +1381,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1529,16 +1447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e848b595d4defda479c0a928ac56b2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 0.1
   m_ShotTime: 0
   m_NowRad: 0
@@ -1585,7 +1496,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1652,16 +1562,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f274bb037c66ec741aac84e6b5896fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 10
   m_PeriodSpeed: 1
@@ -1705,7 +1608,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1772,16 +1674,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa69501d7e4aad40885f06a5a3f5cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   shotInterval: 1000
   shotTime: 0
   nowRad: 0
@@ -1830,7 +1725,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1935,7 +1829,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2002,16 +1895,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339de9fa005782c4b9455c7ef7169640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2056,7 +1942,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2137,16 +2022,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc6949c5a2be3c49a9c775969be6483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.1
   circleRadius: 15
@@ -2195,7 +2073,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2278,16 +2155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a877b3a4c5c72974fac9d99ef4df5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -2333,7 +2203,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2428,16 +2297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a690af6878ddc4695f72ced10aae6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_Danmaku:
     m_AttackNum: 0
     m_AttackFormNum: 0
@@ -2450,7 +2312,6 @@ MonoBehaviour:
     m_AttackChange: 0
     m_AttackIncrease: 0
     m_FormChangeArray: 01000000020000000200000001000000
-    m_UDParamsArrayArray: {fileID: 0}
     m_AllUDFieldArrayArray: {fileID: 11400000, guid: 34b7f29f7a279964c81ededa40ec9694,
       type: 2}
 --- !u!65 &567257088
@@ -2491,7 +2352,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2572,16 +2432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01a9a744b6fab44a98ce524c2824de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 1
   m_way: 20
@@ -5628,7 +5481,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5681,16 +5533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e6f6addd8aeb4ab2fc058dfa00df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -5738,7 +5583,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5833,16 +5677,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f274bb037c66ec741aac84e6b5896fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_Amplitude: 1
   m_PeriodSpeed: 1
@@ -5886,7 +5723,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5907,12 +5743,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641161465}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &669387629 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2878423045518255913, guid: 13a49f352e7b812448d3584ce73352b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1670201093}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682107348
 GameObject:
   m_ObjectHideFlags: 0
@@ -5945,16 +5775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096e6752d31a478439ff98da58da2da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -5998,7 +5821,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6065,16 +5887,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007c0806cc2d84698e71ae7ab57d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -6121,7 +5936,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6188,16 +6002,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007c0806cc2d84698e71ae7ab57d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -6244,7 +6051,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6339,16 +6145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a50d2854115a4049a9af0af5c3af5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 0.1
   m_AngleSpeed: 1
   m_BulletSpeed: 10
@@ -6396,7 +6195,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6461,7 +6259,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 669387629}
+  - {fileID: 1670201094}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6512,16 +6310,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad03d1e3637c7142806bda71cbd4a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 0.2
   m_AngleSpeed: 1
   m_BulletSpeed: 10
@@ -6586,7 +6377,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6639,16 +6429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a228cb3c86b24c869118fd6ea1f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_BasePos: {x: 0, y: 0, z: 0}
   m_BulletSpeed: 10
 --- !u!65 &913544596
@@ -6689,7 +6472,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6771,16 +6553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4f7cf4a5eca9a45a2675d0935f111a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.015
   relativeLaunchPos: {x: 5, y: 0, z: 0}
@@ -6823,7 +6598,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6856,16 +6630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5522ee3493aeb47439ed31ab018674a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.05
   m_AngleSpeed: 2
@@ -6917,16 +6684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7a27be28eb39a42a769d5376e8e520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.03
   circleRadius: 20
@@ -6974,7 +6734,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7088,7 +6847,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7155,16 +6913,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41081600bce0466498a48da8c93d611a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7211,7 +6962,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7293,16 +7043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93db1a9237fc4ba45be350695240f75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_RealShotNum: -1
   m_BulletNum: 100
   m_Bullet: []
@@ -7363,7 +7106,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7454,7 +7196,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7536,16 +7277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08715528c2d619448b7fbdb0f49156d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_PhaseTime:
   - 5
   m_DanmakuPhase: 0
@@ -7610,7 +7344,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7724,7 +7457,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7791,16 +7523,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae8b7152931b9e488cfc279ba715ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7847,7 +7572,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7914,16 +7638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1632f41225b2741a2128bdfa46b816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -7968,7 +7685,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8035,16 +7751,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21149309047b0443aaf09bf39f10144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -8093,7 +7802,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8160,16 +7868,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7598e6776a5c24daa99ca82c84fc90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_OmniShotInterval: 1000
   m_KinkoShotInterval: 1000
   m_OmniShotTime: 0
@@ -8217,7 +7918,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8277,13 +7977,12 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1346442559}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -8293,24 +7992,6 @@ Light:
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -8318,15 +7999,12 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1346442561
@@ -8375,16 +8053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b172d2996cff3c040bf557e1142bd988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -8434,7 +8105,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8501,16 +8171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9dabe54b22e2445b8881abbb6a09da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 1000
   way: 30
@@ -8553,7 +8216,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8620,16 +8282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9c119c21e1e994a9a07a37bd98d4d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 1
   angleAcceleration: 5
@@ -8675,7 +8330,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8808,7 +8462,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8875,16 +8528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af66f9f2ea2026409a5da37de2fa757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.1
   way: 4
@@ -8930,7 +8576,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8983,16 +8628,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2377ba84354fb64dbaa4c5c68623a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -9038,7 +8676,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9105,16 +8742,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6d02b5c6ac79c4a98a08927a92b063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1
   m_ShotTime: 0
   m_NowRad: 0
@@ -9160,7 +8790,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9227,16 +8856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c293fb768278d974e8967f9935bba09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   kinkoShotInterval: 0.1
   kinkoAngleSpeed: 1
@@ -9282,7 +8904,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9349,16 +8970,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a422fc6931c01c47a66bc94c32c2467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -9403,7 +9017,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9470,16 +9083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72748ee617664e4c99738bf70c47a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   SineshotInterval: 0.1
   Sineway: 8
@@ -9527,7 +9133,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9594,16 +9199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de5a1460d21f9046bb136a7c8989407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -9648,7 +9246,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9727,16 +9324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af92e0e9af163cb41a23d4c78bcce52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -9782,7 +9372,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9824,11 +9413,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 869704867}
     m_Modifications:
-    - target: {fileID: 1738506033191002612, guid: 13a49f352e7b812448d3584ce73352b3,
-        type: 3}
-      propertyPath: m_Name
-      value: '[BattleMainManagerGroup]'
-      objectReference: {fileID: 0}
     - target: {fileID: 2878423045518255913, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9889,6 +9473,11 @@ PrefabInstance:
       propertyPath: m_BehaviorList.Array.size
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1738506033191002612, guid: 13a49f352e7b812448d3584ce73352b3,
+        type: 3}
+      propertyPath: m_Name
+      value: '[BattleMainManagerGroup]'
+      objectReference: {fileID: 0}
     - target: {fileID: 488972555095900866, guid: 13a49f352e7b812448d3584ce73352b3,
         type: 3}
       propertyPath: m_MoveObjectHolder
@@ -9926,6 +9515,11 @@ PrefabInstance:
       objectReference: {fileID: 529668062}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13a49f352e7b812448d3584ce73352b3, type: 3}
+--- !u!4 &1670201094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1670201093}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1683370065
 GameObject:
   m_ObjectHideFlags: 0
@@ -9958,16 +9552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e848b595d4defda479c0a928ac56b2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 3.14
@@ -10014,7 +9601,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10081,16 +9667,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5522ee3493aeb47439ed31ab018674a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.05
   m_AngleSpeed: 2
@@ -10134,7 +9713,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10201,16 +9779,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe43c83e6d384344a88da7b6bb2fc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10256,7 +9827,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10337,16 +9907,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347e2cdd72343da44aa9f15a4764d9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   shotInterval: 0.05
   way: 5
@@ -10393,7 +9956,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10448,16 +10010,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d145a12dff914289527d666b03096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 3
   m_Way: 0
@@ -10474,16 +10029,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b83ef10652dc24b92cde445c7e042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.04
   way: 4
@@ -10502,16 +10050,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b83ef10652dc24b92cde445c7e042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.04
   way: 4
@@ -10556,7 +10097,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10637,16 +10177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9abf1cc20047345809320ec8f71a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 0.01
   circleRadiusPhaseSpeed: 1
@@ -10690,7 +10223,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10743,16 +10275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007c0806cc2d84698e71ae7ab57d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -10799,7 +10324,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10868,16 +10392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b07e6991e621b4dbeb219ad428c688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.1
   way: 4
@@ -10923,7 +10440,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10970,16 +10486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b07e6991e621b4dbeb219ad428c688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 
   shotInterval: 0.1
   way: 4
@@ -10999,16 +10508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024d145a12dff914289527d666b03096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 11400000, guid: 8ae66057d40912d47aa8df4ff403a946, type: 2}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   realShotNum: 0
   m_ShotInterval: 3
   m_Way: 0
@@ -11045,16 +10547,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafc9fb3deea1548901c795fde9495c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11101,7 +10596,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11168,16 +10662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b172d2996cff3c040bf557e1142bd988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   m_ShotTime: 0
   m_NowRad: 0
@@ -11227,7 +10714,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11300,10 +10786,9 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -11377,16 +10862,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb24df8cc4a4e94889e3076fb0c6c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   shotNum: 0
   m_BulletSpeed: 10
@@ -11429,7 +10907,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11496,16 +10973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48382e194992ad74fa703566005b3348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 1
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_ShotInterval: 1000
   realShotNum: 0
   m_AngleSpeed: 1
@@ -11548,7 +11018,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11630,16 +11099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05425c9adcd45ef4c87757bf7cf2bfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Troop: 0
   m_BulletSetParam: {fileID: 0}
-  m_NowHp: 0
-  m_MaxHp: 0
-  m_ItemCreateParam:
-    ItemSpreadParams: []
-    CenterCreateItemType: 0
-  m_IsBoss: 0
-  m_DeadEffect: {fileID: 0}
-  m_OnHitInvincibleDuration: 0
+  IsLookMoveDir: 0
+  WillDestroyOnOutOfEnemyField: 0
   m_PhaseTime: []
   m_DanmakuPhase: 0
   m_LocalPositionBezier0: []
@@ -11699,7 +11161,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

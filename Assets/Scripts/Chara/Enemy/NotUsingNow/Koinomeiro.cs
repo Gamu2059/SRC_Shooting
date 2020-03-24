@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Koinomeiro : BattleRealEnemyController
+public class Koinomeiro : BattleRealEnemyBase
 {
 
     // 発射間隔

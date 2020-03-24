@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DanmakusAbstract : BattleRealEnemyController
+public abstract class DanmakusAbstract : BattleRealEnemyBase
 {
 
     // 実際の今までの発射回数

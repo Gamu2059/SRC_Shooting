@@ -7,6 +7,7 @@ using System;
 /// リアルモードの敵の振る舞いパラメータの規定クラス。
 /// このクラスを継承してパラメータのセットを定義して下さい。
 /// </summary>
+[Obsolete]
 public abstract class BattleRealEnemyBehaviorParamSet : ScriptableObject
 {
     [SerializeField]

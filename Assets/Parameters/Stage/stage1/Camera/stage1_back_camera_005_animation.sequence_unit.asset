@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf0ea5f6bf510a4385178209d523e82, type: 3}
+  m_Name: stage1_back_camera_005_animation.sequence_unit
+  m_EditorClassIdentifier: 
+  m_ApplyInterruptEnd: 0
+  m_InterruptEndFunc: {fileID: 0}
+  m_DefaultEndValue: 0
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_InitializeWorldPosition:
+    Data: {x: 60, y: 0.7, z: 61}
+    IsPassX: 0
+    IsPassY: 0
+    IsPassZ: 0
+  m_InitializeEulerAngles:
+    Data: {x: 75, y: 90, z: 0}
+    IsPassX: 0
+    IsPassY: 0
+    IsPassZ: 0
+  m_Duration: 8
+  m_AnimationParam:
+    UsePosition: 1
+    Position:
+      XParam:
+        Use: 1
+        AnimationValue:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 60
+            inSlope: 1
+            outSlope: 0.40304658
+            tangentMode: 1
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.023188408
+          - serializedVersion: 3
+            time: 8
+            value: 61
+            inSlope: -0
+            outSlope: -0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.06763281
+            outWeight: 0.33333334
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        EndValue: 61
+      YParam:
+        Use: 0
+        AnimationValue:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.5
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        EndValue: 0
+      ZParam:
+        Use: 0
+        AnimationValue:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 60.5
+            inSlope: 1
+            outSlope: 0.20528248
+            tangentMode: 1
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.022222223
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        EndValue: 0
+    UseRotation: 1
+    Rotation:
+      XParam:
+        Use: 1
+        AnimationValue:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 75
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 8
+            value: -90
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        EndValue: -90
+      YParam:
+        Use: 0
+        AnimationValue:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 90
+            inSlope: 12.623061
+            outSlope: 12.623061
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.01530344
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        EndValue: 0
+      ZParam:
+        Use: 0
+        AnimationValue:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 11.745663
+            outSlope: 11.745663
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.1352657
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        EndValue: 0

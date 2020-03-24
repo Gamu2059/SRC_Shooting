@@ -16,7 +16,7 @@ public class UDOmn2 : UDOmn1
 
 
     // 発射位置を計算する
-    public override Vector3 CalcLaunchPosition(BattleRealEnemyController enemyController, float time)
+    public override Vector3 CalcLaunchPosition(BattleRealEnemyBase enemyController, float time)
     {
         Vector2 randomPos = Random.insideUnitCircle * circleRadius;
 

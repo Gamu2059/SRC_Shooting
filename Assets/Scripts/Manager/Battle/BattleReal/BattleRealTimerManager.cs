@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealTimerManager : TimerManagerBase
+public class BattleRealTimerManager : TimerManagerBase<BattleRealTimerManager>
 {
-    public static BattleRealTimerManager Instance => BattleRealManager.Instance.RealTimerManager;
+    public static BattleRealTimerManager Builder()
+    {
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
+    }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 
 
 
-public class LaserEnemy : BattleRealEnemyController
+public class LaserEnemy : BattleRealEnemyBase
 
 {
 

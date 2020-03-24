@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// リアルモードの画面のオブジェクトを保持するためのマネージャ。
 /// </summary>
-public class BattleRealStageManager : ControllableMonoBehavior
+public class BattleRealStageManager : SingletonMonoBehavior<BattleRealStageManager>
 {
     public enum E_HOLDER_TYPE
     {
@@ -85,20 +85,6 @@ public class BattleRealStageManager : ControllableMonoBehavior
     public Vector2 MaxLocalFieldPosition => m_MaxLocalFieldPosition;
 
     #endregion
-
-    public static BattleRealStageManager Instance { get; private set; }
-
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-        Instance = this;
-    }
-
-    public override void OnFinalize()
-    {
-        Instance = null;
-        base.OnFinalize();
-    }
 
     /// <summary>
     /// 指定したオブジェクトの座標が、フィールド領域の外にあるかどうかを判定する。

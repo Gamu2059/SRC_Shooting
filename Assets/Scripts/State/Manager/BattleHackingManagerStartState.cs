@@ -1,18 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BattleHackingManagerStartState : MonoBehaviour
+﻿partial class BattleHackingManager
 {
-    // Start is called before the first frame update
-    void Start()
+    private class StartState : StateCycle
     {
-        
-    }
+        public override void OnStart()
+        {
+            base.OnStart();
+            BattleHackingStageManager.Instance.gameObject.SetActive(false);
+            BattleHackingInputManager.Instance.OnStart();
+            BattleHackingTimerManager.Instance.OnStart();
+            BattleHackingPlayerManager.Instance.OnStart();
+            BattleHackingEnemyManager.Instance.OnStart();
+            BattleHackingBulletManager.Instance.OnStart();
+            BattleHackingEffectManager.Instance.OnStart();
+            BattleHackingCollisionManager.Instance.OnStart();
+            BattleHackingCameraManager.Instance.OnStart();
+            BattleHackingUiManager.Instance.OnStart();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            Target.RequestChangeState(E_BATTLE_HACKING_STATE.STAY_REAL);
+        }
     }
 }

@@ -5,16 +5,16 @@ using UnityEngine;
 /// <summary>
 /// 衝突処理を管理する基底クラス。
 /// </summary>
-public abstract class BattleCollisionManagerBase : ControllableObject
+public abstract class BattleCollisionManagerBase<T> : Singleton<T> where T : BattleCollisionManagerBase<T>, new()
 {
     private Material m_CollisionMaterial;
     private MaterialPropertyBlock m_PropertyBlock;
     private int m_ColorId;
     private LinkedList<Mesh> m_Meshes;
 
-    public BattleCollisionManagerBase(Material collisionMaterial)
+    public BattleCollisionManagerBase()
     {
-        m_CollisionMaterial = collisionMaterial;
+        m_CollisionMaterial = null;
     }
 
     public override void OnInitialize()

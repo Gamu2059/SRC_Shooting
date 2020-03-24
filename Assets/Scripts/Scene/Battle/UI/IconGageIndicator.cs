@@ -28,7 +28,7 @@ public class IconGageIndicator : ControllableMonoBehavior
 
     private float m_PreRate;
 
-    private BattleRealBoss m_Boss;
+    private BattleRealBossController m_Boss;
 
     #region Game Cycle
 
@@ -54,7 +54,7 @@ public class IconGageIndicator : ControllableMonoBehavior
 
     #endregion
 
-    private BattleRealBoss GetBoss(){
+    private BattleRealBossController GetBoss(){
         if(m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE){
             return m_Boss;
         }
@@ -63,7 +63,7 @@ public class IconGageIndicator : ControllableMonoBehavior
         var enemies = BattleRealEnemyManager.Instance.Enemies;
         foreach (var e in enemies)
         {
-            if(e.IsBoss && e is BattleRealBoss boss)
+            if(e.IsBoss && e is BattleRealBossController boss)
                 m_Boss = boss;            
         }
         return m_Boss;

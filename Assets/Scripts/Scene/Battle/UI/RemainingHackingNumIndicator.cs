@@ -11,7 +11,7 @@ public class RemainingHackingNumIndicator : ControllableMonoBehavior
     [SerializeField, Tooltip("trueの場合、コンソールにも表示する")]
     private bool m_IsShowOnConsole;
 
-    private BattleRealBoss m_Boss;
+    private BattleRealBossController m_Boss;
 
     private int m_PreRemainingHackingNum;
 
@@ -37,7 +37,7 @@ public class RemainingHackingNumIndicator : ControllableMonoBehavior
 
     #endregion
 
-    private BattleRealBoss GetBoss()
+    private BattleRealBossController GetBoss()
     {
         if (m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
@@ -48,7 +48,7 @@ public class RemainingHackingNumIndicator : ControllableMonoBehavior
         var enemies = BattleRealEnemyManager.Instance.Enemies;
         foreach (var e in enemies)
         {
-            if (e.IsBoss && e is BattleRealBoss boss)
+            if (e.IsBoss && e is BattleRealBossController boss)
                 m_Boss = boss;
         }
         return m_Boss;
@@ -61,7 +61,7 @@ public class RemainingHackingNumIndicator : ControllableMonoBehavior
         {
             return m_PreRemainingHackingNum;
         }
-        return boss.HackingCompleteNum - boss.m_HackingSuccessCount;
+        return boss.HackingCompleteNum - boss.HackingSuccessCount;
     }
 
     public void Show(int remaining)

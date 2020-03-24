@@ -3,48 +3,36 @@
 /// <summary>
 /// シングルトンパターンを実装するための基底クラス。
 /// </summary>
-public abstract class Singleton<T> where T : class, new()
+public abstract class Singleton<T> : ControllableObject where T : class, new()
 {
+	public static T Instance { get; private set; }
 
-	public static T Instance
+	protected Singleton() { }
+
+	public static T Create()
 	{
-		get
+		if (Instance != null)
 		{
-			// 複数同時に生成しないようにロックする
-			lock( m_LockObj )
-			{
-				if( m_Instance == null )
-				{
-					m_Instance = new T();
-				}
-
-				return m_Instance;
-			}
+			return Instance;
 		}
+
+		Instance = new T();
+		return Instance;
 	}
 
-	private static T m_Instance;
-	private static System.Object m_LockObj = new System.Object();
-
-	#region Method Protected
-
-	protected Singleton()
+	public override void OnFinalize()
 	{
-		OnConstructor();
+		if (Instance == null)
+		{
+			return;
+		}
+
+		if (Instance.Equals(this))
+		{
+			Instance = null;
+		}
+		base.OnFinalize();
 	}
 
-	~Singleton()
-	{
-		m_Instance = null;
-	}
-
-	protected virtual void OnConstructor()
-	{
-	}
-
-	public virtual void Init()
-	{
-	}
-
-	#endregion
+	
 }

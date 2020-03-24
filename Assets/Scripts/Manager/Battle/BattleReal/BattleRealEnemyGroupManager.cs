@@ -8,19 +8,9 @@ using System;
 /// リアルモードの敵キャラを管理する。
 /// </summary>
 [Serializable]
-public class BattleRealEnemyGroupManager : ControllableObject
+public class BattleRealEnemyGroupManager : Singleton<BattleRealEnemyGroupManager>
 {
-    public static BattleRealEnemyGroupManager Instance => BattleRealManager.Instance.EnemyGroupManager;
-
-    /// <summary>
-    /// 消滅可能になるまでの最小時間
-    /// </summary>
-    [SerializeField]
-    private float m_CanOutTime;
-
     #region Field
-
-    private BattleRealEnemyGroupManagerParamSet m_ParamSet;
 
     private Transform m_EnemyGroupHolder;
     private Transform m_EnemyEvacuationHolder;
@@ -47,9 +37,11 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
     #endregion
 
-    public BattleRealEnemyGroupManager(BattleRealEnemyGroupManagerParamSet paramSet)
+    public static BattleRealEnemyGroupManager Builder()
     {
-        m_ParamSet = paramSet;
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
     }
 
     #region Game Cycle
@@ -80,7 +72,6 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyGroupHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY_GROUP);
-        BuildEnemyGroupAppearEvents();
     }
 
     public override void OnUpdate()
@@ -124,6 +115,23 @@ public class BattleRealEnemyGroupManager : ControllableObject
             }
 
             enemyGroup.OnLateUpdate();
+        }
+    }
+
+
+
+    public override void OnFixedUpdate()
+    {
+        // FixedUpdate処理
+        foreach (var enemyGroup in m_UpdateEnemyGroups)
+        {
+            if (enemyGroup == null)
+            {
+                CheckPoolEnemyGroup(enemyGroup);
+                continue;
+            }
+
+            enemyGroup.OnFixedUpdate();
         }
     }
 
@@ -192,36 +200,36 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// プールから敵グループを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    private BattleRealEnemyGroupController GetPoolingEnemyGroup(BattleRealEnemyGroupGenerateParamSet groupGenerateParamSet)
+    private BattleRealEnemyGroupController GetPoolingEnemyGroup(BattleRealEnemyGroupParam enemyGroupParam)
     {
-        if (groupGenerateParamSet == null)
+        if (enemyGroupParam == null)
         {
             return null;
         }
 
-        var behaviorClass = groupGenerateParamSet.EnemyGroupBehaviorParamSet.BehaviorClass;
-        Type behaviorType = null;
+        //var behaviorClass = groupGenerateParamSet.EnemyGroupBehaviorParamSet.BehaviorClass;
+        //Type behaviorType = null;
 
-        try
-        {
-            behaviorType = Type.GetType(behaviorClass);
-        }
-        catch (Exception)
-        {
-            return null;
-        }
+        //try
+        //{
+        //    behaviorType = Type.GetType(behaviorClass);
+        //}
+        //catch (Exception)
+        //{
+        //    return null;
+        //}
 
-        if (behaviorType == null)
-        {
-            return null;
-        }
+        //if (behaviorType == null)
+        //{
+        //    return null;
+        //}
 
         BattleRealEnemyGroupController enemyGroup = null;
 
         for (int i = 0; i < m_PoolEnemyGroups.Count; i++)
         {
             var pooledGroup = m_PoolEnemyGroups[i];
-            if (pooledGroup != null && pooledGroup.GetType().Equals(behaviorType))
+            if (pooledGroup != null && pooledGroup is BattleRealEnemyGroupController)
             {
                 enemyGroup = pooledGroup;
                 break;
@@ -230,12 +238,12 @@ public class BattleRealEnemyGroupManager : ControllableObject
 
         if (enemyGroup == null)
         {
-            var groupObj = new GameObject(behaviorClass);
-            enemyGroup = groupObj.AddComponent(behaviorType) as BattleRealEnemyGroupController;
+            var groupObj = new GameObject("EnemyGroup");
+            enemyGroup = groupObj.AddComponent<BattleRealEnemyGroupController>();
 
             if (enemyGroup == null)
             {
-                Debug.LogError(behaviorClass + "は、BattleRealEnemyGroupControllerを継承していません。");
+                //Debug.LogError(behaviorClass + "は、BattleRealEnemyGroupControllerを継承していません。");
                 GameObject.Destroy(groupObj);
                 return null;
             }
@@ -283,38 +291,20 @@ public class BattleRealEnemyGroupManager : ControllableObject
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public void CreateEnemyGroup(int enemyGroupIndex)
+    public void CreateEnemyGroup(BattleRealEnemyGroupParam enemyGroupParam)
     {
-        var paramSets = m_ParamSet.Generator.Contents;
-        if (enemyGroupIndex < 0 || enemyGroupIndex >= paramSets.Length)
+        if (enemyGroupParam == null)
         {
             return;
         }
 
-        var groupParam = paramSets[enemyGroupIndex].GroupGenerateParamSet;
-        var enemyGroup = GetPoolingEnemyGroup(groupParam);
+        var enemyGroup = GetPoolingEnemyGroup(enemyGroupParam);
         if (enemyGroup == null)
         {
             return;
         }
 
-        enemyGroup.SetParamSet(groupParam);
-        CheckStandByEnemyGroup(enemyGroup);
-    }
-
-    /// <summary>
-    /// ボスを作成する。
-    /// </summary>
-    public void CreateBossGroup()
-    {
-        var groupParam = m_ParamSet.Generator.BossParamSet;
-        var enemyGroup = GetPoolingEnemyGroup(groupParam);
-        if (enemyGroup == null)
-        {
-            return;
-        }
-
-        enemyGroup.SetParamSet(groupParam);
+        enemyGroup.SetParam(enemyGroupParam);
         CheckStandByEnemyGroup(enemyGroup);
     }
 
@@ -339,30 +329,5 @@ public class BattleRealEnemyGroupManager : ControllableObject
         }
 
         m_UpdateEnemyGroups.Clear();
-    }
-
-    /// <summary>
-    /// 敵の生成イベントをEventManagerに投げる
-    /// </summary>
-    private void BuildEnemyGroupAppearEvents()
-    {
-        if (m_ParamSet == null || m_ParamSet.Generator == null)
-        {
-            return;
-        }
-
-        var groups = m_ParamSet.Generator.Contents;
-        for (int i = 0; i < groups.Length; i++)
-        {
-            var param = groups[i];
-            var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();
-            eventParam.Condition = param.Condition;
-            var content = new BattleRealEventContent();
-            content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;
-            content.AppearEnemyIndex = i;
-            eventParam.Contents = new[] { content };
-
-            BattleRealEventManager.Instance.AddEventParam(eventParam);
-        }
     }
 }

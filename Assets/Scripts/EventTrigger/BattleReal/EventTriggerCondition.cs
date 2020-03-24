@@ -49,7 +49,6 @@ public enum E_GENERAL_TIME_PERIOD
 {
     BATTLE_LOADED,
     GAME_START,
-    BOSS_START,
 }
 
 /// <summary>

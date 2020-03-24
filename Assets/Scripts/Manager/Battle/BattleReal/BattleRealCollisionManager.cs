@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealCollisionManager : BattleCollisionManagerBase
+public class BattleRealCollisionManager : BattleCollisionManagerBase<BattleRealCollisionManager>
 {
-    public static BattleRealCollisionManager Instance { get; private set; }
-
-    public BattleRealCollisionManager(Material collisionMaterial) : base(collisionMaterial)
+    public static BattleRealCollisionManager Builder()
     {
-        Instance = this;
-    }
-
-    public override void OnFinalize()
-    {
-        Instance = null;
-        base.OnFinalize();
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
     }
 
     /// <summary>

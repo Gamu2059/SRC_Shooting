@@ -9,17 +9,8 @@ using System;
 /// <summary>
 /// リアルモードの敵キャラを管理する。
 /// </summary>
-public class BattleRealEnemyManager : ControllableObject, IColliderProcess
+public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, IColliderProcess
 {
-    public static BattleRealEnemyManager Instance => BattleRealManager.Instance.EnemyManager;
-
-
-    /// <summary>
-    /// 消滅可能になるまでの最小時間
-    /// </summary>
-    [SerializeField]
-    private float m_CanOutTime;
-
     #region Field
 
     public BattleRealEnemyManagerParamSet ParamSet { get; private set; }
@@ -29,35 +20,63 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     //// <summary>
     /// STANDBY状態の敵を保持するリスト。
     /// </summary>
-    private List<BattleRealEnemyController> m_StandbyEnemies;
+    private List<BattleRealEnemyBase> m_StandbyEnemies;
 
     /// <summary>
     /// UPDATE状態の敵を保持するリスト。
     /// </summary>
-    public List<BattleRealEnemyController> Enemies { get; private set; }
+    public List<BattleRealEnemyBase> Enemies { get; private set; }
 
     /// <summary>
     /// UPDATE状態の敵の中でもボスだけを保持するリスト。
     /// </summary>
-    public List<BattleRealEnemyController> BossEnemies { get; private set; }
+    public List<BattleRealEnemyBase> BossEnemies { get; private set; }
 
     /// <summary>
     /// 破棄状態に遷移する敵のリスト。
     /// </summary>
-    private List<BattleRealEnemyController> m_GotoPoolEnemies;
+    private List<BattleRealEnemyBase> m_GotoPoolEnemies;
 
     /// <summary>
     /// POOL状態の敵のディクショナリ。
     /// </summary>
     private Dictionary<string, LinkedList<GameObject>> m_PoolEnemies;
 
-    private static List<BattleRealEnemyController> m_ReservedRegisterEnemies = new List<BattleRealEnemyController>();
+    private static List<BattleRealEnemyBase> m_ReservedRegisterEnemies = new List<BattleRealEnemyBase>();
 
     #endregion
 
-    public BattleRealEnemyManager(BattleRealEnemyManagerParamSet paramSet)
+    #region Open Callback
+
+    public Action ToHackingAction { get; set; }
+    public Action FromHackingAction { get; set; }
+
+    #endregion
+
+    #region Closed Callback
+
+    private Action RequestToHackingAction { get; set; }
+
+    #endregion
+
+    public static BattleRealEnemyManager Builder(BattleRealManager realManager, BattleRealEnemyManagerParamSet param)
     {
-        ParamSet = paramSet;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.SetCallback(realManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleRealEnemyManagerParamSet param)
+    {
+        ParamSet = param;
+    }
+
+    private void SetCallback(BattleRealManager manager)
+    {
+        manager.ChangeStateAction += OnChangeStateBattleRealManager;
+        RequestToHackingAction += manager.RequestStartHacking;
     }
 
     #region Game Cycle
@@ -66,15 +85,18 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     {
         base.OnInitialize();
 
-        m_StandbyEnemies = new List<BattleRealEnemyController>();
-        Enemies = new List<BattleRealEnemyController>();
-        BossEnemies = new List<BattleRealEnemyController>();
-        m_GotoPoolEnemies = new List<BattleRealEnemyController>();
+        m_StandbyEnemies = new List<BattleRealEnemyBase>();
+        Enemies = new List<BattleRealEnemyBase>();
+        BossEnemies = new List<BattleRealEnemyBase>();
+        m_GotoPoolEnemies = new List<BattleRealEnemyBase>();
         m_PoolEnemies = new Dictionary<string, LinkedList<GameObject>>();
     }
 
     public override void OnFinalize()
     {
+        RequestToHackingAction = null;
+        FromHackingAction = null;
+        ToHackingAction = null;
         DestroyAllEnemy();
         base.OnFinalize();
     }
@@ -85,6 +107,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
         var stageManager = BattleRealStageManager.Instance;
         m_EnemyEvacuationHolder = stageManager.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.ENEMY);
+        BuildEnemyGroupAppearEvents();
     }
 
     public override void OnUpdate()
@@ -152,7 +175,6 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
 
     #endregion
 
-
     #region Impl IColliderProcess
 
     public void ClearColliderFlag()
@@ -200,7 +222,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// 敵を登録する。
     /// デバッグ専用。
     /// </summary>
-    public static void RegisterEnemy(BattleRealEnemyController enemy)
+    public static void RegisterEnemy(BattleRealEnemyBase enemy)
     {
         if (enemy == null || m_ReservedRegisterEnemies.Contains(enemy))
         {
@@ -210,7 +232,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         m_ReservedRegisterEnemies.Add(enemy);
     }
 
-    private void Register(BattleRealEnemyController enemy)
+    private void Register(BattleRealEnemyBase enemy)
     {
         if (enemy == null || m_StandbyEnemies.Contains(enemy) || Enemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
         {
@@ -307,16 +329,14 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// プールから敵を取得する。
     /// 足りなければ生成する。
     /// </summary>
-    private GameObject GetPoolingEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    private GameObject GetPoolingEnemy(BattleRealEnemyLookParamSet lookParamSet)
     {
-        if (generateParamSet == null || behaviorParamSet == null)
+        if (lookParamSet == null)
         {
             return null;
         }
 
-        var lookParamSet = behaviorParamSet.EnemyLookParamSet;
         var poolId = lookParamSet.LookId;
-
         GameObject enemyObj = null;
 
         if (m_PoolEnemies.ContainsKey(poolId))
@@ -346,7 +366,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 敵をSTANDBY状態にして制御下に入れる。
     /// </summary>
-    private void CheckStandByEnemy(BattleRealEnemyController enemy)
+    private void CheckStandByEnemy(BattleRealEnemyBase enemy)
     {
         if (enemy == null)
         {
@@ -371,7 +391,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 指定した敵を制御から外すためにチェックする。
     /// </summary>
-    private void CheckPoolEnemy(BattleRealEnemyController enemy)
+    private void CheckPoolEnemy(BattleRealEnemyBase enemy)
     {
         if (enemy == null || m_GotoPoolEnemies.Contains(enemy))
         {
@@ -386,48 +406,89 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 敵グループの生成リストから敵を新規作成する。
     /// </summary>
-    public BattleRealEnemyController CreateEnemy(BattleRealEnemyGenerateParamSet generateParamSet, BattleRealEnemyBehaviorParamSet behaviorParamSet)
+    public BattleRealEnemyBase CreateEnemy(BattleRealEnemyParamSetBase paramSet)
     {
-        if (generateParamSet == null || behaviorParamSet == null)
+        if (paramSet == null)
         {
             return null;
         }
 
-        Type behaviorType = null;
-        try
+        var difficulty = DataManager.Instance.BattleData.Difficulty;
+        var param = paramSet.GetEnemyParam(difficulty);
+        if (param == null)
         {
-            behaviorType = Type.GetType(behaviorParamSet.BehaviorClass);
-        }
-        catch (Exception)
-        {
+            Debug.LogWarningFormat("EnemyParamBase is not found. file:{0}, difficulty:{1}", paramSet.name, difficulty);
             return null;
         }
 
-        var enemyObj = GetPoolingEnemy(generateParamSet, behaviorParamSet);
+        var enemyObj = GetPoolingEnemy(param.EnemyLookParamSet);
         if (enemyObj == null)
         {
             return null;
         }
 
-        var enemy = enemyObj.AddComponent(behaviorType) as BattleRealEnemyController;
+        var controllerClassName = paramSet.GetControllerClassName();
+        Type controllerType = null;
+
+        try
+        {
+            controllerType = Type.GetType(controllerClassName);
+        }
+        catch (Exception)
+        {
+            Debug.LogWarningFormat("指定したクラス名のクラスを認識できませんでした。 {0}", controllerClassName);
+            return null;
+        }
+
+        if (controllerType == null)
+        {
+            Debug.LogWarningFormat("指定したクラス名のクラス情報は取得できませんでした。 {0}", controllerClassName);
+            return null;
+        }
+
+        BattleRealEnemyBase enemy = enemyObj.AddComponent(controllerType) as BattleRealEnemyBase;
+
         if (enemy == null)
         {
+            Debug.LogWarningFormat("指定したクラスは敵コンポーネントではありません。{0}", controllerClassName);
             GameObject.Destroy(enemyObj);
             return null;
         }
 
-        var poolId = behaviorParamSet.EnemyLookParamSet.LookId;
-        enemy.SetLookId(poolId);
-        enemy.SetParamSet(generateParamSet, behaviorParamSet);
+        enemy.SetLookId(param.EnemyLookParamSet.LookId);
+        enemy.SetParam(param);
         CheckStandByEnemy(enemy);
         return enemy;
+    }
+
+    /// <summary>
+    /// 敵の生成イベントをEventManagerに投げる
+    /// </summary>
+    private void BuildEnemyGroupAppearEvents()
+    {
+        if (ParamSet == null || ParamSet.Generator == null)
+        {
+            return;
+        }
+
+        var groups = ParamSet.Generator.Contents;
+        foreach(var param in groups)
+        {
+            var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();
+            var content = new BattleRealEventContent();
+            content.EventType = BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP;
+            content.EnemyGroupParam = param.Param;
+            eventParam.Condition = param.Condition;
+            eventParam.Contents = new[] { content };
+            BattleRealEventManager.Instance.AddEventParam(eventParam);
+        }
     }
 
     /// <summary>
     /// 敵キャラを破棄する。
     /// これを呼び出したタイミングの次のLateUpdateで破棄される。
     /// </summary>
-    public void DestroyEnemy(BattleRealEnemyController enemy)
+    public void DestroyEnemy(BattleRealEnemyBase enemy)
     {
         CheckPoolEnemy(enemy);
     }
@@ -470,7 +531,7 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
     /// <summary>
     /// 敵が敵フィールドの範囲外に出ているかどうかを判定する。
     /// </summary>
-    public bool IsOutOfField(BattleRealEnemyController enemy)
+    public bool IsOutOfField(BattleRealEnemyBase enemy)
     {
         if (enemy == null)
         {
@@ -486,5 +547,29 @@ public class BattleRealEnemyManager : ControllableObject, IColliderProcess
         var pos = enemy.transform.position;
 
         return pos.x < minPos.x || pos.x > maxPos.x || pos.z < minPos.y || pos.z > maxPos.y;
+    }
+
+    /// <summary>
+    /// BattleRealManager監視用
+    /// ステートが切り替わった時に呼び出される
+    /// </summary>
+    private void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
+    {
+        switch (state)
+        {
+            case E_BATTLE_REAL_STATE.TO_HACKING:
+                ToHackingAction?.Invoke();
+                break;
+            case E_BATTLE_REAL_STATE.FROM_HACKING:
+                FromHackingAction?.Invoke();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void RequestToHacking()
+    {
+        RequestToHackingAction?.Invoke();
     }
 }

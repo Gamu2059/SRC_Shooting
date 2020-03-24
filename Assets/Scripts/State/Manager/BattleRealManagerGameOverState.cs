@@ -5,9 +5,13 @@
         public override void OnStart()
         {
             base.OnStart();
-            Target.m_BattleManager.BattleRealUiManager.SetEnableBossUI(false);
-            Target.PlayerManager.StopChargeShot();
-            Target.PlayerManager.SetPlayerActive(false);
+            AudioManager.Instance.StopAllBgm();
+            //AudioManager.Instance.Play(m_ParamSet.GameOverSe);
+            //m_GameOverController.PlayGameOver();
+
+            //Target.m_BattleManager.BattleRealUiManager.SetEnableBossUI(false);
+            BattleRealPlayerManager.Instance.StopChargeShot();
+            BattleRealPlayerManager.Instance.SetPlayerActive(false);
         }
     }
 }

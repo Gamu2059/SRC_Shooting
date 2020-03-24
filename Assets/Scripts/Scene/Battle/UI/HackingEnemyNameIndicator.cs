@@ -13,17 +13,8 @@ public class HackingEnemyNameIndicator : MonoBehaviour
     [SerializeField]
     private Text m_OutText;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_OutText.text = "INF-C-761 : ";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(BattleHackingManager.Instance == null){
-            return;
-        }
     }
 }

@@ -100,6 +100,21 @@ public struct BattleRealEventContent
         /// フェードを制御する
         /// </summary>
         FADE,
+
+        /// <summary>
+        /// プレイヤーをシーケンスコントローラで制御する
+        /// </summary>
+        MOVE_PLAYER_BY_SEQUENCE,
+
+        /// <summary>
+        /// プレイヤーの移動位置をフィールド内に制限する
+        /// </summary>
+        RESTRICT_PLAYER_POSITION,
+
+        /// <summary>
+        /// テロップUIを制御する
+        /// </summary>
+        CONTROL_TELOP_UI,
     }
 
     /// <summary>
@@ -136,7 +151,12 @@ public struct BattleRealEventContent
 
     [Header("APPEAR_ENEMY")]
 
-    public int AppearEnemyIndex;
+    public BattleRealEnemyGroupParam EnemyGroupParam;
+    //public BattleRealEnemyGroupGenerateParamSet EnemyGroupGenerateParamSet;
+
+    [Header("MOVE_PLAYER_BY_SEQUENCE")]
+
+    public SequenceGroup MovePlayerSequenceGroup;
 
     [Header("CONTROL_CAMERA")]
 
@@ -149,6 +169,10 @@ public struct BattleRealEventContent
     [Header("CONTROL_BGM")]
 
     public ControlSoundParam[] ControlBgmParams;
+
+    [Header("CONTROL_TELOP_UI")]
+
+    public ControlTelopParam ControlTelopParam;
 
     [Header("Show Cutscene")]
 

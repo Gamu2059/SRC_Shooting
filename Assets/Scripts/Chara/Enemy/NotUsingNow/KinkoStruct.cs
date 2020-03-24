@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoStruct : BattleRealEnemyController
+public class KinkoStruct : BattleRealEnemyBase
 {
 
     // 発射

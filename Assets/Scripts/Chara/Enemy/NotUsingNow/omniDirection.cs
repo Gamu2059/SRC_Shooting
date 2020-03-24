@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class omniDirection : BattleRealEnemyController
+public class omniDirection : BattleRealEnemyBase
 {
 
     // 発射間隔

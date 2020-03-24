@@ -1,18 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BattleHackingManagerFromRealState : MonoBehaviour
+partial class BattleHackingManager
 {
-    // Start is called before the first frame update
-    void Start()
+    private class FromRealState : StateCycle
     {
-        
-    }
+        public override void OnStart()
+        {
+            base.OnStart();
+            var levelParamSet = HackingDataHolder.HackingLevelParamSet;
+            if (levelParamSet == null)
+            {
+                Debug.LogError("Hacking Level Param Set is null!");
+                Target.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+                return;
+            }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            BattleHackingStageManager.Instance.gameObject.SetActive(true);
+            BattleHackingUiManager.Instance.PlayToHacking();
+
+            Target.m_IsDeadPlayer = false;
+            Target.m_IsDeadBoss = false;
+            Target.m_IsTimeout = false;
+
+            BattleHackingPlayerManager.Instance.OnPrepare(levelParamSet);
+            BattleHackingEnemyManager.Instance.OnPrepare(levelParamSet);
+        }
     }
 }

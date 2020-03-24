@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleHackingTimerManager : TimerManagerBase
+public class BattleHackingTimerManager : TimerManagerBase<BattleHackingTimerManager>
 {
-    public static BattleHackingTimerManager Instance => BattleHackingManager.Instance.HackingTimerManager;
+    public static BattleHackingTimerManager Builder()
+    {
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
+    }
 }

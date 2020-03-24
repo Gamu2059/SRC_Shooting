@@ -50,7 +50,7 @@ public class InfC761Phase3OLD : BattleRealBossBehavior
     private float m_LineShotTimeCount;
     private int m_LineShotTime;
 
-    public InfC761Phase3OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase3OLD(BattleRealEnemyBase enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase3ParamSetOld;
     }
@@ -205,7 +205,7 @@ public class InfC761Phase3OLD : BattleRealBossBehavior
     protected virtual void OnShot(EnemyShotParam param, Vector3 shotPosition, int bulletIndex, int bulletParamIndex, bool isPlayerLook = false){
         int num = param.Num;
         float angle = param.Angle;
-        var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
+        var spreadAngles = BattleRealCharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;
