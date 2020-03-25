@@ -130,7 +130,7 @@ public class BulletController : BattleRealObjectBase
 
     #endregion
 
-    #region Getter & Setter
+    #region Get & Set
 
     /// <summary>
     /// この弾のグループ名を取得する。
@@ -433,7 +433,7 @@ public class BulletController : BattleRealObjectBase
 
     #endregion
 
-
+    #region Create
 
     /// <summary>
     /// 弾を生成する。
@@ -551,7 +551,6 @@ public class BulletController : BattleRealObjectBase
 
         if (bulletParam != null)
         {
-            // 軌道を設定
             bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
         }
 
@@ -631,7 +630,7 @@ public class BulletController : BattleRealObjectBase
     /// 指定したパラメータを用いて弾をBulletParamの指定なしで発射する。
     /// 発射後はプログラムで制御しないと動かないので注意。
     /// </summary>
-    /// <param name="bulletOwner">弾を発射させるキャラ</param>
+    /// <param name="shotParam">発射時のパラメータ</param>
     /// <param name="isBomb">ボムかどうか</param>
     /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
     public static BulletController ShotBulletWithoutBulletParam(BulletShotParam shotParam, bool isBomb = false, bool isCheck = true)
@@ -683,7 +682,6 @@ public class BulletController : BattleRealObjectBase
 
         if (bulletParam != null)
         {
-            // 軌道を設定
             bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
             bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
         }
@@ -697,6 +695,101 @@ public class BulletController : BattleRealObjectBase
 
         return bullet;
     }
+
+    /// <summary>
+    /// 指定したパラメータを用いて弾を生成する。
+    /// </summary>
+    public static BulletController CreateBullet(BulletGeneratorShotParam shotParam)
+    {
+        var owner = shotParam.BulletOwner;
+        if (owner == null)
+        {
+            return null;
+        }
+
+        var bulletPrefab = shotParam.Bullet;
+        if (bulletPrefab == null)
+        {
+            return null;
+        }
+
+        // プールから弾を取得
+        var bullet = BattleRealBulletManager.Instance.GetPoolingBullet(bulletPrefab);
+        if (bullet == null)
+        {
+            return null;
+        }
+
+        bullet.SetPosition(shotParam.Position);
+        bullet.SetRotation(new Vector3(0, shotParam.Rotation, 0));
+        bullet.SetScale(shotParam.Scale);
+
+        bullet.ResetBulletLifeTime();
+        bullet.ResetBulletParam();
+
+        bullet.m_BulletOwner = owner;
+        bullet.SetTroop(owner.Troop);
+        bullet.m_BulletParam = null;
+        bullet.m_BulletIndex = 0;
+        bullet.m_BulletParamIndex = 0;
+        bullet.m_OrbitalParamIndex = -1;
+
+        return bullet;
+    }
+
+    /// <summary>
+    /// 指定したパラメータを用いて弾をBulletParamの指定なしで発射する。
+    /// 発射後はプログラムで制御しないと動かないので注意。
+    /// </summary>
+    /// <param name="shotParam">発射時のパラメータ</param>
+    /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
+    public static BulletController ShotBulletWithoutBulletParam(BulletGeneratorShotParam shotParam, bool isCheck = true)
+    {
+        var bullet = CreateBullet(shotParam);
+        if (bullet == null)
+        {
+            return null;
+        }
+
+        if (isCheck)
+        {
+            BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
+        }
+
+        return bullet;
+    }
+    
+    /// <summary>
+    /// 指定したパラメータを用いて弾を発射する。
+    /// </summary>
+    /// <param name="shotParam">発射時のパラメータ</param>
+    /// <param name="isCheck">trueの場合、自動的にBulletManagerに弾をチェックする</param>
+    public static BulletController ShotBullet(BulletGeneratorShotParam shotParam, bool isCheck = true)
+    {
+        var bullet = CreateBullet(shotParam);
+        if (bullet == null)
+        {
+            return null;
+        }
+
+        var bulletParam = shotParam.BulletParam;
+        if (bulletParam != null)
+        {
+            bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
+            bullet.m_OrbitalParamIndex = 0;
+        }
+
+        bullet.m_BulletParam = bulletParam;
+
+        if (isCheck)
+        {
+            BattleRealBulletManager.Instance.CheckStandbyBullet(bullet);
+        }
+
+        return bullet;
+    }
+
+    #endregion
 
     /// <summary>
     /// この弾の軌道情報を上書きする。
@@ -915,11 +1008,6 @@ public class BulletController : BattleRealObjectBase
     {
         base.OnUpdate();
 
-        if (m_BulletParam == null)
-        {
-            return;
-        }
-
         SetRotation(GetNowDeltaRotation() * Time.deltaTime, E_RELATIVE.RELATIVE);
         SetScale(GetNowDeltaScale() * Time.deltaTime, E_RELATIVE.RELATIVE);
 
@@ -935,11 +1023,6 @@ public class BulletController : BattleRealObjectBase
         SetPosition(transform.forward * speed, E_RELATIVE.RELATIVE);
 
         SetNowLifeTime(Time.deltaTime, E_RELATIVE.RELATIVE);
-
-        if (GetNowLifeTime() > GetBulletParam().LifeTime)
-        {
-            DestroyBullet();
-        }
     }
 
     public override void OnLateUpdate()

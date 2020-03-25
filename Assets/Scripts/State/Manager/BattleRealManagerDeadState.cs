@@ -44,6 +44,7 @@ partial class BattleRealManager
             // 消滅の更新
             BattleRealEnemyGroupManager.Instance.GotoPool();
             BattleRealEnemyManager.Instance.GotoPool();
+            BattleRealBulletGeneratorManager.Instance.GotoPool();
             BattleRealBulletManager.Instance.GotoPool();
             BattleRealItemManager.Instance.GotoPool();
             BattleRealEffectManager.Instance.GotoPool();
@@ -55,6 +56,7 @@ partial class BattleRealManager
             //BattleRealPlayerManager.Instance.OnUpdate();
             BattleRealEnemyGroupManager.Instance.OnUpdate();
             BattleRealEnemyManager.Instance.OnUpdate();
+            BattleRealBulletGeneratorManager.Instance.OnUpdate();
             BattleRealBulletManager.Instance.OnUpdate();
             BattleRealItemManager.Instance.OnUpdate();
             BattleRealEffectManager.Instance.OnUpdate();
@@ -70,6 +72,7 @@ partial class BattleRealManager
             //BattleRealPlayerManager.Instance.OnLateUpdate();
             BattleRealEnemyGroupManager.Instance.OnLateUpdate();
             BattleRealEnemyManager.Instance.OnLateUpdate();
+            BattleRealBulletGeneratorManager.Instance.OnLateUpdate();
             BattleRealBulletManager.Instance.OnLateUpdate();
             BattleRealItemManager.Instance.OnLateUpdate();
             BattleRealEffectManager.Instance.OnLateUpdate();
@@ -97,6 +100,7 @@ partial class BattleRealManager
             //BattleRealPlayerManager.Instance.OnFixedUpdate();
             BattleRealEnemyGroupManager.Instance.OnFixedUpdate();
             BattleRealEnemyManager.Instance.OnFixedUpdate();
+            BattleRealBulletGeneratorManager.Instance.OnFixedUpdate();
             BattleRealBulletManager.Instance.OnFixedUpdate();
             BattleRealItemManager.Instance.OnFixedUpdate();
             BattleRealEffectManager.Instance.OnFixedUpdate();

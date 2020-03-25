@@ -26,11 +26,6 @@ public class BattleRealEnemyParamSet : BattleRealEnemyParamSetBase
     public override BattleRealEnemyParamBase GetEnemyParam(E_DIFFICULTY difficulty)
     {
         var set = m_Params.First(s => s.Difficulty == difficulty);
-        if (set != null)
-        {
-            return set.Param;
-        }
-
-        return null;
+        return set?.Param;
     }
 }

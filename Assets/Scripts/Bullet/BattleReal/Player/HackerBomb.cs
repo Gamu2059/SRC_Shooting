@@ -30,7 +30,8 @@ public class HackerBomb : BulletController
         base.OnUpdate();
 
         var nowLifetime = GetNowLifeTime();
-        var duration = GetBulletParam().LifeTime;
+        var duration = GetBulletParam() != null ? GetBulletParam().LifeTime : 0;
+
         if (duration > 0)
         {
             var normalizedTime = nowLifetime / duration;

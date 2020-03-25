@@ -17,6 +17,7 @@
             BattleRealPlayerManager.Instance.OnStart();
             BattleRealEnemyGroupManager.Instance.OnStart();
             BattleRealEnemyManager.Instance.OnStart();
+            BattleRealBulletGeneratorManager.Instance.OnStart();
             BattleRealBulletManager.Instance.OnStart();
             BattleRealItemManager.Instance.OnStart();
             BattleRealEffectManager.Instance.OnStart();

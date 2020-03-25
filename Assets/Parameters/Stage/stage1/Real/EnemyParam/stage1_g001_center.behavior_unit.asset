@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: stage1_g001_center.behavior_unit
   m_EditorClassIdentifier: 
   m_DefaultEndValue: 0
+  m_BulletGeneratorDatas: []
   m_SpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -63,10 +64,3 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_AngleSpeedCurveScale: 1
-  m_ShotOffset: 1000
-  m_ShotStop: 0
-  m_ShotParam:
-    Interval: 0
-    Num: 0
-    Angle: 0
-    IsPlayerLook: 0

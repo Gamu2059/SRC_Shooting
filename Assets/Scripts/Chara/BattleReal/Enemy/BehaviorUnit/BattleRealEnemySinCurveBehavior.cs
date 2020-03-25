@@ -13,7 +13,7 @@ public class BattleRealEnemySinCurveBehavior : BattleRealEnemyBehaviorUnit
 {
     #region Field Inspector
 
-    [Header("Move Param")]
+    [Header("Sin Curve Parameter")]
 
     [SerializeField, Tooltip("カーブの軸となる角度(度数法)。 0なら上、90なら右、180なら下、270なら左")]
     private float m_AxisAngle;
@@ -39,20 +39,6 @@ public class BattleRealEnemySinCurveBehavior : BattleRealEnemyBehaviorUnit
     private float m_Duration;
     public float Duration => m_Duration;
 
-    [Header("Shot Param")]
-
-    [SerializeField, Tooltip("出現から最初の発射までのオフセット")]
-    private float m_ShotOffset;
-    public float ShotOffset => m_ShotOffset;
-
-    [SerializeField, Tooltip("「最初に発射してから」撃ち止めるまでの時間")]
-    private float m_ShotStop;
-    public float ShotStop => m_ShotStop;
-
-    [SerializeField]
-    private EnemyShotParam m_ShotParam;
-    public EnemyShotParam ShotParam => m_ShotParam;
-
     #endregion
 
     #region Field
@@ -61,9 +47,6 @@ public class BattleRealEnemySinCurveBehavior : BattleRealEnemyBehaviorUnit
     protected float m_InitPhase;
     protected float m_Sin;
     protected float m_Cos;
-    protected float m_ShotStopTimeCount;
-    protected float m_ShotTimeCount;
-    protected bool m_IsCountOffset;
 
     #endregion
 
@@ -78,21 +61,14 @@ public class BattleRealEnemySinCurveBehavior : BattleRealEnemyBehaviorUnit
         var rad = (-AxisAngle + 90) * Mathf.Deg2Rad;
         m_Sin = Mathf.Sin(rad);
         m_Cos = Mathf.Cos(rad);
+
+        Move();
     }
 
     protected override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-
         Move();
-        Shot();
-
-        m_ShotTimeCount += deltaTime;
-
-        if (!m_IsCountOffset)
-        {
-            m_ShotStopTimeCount += deltaTime;
-        }
     }
 
     protected override bool IsEnd()
@@ -110,52 +86,5 @@ public class BattleRealEnemySinCurveBehavior : BattleRealEnemyBehaviorUnit
         deltaPos.x = x * m_Cos - y * m_Sin;
         deltaPos.z = x * m_Sin + y * m_Cos;
         Enemy.transform.position = m_StartPosition + deltaPos;
-    }
-
-    protected virtual void Shot()
-    {
-        if (m_IsCountOffset)
-        {
-            if (m_ShotTimeCount >= ShotOffset)
-            {
-                m_ShotTimeCount = ShotParam.Interval;
-                m_IsCountOffset = false;
-            }
-        }
-        else
-        {
-            if (m_ShotStopTimeCount < ShotStop && m_ShotTimeCount >= ShotParam.Interval)
-            {
-                m_ShotTimeCount = 0;
-                OnShot(ShotParam);
-            }
-        }
-    }
-
-    protected virtual void OnShot(EnemyShotParam param)
-    {
-        var transform = Enemy.transform;
-        int num = param.Num;
-        float angle = param.Angle;
-        var spreadAngles = BattleRealCharaController.GetBulletSpreadAngles(num, angle);
-        var shotParam = new BulletShotParam(Enemy);
-        shotParam.Position = transform.position;
-        shotParam.Rotation = transform.eulerAngles;
-
-        var correctAngle = 0f;
-        if (param.IsPlayerLook)
-        {
-            var player = BattleRealPlayerManager.Instance.Player;
-            var delta = player.transform.position - transform.position;
-            correctAngle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
-        }
-
-        for (int i = 0; i < num; i++)
-        {
-            var bullet = BulletController.ShotBullet(shotParam);
-            bullet.SetRotation(new Vector3(0, spreadAngles[i] + correctAngle, 0));
-        }
-
-        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot01Se);
     }
 }

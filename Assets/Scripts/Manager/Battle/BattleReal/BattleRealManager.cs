@@ -99,6 +99,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealPlayerManager.Builder(this, m_ParamSet.PlayerManagerParamSet);
         BattleRealEnemyGroupManager.Builder();
         BattleRealEnemyManager.Builder(this, m_ParamSet.EnemyManagerParamSet);
+        BattleRealBulletGeneratorManager.Builder();
         BattleRealBulletManager.Builder(this, m_ParamSet.BulletManagerParamSet);
         BattleRealItemManager.Builder(this, m_ParamSet.ItemManagerParamSet);
         BattleRealEffectManager.Builder(this);
@@ -128,6 +129,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealEffectManager.Instance.OnFinalize();
         BattleRealItemManager.Instance.OnFinalize();
         BattleRealBulletManager.Instance.OnFinalize();
+        BattleRealBulletGeneratorManager.Instance.OnFinalize();
         BattleRealEnemyManager.Instance.OnFinalize();
         BattleRealEnemyGroupManager.Instance.OnFinalize();
         BattleRealPlayerManager.Instance.OnFinalize();
