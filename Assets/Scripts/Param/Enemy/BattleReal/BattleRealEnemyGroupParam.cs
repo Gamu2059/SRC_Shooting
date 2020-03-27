@@ -9,7 +9,7 @@ using BattleReal.EnemyGenerator;
 /// <summary>
 /// 敵グループの生成パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/Param", fileName = "param.battle_real_enemy_group.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/Param", fileName = "param.enemy_group.asset")]
 public class BattleRealEnemyGroupParam : ScriptableObject
 {
     [SerializeField, Tooltip("敵グループの生成ビューポート座標")]
@@ -31,4 +31,8 @@ public class BattleRealEnemyGroupParam : ScriptableObject
     [SerializeField, Tooltip("敵グループの振る舞い")]
     private BattleRealEnemyGroupBehaviorUnit m_Behavior;
     public BattleRealEnemyGroupBehaviorUnit Behavior => m_Behavior;
+
+    [SerializeField, Tooltip("敵グループが生成された時に実行されるイベント")]
+    private BattleRealEventContent[] m_OnGenerateGroupEvents;
+    public BattleRealEventContent[] OnGenerateGroupEvents => m_OnGenerateGroupEvents;
 }

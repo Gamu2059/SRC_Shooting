@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: real_mode_enemy_test.generator
   m_EditorClassIdentifier: 
   m_Contents:
-  - m_Condition:
+  - m_Commnet: 
+    m_Condition:
       IsReverse: 0
       IsMultiCondition: 0
       SingleCondition:
@@ -30,4 +31,4 @@ MonoBehaviour:
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
-    m_Param: {fileID: 11400000, guid: 7d8049a21d749ba47a44d04117df807d, type: 2}
+    m_Param: {fileID: 11400000, guid: f7a9675978869724ba507ad92f858dd9, type: 2}

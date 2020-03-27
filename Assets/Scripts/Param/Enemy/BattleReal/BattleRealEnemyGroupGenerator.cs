@@ -11,6 +11,9 @@ public class BattleRealEnemyGroupGenerator : ScriptableObject
     [Serializable]
     public class Content
     {
+        [SerializeField, Tooltip("データとして使用はしませんが、データの目印になるものです。")]
+        private string m_Commnet;
+
         [SerializeField, Tooltip("敵グループの生成条件")]
         private EventTriggerRootCondition m_Condition;
         public EventTriggerRootCondition Condition => m_Condition;
@@ -18,10 +21,6 @@ public class BattleRealEnemyGroupGenerator : ScriptableObject
         [SerializeField]
         private BattleRealEnemyGroupParam m_Param;
         public BattleRealEnemyGroupParam Param => m_Param;
-
-        //[SerializeField]
-        //private BattleRealEnemyGroupGenerateParamSet m_GroupGenerateParamSet;
-        //public BattleRealEnemyGroupGenerateParamSet GroupGenerateParamSet => m_GroupGenerateParamSet;
     }
 
     [SerializeField]

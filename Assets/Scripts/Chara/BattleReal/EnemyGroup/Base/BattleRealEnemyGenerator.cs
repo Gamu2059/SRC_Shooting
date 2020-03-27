@@ -12,7 +12,20 @@ namespace BattleReal.EnemyGenerator
     /// </summary>
     public class BattleRealEnemyGenerator : ScriptableObject, IControllableGameCycle
     {
+        #region Field Inspector
+
+        [Header("Generator Parameter")]
+
+        [SerializeField, Tooltip("生成終了条件を適用するかどうか")]
+        private bool m_UseStopCondition;
+
+        [SerializeField, Tooltip("生成終了条件")]
+        private EventTriggerRootCondition m_StopCondition;
+
+        #endregion
+
         protected BattleRealEnemyGroupController EnemyGroup { get; private set; }
+        protected bool IsStopGenerate { get; private set; }
 
         public void SetEnemyGroup(BattleRealEnemyGroupController enemyGroup)
         {
@@ -23,14 +36,50 @@ namespace BattleReal.EnemyGenerator
 
         public virtual void OnFinalize() { }
 
-        public virtual void OnStart() { }
+        public void OnStart()
+        {
+            IsStopGenerate = false;
+            OnStartGenerator();
+        }
 
-        public virtual void OnUpdate() { }
+        public void OnUpdate()
+        {
+            if (m_UseStopCondition && !IsStopGenerate)
+            {
+                IsStopGenerate = BattleRealEventManager.Instance.IsMeetRootCondition(ref m_StopCondition);
+            }
 
-        public virtual void OnLateUpdate() { }
+            if (!IsStopGenerate)
+            {
+                OnUpdateGenerator();
+            }
+        }
 
-        public virtual void OnFixedUpdate() { }
+        public void OnLateUpdate()
+        {
+            if (!IsStopGenerate)
+            {
+                OnLateUpdateGenerator();
+            }
+        }
+
+        public void OnFixedUpdate()
+        {
+            if (!IsStopGenerate)
+            {
+                OnFixedUpdateGenerator();
+            }
+        }
 
         public virtual void OnEnd() { }
+
+        #region Have to Override
+
+        protected virtual void OnStartGenerator() { }
+        protected virtual void OnUpdateGenerator() { }
+        protected virtual void OnLateUpdateGenerator() { }
+        protected virtual void OnFixedUpdateGenerator() { }
+
+        #endregion
     }
 }

@@ -68,6 +68,9 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
     {
         base.OnInitialize();
 
+        // 最初は全ての当たり判定無効
+        GetCollider().SetEnableAllCollider(false);
+
         m_StateMachine = new StateMachine<E_STATE, BattleRealEnemyController>();
         m_StateMachine.AddState(new InnerState(E_STATE.START, this, new StartState()));
         m_StateMachine.AddState(new InnerState(E_STATE.BEHAVIOR, this, new BehaviorState()));

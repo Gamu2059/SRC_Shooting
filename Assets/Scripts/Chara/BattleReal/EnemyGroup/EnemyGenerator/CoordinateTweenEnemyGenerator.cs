@@ -10,38 +10,40 @@ namespace BattleReal.EnemyGenerator
     /// <summary>
     /// 2点の座標を指定して、その間に敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/CoorinateTween", fileName = "coordinate_tween.battle_real_enemy_generator.asset", order = 10)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/CoorinateTween", fileName = "coordinate_tween.enemy_generator.asset", order = 10)]
     public class CoordinateTweenEnemyGenerator : BattleRealEnemyGenerator
     {
         #region Field Inspector
 
-        [SerializeField, Tooltip("生成したい敵のパラメータ")]
-        private BattleRealEnemyParamSetBase m_ParamSet;
-        public BattleRealEnemyParamSetBase ParamSet => m_ParamSet;
+        [Header("Coordinate Tween Parameter")]
+
+        [SerializeField, Tooltip("生成したい敵のパラメータ配列。この配列の順番で生成サイクルを回します。交互に敵を出したい場合は、要素数2にして異なるパラメータを入れます。")]
+        private BattleRealEnemyParamSetBase[] m_ParamSets;
+        protected BattleRealEnemyParamSetBase[] ParamSets => m_ParamSets;
 
         [SerializeField, Tooltip("EnemyGroupがある場所に対しての相対的な開始座標")]
         private Vector2 m_BeginPosition;
-        public Vector2 BeginPosition => m_BeginPosition;
+        protected Vector2 BeginPosition => m_BeginPosition;
 
         [SerializeField, Tooltip("EnemyGroupがある場所に対しての相対的な終了座標")]
         private Vector2 m_EndPosition;
-        public Vector2 EndPosition => m_EndPosition;
+        protected Vector2 EndPosition => m_EndPosition;
 
         [SerializeField, Tooltip("敵の生成角度。EnemyGroupに対する相対角度")]
         private float m_GenerateAngle;
-        public float GenerateAngle => m_GenerateAngle;
+        protected float GenerateAngle => m_GenerateAngle;
 
         [SerializeField, Tooltip("敵の生成数。1以上でなけれなならない。1の時は開始座標と終了座標の間に生成される。"), Min(1)]
         private int m_GenerateNum;
-        public int GenerateNum => m_GenerateNum;
+        protected int GenerateNum => m_GenerateNum;
 
         [SerializeField, Tooltip("敵の生成オフセット時間。生成の開始タイミングを遅延させることができる。"), Min(0)]
         private float m_GenerateOffsetTime;
-        public float GenerateOffsetTime => m_GenerateOffsetTime;
+        protected float GenerateOffsetTime => m_GenerateOffsetTime;
 
         [SerializeField, Tooltip("敵の生成間隔時間。"), Min(0)]
         private float m_GenerateInterval;
-        public float GenerateInterval => m_GenerateInterval;
+        protected float GenerateInterval => m_GenerateInterval;
 
         #endregion
 
@@ -57,9 +59,9 @@ namespace BattleReal.EnemyGenerator
 
         #region Game Cycle
 
-        public override void OnStart()
+        protected override void OnStartGenerator()
         {
-            base.OnStart();
+            base.OnStartGenerator();
 
             m_IsCountOffset = true;
             m_GenerateTimeCount = 0;
@@ -76,9 +78,9 @@ namespace BattleReal.EnemyGenerator
             }
         }
 
-        public override void OnLateUpdate()
+        protected override void OnLateUpdateGenerator()
         {
-            base.OnLateUpdate();
+            base.OnLateUpdateGenerator();
 
             if (GenerateNum < 1)
             {
@@ -86,7 +88,8 @@ namespace BattleReal.EnemyGenerator
                 return;
             }
 
-            if (m_GeneratedEnemyCount > 0 && m_GeneratedEnemies.Count < 1)
+            // 生成すべき敵を全て生成し、かつそれらの敵が全て消滅したならグループを破棄する
+            if (m_GeneratedEnemyCount >= GenerateNum && m_GeneratedEnemies.Count < 1)
             {
                 EnemyGroup.Destory();
                 return;
@@ -95,9 +98,9 @@ namespace BattleReal.EnemyGenerator
             m_GeneratedEnemies.RemoveAll(e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
         }
 
-        public override void OnFixedUpdate()
+        protected override void OnFixedUpdateGenerator()
         {
-            base.OnFixedUpdate();
+            base.OnFixedUpdateGenerator();
 
             if (m_GeneratedEnemyCount >= GenerateNum)
             {
@@ -133,7 +136,8 @@ namespace BattleReal.EnemyGenerator
 
         private void Generate()
         {
-            var enemy = BattleRealEnemyManager.Instance.CreateEnemy(ParamSet);
+            var paramSet = ParamSets[m_GeneratedEnemyCount % ParamSets.Length];
+            var enemy = BattleRealEnemyManager.Instance.CreateEnemy(paramSet);
             if (enemy == null)
             {
                 return;

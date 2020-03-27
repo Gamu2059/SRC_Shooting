@@ -6,7 +6,6 @@ partial class BattleRealEnemyController
 {
     private class BehaviorState : StateCycle
     {
-        private bool m_UseBehavior;
         private BattleRealEnemyBehaviorUnit m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
 
@@ -14,22 +13,27 @@ partial class BattleRealEnemyController
         {
             base.OnStart();
 
+            Target.GetCollider().SetEnableAllCollider(true);
+            Target.WillDestroyOnOutOfEnemyField = true;
+
             var param = Target.m_EnemyParam;
             if (param != null && param.OnStartBehaviorEvents != null)
             {
                 BattleRealEventManager.Instance.AddEvent(param.OnStartBehaviorEvents);
             }
 
-            m_UseBehavior = Target.m_BehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT;
             m_Behavior = Target.m_Behavior;
             m_BehaviorController = Target.m_BehaviorController;
-            if (m_UseBehavior)
+            switch (Target.m_BehaviorType)
             {
-                m_Behavior?.OnStartUnit(Target, null);
-            }
-            else
-            {
-                m_BehaviorController?.BuildBehavior(Target.m_BehaviorGroup);
+                case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                    m_Behavior?.OnStartUnit(Target, null);
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                    m_BehaviorController?.BuildBehavior(Target.m_BehaviorGroup);
+                    break;
             }
         }
 
@@ -37,19 +41,22 @@ partial class BattleRealEnemyController
         {
             base.OnUpdate();
 
-            if (m_UseBehavior)
+            switch (Target.m_BehaviorType)
             {
-                if (m_Behavior == null)
-                {
-                    Target.Destroy();
-                    return;
-                }
+                case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                    if (m_Behavior == null)
+                    {
+                        Target.OnRetireDestroy();
+                        return;
+                    }
 
-                m_Behavior.OnUpdateUnit(Time.deltaTime);
-            }
-            else
-            {
-                m_BehaviorController?.OnUpdate();
+                    m_Behavior.OnUpdateUnit(Time.deltaTime);
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                    m_BehaviorController?.OnUpdate();
+                    break;
             }
         }
 
@@ -57,36 +64,42 @@ partial class BattleRealEnemyController
         {
             base.OnLateUpdate();
 
-            if (m_UseBehavior)
+            switch (Target.m_BehaviorType)
             {
-                if (m_Behavior == null)
-                {
-                    Target.Destroy();
-                    return;
-                }
+                case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                    if (m_Behavior == null)
+                    {
+                        Target.OnRetireDestroy();
+                        return;
+                    }
 
-                m_Behavior.OnLateUpdateUnit(Time.deltaTime);
-                if (m_Behavior.IsEndUnit())
-                {
-                    Target.Destroy();
-                    return;
-                }
-            }
-            else
-            {
-                m_BehaviorController?.OnLateUpdate();
+                    m_Behavior.OnLateUpdateUnit(Time.deltaTime);
+                    if (m_Behavior.IsEndUnit())
+                    {
+                        Target.OnRetireDestroy();
+                        return;
+                    }
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                    m_BehaviorController?.OnLateUpdate();
+                    break;
             }
         }
 
         public override void OnEnd()
         {
-            if (m_UseBehavior)
+            switch (Target.m_BehaviorType)
             {
-                m_Behavior?.OnEndUnit();
-            }
-            else
-            {
-                m_BehaviorController?.OnEndUnit();
+                case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                    m_Behavior?.OnEndUnit();
+                    break;
+                case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                    m_BehaviorController?.OnEndUnit();
+                    break;
             }
 
             base.OnEnd();

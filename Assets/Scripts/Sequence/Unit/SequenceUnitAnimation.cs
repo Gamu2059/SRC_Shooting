@@ -184,17 +184,17 @@ public class SequenceUnitAnimation : SequenceUnit
 
         if (param.XParam.Use)
         {
-            vector.x = param.XParam.AnimationValue.Evaluate(currentTime);
+            vector.x = param.XParam.Scale * param.XParam.AnimationValue.Evaluate(currentTime);
         }
 
         if (param.YParam.Use)
         {
-            vector.y = param.YParam.AnimationValue.Evaluate(currentTime);
+            vector.y = param.YParam.Scale * param.YParam.AnimationValue.Evaluate(currentTime);
         }
 
         if (param.ZParam.Use)
         {
-            vector.z = param.ZParam.AnimationValue.Evaluate(currentTime);
+            vector.z = param.ZParam.Scale * param.ZParam.AnimationValue.Evaluate(currentTime);
         }
 
         return vector;
@@ -206,17 +206,17 @@ public class SequenceUnitAnimation : SequenceUnit
 
         if (param.XParam.Use)
         {
-            vector.x = param.XParam.EndValue;
+            vector.x = param.XParam.Scale * param.XParam.EndValue;
         }
 
         if (param.YParam.Use)
         {
-            vector.y = param.YParam.EndValue;
+            vector.y = param.YParam.Scale * param.YParam.EndValue;
         }
 
         if (param.ZParam.Use)
         {
-            vector.z = param.ZParam.EndValue;
+            vector.z = param.ZParam.Scale * param.ZParam.EndValue;
         }
 
         return vector;

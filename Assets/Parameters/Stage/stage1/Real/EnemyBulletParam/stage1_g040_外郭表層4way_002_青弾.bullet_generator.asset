@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d53c3071c888a1438cdef8df3a48268, type: 3}
+  m_Name: "stage1_g040_\u5916\u90ED\u8868\u5C644way_002_\u9752\u5F3E.bullet_generator"
+  m_EditorClassIdentifier: 
+  m_GeneratorClassName: BattleReal.BulletGenerator.CircleNwayBulletGenerator
+  m_Params:
+  - Difficulty: 1
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 23e31bbfc057d9940a11daecc10ef47a, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 362b67ee89374e94ca49269762d14f4e, type: 2}
+      m_ShotTransformName: HeadBulletBase
+      m_ShotPointNum: 4
+      m_ShotPointRadius: 0
+      m_ShotPointOffsetAngleFromTransform: 0
+      m_ShotPointAngleSpeedFromTransform: 90
+      m_ShotOverallStartEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 02f92d9f75173e04d8468ef4f2de0528, type: 2}
+      m_ShotEffect: {fileID: 0}
+      m_ShotNum: 25
+      m_ShotOffsetTime: 0.55
+      m_ShotInterval: 0.04

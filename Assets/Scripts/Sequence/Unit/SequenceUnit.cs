@@ -25,7 +25,7 @@ public class SequenceUnit : SequenceElement
     [SerializeField, Tooltip("割り込み終了関数によって終了しなかった場合の、デフォルトの終了値")]
     private bool m_DefaultEndValue;
 
-    [Header("Sequence Option")]
+    [Header("Option Parameter")]
 
     [SerializeField]
     private SequenceOptionFunc[] m_OnStartOptions;
@@ -47,14 +47,12 @@ public class SequenceUnit : SequenceElement
         Controller = controller;
         CurrentTime = 0;
 
-        if (m_OnStartOptions == null)
+        if (m_OnStartOptions != null)
         {
-            return;
-        }
-
-        foreach (var option in m_OnStartOptions)
-        {
-            option?.Call(Target);
+            foreach (var option in m_OnStartOptions)
+            {
+                option?.Call(Target);
+            }
         }
 
         OnStart();
@@ -77,14 +75,12 @@ public class SequenceUnit : SequenceElement
     {
         OnEnd();
 
-        if (m_OnEndOptions == null)
+        if (m_OnEndOptions != null)
         {
-            return;
-        }
-
-        foreach (var option in m_OnEndOptions)
-        {
-            option?.Call(Target);
+            foreach (var option in m_OnEndOptions)
+            {
+                option?.Call(Target);
+            }
         }
 
         Controller = null;

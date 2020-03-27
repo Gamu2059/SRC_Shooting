@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d6a62cf8de16ca4087295ead86d3902, type: 3}
+  m_Name: "stage1_g041_\u5916\u90ED\u8868\u5C64\u8FFD\u8DE14way\u5DE6_001_\u56DE\u8EE2\u653B\u6483.behavior_unit"
+  m_EditorClassIdentifier: 
+  m_ApplyInterruptEnd: 0
+  m_InterruptEndFunc: {fileID: 0}
+  m_DefaultEndValue: 0
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_BulletGeneratorDatas:
+  - ParamSet: {fileID: 11400000, guid: 52680c863ff1fa94c8de7ad08f69958e, type: 2}
+    StartTimeOnFirstActivate: 0
+    StopTimeFromFirstActivate: 0
+    ActivateInterval: 0
+  m_DestroyBulletGeneratorOnBehaviorEnd: 1
+  m_SpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_SpeedCurveScale: 0
+  m_AngleSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 90
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7
+      value: 90
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_AngleSpeedCurveScale: 1

@@ -227,13 +227,15 @@ public partial class BattleRealPlayerController : BattleRealCharaController
                 // ダウンダメージを設定する
                 switch (bullet)
                 {
-                    case HackerBullet hackerBullet:
+                    case BattleRealPlayerMainBullet hackerBullet:
                         hackerBullet.SetNowDownDamage(levelParam.LaserTypeShotDownDamage);
                         break;
                 }
             }
             m_ShotDelay = 0;
         }
+
+        // 押している間SEを鳴らしたいので、プレイヤー弾のSE再生このタイミングで行う
         AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ShotSe);
     }
 

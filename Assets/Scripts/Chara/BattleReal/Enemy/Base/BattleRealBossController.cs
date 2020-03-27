@@ -264,7 +264,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
             {
                 switch (sufferData.OpponentObject)
                 {
-                    case HackerBullet hackerBullet:
+                    case BattleRealPlayerMainBullet hackerBullet:
                         DamageDownHp(hackerBullet.GetNowDownDamage());
                         break;
                 }

@@ -10,6 +10,9 @@ partial class BattleRealEnemyController
         {
             base.OnStart();
 
+            Target.GetCollider().SetEnableAllCollider(false);
+            Target.WillDestroyOnOutOfEnemyField = false;
+
             var param = Target.m_EnemyParam;
             var sequenceController = Target.SequenceController;
             if (param == null || param.OnInitializeSequence == null || sequenceController == null)

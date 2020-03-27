@@ -7,20 +7,22 @@ using System;
 /// BattleAnimationトラックで用いるデータ。
 /// </summary>
 [Serializable]
-public struct BattleAnimationParam
+public class BattleAnimationParam
 {
     [Serializable]
-    public struct FloatParam
+    public class FloatParam
     {
-        public bool Use;
+        public bool Use = false;
 
         public AnimationCurve AnimationValue;
 
-        public float EndValue;
+        public float EndValue = 0;
+
+        public float Scale = 1;
     }
 
     [Serializable]
-    public struct BattleAnimationVectorParam
+    public class BattleAnimationVectorParam
     {
         public FloatParam XParam;
 

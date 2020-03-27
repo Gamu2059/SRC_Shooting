@@ -9,4 +9,5 @@ public enum E_ENEMY_BEHAVIOR_TYPE
 {
     BEHAVIOR_UNIT,
     BEHAVIOR_CONTROLLER,
+    NONE,
 }

@@ -6,10 +6,9 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// コマンドイベントの弾と弾道パラメータをリスト保持するパラメータアセット。
+/// ハッキングモードの弾と弾道パラメータをリスト保持するパラメータアセット。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Stage Param/Command Bullet Set Param", fileName = "CommandBulletSetParam", order = 0)]
-[Serializable]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Bullet/BulletSet", fileName = "param.bullet_set", order = 0)]
 public class CommandBulletSetParam : ScriptableObject
 {
     [SerializeField, Tooltip("弾のプレハブの配列")]

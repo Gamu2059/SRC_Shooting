@@ -93,6 +93,8 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
         EnemyGenerator.OnStart();
         Behavior.OnStart();
+
+        BattleRealEventManager.Instance.AddEvent(Param.OnGenerateGroupEvents);
     }
 
     public override void OnUpdate()

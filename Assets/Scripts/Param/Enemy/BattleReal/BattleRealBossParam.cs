@@ -106,4 +106,14 @@ public class BattleRealBossParam : BattleRealEnemyParamBase
     public float RescueHideTime => m_RescueHideTime;
 
     #endregion
+
+    #region Retire
+
+    [Header("退場パラメータ")]
+
+    [SerializeField, Tooltip("退場時のイベント")]
+    private BattleRealEventContent[] m_RetireEvents;
+    public override BattleRealEventContent[] RetireEvents => m_RetireEvents;
+
+    #endregion
 }

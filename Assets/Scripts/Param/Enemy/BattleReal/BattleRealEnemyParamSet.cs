@@ -9,7 +9,7 @@ using System.Linq;
 /// <summary>
 /// リアルモードの敵のパラメータセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyParamSet", fileName = "param.battle_real_enemy.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyParamSet", fileName = "param.enemy.asset")]
 
 public class BattleRealEnemyParamSet : BattleRealEnemyParamSetBase
 {
@@ -26,11 +26,6 @@ public class BattleRealEnemyParamSet : BattleRealEnemyParamSetBase
     public override BattleRealEnemyParamBase GetEnemyParam(E_DIFFICULTY difficulty)
     {
         var set = m_Params.First(s => s.Difficulty == difficulty);
-        if (set != null)
-        {
-            return set.Param;
-        }
-
-        return null;
+        return set?.Param;
     }
 }

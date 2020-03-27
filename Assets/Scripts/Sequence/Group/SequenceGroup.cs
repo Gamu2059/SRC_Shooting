@@ -14,7 +14,7 @@ public class SequenceGroup : SequenceElement
     [SerializeField]
     private List<SequenceElement> m_Elements;
 
-    [Header("Sequence Option")]
+    [Header("Option Parameter")]
 
     [SerializeField]
     private SequenceOptionFunc[] m_OnStartOptions;
@@ -37,14 +37,12 @@ public class SequenceGroup : SequenceElement
         CurrentIndex = 0;
         Controller = controller;
 
-        if (m_OnStartOptions == null)
+        if (m_OnStartOptions != null)
         {
-            return;
-        }
-
-        foreach (var option in m_OnStartOptions)
-        {
-            option?.Call();
+            foreach (var option in m_OnStartOptions)
+            {
+                option?.Call();
+            }
         }
 
         OnStart();
@@ -58,14 +56,12 @@ public class SequenceGroup : SequenceElement
     {
         CurrentIndex = 0;
 
-        if (m_OnLoopedOptions == null)
+        if (m_OnLoopedOptions != null)
         {
-            return;
-        }
-
-        foreach (var option in m_OnLoopedOptions)
-        {
-            option?.Call();
+            foreach (var option in m_OnLoopedOptions)
+            {
+                option?.Call();
+            }
         }
 
         OnLooped();
@@ -79,14 +75,12 @@ public class SequenceGroup : SequenceElement
     {
         OnEnd();
 
-        if (m_OnEndOptions == null)
+        if (m_OnEndOptions != null)
         {
-            return;
-        }
-
-        foreach (var option in m_OnEndOptions)
-        {
-            option?.Call();
+            foreach (var option in m_OnEndOptions)
+            {
+                option?.Call();
+            }
         }
 
         Controller = null;

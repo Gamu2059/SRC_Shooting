@@ -10,6 +10,8 @@ partial class BattleRealEnemyController
         {
             base.OnStart();
 
+            Target.GetCollider().SetEnableAllCollider(false);
+
             var defeatTime = 0f;
             if (Target.Param != null)
             {

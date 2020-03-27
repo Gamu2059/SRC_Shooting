@@ -23,7 +23,28 @@ MonoBehaviour:
     IntInitValue: 0
     FloatInitValue: 0
     BoolInitValue: 0
+  - Type: 2
+    Name: G041 Left Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 2
+    Name: G041 Right Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 2
+    Name: G044 Left Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 2
+    Name: G045 Right Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
   m_TimePeriodNames:
   - Goto Surface
+  - G041 Appear
   m_Params:
   - {fileID: 11400000, guid: b44c67dbbc725b840b50ea3e9eb8a6f2, type: 2}

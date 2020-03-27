@@ -38,4 +38,5 @@ public abstract class BattleRealEnemyParamBase
     public abstract BattleRealEventContent[] DefeatEvents { get; }
     public abstract SequentialEffectParamSet DefeatSequentialEffect { get; }
     public abstract float DefeatHideTime { get; }
+    public abstract BattleRealEventContent[] RetireEvents { get; }
 }

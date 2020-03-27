@@ -169,9 +169,9 @@ public class BattleRealEnemyBase : BattleRealCharaController
         IsOutOfEnemyField = BattleRealEnemyManager.Instance.IsOutOfField(this);
         if (IsOutOfEnemyField)
         {
-            if (IsShowFirst)
+            if (IsShowFirst && WillDestroyOnOutOfEnemyField)
             {
-                Destroy();
+                OnRetireDestroy();
             }
         }
         else
@@ -274,10 +274,21 @@ public class BattleRealEnemyBase : BattleRealCharaController
         BattleRealEventManager.Instance.AddEvent(Param.DefeatEvents);
     }
 
+    protected void OnRetireDestroy()
+    {
+        Destroy();
+        ExecuteRetireEvent();
+    }
+
+    protected void ExecuteRetireEvent()
+    {
+        BattleRealEventManager.Instance.AddEvent(Param.RetireEvents);
+    }
+
     /// <summary>
     /// 死亡ではなく強制削除
     /// </summary>
-    public void Destroy()
+    protected void Destroy()
     {
         BattleRealEnemyManager.Instance.DestroyEnemy(this);
     }
