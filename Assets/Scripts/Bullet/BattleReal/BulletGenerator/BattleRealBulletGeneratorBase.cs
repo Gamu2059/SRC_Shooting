@@ -48,7 +48,10 @@ namespace BattleReal.BulletGenerator
 
         public void Destroy()
         {
-            BattleRealBulletGeneratorManager.Instance.CheckStandbyPool(this);
+            if (Cycle != E_POOLED_OBJECT_CYCLE.STANDBY_CHECK_POOL && Cycle != E_POOLED_OBJECT_CYCLE.POOLED)
+            {
+                BattleRealBulletGeneratorManager.Instance.CheckStandbyPool(this);
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 530211894366981983}
   - component: {fileID: 749508610363168797}
   m_Layer: 11
-  m_Name: HackerBomb
+  m_Name: BattleRealPlayerBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437574a78451dac45ab5a50d2c9edf7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BulletGroupId: Hacker Bomb
+  m_BulletGroupId: battle_real_player_main_bullet
   m_CanHitOtherBullet: 1
   m_Cycle: 0
   m_BaseSize: 80

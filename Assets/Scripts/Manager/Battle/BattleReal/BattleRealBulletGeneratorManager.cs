@@ -161,6 +161,10 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
             }
 
             poolList.AddLast(g);
+
+            // どこから入ってきたか分からないため両方のリストで削除を行う
+            m_StandbyUpdateGenerators.Remove(g);
+            m_UpdateGenerators.Remove(g);
         }
 
         m_StandbyPoolGenerators.Clear();
@@ -249,11 +253,11 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
     /// </summary>
     /// <param name="paramSet">弾生成パラメータセット</param>
     /// <param name="owner">弾を発射するキャラ</param>
-    public void CreateBulletGenerator(BattleRealBulletGeneratorParamSetBase paramSet, BattleRealCharaController owner)
+    public BattleRealBulletGeneratorBase CreateBulletGenerator(BattleRealBulletGeneratorParamSetBase paramSet, BattleRealCharaController owner)
     {
         if (paramSet == null)
         {
-            return;
+            return null;
         }
 
         var difficulty = DataManager.Instance.BattleData.Difficulty;
@@ -261,17 +265,18 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
         if (param == null)
         {
             Debug.LogErrorFormat("難易度に応じたパラメータがありません。 paramSet : {0}, difficulty : {1}", paramSet.name, difficulty);
-            return;
+            return null;
         }
 
         var g = GetPoolingGenerator(paramSet.GeneratorClassName);
         if (g == null)
         {
-            return;
+            return null;
         }
-
-        
+     
         g.SetParam(param, owner);
         CheckStandbyUpdate(g);
+
+        return g;
     }
 }

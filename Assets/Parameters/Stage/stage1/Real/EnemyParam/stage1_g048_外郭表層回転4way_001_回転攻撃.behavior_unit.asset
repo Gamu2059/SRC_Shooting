@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3398e0bb33e6ab94fa47d97cbacfec93, type: 3}
+  m_Name: "stage1_g048_\u5916\u90ED\u8868\u5C64\u56DE\u8EE24way_001_\u56DE\u8EE2\u653B\u6483.behavior_unit"
+  m_EditorClassIdentifier: 
+  m_ApplyInterruptEnd: 0
+  m_InterruptEndFunc: {fileID: 0}
+  m_DefaultEndValue: 0
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_BulletGeneratorDatas:
+  - ParamSet: {fileID: 11400000, guid: 5e34a2b22201b0445b6e510aac3f6f26, type: 2}
+    StartTimeOnFirstActivate: 0
+    StopTimeFromFirstActivate: 0
+    ActivateInterval: 0
+  m_DestroyBulletGeneratorOnBehaviorEnd: 1
+  m_CenterPosition: {x: 0, y: 0, z: 0}
+  m_CenterPositionSpaceType: 0
+  m_Duration: 16
+  m_InitAngleSpeed: 22.5
+  m_AngleAccelCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_AngleAccelCurveScale: 1
+  m_UseRadiusCurve: 0
+  m_RadiusCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_UseRotation: 1
+  m_RotateAngleSpeed: 90

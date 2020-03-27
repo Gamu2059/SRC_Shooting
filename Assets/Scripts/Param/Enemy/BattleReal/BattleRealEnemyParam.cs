@@ -60,4 +60,10 @@ public class BattleRealEnemyParam : BattleRealEnemyParamBase
     [SerializeField, Tooltip("撃破時の敵非表示タイミング")]
     private float m_DefeatHideTime;
     public override float DefeatHideTime => m_DefeatHideTime;
+
+    [Header("退場パラメータ")]
+
+    [SerializeField, Tooltip("退場時のイベント")]
+    private BattleRealEventContent[] m_RetireEvents;
+    public override BattleRealEventContent[] RetireEvents => m_RetireEvents;
 }

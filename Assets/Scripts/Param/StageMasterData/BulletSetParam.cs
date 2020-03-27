@@ -6,9 +6,9 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// 弾と弾道パラメータをリスト保持するパラメータアセット。
+/// リアルモードの弾と弾道パラメータをリスト保持するパラメータアセット。
 /// </summary>
-[Serializable, CreateAssetMenu( menuName = "Param/ParamSet/BulletSet", fileName = "param.bullet_set")]
+[Serializable, CreateAssetMenu( menuName = "Param/BattleReal/Bullet/BulletSet", fileName = "param.bullet_set", order = 0)]
 public class BulletSetParam : ScriptableObject
 {
 	[SerializeField, Tooltip( "弾のプレハブの配列" )]

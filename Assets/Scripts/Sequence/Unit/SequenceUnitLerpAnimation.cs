@@ -54,7 +54,6 @@ public class SequenceUnitLerpAnimation : SequenceUnit
 
             m_OnStartEulerAngles = new Vector3(x.Item1, y.Item1, z.Item1);
             m_NextEulerAngles = new Vector3(x.Item2, y.Item2, z.Item2);
-
         }
     }
 

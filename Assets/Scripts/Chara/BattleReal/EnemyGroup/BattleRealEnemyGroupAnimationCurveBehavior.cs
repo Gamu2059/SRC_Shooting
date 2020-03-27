@@ -20,8 +20,16 @@ public class BattleRealEnemyGroupAnimationCurveBehavior : BattleRealEnemyGroupBe
     public AnimationCurve SpeedCurve => m_SpeedCurve;
 
     [SerializeField]
+    private float m_SpeedCurveScale = 1;
+    public float SpeedCurveScale => m_SpeedCurveScale;
+
+    [SerializeField]
     private AnimationCurve m_AngleSpeedCurve;
     public AnimationCurve AngleSpeedCurve => m_AngleSpeedCurve;
+
+    [SerializeField]
+    private float m_AngleSpeedCurveScale = 1;
+    public float AngleSpeedCurveScale => m_AngleSpeedCurveScale;
 
     #endregion
 
@@ -61,8 +69,8 @@ public class BattleRealEnemyGroupAnimationCurveBehavior : BattleRealEnemyGroupBe
 
     private void Move()
     {
-        m_NowSpeed = SpeedCurve.Evaluate(m_MoveTimeCount);
-        m_NowAngleSpeed = AngleSpeedCurve.Evaluate(m_MoveTimeCount);
+        m_NowSpeed = SpeedCurveScale * SpeedCurve.Evaluate(m_MoveTimeCount);
+        m_NowAngleSpeed = AngleSpeedCurveScale * AngleSpeedCurve.Evaluate(m_MoveTimeCount);
 
         var transform = EnemyGroup.transform;
         var pos = transform.forward * m_NowSpeed * Time.deltaTime + transform.position;

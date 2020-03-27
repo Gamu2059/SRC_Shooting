@@ -10,13 +10,13 @@ namespace BattleReal.EnemyGenerator
     /// <summary>
     /// 生成座標とタイミングを指定して敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/Default", fileName = "default.battle_real_enemy_generator.asset", order = 0)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/Default", fileName = "default.enemy_generator.asset", order = 0)]
     public class DefaultEnemyGenerator : BattleRealEnemyGenerator
     {
         #region Define
 
         [Serializable]
-        private class IndividualParam
+        protected class IndividualParam
         {
             [SerializeField, Tooltip("敵グループが生成されてからの相対的な生成時間。"), Min(0)]
             private float m_GenerateTime;
@@ -47,13 +47,15 @@ namespace BattleReal.EnemyGenerator
 
         #region Field Inspector
 
+        [Header("Default Enemy Parameter")]
+
         [SerializeField]
         private BattleRealEnemyParamSetBase m_DefaultParamSet;
-        public BattleRealEnemyParamSetBase DefaultParamSet => m_DefaultParamSet;
+        protected BattleRealEnemyParamSetBase DefaultParamSet => m_DefaultParamSet;
 
         [SerializeField]
         private IndividualParam[] m_IndividualParams;
-        private IndividualParam[] IndividualParams => m_IndividualParams;
+        protected IndividualParam[] IndividualParams => m_IndividualParams;
 
         #endregion
 
@@ -69,9 +71,9 @@ namespace BattleReal.EnemyGenerator
 
         #region Game Cycle
 
-        public override void OnStart()
+        protected override void OnStartGenerator()
         {
-            base.OnStart();
+            base.OnStartGenerator();
 
             m_GenerateEnemyTimeCount = 0;
             m_GenerateParams = new List<IndividualParam>();
@@ -83,9 +85,9 @@ namespace BattleReal.EnemyGenerator
             m_GenerateReserveEnemyNum = m_GenerateParams.Count;
         }
 
-        public override void OnLateUpdate()
+        protected override void OnLateUpdateGenerator()
         {
-            base.OnLateUpdate();
+            base.OnLateUpdateGenerator();
 
             if (m_GenerateReserveEnemyNum < 1)
             {
@@ -93,7 +95,8 @@ namespace BattleReal.EnemyGenerator
                 return;
             }
 
-            if (m_GeneratedEnemyCount > 0 && m_GeneratedEnemies.Count < 1)
+            // 生成すべき敵を全て生成し、かつそれらの敵が全て消滅したならグループを破棄する
+            if (m_GeneratedEnemyCount >= m_GenerateReserveEnemyNum && m_GeneratedEnemies.Count < 1)
             {
                 EnemyGroup.Destory();
                 return;
@@ -102,9 +105,9 @@ namespace BattleReal.EnemyGenerator
             m_GeneratedEnemies.RemoveAll(e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
         }
 
-        public override void OnFixedUpdate()
+        protected override void OnFixedUpdateGenerator()
         {
-            base.OnFixedUpdate();
+            base.OnFixedUpdateGenerator();
 
             if (m_GenerateParams.Count < 1)
             {

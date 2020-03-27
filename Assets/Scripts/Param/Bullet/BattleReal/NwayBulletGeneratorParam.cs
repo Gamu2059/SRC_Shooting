@@ -34,6 +34,8 @@ namespace BattleReal.BulletGenerator
         private BulletParam[] m_BulletParams;
         public BulletParam[] BulletParams => m_BulletParams;
 
+        [Space()]
+
         [SerializeField, Tooltip("このNway弾を発射するトランスフォームの名前")]
         private string m_ShotTransformName;
         public string ShotTransformName => m_ShotTransformName;
@@ -49,6 +51,10 @@ namespace BattleReal.BulletGenerator
         [SerializeField, Tooltip("Nwayの軸のオフセット角度(度数法)")]
         private float m_AxisOffsetAngle;
         public float AxisOffsetAngle => m_AxisOffsetAngle;
+
+        [SerializeField, Tooltip("発射した箇所に生成するエフェクト")]
+        private EffectParamSet m_ShotEffect;
+        public EffectParamSet ShotEffect => m_ShotEffect;
 
         [Header("Shot Radius")]
 

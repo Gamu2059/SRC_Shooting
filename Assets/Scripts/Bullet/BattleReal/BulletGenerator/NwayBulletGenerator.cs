@@ -39,6 +39,7 @@ namespace BattleReal.BulletGenerator
         private int ShotNum;
         private E_AXIS_TYPE AxisType;
         private float AxisOffsetAngle;
+        private EffectParamSet ShotEffect;
 
         private float ShotRadius;
         private float ShotDeltaRadius;
@@ -77,6 +78,7 @@ namespace BattleReal.BulletGenerator
                 ShotNum = p.ShotNum;
                 AxisType = p.AxisType;
                 AxisOffsetAngle = p.AxisOffsetAngle;
+                ShotEffect = p.ShotEffect;
 
                 ShotRadius = p.ShotRadius;
                 ShotDeltaRadius = p.ShotDeltaRadius;
@@ -114,7 +116,7 @@ namespace BattleReal.BulletGenerator
         {
             base.OnStart();
 
-            ShotTransform = Owner.transform.Find(ShotTransformName);
+            ShotTransform = Owner.transform.Find(ShotTransformName, false);
             if (ShotTransform == null)
             {
                 Debug.LogErrorFormat("このキャラには指定されたトランスフォームがありません。 name : {0}", ShotTransformName);
@@ -130,12 +132,17 @@ namespace BattleReal.BulletGenerator
 
             // 発射データを作成する
             var shotPhaseNum = Mathf.CeilToInt(ShotNum / 2f);
-            var shotInterval = ShotInterval;
-            var shotAngle = ShotAngle;
+
             var shotRadius = ShotRadius;
-            var deltaInterval = ShotDeltaInterval;
-            var deltaAngle = ShotDeltaAngle;
             var deltaRadius = ShotDeltaRadius;
+
+            var shotTime = ShotOffsetTime;
+            var shotInterval = ShotInterval;
+            var deltaInterval = ShotDeltaInterval;
+
+            var shotAngle = ShotNum % 2 > 1 ? 0f : ShotAngle / 2f;
+            var shotAngleInerval = ShotAngle;
+            var deltaAngleInerval = ShotDeltaAngle;
 
             m_ShotPhaseDataList = new List<ShotPhaseData>();
             for (var i = 0; i < shotPhaseNum; i++)
@@ -145,26 +152,21 @@ namespace BattleReal.BulletGenerator
                 data.Bullet = Bullets[i % Bullets.Length];
                 data.BulletParam = BulletParams[i % BulletParams.Length];
 
-                data.IsCenterShot = i == 0 && ShotNum % 2 > 1;
+                data.IsCenterShot = i == 0 && ShotNum % 2 > 0;
                 data.ShotRaduis = shotRadius;
+                data.ShotTime = shotTime;
+                data.ShotAngle = shotAngle;
 
-                if (i == 0)
-                {
-                    data.ShotTime = ShotOffsetTime;
-                    data.ShotAngle = ShotNum % 2 > 1 ? 0f : shotAngle / 2f;
-                }
-                else
-                {
-                    data.ShotTime = ShotOffsetTime + shotInterval;
-                    data.ShotAngle = shotAngle;
-                }
-
-                shotInterval += Mathf.Max(deltaInterval, 0);
-                shotAngle = deltaAngle;
-                shotRadius = deltaRadius;
-                deltaInterval += Mathf.Max(ShotDeltaDeltaInterval, 0);
-                deltaAngle += ShotDeltaDeltaAngle;
+                shotRadius += deltaRadius;
                 deltaRadius += ShotDeltaDeltaRadius;
+
+                shotTime += shotInterval;
+                shotInterval += deltaInterval;
+                deltaInterval += ShotDeltaDeltaInterval;
+
+                shotAngle += shotAngleInerval;
+                shotAngleInerval += deltaAngleInerval;
+                deltaAngleInerval += ShotDeltaDeltaAngle;
 
                 m_ShotPhaseDataList.Add(data);
             }
@@ -174,7 +176,13 @@ namespace BattleReal.BulletGenerator
 
         protected override void OnGeneratorUpdate()
         {
-            foreach(var data in m_ShotPhaseDataList)
+            if (m_ShotPhaseDataList.Count < 1)
+            {
+                Destroy();
+                return;
+            }
+
+            foreach (var data in m_ShotPhaseDataList)
             {
                 if (m_ShotTimeCount >= data.ShotTime)
                 {
@@ -182,13 +190,8 @@ namespace BattleReal.BulletGenerator
                 }
             }
 
-            m_ShotPhaseDataList.RemoveAll( d => m_ShotTimeCount >= d.ShotTime);
+            m_ShotPhaseDataList.RemoveAll(d => m_ShotTimeCount >= d.ShotTime);
             m_ShotTimeCount += Time.fixedDeltaTime;
-
-            if (m_ShotPhaseDataList.Count < 1)
-            {
-                Destroy();
-            }
         }
 
         #endregion
@@ -198,9 +201,9 @@ namespace BattleReal.BulletGenerator
         /// </summary>
         private void DecideShotPositionAndAngle()
         {
-            m_ShotBasePosition = ShotTransform.position;
-            // 弾の方を優先的に見せたいため(シェーダーの描画順を変えることで今後は対処すべき)
-            m_ShotBasePosition.y += 1;
+            var camera = BattleRealCameraManager.Instance.GetCameraController(E_CAMERA_TYPE.FRONT_CAMERA);
+            var viewportPos = camera.Camera.WorldToViewportPoint(ShotTransform.position);
+            m_ShotBasePosition = BattleRealStageManager.Instance.GetPositionFromFieldViewPortPosition(viewportPos.x, viewportPos.y);
 
             if (AxisType == E_AXIS_TYPE.TRANSFORM_FORWARD)
             {
@@ -238,13 +241,12 @@ namespace BattleReal.BulletGenerator
 
         private void Shot(ShotPhaseData data, float shotAngle)
         {
-            var angle = m_ShotBaseAngle + shotAngle;
+            var unityAngle = m_ShotBaseAngle + shotAngle;
             var radius = data.ShotRaduis;
 
-            var posPhase = angle.UnityObjectAngleToMathAngle().DegToRad();
-            var x = radius * Mathf.Cos(posPhase);
-            var z = radius * Mathf.Sin(posPhase);
-            var pos = m_ShotBasePosition + new Vector3(x, 0, z);
+            var phase = unityAngle.UnityObjectAngleToMathAngle().DegToRad();
+            var deltaPos = new Vector3(Mathf.Cos(phase), 0, Mathf.Sin(phase)) * radius;
+            var pos = m_ShotBasePosition + deltaPos;
 
             var shotParam = new BulletGeneratorShotParam()
             {
@@ -252,10 +254,19 @@ namespace BattleReal.BulletGenerator
                 Bullet = data.Bullet,
                 BulletParam = data.BulletParam,
                 Position = pos,
-                Rotation = angle,
+                Rotation = unityAngle,
                 Scale = Vector3.one
             };
             BulletController.ShotBullet(shotParam);
+
+            var effect = BattleRealEffectManager.Instance.CreateEffect(ShotEffect, ShotTransform);
+            if (effect != null)
+            {
+                effect.transform.position = pos;
+                var effectPhase = shotAngle.UnityObjectAngleToMathAngle().DegToRad();
+                var effectDeltaPos = new Vector3(Mathf.Cos(effectPhase), 0, Mathf.Sin(effectPhase)) * radius;
+                effect.RelatedAllowPos = effectDeltaPos;
+            }
         }
     }
 }

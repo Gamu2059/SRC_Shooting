@@ -9,7 +9,7 @@ using System.Linq;
 /// <summary>
 /// リアルモードの敵のパラメータセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyParamSet", fileName = "param.battle_real_enemy.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyParamSet", fileName = "param.enemy.asset")]
 
 public class BattleRealEnemyParamSet : BattleRealEnemyParamSetBase
 {

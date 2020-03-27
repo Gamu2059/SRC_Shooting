@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768669efa4d51143a2edf0402706824, type: 3}
+  m_Name: "stage1_g020_g021_2\u672C\u76EE\u901A\u8DEF\u524D\u534A\u624B\u524D.bullet_generator"
+  m_EditorClassIdentifier: 
+  m_GeneratorClassName: BattleReal.BulletGenerator.NwayBulletGenerator
+  m_Params:
+  - Difficulty: 1
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 7f82fcaa557c58847a6115466899005f, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 39b2dafd0f0d0a048890838de80fa76a, type: 2}
+      m_ShotTransformName: Scaler
+      m_ShotNum: 7
+      m_AxisType: 0
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.1
+      m_ShotDeltaRadius: -0.02
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 1
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0

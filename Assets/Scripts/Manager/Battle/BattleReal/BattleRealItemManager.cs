@@ -316,7 +316,6 @@ public class BattleRealItemManager : Singleton<BattleRealItemManager>, ICollider
         }
 
         var stageManager = BattleRealStageManager.Instance;
-
         for (int i = 0; i < param.ItemSpreadParams.Length; i++)
         {
             var spreadParam = param.ItemSpreadParams[i];
@@ -345,7 +344,6 @@ public class BattleRealItemManager : Singleton<BattleRealItemManager>, ICollider
 
                 // このタイミングでアイテムがフィールド外に出てても押し込める
                 stageManager.ClampMovingObjectPosition(item.transform);
-
                 CheckStandbyItem(item);
             }
         }
