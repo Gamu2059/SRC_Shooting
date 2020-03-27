@@ -36,7 +36,8 @@ MonoBehaviour:
     EventType: 3
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams:
@@ -44,6 +45,8 @@ MonoBehaviour:
       PlaySoundParam: {fileID: 11400000, guid: 1179a74477bd7d54385bd660f6f8c5f0, type: 2}
       StopSoundGroup: 0
       OperateAisacParam: {fileID: 0}
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
@@ -72,10 +75,13 @@ MonoBehaviour:
     EventType: 7
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
@@ -104,12 +110,15 @@ MonoBehaviour:
     EventType: 1
     ExecuteTiming: 1
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams:
     - CameraType: 0
       SequenceGroup: {fileID: 11400000, guid: a5ca8f0f4ce3dc44c8b792403123b222, type: 2}
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
@@ -138,12 +147,15 @@ MonoBehaviour:
     EventType: 13
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams:
     - CameraType: 0
       SequenceGroup: {fileID: 11400000, guid: a5ca8f0f4ce3dc44c8b792403123b222, type: 2}
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: sc0101
       AutoChangeToGameState: 1

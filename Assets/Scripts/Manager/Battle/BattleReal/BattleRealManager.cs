@@ -25,7 +25,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     private BattleRealParamSet m_ParamSet;
     private StateMachine<E_BATTLE_REAL_STATE, BattleRealManager> m_StateMachine;
-    private bool m_IsPlayerDead;
+    private BattleManager m_BattleManager;
 
     /// <summary>
     /// カットシーン呼び出し制御用インスタンス
@@ -45,18 +45,11 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     #endregion
 
-    #region Closed Callback
-
-    private Action<E_BATTLE_STATE> RequestChangeStateBattleManagerAction { get; set; }
-    private Action ForceExitGameAction { get; set; }
-
-    #endregion
-
     public static BattleRealManager Builder(BattleManager battleManager, BattleRealParamSet param)
     {
         var manager = new BattleRealManager();
+        manager.m_BattleManager = battleManager;
         manager.SetParam(param);
-        manager.SetCallback(battleManager);
         manager.OnInitialize();
         return manager;
     }
@@ -64,12 +57,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     private void SetParam(BattleRealParamSet paramSet)
     {
         m_ParamSet = paramSet;
-    }
-
-    private void SetCallback(BattleManager manager)
-    {
-        RequestChangeStateBattleManagerAction += manager.RequestChangeState;
-        ForceExitGameAction += manager.ExitGame;
     }
 
     #region Game Cycle
@@ -119,8 +106,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_CutsceneCaller?.StopCutscene();
         m_CutsceneCaller = null;
 
-        ForceExitGameAction = null;
-        RequestChangeStateBattleManagerAction = null;
         ChangeStateAction = null;
 
         BattleRealUiManager.Instance.OnFinalize();
@@ -136,7 +121,11 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealEventManager.Instance.OnFinalize();
         BattleRealTimerManager.Instance.OnFinalize();
         BattleRealInputManager.Instance.OnFinalize();
+
         m_StateMachine.OnFinalize();
+        m_StateMachine = null;
+        m_ParamSet = null;
+        m_BattleManager = null;
         base.OnFinalize();
     }
 
@@ -147,7 +136,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
         if (BattleRealInputManager.Instance.Menu == E_INPUT_STATE.DOWN)
         {
-            ForceExitGameAction?.Invoke();
+            m_BattleManager.ExitGame();
         }
     }
 
@@ -171,14 +160,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     public void RequestChangeState(E_BATTLE_REAL_STATE state)
     {
         m_StateMachine?.Goto(state);
-    }
-
-    /// <summary>
-    /// プレイヤーキャラが死亡した時に呼び出す。
-    /// </summary>
-    public void DeadPlayer()
-    {
-        m_IsPlayerDead = true;
     }
 
     /// <summary>
@@ -280,11 +261,11 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     /// </summary>
     public void RequestStartHacking()
     {
-        RequestChangeStateBattleManagerAction?.Invoke(E_BATTLE_STATE.TO_HACKING);
+        m_BattleManager.RequestChangeState(E_BATTLE_STATE.TO_HACKING);
     }
 
     public void End()
     {
-        RequestChangeStateBattleManagerAction?.Invoke(E_BATTLE_STATE.END);
+        m_BattleManager.RequestChangeState(E_BATTLE_STATE.END);
     }
 }

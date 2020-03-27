@@ -6,7 +6,6 @@
         {
             base.OnStart();
             BattleRealUiManager.Instance.SetAlpha(1);
-            Target.m_IsPlayerDead = false;
             BattleRealInputManager.Instance.RegistInput();
         }
 
@@ -41,7 +40,7 @@
             base.OnLateUpdate();
             BattleRealTimerManager.Instance.OnLateUpdate();
             BattleRealEventManager.Instance.OnLateUpdate();
-            //BattleRealPlayerManager.Instance.OnLateUpdate();
+            BattleRealPlayerManager.Instance.OnLateUpdate();
             BattleRealEnemyGroupManager.Instance.OnLateUpdate();
             BattleRealEnemyManager.Instance.OnLateUpdate();
             BattleRealBulletGeneratorManager.Instance.OnLateUpdate();
@@ -76,10 +75,16 @@
             CheckDeadPlayer();
         }
 
-        // この処理はPull型通知だが、いずれPush型通知でプレイヤーの死亡を処理するように作り直す
         private void CheckDeadPlayer()
         {
-            if (Target.m_IsPlayerDead)
+            var testDataManager = BattleTestDataManager.Instance;
+            if (testDataManager != null && testDataManager.IsNotPlayerDead)
+            {
+                return;
+            }
+
+            var player = BattleRealPlayerManager.Instance.Player;
+            if (player != null && player.IsDead)
             {
                 Target.RequestChangeState(E_BATTLE_REAL_STATE.DEAD);
             }
@@ -104,7 +109,7 @@
         public override void OnEnd()
         {
             base.OnEnd();
-            BattleRealInputManager.Instance.RemoveInput();
+            //BattleRealInputManager.Instance.RemoveInput();
         }
     }
 }

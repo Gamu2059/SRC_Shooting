@@ -7,11 +7,22 @@ partial class BattleRealPlayerController
         public override void OnStart()
         {
             base.OnStart();
+            
+            if (Target.m_DefaultGameState != E_STATE.GAME)
+            {
+                Target.RequestChangeDefaultGameState();
+            }
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
+
+            if (Target.m_DefaultGameState != E_STATE.GAME)
+            {
+                Target.RequestChangeDefaultGameState();
+                return;
+            }
 
             var input = BattleRealInputManager.Instance;
             var moveDir = input.MoveDir;

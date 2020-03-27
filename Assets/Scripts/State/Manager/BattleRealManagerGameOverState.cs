@@ -11,7 +11,7 @@
 
             //Target.m_BattleManager.BattleRealUiManager.SetEnableBossUI(false);
             BattleRealPlayerManager.Instance.StopChargeShot();
-            BattleRealPlayerManager.Instance.SetPlayerActive(false);
+            //BattleRealPlayerManager.Instance.SetPlayerActive(false);
         }
     }
 }
