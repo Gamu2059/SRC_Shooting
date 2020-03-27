@@ -39,6 +39,10 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     private EffectParamSet m_ChargeEffectParam;
     public EffectParamSet ChargeEffectParam => m_ChargeEffectParam;
 
+    [SerializeField, Tooltip("シールドエフェクト")]
+    private EffectParamSet m_ShieldEffectParam;
+    public EffectParamSet ShieldEffectParam => m_ShieldEffectParam;
+
     [Header("カメラウェーブ")]
 
     [SerializeField]

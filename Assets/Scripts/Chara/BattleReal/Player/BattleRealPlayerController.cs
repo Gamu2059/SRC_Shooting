@@ -65,15 +65,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     [SerializeField]
     private float m_MainShotInterval;
 
-    [SerializeField]
-    private Transform m_Critical;
-
-    [SerializeField]
-    private Animator m_ShieldAnimator;
-
-    [SerializeField]
-    private Transform m_Shield;
-
     #endregion
 
     #region Field
@@ -84,8 +75,12 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     private SequenceController m_SequenceController;
     private SequenceGroup m_SequenceGroup;
 
+    private Transform m_Critical;
+    private Transform m_Shield;
+
     private E_STATE m_DefaultGameState;
     private float m_ShotDelay;
+    private BattleCommonEffectController m_ShieldEffect;
     private BattleCommonEffectController m_ChargeEffect;
     private BulletController m_Laser;
     private BulletController m_Bomb;
@@ -123,15 +118,16 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         IsDead = false;
         m_DefaultGameState = E_STATE.NON_GAME;
 
-        SetEnableCollider(true);
-        m_Shield.gameObject.SetActive(false);
-
         m_SequenceController = GetComponent<SequenceController>();
         if (m_SequenceController == null)
         {
             m_SequenceController = gameObject.AddComponent<SequenceController>();
         }
         m_SequenceController?.OnInitialize();
+
+        m_Critical = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.CRITICAL).Transform;
+        m_Shield = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.DEFAULT).Transform;
+        SetEnableCollider(true);
 
         // ‚Æ‚è‚ ‚¦‚¸NON_GAME‚Ö‘JˆÚ‚µ‚Ä‘Ò‹@‚µ‚Ä‚¨‚­
         RequestChangeState(E_STATE.NON_GAME);
@@ -382,12 +378,13 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         {
             timer = null;
             SetEnableCollider(true);
-            m_Shield.gameObject.SetActive(false);
+
+            m_ShieldEffect?.DestroyEffect(true);
+            m_ShieldEffect = null;
         });
         RegistTimer(INVINSIBLE_KEY, timer);
 
-        m_Shield.gameObject.SetActive(true);
-        m_ShieldAnimator.Play("battle_real_player_shield", 0);
+        m_ShieldEffect = BattleRealEffectManager.Instance.CreateEffect(m_ParamSet.ShieldEffectParam, transform);
         SetEnableCollider(false);
     }
 
@@ -531,7 +528,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
 
     public void MoveBySequence(SequenceGroup sequenceGroup)
     {
-        Debug.Log(sequenceGroup);
         m_SequenceGroup = sequenceGroup;
         RequestChangeState(E_STATE.SEQUENCE);
     }
