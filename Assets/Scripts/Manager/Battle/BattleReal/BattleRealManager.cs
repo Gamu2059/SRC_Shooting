@@ -69,7 +69,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.START, this, new StartState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME, this, new GameState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.DEAD, this, new DeadState()));
-        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.CHARGE_SHOT, this, new ChargeShotState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.TO_HACKING, this, new ToHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.STAY_HACKING, this, new StayHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.FROM_HACKING, this, new FromHackingState()));

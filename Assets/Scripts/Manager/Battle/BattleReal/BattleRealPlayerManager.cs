@@ -133,29 +133,9 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
         Player?.ProcessCollision();
     }
 
-    public void ChargeShot()
-    {
-        if (Player != null)
-        {
-            if (Player.IsLaserType)
-            {
-                Player.ShotLaser();
-                BattleRealCameraManager.Instance.Shake(ParamSet.LaserShakeParam);
-            }
-            else
-            {
-                Player.ShotBomb();
-                BattleRealCameraManager.Instance.Shake(ParamSet.BombShakeParam);
-            }
-        }
-    }
-
     public void StopChargeShot()
     {
-        if (Player != null)
-        {
-            Player.StopChargeShot();
-        }
+        Player?.StopChargeShot();
     }
 
     /// <summary>

@@ -211,12 +211,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         m_ParamSet = param;
     }
 
-    public bool IsUsingChargeShot()
-    {
-        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
-        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
-        return useLaser || useBomb;
-    }
+    #region Shot
 
     /// <summary>
     /// 通常弾を放つ
@@ -286,6 +281,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
             return;
         }
 
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
         // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
         if (IsLaserType)
         {
@@ -297,14 +293,33 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         }
 
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
-        //BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT);
+    }
+
+    /// <summary>
+    /// チャージショットを放つ
+    /// </summary>
+    private void ChargeShot()
+    {
+        BattleRealUiManager.Instance.FrontViewEffect.StopEffect();
+        BattleRealEffectManager.Instance.ResumeAllEffect();
+
+        if (IsLaserType)
+        {
+            ShotLaser();
+            BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
+        }
+        else
+        {
+            ShotBomb();
+            BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
+        }
     }
 
     /// <summary>
     /// レーザーを放つ
     /// チャージを放った後に呼ばれることを想定している
     /// </summary>
-    public void ShotLaser()
+    private void ShotLaser()
     {
         if (IsUsingChargeShot())
         {
@@ -333,7 +348,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// ボムを放つ
     /// チャージを放った後に呼ばれることを想定している
     /// </summary>
-    public void ShotBomb()
+    private void ShotBomb()
     {
         if (IsUsingChargeShot())
         {
@@ -367,10 +382,12 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.WeaponChangeSe);
     }
 
+    #endregion
+
     /// <summary>
     /// 無敵状態にする。
     /// </summary>
-    public void SetInvinsible(float invinsibleDuration)
+    public void SetInvinsible(float invinsibleDuration, bool showShield = true)
     {
         DestroyTimer(INVINSIBLE_KEY);
         var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, invinsibleDuration);
@@ -384,7 +401,10 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         });
         RegistTimer(INVINSIBLE_KEY, timer);
 
-        m_ShieldEffect = BattleRealEffectManager.Instance.CreateEffect(m_ParamSet.ShieldEffectParam, transform);
+        if (showShield)
+        {
+            m_ShieldEffect = BattleRealEffectManager.Instance.CreateEffect(m_ParamSet.ShieldEffectParam, transform);
+        }
         SetEnableCollider(false);
     }
 
@@ -393,7 +413,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// </summary>
     public void StopChargeShot()
     {
-
         if (m_Laser != null)
         {
             m_Laser.DestroyBullet();
@@ -415,6 +434,13 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
     }
 
+    private bool IsUsingChargeShot()
+    {
+        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        return useLaser || useBomb;
+    }
+
     private void SetEnableCollider(bool isEnable)
     {
         var c = GetCollider();
@@ -423,6 +449,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         c.SetEnableCollider(m_Critical, isEnable);
         c.SetEnableCollider(m_Shield, !isEnable);
     }
+
+    #region Suffer & Hit
 
     protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
@@ -519,6 +547,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController
                 break;
         }
     }
+
+    #endregion
 
     public override void Dead()
     {

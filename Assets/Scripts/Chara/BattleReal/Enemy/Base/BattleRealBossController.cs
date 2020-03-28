@@ -233,6 +233,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
+        
     }
 
     public override void OnLateUpdate()
