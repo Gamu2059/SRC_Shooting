@@ -38,18 +38,10 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     [SerializeField]
     private VideoPlayer m_VideoPlayer = default;
 
-    [Header("GameOver")]
-
-    [SerializeField]
-    private GameOverController m_GameOverController = default;
-
     [Header("Debug")]
 
     [SerializeField]
     private bool m_IsStartHackingMode = default;
-
-    [SerializeField]
-    public bool m_PlayerNotDead = default;
 
     [SerializeField]
     public bool m_IsDrawColliderArea = default;
@@ -88,14 +80,10 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.HACKING_MODE, this, new HackingModeState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.TO_REAL, this, new ToRealState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.TO_HACKING, this, new ToHackingState()));
-
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.END, this, new EndState()));
 
         m_RealManager = BattleRealManager.Builder(this, m_ParamSet.BattleRealParamSet);
         m_HackingManager = BattleHackingManager.Builder(this, m_ParamSet.BattleHackingParamSet);
-
-        m_GameOverController.OnInitialize();
-        m_GameOverController.EndAction += m_RealManager.End;
 
         DataManager.Instance.BattleData.SetDifficulty(m_Difficulty);
 
@@ -105,8 +93,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     public override void OnFinalize()
     {
         m_OnChangeState = null;
-
-        m_GameOverController.OnFinalize();
 
         m_HackingManager.OnFinalize();
         m_RealManager.OnFinalize();
@@ -202,6 +188,15 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         //}
 
         DataManager.Instance.BattleData.SetPerfectHackingSuccessCount(sum);
+    }
+
+    /// <summary>
+    /// GameOverControllerがBattleManagerに紐づいているのでとりあえずここで再生メソッドを定義する。
+    /// しかし、最終的にはBattleRealUiManagerに紐づける。
+    /// </summary>
+    public void PlayGameOverPerformance()
+    {
+
     }
 
     public void ExitGame()

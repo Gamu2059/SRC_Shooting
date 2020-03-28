@@ -43,6 +43,10 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     private EffectParamSet m_ShieldEffectParam;
     public EffectParamSet ShieldEffectParam => m_ShieldEffectParam;
 
+    [SerializeField, Tooltip("死亡エフェクト")]
+    private EffectParamSet m_DeadEffectParam;
+    public EffectParamSet DeadEffectParam => m_DeadEffectParam;
+
     [Header("カメラウェーブ")]
 
     [SerializeField]

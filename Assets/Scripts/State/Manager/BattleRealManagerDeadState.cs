@@ -33,6 +33,7 @@ partial class BattleRealManager
                 timer.SetTimeoutCallBack(() =>
                 {
                     timer = null;
+                    BattleRealPlayerManager.Instance.RespawnPlayer(true);
                     Target.RequestChangeState(E_BATTLE_REAL_STATE.GAME);
                 });
                 BattleRealTimerManager.Instance.RegistTimer(timer);
@@ -107,12 +108,6 @@ partial class BattleRealManager
             BattleRealEffectManager.Instance.OnFixedUpdate();
             BattleRealCameraManager.Instance.OnFixedUpdate();
             BattleRealUiManager.Instance.OnFixedUpdate();
-        }
-
-        public override void OnEnd()
-        {
-            base.OnEnd();
-            BattleRealPlayerManager.Instance.RespawnPlayer(true);
         }
     }
 }

@@ -93,6 +93,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealCollisionManager.Builder();
         BattleRealCameraManager.Instance.OnInitialize();
         BattleRealUiManager.Instance.OnInitialize();
+        BattleRealUiManager.Instance.SetCallback(this);
 
         m_CutsceneCaller = null;
         m_TalkCaller = null;

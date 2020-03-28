@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9e4b8dc684c00345b377bc238b23c5c, type: 3}
-  m_Name: hacking_inf_c_761_dead.effect
+  m_Name: hacker_down_triangle.effect
   m_EditorClassIdentifier: 
-  m_Effect: {fileID: 172961455321075704, guid: 3c070949ac48c474290106d77705951b, type: 3}
+  m_Effect: {fileID: 8062093955763083968, guid: 58d0fe6096852714fa68701d65d761d0,
+    type: 3}
   m_FirePositionRelative: 0
   m_FirePosition:
     m_ValueType: 0
-    m_ConstantValue: {x: 0, y: 0, z: 0.2}
+    m_ConstantValue: {x: 0, y: 0, z: 0}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
   m_FireRotationRelative: 0
@@ -31,6 +32,8 @@ MonoBehaviour:
     m_ConstantValue: {x: 1, y: 1, z: 1}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
-  m_IsAllowOwnerPosition: 1
-  m_IsAutoDestroyDuration: 1
-  m_Duration: 0.5
+  m_IsAllowOwnerPosition: 0
+  m_IsAllowOwnerRotation: 0
+  m_IsAutoDestroyDuration: 0
+  m_Duration: 0
+  m_PlaySoundParams: []
