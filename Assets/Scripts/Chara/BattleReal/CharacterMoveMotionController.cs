@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラクタの移動モーションを制御する。
 /// </summary>
-public class CharacterMoveMotionController : ControllableMonoBehavior
+public class CharacterMoveMotionController : ControllableMonoBehavior, IAutoControlOnCharaController
 {
     private const string V_SPEED = "VSpeed";
     private const string H_SPEED = "HSpeed";
