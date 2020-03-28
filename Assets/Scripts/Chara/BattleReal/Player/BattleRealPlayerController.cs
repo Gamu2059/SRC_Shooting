@@ -55,7 +55,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
 
     #endregion
 
-    private const float INVINSIBLE_DURATION = 5f;
     private const string INVINSIBLE_KEY = "Invinsible";
 
     #region Field Inspector
@@ -65,15 +64,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
 
     [SerializeField]
     private float m_MainShotInterval;
-
-    [SerializeField]
-    private Transform m_Critical;
-
-    [SerializeField]
-    private Animator m_ShieldAnimator;
-
-    [SerializeField]
-    private Transform m_Shield;
 
     #endregion
 
@@ -85,12 +75,18 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     private SequenceController m_SequenceController;
     private SequenceGroup m_SequenceGroup;
 
+    private Transform m_Critical;
+    private Transform m_Shield;
+
+    private E_STATE m_DefaultGameState;
     private float m_ShotDelay;
+    private BattleCommonEffectController m_ShieldEffect;
     private BattleCommonEffectController m_ChargeEffect;
     private BulletController m_Laser;
     private BulletController m_Bomb;
     private bool m_IsExistEnergyCharge;
 
+    public bool IsDead { get; private set; }
     public bool IsLaserType { get; private set; }
     public bool IsRestrictPosition;
 
@@ -102,18 +98,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
 
     #endregion
 
-    #region Closed Callback
-
-    private Action DeadPlayerAction { get; set; }
-
-    #endregion
-
     #region Game Cycle
-
-    private void Start()
-    {
-        BattleRealPlayerManager.RegisterPlayer(this);
-    }
 
     public override void OnInitialize()
     {
@@ -130,9 +115,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         Troop = E_CHARA_TROOP.PLAYER;
         IsLaserType = m_ParamSet == null ? true : m_ParamSet.IsLaserType;
         IsRestrictPosition = false;
-
-        SetEnableCollider(true);
-        m_Shield.gameObject.SetActive(false);
+        IsDead = false;
+        m_DefaultGameState = E_STATE.NON_GAME;
 
         m_SequenceController = GetComponent<SequenceController>();
         if (m_SequenceController == null)
@@ -141,8 +125,12 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         }
         m_SequenceController?.OnInitialize();
 
+        m_Critical = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.CRITICAL).Transform;
+        m_Shield = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.DEFAULT).Transform;
+        SetEnableCollider(true);
+
         // とりあえずNON_GAMEへ遷移して待機しておく
-        RequestChangeState(E_STATE.GAME);
+        RequestChangeState(E_STATE.NON_GAME);
     }
 
     public override void OnFinalize()
@@ -173,6 +161,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController
 
     #endregion
 
+    #region Change State
+
     /// <summary>
     /// BattleRealPlayerControllerのステートを変更する。
     /// </summary>
@@ -180,6 +170,32 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     {
         m_StateMachine?.Goto(state);
     }
+
+    /// <summary>
+    /// デフォルトゲームステートを切り替える。
+    /// </summary>
+    public void SetDefaultGameState(bool isBattleRealManagerGameState)
+    {
+        m_DefaultGameState = isBattleRealManagerGameState ? E_STATE.GAME : E_STATE.NON_GAME;
+    }
+
+    /// <summary>
+    /// プレイヤーのステートをデフォルトゲームステートに切り替える。
+    /// </summary>
+    private void RequestChangeDefaultGameState()
+    {
+        RequestChangeState(m_DefaultGameState);
+    }
+
+    /// <summary>
+    /// 死亡ステートに切り替える。
+    /// </summary>
+    public void RequestChangeToDeadState()
+    {
+        RequestChangeState(E_STATE.DEAD);
+    }
+
+    #endregion
 
     /// <summary>
     /// 座標を動体フィールド領域に制限する。
@@ -195,17 +211,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         m_ParamSet = param;
     }
 
-    public void SetCallback(BattleRealPlayerManager manager)
-    {
-        DeadPlayerAction += manager.OnDeadPlayer;
-    }
-
-    public bool IsUsingChargeShot()
-    {
-        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
-        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
-        return useLaser || useBomb;
-    }
+    #region Shot
 
     /// <summary>
     /// 通常弾を放つ
@@ -275,6 +281,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
             return;
         }
 
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
         // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
         if (IsLaserType)
         {
@@ -286,14 +293,33 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         }
 
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
-        //BattleRealManager.Instance.RequestChangeState(E_BATTLE_REAL_STATE.CHARGE_SHOT);
+    }
+
+    /// <summary>
+    /// チャージショットを放つ
+    /// </summary>
+    private void ChargeShot()
+    {
+        BattleRealUiManager.Instance.FrontViewEffect.StopEffect();
+        BattleRealEffectManager.Instance.ResumeAllEffect();
+
+        if (IsLaserType)
+        {
+            ShotLaser();
+            BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
+        }
+        else
+        {
+            ShotBomb();
+            BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
+        }
     }
 
     /// <summary>
     /// レーザーを放つ
     /// チャージを放った後に呼ばれることを想定している
     /// </summary>
-    public void ShotLaser()
+    private void ShotLaser()
     {
         if (IsUsingChargeShot())
         {
@@ -322,7 +348,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// ボムを放つ
     /// チャージを放った後に呼ばれることを想定している
     /// </summary>
-    public void ShotBomb()
+    private void ShotBomb()
     {
         if (IsUsingChargeShot())
         {
@@ -356,20 +382,29 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.WeaponChangeSe);
     }
 
-    public void SetInvinsible()
+    #endregion
+
+    /// <summary>
+    /// 無敵状態にする。
+    /// </summary>
+    public void SetInvinsible(float invinsibleDuration, bool showShield = true)
     {
         DestroyTimer(INVINSIBLE_KEY);
-        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, INVINSIBLE_DURATION);
+        var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, invinsibleDuration);
         timer.SetTimeoutCallBack(() =>
         {
             timer = null;
             SetEnableCollider(true);
-            m_Shield.gameObject.SetActive(false);
+
+            m_ShieldEffect?.DestroyEffect(true);
+            m_ShieldEffect = null;
         });
         RegistTimer(INVINSIBLE_KEY, timer);
 
-        m_Shield.gameObject.SetActive(true);
-        m_ShieldAnimator.Play("battle_real_player_shield", 0);
+        if (showShield)
+        {
+            m_ShieldEffect = BattleRealEffectManager.Instance.CreateEffect(m_ParamSet.ShieldEffectParam, transform);
+        }
         SetEnableCollider(false);
     }
 
@@ -378,7 +413,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// </summary>
     public void StopChargeShot()
     {
-
         if (m_Laser != null)
         {
             m_Laser.DestroyBullet();
@@ -400,6 +434,13 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
     }
 
+    private bool IsUsingChargeShot()
+    {
+        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        return useLaser || useBomb;
+    }
+
     private void SetEnableCollider(bool isEnable)
     {
         var c = GetCollider();
@@ -408,6 +449,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         c.SetEnableCollider(m_Critical, isEnable);
         c.SetEnableCollider(m_Shield, !isEnable);
     }
+
+    #region Suffer & Hit
 
     protected override void OnEnterSufferBullet(HitSufferData<BulletController> sufferData)
     {
@@ -505,20 +548,12 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         }
     }
 
+    #endregion
+
     public override void Dead()
     {
-        //if (BattleManager.Instance.m_PlayerNotDead)
-        //{
-        //    return;
-        //}
-
         base.Dead();
-
-        StopChargeShot();
-
-        // 死亡SEは色々な処理の後にしておかないと、プレイヤーSEの停止に巻き込まれる可能性がある
-        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.DeadSe);
-        DeadPlayerAction?.Invoke();
+        IsDead = true;
     }
 
     public void MoveBySequence(SequenceGroup sequenceGroup)

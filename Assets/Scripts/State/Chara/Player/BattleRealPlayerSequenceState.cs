@@ -10,7 +10,7 @@
             var sequenceController = Target.m_SequenceController;
             if (sequenceGroup == null || sequenceController == null)
             {
-                Target.RequestChangeState(E_STATE.GAME);
+                Target.RequestChangeDefaultGameState();
                 return;
             }
 
@@ -27,6 +27,7 @@
         public override void OnEnd()
         {
             base.OnEnd();
+
             if (Target.m_SequenceController != null)
             {
                 Target.m_SequenceController.OnEndSequence -= OnEndSequence;
@@ -35,7 +36,7 @@
 
         private void OnEndSequence()
         {
-            Target.RequestChangeState(E_STATE.GAME);
+            Target.RequestChangeDefaultGameState();
         }
     }
 }

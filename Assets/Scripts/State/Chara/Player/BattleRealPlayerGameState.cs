@@ -7,11 +7,22 @@ partial class BattleRealPlayerController
         public override void OnStart()
         {
             base.OnStart();
+
+            if (Target.m_DefaultGameState != E_STATE.GAME)
+            {
+                Target.RequestChangeDefaultGameState();
+            }
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
+
+            if (Target.m_DefaultGameState != E_STATE.GAME)
+            {
+                Target.RequestChangeDefaultGameState();
+                return;
+            }
 
             var input = BattleRealInputManager.Instance;
             var moveDir = input.MoveDir;
@@ -51,7 +62,10 @@ partial class BattleRealPlayerController
 
             if (input.ChargeShot == E_INPUT_STATE.DOWN)
             {
-                Target.RequestChangeState(E_STATE.CHARGE);
+                if (DataManager.Instance.BattleData.EnergyCount > 0)
+                {
+                    Target.RequestChangeState(E_STATE.CHARGE);
+                }
             }
 
             Target.m_ShotDelay += Time.deltaTime;

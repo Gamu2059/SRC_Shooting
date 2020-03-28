@@ -7,34 +7,36 @@ partial class BattleRealManager
         public override void OnStart()
         {
             base.OnStart();
-            BattleRealPlayerManager.Instance.SetPlayerActive(false);
+            BattleRealPlayerManager.Instance.DeadPlayer();
 
             // シェイクが邪魔になるので止める
             BattleRealCameraManager.Instance.StopShake();
 
+            var testDataManager = BattleTestDataManager.Instance;
+            var isNotGameOver = testDataManager != null && testDataManager.IsNotGameOver;
+
             var battleData = DataManager.Instance.BattleData;
-            if (battleData.PlayerLife < 1)
+            if (!isNotGameOver && battleData.PlayerLife < 1)
             {
-                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 1);
+                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1);
                 timer.SetTimeoutCallBack(() =>
                 {
                     timer = null;
                     Target.GameOver();
                 });
-                TimerManager.Instance.RegistTimer(timer);
-                Time.timeScale = 0f;
+                BattleRealTimerManager.Instance.RegistTimer(timer);
             }
             else
             {
                 battleData.DecreasePlayerLife();
-                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 2);
+                var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1);
                 timer.SetTimeoutCallBack(() =>
                 {
                     timer = null;
+                    BattleRealPlayerManager.Instance.RespawnPlayer(true);
                     Target.RequestChangeState(E_BATTLE_REAL_STATE.GAME);
                 });
-                TimerManager.Instance.RegistTimer(timer);
-                Time.timeScale = 0.1f;
+                BattleRealTimerManager.Instance.RegistTimer(timer);
             }
         }
 
@@ -53,7 +55,7 @@ partial class BattleRealManager
             BattleRealInputManager.Instance.OnUpdate();
             BattleRealTimerManager.Instance.OnUpdate();
             BattleRealEventManager.Instance.OnUpdate();
-            //BattleRealPlayerManager.Instance.OnUpdate();
+            BattleRealPlayerManager.Instance.OnUpdate();
             BattleRealEnemyGroupManager.Instance.OnUpdate();
             BattleRealEnemyManager.Instance.OnUpdate();
             BattleRealBulletGeneratorManager.Instance.OnUpdate();
@@ -69,7 +71,7 @@ partial class BattleRealManager
             base.OnLateUpdate();
             BattleRealTimerManager.Instance.OnLateUpdate();
             BattleRealEventManager.Instance.OnLateUpdate();
-            //BattleRealPlayerManager.Instance.OnLateUpdate();
+            BattleRealPlayerManager.Instance.OnLateUpdate();
             BattleRealEnemyGroupManager.Instance.OnLateUpdate();
             BattleRealEnemyManager.Instance.OnLateUpdate();
             BattleRealBulletGeneratorManager.Instance.OnLateUpdate();
@@ -97,7 +99,7 @@ partial class BattleRealManager
             base.OnFixedUpdate();
             BattleRealTimerManager.Instance.OnFixedUpdate();
             BattleRealEventManager.Instance.OnFixedUpdate();
-            //BattleRealPlayerManager.Instance.OnFixedUpdate();
+            BattleRealPlayerManager.Instance.OnFixedUpdate();
             BattleRealEnemyGroupManager.Instance.OnFixedUpdate();
             BattleRealEnemyManager.Instance.OnFixedUpdate();
             BattleRealBulletGeneratorManager.Instance.OnFixedUpdate();
@@ -106,15 +108,6 @@ partial class BattleRealManager
             BattleRealEffectManager.Instance.OnFixedUpdate();
             BattleRealCameraManager.Instance.OnFixedUpdate();
             BattleRealUiManager.Instance.OnFixedUpdate();
-        }
-
-        public override void OnEnd()
-        {
-            base.OnEnd();
-            BattleRealPlayerManager.Instance.SetRespawnPlayerPosition();
-            BattleRealPlayerManager.Instance.SetPlayerActive(true);
-            BattleRealPlayerManager.Instance.SetPlayerInvinsible();
-            Time.timeScale = 1;
         }
     }
 }

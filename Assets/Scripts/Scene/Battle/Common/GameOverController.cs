@@ -85,7 +85,6 @@ public class GameOverController : ControllableMonoBehavior
 
         m_PlayEndAnimation = true;
         m_Animator.Play(END_GAME_OVER, 0);
-
         AudioManager.Instance.Play(m_EndSe);
     }
 

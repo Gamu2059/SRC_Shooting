@@ -29,18 +29,11 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
     #region Manager
 
-    private TimerManager m_TimerManager;
-    public TimerManager TimerManager => m_TimerManager;
-
     [SerializeField]
     private BaseSceneManager m_SceneManager;
 
     [SerializeField]
     private TransitionManager m_TransitionManager;
-
-    [SerializeField]
-    private AudioManager m_AudioManager;
-    public AudioManager AudioManager => m_AudioManager;
 
     public DataManager DataManager { get; private set; }
 
@@ -49,6 +42,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
     #endregion
 
+    #region Unity Game Cycle
+
     protected override void OnAwake()
 	{
 		base.OnAwake();
@@ -56,6 +51,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
 	protected override void OnDestroyed()
 	{
+        OnFinalize();
 		base.OnDestroyed();
 	}
 
@@ -80,17 +76,20 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 		OnFixedUpdate();
 	}
 
+    #endregion
+
+    #region Game Cycle
+
     public override void OnInitialize()
 	{
         base.OnInitialize();
 
-        m_TimerManager = new TimerManager();
-        m_AudioManager.SetAdxParam(m_GameManagerParamSet.AdxAssetParam);
+        AudioManager.Instance.SetAdxParam(m_GameManagerParamSet.AdxAssetParam);
         DataManager = new DataManager(m_GameManagerParamSet.PlayerLevelParamSet);
         m_PlayerRecordManager = new PlayerRecordManager();
 
-        m_TimerManager.OnInitialize();
-        m_AudioManager.OnInitialize();
+        TimerManager.Builder();
+        AudioManager.Instance.OnInitialize();
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
 
@@ -108,8 +107,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 
         m_SceneManager.OnFinalize();
         m_TransitionManager.OnFinalize();
-        m_AudioManager.OnFinalize();
-        m_TimerManager.OnFinalize();
+        AudioManager.Instance.OnFinalize();
+        TimerManager.Instance.OnFinalize();
 
         base.OnFinalize();
 	}
@@ -118,8 +117,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	{
         base.OnStart();
 
-        m_TimerManager.OnStart();
-        m_AudioManager.OnStart();
+        TimerManager.Instance.OnStart();
+        AudioManager.Instance.OnStart();
         m_TransitionManager.OnStart();
         m_SceneManager.OnStart();
 
@@ -130,8 +129,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	{
         base.OnUpdate();
 
-        m_TimerManager.OnUpdate();
-        m_AudioManager.OnUpdate();
+        TimerManager.Instance.OnUpdate();
+        AudioManager.Instance.OnUpdate();
         m_TransitionManager.OnUpdate();
         m_SceneManager.OnUpdate();
 
@@ -142,8 +141,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	{
         base.OnLateUpdate();
 
-        m_TimerManager.OnLateUpdate();
-        m_AudioManager.OnLateUpdate();
+        TimerManager.Instance.OnLateUpdate();
+        AudioManager.Instance.OnLateUpdate();
         m_TransitionManager.OnLateUpdate();
         m_SceneManager.OnLateUpdate();
 	}
@@ -152,9 +151,11 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	{
         base.OnFixedUpdate();
 
-        m_TimerManager.OnFixedUpdate();
-        m_AudioManager.OnFixedUpdate();
+        TimerManager.Instance.OnFixedUpdate();
+        AudioManager.Instance.OnFixedUpdate();
         m_TransitionManager.OnFixedUpdate();
         m_SceneManager.OnFixedUpdate();
 	}
+
+    #endregion
 }

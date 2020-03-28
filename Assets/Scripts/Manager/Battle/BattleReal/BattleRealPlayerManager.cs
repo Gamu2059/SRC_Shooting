@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
 /// </summary>
 public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColliderProcess
 {
-
     #region Field
 
     public BattleRealPlayerManagerParamSet ParamSet { get; private set; }
 
     private Transform m_PlayerCharaHolder;
-
-    // 事前にシーンに存在していたプレイヤー
-    private static BattleRealPlayerController m_RegisteredPlayer;
 
     public BattleRealPlayerController Player { get; private set; }
 
@@ -27,6 +24,7 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
     {
         var manager = Create();
         manager.SetParam(param);
+        manager.SetCallback(realManager);
         manager.OnInitialize();
         return manager;
     }
@@ -36,21 +34,19 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
         ParamSet = param;
     }
 
-    /// <summary>
-    /// プレイヤーキャラを登録する。
-    /// デバッグ用。
-    /// </summary>
-    public static void RegisterPlayer(BattleRealPlayerController player)
+    private void SetCallback(BattleRealManager realManager)
     {
-        if (player == null)
-        {
-            return;
-        }
-
-        m_RegisteredPlayer = player;
+        realManager.ChangeStateAction += OnChangeStateBattleRealManager;
     }
 
     #region Game Cycle
+
+    public override void OnFinalize()
+    {
+        Player?.OnFinalize();
+        Player = null;
+        base.OnFinalize();
+    }
 
     public override void OnStart()
     {
@@ -58,15 +54,7 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
 
         m_PlayerCharaHolder = BattleRealStageManager.Instance.GetHolder(BattleRealStageManager.E_HOLDER_TYPE.PLAYER);
 
-        if (m_RegisteredPlayer != null)
-        {
-            Player = m_RegisteredPlayer;
-        }
-        else
-        {
-            Player = GameObject.Instantiate(ParamSet.PlayerPrefab);
-        }
-
+        Player = GameObject.Instantiate(ParamSet.PlayerPrefab);
         Player.transform.SetParent(m_PlayerCharaHolder);
         SetInitPlayerPosition();
         Player.SetParam(ParamSet);
@@ -94,6 +82,11 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
 
     #endregion
 
+    private void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
+    {
+        Player?.SetDefaultGameState(state == E_BATTLE_REAL_STATE.GAME);
+    }
+
     /// <summary>
     /// ゲーム開始時位置にプレイヤーをセットする。
     /// </summary>
@@ -105,20 +98,6 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
         }
 
         var pos = GetPosFromViewportPosition(ParamSet.InitAppearViewportPosition);
-        Player.transform.position = pos;
-    }
-
-    /// <summary>
-    /// リスポーン位置にプレイヤーをセットする。
-    /// </summary>
-    public void SetRespawnPlayerPosition()
-    {
-        if (Player == null)
-        {
-            return;
-        }
-
-        var pos = GetPosFromViewportPosition(ParamSet.RespawnViewportPosition);
         Player.transform.position = pos;
     }
 
@@ -141,72 +120,53 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
 
     public void ClearColliderFlag()
     {
-        if (Player != null)
-        {
-            Player.ClearColliderFlag();
-        }
+        Player?.ClearColliderFlag();
     }
 
     public void UpdateCollider()
     {
-        if (Player != null)
-        {
-            Player.UpdateCollider();
-        }
+        Player?.UpdateCollider();
     }
 
     public void ProcessCollision()
     {
-        if (Player != null)
-        {
-            Player.ProcessCollision();
-        }
-    }
-
-    public void SetPlayerActive(bool isEnable)
-    {
-        if (Player != null)
-        {
-            Player.gameObject.SetActive(isEnable);
-        }
-    }
-
-    public void SetPlayerInvinsible()
-    {
-        if (Player != null)
-        {
-            Player.SetInvinsible();
-        }
-    }
-
-    public void ChargeShot()
-    {
-        if (Player != null)
-        {
-            if (Player.IsLaserType)
-            {
-                Player.ShotLaser();
-                BattleRealCameraManager.Instance.Shake(ParamSet.LaserShakeParam);
-            }
-            else
-            {
-                Player.ShotBomb();
-                BattleRealCameraManager.Instance.Shake(ParamSet.BombShakeParam);
-            }
-        }
+        Player?.ProcessCollision();
     }
 
     public void StopChargeShot()
     {
-        if (Player != null)
+        Player?.StopChargeShot();
+    }
+
+    /// <summary>
+    /// プレイヤーを死亡させる。
+    /// </summary>
+    public void DeadPlayer()
+    {
+        Player?.Dead();
+        Player?.RequestChangeToDeadState();
+    }
+
+    /// <summary>
+    /// プレイヤーを復活させる。
+    /// </summary>
+    /// <param name="enableInvinsible">無敵状態を適用するかどうか</param>
+    public void RespawnPlayer(bool enableInvinsible)
+    {
+        MovePlayerBySequence(ParamSet.RespawnSequence);
+
+        if (enableInvinsible)
         {
-            Player.StopChargeShot();
+            MakeInvinsiblePlayer();
         }
     }
 
-    public void OnDeadPlayer()
+    /// <summary>
+    /// プレイヤーを無敵状態にする。
+    /// </summary>
+    public void MakeInvinsiblePlayer()
     {
-
+        Player?.SetInvinsible(5f);
     }
 
     public void MovePlayerBySequence(SequenceGroup sequenceGroup)

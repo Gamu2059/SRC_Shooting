@@ -43,16 +43,16 @@ partial class BattleRealPlayerController
                 Target.ShotBullet();
             }
 
-            if (input.ChangeMode == E_INPUT_STATE.DOWN)
-            {
-                Target.IsLaserType = !Target.IsLaserType;
-                Target.ChangeWeapon();
-                Target.ChangeWeaponTypeAction?.Invoke(Target.IsLaserType);
-            }
+            //if (input.ChangeMode == E_INPUT_STATE.DOWN)
+            //{
+            //    Target.IsLaserType = !Target.IsLaserType;
+            //    Target.ChangeWeapon();
+            //    Target.ChangeWeaponTypeAction?.Invoke(Target.IsLaserType);
+            //}
 
             if (input.ChargeShot == E_INPUT_STATE.UP)
             {
-                Target.RequestChangeState(E_STATE.GAME);
+                Target.RequestChangeState(E_STATE.CHARGE_SHOT);
             }
 
             Target.m_ShotDelay += Time.deltaTime;

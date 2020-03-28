@@ -41,5 +41,10 @@ public class BattleRealPlayerBomb : BulletController
                 m_BombTransform.localScale = Vector3.one * size;
             }
         }
+
+        if (nowLifetime >= duration)
+        {
+            DestroyBullet();
+        }
     }
 }

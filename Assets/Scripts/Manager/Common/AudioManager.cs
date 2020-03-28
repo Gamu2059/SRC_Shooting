@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AudioManager : ControllableMonoBehavior
+public class AudioManager : SingletonMonoBehavior<AudioManager>
 {
-    #region Definition
+    #region Define
 
     [Serializable]
     private struct SourceSet
@@ -29,8 +29,6 @@ public class AudioManager : ControllableMonoBehavior
     }
 
     #endregion
-
-    public static AudioManager Instance => GameManager.Instance.AudioManager;
 
     #region Field Inspector
 

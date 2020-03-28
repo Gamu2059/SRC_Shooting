@@ -57,11 +57,16 @@ public class BattleRealPlayerLaser : BulletController
     {
         base.OnUpdate();
         var ownerPosition = GetBulletOwner().transform.position + m_InitDeltaPosition;
-        ownerPosition.y = 10;
+        ownerPosition.y = ParamDef.BASE_Y_POS;
         SetPosition(ownerPosition);
 
         m_Animator.Update(Time.deltaTime);
         m_ParticleTime += Time.deltaTime;
+
+        if (GetNowLifeTime() >= GetBulletParam().LifeTime)
+        {
+            DestroyBullet();
+        }
     }
 
     private void OnPause()

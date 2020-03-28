@@ -96,6 +96,11 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     [SerializeField]
     private ResultIndicator m_ResultIndicator;
 
+    [Header("Game Over")]
+
+    [SerializeField]
+    private GameOverController m_GameOverController;
+
     #endregion
 
     private bool m_IsShowResult;
@@ -141,6 +146,8 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_BossDownGage.OnInitialize();
         m_BossRemainingHackingIndicator.OnInitialize();
         m_ResultIndicator.OnInitialize();
+        m_GameOverController.OnInitialize();
+        m_GameOverController.EndAction += OnEndGameOver;
 
         m_StartTelop.OnInitialize();
         m_WarningTelop.OnInitialize();
@@ -157,6 +164,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_WarningTelop.OnFinalize();
         m_StartTelop.OnFinalize();
 
+        m_GameOverController.OnFinalize();
         m_ResultIndicator.OnFinalize();
         m_BossRemainingHackingIndicator.OnFinalize();
         m_BossDownGage.OnFinalize();
@@ -190,6 +198,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_BossDownGage.OnUpdate();
         m_BossRemainingHackingIndicator.OnUpdate();
         m_ResultIndicator.OnUpdate();
+        m_GameOverController.OnUpdate();
 
         m_StartTelop.OnUpdate();
         m_WarningTelop.OnUpdate();
@@ -224,6 +233,16 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
     public void SetEnableBossUI(bool isEnable){
         m_BossUI.SetActive(isEnable);
+    }
+
+    public void PlayGameOver()
+    {
+        m_GameOverController.PlayGameOver();
+    }
+
+    private void OnEndGameOver()
+    {
+        EndAction?.Invoke();
     }
 
     public void PlayGameClearAnimation()
