@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 速度を線形補間する演算を表すクラス。
+/// 速度を線形補間する演算を表すクラス。（作成途中）
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/operation/float/velocityLinearInterpo", fileName = "OperationFloatVelocityLinearInterpo", order = 0)]
 [System.Serializable]
@@ -92,26 +92,26 @@ public class OperationFloatVelocityLinearInterpo : OperationFloatBase
 
             return tempDistance + distance;
         }
-        // 最後の区間の場合
-        else if(/*tempTime + m_VelocityDistance[m_VelocityDistance.Length - 1].Distance.GetResultFloat()*/false)
-        {
-            // このフェーズの開始時の速度
-            float vBegin = m_VelocityDistance[m_VelocityDistance.Length - 1].Velocity.GetResultFloat();
+        //// 最後の区間の場合
+        //else if(/*tempTime + m_VelocityDistance[m_VelocityDistance.Length - 1].Distance.GetResultFloat()*/false)
+        //{
+        //    // このフェーズの開始時の速度
+        //    float vBegin = m_VelocityDistance[m_VelocityDistance.Length - 1].Velocity.GetResultFloat();
 
-            // このフェーズの終了時の速度
-            float vEnd = m_LastVelocity.GetResultFloat();
+        //    // このフェーズの終了時の速度
+        //    float vEnd = m_LastVelocity.GetResultFloat();
 
-            // このフェーズ全体で進む総距離
-            float distanceSum = m_VelocityDistance[m_VelocityDistance.Length - 1].Distance.GetResultFloat();
+        //    // このフェーズ全体で進む総距離
+        //    float distanceSum = m_VelocityDistance[m_VelocityDistance.Length - 1].Distance.GetResultFloat();
 
-            // 加速度
-            float acceleration = (vEnd * vEnd - vBegin * vBegin) / (2 * distanceSum);
+        //    // 加速度
+        //    float acceleration = (vEnd * vEnd - vBegin * vBegin) / (2 * distanceSum);
 
-            // このフェーズ内で実際に進んだ距離
-            float distance = vBegin * t + acceleration * t * t / 2;
+        //    // このフェーズ内で実際に進んだ距離
+        //    float distance = vBegin * t + acceleration * t * t / 2;
 
-            return tempDistance + distance;
-        }
+        //    return tempDistance + distance;
+        //}
         // 最後の区間以降の場合
         else
         {

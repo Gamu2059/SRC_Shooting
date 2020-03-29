@@ -35,6 +35,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         CommandCharaController shotOwner,
         float dTime,
         ShotParamOperation shotParamOperation,
+        BulletParamFreeOperation bulletParamFreeOperation,
         OperationFloatVariable timeOperation,
         ShotParamOperationVariable launchParam,
         TransformOperation transformOperation,
@@ -50,7 +51,25 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         }
 
         // プレハブを取得
-        var bulletPrefab = bulletOwner.GetBulletPrefab(shotParamOperation.BulletIndex.GetResultInt());
+
+
+        // 付け足した部分
+
+        int bulletIndex;
+
+        // 今まで通りなら
+        if (shotParamOperation != null)
+        {
+            bulletIndex = shotParamOperation.BulletIndex.GetResultInt();
+        }
+        // 新しいやり方なら
+        else
+        {
+            bulletIndex = 0;
+        }
+
+
+        var bulletPrefab = bulletOwner.GetBulletPrefab(bulletIndex);
 
         if (bulletPrefab == null)
         {
@@ -77,6 +96,12 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         bullet.m_ShotParam = new ShotParam(shotParamOperation);
 
+
+        if (bulletParamFreeOperation == null) Debug.Log("bulletParamFreeOperation");
+
+        bullet.m_BulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
+
+
         bullet.m_Time = dTime;
 
         bullet.m_TimeOperation = timeOperation;
@@ -85,9 +110,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         bullet.m_TransformOperation = transformOperation;
 
-
         bullet.spriteRenderer = (SpriteRenderer)bullet.gameObject.GetComponentInChildren(typeof(SpriteRenderer));
-
 
         return bullet;
     }
@@ -124,6 +147,13 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// 発射時の発射パラメータ（保存用）
     /// </summary>
     private ShotParam m_ShotParam;
+
+
+    /// <summary>
+    /// 弾のパラメータ（保存用）
+    /// </summary>
+    private BulletParamFree m_BulletParamFree;
+
 
     /// <summary>
     /// 発射時のパラメータを表す変数（入力用）
@@ -180,8 +210,25 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             // 時刻を外部に反映させる
             m_TimeOperation.Value = m_Time;
 
+            // 時刻をstatic変数に反映させる
+            BulletTime.m_Time = m_Time;
+
             // 発射パラメータを外部に反映させる
             m_LaunchParam.SetValue(m_ShotParam);
+
+
+            // bool型のパラメータをstatic変数に反映させる
+            BulletBool.BoolArray = m_BulletParamFree.m_Bool;
+
+            // int型のパラメータをstatic変数に反映させる
+            BulletInt.IntArray = m_BulletParamFree.m_Int;
+
+            // float型のパラメータをstatic変数に反映させる
+            BulletFloat.FloatArray = m_BulletParamFree.m_Float;
+
+            // Vector2型のパラメータをstatic変数に反映させる
+            BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
+
 
             // この弾の物理的な状態を外部の演算により求める（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
             transformSimple = m_TransformOperation.GetResultTransform(m_ShotParam, m_Time);

@@ -20,6 +20,11 @@ public class BattleHackingPlayerController : CommandCharaController
     [SerializeField, Tooltip("発射パラメータ（演算）")]
     private ShotParamOperation m_ShotParamOperation;
 
+
+    [SerializeField, Tooltip("弾が持つパラメータ（演算）")]
+    private BulletParamFreeOperation m_BulletParamFreeOperation;
+
+
     [SerializeField, Tooltip("発射位置を表す変数オブジェクト")]
     private OperationVector2Variable m_ShotPositionVariable;
 
@@ -69,6 +74,7 @@ public class BattleHackingPlayerController : CommandCharaController
                     this,
                     0,
                     m_ShotParamOperation,
+                    m_BulletParamFreeOperation,
                     null,
                     null,
                     null
