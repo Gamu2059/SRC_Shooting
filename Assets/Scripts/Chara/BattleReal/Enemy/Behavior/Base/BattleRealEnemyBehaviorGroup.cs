@@ -11,8 +11,15 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemySequence/Group/Default", fileName = "default.behavior_group.asset", order = 0)]
 public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
 {
+    #region Field Inspector
+
     [SerializeField]
     private List<BattleRealEnemyBehaviorElement> m_Elements;
+
+    [Header("End Parameter")]
+
+    [SerializeField, Tooltip("終了条件に適用するブール値。無限ループさせたい場合は、これをfalseにしておきます。")]
+    private bool m_DefaultEndValue = true;
 
     [Header("Option Parameter")]
 
@@ -25,10 +32,19 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
     [SerializeField]
     private BattleRealEnemyBehaviorOptionFunc[] m_OnLoopedOptions;
 
+    #endregion
+
+    #region Field
+
     protected BattleRealEnemyBase Enemy { get; private set; }
     protected BattleRealEnemyBehaviorController Controller { get; private set; }
     public int CurrentIndex { get; private set; }
 
+    #endregion
+
+    /// <summary>
+    /// このグループの開始時の処理
+    /// </summary>
     public void OnStartGroup(BattleRealEnemyBase enemy, BattleRealEnemyBehaviorController controller)
     {
         Enemy = enemy;
@@ -46,6 +62,9 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
         OnStart();
     }
 
+    /// <summary>
+    /// このグループが終了せずループした時の処理
+    /// </summary>
     public void OnLoopedGroup()
     {
         CurrentIndex = 0;
@@ -61,6 +80,9 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
         OnLooped();
     }
 
+    /// <summary>
+    /// このグループの終了時の処理
+    /// </summary>
     public void OnEndGroup()
     {
         OnEnd();
@@ -77,43 +99,70 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
         Enemy = null;
     }
 
+    /// <summary>
+    /// 指し示しているインデックスを一つ進める。
+    /// </summary>
     public void Forward()
     {
         CurrentIndex++;
     }
 
+    /// <summary>
+    /// 現在指しているインデックスのBehaviorElementを取得する。
+    /// </summary>
     public BattleRealEnemyBehaviorElement GetCurrentReferenceElement()
     {
         return GetReferenceElementAt(CurrentIndex);
     }
 
+    /// <summary>
+    /// 指しているインデックスの次のBehaviorElementを取得する。
+    /// </summary>
+    /// <returns></returns>
     public BattleRealEnemyBehaviorElement GetNextReferenceElement()
     {
         return GetReferenceElementAt(CurrentIndex + 1);
     }
 
+    /// <summary>
+    /// 指定されたインデックスにあるBehaviorElementを取得する。
+    /// </summary>
     public BattleRealEnemyBehaviorElement GetReferenceElementAt(int index)
     {
-        if (m_Elements == null || index < 0 || IsLastOver(index))
+        var elements = GetCurrentElements();
+        if (elements == null || index < 0 || IsLastOver(index))
         {
             return null;
         }
 
-        return m_Elements[index];
+        return elements[index];
     }
 
+    /// <summary>
+    /// 指定されたインデックスがElementsの範囲を超えているかどうかを判定する。
+    /// </summary>
     public bool IsLastOver(int index)
     {
-        return m_Elements == null || index >= m_Elements.Count;
+        var elements = GetCurrentElements();
+        return elements == null || index >= elements.Count;
     }
 
     #region Have to Override Mehtod
 
-    public virtual void OnStart() { }
+    protected virtual void OnStart() { }
 
-    public virtual void OnLooped() { }
+    protected virtual void OnLooped() { }
 
-    public virtual void OnEnd() { }
+    protected virtual void OnEnd() { }
+
+    /// <summary>
+    /// 今適用されているElementsを取得する。<br/>
+    /// グループによっては参照するElementsが切り替わる可能性があるため、このメソッドで取得したElementsをキャッシュすることは非推奨。
+    /// </summary>
+    protected virtual List<BattleRealEnemyBehaviorElement> GetCurrentElements()
+    {
+        return m_Elements;
+    }
 
     /// <summary>
     /// このグループが終了するかどうかを判定する。
@@ -121,7 +170,7 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
     /// </summary>
     public virtual bool IsEndGroup()
     {
-        return true;
+        return m_DefaultEndValue;
     }
 
     #endregion

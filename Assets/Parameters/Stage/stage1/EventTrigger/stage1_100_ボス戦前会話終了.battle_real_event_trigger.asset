@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
+  m_Name: "stage1_100_\u30DC\u30B9\u6226\u524D\u4F1A\u8A71\u7D42\u4E86.battle_real_event_trigger"
+  m_EditorClassIdentifier: 
+  EventTriggerName: "\u30DC\u30B9\u6226\u524D\u4F1A\u8A71\u7D42\u4E86"
+  Condition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 3
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 1
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 5
+      BoolCompareType: 0
+      CompareValue: 0.1
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
+  Contents:
+  - ContentName: "\u30D5\u30A7\u30FC\u30C9\u30A4\u30F3"
+    IsPassExecute: 0
+    EventType: 4
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0.5
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams:
+    - VariableType: 2
+      VariableName: Boss Talk End
+      OperandType: 0
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 0
+      BoolOperandValue: 1
+    CountStartTimePeriodNames: []
+    CallScriptParams: []

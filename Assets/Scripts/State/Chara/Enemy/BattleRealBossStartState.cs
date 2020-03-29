@@ -11,6 +11,8 @@ partial class BattleRealBossController
             base.OnStart();
 
             Target.ChangeBehaviorSet(0);
+            // 0で設定されているので、最大値まで回復させておく
+            Target.RecoverDownHp(Target.MaxDownHp);
             Target.HackingCompleteNum = Target.m_BehaviorSets.Count;
             Target.HackingSuccessCount = 0;
 

@@ -152,7 +152,7 @@ public class BattleRealEnemyBehaviorUnit : BattleRealEnemyBehaviorElement
         }
         m_BulletGeneratorList = null;
 
-        m_BulletGeneratorFieldDataList.Clear();
+        m_BulletGeneratorFieldDataList?.Clear();
         m_BulletGeneratorFieldDataList = null;
         Controller = null;
         Enemy = null;

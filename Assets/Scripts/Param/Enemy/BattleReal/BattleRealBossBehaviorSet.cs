@@ -11,6 +11,8 @@ using System;
 [Serializable]
 public class BattleRealBossBehaviorSet
 {
+    [Header("通常の振る舞い")]
+
     [SerializeField, Tooltip("ボスの通常の振る舞いのタイプ")]
     private E_ENEMY_BEHAVIOR_TYPE m_BehaviorType;
     public E_ENEMY_BEHAVIOR_TYPE BehaviorType => m_BehaviorType;
@@ -23,6 +25,8 @@ public class BattleRealBossBehaviorSet
     private BattleRealEnemyBehaviorGroup m_BehaviorGroup;
     public BattleRealEnemyBehaviorGroup BehaviorGroup => m_BehaviorGroup;
 
+    [Header("ダウン時の振る舞い")]
+
     [SerializeField, Tooltip("ボスのダウン時の振る舞いのタイプ")]
     private E_ENEMY_BEHAVIOR_TYPE m_DownBehaviorType;
     public E_ENEMY_BEHAVIOR_TYPE DownBehaviorType => m_DownBehaviorType;
@@ -34,6 +38,8 @@ public class BattleRealBossBehaviorSet
     [SerializeField, Tooltip("ボスのダウン時の振る舞いのグループ")]
     private BattleRealEnemyBehaviorGroup m_DownBehaviorGroup;
     public BattleRealEnemyBehaviorGroup DownBehaviorGroup => m_DownBehaviorGroup;
+
+    [Space()]
 
     [SerializeField, Tooltip("ハッキングを開始した時に読み込まれるレベルデータ")]
     private BattleHackingLevelParamSet m_HackingLevelParamSet;

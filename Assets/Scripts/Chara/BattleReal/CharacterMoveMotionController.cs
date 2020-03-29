@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラクタの移動モーションを制御する。
 /// </summary>
-public class CharacterMoveMotionController : ControllableMonoBehavior
+public class CharacterMoveMotionController : ControllableMonoBehavior, IAutoControlOnCharaController
 {
     private const string V_SPEED = "VSpeed";
     private const string H_SPEED = "HSpeed";
@@ -15,6 +15,9 @@ public class CharacterMoveMotionController : ControllableMonoBehavior
 
     [SerializeField]
     private float m_Leap;
+
+    private bool m_IsEnableController;
+    public bool IsEnableController { get { return m_IsEnableController; } set { m_IsEnableController = value; } }
 
     private Vector3 m_PrePosition;
     private float m_TargetV;
@@ -28,6 +31,7 @@ public class CharacterMoveMotionController : ControllableMonoBehavior
         m_PrePosition = transform.position;
         m_TargetV = m_TargetH = 0;
         m_NowV = m_NowH = 0;
+        IsEnableController = true;
     }
 
     public override void OnUpdate()
