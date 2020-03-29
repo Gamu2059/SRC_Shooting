@@ -97,10 +97,8 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         bullet.m_ShotParam = new ShotParam(shotParamOperation);
 
 
-        if (bulletParamFreeOperation == null) Debug.Log("bulletParamFreeOperation");
-
-        bullet.m_BulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
-
+        if (bulletParamFreeOperation != null)
+            bullet.m_BulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
 
         bullet.m_Time = dTime;
 
@@ -217,17 +215,20 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             m_LaunchParam.SetValue(m_ShotParam);
 
 
-            // bool型のパラメータをstatic変数に反映させる
-            BulletBool.BoolArray = m_BulletParamFree.m_Bool;
+            if (m_BulletParamFree != null)
+            {
+                // bool型のパラメータをstatic変数に反映させる
+                BulletBool.BoolArray = m_BulletParamFree.m_Bool;
 
-            // int型のパラメータをstatic変数に反映させる
-            BulletInt.IntArray = m_BulletParamFree.m_Int;
+                // int型のパラメータをstatic変数に反映させる
+                BulletInt.IntArray = m_BulletParamFree.m_Int;
 
-            // float型のパラメータをstatic変数に反映させる
-            BulletFloat.FloatArray = m_BulletParamFree.m_Float;
+                // float型のパラメータをstatic変数に反映させる
+                BulletFloat.FloatArray = m_BulletParamFree.m_Float;
 
-            // Vector2型のパラメータをstatic変数に反映させる
-            BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
+                // Vector2型のパラメータをstatic変数に反映させる
+                BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
+            }
 
 
             // この弾の物理的な状態を外部の演算により求める（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
