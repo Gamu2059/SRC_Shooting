@@ -3,8 +3,6 @@
     START,
     GAME,
     DEAD,
-    CHARGE_SHOT,
-    BEGIN_BOSS_BATTLE,
     TO_HACKING,
     STAY_HACKING,
     FROM_HACKING,

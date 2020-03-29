@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LinearMishaguzi : BattleRealEnemyController
+public class LinearMishaguzi : BattleRealEnemyBase
 {
 
     // 発射間隔

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// ある単一のオブジェクトをシーケンスを用いて制御する
@@ -10,6 +11,11 @@ public class SequenceController : ControllableMonoBehavior
     private Stack<SequenceGroup> m_GroupStack;
     private SequenceGroup m_CurrentGroup;
     private SequenceUnit m_CurrentUnit;
+
+    /// <summary>
+    /// 指定したシーケンスを終えた時に呼ばれるコールバック
+    /// </summary>
+    public Action OnEndSequence;
 
     public override void OnInitialize()
     {
@@ -21,6 +27,7 @@ public class SequenceController : ControllableMonoBehavior
 
     public override void OnFinalize()
     {
+        OnEndSequence = null;
         m_GroupStack.Clear();
         m_GroupStack = null;
         base.OnFinalize();
@@ -38,7 +45,7 @@ public class SequenceController : ControllableMonoBehavior
         m_CurrentUnit.OnUpdateUnit(Time.deltaTime);
         if (m_CurrentUnit.IsEndUnit())
         {
-            GoNextUnit(true, false);
+            GoNextUnit(true, false, false);
         }
     }
 
@@ -54,7 +61,7 @@ public class SequenceController : ControllableMonoBehavior
 
         m_CurrentGroup = Instantiate(rootGroup);
         m_CurrentGroup.OnStartGroup(this);
-        GoNextUnit(false, false);
+        GoNextUnit(false, false, false);
     }
 
     /// <summary>
@@ -62,7 +69,8 @@ public class SequenceController : ControllableMonoBehavior
     /// </summary>
     /// <param name="isForward">グループが指し示すUnitを一つ進めるかどうか</param>
     /// <param name="isSelfLoop">グループ自身の中でループが発生しているかどうか</param>
-    private void GoNextUnit(bool isForward, bool isSelfLoop)
+    /// <param name="isGroupEnded">グループが終了して、その関連で遷移させているかどうか</param>
+    private void GoNextUnit(bool isForward, bool isSelfLoop, bool isGroupEnded)
     {
         if (m_CurrentGroup == null)
         {
@@ -80,6 +88,9 @@ public class SequenceController : ControllableMonoBehavior
         {
             if (m_CurrentGroup.IsLastOver(m_CurrentGroup.CurrentIndex))
             {
+                // グループよりユニットの方が終了呼び出しは早い
+                m_CurrentUnit?.OnEndUnit();
+
                 // 次が無いのでグループの終了判定を見る
                 if (m_CurrentGroup.IsEndGroup())
                 {
@@ -89,13 +100,14 @@ public class SequenceController : ControllableMonoBehavior
                     {
                         // 1つ上に戻って次を探す
                         m_CurrentGroup = m_GroupStack.Pop();
-                        GoNextUnit(true, false);
+                        GoNextUnit(true, false, true);
                     }
                     else
                     {
                         // もう何もないので処理を止める
                         m_CurrentGroup = null;
                         m_CurrentUnit = null;
+                        OnEndSequence?.Invoke();
                     }
                 }
                 else
@@ -104,7 +116,7 @@ public class SequenceController : ControllableMonoBehavior
                     {
                         // 自分自身の最初に戻って次を探す
                         m_CurrentGroup.OnLoopedGroup();
-                        GoNextUnit(false, true);
+                        GoNextUnit(false, true, true);
                     }
                     else
                     {
@@ -112,13 +124,14 @@ public class SequenceController : ControllableMonoBehavior
                         Debug.LogErrorFormat("{0} : 無限ループが発生したため終了します", GetType().Name);
                         m_CurrentGroup = null;
                         m_CurrentUnit = null;
+                        OnEndSequence?.Invoke();
                     }
                 }
             }
             else
             {
                 // 単純にnullなだけなので、次に飛ばす
-                GoNextUnit(true, false);
+                GoNextUnit(true, false, false);
             }
 
             return;
@@ -126,15 +139,26 @@ public class SequenceController : ControllableMonoBehavior
 
         if (nextReferenceElement is SequenceGroup nextReferenceGroup)
         {
+            // 次のグループが開始するよりも前に現在のユニットは終了する
+            if (m_CurrentUnit != null)
+            {
+                m_CurrentUnit.OnEndUnit();
+                m_CurrentUnit = null;
+            }
+
             // 次のUnitがGroupだった場合は、スタックに入れてさらに下の階層をたどる
             m_GroupStack.Push(m_CurrentGroup);
             m_CurrentGroup = Instantiate(nextReferenceGroup);
             m_CurrentGroup.OnStartGroup(this);
-            GoNextUnit(false, false);
+            GoNextUnit(false, false, false);
             return;
         }
 
-        m_CurrentUnit?.OnEndUnit();
+        // グループ終了の場合は既にOnEndUnitが呼ばれているはずなのでスルー
+        if (!isGroupEnded)
+        {
+            m_CurrentUnit?.OnEndUnit();
+        }
 
         if (nextReferenceElement is SequenceUnit nextReferenceUnit)
         {

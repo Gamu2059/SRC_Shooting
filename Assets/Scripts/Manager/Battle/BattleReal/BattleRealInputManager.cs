@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealInputManager : InputManagerBase
+public class BattleRealInputManager : InputManagerBase<BattleRealInputManager>
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -29,8 +29,6 @@ public class BattleRealInputManager : InputManagerBase
         KeyCode.Alpha9,
     };
 
-    public static BattleRealInputManager Instance => BattleRealManager.Instance.InputManager;
-
     public Vector2 MoveDir { get; private set; }
 
     public E_INPUT_STATE Submit { get; private set; }
@@ -46,6 +44,13 @@ public class BattleRealInputManager : InputManagerBase
     public E_INPUT_STATE ChangeMode { get; private set; }
 
     public E_INPUT_STATE Menu { get; private set; }
+
+    public static BattleRealInputManager Builder()
+    {
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
+    }
 
     public override void OnUpdate()
     {

@@ -5,7 +5,7 @@
         public override void OnStart()
         {
             base.OnStart();
-            Target.OnTransitionToHacking?.Invoke();
+            BattleRealUiManager.Instance.PlayToHacking();
         }
     }
 }

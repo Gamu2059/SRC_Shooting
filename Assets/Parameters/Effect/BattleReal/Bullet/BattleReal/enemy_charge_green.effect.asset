@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e4b8dc684c00345b377bc238b23c5c, type: 3}
+  m_Name: enemy_charge_green.effect
+  m_EditorClassIdentifier: 
+  m_Effect: {fileID: 3007492986554732069, guid: ee2fc4dcbe747ab4794a987d61ce808a,
+    type: 3}
+  m_FirePositionRelative: 0
+  m_FirePosition:
+    m_ValueType: 0
+    m_ConstantValue: {x: 0, y: 0.02, z: 0}
+    m_RandomMinValue: {x: 0, y: 0, z: 0}
+    m_RandomMaxValue: {x: 0, y: 0, z: 0}
+  m_FireRotationRelative: 0
+  m_FireRotation:
+    m_ValueType: 0
+    m_ConstantValue: {x: 0, y: 0, z: 0}
+    m_RandomMinValue: {x: 0, y: 0, z: 0}
+    m_RandomMaxValue: {x: 0, y: 0, z: 0}
+  m_FireScaleRelative: 1
+  m_FireScale:
+    m_ValueType: 0
+    m_ConstantValue: {x: 1, y: 1, z: 1}
+    m_RandomMinValue: {x: 0, y: 0, z: 0}
+    m_RandomMaxValue: {x: 0, y: 0, z: 0}
+  m_IsAllowOwnerPosition: 1
+  m_IsAllowOwnerRotation: 1
+  m_IsAutoDestroyDuration: 1
+  m_Duration: 1.2
+  m_PlaySoundParams: []

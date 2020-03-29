@@ -1,4 +1,4 @@
-﻿public enum E_STATE
+﻿public enum E_STAGE
 {
     EASY_0,
     EASY_1,

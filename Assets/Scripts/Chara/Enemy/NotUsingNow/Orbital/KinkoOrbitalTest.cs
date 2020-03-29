@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KinkoOrbitalTest : BattleRealEnemyController
+public class KinkoOrbitalTest : BattleRealEnemyBase
 {
 
     // 発射間隔

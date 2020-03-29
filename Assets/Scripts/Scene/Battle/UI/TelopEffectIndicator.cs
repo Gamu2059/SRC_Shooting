@@ -106,7 +106,7 @@ public class TelopEffectIndicator : ControllableMonoBehavior
                     m_Phase = E_PHASE.EXIT;
                     m_WaitTimer = null;
                 });
-                TimerManager.Instance.RegistTimer(m_WaitTimer);
+                BattleRealTimerManager.Instance.RegistTimer(m_WaitTimer);
                 break;
             case E_PHASE.EXIT:
                 if (m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)

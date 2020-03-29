@@ -8,8 +8,10 @@ using System.Linq;
 /// リアルモードのエフェクトを管理する。
 /// </summary>
 [Serializable]
-public class BattleRealEffectManager : ControllableObject
+public class BattleRealEffectManager : Singleton<BattleRealEffectManager>
 {
+    #region Define
+
     private class SequentialData
     {
         public List<SequentialEffectParamSet.SequentialEffectParam> Effects;
@@ -36,16 +38,7 @@ public class BattleRealEffectManager : ControllableObject
         }
     }
 
-    public static BattleRealEffectManager Instance {
-        get {
-            if (BattleRealManager.Instance == null)
-            {
-                return null;
-            }
-
-            return BattleRealManager.Instance.EffectManager;
-        }
-    }
+    #endregion
 
     #region Field
 
@@ -83,9 +76,17 @@ public class BattleRealEffectManager : ControllableObject
 
     #endregion
 
-    public BattleRealEffectManager()
+    public static BattleRealEffectManager Builder(BattleRealManager realManager)
     {
+        var manager = Create();
+        manager.SetCallback(realManager);
+        manager.OnInitialize();
+        return manager;
+    }
 
+    private void SetCallback(BattleRealManager manager)
+    {
+        manager.ChangeStateAction += OnChangeStateBattleRealManager;
     }
 
     #region Game Cycle
@@ -99,16 +100,10 @@ public class BattleRealEffectManager : ControllableObject
         m_GotoPoolEffects = new List<BattleCommonEffectController>();
         m_StandbySequentialDatas = new List<SequentialData>();
         m_ProcessingSequentialDatas = new List<SequentialData>();
-
-        BattleRealManager.Instance.OnTransitionToHacking += PauseAllEffect;
-        BattleRealManager.Instance.OnTransitionToReal += ResumeAllEffect;
     }
 
     public override void OnFinalize()
     {
-        BattleRealManager.Instance.OnTransitionToReal -= ResumeAllEffect;
-        BattleRealManager.Instance.OnTransitionToHacking -= PauseAllEffect;
-
         m_ProcessingSequentialDatas.Clear();
         m_StandbySequentialDatas.Clear();
         m_StandbyEffects.Clear();
@@ -135,7 +130,10 @@ public class BattleRealEffectManager : ControllableObject
                 continue;
             }
 
-            effect.OnStart();
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                effect.OnStart();
+            }
         }
 
         GotoUpdateFromStandby();
@@ -148,7 +146,10 @@ public class BattleRealEffectManager : ControllableObject
                 continue;
             }
 
-            effect.OnUpdate();
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                effect.OnUpdate();
+            }
         }
 
         // 処理中シーケンシャルデータの処理
@@ -194,7 +195,10 @@ public class BattleRealEffectManager : ControllableObject
                 continue;
             }
 
-            effect.OnLateUpdate();
+            if (effect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+            {
+                effect.OnLateUpdate();
+            }
         }
 
         // 除外判定
@@ -243,6 +247,7 @@ public class BattleRealEffectManager : ControllableObject
             else if (effect.Cycle != E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
             {
                 CheckPoolEffect(effect);
+                continue;
             }
 
             effect.Cycle = E_POOLED_OBJECT_CYCLE.UPDATE;
@@ -262,13 +267,13 @@ public class BattleRealEffectManager : ControllableObject
         for (int i = 0; i < count; i++)
         {
             int idx = count - i - 1;
-            var bullet = m_GotoPoolEffects[idx];
-            bullet.OnFinalize();
-            bullet.Cycle = E_POOLED_OBJECT_CYCLE.POOLED;
-            bullet.gameObject.SetActive(false);
+            var effect = m_GotoPoolEffects[idx];
+            effect.OnFinalize();
+            effect.Cycle = E_POOLED_OBJECT_CYCLE.POOLED;
+            effect.gameObject.SetActive(false);
             m_GotoPoolEffects.RemoveAt(idx);
-            m_UpdateEffects.Remove(bullet);
-            m_PoolEffects.Add(bullet);
+            m_UpdateEffects.Remove(effect);
+            m_PoolEffects.Add(effect);
         }
 
         m_GotoPoolEffects.Clear();
@@ -311,7 +316,7 @@ public class BattleRealEffectManager : ControllableObject
     /// プールからエフェクトを取得する。
     /// 足りなければ生成する。
     /// </summary>
-    public BattleCommonEffectController GetPoolingEffect(BattleCommonEffectController effectPrefab)
+    private BattleCommonEffectController GetPoolingEffect(BattleCommonEffectController effectPrefab)
     {
         if (effectPrefab == null)
         {
@@ -343,7 +348,7 @@ public class BattleRealEffectManager : ControllableObject
     /// <summary>
     /// エフェクトを作成する。
     /// </summary>
-    public BattleCommonEffectController CreateEffect(EffectParamSet paramSet, Transform owner = null)
+    public BattleCommonEffectController CreateEffect(EffectParamSet paramSet, Transform owner)
     {
         if (paramSet == null)
         {
@@ -365,7 +370,7 @@ public class BattleRealEffectManager : ControllableObject
     /// <summary>
     /// シーケンシャルエフェクトを登録する。
     /// </summary>
-    public void RegisterSequentialEffect(SequentialEffectParamSet paramSet, Transform owner = null, bool isCancelOnOwnerNull = false, Action<BattleCommonEffectController> onCreateEffect = null)
+    public void RegisterSequentialEffect(SequentialEffectParamSet paramSet, Transform owner, bool isCancelOnOwnerNull = false, Action<BattleCommonEffectController> onCreateEffect = null)
     {
         if (paramSet == null)
         {
@@ -386,15 +391,8 @@ public class BattleRealEffectManager : ControllableObject
     /// </summary>
     public void PauseAllEffect()
     {
-        foreach (var e in m_StandbyEffects)
-        {
-            e.Pause();
-        }
-
-        foreach (var e in m_UpdateEffects)
-        {
-            e.Pause();
-        }
+        m_StandbyEffects.ForEach(e => e.Pause());
+        m_UpdateEffects.ForEach(e => e.Pause());
     }
 
     /// <summary>
@@ -402,15 +400,8 @@ public class BattleRealEffectManager : ControllableObject
     /// </summary>
     public void ResumeAllEffect()
     {
-        foreach (var e in m_StandbyEffects)
-        {
-            e.Resume();
-        }
-
-        foreach (var e in m_UpdateEffects)
-        {
-            e.Resume();
-        }
+        m_StandbyEffects.ForEach(e => e.Resume());
+        m_UpdateEffects.ForEach(e => e.Resume());
     }
 
     /// <summary>
@@ -419,14 +410,72 @@ public class BattleRealEffectManager : ControllableObject
     /// </summary>
     public void StopAllEffect(bool isImmediate)
     {
+        m_StandbyEffects.ForEach(e => e.Stop(isImmediate));
+        m_UpdateEffects.ForEach(e => e.Stop(isImmediate));
+    }
+
+    /// <summary>
+    /// 全てのエフェクトを破棄する。
+    /// </summary>
+    public void DestroyAllEffect(bool isImmediate)
+    {
+        m_StandbySequentialDatas.ForEach(s => s.WillDestroy = true);
+        m_ProcessingSequentialDatas.ForEach(s => s.WillDestroy = true);
+        m_StandbyEffects.ForEach(e => e.Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_POOL);
+        m_UpdateEffects.ForEach(e => e.DestroyEffect(isImmediate));
+    }
+
+    /// <summary>
+    /// 指定したオーナーを持つエフェクトを破棄する。
+    /// </summary>
+    public void DestroyEffectByOwner(Transform owner, bool isImmediate)
+    {
+        foreach (var s in m_StandbySequentialDatas)
+        {
+            if (s.Owner == owner)
+            {
+                s.WillDestroy = true;
+            }
+        }
+
+        foreach (var s in m_ProcessingSequentialDatas)
+        {
+            if (s.Owner == owner)
+            {
+                s.WillDestroy = true;
+            }
+        }
+
+        // DestroyEffectを呼び出しても意味がないので、サイクルを上書きして破棄にもっていく
         foreach (var e in m_StandbyEffects)
         {
-            e.Stop(isImmediate);
+            if (e.Owner == owner)
+            {
+                e.Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_POOL;
+            }
         }
 
         foreach (var e in m_UpdateEffects)
         {
-            e.Stop(isImmediate);
+            if (e.Owner == owner)
+            {
+                e.DestroyEffect(isImmediate);
+            }
+        }
+    }
+
+    private void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
+    {
+        switch (state)
+        {
+            case E_BATTLE_REAL_STATE.TO_HACKING:
+                PauseAllEffect();
+                break;
+            case E_BATTLE_REAL_STATE.FROM_HACKING:
+                ResumeAllEffect();
+                break;
+            default:
+                break;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TitleInputManager : InputManagerBase
+public class TitleInputManager : InputManagerBase<TitleInputManager>
 {
     private const string VERTICAL = "Vertical";
     private const string SUBMIT = "Submit";

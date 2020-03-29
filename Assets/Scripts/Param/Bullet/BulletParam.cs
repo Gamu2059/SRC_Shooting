@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Bulletに渡すパラメータ。
 /// </summary>
-[System.Serializable, CreateAssetMenu( menuName = "Param/BulletParam", fileName = "BulletParam" )]
+[Serializable, CreateAssetMenu( menuName = "Param/BattleCommon/BulletParam", fileName = "param.bullet" , order = 0)]
 public class BulletParam : ScriptableObject
 {
 	[Tooltip( "弾の継続時間 これを超えると自動消滅する" )]

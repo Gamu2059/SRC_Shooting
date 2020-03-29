@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[Obsolete]
 [Serializable, CreateAssetMenu(menuName = "Param/INF-C-761/Phase3", fileName = "param.inf_c_761_phase_3.asset")]
 public class InfC761Phase3ParamSet : BattleRealBossBehaviorUnitParamSet
 {

@@ -26,22 +26,22 @@ public class SequenceUnitLerp : SequenceUnit
     [SerializeField, Tooltip("回転において、ほぼ1周するような時に、近い方向を使って補間していくかどうか")]
     private bool m_CalcNearRotation;
 
-    private Vector3 m_OnStartWorldPosition;
+    private Vector3 m_OnStartPosition;
     private Vector3 m_OnStartEulerAngles;
-    private Vector3 m_NextWorldPosition;
+    private Vector3 m_NextPosition;
     private Vector3 m_NextEulerAngles;
 
     protected override void OnStart()
     {
         base.OnStart();
 
-        m_OnStartWorldPosition = Target.position;
-        m_OnStartEulerAngles = Target.eulerAngles;
+        m_OnStartPosition = m_SpaceType == Space.World ? Target.position : Target.localPosition;
+        m_OnStartEulerAngles = m_SpaceType == Space.World ? Target.eulerAngles : Target.localEulerAngles;
 
         var nextUnit = Controller.GetNextReferenceUnit();
         if (nextUnit == null)
         {
-            m_NextWorldPosition = m_OnStartWorldPosition;
+            m_NextPosition = m_OnStartPosition;
             m_NextEulerAngles = m_OnStartEulerAngles;
 
             Debug.LogWarningFormat("[{0}] : 次のSequenceUnitを見つけることが出来ませんでいた", GetType().Name);
@@ -49,7 +49,23 @@ public class SequenceUnitLerp : SequenceUnit
             return;
         }
 
-        nextUnit.GetStartTransform(Target, out m_NextWorldPosition, out m_NextEulerAngles);
+        Space nextUnitSpaceType;
+        nextUnit.GetStartTransform(Target, out nextUnitSpaceType, out m_NextPosition, out m_NextEulerAngles);
+        
+        // 座標系が異なる場合は一致させる
+        if (m_SpaceType != nextUnitSpaceType)
+        {
+            if (m_SpaceType == Space.World)
+            {
+                m_NextPosition = Target.LocalPositionToWorldPosition(m_NextPosition);
+                m_NextEulerAngles = Target.LocalEulerAnglesToWorldEulerAngles(m_NextEulerAngles);
+            }
+            else
+            {
+                m_NextPosition = Target.WorldPositionToLocalPosition(m_NextPosition);
+                m_NextEulerAngles = Target.WorldEulerAnglesToLocaEulerlAngles(m_NextEulerAngles);
+            }
+        }
 
         if (m_CalcNearRotation)
         {
@@ -69,8 +85,18 @@ public class SequenceUnitLerp : SequenceUnit
         var posLerp = m_PositionLerp.Evaluate(CurrentTime);
         var rotLerp = m_RotationLerp.Evaluate(CurrentTime);
 
-        Target.position = Vector3.Lerp(m_OnStartWorldPosition, m_NextWorldPosition, posLerp);
-        Target.eulerAngles = Vector3.Lerp(m_OnStartEulerAngles, m_NextEulerAngles, rotLerp);
+        var pos = Vector3.Lerp(m_OnStartPosition, m_NextPosition, posLerp);
+        var rot = Vector3.Lerp(m_OnStartEulerAngles, m_NextEulerAngles, rotLerp);
+
+        if (m_SpaceType == Space.World)
+        {
+            Target.SetPositionAndRotation(pos, Quaternion.Euler(rot));
+        }
+        else
+        {
+            Target.localPosition = pos;
+            Target.localEulerAngles = rot;
+        }
     }
 
     protected override bool IsEnd()

@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3926154292488969787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5882034224484453810}
+  - component: {fileID: 3007492986554732069}
+  m_Layer: 11
+  m_Name: enemy_charge_blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5882034224484453810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926154292488969787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5334879308641924358}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3007492986554732069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926154292488969787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8de59207462efd4e9d65e33f16af5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectGroupId: enemy_charge_blue
+  m_ParticleSystems:
+  - {fileID: 5334879308556758640}
+  - {fileID: 5334879308243560234}
+  - {fileID: 5334879308047372973}
+  - {fileID: 5334879308992925394}
+  m_Animators: []
+  Cycle: 0
+  IsAllowOwner: 0
+  RelatedAllowPos: {x: 0, y: 0, z: 0}
+  IsAllowOwnerAngle: 0
+--- !u!1001 &2475576688714875984
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5882034224484453810}
+    m_Modifications:
+    - target: {fileID: 7517158237560926551, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_Name
+      value: enemy_charge_blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5aa34ed05c0b74c41a330087d9727d77, type: 3}
+--- !u!4 &5334879308641924358 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7517158237560926550, guid: 5aa34ed05c0b74c41a330087d9727d77,
+    type: 3}
+  m_PrefabInstance: {fileID: 2475576688714875984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5334879308556758640 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7517158237507807776, guid: 5aa34ed05c0b74c41a330087d9727d77,
+    type: 3}
+  m_PrefabInstance: {fileID: 2475576688714875984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5334879308243560234 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7517158237966623610, guid: 5aa34ed05c0b74c41a330087d9727d77,
+    type: 3}
+  m_PrefabInstance: {fileID: 2475576688714875984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5334879308047372973 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7517158236964280061, guid: 5aa34ed05c0b74c41a330087d9727d77,
+    type: 3}
+  m_PrefabInstance: {fileID: 2475576688714875984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5334879308992925394 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7517158236064860802, guid: 5aa34ed05c0b74c41a330087d9727d77,
+    type: 3}
+  m_PrefabInstance: {fileID: 2475576688714875984}
+  m_PrefabAsset: {fileID: 0}

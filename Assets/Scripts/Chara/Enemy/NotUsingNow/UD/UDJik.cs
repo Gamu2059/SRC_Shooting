@@ -42,7 +42,7 @@ public class UDJik : DanmakuCountAbstract
 
 
     // 弾の位置とオイラー角を計算して発射する[発射時刻、発射からの経過時間]
-    public override void ShotBullets(BattleRealEnemyController enemyController, float launchTime, float dTime)
+    public override void ShotBullets(BattleRealEnemyBase enemyController, float launchTime, float dTime)
     {
         var player = BattleRealPlayerManager.Instance.Player;
         Vector3 relativePosition = player.transform.position - (enemyController.transform.position + m_Vector3[(int)VECTOR3.発射位置]);

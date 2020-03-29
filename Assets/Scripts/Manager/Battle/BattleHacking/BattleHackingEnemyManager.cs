@@ -8,10 +8,8 @@ using EnemyContent = BattleHackingLevelParamSet.Content;
 /// <summary>
 /// ハッキングモードの敵キャラを管理する。
 /// </summary>
-public class BattleHackingEnemyManager : ControllableObject
+public class BattleHackingEnemyManager : Singleton<BattleHackingEnemyManager>
 {
-    public static BattleHackingEnemyManager Instance => BattleHackingManager.Instance.EnemyManager;
-
     #region Field
 
     public BattleHackingEnemyManagerParamSet ParamSet { get; private set; }
@@ -51,9 +49,23 @@ public class BattleHackingEnemyManager : ControllableObject
 
     #endregion
 
-    public BattleHackingEnemyManager(BattleHackingEnemyManagerParamSet paramSet)
+    public static BattleHackingEnemyManager Builder(BattleHackingManager hackingManager, BattleHackingEnemyManagerParamSet param)
     {
-        ParamSet = paramSet;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.SetCallback(hackingManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleHackingEnemyManagerParamSet param)
+    {
+        ParamSet = param;
+    }
+
+    private void SetCallback(BattleHackingManager manager)
+    {
+
     }
 
     #region Game Cycle
@@ -560,5 +572,15 @@ public class BattleHackingEnemyManager : ControllableObject
     public void OnPutAway()
     {
         CheckPoolAllEnemy();
+    }
+
+    public void DeadBoss()
+    {
+        //m_IsDeadBoss = true;
+    }
+
+    public void Timeout()
+    {
+
     }
 }

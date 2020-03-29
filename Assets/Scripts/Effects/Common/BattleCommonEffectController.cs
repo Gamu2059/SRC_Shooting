@@ -35,17 +35,27 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     /// </summary>
     public Transform Owner { get; private set; }
 
-    [SerializeField]
-    private E_POOLED_OBJECT_CYCLE m_Cycle;
-    public E_POOLED_OBJECT_CYCLE Cycle {
-        get => m_Cycle;
-        set => m_Cycle = value;
-    }
+    [HideInInspector]
+    public E_POOLED_OBJECT_CYCLE Cycle;
 
-    private bool m_IsAllowOwner;
-    public bool IsAllowOwner { get; private set; }
+    /// <summary>
+    /// エフェクトの所有者との位置関係を維持するかどうか。
+    /// </summary>
+    [HideInInspector]
+    public bool IsAllowOwner;
 
-    private Vector3 m_RelatedAllowPos;
+    /// <summary>
+    /// エフェクトの所有者との相対位置。
+    /// </summary>
+    [HideInInspector]
+    public Vector3 RelatedAllowPos;
+
+    /// <summary>
+    /// エフェクトの所有者との角度関係を維持するかどうか。<br/>
+    /// IsAllowOwner == true && IsAllowOwnerAngle == true とすると所有者との相対位置に回転も考慮されるようになる。
+    /// </summary>
+    [HideInInspector]
+    public bool IsAllowOwnerAngle;
 
     private bool m_IsAutoDestroyDuration;
 
@@ -83,12 +93,12 @@ public class BattleCommonEffectController : ControllableMonoBehavior
         if (Owner == null || paramSet.FirePositionRelative == E_RELATIVE.ABSOLUTE)
         {
             transform.position = position;
-            m_RelatedAllowPos = Vector3.zero;
+            RelatedAllowPos = Vector3.zero;
         }
         else
         {
             transform.position = position + Owner.position;
-            m_RelatedAllowPos = position;
+            RelatedAllowPos = position;
         }
 
         if (Owner == null || paramSet.FireRotationRelative == E_RELATIVE.ABSOLUTE)
@@ -112,7 +122,8 @@ public class BattleCommonEffectController : ControllableMonoBehavior
             transform.localScale = scale;
         }
 
-        m_IsAllowOwner = paramSet.IsAllowOwnerPosition && Owner != null;
+        IsAllowOwner = paramSet.IsAllowOwnerPosition && Owner != null;
+        IsAllowOwnerAngle = paramSet.IsAllowOwnerRotation && Owner != null;
         m_IsAutoDestroyDuration = paramSet.IsAutoDestroyDuration;
         m_Duration = paramSet.Duration;
 
@@ -167,10 +178,18 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     {
         base.OnUpdate();
 
-        if (m_IsAllowOwner && Owner != null)
+        if (Owner != null)
         {
-            var ownerPos = Owner.transform.position;
-            transform.position = ownerPos + m_RelatedAllowPos;
+            if (IsAllowOwner && IsAllowOwnerAngle)
+            {
+                var ownerPos = Owner.transform.position;
+                transform.position = ownerPos + Owner.rotation * RelatedAllowPos;
+            }
+            else if (IsAllowOwner)
+            {
+                var ownerPos = Owner.transform.position;
+                transform.position = ownerPos + RelatedAllowPos;
+            }
         }
 
         if (m_Animators != null)
@@ -200,11 +219,11 @@ public class BattleCommonEffectController : ControllableMonoBehavior
 
     public virtual void DestroyEffect(bool isImmediateStop)
     {
-        if (m_Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
+        if (Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             Stop(isImmediateStop);
             // マネージャが自動的に回収することを期待してプールスタンバイにする
-            m_Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_CHECK_POOL;
+            Cycle = E_POOLED_OBJECT_CYCLE.STANDBY_CHECK_POOL;
         }
     }
 

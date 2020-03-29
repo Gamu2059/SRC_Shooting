@@ -5,21 +5,17 @@
         public override void OnStart()
         {
             base.OnStart();
-            Target.RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TO_HACKING);
-            Target.HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TRANSITION_TO_HACKING);
+            Target.m_RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TO_HACKING);
+            Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.FROM_REAL);
 
             DataManager.Instance.BattleData.IncreaseHackingTryCount();
 
-            Target.BattleHackingStageManager.gameObject.SetActive(true);
 
             Target.m_VideoPlayer.clip = Target.m_ParamSet.ToHackingMovie;
             Target.m_VideoPlayer.Play();
             Target.m_VideoPlayer.gameObject.SetActive(true);
 
             AudioManager.Instance.Play(Target.m_ParamSet.ToHackingSe);
-
-            Target.BattleRealUiManager.PlayToHacking();
-            Target.BattleHackingUiManager.PlayToHacking();
         }
 
         public override void OnUpdate()
@@ -41,40 +37,27 @@
                 Target.RequestChangeState(E_BATTLE_STATE.HACKING_MODE);
             }
 
-            Target.RealManager.OnUpdate();
-            Target.HackingManager.OnUpdate();
-
-            Target.BattleRealUiManager.OnUpdate();
-            Target.BattleHackingUiManager.OnUpdate();
+            Target.m_RealManager.OnUpdate();
+            Target.m_HackingManager.OnUpdate();
         }
 
         public override void OnLateUpdate()
         {
             base.OnLateUpdate();
-            Target.RealManager.OnLateUpdate();
-            Target.HackingManager.OnLateUpdate();
-
-            Target.BattleRealUiManager.OnLateUpdate();
-            Target.BattleHackingUiManager.OnLateUpdate();
+            Target.m_RealManager.OnLateUpdate();
+            Target.m_HackingManager.OnLateUpdate();
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            Target.RealManager.OnFixedUpdate();
-            Target.HackingManager.OnFixedUpdate();
-
-            Target.BattleRealUiManager.OnFixedUpdate();
-            Target.BattleHackingUiManager.OnFixedUpdate();
+            Target.m_RealManager.OnFixedUpdate();
+            Target.m_HackingManager.OnFixedUpdate();
         }
 
         public override void OnEnd()
         {
             base.OnEnd();
-            Target.RealManager.RequestChangeState(E_BATTLE_REAL_STATE.STAY_HACKING);
-            Target.HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.GAME);
-
-            Target.m_BattleRealStageManager.gameObject.SetActive(false);
             Target.m_VideoPlayer.gameObject.SetActive(false);
             Target.m_VideoPlayer.Stop();
         }

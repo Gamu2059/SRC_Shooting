@@ -38,6 +38,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 		// 以下はテスト用(必要ならば追加していって)
 		CAMERA_TEST = 14,
+		ENEMY_TEST = 15,
 	}
 
     /// <summary>

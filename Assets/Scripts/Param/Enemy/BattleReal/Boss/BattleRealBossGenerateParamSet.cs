@@ -13,10 +13,6 @@ public class BattleRealBossGenerateParamSet : BattleRealEnemyGenerateParamSet
 {
     [Header("ダウン")]
 
-    [SerializeField, Tooltip("何回ハッキングに成功すれば\"救出\"になるのか")]
-    private int m_HackingCompleteNum;
-    public int HackingCompleteNum => m_HackingCompleteNum;
-
     [SerializeField, Tooltip("ダウンHP ハッキング成功回数に応じて変わってくる可能性があるので配列化")]
     private float[] m_DownHpArray;
     public float[] DownHpArray => m_DownHpArray;
@@ -66,4 +62,14 @@ public class BattleRealBossGenerateParamSet : BattleRealEnemyGenerateParamSet
     [SerializeField, Tooltip("救出時の敵非表示タイミング")]
     private float m_RescueHideTime;
     public float RescueHideTime => m_RescueHideTime;
+
+    [Header("ハッキングパラメータ")]
+
+    [SerializeField, Tooltip("何回ハッキングに成功すれば\"救出\"になるのか 下記のハッキングモードの生成パラメータとは数が一致しない可能性もある")]
+    private int m_HackingCompleteNum;
+    public int HackingCompleteNum => m_HackingCompleteNum;
+
+    [SerializeField, Tooltip("ハッキングモードの生成パラメータ")]
+    private BattleHackingLevelParamSet[] m_HackingLevelParamSets;
+    public BattleHackingLevelParamSet[] HackingLevelParamSets => m_HackingLevelParamSets;
 }

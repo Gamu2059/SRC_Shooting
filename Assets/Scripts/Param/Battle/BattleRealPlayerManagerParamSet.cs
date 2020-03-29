@@ -19,6 +19,10 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     private Vector2 m_InitAppearViewportPosition;
     public Vector2 InitAppearViewportPosition => m_InitAppearViewportPosition;
 
+    [SerializeField, Tooltip("プレイヤー復活時のシーケンス")]
+    private SequenceGroup m_RespawnSequence;
+    public SequenceGroup RespawnSequence => m_RespawnSequence;
+
     [SerializeField, Tooltip("プレイヤーの基本移動速度")]
     private float m_PlayerBaseMoveSpeed;
     public float PlayerBaseMoveSpeed => m_PlayerBaseMoveSpeed;
@@ -34,6 +38,14 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     [SerializeField, Tooltip("チャージエフェクト")]
     private EffectParamSet m_ChargeEffectParam;
     public EffectParamSet ChargeEffectParam => m_ChargeEffectParam;
+
+    [SerializeField, Tooltip("シールドエフェクト")]
+    private EffectParamSet m_ShieldEffectParam;
+    public EffectParamSet ShieldEffectParam => m_ShieldEffectParam;
+
+    [SerializeField, Tooltip("死亡エフェクト")]
+    private EffectParamSet m_DeadEffectParam;
+    public EffectParamSet DeadEffectParam => m_DeadEffectParam;
 
     [Header("カメラウェーブ")]
 

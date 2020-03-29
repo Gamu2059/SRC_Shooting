@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class BattleRealUiManager : ControllableMonoBehavior
+public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 {
     private const string TO_HACKING = "battle_real_ui_to_hacking";
     private const string TO_REAL = "battle_real_ui_to_real";
@@ -96,17 +96,31 @@ public class BattleRealUiManager : ControllableMonoBehavior
     [SerializeField]
     private ResultIndicator m_ResultIndicator;
 
+    [Header("Game Over")]
+
+    [SerializeField]
+    private GameOverController m_GameOverController;
+
     #endregion
 
     private bool m_IsShowResult;
 
+    #region Closed Callback
+
+    private Action EndAction { get; set; }
+
+    #endregion
+
+    public void SetCallback(BattleRealManager manager)
+    {
+        EndAction += manager.End;
+    }
 
     #region Game Cycle
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        m_StageClearAnimator.gameObject.SetActive(false);
         m_IsShowResult = false;
     }
 
@@ -132,6 +146,8 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_BossDownGage.OnInitialize();
         m_BossRemainingHackingIndicator.OnInitialize();
         m_ResultIndicator.OnInitialize();
+        m_GameOverController.OnInitialize();
+        m_GameOverController.EndAction += OnEndGameOver;
 
         m_StartTelop.OnInitialize();
         m_WarningTelop.OnInitialize();
@@ -142,10 +158,13 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     public override void OnFinalize()
     {
+        EndAction = null;
+
         m_ClearTelop.OnFinalize();
         m_WarningTelop.OnFinalize();
         m_StartTelop.OnFinalize();
 
+        m_GameOverController.OnFinalize();
         m_ResultIndicator.OnFinalize();
         m_BossRemainingHackingIndicator.OnFinalize();
         m_BossDownGage.OnFinalize();
@@ -179,6 +198,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         m_BossDownGage.OnUpdate();
         m_BossRemainingHackingIndicator.OnUpdate();
         m_ResultIndicator.OnUpdate();
+        m_GameOverController.OnUpdate();
 
         m_StartTelop.OnUpdate();
         m_WarningTelop.OnUpdate();
@@ -187,7 +207,7 @@ public class BattleRealUiManager : ControllableMonoBehavior
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;
-            BattleRealManager.Instance.End();
+            EndAction?.Invoke();
         }
     }
 
@@ -213,6 +233,16 @@ public class BattleRealUiManager : ControllableMonoBehavior
 
     public void SetEnableBossUI(bool isEnable){
         m_BossUI.SetActive(isEnable);
+    }
+
+    public void PlayGameOver()
+    {
+        m_GameOverController.PlayGameOver();
+    }
+
+    private void OnEndGameOver()
+    {
+        EndAction?.Invoke();
     }
 
     public void PlayGameClearAnimation()

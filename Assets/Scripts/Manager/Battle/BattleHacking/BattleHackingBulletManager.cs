@@ -8,10 +8,8 @@ using System.Linq;
 /// コマンドイベントの全ての弾の制御を管理する。
 /// </summary>
 [Serializable]
-public class BattleHackingBulletManager : ControllableObject, IColliderProcess
+public class BattleHackingBulletManager : Singleton<BattleHackingBulletManager>, IColliderProcess
 {
-    public static BattleHackingBulletManager Instance => BattleHackingManager.Instance.BulletManager;
-
     #region Field
 
     private BattleHackingBulletManagerParamSet m_ParamSet;
@@ -52,9 +50,23 @@ public class BattleHackingBulletManager : ControllableObject, IColliderProcess
 
     #endregion
 
-    public BattleHackingBulletManager(BattleHackingBulletManagerParamSet paramSet)
+    public static BattleHackingBulletManager Builder(BattleHackingManager hackingManager, BattleHackingBulletManagerParamSet param)
     {
-        m_ParamSet = paramSet;
+        var manager = Create();
+        manager.SetParam(param);
+        manager.SetCallback(hackingManager);
+        manager.OnInitialize();
+        return manager;
+    }
+
+    private void SetParam(BattleHackingBulletManagerParamSet param)
+    {
+        m_ParamSet = param;
+    }
+
+    private void SetCallback(BattleHackingManager manager)
+    {
+
     }
 
     #region Game Cycle

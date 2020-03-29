@@ -120,7 +120,7 @@ public class BattleHackingPlayerController : CommandCharaController
 
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
         BattleHackingEffectManager.Instance.CreateEffect(paramSet.DeadEffectParam, transform);
-        BattleHackingManager.Instance.DeadPlayer();
+        BattleHackingPlayerManager.Instance.DeadPlayer();
 
         gameObject.SetActive(false);
     }

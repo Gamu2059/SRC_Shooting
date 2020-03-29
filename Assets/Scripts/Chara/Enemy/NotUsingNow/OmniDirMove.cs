@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OmniDirMove : BattleRealEnemyController
+public class OmniDirMove : BattleRealEnemyBase
 {
 
     // 発射間隔

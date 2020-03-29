@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyBehavior/AnimationCurve", fileName = "behavior.animation_curve.asset")]
-
+[Serializable, Obsolete]
 public class AnimationCurveEnemyParamSet : BattleRealEnemyBehaviorParamSet
 {
     [Header("Move Param")]

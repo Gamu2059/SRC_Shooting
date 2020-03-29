@@ -977,7 +977,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5672039974673091813}
   - component: {fileID: 5672039974673091822}
-  - component: {fileID: 5672039974673091817}
   - component: {fileID: 5672039974673091816}
   - component: {fileID: 5672039974673091819}
   - component: {fileID: 5672039974673091818}
@@ -1029,7 +1028,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 4.8
-  m_Depth: 0
+  m_Depth: 50
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 16384
@@ -1044,14 +1043,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5672039974673091817
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5672039974673091812}
-  m_Enabled: 1
 --- !u!114 &5672039974673091816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2866,6 +2857,7 @@ GameObject:
   - component: {fileID: 5672039975778995328}
   - component: {fileID: 5672039975778995342}
   - component: {fileID: 5672039975778995343}
+  - component: {fileID: 1248727651717999708}
   m_Layer: 14
   m_Name: AdvEngine
   m_TagString: Untagged
@@ -3277,6 +3269,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unscaled: 0
+--- !u!114 &1248727651717999708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5672039975778995330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445f47a3abcc78742ba53c18853ae3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5672039975838133650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3751,7 +3755,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 4.8
-  m_Depth: 5
+  m_Depth: 51
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 32768
@@ -4124,22 +4128,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 100006, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 100008, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4224,6 +4212,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fff572331f13ee44b9e8427d50e182ee, type: 3}
 --- !u!224 &3899401295869667451 stripped
@@ -4247,15 +4251,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: bcba093672c9a734db7420291522c465, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 11408032, guid: bcba093672c9a734db7420291522c465, type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: f435e99f062356a48921e6a7ab50fc41,
-        type: 3}
     - target: {fileID: 22400002, guid: bcba093672c9a734db7420291522c465, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4340,6 +4335,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bcba093672c9a734db7420291522c465, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11408032, guid: bcba093672c9a734db7420291522c465, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: f435e99f062356a48921e6a7ab50fc41,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcba093672c9a734db7420291522c465, type: 3}
 --- !u!224 &6437822565802903232 stripped

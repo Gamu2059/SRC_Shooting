@@ -19,6 +19,10 @@ public class BattleRealEnemyManagerParamSet : ScriptableObject
     private Vector2 m_MaxOffsetFieldPosition;
     public Vector2 MaxOffsetFieldPosition => m_MaxOffsetFieldPosition;
 
+    [SerializeField, Tooltip("敵グループのジェネレータ")]
+    private BattleRealEnemyGroupGenerator m_Generator;
+    public BattleRealEnemyGroupGenerator Generator => m_Generator;
+
     [Header("SE"), Tooltip("あとでそれぞれの敵パラメータで指定するように変更する")]
 
     [SerializeField]

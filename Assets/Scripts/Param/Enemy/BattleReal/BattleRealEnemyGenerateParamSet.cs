@@ -8,6 +8,7 @@ using System;
 /// <summary>
 /// リアルモードの敵の生成パラメータのセット。
 /// </summary>
+[Obsolete]
 [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyGenerate", fileName = "param.battle_real_enemy_generate.asset")]
 public class BattleRealEnemyGenerateParamSet : ScriptableObject
 {

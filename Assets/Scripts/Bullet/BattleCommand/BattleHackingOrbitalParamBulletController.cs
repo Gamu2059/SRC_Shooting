@@ -855,10 +855,10 @@ public class BattleHackingOrbitalParamBulletController : BattleHackingBulletCont
 
         SetNowLifeTime(Time.deltaTime, E_RELATIVE.RELATIVE);
 
-        if (GetNowLifeTime() > GetBulletParam().LifeTime)
-        {
-            //DestroyBullet();
-        }
+        //if (GetNowLifeTime() > GetBulletParam().LifeTime)
+        //{
+        //    DestroyBullet();
+        //}
     }
 
     //public override void OnUpdate()

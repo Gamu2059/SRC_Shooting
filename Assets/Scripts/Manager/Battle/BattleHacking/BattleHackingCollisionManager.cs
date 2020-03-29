@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleHackingCollisionManager : BattleCollisionManagerBase
+public class BattleHackingCollisionManager : BattleCollisionManagerBase<BattleHackingCollisionManager>
 {
-    public static BattleHackingCollisionManager Instance { get; private set; }
-
-    public BattleHackingCollisionManager(Material collisionMaterial) : base(collisionMaterial)
+    public static BattleHackingCollisionManager Builder()
     {
-        Instance = this;
-    }
-
-    public override void OnFinalize()
-    {
-        Instance = null;
-        base.OnFinalize();
+        var manager = Create();
+        manager.OnInitialize();
+        return manager;
     }
 
     /// <summary>

@@ -22,7 +22,7 @@ public class BattleRealHackingShield : BattleCommonEffectController
         }
 
         var player = BattleRealPlayerManager.Instance.Player;
-        var camera = BattleRealCameraManager.Instance.GetFrontCamera();
+        var camera = BattleRealCameraManager.Instance.GetCameraController(E_CAMERA_TYPE.FRONT_CAMERA).Camera;
         if (Owner == null || player == null || camera == null)
         {
             DestroyEffect(true);

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class GameOverController : ControllableMonoBehavior
 {
@@ -24,6 +25,8 @@ public class GameOverController : ControllableMonoBehavior
 
     private bool m_PlayTextAnimation;
     private bool m_PlayEndAnimation;
+
+    public Action EndAction { get; set; }
 
     #region Game Cycle
 
@@ -82,7 +85,6 @@ public class GameOverController : ControllableMonoBehavior
 
         m_PlayEndAnimation = true;
         m_Animator.Play(END_GAME_OVER, 0);
-
         AudioManager.Instance.Play(m_EndSe);
     }
 
@@ -93,6 +95,6 @@ public class GameOverController : ControllableMonoBehavior
             return;
         }
 
-        BattleRealManager.Instance.End();
+        EndAction?.Invoke();
     }
 }

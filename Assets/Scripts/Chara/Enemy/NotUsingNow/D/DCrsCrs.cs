@@ -15,7 +15,7 @@ public class DCrsCrs : System.Object
     private UDOmn1 uDCrs2;
 
 
-    public void Updates(BattleRealEnemyController enemyController, float time)
+    public void Updates(BattleRealEnemyBase enemyController, float time)
     {
         uDCrs1.Updates(enemyController, time);
         uDCrs2.Updates(enemyController, time);

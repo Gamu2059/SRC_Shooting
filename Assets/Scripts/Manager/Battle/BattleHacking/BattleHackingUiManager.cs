@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleHackingUiManager : ControllableMonoBehavior
+public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManager>
 {
     private const string TO_HACKING = "battle_hacking_ui_to_hacking";
     private const string TO_REAL = "battle_hacking_ui_to_real";

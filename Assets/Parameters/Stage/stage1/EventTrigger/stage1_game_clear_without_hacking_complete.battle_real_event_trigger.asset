@@ -19,7 +19,11 @@ MonoBehaviour:
     SingleCondition:
       IsReverse: 0
       VariableType: 0
-      VariableName: Boss Defeat
+      UseGeneralIntVariable: 1
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
       CompareType: 5
       BoolCompareType: 0
       CompareValue: 1
@@ -32,20 +36,32 @@ MonoBehaviour:
     EventType: 10
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    AppearEnemyIndex: 0
+    EnemyGroupGenerateParamSet: {fileID: 0}
     ControlCameraParams:
     - CameraType: 0
-      CameraTimelineParam:
-        TimelineAsset: {fileID: 11400000, guid: 2bd0b3871a7b78740a7f4c3bfcd09e1f,
-          type: 2}
-        TrackBindParams: []
-        ReferenceBindParams:
-        - ReferenceName: BackEnd Camera
-          BindTargetName: BackCamera
-          BindTargetComponentType: Transform
-        IsDestroyEndTimeline: 0
+      SequenceGroup: {fileID: 0}
     ControlObjectParams: []
     ControlBgmParams: []
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []

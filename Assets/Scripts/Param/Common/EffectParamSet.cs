@@ -41,6 +41,10 @@ public class EffectParamSet : ScriptableObject
     private bool m_IsAllowOwnerPosition;
     public bool IsAllowOwnerPosition => m_IsAllowOwnerPosition;
 
+    [SerializeField, Tooltip("発生オブジェクトの角度を追従するかどうか")]
+    private bool m_IsAllowOwnerRotation;
+    public bool IsAllowOwnerRotation => m_IsAllowOwnerRotation;
+
     [SerializeField, Tooltip("再生時間を超過したら自動的に破棄するかどうか")]
     private bool m_IsAutoDestroyDuration;
     public bool IsAutoDestroyDuration => m_IsAutoDestroyDuration;

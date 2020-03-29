@@ -7,6 +7,7 @@ using System;
 /// ステートマシンで使用するステート。
 /// Created by Sho Yamagami.
 /// </summary>
+[Serializable]
 public class State<T, U> : ControllableObject
 {
     public T Key { get; private set; }
@@ -67,7 +68,7 @@ public class State<T, U> : ControllableObject
 
         if (Target != null && Target is IStateCallback<T> callback)
         {
-            callback.OnChangeState(Key);
+            callback.ChangeStateAction?.Invoke(Key);
         }
     }
 

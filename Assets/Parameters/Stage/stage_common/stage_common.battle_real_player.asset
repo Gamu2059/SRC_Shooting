@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b158cc9ad4f2464ea14f1e5c5f8055a, type: 3}
   m_Name: stage_common.battle_real_player
   m_EditorClassIdentifier: 
-  m_PlayerPrefab: {fileID: 6915949984067917126, guid: ebef49eadb94bd04195621177871e6c9,
+  m_PlayerPrefab: {fileID: 8230483218780302806, guid: ebef49eadb94bd04195621177871e6c9,
     type: 3}
-  m_InitAppearViewportPosition: {x: 0.5, y: 0.1}
+  m_InitAppearViewportPosition: {x: 0.5, y: -0.3}
+  m_RespawnSequence: {fileID: 11400000, guid: 08f15f9ab2f765b4a8a1e361e301d181, type: 2}
   m_PlayerBaseMoveSpeed: 1
   m_PlayerSlowMoveSpeed: 0.5
   m_IsLaserType: 1
   m_ChargeEffectParam: {fileID: 11400000, guid: 831e12128ad097c46803a62a083f7f8f,
     type: 2}
+  m_ShieldEffectParam: {fileID: 11400000, guid: a25de3426a5eac24493d75dbef68e359,
+    type: 2}
+  m_DeadEffectParam: {fileID: 11400000, guid: b9e00ef7308498c4390e7e80ef2d3d4d, type: 2}
   m_LaserShakeParam:
     XAmp: 0.3
     YAmp: 0.3

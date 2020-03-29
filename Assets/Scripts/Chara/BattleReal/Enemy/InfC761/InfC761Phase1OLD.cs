@@ -40,7 +40,7 @@ public class InfC761Phase1OLD : BattleRealBossBehavior
 
     private int m_NShotsNum;
 
-    public InfC761Phase1OLD(BattleRealEnemyController enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
+    public InfC761Phase1OLD(BattleRealEnemyBase enemy, BattleRealBossBehaviorUnitParamSet paramSet) : base(enemy, paramSet)
     {
         m_ParamSet = paramSet as InfC761Phase1ParamSetOld;
     }
@@ -177,7 +177,7 @@ public class InfC761Phase1OLD : BattleRealBossBehavior
     {
         int num = param.Num;
         float angle = param.Angle;
-        var spreadAngles = CharaController.GetBulletSpreadAngles(num, angle);
+        var spreadAngles = BattleRealCharaController.GetBulletSpreadAngles(num, angle);
         var shotParam = new BulletShotParam();
         shotParam.Position = shotPosition + Enemy.transform.position;
         shotParam.BulletParamIndex = bulletParamIndex;
