@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d88388f042d837418d382261f4fdca6, type: 3}
+  m_Script: {fileID: 11500000, guid: c35a123b43e2d4a4babd69795849e6db, type: 3}
   m_Name: Speed
   m_EditorClassIdentifier: 
-  m_Value: 0.8
+  m_Easy: {fileID: 11400000, guid: be47e54ac57c4fa429e0d0195de90e53, type: 2}
+  m_Normal: {fileID: 11400000, guid: eb5f3d33ea7eb5b4081ef8e2005984c6, type: 2}
+  m_Hard: {fileID: 11400000, guid: 8f4f212a54c7e164e999ac425d51f899, type: 2}
+  m_Hades: {fileID: 11400000, guid: aa94a3c867a28c04ebb5abc731589467, type: 2}

@@ -16,6 +16,11 @@ public class UnitDanmaku : ScriptableObject
     [SerializeField, Tooltip("発射パラメータ（演算）")]
     private ShotParamOperation m_ShotParam;
 
+
+    [SerializeField, Tooltip("弾が持つパラメータ（演算）")]
+    private BulletParamFreeOperation m_BulletParamFreeOperation;
+
+
     [SerializeField, Tooltip("弾の物理的な状態")]
     public TransformOperation m_BulletTransform;
 
@@ -40,6 +45,7 @@ public class UnitDanmaku : ScriptableObject
                     boss.GetEnemy(),
                     commonOperationVariable.DTimeOperation.GetResultFloat(),
                     m_ShotParam,
+                    m_BulletParamFreeOperation,
                     commonOperationVariable.TimeOperation,
                     commonOperationVariable.LaunchParam,
                     m_BulletTransform
