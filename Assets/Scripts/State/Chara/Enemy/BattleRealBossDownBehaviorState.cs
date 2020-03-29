@@ -6,13 +6,23 @@ partial class BattleRealBossController
 {
     private class DownBehaviorState : StateCycle
     {
-        private bool m_UseBehavior;
+        private BehaviorSet m_BehaviorSet;
         private BattleRealEnemyBehaviorUnit m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
 
         private float m_DownHealTime;
         private BattleCommonEffectController m_DownEffect;
         private BattleCommonEffectController m_DownPlayerTriangleEffect;
+
+        /// <summary>
+        /// このステートに遷移したのが1回目かどうか
+        /// </summary>
+        private bool m_IsFirstTime;
+
+        public DownBehaviorState() : base()
+        {
+            m_IsFirstTime = true;
+        }
 
         public override void OnStart()
         {
@@ -22,33 +32,30 @@ partial class BattleRealBossController
             BattleRealEnemyManager.Instance.FromHackingAction += OnFromHacking;
 
             // ダウン中はダメージコライダーを無効にする
-            Target.GetCollider().SetEnableCollider(Target.m_DamageCollider, false);
+            Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, false);
 
             BattleRealBulletManager.Instance.CheckPoolBullet(Target);
             AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
-            m_Behavior = null;
             m_DownHealTime = 0;
-            if (Target.m_CurrentBehaviorSet != null)
+            m_BehaviorSet = Target.m_CurrentBehaviorSet;
+            if (m_BehaviorSet != null)
             {
-                m_DownHealTime = Target.m_CurrentBehaviorSet.DownHealTime;
-
-                m_UseBehavior = false;
-                if (Target.m_CurrentBehaviorSet != null)
+                m_Behavior = m_BehaviorSet.DownBehavior;
+                m_BehaviorController = Target.m_DownBehaviorController;
+                switch (m_BehaviorSet.DownBehaviorType)
                 {
-                    m_UseBehavior = Target.m_CurrentBehaviorSet.BehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT;
-                    m_Behavior = Target.m_CurrentBehaviorSet.Behavior;
-                    m_BehaviorController = Target.m_BehaviorController;
-                    if (m_UseBehavior)
-                    {
-                        m_Behavior.OnStartUnit(Target, null);
-                    }
-                    else
-                    {
-                        m_BehaviorController.BuildBehavior(Target.m_CurrentBehaviorSet.BehaviorGroup);
-                    }
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnStartUnit(Target, null);
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.BuildBehavior(m_BehaviorSet.DownBehaviorGroup);
+                        break;
                 }
             }
+            m_IsFirstTime = false;
 
             var effectManager = BattleRealEffectManager.Instance;
             m_DownEffect = effectManager.CreateEffect(Target.m_BossParam.DownEffectParam, Target.transform);
@@ -66,13 +73,19 @@ partial class BattleRealBossController
         {
             base.OnUpdate();
 
-            if (m_UseBehavior)
+            if (m_BehaviorSet != null)
             {
-                m_Behavior?.OnUpdateUnit(Time.deltaTime);
-            }
-            else
-            {
-                m_BehaviorController?.OnUpdate();
+                switch (m_BehaviorSet.BehaviorType)
+                {
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnUpdateUnit(Time.deltaTime);
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.OnUpdate();
+                        break;
+                }
             }
 
             if (Target.MaxDownHp > 0 && m_DownHealTime > 0)
@@ -89,13 +102,19 @@ partial class BattleRealBossController
         {
             base.OnLateUpdate();
 
-            if (m_UseBehavior)
+            if (m_BehaviorSet != null)
             {
-                m_Behavior?.OnLateUpdateUnit(Time.deltaTime);
-            }
-            else
-            {
-                m_BehaviorController?.OnLateUpdate();
+                switch (m_BehaviorSet.BehaviorType)
+                {
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnLateUpdateUnit(Time.deltaTime);
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.OnLateUpdate();
+                        break;
+                }
             }
         }
 
@@ -104,13 +123,19 @@ partial class BattleRealBossController
             m_DownPlayerTriangleEffect?.DestroyEffect(true);
             m_DownEffect?.DestroyEffect(true);
 
-            if (m_UseBehavior)
+            if (m_BehaviorSet != null)
             {
-                m_Behavior?.OnEndUnit();
-            }
-            else
-            {
-                m_BehaviorController?.OnEndUnit();
+                switch (m_BehaviorSet.BehaviorType)
+                {
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnEndUnit();
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.OnEndUnit();
+                        break;
+                }
             }
 
             // ハッキングから帰ってきた時のコールバックを削除する

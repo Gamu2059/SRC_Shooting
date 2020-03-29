@@ -16,6 +16,9 @@ public class CharacterMoveMotionController : ControllableMonoBehavior, IAutoCont
     [SerializeField]
     private float m_Leap;
 
+    private bool m_IsEnableController;
+    public bool IsEnableController { get { return m_IsEnableController; } set { m_IsEnableController = value; } }
+
     private Vector3 m_PrePosition;
     private float m_TargetV;
     private float m_TargetH;
@@ -28,6 +31,7 @@ public class CharacterMoveMotionController : ControllableMonoBehavior, IAutoCont
         m_PrePosition = transform.position;
         m_TargetV = m_TargetH = 0;
         m_NowV = m_NowH = 0;
+        IsEnableController = true;
     }
 
     public override void OnUpdate()

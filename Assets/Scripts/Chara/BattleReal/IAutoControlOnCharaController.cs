@@ -1,1 +1,4 @@
-﻿public interface IAutoControlOnCharaController { }
+﻿public interface IAutoControlOnCharaController
+{
+    bool IsEnableController { get; set; }
+}

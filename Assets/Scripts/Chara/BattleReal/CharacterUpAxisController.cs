@@ -16,18 +16,22 @@ public class CharacterUpAxisController : ControllableMonoBehavior, IAutoControlO
     [SerializeField, Tooltip("向きによらずオフセット角度を同じ方向に適用するかどうか")]
     private bool m_ApplyOffsetAngleWithoutForward = true;
 
+    private bool m_IsEnableController;
+    public bool IsEnableController { get { return m_IsEnableController; } set { m_IsEnableController = value; } }
+
     private Transform m_FrontCamera;
 
     public override void OnStart()
     {
         base.OnStart();
         m_FrontCamera = BattleRealCameraManager.Instance.GetCameraController(E_CAMERA_TYPE.FRONT_CAMERA).transform;
+        IsEnableController = true;
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-        
+
         var delta = m_FrontCamera.position - m_CharacterView.position;
 
         // X軸の差分はあえて0にする

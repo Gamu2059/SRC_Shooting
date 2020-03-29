@@ -10,6 +10,8 @@ partial class BattleRealBossController
         {
             base.OnStart();
 
+            Target.GetCollider().SetEnableAllCollider(false);
+
             var sequenceGroup = Target.m_ReservedSequenceGroup;
             var sequenceController = Target.SequenceController;
             if (sequenceGroup == null || sequenceController == null)
@@ -40,6 +42,7 @@ partial class BattleRealBossController
         private void OnEndSequence()
         {
             Target.RequestChangeState(E_STATE.BEHAVIOR);
+            Target.GetCollider().SetEnableAllCollider(true);
         }
     }
 }

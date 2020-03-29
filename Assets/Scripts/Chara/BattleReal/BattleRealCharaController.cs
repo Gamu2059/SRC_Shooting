@@ -14,8 +14,8 @@ public class BattleRealCharaController : BattleRealObjectBase
     [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
     private BulletSetParam m_BulletSetParam;
 
-    public float NowHp{get; private set;}
-    public float MaxHp{get; private set;}
+    public float NowHp { get; private set; }
+    public float MaxHp { get; private set; }
 
     #endregion
 
@@ -29,6 +29,7 @@ public class BattleRealCharaController : BattleRealObjectBase
     private HitSufferController<BattleRealItemController> m_ItemHit;
 
     private List<ControllableMonoBehavior> m_AutoControlBehaviors;
+    public List<ControllableMonoBehavior> AutoControlBehaviors => m_AutoControlBehaviors;
 
     #endregion
 
@@ -152,7 +153,10 @@ public class BattleRealCharaController : BattleRealObjectBase
         base.OnUpdate();
         foreach (var b in m_AutoControlBehaviors)
         {
-            b.OnUpdate();
+            if (b is IAutoControlOnCharaController c && c.IsEnableController)
+            {
+                b.OnUpdate();
+            }
         }
     }
 
@@ -161,7 +165,10 @@ public class BattleRealCharaController : BattleRealObjectBase
         base.OnLateUpdate();
         foreach (var b in m_AutoControlBehaviors)
         {
-            b.OnLateUpdate();
+            if (b is IAutoControlOnCharaController c && c.IsEnableController)
+            {
+                b.OnLateUpdate();
+            }
         }
     }
 
@@ -170,7 +177,10 @@ public class BattleRealCharaController : BattleRealObjectBase
         base.OnFixedUpdate();
         foreach (var b in m_AutoControlBehaviors)
         {
-            b.OnFixedUpdate();
+            if (b is IAutoControlOnCharaController c && c.IsEnableController)
+            {
+                b.OnFixedUpdate();
+            }
         }
     }
 
