@@ -50,6 +50,9 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private PlaySoundParam m_CancelSe;
 
     [SerializeField]
+    private PlaySoundParam m_StartSe;
+
+    [SerializeField]
     private float m_WaitCursorTime;
 
     private TwoAxisInputManager InputManager;
@@ -257,6 +260,13 @@ public class ChapterMenuManager : ControllableMonoBehavior
         }
     }
 
+    private void CheckStartAction(BaseSceneManager.E_SCENE scene)
+    {
+        PlayStart();
+        BaseSceneManager.Instance.LoadScene(scene);
+        InputManager.RemoveInput();
+    }
+
     private void PlayCursor()
     {
         AudioManager.Instance.Play(m_CursorSe);
@@ -270,6 +280,11 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void PlayCancel()
     {
         AudioManager.Instance.Play(m_CancelSe);
+    }
+
+    private void PlayStart()
+    {
+        AudioManager.Instance.Play(m_StartSe);
     }
 
     private void ExitScene()
@@ -307,7 +322,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap0()
     {
         Debug.Log("Chapter0が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_0);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_0);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE0);
     }
 
     private void UpdateOnSelectChap0()
@@ -348,7 +364,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap1()
     {
         Debug.Log("Chapter1が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_1);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_1);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE1);
     }
 
     private void UpdateOnSelectChap1()
@@ -389,7 +406,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap2()
     {
         Debug.Log("Chapter2が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_2);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_2);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE2);
     }
 
     private void UpdateOnSelectChap2()
@@ -430,7 +448,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap3()
     {
         Debug.Log("Chapter3が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_3);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_3);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE3);
     }
 
     private void UpdateOnSelectChap3()
@@ -471,7 +490,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap4()
     {
         Debug.Log("Chapter4が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_4);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_4);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE4);
     }
 
     private void UpdateOnSelectChap4()
@@ -512,7 +532,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap5()
     {
         Debug.Log("Chapter5が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_5);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_5);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE5);
     }
 
     private void UpdateOnSelectChap5()
@@ -553,7 +574,8 @@ public class ChapterMenuManager : ControllableMonoBehavior
     private void StartOnSelectChap6()
     {
         Debug.Log("Chapter6が選択されました");
-        m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_6);
+        // m_StateMachine.Goto(E_CHAPTER_MENU_STATE.FORCUS_CHAP_6);
+        CheckStartAction(BaseSceneManager.E_SCENE.STAGE6);
     }
 
     private void UpdateOnSelectChap6()

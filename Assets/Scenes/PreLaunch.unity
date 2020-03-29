@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -778,6 +778,9 @@ MonoBehaviour:
   - CurrentScene: 3
     NextScene: 1
     AdditiveScene: 
+  - CurrentScene: 10
+    NextScene: 2
+    AdditiveScene: 
   m_CurrentInfoNextScene: -1
   m_CurrentInfoNextAdditiveScenes: 
   m_CurrentScene: {fileID: 0}
@@ -800,7 +803,6 @@ MonoBehaviour:
     m_AdxAssetParam: {fileID: 11400000, guid: e694442f98e43b7439e93c18b83a687b, type: 2}
   m_SceneManager: {fileID: 1379646823}
   m_TransitionManager: {fileID: 1379646827}
-  m_AudioManager: {fileID: 1379646826}
 --- !u!4 &1379646825
 Transform:
   m_ObjectHideFlags: 0
