@@ -19,6 +19,12 @@ public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
 
     #endregion
 
+    #region Closed Callback
+
+    private Action DeadPlayerAction;
+
+    #endregion
+
     public static BattleHackingPlayerManager Builder(BattleHackingManager hackingManager, BattleHackingPlayerManagerParamSet param)
     {
         var manager = Create();
@@ -35,7 +41,7 @@ public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
 
     private void SetCallback(BattleHackingManager manager)
     {
-
+        DeadPlayerAction += manager.DeadPlayer;
     }
 
     public override void OnInitialize()
@@ -45,6 +51,7 @@ public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
 
     public override void OnFinalize()
     {
+        DeadPlayerAction = null;
         base.OnFinalize();
     }
 
@@ -185,6 +192,6 @@ public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
 
     public void DeadPlayer()
     {
-        //m_IsDeadPlayer = true;
+        DeadPlayerAction?.Invoke();
     }
 }
