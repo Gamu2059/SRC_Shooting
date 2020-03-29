@@ -54,8 +54,10 @@ public class IconGageIndicator : ControllableMonoBehavior
 
     #endregion
 
-    private BattleRealBossController GetBoss(){
-        if(m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE){
+    private BattleRealBossController GetBoss()
+    {
+        if (m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE)
+        {
             return m_Boss;
         }
 
@@ -63,8 +65,10 @@ public class IconGageIndicator : ControllableMonoBehavior
         var enemies = BattleRealEnemyManager.Instance.Enemies;
         foreach (var e in enemies)
         {
-            if(e.IsBoss && e is BattleRealBossController boss)
-                m_Boss = boss;            
+            if (e.IsBoss && e is BattleRealBossController boss)
+            {
+                m_Boss = boss;
+            }
         }
         return m_Boss;
     }
@@ -85,22 +89,24 @@ public class IconGageIndicator : ControllableMonoBehavior
                 return energy / maxEnergy;
             case E_VALUE_TYPE.BOSS_HP:
                 var boss = GetBoss();
-                if(boss == null){
+                if (boss == null)
+                {
                     return 0;
                 }
                 return boss.NowHp / boss.MaxHp;
             case E_VALUE_TYPE.BOSS_DOWN:
                 var b = GetBoss();
-                if(b == null){
+                if (b == null)
+                {
                     return 0;
                 }
-                return b.NowDownHp/b.MaxDownHp;
+                return b.NowDownHp / b.MaxDownHp;
         }
 
         return 0;
     }
 
-    public void ShowRate(float rate)
+    private void ShowRate(float rate)
     {
         rate = Mathf.Clamp01(rate);
         m_Slider.value = rate;

@@ -6,45 +6,77 @@ partial class BattleRealBossController
 {
     private class BehaviorState : StateCycle
     {
-        private bool m_UseBehavior;
+        private BehaviorSet m_BehaviorSet;
         private BattleRealEnemyBehaviorUnit m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
+
+        /// <summary>
+        /// このステートに遷移したのが1回目かどうか
+        /// </summary>
+        private bool m_IsFirstTime;
+
+        public BehaviorState() : base()
+        {
+            m_IsFirstTime = true;
+        }
 
         public override void OnStart()
         {
             base.OnStart();
 
             // 通常ではダメージコライダーを有効にする
-            Target.GetCollider().SetEnableCollider(Target.m_DamageCollider, true);
+            Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, true);
+            AudioManager.Instance.Stop(E_CUE_SHEET.ENEMY);
 
-            m_UseBehavior = false;
-            if (Target.m_CurrentBehaviorSet != null)
+            if (m_IsFirstTime)
             {
-                m_UseBehavior = Target.m_CurrentBehaviorSet.BehaviorType == E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT;
-                m_Behavior = Target.m_CurrentBehaviorSet.Behavior;
-                m_BehaviorController = Target.m_BehaviorController;
-                if (m_UseBehavior)
+                var param = Target.m_BossParam;
+                if (param != null && param.OnStartBehaviorEvents != null)
                 {
-                    m_Behavior.OnStartUnit(Target, null);
+                    BattleRealEventManager.Instance.AddEvent(param.OnStartBehaviorEvents);
                 }
-                else
+
+                // ボスUIを表示する
+                BattleRealUiManager.Instance.SetEnableBossUI(true);
+            }
+
+            m_BehaviorSet = Target.m_CurrentBehaviorSet;
+            if (m_BehaviorSet != null)
+            {
+                m_Behavior = m_BehaviorSet.Behavior;
+                m_BehaviorController = Target.m_BehaviorController;
+                switch (m_BehaviorSet.BehaviorType)
                 {
-                    m_BehaviorController.BuildBehavior(Target.m_CurrentBehaviorSet.BehaviorGroup);
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnStartUnit(Target, null);
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.BuildBehavior(m_BehaviorSet.BehaviorGroup);
+                        break;
                 }
             }
+            m_IsFirstTime = false;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            if (m_UseBehavior)
+            if (m_BehaviorSet != null)
             {
-                m_Behavior?.OnUpdateUnit(Time.deltaTime);
-            }
-            else
-            {
-                m_BehaviorController?.OnUpdate();
+                switch (m_BehaviorSet.BehaviorType)
+                {
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnUpdateUnit(Time.deltaTime);
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.OnUpdate();
+                        break;
+                }
             }
         }
 
@@ -52,26 +84,39 @@ partial class BattleRealBossController
         {
             base.OnLateUpdate();
 
-            if (m_UseBehavior)
+            if (m_BehaviorSet != null)
             {
-                m_Behavior?.OnLateUpdateUnit(Time.deltaTime);
+                switch (m_BehaviorSet.BehaviorType)
+                {
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnLateUpdateUnit(Time.deltaTime);
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.OnLateUpdate();
+                        break;
+                }
             }
-            else
-            {
-                m_BehaviorController?.OnLateUpdate();
-            }
+
             CheckChangeBehavior();
         }
 
         public override void OnEnd()
         {
-            if (m_UseBehavior)
+            if (m_BehaviorSet != null)
             {
-                m_Behavior?.OnEndUnit();
-            }
-            else
-            {
-                m_BehaviorController?.OnEndUnit();
+                switch (m_BehaviorSet.BehaviorType)
+                {
+                    case E_ENEMY_BEHAVIOR_TYPE.NONE:
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
+                        m_Behavior?.OnEndUnit();
+                        break;
+                    case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
+                        m_BehaviorController?.OnEndUnit();
+                        break;
+                }
             }
 
             base.OnEnd();

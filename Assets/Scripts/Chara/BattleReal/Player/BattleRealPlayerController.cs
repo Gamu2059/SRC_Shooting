@@ -484,6 +484,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController
             case E_COLLIDER_TYPE.ENEMY_BULLET:
             case E_COLLIDER_TYPE.ENEMY_LASER:
             case E_COLLIDER_TYPE.ENEMY_BOMB:
+            case E_COLLIDER_TYPE.ENEMY_MAIN_BODY:
+            case E_COLLIDER_TYPE.ENEMY_SUB_BODY:
                 if (selfColliderType == E_COLLIDER_TYPE.CRITICAL)
                 {
                     Damage(1);

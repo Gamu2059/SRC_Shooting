@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// キャラの制御を行うコンポーネント。
@@ -13,12 +14,13 @@ public class BattleRealCharaController : BattleRealObjectBase
     [SerializeField, Tooltip("キャラが用いる弾の組み合わせ")]
     private BulletSetParam m_BulletSetParam;
 
-    public float NowHp{get; private set;}
-    public float MaxHp{get; private set;}
+    public float NowHp { get; private set; }
+    public float MaxHp { get; private set; }
 
     #endregion
 
     #region Field
+
     public E_CHARA_TROOP Troop { get; protected set; }
 
     private HitSufferController<BulletController> m_BulletSuffer;
@@ -26,8 +28,8 @@ public class BattleRealCharaController : BattleRealObjectBase
     private HitSufferController<BattleRealCharaController> m_CharaHit;
     private HitSufferController<BattleRealItemController> m_ItemHit;
 
-    private OutRingController m_OutRingController;
-    private CharacterMoveMotionController m_MoveMotionController;
+    private List<ControllableMonoBehavior> m_AutoControlBehaviors;
+    public List<ControllableMonoBehavior> AutoControlBehaviors => m_AutoControlBehaviors;
 
     #endregion
 
@@ -122,6 +124,7 @@ public class BattleRealCharaController : BattleRealObjectBase
 
     public override void OnFinalize()
     {
+        m_AutoControlBehaviors.Clear();
         m_ItemHit.OnFinalize();
         m_CharaHit.OnFinalize();
         m_CharaSuffer.OnFinalize();
@@ -133,35 +136,52 @@ public class BattleRealCharaController : BattleRealObjectBase
     {
         base.OnStart();
 
-        m_MoveMotionController = GetComponent<CharacterMoveMotionController>();
-        m_OutRingController = GetComponentInChildren<OutRingController>(true);
-
-        m_MoveMotionController?.OnStart();
-        m_OutRingController?.OnStart();
+        m_AutoControlBehaviors = new List<ControllableMonoBehavior>();
+        var behaviors = GetComponents<ControllableMonoBehavior>();
+        foreach (var b in behaviors)
+        {
+            if (b is IAutoControlOnCharaController)
+            {
+                m_AutoControlBehaviors.Add(b);
+                b.OnStart();
+            }
+        }
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-
-        m_MoveMotionController?.OnUpdate();
-        m_OutRingController?.OnUpdate();
+        foreach (var b in m_AutoControlBehaviors)
+        {
+            if (b is IAutoControlOnCharaController c && c.IsEnableController)
+            {
+                b.OnUpdate();
+            }
+        }
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-
-        m_MoveMotionController?.OnLateUpdate();
-        m_OutRingController?.OnLateUpdate();
+        foreach (var b in m_AutoControlBehaviors)
+        {
+            if (b is IAutoControlOnCharaController c && c.IsEnableController)
+            {
+                b.OnLateUpdate();
+            }
+        }
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-
-        m_MoveMotionController?.OnFixedUpdate();
-        m_OutRingController?.OnFixedUpdate();
+        foreach (var b in m_AutoControlBehaviors)
+        {
+            if (b is IAutoControlOnCharaController c && c.IsEnableController)
+            {
+                b.OnFixedUpdate();
+            }
+        }
     }
 
     #endregion
@@ -189,10 +209,7 @@ public class BattleRealCharaController : BattleRealObjectBase
         OnRecover();
     }
 
-    protected virtual void OnRecover()
-    {
-
-    }
+    protected virtual void OnRecover() { }
 
     /// <summary>
     /// このキャラにダメージを与える。
@@ -214,29 +231,12 @@ public class BattleRealCharaController : BattleRealObjectBase
         }
     }
 
-    protected virtual void OnDamage()
-    {
-
-    }
+    protected virtual void OnDamage() { }
 
     /// <summary>
     /// このキャラを死亡させる。
     /// </summary>
-    public virtual void Dead()
-    {
-
-    }
-
-    /// <summary>
-    /// リングアニメーションを始める
-    /// </summary>
-    protected void StartOutRingAnimation()
-    {
-        if (m_OutRingController != null)
-        {
-            m_OutRingController.StartAnimation();
-        }
-    }
+    public virtual void Dead() { }
 
     #region Impl IColliderProcess
 

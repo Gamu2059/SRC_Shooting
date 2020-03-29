@@ -60,4 +60,14 @@ public enum E_COLLIDER_TYPE
     /// 敵のハッキング可能コライダー。PLAYER_HACKINGと接触することでハッキング開始となる。
     /// </summary>
     ENEMY_HACKING,
+
+    /// <summary>
+    /// 敵本体。プレイヤーがこれに当たるとプレイヤーが死亡する。
+    /// </summary>
+    ENEMY_MAIN_BODY,
+
+    /// <summary>
+    /// 敵の本体以外のオブジェクトのコライダー。プレイヤーがこれに当たるとプレイヤーが死亡する。
+    /// </summary>
+    ENEMY_SUB_BODY,
 }

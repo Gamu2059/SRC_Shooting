@@ -15,6 +15,8 @@ partial class BattleRealManager
 
             AudioManager.Instance.StopAllBgm();
             AudioManager.Instance.StopAllSe();
+
+            BattleRealUiManager.Instance.SetEnableBossUI(false);
             //AudioManager.Instance.Play(m_ParamSet.GameClearSe);
 
             //var battleManager = Target.m_BattleManager;

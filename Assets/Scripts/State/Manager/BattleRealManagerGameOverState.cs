@@ -12,6 +12,8 @@
             //Target.m_BattleManager.BattleRealUiManager.SetEnableBossUI(false);
             BattleRealPlayerManager.Instance.StopChargeShot();
             BattleRealUiManager.Instance.PlayGameOver();
+
+            BattleRealUiManager.Instance.SetEnableBossUI(false);
         }
 
         public override void OnUpdate()
