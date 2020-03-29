@@ -41,41 +41,8 @@ MonoBehaviour:
         m_HackingSuccessItemParam:
           ItemSpreadParams: []
           CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: caab4a5be051bfb47895c6318eee9440,
-          type: 2}
-        m_DownBehaviorType: 2
-        m_DownBehavior: {fileID: 0}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 1a19522e2833a48419860e4f5e19b23f,
-          type: 2}
-        m_StartSequenceGroup: {fileID: 0}
-        m_DownHp: 1
-        m_DownHealTime: 10
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams: []
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: caab4a5be051bfb47895c6318eee9440,
-          type: 2}
-        m_DownBehaviorType: 2
-        m_DownBehavior: {fileID: 0}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 3c5a7d61399efb24b9959c43ec7b5897,
-          type: 2}
-        m_StartSequenceGroup: {fileID: 0}
-        m_DownHp: 1
-        m_DownHealTime: 10
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams: []
-          CenterCreateItemType: 0
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 11400000, guid: cd30be567eeb7744c9e29c3f3b30a174,
-        type: 2}
+      m_OnInitializeSequence: {fileID: 0}
       m_OnStartBehaviorEvents: []
       m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb,
         type: 2}

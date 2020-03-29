@@ -105,6 +105,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     public float MaxDownHp { get; private set; }
     public int HackingCompleteNum { get; private set; }
     public int HackingSuccessCount { get; private set; }
+    public bool IsChargeSuccess { get; private set; }
 
     private Transform m_EnemyBodyCollider;
     private int m_CarryOverHackingBossDamage;
@@ -152,6 +153,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
         WillDestroyOnOutOfEnemyField = false;
         IsBoss = true;
+        IsChargeSuccess = false;
 
         RequestChangeState(E_STATE.START);
     }
@@ -233,7 +235,6 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
-        Debug.Log(m_StateMachine.CurrentState.Key);
     }
 
     public override void OnLateUpdate()
@@ -424,5 +425,13 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     protected void ExecuteResuceEvent()
     {
         BattleRealEventManager.Instance.AddEvent(m_BossParam.RescueEvents);
+    }
+
+    /// <summary>
+    /// チャージを開始する。
+    /// </summary>
+    public void StartCharge(float duration, float damageUntilFailure, EffectParamSet charageEffect)
+    {
+        IsChargeSuccess = false;
     }
 }
