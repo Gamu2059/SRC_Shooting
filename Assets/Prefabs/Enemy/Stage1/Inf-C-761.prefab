@@ -790,7 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColliderTransforms:
-  - IsDisable: 0
+  - IsDisable: 1
     IsTriggerCollider: 0
     ColliderType: 1
     ColliderShape: 1
@@ -806,7 +806,7 @@ MonoBehaviour:
     ColliderWidth: 20
     ColliderColor: {r: 1, g: 0.43602607, b: 0, a: 0}
     Transform: {fileID: 647607996451118584}
-  - IsDisable: 0
+  - IsDisable: 1
     IsTriggerCollider: 0
     ColliderType: 12
     ColliderShape: 1

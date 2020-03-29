@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_100_\u672C\u4F53nway\u8D64\u5F3E.bullet"
+  m_Name: "stage1_\u30CA\u30DF_102_\u672C\u4F53\u8D64\u5927\u5F3E.bullet"
   m_EditorClassIdentifier: 
   LifeTime: 10
   OrbitalParam:
@@ -19,7 +19,7 @@ MonoBehaviour:
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: 0, y: 0, z: 0}
+    Scale: {x: 4, y: 4, z: 4}
     ScaleRelative: 0
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
@@ -27,9 +27,9 @@ MonoBehaviour:
     DeltaScaleRelative: 0
     Damage: 1
     DamageRelative: 1
-    Speed: 1
+    Speed: 0.05
     SpeedRelative: 1
-    Accel: 0
+    Accel: 2
     AccelRelative: 1
     IsSearch: 0
     Lerp: 0

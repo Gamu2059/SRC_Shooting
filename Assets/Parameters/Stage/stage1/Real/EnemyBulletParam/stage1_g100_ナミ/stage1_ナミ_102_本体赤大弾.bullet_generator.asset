@@ -10,24 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86497d7cce482e04b9b332799cc04699, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_102_\u672C\u4F53\u5927\u7389.bullet_generator"
+  m_Name: "stage1_\u30CA\u30DF_102_\u672C\u4F53\u8D64\u5927\u5F3E.bullet_generator"
   m_EditorClassIdentifier: 
   m_GeneratorClassName: BattleReal.BulletGenerator.PointTweenBulletGenerator
   m_Params:
   - Difficulty: 1
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8f9f084ebd1e90b48b42654bd55d3e4f, type: 3}
+      - {fileID: 6531663667767994548, guid: b4096a5b47e9fe64393cc9c6071b8041, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 2d68ff39eccb7e0478d81364ca4c445f, type: 2}
-      m_BeginPoint: {x: -0.8, y: 0, z: -0.9}
-      m_EndPoint: {x: -0.8, y: 0, z: 0.9}
-      m_ShotNum: 20
-      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
-      m_ShotOffsetTime: 0
-      m_ShotInterval: 0.4
+      - {fileID: 11400000, guid: 23ee6e311de2c8d4199875e7a1935176, type: 2}
+      m_BeginPoint: {x: -0.7, y: 0, z: 0.7}
+      m_EndPoint: {x: 0.7, y: 0, z: 0.7}
+      m_ShotNum: 5
+      m_ShotOffsetTime: 0.6
+      m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 90
+      m_ShotAngle: 180
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
+      m_ShotBeforeEffect: {fileID: 11400000, guid: 9f511652f65da1645aaa12cfbfe66819,
+        type: 2}
+      m_AppearBeforeTimeShotBeforeEffect: 0.6
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}

@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Params:
   - Difficulty: 1
     Param:
-      m_Hp: 1000
+      m_Hp: 10
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: dafb7966db844da49bee2a0edd96cb0d,
         type: 2}
@@ -35,8 +35,40 @@ MonoBehaviour:
         m_HackingLevelParamSet: {fileID: 11400000, guid: 138f571f6c9003642bc0a9b9126b29a2,
           type: 2}
         m_StartSequenceGroup: {fileID: 0}
-        m_DownHp: 100
-        m_DownHealTime: 1
+        m_DownHp: 1
+        m_DownHealTime: 10
+        m_HpRateThresholdNextBehavior: 0
+        m_HackingSuccessItemParam:
+          ItemSpreadParams: []
+          CenterCreateItemType: 0
+      - m_BehaviorType: 1
+        m_Behavior: {fileID: 0}
+        m_BehaviorGroup: {fileID: 11400000, guid: caab4a5be051bfb47895c6318eee9440,
+          type: 2}
+        m_DownBehaviorType: 2
+        m_DownBehavior: {fileID: 0}
+        m_DownBehaviorGroup: {fileID: 0}
+        m_HackingLevelParamSet: {fileID: 11400000, guid: 1a19522e2833a48419860e4f5e19b23f,
+          type: 2}
+        m_StartSequenceGroup: {fileID: 0}
+        m_DownHp: 1
+        m_DownHealTime: 10
+        m_HpRateThresholdNextBehavior: 0
+        m_HackingSuccessItemParam:
+          ItemSpreadParams: []
+          CenterCreateItemType: 0
+      - m_BehaviorType: 1
+        m_Behavior: {fileID: 0}
+        m_BehaviorGroup: {fileID: 11400000, guid: caab4a5be051bfb47895c6318eee9440,
+          type: 2}
+        m_DownBehaviorType: 2
+        m_DownBehavior: {fileID: 0}
+        m_DownBehaviorGroup: {fileID: 0}
+        m_HackingLevelParamSet: {fileID: 11400000, guid: 3c5a7d61399efb24b9959c43ec7b5897,
+          type: 2}
+        m_StartSequenceGroup: {fileID: 0}
+        m_DownHp: 1
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
           ItemSpreadParams: []
@@ -45,10 +77,14 @@ MonoBehaviour:
       m_OnInitializeSequence: {fileID: 11400000, guid: cd30be567eeb7744c9e29c3f3b30a174,
         type: 2}
       m_OnStartBehaviorEvents: []
-      m_DownEffectParam: {fileID: 0}
-      m_PlayerTriangleEffectParam: {fileID: 0}
-      m_HackingFailureEffectParam: {fileID: 0}
-      m_HackingSuccessEffectParam: {fileID: 0}
+      m_DownEffectParam: {fileID: 11400000, guid: d223e938010a30d458b643c2aa887bbb,
+        type: 2}
+      m_PlayerTriangleEffectParam: {fileID: 11400000, guid: ed5997dcef785994a93b25d031fa9a6c,
+        type: 2}
+      m_HackingFailureEffectParam: {fileID: 11400000, guid: df487b381c5fb4a43909c88621b12d29,
+        type: 2}
+      m_HackingSuccessEffectParam: {fileID: 11400000, guid: bfc56091884e80244bed6c6f9ce54765,
+        type: 2}
       m_DefeatScore: 0
       m_DefeatItemParam:
         ItemSpreadParams: []

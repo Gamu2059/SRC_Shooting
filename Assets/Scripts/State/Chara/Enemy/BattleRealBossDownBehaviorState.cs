@@ -14,16 +14,6 @@ partial class BattleRealBossController
         private BattleCommonEffectController m_DownEffect;
         private BattleCommonEffectController m_DownPlayerTriangleEffect;
 
-        /// <summary>
-        /// このステートに遷移したのが1回目かどうか
-        /// </summary>
-        private bool m_IsFirstTime;
-
-        public DownBehaviorState() : base()
-        {
-            m_IsFirstTime = true;
-        }
-
         public override void OnStart()
         {
             base.OnStart();
@@ -37,10 +27,10 @@ partial class BattleRealBossController
             BattleRealBulletManager.Instance.CheckPoolBullet(Target);
             AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
 
-            m_DownHealTime = 0;
             m_BehaviorSet = Target.m_CurrentBehaviorSet;
             if (m_BehaviorSet != null)
             {
+                m_DownHealTime = m_BehaviorSet.DownHealTime;
                 m_Behavior = m_BehaviorSet.DownBehavior;
                 m_BehaviorController = Target.m_DownBehaviorController;
                 switch (m_BehaviorSet.DownBehaviorType)
@@ -55,7 +45,6 @@ partial class BattleRealBossController
                         break;
                 }
             }
-            m_IsFirstTime = false;
 
             var effectManager = BattleRealEffectManager.Instance;
             m_DownEffect = effectManager.CreateEffect(Target.m_BossParam.DownEffectParam, Target.transform);
@@ -90,7 +79,7 @@ partial class BattleRealBossController
 
             if (Target.MaxDownHp > 0 && m_DownHealTime > 0)
             {
-                Target.NowDownHp += Target.MaxDownHp * Time.deltaTime / m_DownHealTime;                
+                Target.NowDownHp += Target.MaxDownHp * Time.deltaTime / m_DownHealTime;
                 if (Target.NowDownHp >= Target.MaxDownHp)
                 {
                     HealDown();
@@ -140,7 +129,7 @@ partial class BattleRealBossController
 
             // ハッキングから帰ってきた時のコールバックを削除する
             BattleRealEnemyManager.Instance.FromHackingAction -= OnFromHacking;
-            
+
             base.OnEnd();
         }
 

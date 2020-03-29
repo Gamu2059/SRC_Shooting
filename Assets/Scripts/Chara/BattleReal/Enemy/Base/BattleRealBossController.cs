@@ -151,6 +151,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         InitializeBehaviorSet();
 
         WillDestroyOnOutOfEnemyField = false;
+        IsBoss = true;
 
         RequestChangeState(E_STATE.START);
     }
@@ -232,7 +233,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
-
+        Debug.Log(m_StateMachine.CurrentState.Key);
     }
 
     public override void OnLateUpdate()
@@ -275,7 +276,6 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     protected override void OnEnterSufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
         base.OnEnterSufferChara(sufferData);
-
         var sufferType = sufferData.SufferCollider.Transform.ColliderType;
         switch (sufferType)
         {
@@ -377,12 +377,14 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
         if (MaxDownHp > 0)
         {
+            // MaxDownHpが0より大きい時は、割合を保持しながら変更する
             var rate = NowDownHp / MaxDownHp;
             MaxDownHp = m_CurrentBehaviorSet.DownHp;
             NowDownHp = m_CurrentBehaviorSet.DownHp * rate;
         }
         else
         {
+            // MaxDownHpが0の時は直代入する
             MaxDownHp = m_CurrentBehaviorSet.DownHp;
             NowDownHp = 0;
         }

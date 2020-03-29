@@ -49,6 +49,13 @@ public class BattleHackingEnemyManager : Singleton<BattleHackingEnemyManager>
 
     #endregion
 
+    #region Closed Callback
+
+    private Action DeadBossAction;
+    private Action TimeoutAction;
+
+    #endregion
+
     public static BattleHackingEnemyManager Builder(BattleHackingManager hackingManager, BattleHackingEnemyManagerParamSet param)
     {
         var manager = Create();
@@ -65,7 +72,8 @@ public class BattleHackingEnemyManager : Singleton<BattleHackingEnemyManager>
 
     private void SetCallback(BattleHackingManager manager)
     {
-
+        DeadBossAction += manager.DeadBoss;
+        TimeoutAction += manager.Timeout;
     }
 
     #region Game Cycle
@@ -86,6 +94,9 @@ public class BattleHackingEnemyManager : Singleton<BattleHackingEnemyManager>
 
     public override void OnFinalize()
     {
+        TimeoutAction = null;
+        DeadBossAction = null;
+
         m_RemoveContentParamSets.Clear();
         m_ContentParamSets.Clear();
         m_RemoveContentParamSets = null;
@@ -574,13 +585,13 @@ public class BattleHackingEnemyManager : Singleton<BattleHackingEnemyManager>
         CheckPoolAllEnemy();
     }
 
-    public void DeadBoss()
-    {
-        //m_IsDeadBoss = true;
-    }
-
     public void Timeout()
     {
+        TimeoutAction?.Invoke();
+    }
 
+    public void DeadBoss()
+    {
+        DeadBossAction?.Invoke();
     }
 }

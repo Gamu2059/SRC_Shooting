@@ -26,6 +26,7 @@ partial class BattleRealBossController
 
             // 通常ではダメージコライダーを有効にする
             Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, true);
+            AudioManager.Instance.Stop(E_CUE_SHEET.ENEMY);
 
             if (m_IsFirstTime)
             {
@@ -34,6 +35,9 @@ partial class BattleRealBossController
                 {
                     BattleRealEventManager.Instance.AddEvent(param.OnStartBehaviorEvents);
                 }
+
+                // ボスUIを表示する
+                BattleRealUiManager.Instance.SetEnableBossUI(true);
             }
 
             m_BehaviorSet = Target.m_CurrentBehaviorSet;
