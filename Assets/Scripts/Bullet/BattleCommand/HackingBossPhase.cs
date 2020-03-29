@@ -16,6 +16,13 @@ public class HackingBossPhase : ScriptableObject
     [SerializeField, Tooltip("弾幕")]
     private Danmaku m_DanmakuArray;
 
+    [SerializeField, Tooltip("BGM再生用のパラメータ")]
+    private PlaySoundParam m_PlaySoundParam;
+    public PlaySoundParam PlaySoundParam
+    {
+        get { return m_PlaySoundParam; }
+    }
+
     [SerializeField, Tooltip("ゲーム全体で共通の変数へのリンク")]
     private CommonOperationVariable m_CommonOperationVariable;
 
