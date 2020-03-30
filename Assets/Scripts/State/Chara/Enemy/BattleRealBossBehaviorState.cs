@@ -78,6 +78,16 @@ partial class BattleRealBossController
                         break;
                 }
             }
+
+            if (Target.IsCharging)
+            {
+                Target.ChargeRemainTime -= Time.deltaTime;
+                Target.m_ChargeController?.OnUpdate();
+                if (Target.ChargeRemainTime <= 0)
+                {
+                    Target.ChargeSuccess();
+                }
+            }
         }
 
         public override void OnLateUpdate()

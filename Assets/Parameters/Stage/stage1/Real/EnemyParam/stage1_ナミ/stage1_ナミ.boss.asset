@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Params:
   - Difficulty: 1
     Param:
-      m_Hp: 10
+      m_Hp: 3000
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: dafb7966db844da49bee2a0edd96cb0d,
         type: 2}
@@ -27,7 +27,7 @@ MonoBehaviour:
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: caab4a5be051bfb47895c6318eee9440,
+        m_BehaviorGroup: {fileID: 11400000, guid: 3e977da2ed12267478919bc7fe838e6c,
           type: 2}
         m_DownBehaviorType: 2
         m_DownBehavior: {fileID: 0}
@@ -35,7 +35,7 @@ MonoBehaviour:
         m_HackingLevelParamSet: {fileID: 11400000, guid: 138f571f6c9003642bc0a9b9126b29a2,
           type: 2}
         m_StartSequenceGroup: {fileID: 0}
-        m_DownHp: 1
+        m_DownHp: 200
         m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
