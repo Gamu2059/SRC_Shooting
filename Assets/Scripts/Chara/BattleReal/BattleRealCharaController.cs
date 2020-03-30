@@ -206,10 +206,10 @@ public class BattleRealCharaController : BattleRealObjectBase
         }
 
         NowHp = Mathf.Clamp(NowHp + recover, 0, MaxHp);
-        OnRecover();
+        OnRecover(recover);
     }
 
-    protected virtual void OnRecover() { }
+    protected virtual void OnRecover(float recover) { }
 
     /// <summary>
     /// このキャラにダメージを与える。
@@ -223,7 +223,7 @@ public class BattleRealCharaController : BattleRealObjectBase
         }
 
         NowHp = Mathf.Clamp(NowHp - damage, 0, MaxHp);
-        OnDamage();
+        OnDamage(damage);
 
         if (NowHp == 0)
         {
@@ -231,7 +231,7 @@ public class BattleRealCharaController : BattleRealObjectBase
         }
     }
 
-    protected virtual void OnDamage() { }
+    protected virtual void OnDamage(float damage) { }
 
     /// <summary>
     /// このキャラを死亡させる。

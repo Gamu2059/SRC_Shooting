@@ -101,10 +101,56 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     private BattleRealEnemyBehaviorController m_BehaviorController;
     private BattleRealEnemyBehaviorController m_DownBehaviorController;
 
+    private BossChargeController m_ChargeController;
+
+    /// <summary>
+    /// ダウンHPの現在値。通常弾に被弾してこれが0以下になるとダウンする。
+    /// </summary>
     public float NowDownHp { get; private set; }
+
+    /// <summary>
+    /// ダウンHPの最大値。
+    /// </summary>
     public float MaxDownHp { get; private set; }
+
+    /// <summary>
+    /// ハッキングコンプリートに必要なハッキング成功数。
+    /// </summary>
     public int HackingCompleteNum { get; private set; }
+
+    /// <summary>
+    /// 現在のハッキング成功数。
+    /// </summary>
     public int HackingSuccessCount { get; private set; }
+
+    /// <summary>
+    /// チャージ開始から与えたダメージの総合値。
+    /// </summary>
+    public float DamageFromChargeStart { get; private set; }
+    
+    /// <summary>
+    /// チャージ阻止に必要なダメージの総合値。
+    /// </summary>
+    public float DamageUntilChargeFailure { get; private set; }
+    
+    /// <summary>
+    /// チャージ完了までの残り秒数。
+    /// </summary>
+    public float ChargeRemainTime { get; private set; }
+    
+    /// <summary>
+    /// チャージに必要な秒数。
+    /// </summary>
+    public float ChargeDuration { get; private set; }
+    
+    /// <summary>
+    /// チャージ中かどうか。
+    /// </summary>
+    public bool IsCharging { get; private set; }
+    
+    /// <summary>
+    /// チャージに成功したかどうか。
+    /// </summary>
     public bool IsChargeSuccess { get; private set; }
 
     private Transform m_EnemyBodyCollider;
@@ -138,8 +184,15 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_EnemyBodyCollider = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.ENEMY_MAIN_BODY)?.Transform;
         if (m_EnemyBodyCollider == null)
         {
-            Debug.LogError("[{0}] : ENEMY_BODYタイプのコライダーを見つけることができませんでした");
+            Debug.LogError("ENEMY_BODYタイプのコライダーを見つけることができませんでした");
         }
+
+        m_ChargeController = GetComponent<BossChargeController>();
+        if (m_ChargeController == null)
+        {
+            Debug.LogError("BossChargeControllerを見つけることができませんでした");
+        }
+        m_ChargeController?.OnInitialize();
 
         m_CarryOverHackingBossDamage = 0;
         m_ReservedSequenceGroup = null;
@@ -154,6 +207,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         WillDestroyOnOutOfEnemyField = false;
         IsBoss = true;
         IsChargeSuccess = false;
+        IsCharging = false;
 
         RequestChangeState(E_STATE.START);
     }
@@ -215,6 +269,8 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_BehaviorController.OnFinalize();
         m_DownBehaviorController = null;
         m_BehaviorController = null;
+
+        m_ChargeController?.OnFinalize();
 
         // 自身が作成したエフェクトを全て破棄する
         BattleRealEffectManager.Instance.DestroyEffectByOwner(transform, true);
@@ -308,6 +364,20 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_StateMachine?.Goto(state);
     }
 
+    protected override void OnDamage(float damage)
+    {
+        base.OnDamage(damage);
+
+        if (IsCharging)
+        {
+            DamageFromChargeStart += damage;
+            if (DamageFromChargeStart >= DamageUntilChargeFailure)
+            {
+                ChargeFailure();
+            }
+        }
+    }
+
     /// <summary>
     /// このボスのダウンHPを回復する。回復量は0より大きくなければ処理されない。
     /// </summary>
@@ -319,13 +389,10 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         }
 
         NowDownHp = Mathf.Clamp(NowDownHp + recover, 0, MaxDownHp);
-        OnRecoverDownHp();
+        OnRecoverDownHp(recover);
     }
 
-    protected virtual void OnRecoverDownHp()
-    {
-
-    }
+    protected virtual void OnRecoverDownHp(float recover) { }
 
     /// <summary>
     /// このボスのダウンHPを削る。ダメージ量は0より大きくなければ処理されない。
@@ -338,7 +405,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         }
 
         NowDownHp = Mathf.Clamp(NowDownHp - damage, 0, MaxDownHp);
-        OnDamageDownHp();
+        OnDamageDownHp(damage);
 
         if (NowDownHp <= 0)
         {
@@ -346,10 +413,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         }
     }
 
-    protected virtual void OnDamageDownHp()
-    {
-
-    }
+    protected virtual void OnDamageDownHp(float damage) { }
 
     /// <summary>
     /// 指定したインデックスの振る舞いに切り替える。
@@ -432,6 +496,34 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     /// </summary>
     public void StartCharge(float duration, float damageUntilFailure, EffectParamSet charageEffect)
     {
+        if (IsCharging)
+        {
+            Debug.LogWarning("現在チャージ中です。");
+            return;
+        }
+
         IsChargeSuccess = false;
+        IsCharging = true;
+
+        DamageFromChargeStart = 0;
+        DamageUntilChargeFailure = damageUntilFailure;
+        ChargeRemainTime = duration;
+        ChargeDuration = duration;
+
+        m_ChargeController?.Play(this);
+    }
+
+    private void ChargeFailure()
+    {
+        IsChargeSuccess = false;
+        IsCharging = false;
+        m_ChargeController?.Stop();
+    }
+
+    private void ChargeSuccess()
+    {
+        IsChargeSuccess = true;
+        IsCharging = false;
+        m_ChargeController?.Stop();
     }
 }

@@ -235,9 +235,9 @@ public class BattleRealEnemyBase : BattleRealCharaController
         }
     }
 
-    protected override void OnDamage()
+    protected override void OnDamage(float damage)
     {
-        base.OnDamage();
+        base.OnDamage(damage);
         AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DamageSe);
 
         if (m_MaterialEffect != null)

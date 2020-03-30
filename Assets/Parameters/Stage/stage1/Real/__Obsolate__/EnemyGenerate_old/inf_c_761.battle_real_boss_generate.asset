@@ -30,14 +30,17 @@ MonoBehaviour:
     CenterCreateItemType: 0
   m_DefeatEvents:
   - ContentName: "\u30DC\u30B9\u7D42\u4E86"
-    IsPassExecute: 0
+    IsPassExecute: 1
     EventType: 4
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
@@ -74,10 +77,13 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 1
     DelayExecuteTime: 8
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
@@ -161,10 +167,13 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0
@@ -201,10 +210,13 @@ MonoBehaviour:
     EventType: 4
     ExecuteTiming: 1
     DelayExecuteTime: 8
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0

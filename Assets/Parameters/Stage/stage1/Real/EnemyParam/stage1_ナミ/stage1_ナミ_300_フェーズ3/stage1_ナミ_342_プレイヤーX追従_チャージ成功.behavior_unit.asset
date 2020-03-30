@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10dbec482e9329049b9550cc3e10020d, type: 3}
+  m_Name: "stage1_\u30CA\u30DF_342_\u30D7\u30EC\u30A4\u30E4\u30FCX\u8FFD\u5F93_\u30C1\u30E3\u30FC\u30B8\u6210\u529F.behavior_unit"
+  m_EditorClassIdentifier: 
+  m_ApplyInterruptEnd: 0
+  m_InterruptEndFunc: {fileID: 0}
+  m_DefaultEndValue: 0
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_BulletGeneratorDatas:
+  - ParamSet: {fileID: 11400000, guid: 1b27c23d1abaa4a468187c6b13b63663, type: 2}
+    StartTimeOnFirstActivate: 0
+    StopTimeFromFirstActivate: 100
+    ActivateInterval: 0.2
+  - ParamSet: {fileID: 11400000, guid: ce81b0fa3aadc9743bfa94f22e97e32a, type: 2}
+    StartTimeOnFirstActivate: 0
+    StopTimeFromFirstActivate: 100
+    ActivateInterval: 0.2
+  - ParamSet: {fileID: 11400000, guid: c13024d490465944d8db761055626b30, type: 2}
+    StartTimeOnFirstActivate: 0
+    StopTimeFromFirstActivate: 100
+    ActivateInterval: 0.2
+  m_DestroyBulletGeneratorOnBehaviorEnd: 1
+  m_XMoveSpeed: 0.5

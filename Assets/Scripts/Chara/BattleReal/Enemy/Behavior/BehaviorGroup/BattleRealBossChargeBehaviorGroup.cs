@@ -34,7 +34,7 @@ public class BattleRealBossChargeBehaviorGroup : BattleRealEnemyBehaviorGroup
 
     #endregion
 
-    #region Field Inspector
+    #region Field
 
     private bool m_IsInvalid;
     private BattleRealBossController m_Boss;
@@ -65,7 +65,7 @@ public class BattleRealBossChargeBehaviorGroup : BattleRealEnemyBehaviorGroup
         m_IsFirstLoop = true;
         m_IsChargeSuccess = false;
 
-        // ここでボスにチャージを開始する処理を渡す
+        m_Boss.StartCharge(m_ChargeDuration, m_DamageUntilChargeFailure, m_ChargeEffect);
     }
 
     protected override void OnLooped()
@@ -75,10 +75,7 @@ public class BattleRealBossChargeBehaviorGroup : BattleRealEnemyBehaviorGroup
         if (m_IsFirstLoop)
         {
             m_IsFirstLoop = false;
-
-            // ここでボスの状態を見て、成否を決定する
-            // 今は無条件で成功したことにする
-            m_IsChargeSuccess = true;
+            m_IsChargeSuccess = m_Boss.IsChargeSuccess;
         }
     }
 

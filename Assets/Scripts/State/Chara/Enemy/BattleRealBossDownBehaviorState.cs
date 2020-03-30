@@ -46,6 +46,11 @@ partial class BattleRealBossController
                 }
             }
 
+            if (Target.IsCharging)
+            {
+                Target.ChargeFailure();
+            }
+
             var effectManager = BattleRealEffectManager.Instance;
             m_DownEffect = effectManager.CreateEffect(Target.m_BossParam.DownEffectParam, Target.transform);
             m_DownPlayerTriangleEffect = effectManager.CreateEffect(Target.m_BossParam.PlayerTriangleEffectParam, Target.transform);
