@@ -59,8 +59,8 @@ public class BattleRealEnemyPlayerDirectionForFieldBehavior : BattleRealEnemyBeh
         var minField = BattleRealStageManager.Instance.MinLocalFieldPosition;
 
         var maxXmaxZForward = maxField.ToVector3XZ() - m_StartPosition;
-        var maxXminZForward = new Vector3(maxField.x, minField.y) - m_StartPosition;
-        var minXmaxZForward = new Vector3(minField.x, maxField.y) - m_StartPosition;
+        var maxXminZForward = new Vector3(maxField.x, 0, minField.y) - m_StartPosition;
+        var minXmaxZForward = new Vector3(minField.x, 0, maxField.y) - m_StartPosition;
         var minXminZForward = minField.ToVector3XZ() - m_StartPosition;
 
         var crossMaxXMaxZ = Vector3.Cross(maxXmaxZForward, playerForward).y;
