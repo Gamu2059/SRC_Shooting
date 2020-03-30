@@ -34,7 +34,7 @@ public class BattleRealBossChargeBehaviorGroup : BattleRealEnemyBehaviorGroup
 
     #endregion
 
-    #region Field Inspector
+    #region Field
 
     private bool m_IsInvalid;
     private BattleRealBossController m_Boss;

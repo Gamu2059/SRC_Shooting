@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0ea5f6bf510a4385178209d523e82, type: 3}
   m_Name: stage1_back_camera_009_animation.sequence_unit
   m_EditorClassIdentifier: 
+  m_SpaceType: 0
   m_ApplyInterruptEnd: 0
   m_InterruptEndFunc: {fileID: 0}
   m_DefaultEndValue: 0
@@ -23,7 +24,7 @@ MonoBehaviour:
     IsPassY: 0
     IsPassZ: 0
   m_InitializeEulerAngles:
-    Data: {x: 30, y: 15, z: 5}
+    Data: {x: 30, y: 5, z: 15}
     IsPassX: 0
     IsPassY: 0
     IsPassZ: 0
@@ -49,6 +50,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
       YParam:
         Use: 0
         AnimationValue:
@@ -67,6 +69,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
       ZParam:
         Use: 1
         AnimationValue:
@@ -103,6 +106,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 110
+        Scale: 1
     UseRotation: 1
     Rotation:
       XParam:
@@ -132,6 +136,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: -30
+        Scale: 1
       YParam:
         Use: 1
         AnimationValue:
@@ -159,6 +164,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: -180
+        Scale: 1
       ZParam:
         Use: 1
         AnimationValue:
@@ -186,3 +192,4 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310bbbfb262e3db479dac28abca1b85a, type: 3}
+  m_Name: "stage1_\u30CA\u30DF_320_\u30C1\u30E3\u30FC\u30B8.behavior_group"
+  m_EditorClassIdentifier: 
+  m_Elements:
+  - {fileID: 11400000, guid: 84480f69aeb2809418d29255d8a15e87, type: 2}
+  - {fileID: 11400000, guid: 7dcdfaa58c515b94aa73abf4c6353845, type: 2}
+  m_DefaultEndValue: 1
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_OnLoopedOptions: []
+  m_ChargeDuration: 14
+  m_DamageUntilChargeFailure: 100
+  m_ChargeEffect: {fileID: 0}
+  m_ChargeSuccessElements:
+  - {fileID: 11400000, guid: d0b930d5e8568c04e8890a06d6238158, type: 2}
+  - {fileID: 11400000, guid: acaf9164b38091d4e853ed5952420c24, type: 2}
+  m_ChargeFailureElements:
+  - {fileID: 11400000, guid: 73a84aa3afd3a394e8fb452e96772761, type: 2}
