@@ -38,16 +38,10 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     [SerializeField]
     private VideoPlayer m_VideoPlayer = default;
 
-    [Header("Debug")]
+    [Header("Hacking In Out")]
 
     [SerializeField]
-    private bool m_IsStartHackingMode = default;
-
-    [SerializeField]
-    public bool m_IsDrawColliderArea = default;
-
-    [SerializeField]
-    public bool m_IsDrawOutSideColliderArea = default;
+    private HackInOutController m_HackInController;
 
     #endregion
 
@@ -85,14 +79,16 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_RealManager = BattleRealManager.Builder(this, m_ParamSet.BattleRealParamSet);
         m_HackingManager = BattleHackingManager.Builder(this, m_ParamSet.BattleHackingParamSet);
 
-        DataManager.Instance.BattleData.SetDifficulty(m_Difficulty);
+        m_HackInController.OnInitialize();
 
-        CalcPerfectHackingSuccessNum();
+        DataManager.Instance.BattleData.SetDifficulty(m_Difficulty);
     }
 
     public override void OnFinalize()
     {
         m_OnChangeState = null;
+
+        m_HackInController.OnFinalize();
 
         m_HackingManager.OnFinalize();
         m_RealManager.OnFinalize();
@@ -103,20 +99,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     public override void OnUpdate()
     {
         base.OnUpdate();
-
         m_StateMachine.OnUpdate();
-
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            m_IsDrawColliderArea = !m_IsDrawColliderArea;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            DataManager.Instance.BattleData.AddEnergyCount(1);
-        }
-#endif
     }
 
     public override void OnLateUpdate()

@@ -16,12 +16,6 @@
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (Target.m_IsStartHackingMode)
-            {
-                Target.m_IsStartHackingMode = false;
-                Target.RequestChangeState(E_BATTLE_STATE.TO_HACKING);
-            }
-
             Target.m_RealManager.OnUpdate();
             Target.m_HackingManager.OnUpdate();
         }
