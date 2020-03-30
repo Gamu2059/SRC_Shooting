@@ -8,12 +8,6 @@ public class BattleRealEnemyBulletBase : BulletController
     protected bool m_IsDestoryOnHitOther;
     public bool IsDestoryOnHitOther => m_IsDestoryOnHitOther;
 
-    public override void OnInitialize()
-    {
-        base.OnInitialize();
-        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.Shot01Se);
-    }
-
     protected override void OnEnterHitChara(HitSufferData<BattleRealCharaController> hitData)
     {
         base.OnEnterHitChara(hitData);
