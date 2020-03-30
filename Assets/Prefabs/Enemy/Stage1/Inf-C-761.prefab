@@ -841,7 +841,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TargetAnimator: {fileID: 8312071786102192054}
-  m_Leap: 10
+  m_VerticalKey: VSpeed
+  m_HorizontalKey: HSpeed
+  m_Leap: 0.1
 --- !u!114 &431221323910337709
 MonoBehaviour:
   m_ObjectHideFlags: 0
