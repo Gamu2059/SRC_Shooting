@@ -22,13 +22,6 @@
             "CanUseSpriteAtlas"="True"
         }
 
-        Stencil
-        {
-            Ref 1
-            Comp Always
-            Pass Replace
-        }
-
         Cull Off
         Lighting Off
         ZWrite On
