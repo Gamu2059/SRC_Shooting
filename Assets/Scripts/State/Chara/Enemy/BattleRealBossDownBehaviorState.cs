@@ -46,11 +46,6 @@ partial class BattleRealBossController
                 }
             }
 
-            if (Target.IsCharging)
-            {
-                Target.ChargeFailure();
-            }
-
             var effectManager = BattleRealEffectManager.Instance;
             m_DownEffect = effectManager.CreateEffect(Target.m_BossParam.DownEffectParam, Target.transform);
             m_DownPlayerTriangleEffect = effectManager.CreateEffect(Target.m_BossParam.PlayerTriangleEffectParam, Target.transform);
@@ -124,10 +119,10 @@ partial class BattleRealBossController
                     case E_ENEMY_BEHAVIOR_TYPE.NONE:
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
-                        m_Behavior?.OnEndUnit();
+                        m_Behavior?.OnStopUnit();
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
-                        m_BehaviorController?.OnEndUnit();
+                        m_BehaviorController?.StopBehavior();
                         break;
                 }
             }

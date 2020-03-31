@@ -68,6 +68,9 @@ public class BattleRealEnemyBehaviorUnit : BattleRealEnemyBehaviorElement
     [SerializeField]
     private BattleRealEnemyBehaviorOptionFunc[] m_OnEndOptions;
 
+    [SerializeField]
+    private BattleRealEnemyBehaviorOptionFunc[] m_OnStopOptions;
+
     [Header("Shot Parameter")]
 
     [SerializeField, Tooltip("弾生成に関するパラメータ")]
@@ -149,8 +152,8 @@ public class BattleRealEnemyBehaviorUnit : BattleRealEnemyBehaviorElement
                 }
             }
             m_BulletGeneratorList.Clear();
+            m_BulletGeneratorList = null;
         }
-        m_BulletGeneratorList = null;
 
         m_BulletGeneratorFieldDataList?.Clear();
         m_BulletGeneratorFieldDataList = null;
@@ -169,6 +172,37 @@ public class BattleRealEnemyBehaviorUnit : BattleRealEnemyBehaviorElement
         }
 
         return IsEnd();
+    }
+
+    public void OnStopUnit()
+    {
+        OnStop();
+
+        if (m_OnStopOptions != null)
+        {
+            foreach (var option in m_OnStopOptions)
+            {
+                option?.Call(Enemy);
+            }
+        }
+
+        if (m_BulletGeneratorList != null)
+        {
+            if (m_DestroyBulletGeneratorOnBehaviorEnd)
+            {
+                foreach (var g in m_BulletGeneratorList)
+                {
+                    g.Destroy();
+                }
+            }
+            m_BulletGeneratorList.Clear();
+            m_BulletGeneratorList = null;
+        }
+
+        m_BulletGeneratorFieldDataList?.Clear();
+        m_BulletGeneratorFieldDataList = null;
+        Controller = null;
+        Enemy = null;
     }
 
     private void UpdateBulletGenerator(float deltaTime)
@@ -231,6 +265,8 @@ public class BattleRealEnemyBehaviorUnit : BattleRealEnemyBehaviorElement
     protected virtual void OnEnd() { }
 
     protected virtual bool IsEnd() { return m_DefaultEndValue; }
+
+    protected virtual void OnStop() { }
 
     #endregion
 }

@@ -46,8 +46,8 @@ public class BattleRealBossBehaviorSet
     public BattleHackingLevelParamSet HackingLevelParamSet => m_HackingLevelParamSet;
 
     [SerializeField, Tooltip("この振る舞いに切り替わった時に用いるシーケンスデータ")]
-    private SequenceGroup m_StartSequenceGroup;
-    public SequenceGroup StartSequenceGroup => m_StartSequenceGroup;
+    private SequenceGroup m_SequenceGroupOnChangeBehavior;
+    public SequenceGroup SequenceGroupOnChangeBehavior => m_SequenceGroupOnChangeBehavior;
 
     [SerializeField, Tooltip("この振る舞いでのダウンHP")]
     private int m_DownHp;

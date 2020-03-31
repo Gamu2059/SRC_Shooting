@@ -27,14 +27,14 @@ MonoBehaviour:
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: caab4a5be051bfb47895c6318eee9440,
+        m_BehaviorGroup: {fileID: 11400000, guid: 712ec9e9d6fbded498cd362526f5bee8,
           type: 2}
         m_DownBehaviorType: 2
         m_DownBehavior: {fileID: 0}
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: 138f571f6c9003642bc0a9b9126b29a2,
           type: 2}
-        m_StartSequenceGroup: {fileID: 0}
+        m_SequenceGroupOnChangeBehavior: {fileID: 0}
         m_DownHp: 60
         m_DownHealTime: 6
         m_HpRateThresholdNextBehavior: 0.6
@@ -58,7 +58,8 @@ MonoBehaviour:
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: 1a19522e2833a48419860e4f5e19b23f,
           type: 2}
-        m_StartSequenceGroup: {fileID: 0}
+        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
+          type: 2}
         m_DownHp: 80
         m_DownHealTime: 6
         m_HpRateThresholdNextBehavior: 0.3
@@ -82,7 +83,8 @@ MonoBehaviour:
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: 3c5a7d61399efb24b9959c43ec7b5897,
           type: 2}
-        m_StartSequenceGroup: {fileID: 0}
+        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
+          type: 2}
         m_DownHp: 100
         m_DownHealTime: 6
         m_HpRateThresholdNextBehavior: 0

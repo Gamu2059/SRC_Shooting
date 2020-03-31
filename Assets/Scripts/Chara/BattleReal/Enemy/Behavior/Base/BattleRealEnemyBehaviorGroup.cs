@@ -32,6 +32,9 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
     [SerializeField]
     private BattleRealEnemyBehaviorOptionFunc[] m_OnLoopedOptions;
 
+    [SerializeField]
+    private BattleRealEnemyBehaviorOptionFunc[] m_OnStopOptions;
+
     #endregion
 
     #region Field
@@ -100,6 +103,25 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
     }
 
     /// <summary>
+    /// このグループの中断時の処理
+    /// </summary>
+    public void OnStopGroup()
+    {
+        OnStop();
+
+        if (m_OnStopOptions != null)
+        {
+            foreach (var option in m_OnStopOptions)
+            {
+                option?.Call(Enemy);
+            }
+        }
+
+        Controller = null;
+        Enemy = null;
+    }
+
+    /// <summary>
     /// 指し示しているインデックスを一つ進める。
     /// </summary>
     public void Forward()
@@ -154,6 +176,8 @@ public class BattleRealEnemyBehaviorGroup : BattleRealEnemyBehaviorElement
     protected virtual void OnLooped() { }
 
     protected virtual void OnEnd() { }
+
+    protected virtual void OnStop() { }
 
     /// <summary>
     /// 今適用されているElementsを取得する。<br/>

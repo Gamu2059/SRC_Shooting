@@ -19,14 +19,18 @@ partial class BattleRealBossController
             Target.m_CarryOverHackingBossDamage = 0;
 
             var behaviorSet = Target.m_CurrentBehaviorSet;
-            if (behaviorSet == null || behaviorSet.StartSequenceGroup == null)
+            if (behaviorSet == null)
             {
-                Debug.LogWarningFormat("[{0}] : シーケンスを実行できません。", GetType().Name);
+                Debug.LogWarningFormat("[{0}] : BehaviorSetがないため、シーケンスを実行できません。", GetType().Name);
                 Target.RequestChangeState(E_STATE.BEHAVIOR);
                 return;
             }
 
-            Target.StartSequence(behaviorSet.StartSequenceGroup);
+            var isStartSequence = Target.StartSequence(behaviorSet.SequenceGroupOnChangeBehavior);
+            if (!isStartSequence)
+            {
+                Target.RequestChangeState(E_STATE.BEHAVIOR);
+            }
         }
     }
 }

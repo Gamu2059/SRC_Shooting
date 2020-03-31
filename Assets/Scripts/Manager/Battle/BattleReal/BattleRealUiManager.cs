@@ -213,28 +213,44 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
     #endregion
 
+    /// <summary>
+    /// ハッキングモードに遷移する時のビューの透明度アニメーションを再生する。
+    /// </summary>
+    [Obsolete("ハッキングモードに遷移する時は新しい演出を使用して下さい。")]
     public void PlayToHacking()
     {
         m_MainViewAnimator.Play(TO_HACKING, 0);
         m_ResultViewAnimator.Play(TO_HACKING, 0);
     }
 
+    /// <summary>
+    /// リアルモードに遷移する時のビューの透明度アニメーションを再生する。
+    /// </summary>
     public void PlayToReal()
     {
         m_MainViewAnimator.Play(TO_REAL, 0);
         m_ResultViewAnimator.Play(TO_REAL, 0);
     }
 
+    /// <summary>
+    /// リアルモードのUIの透明度を設定する。
+    /// </summary>
     public void SetAlpha(float normalizedAlpha)
     {
         m_MainUiGroup.alpha = normalizedAlpha;
         m_ResultUiGroup.alpha = normalizedAlpha;
     }
 
+    /// <summary>
+    /// リアルモードのボスUIの有効無効を設定する。
+    /// </summary>
     public void SetEnableBossUI(bool isEnable){
         m_BossUI.SetActive(isEnable);
     }
 
+    /// <summary>
+    /// ゲームオーバー演出を再生する。
+    /// </summary>
     public void PlayGameOver()
     {
         m_GameOverController.PlayGameOver();
@@ -245,41 +261,43 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         EndAction?.Invoke();
     }
 
-    public void PlayGameClearAnimation()
-    {
-        //m_StageClearAnimator.gameObject.SetActive(true);
-        //if (DataManager.Instance.BattleData.IsHackingComplete)
-        //{
-        //    m_StageClearAnimator.Play(CLEAR_WITH_HACKING_COMPLETE, 0);
-        //}
-        //else
-        //{
-        //    m_StageClearAnimator.Play(CLEAR_WITHOUT_HACKING_COMPLETE, 0);
-        //}
-        PlayClearTelop();
-    }
-
+    /// <summary>
+    /// ゲームスタート演出を再生する。
+    /// </summary>
     public void PlayStartTelop(Action onEnd = null)
     {
         m_StartTelop.Play(null, false, onEnd);
     }
 
+    /// <summary>
+    /// 警告演出を再生する。
+    /// </summary>
+    [Obsolete("どこにも使用しないはずです。")]
     public void PlayWarningTelop(Action onEnd = null)
     {
         m_WarningTelop.Play(null, false, onEnd);
     }
 
+    /// <summary>
+    /// ゲームクリア演出を再生する。
+    /// </summary>
     public void PlayClearTelop(Action onEnd = null)
     {
         m_ClearTelop.Play(DataManager.Instance.BattleData.IsHackingComplete ? "Hacking Complete" : null, false, onEnd);
     }
 
-    public void PlayMainViewHideAnimation()
+    /// <summary>
+    /// 結果UIを表示することに先立ってメインビューを隠すアニメーションを再生する。
+    /// </summary>
+    public void PlayMainViewHideAnimationBeforeShowResult()
     {
         m_MainViewAnimator.Play(TO_HACKING, 0);
     }
 
-    public void DisplayResult()
+    /// <summary>
+    /// 結果UIを表示する。
+    /// </summary>
+    public void ShowResult()
     {
         m_ResultIndicator.PlayResult();
         m_IsShowResult = true;
