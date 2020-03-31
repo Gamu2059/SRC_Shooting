@@ -20,7 +20,7 @@ partial class BattleRealManager
             BattleRealUiManager.Instance.SetEnableBossUI(false);
             BattleRealUiManager.Instance.PlayClearTelop();
 
-            //AudioManager.Instance.Play(Target.m_ParamSet.GameClearSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.GAME_CLEAR);
 
             var hideViewWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
             hideViewWaitTimer.SetTimeoutCallBack(() =>

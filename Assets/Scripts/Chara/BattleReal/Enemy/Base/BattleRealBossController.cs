@@ -82,7 +82,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         public float DownHealTime;
         public float HpRateThresholdNextBehavior;
         public ItemCreateParam HackingSuccessItemParam;
-        public SequenceGroup StartSequenceGroup;
+        public SequenceGroup SequenceGroupOnChangeBehavior;
     }
 
     #endregion
@@ -257,7 +257,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
             behaviorSet.DownHealTime = originBehaviorSet.DownHealTime;
             behaviorSet.HpRateThresholdNextBehavior = originBehaviorSet.HpRateThresholdNextBehavior;
             behaviorSet.HackingSuccessItemParam = originBehaviorSet.HackingSuccessItemParam;
-            behaviorSet.StartSequenceGroup = originBehaviorSet.StartSequenceGroup;
+            behaviorSet.SequenceGroupOnChangeBehavior = originBehaviorSet.SequenceGroupOnChangeBehavior;
 
             m_BehaviorSets.Add(behaviorSet);
         }
@@ -458,15 +458,17 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     /// <summary>
     /// シーケンスによる制御を開始する。
     /// </summary>
-    private void StartSequence(SequenceGroup sequenceGroup)
+    /// <returns>シーケンス制御が可能ならtrueを返す</returns>
+    private bool StartSequence(SequenceGroup sequenceGroup)
     {
         if (sequenceGroup == null)
         {
-            return;
+            return false;
         }
 
         m_ReservedSequenceGroup = sequenceGroup;
         RequestChangeState(E_STATE.SEQUENCE);
+        return true;
     }
 
     /// <summary>

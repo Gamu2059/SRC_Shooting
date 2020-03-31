@@ -37,7 +37,7 @@ public class BattleRealEnemyBehaviorController : ControllableObject
     public override void OnFinalize()
     {
         OnEndBehavior = null;
-        m_GroupStack.Clear();
+        ClearRemainData();
         m_GroupStack = null;
         base.OnFinalize();
     }
@@ -69,9 +69,14 @@ public class BattleRealEnemyBehaviorController : ControllableObject
         }
     }
 
-    public void OnEndUnit()
+    /// <summary>
+    /// 振る舞いを中断する。
+    /// </summary>
+    public void StopBehavior()
     {
-        m_CurrentUnit?.OnEndUnit();
+        m_CurrentUnit?.OnStopUnit();
+        m_CurrentGroup?.OnStopGroup();
+        ClearRemainData();
     }
 
     /// <summary>
@@ -84,9 +89,20 @@ public class BattleRealEnemyBehaviorController : ControllableObject
             return;
         }
 
+        ClearRemainData();
         m_CurrentGroup = GameObject.Instantiate(behaviorGroup);
         m_CurrentGroup.OnStartGroup(m_Enemy, this);
         GoNextUnit(false, false, false);
+    }
+
+    /// <summary>
+    /// 残っているデータを消す。
+    /// </summary>
+    private void ClearRemainData()
+    {
+        m_GroupStack.Clear();
+        m_CurrentGroup = null;
+        m_CurrentUnit = null;
     }
 
     /// <summary>

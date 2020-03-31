@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9768669efa4d51143a2edf0402706824, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_207_\u672C\u4F53\u77E9\u5F62\u30AA\u30EC\u30F3\u30B8\u5F3E.bullet_generator"
+  m_Name: "stage1_\u30CA\u30DF_304_\u5782\u76F4\u843D\u4E0B\u83F1\u5F62\u30AA\u30EC\u30F3\u30B8\u5F3E3_\u30C1\u30E3\u30FC\u30B8\u6210\u529F.bullet_generator"
   m_EditorClassIdentifier: 
   m_GeneratorClassName: BattleReal.BulletGenerator.NwayBulletGenerator
   m_Params:
   - Difficulty: 1
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: d300d93f16f1d1e40930e11b420890e7, type: 3}
+      - {fileID: 6531663667767994548, guid: 076a34267f1eedd47802f1fa9929df68, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: ff76f44c5ad6bf2439b197f16da53fd5, type: 2}
+      - {fileID: 11400000, guid: e97070c9569e8254dbd74699a1c73ef7, type: 2}
       m_ShotTransformName: Scaler
-      m_ShotNum: 3
-      m_AxisType: 0
+      m_ShotNum: 1
+      m_AxisType: 1
       m_AxisOffsetAngle: 0
       m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
       m_ShotRadius: 0
@@ -32,6 +32,6 @@ MonoBehaviour:
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 3
+      m_ShotAngle: 0
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0

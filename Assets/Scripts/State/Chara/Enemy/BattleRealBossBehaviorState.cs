@@ -121,12 +121,17 @@ partial class BattleRealBossController
                     case E_ENEMY_BEHAVIOR_TYPE.NONE:
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
-                        m_Behavior?.OnEndUnit();
+                        m_Behavior?.OnStopUnit();
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
-                        m_BehaviorController?.OnEndUnit();
+                        m_BehaviorController?.StopBehavior();
                         break;
                 }
+            }
+
+            if (Target.IsCharging)
+            {
+                Target.ChargeFailure();
             }
 
             base.OnEnd();

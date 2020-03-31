@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9768669efa4d51143a2edf0402706824, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_303_\u5782\u76F4\u843D\u4E0B\u83F1\u5F62\u30AA\u30EC\u30F3\u30B8\u5F3E2.bullet_generator"
+  m_Name: "stage1_\u30CA\u30DF_303_\u5782\u76F4\u843D\u4E0B\u83F1\u5F62\u30AA\u30EC\u30F3\u30B8\u5F3E2_\u30C1\u30E3\u30FC\u30B8\u6210\u529F.bullet_generator"
   m_EditorClassIdentifier: 
   m_GeneratorClassName: BattleReal.BulletGenerator.NwayBulletGenerator
   m_Params:
   - Difficulty: 1
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: e691edb85e0c6d14ebe1c8b4e41d4f29, type: 3}
+      - {fileID: 6531663667767994548, guid: 076a34267f1eedd47802f1fa9929df68, type: 3}
       m_BulletParams:
       - {fileID: 11400000, guid: a651a0a4e3e87684a83b52cae9de7d2e, type: 2}
       m_ShotTransformName: Scaler

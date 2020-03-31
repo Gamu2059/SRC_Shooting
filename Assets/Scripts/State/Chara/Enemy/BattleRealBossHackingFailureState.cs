@@ -13,7 +13,7 @@ partial class BattleRealBossController
             if (Target.m_CurrentBehaviorSet != null)
             {
                 // ハッキング失敗エフェクトは、ボスのステートに合わせて破棄しないので作って放置
-                BattleRealEffectManager.Instance.CreateEffect(Target.m_BossParam.HackingSuccessEffectParam, Target.transform);
+                BattleRealEffectManager.Instance.CreateEffect(Target.m_BossParam.HackingFailureEffectParam, Target.transform);
             }
 
             Target.RequestChangeState(E_STATE.BEHAVIOR);
