@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3742b18b28a2e014db5c2ca912539422, type: 3}
-  m_Name: stage1_back_camera_006_option001.sequence_option
+  m_Name: "stage1_back_camera_006_3\u672C\u76EE\u901A\u8DEF.sequence_option"
   m_EditorClassIdentifier: 
   m_CallEvent:
     ContentName: "\u30BF\u30A4\u30E0\u30D4\u30EA\u30AA\u30C9"
@@ -18,11 +18,13 @@ MonoBehaviour:
     EventType: 5
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    EnemyGroupGenerateParamSet: {fileID: 0}
+    EnemyGroupParam: {fileID: 0}
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
     ShowCutsceneParam:
       CutsceneName: 
       AutoChangeToGameState: 0

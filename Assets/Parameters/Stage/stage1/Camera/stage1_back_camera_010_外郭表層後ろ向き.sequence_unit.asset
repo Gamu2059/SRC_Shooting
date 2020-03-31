@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbf0ea5f6bf510a4385178209d523e82, type: 3}
-  m_Name: stage1_back_camera_010_animation.sequence_unit
+  m_Name: "stage1_back_camera_010_\u5916\u90ED\u8868\u5C64\u5F8C\u308D\u5411\u304D.sequence_unit"
   m_EditorClassIdentifier: 
+  m_SpaceType: 0
   m_ApplyInterruptEnd: 1
   m_InterruptEndFunc: {fileID: 11400000, guid: 867bda7483df2c5488ecfe4a07d0cc7d, type: 2}
   m_DefaultEndValue: 0
@@ -49,6 +50,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
       YParam:
         Use: 0
         AnimationValue:
@@ -67,6 +69,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
       ZParam:
         Use: 1
         AnimationValue:
@@ -103,6 +106,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 160
+        Scale: 1
     UseRotation: 0
     Rotation:
       XParam:
@@ -123,6 +127,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
       YParam:
         Use: 0
         AnimationValue:
@@ -141,6 +146,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
       ZParam:
         Use: 0
         AnimationValue:
@@ -159,3 +165,4 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
+        Scale: 1
