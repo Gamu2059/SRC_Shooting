@@ -113,12 +113,12 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
     public override void OnUpdate()
     {
         // デバッグ用
-        foreach (var enemy in m_ReservedRegisterEnemies)
-        {
-            Register(enemy);
-        }
+        //foreach (var enemy in m_ReservedRegisterEnemies)
+        //{
+        //    Register(enemy);
+        //}
 
-        m_ReservedRegisterEnemies.Clear();
+        //m_ReservedRegisterEnemies.Clear();
 
         // Start
         foreach (var enemy in m_StandbyEnemies)
@@ -222,6 +222,7 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
     /// 敵を登録する。
     /// デバッグ専用。
     /// </summary>
+    [Obsolete]
     public static void RegisterEnemy(BattleRealEnemyBase enemy)
     {
         if (enemy == null || m_ReservedRegisterEnemies.Contains(enemy))
@@ -232,6 +233,7 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
         m_ReservedRegisterEnemies.Add(enemy);
     }
 
+    [Obsolete]
     private void Register(BattleRealEnemyBase enemy)
     {
         if (enemy == null || m_StandbyEnemies.Contains(enemy) || Enemies.Contains(enemy) || m_GotoPoolEnemies.Contains(enemy))
