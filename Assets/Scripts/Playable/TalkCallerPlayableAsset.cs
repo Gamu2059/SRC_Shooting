@@ -20,6 +20,7 @@ public class TalkCallerPlayableAsset : PlayableAsset
         var behavior = new TalkCallerPlayableBehavior();
         behavior.ScenarioLabel = m_ScenarioLabel;
         behavior.PlayableDirectorObject = go;
+        
         return ScriptPlayable<TalkCallerPlayableBehavior>.Create(graph, behavior);
     }
 }

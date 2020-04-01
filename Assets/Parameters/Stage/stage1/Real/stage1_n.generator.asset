@@ -703,16 +703,16 @@ MonoBehaviour:
       IsMultiCondition: 0
       SingleCondition:
         IsReverse: 0
-        VariableType: 3
+        VariableType: 2
         UseGeneralIntVariable: 0
         GeneralIntVariable: 0
-        UseGeneralTimePeriod: 1
+        UseGeneralTimePeriod: 0
         GeneralTimePeriod: 1
-        VariableName: 
-        CompareType: 5
+        VariableName: G048 Defeat
+        CompareType: 0
         BoolCompareType: 0
-        CompareValue: 116
-        BoolCompareValue: 0
+        CompareValue: 0
+        BoolCompareValue: 1
       MultiConditionType: 0
       MultiConditions: []
     m_Param: {fileID: 11400000, guid: 4e1d714ad363663448ee648452d8b293, type: 2}

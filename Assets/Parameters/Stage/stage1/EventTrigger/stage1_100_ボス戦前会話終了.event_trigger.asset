@@ -10,37 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage1_201_\u30DC\u30B9\u6551\u51FA.battle_real_event_trigger"
+  m_Name: "stage1_100_\u30DC\u30B9\u6226\u524D\u4F1A\u8A71\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30DC\u30B9\u6551\u51FA"
+  EventTriggerName: "\u30DC\u30B9\u6226\u524D\u4F1A\u8A71\u7D42\u4E86"
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 0
-      UseGeneralIntVariable: 1
-      GeneralIntVariable: 1
-      UseGeneralTimePeriod: 0
+      VariableType: 3
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 1
       GeneralTimePeriod: 0
       VariableName: 
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 1
+      CompareValue: 0.1
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
   Contents:
-  - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2(\u6551\u52A9\u3042\u308A)"
+  - ContentName: "\u30D5\u30A7\u30FC\u30C9\u30A4\u30F3"
     IsPassExecute: 0
-    EventType: 12
+    EventType: 4
     ExecuteTiming: 0
     DelayExecuteTime: 0
     EnemyGroupParam: {fileID: 0}
     MovePlayerSequenceGroup: {fileID: 0}
-    ControlCameraParams:
-    - CameraType: 0
-      SequenceGroup: {fileID: 0}
+    ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
     ControlTelopParam:
@@ -58,13 +56,21 @@ MonoBehaviour:
       IsFadeOut: 0
       FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
       UseAnimation: 0
-      Duration: 0
+      Duration: 0.5
       RateCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    OperateVariableParams: []
+    OperateVariableParams:
+    - VariableType: 2
+      VariableName: Boss Talk End
+      OperandType: 0
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 0
+      BoolOperandValue: 1
     CountStartTimePeriodNames: []
     CallScriptParams: []

@@ -109,7 +109,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u30A2\u30AA\u30A4\uFF1F\u59CB\u3081\u308B\u308F\u3088\u3002"
+      - "\u30A2\u30AA\u30A4\uFF1F\u59CB\u3081\u308B\u308F\u3088"
       - 
       - 
       - CutsceneMessageWindow
@@ -123,9 +123,41 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 7
+      debugIndex: 9
+      strings:
+      - '*Stage0_0002'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30A2\u30AA\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u3093"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 11
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     name: Assets/Talks/Talks.xls:Stage0
     type: 1
-    textLength: 184
+    textLength: 237
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -803,7 +835,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u30A2\u30AA\u30A4\uFF1F\u59CB\u3081\u308B\u308F\u3088\u3002"
+      - "\u30A2\u30AA\u30A4\uFF1F\u59CB\u3081\u308B\u308F\u3088"
       - 
       - 
       - CutsceneMessageWindow
@@ -825,13 +857,39 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 9
       debugIndex: 9
-      strings: []
-      isEmpty: 1
+      strings:
+      - '*Stage0_0002'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30A2\u30AA\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u3093"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - EndScenario
+      isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/Talks/Talks.xls:Stage0
     type: 1
-    textLength: 184
+    textLength: 237
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:

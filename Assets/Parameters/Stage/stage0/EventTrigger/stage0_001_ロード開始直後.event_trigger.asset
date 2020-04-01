@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage1_100_\u30DC\u30B9\u6226\u524D\u4F1A\u8A71\u7D42\u4E86.battle_real_event_trigger"
+  m_Name: "stage0_001_\u30ED\u30FC\u30C9\u958B\u59CB\u76F4\u5F8C.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30DC\u30B9\u6226\u524D\u4F1A\u8A71\u7D42\u4E86"
+  EventTriggerName: "\u30B7\u30FC\u30F3\u8AAD\u8FBC\u6642"
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
@@ -26,14 +26,14 @@ MonoBehaviour:
       VariableName: 
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 0.1
+      CompareValue: 0
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
   Contents:
-  - ContentName: "\u30D5\u30A7\u30FC\u30C9\u30A4\u30F3"
+  - ContentName: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8"
     IsPassExecute: 0
-    EventType: 4
+    EventType: 7
     ExecuteTiming: 0
     DelayExecuteTime: 0
     EnemyGroupParam: {fileID: 0}
@@ -56,21 +56,51 @@ MonoBehaviour:
       IsFadeOut: 0
       FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
       UseAnimation: 0
-      Duration: 0.5
+      Duration: 0
       RateCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    OperateVariableParams:
-    - VariableType: 2
-      VariableName: Boss Talk End
-      OperandType: 0
-      BoolOperandType: 0
-      OperandValueType: 0
-      OperandValueName: 
-      OperandValue: 0
-      BoolOperandValue: 1
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  - ContentName: "\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3"
+    IsPassExecute: 0
+    EventType: 13
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams:
+    - CameraType: 0
+      SequenceGroup: {fileID: 11400000, guid: 4258413fc7cefc54aad89b9aee0f41cd, type: 2}
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: sc0001
+      AutoChangeToGameState: 1
+      OnCompletedEvents:
+      - {fileID: 11400000, guid: d5b365fa94a6f4b44b53282cf9c57f62, type: 2}
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []

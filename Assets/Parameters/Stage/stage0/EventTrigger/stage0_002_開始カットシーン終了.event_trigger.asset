@@ -10,37 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage1_200_\u30DC\u30B9\u6483\u7834.battle_real_event_trigger"
+  m_Name: "stage0_002_\u958B\u59CB\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30DC\u30B9\u6483\u7834"
+  EventTriggerName: "\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86\u6642"
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 0
-      UseGeneralIntVariable: 1
+      VariableType: 3
+      UseGeneralIntVariable: 0
       GeneralIntVariable: 0
-      UseGeneralTimePeriod: 0
+      UseGeneralTimePeriod: 1
       GeneralTimePeriod: 0
       VariableName: 
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 1
+      CompareValue: 0.1
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
   Contents:
-  - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2(\u6551\u52A9\u306A\u3057)"
+  - ContentName: "\u30D5\u30A7\u30FC\u30C9\u30A4\u30F3"
     IsPassExecute: 0
-    EventType: 10
+    EventType: 17
     ExecuteTiming: 0
     DelayExecuteTime: 0
     EnemyGroupParam: {fileID: 0}
     MovePlayerSequenceGroup: {fileID: 0}
-    ControlCameraParams:
-    - CameraType: 0
-      SequenceGroup: {fileID: 0}
+    ControlCameraParams: []
     ControlObjectParams: []
     ControlBgmParams: []
     ControlTelopParam:
@@ -58,7 +56,7 @@ MonoBehaviour:
       IsFadeOut: 0
       FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
       UseAnimation: 0
-      Duration: 0
+      Duration: 0.5
       RateCurve:
         serializedVersion: 2
         m_Curve: []
