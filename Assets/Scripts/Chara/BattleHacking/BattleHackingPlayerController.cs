@@ -60,7 +60,7 @@ public class BattleHackingPlayerController : CommandCharaController
             return;
         }
 
-        AudioManager.Instance.Play(BattleHackingPlayerManager.Instance.ParamSet.ShotSe);
+        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_HACKING_SHOT);
 
         for(int j = 0;j < 1; j++)
         {

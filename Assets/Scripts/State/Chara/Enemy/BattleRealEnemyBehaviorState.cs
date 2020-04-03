@@ -6,7 +6,7 @@ partial class BattleRealEnemyController
 {
     private class BehaviorState : StateCycle
     {
-        private BattleRealEnemyBehaviorUnit m_Behavior;
+        private BattleRealEnemyBehaviorUnitBase m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
 
         public override void OnStart()

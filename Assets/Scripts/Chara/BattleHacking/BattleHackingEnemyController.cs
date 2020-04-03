@@ -167,7 +167,7 @@ public class BattleHackingEnemyController : CommandCharaController
     protected override void OnDamage()
     {
         base.OnDamage();
-        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.DamageSe);
+        AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_DAMAGE_01);
 
         if (m_MaterialEffect != null)
         {
@@ -186,7 +186,6 @@ public class BattleHackingEnemyController : CommandCharaController
             DataManager.Instance.BattleData.AddScore(GenerateParamSet.Score);
         }
 
-        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.BreakSe);
         Destroy();
     }
 

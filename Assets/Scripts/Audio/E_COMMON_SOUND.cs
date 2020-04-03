@@ -45,7 +45,7 @@ public enum E_COMMON_SOUND
     /// <summary>
     /// プレイヤーのエナジーストックが1つ増えた時のSE
     /// </summary>
-    POWER_UP,
+    PLAYER_POWER_UP,
 
     /// <summary>
     /// ステージのゲームクリアBGM
@@ -56,4 +56,64 @@ public enum E_COMMON_SOUND
     /// ゲームオーバーBGM
     /// </summary>
     GAME_OVER,
+
+    /// <summary>
+    /// 敵のダメージSE
+    /// </summary>
+    ENEMY_DAMAGE_01,
+
+    /// <summary>
+    /// リアルモードのボスのダウンSE
+    /// </summary>
+    BOSS_DOWN,
+
+    /// <summary>
+    /// リアルモードのボスのダウン復帰SE
+    /// </summary>
+    BOSS_DOWN_RETURN,
+
+    /// <summary>
+    /// プレイヤー通常弾SE その1
+    /// </summary>
+    PLAYER_SHOT_01,
+
+    /// <summary>
+    /// ハッキングのプレイヤー通常弾SE
+    /// </summary>
+    PLAYER_HACKING_SHOT,
+
+    /// <summary>
+    /// プレイヤーチャージSE その1
+    /// </summary>
+    PLAYER_CHARGE_01,
+
+    /// <summary>
+    /// プレイヤーレーザーSE
+    /// </summary>
+    PLAYER_LASER,
+
+    /// <summary>
+    /// プレイヤーボムSE
+    /// </summary>
+    PLAYER_BOMB,
+
+    /// <summary>
+    /// プレイヤー武器タイプ切替SE
+    /// </summary>
+    PLAYER_WEAPON_CHANGE,
+
+    /// <summary>
+    /// アイテム獲得SE
+    /// </summary>
+    PLAYER_GET_ITEM,
+
+    /// <summary>
+    /// 敵の中級発射SE その1
+    /// </summary>
+    ENEMY_SHOT_MEDIUM_01,
+
+    /// <summary>
+    /// 敵の中級発射SE その2
+    /// </summary>
+    ENEMY_SHOT_MEDIUM_02,
 }

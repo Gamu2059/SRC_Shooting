@@ -7,7 +7,7 @@ partial class BattleRealBossController
     private class BehaviorState : StateCycle
     {
         private BehaviorSet m_BehaviorSet;
-        private BattleRealEnemyBehaviorUnit m_Behavior;
+        private BattleRealEnemyBehaviorUnitBase m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
 
         /// <summary>

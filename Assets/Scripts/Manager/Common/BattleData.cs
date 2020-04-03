@@ -242,8 +242,7 @@ public class BattleData
                 // レベルMAXになった時
                 if (Level >= levelNum - 1)
                 {
-                    var powerUpSe = BattleRealPlayerManager.Instance.ParamSet.PowerUpSe;
-                    AudioManager.Instance.Play(powerUpSe);
+                    AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_POWER_UP);
                 }
             }
 

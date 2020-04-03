@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// ハッキングモードのボスの生成パラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Boss/BossGenerate", fileName = "param.battle_hacking_boss_generate.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Enemy/BossParamSet", fileName = "param.boss.asset")]
 public class BattleHackingBossGenerateParamSet : BattleHackingEnemyGenerateParamSet
 {
     [Header("エフェクト")]
