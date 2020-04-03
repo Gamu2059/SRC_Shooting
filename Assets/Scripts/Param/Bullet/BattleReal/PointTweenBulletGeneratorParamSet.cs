@@ -11,7 +11,7 @@ namespace BattleReal.BulletGenerator
     /// <summary>
     /// 座標指定弾ジェネレータのパラメータセット。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/BulletGenerator/PointTween", fileName = "point_tween.bullet_generator.asset", order = 20)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Bullet/BulletGenerator/PointTween", fileName = "param.bullet_generator.asset", order = 20)]
     public class PointTweenBulletGeneratorParamSet : BattleRealBulletGeneratorParamSetBase
     {
         [Serializable]

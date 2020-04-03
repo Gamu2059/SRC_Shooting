@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// ハッキングモードの弾と弾道パラメータをリスト保持するパラメータアセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Bullet/BulletSet", fileName = "param.bullet_set", order = 0)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Bullet/BulletSet", fileName = "param.bullet_set.asset", order = 0)]
 public class CommandBulletSetParam : ScriptableObject
 {
     [SerializeField, Tooltip("弾のプレハブの配列")]

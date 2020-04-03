@@ -10,8 +10,8 @@ namespace BattleReal.EnemyGenerator
     /// <summary>
     /// 2点の座標を指定して、その間に敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/CoorinateTween", fileName = "coordinate_tween.enemy_generator.asset", order = 10)]
-    public class CoordinateTweenEnemyGenerator : BattleRealEnemyGenerator
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGenerator/CoorinateTween", fileName = "param.enemy_generator.asset", order = 10)]
+    public class CoordinateTweenEnemyGenerator : BattleRealEnemyGeneratorBase
     {
         #region Field Inspector
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/EnemyGroupGenerator", fileName = "param.battle_real_enemy_group_generator.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGroupGenerator", fileName = "param.generator.asset")]
 public class BattleRealEnemyGroupGenerator : ScriptableObject
 {
     [Serializable]

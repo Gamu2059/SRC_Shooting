@@ -11,7 +11,7 @@ namespace BattleReal.BulletGenerator
     /// <summary>
     /// Nway弾ジェネレータのパラメータセット。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/BulletGenerator/Nway", fileName = "n_way.bullet_generator.asset", order = 0)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Bullet/BulletGenerator/Nway", fileName = "param.bullet_generator.asset", order = 0)]
     public class NwayBulletGeneratorParamSet : BattleRealBulletGeneratorParamSetBase
     {
         [Serializable]

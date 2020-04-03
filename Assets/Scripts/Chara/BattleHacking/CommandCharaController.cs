@@ -40,39 +40,6 @@ public class CommandCharaController : BattleHackingObjectBase
     }
 
     /// <summary>
-    /// キャラが保持するBulletParamの個数を取得する。
-    /// </summary>
-    public int GetBulletParamsCount()
-    {
-        if (GetBulletSetParam().GetBulletParams() == null)
-        {
-            return -1;
-        }
-
-        return GetBulletSetParam().GetBulletParams().Length;
-    }
-
-    /// <summary>
-    /// 指定したインデックスのBulletParamを取得する。
-    /// </summary>
-    public BulletParam GetBulletParam(int bulletParamIndex = 0)
-    {
-        int paramCount = GetBulletParamsCount();
-
-        if (GetBulletSetParam().GetBulletParams() == null || paramCount < 1)
-        {
-            return null;
-        }
-
-        if (bulletParamIndex < 0 || bulletParamIndex >= paramCount)
-        {
-            bulletParamIndex = 0;
-        }
-
-        return GetBulletSetParam().GetBulletParams()[bulletParamIndex];
-    }
-
-    /// <summary>
     /// キャラが保持する弾プレハブの個数を取得する。
     /// </summary>
     public int GetBulletPrefabsCount()
