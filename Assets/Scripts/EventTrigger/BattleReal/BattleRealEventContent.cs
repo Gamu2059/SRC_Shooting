@@ -7,7 +7,7 @@ using System;
 /// リアルモードのEventの実行内容。
 /// </summary>
 [Serializable]
-public struct BattleRealEventContent
+public class BattleRealEventContent
 {
     public enum E_EVENT_TYPE
     {
@@ -115,6 +115,11 @@ public struct BattleRealEventContent
         /// テロップUIを制御する
         /// </summary>
         CONTROL_TELOP_UI,
+
+        /// <summary>
+        /// 他のイベントを実行する
+        /// </summary>
+        EXECUTE_OTHER_EVENT,
     }
 
     /// <summary>
@@ -151,8 +156,9 @@ public struct BattleRealEventContent
 
     [Header("APPEAR_ENEMY")]
 
+    public bool UseEnemyGroupParamArray = false;
     public BattleRealEnemyGroupParam EnemyGroupParam;
-    //public BattleRealEnemyGroupGenerateParamSet EnemyGroupGenerateParamSet;
+    public BattleRealEnemyGroupParam[] EnemyGroupParams;
 
     [Header("MOVE_PLAYER_BY_SEQUENCE")]
 
@@ -205,4 +211,9 @@ public struct BattleRealEventContent
     [Header("CALL_SCRIPT")]
 
     public CallScriptParam[] CallScriptParams;
+
+    [Header("EXECUTE_OTHER_EVENT")]
+
+    public BattleRealEventTriggerParam[] ExecuteEvents;
+
 }

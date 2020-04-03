@@ -8,9 +8,9 @@ using UnityEngine;
 [System.Serializable]
 public struct ControlObjectParam
 {
-    [Tooltip("操作対象のオブジェクトの名前")]
-    public string Name;
+    [Tooltip("操作対象のオブジェクトのプレハブ")]
+    public BattleRealSequenceObjectController SequenceObjectPrefab;
 
-    [Tooltip("オブジェクトの操作タイプ")]
-    public E_CONTROL_OBJECT_TYPE ControlObjectType;
+    [Tooltip("オブジェクトを操作する制御内容")]
+    public SequenceGroup RootGroup;
 }

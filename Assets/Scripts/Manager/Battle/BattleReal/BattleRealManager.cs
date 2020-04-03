@@ -89,6 +89,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealBulletManager.Builder(this, m_ParamSet.BulletManagerParamSet);
         BattleRealItemManager.Builder(this, m_ParamSet.ItemManagerParamSet);
         BattleRealEffectManager.Builder(this);
+        BattleRealSequenceObjectManager.Builder();
         BattleRealCollisionManager.Builder();
         BattleRealCameraManager.Instance.OnInitialize();
         BattleRealUiManager.Instance.OnInitialize();
@@ -111,6 +112,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealUiManager.Instance.OnFinalize();
         BattleRealCameraManager.Instance.OnFinalize();
         BattleRealCollisionManager.Instance.OnFinalize();
+        BattleRealSequenceObjectManager.Instance.OnFixedUpdate();
         BattleRealEffectManager.Instance.OnFinalize();
         BattleRealItemManager.Instance.OnFinalize();
         BattleRealBulletManager.Instance.OnFinalize();
@@ -217,7 +219,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
             {
                 m_TalkCaller = null;
                 BattleRealEventManager.Instance.AddEventParam(showTalkParam.OnCompletedEvents);
-
                 if (showTalkParam.AutoChangeToGameState)
                 {
                     RequestChangeState(E_BATTLE_REAL_STATE.GAME);

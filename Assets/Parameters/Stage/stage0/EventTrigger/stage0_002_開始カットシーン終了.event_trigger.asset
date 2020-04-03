@@ -66,3 +66,86 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+  - ContentName: "BGM\u30B9\u30BF\u30FC\u30C8"
+    IsPassExecute: 0
+    EventType: 3
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams:
+    - ControlType: 0
+      PlaySoundParam: {fileID: 11400000, guid: 0803fd92b4c0ea245b6cc51994f20576, type: 2}
+      StopSoundGroup: 0
+      OperateAisacParam: {fileID: 0}
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+  - ContentName: "\u4F1A\u8A71"
+    IsPassExecute: 0
+    EventType: 14
+    ExecuteTiming: 1
+    DelayExecuteTime: 0.5
+    EnemyGroupParam: {fileID: 0}
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: Stage0_Start_0001
+      AutoChangeToGameState: 1
+      OnCompletedEvents:
+      - {fileID: 11400000, guid: 910970b84d9be744c947b8a357b981ed, type: 2}
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams:
+    - VariableType: 0
+      VariableName: 
+      OperandType: 0
+      BoolOperandType: 0
+      OperandValueType: 0
+      OperandValueName: 
+      OperandValue: 0
+      BoolOperandValue: 0
+    CountStartTimePeriodNames: []
+    CallScriptParams: []

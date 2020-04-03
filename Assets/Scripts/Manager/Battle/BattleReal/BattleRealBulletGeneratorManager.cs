@@ -72,6 +72,7 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
             else if (g.Cycle != E_POOLED_OBJECT_CYCLE.STANDBY_UPDATE)
             {
                 CheckStandbyPool(g);
+                continue;
             }
 
             g.OnStart();
@@ -89,6 +90,7 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
             else if (g.Cycle != E_POOLED_OBJECT_CYCLE.UPDATE)
             {
                 CheckStandbyPool(g);
+                continue;
             }
 
             g.OnFixedUpdate();

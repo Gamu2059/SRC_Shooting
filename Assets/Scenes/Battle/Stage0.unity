@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 200
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -51,8 +51,8 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
@@ -2678,7 +2678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198628431}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1000, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2089289647}
@@ -5287,6 +5287,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 392545972}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &392545981 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206494444995314440, guid: dd972c705f691794281cf03ea9915c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 392545972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &406911237
 GameObject:
   m_ObjectHideFlags: 0
@@ -7237,7 +7243,7 @@ PrefabInstance:
     - target: {fileID: 2935203351221213555, guid: d7e1153de78e15541a31fffed826cee2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2935203351221213557, guid: d7e1153de78e15541a31fffed826cee2,
         type: 3}
@@ -24741,6 +24747,7 @@ MonoBehaviour:
   m_BulletHolder: {fileID: 392545976}
   m_ItemHolder: {fileID: 392545975}
   m_EffectHolder: {fileID: 392545974}
+  m_SequenceObjectHolder: {fileID: 392545981}
   m_MinLocalFieldPosition: {x: -0.81, y: -1}
   m_MaxLocalFieldPosition: {x: 0.81, y: 1}
 --- !u!4 &1944969279

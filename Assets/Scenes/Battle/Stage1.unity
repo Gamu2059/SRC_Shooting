@@ -10230,6 +10230,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 662550137}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &662550146 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206494444995314440, guid: dd972c705f691794281cf03ea9915c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 662550137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &663606500
 GameObject:
   m_ObjectHideFlags: 0
@@ -22219,6 +22225,7 @@ MonoBehaviour:
   m_BulletHolder: {fileID: 662550141}
   m_ItemHolder: {fileID: 662550140}
   m_EffectHolder: {fileID: 662550138}
+  m_SequenceObjectHolder: {fileID: 662550146}
   m_MinLocalFieldPosition: {x: -0.81, y: -1}
   m_MaxLocalFieldPosition: {x: 0.81, y: 1}
 --- !u!4 &1578941611

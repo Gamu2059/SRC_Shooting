@@ -12,14 +12,19 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     private Transform m_ObjectHolder;
 
     /// <summary>
-    /// 更新を掛けるオブジェクトのリスト。
+    /// STANDBY_UPDATE状態のオブジェクトのリスト。
     /// </summary>
-    private LinkedList<SequenceController> m_UpdateObjects;
+    private LinkedList<BattleRealSequenceObjectController> m_StandbyUpdateObjects;
 
     /// <summary>
-    /// 破棄するオブジェクトのリスト。
+    /// UPDATE状態のオブジェクトのリスト。
     /// </summary>
-    private LinkedList<SequenceController> m_DestroyObjects;
+    private LinkedList<BattleRealSequenceObjectController> m_UpdateObjects;
+
+    /// <summary>
+    /// STANDBY_DESTROY状態のオブジェクトのリスト。
+    /// </summary>
+    private LinkedList<BattleRealSequenceObjectController> m_StandbyDestroyObjects;
 
     #endregion
 
@@ -36,14 +41,15 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     {
         base.OnInitialize();
 
-        m_UpdateObjects = new LinkedList<SequenceController>();
-        m_DestroyObjects = new LinkedList<SequenceController>();
+        m_StandbyUpdateObjects = new LinkedList<BattleRealSequenceObjectController>();
+        m_UpdateObjects = new LinkedList<BattleRealSequenceObjectController>();
+        m_StandbyDestroyObjects = new LinkedList<BattleRealSequenceObjectController>();
     }
 
     public override void OnFinalize()
     {
         DestoryAllObjects();
-        m_DestroyObjects = null;
+        m_StandbyDestroyObjects = null;
         m_UpdateObjects = null;
         base.OnFinalize();
     }
@@ -60,10 +66,34 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     {
         base.OnUpdate();
 
+        // Start処理
+        foreach (var obj in m_StandbyUpdateObjects)
+        {
+            if (obj == null)
+            {
+                continue;
+            }
+            else if (obj.Cycle != E_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                CheckStandbyDestroy(obj);
+                continue;
+            }
+
+            obj.OnStart();
+        }
+
+        GotoUpdateFromStandbyUpdate();
+
+        // Update処理
         foreach (var obj in m_UpdateObjects)
         {
             if (obj == null)
             {
+                continue;
+            }
+            else if (obj.Cycle != E_OBJECT_CYCLE.UPDATE)
+            {
+                CheckStandbyDestroy(obj);
                 continue;
             }
 
@@ -76,10 +106,16 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     {
         base.OnLateUpdate();
 
+        // LateUpdate処理
         foreach (var obj in m_UpdateObjects)
         {
             if (obj == null)
             {
+                continue;
+            }
+            else if (obj.Cycle != E_OBJECT_CYCLE.UPDATE)
+            {
+                CheckStandbyDestroy(obj);
                 continue;
             }
 
@@ -91,10 +127,16 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     {
         base.OnFixedUpdate();
 
+        // FixedUpdate処理
         foreach (var obj in m_UpdateObjects)
         {
             if (obj == null)
             {
+                continue;
+            }
+            else if (obj.Cycle != E_OBJECT_CYCLE.UPDATE)
+            {
+                CheckStandbyDestroy(obj);
                 continue;
             }
 
@@ -113,11 +155,35 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     }
 
     /// <summary>
-    /// DestroyObjectsリストに登録されているものを全て破棄する。
+    /// STANDBY_UPDATEからUPDATEに遷移させる
+    /// </summary>
+    private void GotoUpdateFromStandbyUpdate()
+    {
+        foreach (var obj in m_StandbyUpdateObjects)
+        {
+            if (obj == null)
+            {
+                continue;
+            }
+            else if (obj.Cycle != E_OBJECT_CYCLE.STANDBY_UPDATE)
+            {
+                CheckStandbyDestroy(obj);
+                continue;
+            }
+
+            obj.Cycle = E_OBJECT_CYCLE.UPDATE;
+            m_UpdateObjects.AddLast(obj);
+        }
+
+        m_StandbyUpdateObjects.Clear();
+    }
+
+    /// <summary>
+    /// StandbyDestroyObjectsリストに登録されているものを全て破棄する。
     /// </summary>
     private void DestroyObjects()
     {
-        foreach (var obj in m_DestroyObjects)
+        foreach (var obj in m_StandbyDestroyObjects)
         {
             if (obj == null)
             {
@@ -125,24 +191,43 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
             }
 
             obj.OnFinalize();
+            obj.Cycle = E_OBJECT_CYCLE.DESTROYED;
+            m_StandbyUpdateObjects.Remove(obj);
             m_UpdateObjects.Remove(obj);
             GameObject.Destroy(obj.gameObject);
         }
 
-        m_DestroyObjects.Clear();
+        m_StandbyDestroyObjects.Clear();
     }
 
     /// <summary>
-    /// DestroyObjectsリストに登録する。
+    /// STANDBY_UPDATE状態にする。
     /// </summary>
-    private void CheckDestroy(SequenceController obj)
+    /// <param name="obj"></param>
+    public void CheckStandbyUpdate(BattleRealSequenceObjectController obj)
     {
-        if (obj == null || m_DestroyObjects.Contains(obj))
+        if (obj == null || m_StandbyUpdateObjects.Contains(obj))
         {
             return;
         }
 
-        m_DestroyObjects.AddLast(obj);
+        m_StandbyUpdateObjects.AddLast(obj);
+        obj.Cycle = E_OBJECT_CYCLE.STANDBY_UPDATE;
+        obj.OnInitialize();
+    }
+
+    /// <summary>
+    /// STANDBY_DESTROYED状態にする。
+    /// </summary>
+    public void CheckStandbyDestroy(BattleRealSequenceObjectController obj)
+    {
+        if (obj == null || m_StandbyDestroyObjects.Contains(obj))
+        {
+            return;
+        }
+
+        obj.Cycle = E_OBJECT_CYCLE.STANDBY_DESTROYED;
+        m_StandbyDestroyObjects.AddLast(obj);
     }
 
     /// <summary>
@@ -150,7 +235,7 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     /// </summary>
     /// <param name="sequenceObjectPrefab">シーケンス制御したいオブジェクトのプレハブ</param>
     /// <param name="rootGroup">オブジェクトに対しての制御内容</param>
-    public SequenceController CreateSequenceObject(SequenceController sequenceObjectPrefab, SequenceGroup rootGroup)
+    public BattleRealSequenceObjectController CreateSequenceObject(BattleRealSequenceObjectController sequenceObjectPrefab, SequenceGroup rootGroup)
     {
         if (sequenceObjectPrefab == null || rootGroup == null)
         {
@@ -158,10 +243,10 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
         }
 
         var obj = GameObject.Instantiate(sequenceObjectPrefab);
-        obj.OnInitialize();
+        obj.transform.SetParent(m_ObjectHolder);
+
+        CheckStandbyUpdate(obj);
         obj.BuildSequence(rootGroup);
-        obj.OnEndSequence += () => CheckDestroy(obj);
-        m_UpdateObjects.AddLast(obj);
 
         return obj;
     }
@@ -171,7 +256,7 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
     /// </summary>
     public void DestoryAllObjects()
     {
-        foreach(var obj in m_UpdateObjects)
+        foreach (var obj in m_StandbyUpdateObjects)
         {
             if (obj == null)
             {
@@ -182,7 +267,7 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
             GameObject.Destroy(obj.gameObject);
         }
 
-        foreach (var obj in m_DestroyObjects)
+        foreach (var obj in m_UpdateObjects)
         {
             if (obj == null)
             {
@@ -193,7 +278,19 @@ public class BattleRealSequenceObjectManager : Singleton<BattleRealSequenceObjec
             GameObject.Destroy(obj.gameObject);
         }
 
+        foreach (var obj in m_StandbyDestroyObjects)
+        {
+            if (obj == null)
+            {
+                continue;
+            }
+
+            obj.OnFinalize();
+            GameObject.Destroy(obj.gameObject);
+        }
+
+        m_StandbyUpdateObjects.Clear();
         m_UpdateObjects.Clear();
-        m_DestroyObjects.Clear();
+        m_StandbyDestroyObjects.Clear();
     }
 }

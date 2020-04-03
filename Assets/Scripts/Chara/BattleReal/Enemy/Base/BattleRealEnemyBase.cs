@@ -82,12 +82,6 @@ public class BattleRealEnemyBase : BattleRealCharaController
 
     #region Game Cycle
 
-    private void Start()
-    {
-        // 開発時専用で、自動的にマネージャにキャラを追加するためにUnityのStartを用いています
-        BattleRealEnemyManager.RegisterEnemy(this);
-    }
-
     public void SetParam(BattleRealEnemyParamBase param)
     {
         Param = param;
