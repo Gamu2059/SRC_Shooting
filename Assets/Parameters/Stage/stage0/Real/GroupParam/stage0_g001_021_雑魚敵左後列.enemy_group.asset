@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91201f4ed5c7adb42a51159df391dd9f, type: 3}
+  m_Name: "stage0_g001_021_\u96D1\u9B5A\u6575\u5DE6\u5F8C\u5217.enemy_group"
+  m_EditorClassIdentifier: 
+  m_ViewPortPos: {x: 0.25, y: 1.4}
+  m_OffsetPosFromViewPort: {x: -0.05, y: 0, z: 0.0866}
+  m_GenerateAngle: 0
+  m_EnemyGenerator: {fileID: 11400000, guid: f6e5179b642772b47a1f283b6f90d5e5, type: 2}
+  m_Behavior: {fileID: 11400000, guid: 1e8d2454a8ac59048bb68e45e594cf03, type: 2}
+  m_OnGenerateGroupEvents: []

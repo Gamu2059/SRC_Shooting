@@ -28,8 +28,7 @@ public class BattleRealCharaController : BattleRealObjectBase
     private HitSufferController<BattleRealCharaController> m_CharaHit;
     private HitSufferController<BattleRealItemController> m_ItemHit;
 
-    private List<ControllableMonoBehavior> m_AutoControlBehaviors;
-    public List<ControllableMonoBehavior> AutoControlBehaviors => m_AutoControlBehaviors;
+    public List<ControllableMonoBehavior> AutoControlBehaviors { get; private set; }
 
     #endregion
 
@@ -124,7 +123,7 @@ public class BattleRealCharaController : BattleRealObjectBase
 
     public override void OnFinalize()
     {
-        m_AutoControlBehaviors.Clear();
+        AutoControlBehaviors.Clear();
         m_ItemHit.OnFinalize();
         m_CharaHit.OnFinalize();
         m_CharaSuffer.OnFinalize();
@@ -136,13 +135,13 @@ public class BattleRealCharaController : BattleRealObjectBase
     {
         base.OnStart();
 
-        m_AutoControlBehaviors = new List<ControllableMonoBehavior>();
+        AutoControlBehaviors = new List<ControllableMonoBehavior>();
         var behaviors = GetComponents<ControllableMonoBehavior>();
         foreach (var b in behaviors)
         {
             if (b is IAutoControlOnCharaController)
             {
-                m_AutoControlBehaviors.Add(b);
+                AutoControlBehaviors.Add(b);
                 b.OnStart();
             }
         }
@@ -151,7 +150,7 @@ public class BattleRealCharaController : BattleRealObjectBase
     public override void OnUpdate()
     {
         base.OnUpdate();
-        foreach (var b in m_AutoControlBehaviors)
+        foreach (var b in AutoControlBehaviors)
         {
             if (b is IAutoControlOnCharaController c && c.IsEnableController)
             {
@@ -163,7 +162,7 @@ public class BattleRealCharaController : BattleRealObjectBase
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-        foreach (var b in m_AutoControlBehaviors)
+        foreach (var b in AutoControlBehaviors)
         {
             if (b is IAutoControlOnCharaController c && c.IsEnableController)
             {
@@ -175,7 +174,7 @@ public class BattleRealCharaController : BattleRealObjectBase
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        foreach (var b in m_AutoControlBehaviors)
+        foreach (var b in AutoControlBehaviors)
         {
             if (b is IAutoControlOnCharaController c && c.IsEnableController)
             {

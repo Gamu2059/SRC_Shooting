@@ -21,6 +21,7 @@
             BattleRealBulletManager.Instance.OnStart();
             BattleRealItemManager.Instance.OnStart();
             BattleRealEffectManager.Instance.OnStart();
+            BattleRealSequenceObjectManager.Instance.OnStart();
             BattleRealCollisionManager.Instance.OnStart();
             BattleRealCameraManager.Instance.OnStart();
             BattleRealUiManager.Instance.OnStart();

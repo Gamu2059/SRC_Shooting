@@ -20,10 +20,6 @@ public class BattleParamSet : ScriptableObject
     private BattleHackingParamSet m_BattleHackingParamSet = default;
     public BattleHackingParamSet BattleHackingParamSet => m_BattleHackingParamSet;
 
-    [SerializeField]
-    private Material m_ColliderMaterial = default;
-    public Material ColliderMaterial => m_ColliderMaterial;
-
     [Header("Transition")]
 
     [SerializeField]
@@ -34,31 +30,11 @@ public class BattleParamSet : ScriptableObject
     private AnimationCurve m_FadeInVideoParam = default;
     public AnimationCurve FadeInVideoParam => m_FadeInVideoParam;
 
-    [SerializeField]
-    private VideoClip m_ToHackingMovie = default;
-    public VideoClip ToHackingMovie => m_ToHackingMovie;
+    //[SerializeField]
+    //private VideoClip m_ToHackingMovie = default;
+    //public VideoClip ToHackingMovie => m_ToHackingMovie;
 
     [SerializeField]
     private VideoClip m_ToRealMovie = default;
     public VideoClip ToRealMovie => m_ToRealMovie;
-
-    [SerializeField]
-    private PlaySoundParam m_ToHackingSe;
-    public PlaySoundParam ToHackingSe => m_ToHackingSe;
-
-    [SerializeField]
-    private PlaySoundParam m_ToRealSe;
-    public PlaySoundParam ToRealSe => m_ToRealSe;
-
-    [Header("Game Clear")]
-
-    [SerializeField]
-    private PlaySoundParam m_GameClearSe;
-    public PlaySoundParam GameClearSe => m_GameClearSe;
-
-    [Header("Game Over")]
-
-    [SerializeField]
-    private PlaySoundParam m_GameOverSe;
-    public PlaySoundParam GameOverSe => m_GameOverSe;
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 using Utage;
 
 /// <summary>
-/// ページ内文章をクリアする拡張コマンド。
-/// もしかした既存で存在するかもしれない。
+/// ページ内文章をクリアする拡張コマンド。<br/>
+/// もしかした既存で存在するかもしれない。<br/>
+/// <br/>
+/// Command : ClearPage<br/>
+/// Param : なし
 /// </summary>
 public class ClearPageCommand : AdvCommand
 {

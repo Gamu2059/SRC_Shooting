@@ -3622,6 +3622,7 @@ MonoBehaviour:
   m_BulletHolder: {fileID: 494274809}
   m_ItemHolder: {fileID: 494274808}
   m_EffectHolder: {fileID: 494274807}
+  m_SequenceObjectHolder: {fileID: 494274814}
   m_MinLocalFieldPosition: {x: -0.81, y: -1}
   m_MaxLocalFieldPosition: {x: 0.81, y: 1}
 --- !u!4 &180427289
@@ -8065,6 +8066,12 @@ Transform:
 --- !u!4 &494274813 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7071806974053814476, guid: dd972c705f691794281cf03ea9915c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 494274805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &494274814 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206494444995314440, guid: dd972c705f691794281cf03ea9915c3d,
     type: 3}
   m_PrefabInstance: {fileID: 494274805}
   m_PrefabAsset: {fileID: 0}

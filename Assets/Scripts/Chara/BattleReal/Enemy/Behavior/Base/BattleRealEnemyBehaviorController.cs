@@ -131,11 +131,13 @@ public class BattleRealEnemyBehaviorController : ControllableObject
             {
                 // グループよりユニットの方が終了呼び出しは早い
                 m_CurrentUnit?.OnEndUnit();
+                m_CurrentUnit = null;
 
                 // 次が無いのでグループの終了判定を見る
                 if (m_CurrentGroup.IsEndGroup())
                 {
                     m_CurrentGroup.OnEndGroup();
+                    m_CurrentGroup = null;
 
                     if (m_GroupStack.Count > 0)
                     {
@@ -146,8 +148,6 @@ public class BattleRealEnemyBehaviorController : ControllableObject
                     else
                     {
                         // もう何もないので処理を止める
-                        m_CurrentGroup = null;
-                        m_CurrentUnit = null;
                         OnEndBehavior?.Invoke();
                     }
                 }

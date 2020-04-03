@@ -26,7 +26,6 @@ partial class BattleRealBossController
 
             // 通常ではダメージコライダーを有効にする
             Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, true);
-            AudioManager.Instance.Stop(E_CUE_SHEET.ENEMY);
 
             if (m_IsFirstTime)
             {

@@ -606,6 +606,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: df562ee77ed01fb40ad71e768ed9ccb4, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: df562ee77ed01fb40ad71e768ed9ccb4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 12d220abf61029e47b13e95a25125495, type: 2}
     - target: {fileID: 400002, guid: df562ee77ed01fb40ad71e768ed9ccb4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -662,14 +670,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: df562ee77ed01fb40ad71e768ed9ccb4, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: df562ee77ed01fb40ad71e768ed9ccb4, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 12d220abf61029e47b13e95a25125495, type: 2}
     - target: {fileID: 13700000, guid: df562ee77ed01fb40ad71e768ed9ccb4, type: 3}
       propertyPath: m_BlendShapeWeights.Array.size
       value: 1

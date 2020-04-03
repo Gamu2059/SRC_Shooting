@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// イベントマネージャで使用するパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/EventTrigger", fileName = "param.battle_real_event.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Event/EventTriggerParamSet", fileName = "param.event.asset")]
 public class BattleRealEventTriggerParamSet : ScriptableObject
 {
     /// <summary>

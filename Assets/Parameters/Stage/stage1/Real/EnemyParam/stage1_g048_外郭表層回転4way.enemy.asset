@@ -36,10 +36,96 @@ MonoBehaviour:
       m_DefeatItemParam:
         ItemSpreadParams: []
         CenterCreateItemType: 0
-      m_DefeatEvents: []
+      m_DefeatEvents:
+      - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        EnemyGroupParam: {fileID: 0}
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 2
+          VariableName: G048 Defeat
+          OperandType: 0
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 0
+          BoolOperandValue: 1
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
       m_DefeatSequentialEffect:
         m_Params:
         - Delay: 0
           Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
       m_DefeatHideTime: 0
-      m_RetireEvents: []
+      m_RetireEvents:
+      - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        EnemyGroupParam: {fileID: 0}
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 2
+          VariableName: G048 Defeat
+          OperandType: 0
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 0
+          BoolOperandValue: 1
+        CountStartTimePeriodNames: []
+        CallScriptParams: []

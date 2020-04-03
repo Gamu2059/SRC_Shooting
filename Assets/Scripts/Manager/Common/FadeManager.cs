@@ -128,7 +128,7 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
             }
             else
             {
-                result =FadeOut(fadeParam.Duration, fadeParam.FadeOutColor, onComplete);
+                result = FadeOut(fadeParam.Duration, fadeParam.FadeOutColor, onComplete);
             }
         }
         else
@@ -157,7 +157,8 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
             return false;
         }
 
-        Action completeAction = () => {
+        Action completeAction = () =>
+        {
             IsFading = false;
             m_FadeData = null;
             m_FadeImage.color = color;
@@ -181,7 +182,8 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
             return false;
         }
 
-        Action completeAction = () => {
+        Action completeAction = () =>
+        {
             IsFading = false;
             m_FadeData = null;
             m_FadeImage.color = color;
@@ -208,7 +210,8 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
         var color = m_FadeImage.color;
         color.a = 0;
 
-        Action completeAction = () => {
+        Action completeAction = () =>
+        {
             IsFading = false;
             m_FadeData = null;
             m_FadeImage.color = color;
@@ -235,7 +238,8 @@ public class FadeManager : SingletonMonoBehavior<FadeManager>
         var color = m_FadeImage.color;
         color.a = 0;
 
-        Action completeAction = () => {
+        Action completeAction = () =>
+        {
             IsFading = false;
             m_FadeData = null;
             m_FadeImage.color = color;

@@ -32,10 +32,4 @@ public class BattleRealParamSet : ScriptableObject
     [SerializeField]
     private BattleRealEventTriggerParamSet m_EventTriggerParamSet;
     public BattleRealEventTriggerParamSet EventTriggerParamSet => m_EventTriggerParamSet;
-
-    [Header("Boss Change")]
-
-    [SerializeField]
-    private ControlSoundParam m_ControlBgmParam;
-    public ControlSoundParam ControlBgmParam => m_ControlBgmParam;
 }

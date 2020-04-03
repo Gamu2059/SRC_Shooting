@@ -137,6 +137,9 @@ partial class BattleRealBossController
         {
             Target.NowDownHp = Target.MaxDownHp;
             Target.RequestChangeState(E_STATE.BEHAVIOR);
+
+            var downReturnSe = BattleRealEnemyManager.Instance.ParamSet.DownReturnSe;
+            AudioManager.Instance.Play(downReturnSe);
         }
 
         private void OnFromHacking()
