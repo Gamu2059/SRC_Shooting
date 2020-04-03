@@ -80,7 +80,7 @@ public class BattleHackingBossBehavior : ControllableObject
     public HackingBossPhase m_HackingBossPhase;
 
 
-    protected InfC761Hacker1Phase1ParamSet m_ParamSet;
+    protected BattleHackingBossBehaviorUnitParamSet m_ParamSet;
 
 
     // オーバーライド前提なのでひとまずnull
