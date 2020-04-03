@@ -25,7 +25,7 @@ partial class BattleRealBossController
             Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, false);
 
             BattleRealBulletManager.Instance.CheckPoolBullet(Target);
-            AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.BOSS_DOWN);
 
             m_BehaviorSet = Target.m_CurrentBehaviorSet;
             if (m_BehaviorSet != null)
@@ -138,8 +138,7 @@ partial class BattleRealBossController
             Target.NowDownHp = Target.MaxDownHp;
             Target.RequestChangeState(E_STATE.BEHAVIOR);
 
-            var downReturnSe = BattleRealEnemyManager.Instance.ParamSet.DownReturnSe;
-            AudioManager.Instance.Play(downReturnSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.BOSS_DOWN_RETURN);
         }
 
         private void OnFromHacking()

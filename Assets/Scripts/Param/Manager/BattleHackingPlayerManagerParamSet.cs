@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// ハッキングモードのPlayerManagerのパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/BattleHackingPlayer", fileName = "param.battle_hacking_player.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Manager/BattleHackingPlayer", fileName = "param.battle_hacking_player.asset")]
 public class BattleHackingPlayerManagerParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("プレイヤーのプレハブ")]
@@ -28,10 +28,4 @@ public class BattleHackingPlayerManagerParamSet : ScriptableObject
     [SerializeField]
     private EffectParamSet m_DeadEffectParam;
     public EffectParamSet DeadEffectParam => m_DeadEffectParam;
-
-    [Header("SE"), Tooltip("いずれ各々の行動のパラメータに分散させたい")]
-
-    [SerializeField]
-    private PlaySoundParam m_ShotSe;
-    public PlaySoundParam ShotSe => m_ShotSe;
 }

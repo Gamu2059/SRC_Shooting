@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// ハッキングモードで使用するパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/BattleHacking", fileName = "param.battle_hacking.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Manager/BattleHacking", fileName = "param.battle_hacking.asset")]
 public class BattleHackingParamSet : ScriptableObject
 {
     [SerializeField]

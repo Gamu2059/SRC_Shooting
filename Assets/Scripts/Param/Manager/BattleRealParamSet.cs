@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードで使用するパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/BattleReal", fileName = "param.battle_real.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Manager/BattleReal", fileName = "param.battle_real.asset")]
 public class BattleRealParamSet : ScriptableObject
 {
     [Header("Param Set")]

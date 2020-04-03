@@ -232,7 +232,7 @@ public class BattleRealEnemyBase : BattleRealCharaController
     protected override void OnDamage(float damage)
     {
         base.OnDamage(damage);
-        AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DamageSe);
+        AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_DAMAGE_01);
 
         if (m_MaterialEffect != null)
         {

@@ -8,11 +8,11 @@ using System;
 /// <summary>
 /// リアルモードのItemManagerのパラメータのセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/BattleRealItem", fileName = "param.battle_real_item.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Manager/BattleRealItem", fileName = "param.battle_real_item.asset")]
 public class BattleRealItemManagerParamSet : ScriptableObject
 {
     [Serializable]
-    public struct ItemPrefabSet
+    public class ItemPrefabSet
     {
         [SerializeField]
         private E_ITEM_TYPE m_ItemType;
