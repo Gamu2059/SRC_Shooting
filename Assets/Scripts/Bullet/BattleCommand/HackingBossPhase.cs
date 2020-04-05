@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +11,9 @@ using UnityEngine;
 [System.Serializable]
 public class HackingBossPhase : ScriptableObject
 {
+
+    [SerializeField, Tooltip("多重forループ")]
+    private MultiForLoop m_MultiForLoop;
 
     [SerializeField, Tooltip("敵本体の物理的な状態")]
     private TransformOperation m_BossTransform;
@@ -34,6 +39,10 @@ public class HackingBossPhase : ScriptableObject
         m_DanmakuArray.OnStarts();
 
         BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
+
+        //m_MultiForLoop.m_ForArray = new ForBase[0];
+
+        m_MultiForLoop.Setup();
     }
 
 
@@ -41,7 +50,16 @@ public class HackingBossPhase : ScriptableObject
     {
         m_CommonOperationVariable.OnUpdates();
 
-        TransformSimple transform = m_BossTransform.GetResultTransform();
+        TransformSimple transform = null;
+
+        if (m_MultiForLoop.Init())
+        {
+            do
+            {
+                transform = m_BossTransform.GetResultTransform();
+            }
+            while (m_MultiForLoop.Process());
+        }
 
         m_DanmakuArray.OnUpdates(
             boss,

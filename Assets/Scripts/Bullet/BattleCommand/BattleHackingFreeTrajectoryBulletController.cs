@@ -55,17 +55,23 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         // 付け足した部分
 
+        // 新しい弾のパラメータの値（今までのやり方なら、nullが入っている）
+        BulletParamFree bulletParamFree;
+
+        // 弾の外見のインデックス
         int bulletIndex;
 
         // 今まで通りなら
-        if (shotParamOperation != null)
+        if (bulletParamFreeOperation == null)
         {
+            bulletParamFree = null;
             bulletIndex = shotParamOperation.BulletIndex.GetResultInt();
         }
         // 新しいやり方なら
         else
         {
-            bulletIndex = 0;
+            bulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
+            bulletIndex = bulletParamFree.m_Int[0];
         }
 
 
@@ -94,11 +100,18 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         }
 
 
-        bullet.m_ShotParam = new ShotParam(shotParamOperation);
-
-
-        if (bulletParamFreeOperation != null)
-            bullet.m_BulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
+        // 今まで通りなら
+        if (bulletParamFreeOperation == null)
+        {
+            bullet.m_ShotParam = new ShotParam(shotParamOperation);
+            bullet.m_BulletParamFree = null;
+        }
+        // 新しいやり方なら
+        else
+        {
+            bullet.m_ShotParam = null;
+            bullet.m_BulletParamFree = bulletParamFree;
+        }
 
         bullet.m_Time = dTime;
 
@@ -211,11 +224,17 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             // 時刻をstatic変数に反映させる
             BulletTime.m_Time = m_Time;
 
-            // 発射パラメータを外部に反映させる
-            m_LaunchParam.SetValue(m_ShotParam);
+            // 今まで通り
+            if (m_BulletParamFree == null)
+            {
+                // 発射パラメータを外部に反映させる
+                m_LaunchParam.SetValue(m_ShotParam);
 
-
-            if (m_BulletParamFree != null)
+                // この弾の物理的な状態を外部の演算により求める（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
+                transformSimple = m_TransformOperation.GetResultTransform(m_ShotParam, m_Time);
+            }
+            // 新しいやり方
+            else
             {
                 // bool型のパラメータをstatic変数に反映させる
                 BulletBool.BoolArray = m_BulletParamFree.m_Bool;
@@ -228,11 +247,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
                 // Vector2型のパラメータをstatic変数に反映させる
                 BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
+
+                // この弾の物理的な状態を外部の演算により求める（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
+                transformSimple = m_TransformOperation.GetResultTransform(null, 0);
             }
-
-
-            // この弾の物理的な状態を外部の演算により求める（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
-            transformSimple = m_TransformOperation.GetResultTransform(m_ShotParam, m_Time);
         }
 
         // 実際にこの弾の物理的な状態を更新する
@@ -516,3 +534,22 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 //}
 
 //bullet.m_BulletParam = bulletParam;
+
+
+//// 今まで通りなら
+//if (bulletParamFreeOperation == null)
+//{
+//    bulletIndex = shotParamOperation.BulletIndex.GetResultInt();
+//}
+//// 新しいやり方なら
+//else
+//{
+//    bulletIndex = bulletParamFree.m_Int[0];
+//}
+
+
+//if (shotParamOperation != null)
+//    bullet.m_ShotParam = new ShotParam(shotParamOperation);
+
+//if (bulletParamFreeOperation != null)
+//    bullet.m_BulletParamFree = bulletParamFree;
