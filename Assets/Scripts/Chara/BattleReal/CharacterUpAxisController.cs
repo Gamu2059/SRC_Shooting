@@ -13,9 +13,6 @@ public class CharacterUpAxisController : ControllableMonoBehavior, IAutoControlO
     [SerializeField]
     private float m_OffsetAngle;
 
-    [SerializeField, Tooltip("向きによらずオフセット角度を同じ方向に適用するかどうか")]
-    private bool m_ApplyOffsetAngleWithoutForward = true;
-
     private bool m_IsEnableController;
     public bool IsEnableController { get { return m_IsEnableController; } set { m_IsEnableController = value; } }
 
@@ -33,17 +30,10 @@ public class CharacterUpAxisController : ControllableMonoBehavior, IAutoControlO
         base.OnLateUpdate();
 
         var delta = m_FrontCamera.position - m_CharacterView.position;
-
-        // X軸の差分はあえて0にする
         delta.x = 0;
-        var angle = Vector3.Angle(m_CharacterView.forward, delta);
+        var angle = Vector3.Angle(Vector3.forward, delta);
 
-        var offset = m_OffsetAngle;
-        if (m_ApplyOffsetAngleWithoutForward)
-        {
-            offset *= Mathf.Sign(m_CharacterView.forward.z);
-        }
-
-        m_CharacterView.RotateAround(m_CharacterView.position, m_CharacterView.right, 90 - angle + offset);
+        m_CharacterView.localEulerAngles = Vector3.zero;
+        m_CharacterView.RotateAround(m_CharacterView.position, Vector3.right, 90 - angle + m_OffsetAngle);
     }
 }

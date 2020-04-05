@@ -31,6 +31,7 @@ partial class BattleRealBossController
 
             // HPの割合によらず、強制的に次の振る舞いへと遷移する
             Target.RequestChangeState(E_STATE.CHANGE_BEHAVIOR);
+            Target.RecoverDownHp(Target.MaxDownHp);
         }
     }
 }

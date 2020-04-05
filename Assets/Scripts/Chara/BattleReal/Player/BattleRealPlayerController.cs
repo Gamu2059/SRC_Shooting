@@ -242,7 +242,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         }
 
         // 押している間SEを鳴らしたいので、プレイヤー弾のSE再生このタイミングで行う
-        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.ShotSe);
+        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_SHOT_01);
     }
 
     /// <summary>
@@ -266,7 +266,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
         {
             var paramSet = BattleRealPlayerManager.Instance.ParamSet;
-            AudioManager.Instance.Play(paramSet.ChargeSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_CHARGE_01);
             m_ChargeEffect = BattleRealEffectManager.Instance.CreateEffect(paramSet.ChargeEffectParam, transform);
         }
     }
@@ -285,11 +285,11 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
         if (IsLaserType)
         {
-            AudioManager.Instance.Play(m_ParamSet.LaserSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_LASER);
         }
         else
         {
-            AudioManager.Instance.Play(m_ParamSet.BombSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_BOMB);
         }
 
         DataManager.Instance.BattleData.ConsumeEnergyCount(1);
@@ -379,7 +379,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// </summary>
     private void ChangeWeapon()
     {
-        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.WeaponChangeSe);
+        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_WEAPON_CHANGE);
     }
 
     #endregion
@@ -525,7 +525,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
             return;
         }
 
-        AudioManager.Instance.Play(BattleRealPlayerManager.Instance.ParamSet.GetItemSe);
+        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_GET_ITEM);
         var battleData = DataManager.Instance.BattleData;
 
         switch (item.ItemType)

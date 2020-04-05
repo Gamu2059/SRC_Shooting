@@ -25,6 +25,9 @@ public class CustomCommandManager : AdvCustomCommandManager
             case "AutoBrPage":
                 command = new AutoBrPageCommand(row);
                 break;
+            case "EventVar":
+                command = new BattleRealEventVariableCommand(row);
+                break;
         }
     }
 }

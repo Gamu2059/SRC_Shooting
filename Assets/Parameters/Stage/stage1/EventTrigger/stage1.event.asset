@@ -13,16 +13,6 @@ MonoBehaviour:
   m_Name: stage1.event
   m_EditorClassIdentifier: 
   m_Variables:
-  - Type: 0
-    Name: Before Boss
-    IntInitValue: 0
-    FloatInitValue: 0
-    BoolInitValue: 0
-  - Type: 2
-    Name: Boss End
-    IntInitValue: 0
-    FloatInitValue: 0
-    BoolInitValue: 0
   - Type: 2
     Name: G041 Left Defeat
     IntInitValue: 0
@@ -40,6 +30,11 @@ MonoBehaviour:
     BoolInitValue: 0
   - Type: 2
     Name: G045 Right Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 2
+    Name: G048 Defeat
     IntInitValue: 0
     FloatInitValue: 0
     BoolInitValue: 0

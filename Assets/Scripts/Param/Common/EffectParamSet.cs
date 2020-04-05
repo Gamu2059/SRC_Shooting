@@ -9,7 +9,7 @@ using System;
 /// エフェクトの発生パラメータ。
 /// リアルモードとハッキングモードで共通。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/Effect", fileName = "param.effect.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/Effect/Effect", fileName = "param.effect.asset")]
 public class EffectParamSet : ScriptableObject
 {
     [SerializeField, Tooltip("エフェクト本体")]

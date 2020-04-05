@@ -62,6 +62,250 @@ MonoBehaviour:
     - rowIndex: 1
       debugIndex: 1
       strings:
+      - '*Stage0_0000'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3055\u3042\u3001\u30A2\u30AA\u30A4\u3002\u3084\u308B\u308F\u3088"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 5
+      strings:
+      - '*Stage0_0001'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 6
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30A2\u30AA\u30A4\uFF1F\u59CB\u3081\u308B\u308F\u3088"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 7
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 9
+      strings:
+      - '*Stage0_0002'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30A2\u30AA\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u3093"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 11
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 13
+      strings:
+      - '*Stage0_Start_0001'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 14
+      strings:
+      - EventVar
+      - INT
+      - Start Talk Progress
+      - SUBSTITUTE
+      - CONSTANT
+      - 0
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 15
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u3093\u305F\u306E\u4EFB\u52D9\u306F\u30D1\u30E9\u30B9\u306E\u6BB2\u6EC5\u3068\u652B\u308F\u308C\u305F\u30B3\u30FC\u30C9\u306E\u300E\u6551\u51FA\u300F\u3088\u3002\n\u91CD\u8981\u306A\u4EFB\u52D9\u306E\u76EE\u524D\u306A\u3093\u3060\u304B\u3089\u96C6\u4E2D\u3057\u3066"
+      - 
+      - 
+      - MessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 16
+      strings:
+      - EventVar
+      - INT
+      - Start Talk Progress
+      - SUBSTITUTE
+      - CONSTANT
+      - 1
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 17
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 18
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4EEE\u60F3\u6575\u3092\u7528\u610F\u3057\u305F\u308F\u3002\n\u307E\u305A\u306F\u6575\u304C\u9000\u907F\u3059\u308B\u524D\u306B\u5168\u90E8\u6483\u7834\u3057\u3066\u307F\u3066"
+      - 
+      - 
+      - MessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 19
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 21
+      strings:
+      - '*Stage0_Start_0002'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 22
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
+      - 
+      - 
+      - 
+      - 
+      - "\u826F\u3044\u611F\u3058\u306D\uFF01"
+      - 
+      - 
+      - MessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 23
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/Talks/Talks.xls:Stage0
+    type: 1
+    textLength: 546
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
       - '*Stage1_Start'
       isEmpty: 0
       isCommentOut: 0
@@ -86,6 +330,9 @@ MonoBehaviour:
       - 
       - 
       - "\u30A2\u30AA\u30A4\uFF01\n\u8868\u5C64\u3078\u306F\u53F3\u3001\u4E0A\u304C\u6700\u77ED\u3088\uFF01"
+      - 
+      - 
+      - MessageWindow
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -101,6 +348,9 @@ MonoBehaviour:
       - 
       - 
       - "\u6575\u306F\u591A\u3044\u3051\u3069\u3001\u3042\u3093\u305F\u306A\u3089\u51FA\u6765\u308B\u308F\uFF01"
+      - 
+      - 
+      - MessageWindow
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -138,13 +388,16 @@ MonoBehaviour:
       strings:
       - 
       - 
-      - "\u30CA\u30DF"
+      - 
       - 
       - 
       - 
       - 
       - 
       - "\u30DC\u30B9\u6226\u306F\u3063\u3058\u307E\u3063\u308B\u3088\uFF5E"
+      - 
+      - 
+      - MessageWindow
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -157,7 +410,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/Talks/Talks.xls:Stage1
     type: 1
-    textLength: 201
+    textLength: 238
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -651,6 +904,272 @@ MonoBehaviour:
     - rowIndex: 1
       debugIndex: 1
       strings:
+      - '*Stage0_0000'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3055\u3042\u3001\u30A2\u30AA\u30A4\u3002\u3084\u308B\u308F\u3088"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings: []
+      isEmpty: 1
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - '*Stage0_0001'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30A2\u30AA\u30A4\uFF1F\u59CB\u3081\u308B\u308F\u3088"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings: []
+      isEmpty: 1
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - '*Stage0_0002'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30A2\u30AA\u30A4"
+      - <Off>
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u3093"
+      - 
+      - 
+      - CutsceneMessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings: []
+      isEmpty: 1
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - '*Stage0_Start_0001'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - EventVar
+      - INT
+      - Start Talk Progress
+      - SUBSTITUTE
+      - CONSTANT
+      - 0
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u3093\u305F\u306E\u4EFB\u52D9\u306F\u30D1\u30E9\u30B9\u306E\u6BB2\u6EC5\u3068\u652B\u308F\u308C\u305F\u30B3\u30FC\u30C9\u306E\u300E\u6551\u51FA\u300F\u3088\u3002\n\u91CD\u8981\u306A\u4EFB\u52D9\u306E\u76EE\u524D\u306A\u3093\u3060\u304B\u3089\u96C6\u4E2D\u3057\u3066"
+      - 
+      - 
+      - MessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - EventVar
+      - INT
+      - Start Talk Progress
+      - SUBSTITUTE
+      - CONSTANT
+      - 1
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4EEE\u60F3\u6575\u3092\u7528\u610F\u3057\u305F\u308F\u3002\n\u307E\u305A\u306F\u6575\u304C\u9000\u907F\u3059\u308B\u524D\u306B\u5168\u90E8\u6483\u7834\u3057\u3066\u307F\u3066"
+      - 
+      - 
+      - MessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings: []
+      isEmpty: 1
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - '*Stage0_Start_0002'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - 
+      - "\u30A2\u30AB\u30A4"
+      - 
+      - Right
+      - 
+      - 
+      - 
+      - 
+      - "\u826F\u3044\u611F\u3058\u306D\uFF01"
+      - 
+      - 
+      - MessageWindow
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/Talks/Talks.xls:Stage0
+    type: 1
+    textLength: 546
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
       - '*Stage1_Start'
       isEmpty: 0
       isCommentOut: 0
@@ -675,6 +1194,9 @@ MonoBehaviour:
       - 
       - 
       - "\u30A2\u30AA\u30A4\uFF01\n\u8868\u5C64\u3078\u306F\u53F3\u3001\u4E0A\u304C\u6700\u77ED\u3088\uFF01"
+      - 
+      - 
+      - MessageWindow
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -690,6 +1212,9 @@ MonoBehaviour:
       - 
       - 
       - "\u6575\u306F\u591A\u3044\u3051\u3069\u3001\u3042\u3093\u305F\u306A\u3089\u51FA\u6765\u308B\u308F\uFF01"
+      - 
+      - 
+      - MessageWindow
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -733,13 +1258,16 @@ MonoBehaviour:
       strings:
       - 
       - 
-      - "\u30CA\u30DF"
+      - 
       - 
       - 
       - 
       - 
       - 
       - "\u30DC\u30B9\u6226\u306F\u3063\u3058\u307E\u3063\u308B\u3088\uFF5E"
+      - 
+      - 
+      - MessageWindow
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -752,6 +1280,6 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/Talks/Talks.xls:Stage1
     type: 1
-    textLength: 201
+    textLength: 238
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}

@@ -294,8 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 1
-  _cueName: BGM_Stage02
-  _cueSheet: BGM
+  _cueName: SE_Systm_Slide
+  _cueSheet: SE_System
   _use3dPositioning: 1
   _loop: 0
   _volume: 1
@@ -332,7 +332,7 @@ MonoBehaviour:
   - Name: AISAC_BGM
     Value: 0
   - Name: AISAC_Hack
-    Value: 0
+    Value: 1
 --- !u!114 &1515799330
 MonoBehaviour:
   m_ObjectHideFlags: 0

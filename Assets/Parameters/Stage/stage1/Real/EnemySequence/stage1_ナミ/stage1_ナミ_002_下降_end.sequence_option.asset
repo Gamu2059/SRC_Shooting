@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CallEvent:
     ContentName: "\u30B9\u30C6\u30FC\u30B81\u30DC\u30B9\u6226\u4F1A\u8A71"
-    IsPassExecute: 1
+    IsPassExecute: 0
     EventType: 14
     ExecuteTiming: 0
     DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -49,3 +51,4 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []

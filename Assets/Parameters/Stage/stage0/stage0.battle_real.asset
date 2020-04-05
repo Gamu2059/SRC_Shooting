@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e28ba1d5e92e54fad91b8cf4993aa8, type: 3}
   m_Name: stage0.battle_real
   m_EditorClassIdentifier: 
-  m_PlayerManagerParamSet: {fileID: 11400000, guid: 76e86597affcb6e49943c8700cd19d3b,
+  m_PlayerManagerParamSet: {fileID: 11400000, guid: 948b8012b4b52a84cb406b02f3e95c18,
     type: 2}
-  m_EnemyGroupManagerParamSet: {fileID: 11400000, guid: 7d3777d8a31da8a41b0364e21b9acb6a,
-    type: 2}
-  m_EnemyManagerParamSet: {fileID: 11400000, guid: 9232ba5c5087d16469c7c9f7c70b27e8,
+  m_EnemyManagerParamSet: {fileID: 11400000, guid: 5723d71726014cf4390e2b627a9c3172,
     type: 2}
   m_BulletManagerParamSet: {fileID: 11400000, guid: 0eb7c58effc165f4ea0f01adcd55a9ae,
     type: 2}
@@ -24,8 +22,3 @@ MonoBehaviour:
     type: 2}
   m_EventTriggerParamSet: {fileID: 11400000, guid: 27e0eca5c5263d540bf82c4d53d19c97,
     type: 2}
-  m_ControlBgmParam:
-    ControlType: 0
-    PlaySoundParam: {fileID: 0}
-    StopSoundGroup: 0
-    OperateAisacParam: {fileID: 0}

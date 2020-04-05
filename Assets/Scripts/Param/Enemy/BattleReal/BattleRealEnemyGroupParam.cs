@@ -25,12 +25,12 @@ public class BattleRealEnemyGroupParam : ScriptableObject
     public float GenerateAngle => m_GenerateAngle;
 
     [SerializeField, Tooltip("敵の生成の仕方")]
-    private BattleRealEnemyGenerator m_EnemyGenerator;
-    public BattleRealEnemyGenerator EnemyGenerator => m_EnemyGenerator;
+    private BattleRealEnemyGeneratorBase m_EnemyGenerator;
+    public BattleRealEnemyGeneratorBase EnemyGenerator => m_EnemyGenerator;
 
     [SerializeField, Tooltip("敵グループの振る舞い")]
-    private BattleRealEnemyGroupBehaviorUnit m_Behavior;
-    public BattleRealEnemyGroupBehaviorUnit Behavior => m_Behavior;
+    private BattleRealEnemyGroupBehaviorUnitBase m_Behavior;
+    public BattleRealEnemyGroupBehaviorUnitBase Behavior => m_Behavior;
 
     [SerializeField, Tooltip("敵グループが生成された時に実行されるイベント")]
     private BattleRealEventContent[] m_OnGenerateGroupEvents;

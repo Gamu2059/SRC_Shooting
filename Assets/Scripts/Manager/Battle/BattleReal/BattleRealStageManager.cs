@@ -18,6 +18,7 @@ public class BattleRealStageManager : SingletonMonoBehavior<BattleRealStageManag
         BULLET,
         ITEM,
         EFFECT,
+        SEQUENCE_OBJECT,
     }
 
     public const string STAGE_OBJECT_HOLDER = "[StageObjectHolder]";
@@ -27,6 +28,7 @@ public class BattleRealStageManager : SingletonMonoBehavior<BattleRealStageManag
     public const string BULLET_HOLDER = "[BulletHolder]";
     public const string ITEM_HOLDER = "[ItemHolder]";
     public const string EFFECT_HOLDER = "[EffectHolder]";
+    public const string SEQUENCE_OBJECT_HOLDER = "[SequenceObjectHolder]";
 
     #region Inspector
 
@@ -73,6 +75,12 @@ public class BattleRealStageManager : SingletonMonoBehavior<BattleRealStageManag
     /// </summary>
     [SerializeField]
     private Transform m_EffectHolder;
+
+    /// <summary>
+    /// シーケンスオブジェクトを保持するためのホルダー
+    /// </summary>
+    [SerializeField]
+    private Transform m_SequenceObjectHolder;
 
     [Header("Filed")]
 
@@ -201,6 +209,10 @@ public class BattleRealStageManager : SingletonMonoBehavior<BattleRealStageManag
             case E_HOLDER_TYPE.EFFECT:
                 holder = m_EffectHolder;
                 holderName = EFFECT_HOLDER;
+                break;
+            case E_HOLDER_TYPE.SEQUENCE_OBJECT:
+                holder = m_SequenceObjectHolder;
+                holderName = SEQUENCE_OBJECT_HOLDER;
                 break;
         }
 

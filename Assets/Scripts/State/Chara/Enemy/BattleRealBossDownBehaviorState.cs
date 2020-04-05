@@ -7,7 +7,7 @@ partial class BattleRealBossController
     private class DownBehaviorState : StateCycle
     {
         private BehaviorSet m_BehaviorSet;
-        private BattleRealEnemyBehaviorUnit m_Behavior;
+        private BattleRealEnemyBehaviorUnitBase m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
 
         private float m_DownHealTime;
@@ -25,7 +25,7 @@ partial class BattleRealBossController
             Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, false);
 
             BattleRealBulletManager.Instance.CheckPoolBullet(Target);
-            AudioManager.Instance.Play(BattleRealEnemyManager.Instance.ParamSet.DownSe);
+            AudioManager.Instance.Play(E_COMMON_SOUND.BOSS_DOWN);
 
             m_BehaviorSet = Target.m_CurrentBehaviorSet;
             if (m_BehaviorSet != null)
@@ -119,10 +119,10 @@ partial class BattleRealBossController
                     case E_ENEMY_BEHAVIOR_TYPE.NONE:
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
-                        m_Behavior?.OnEndUnit();
+                        m_Behavior?.OnStopUnit();
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
-                        m_BehaviorController?.OnEndUnit();
+                        m_BehaviorController?.StopBehavior();
                         break;
                 }
             }
@@ -137,6 +137,8 @@ partial class BattleRealBossController
         {
             Target.NowDownHp = Target.MaxDownHp;
             Target.RequestChangeState(E_STATE.BEHAVIOR);
+
+            AudioManager.Instance.Play(E_COMMON_SOUND.BOSS_DOWN_RETURN);
         }
 
         private void OnFromHacking()

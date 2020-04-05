@@ -90,11 +90,13 @@ public class SequenceController : ControllableMonoBehavior
             {
                 // グループよりユニットの方が終了呼び出しは早い
                 m_CurrentUnit?.OnEndUnit();
+                m_CurrentUnit = null;
 
                 // 次が無いのでグループの終了判定を見る
                 if (m_CurrentGroup.IsEndGroup())
                 {
                     m_CurrentGroup.OnEndGroup();
+                    m_CurrentGroup = null;
 
                     if (m_GroupStack.Count > 0)
                     {
@@ -105,8 +107,6 @@ public class SequenceController : ControllableMonoBehavior
                     else
                     {
                         // もう何もないので処理を止める
-                        m_CurrentGroup = null;
-                        m_CurrentUnit = null;
                         OnEndSequence?.Invoke();
                     }
                 }
@@ -122,6 +122,7 @@ public class SequenceController : ControllableMonoBehavior
                     {
                         // 無限ループするので処理を止める
                         Debug.LogErrorFormat("{0} : 無限ループが発生したため終了します", GetType().Name);
+                        m_CurrentGroup.OnEndGroup();
                         m_CurrentGroup = null;
                         m_CurrentUnit = null;
                         OnEndSequence?.Invoke();

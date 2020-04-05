@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
+  m_Name: "stage0_001_\u30ED\u30FC\u30C9\u958B\u59CB\u76F4\u5F8C.event_trigger"
+  m_EditorClassIdentifier: 
+  EventTriggerName: "\u30B7\u30FC\u30F3\u8AAD\u8FBC\u6642"
+  DontDestroy: 0
+  Condition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 3
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 1
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 5
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
+  Contents:
+  - ContentName: "\u30B2\u30FC\u30E0\u30B9\u30BF\u30FC\u30C8"
+    IsPassExecute: 0
+    EventType: 7
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+    ExecuteEvents: []
+  - ContentName: "\u30AB\u30E1\u30E9\u30B7\u30FC\u30B1\u30F3\u30B9"
+    IsPassExecute: 0
+    EventType: 1
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams:
+    - CameraType: 0
+      SequenceGroup: {fileID: 11400000, guid: 4258413fc7cefc54aad89b9aee0f41cd, type: 2}
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+    ExecuteEvents: []
+  - ContentName: "\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3"
+    IsPassExecute: 0
+    EventType: 13
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: sc0001
+      AutoChangeToGameState: 1
+      OnCompletedEvents:
+      - {fileID: 11400000, guid: d5b365fa94a6f4b44b53282cf9c57f62, type: 2}
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+    ExecuteEvents: []
+  - ContentName: "\u30A2\u30AB\u30A4\u751F\u6210"
+    IsPassExecute: 0
+    EventType: 2
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams:
+    - SequenceObjectPrefab: {fileID: 2178888743881379179, guid: 8cf8378a7216bc2499e2ef0c8f35e08f,
+        type: 3}
+      RootGroup: {fileID: 11400000, guid: 2ba56eadc1bd5eb46b54316d4b0d9f0a, type: 2}
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+    ExecuteEvents: []
+  - ContentName: "\u30D7\u30EC\u30A4\u30E4\u30FC\u30D5\u30A3\u30FC\u30EB\u30C9\u5236\u9650"
+    IsPassExecute: 0
+    EventType: 19
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+    ExecuteEvents: []
