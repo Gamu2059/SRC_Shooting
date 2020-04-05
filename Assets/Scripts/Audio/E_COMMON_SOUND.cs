@@ -116,4 +116,19 @@ public enum E_COMMON_SOUND
     /// 敵の中級発射SE その2
     /// </summary>
     ENEMY_SHOT_MEDIUM_02,
+
+    /// <summary>
+    /// ボスのチャージ時のSE
+    /// </summary>
+    BOSS_CHARGE,
+
+    /// <summary>
+    /// ハッキングが成功した時のSE
+    /// </summary>
+    BOSS_HACK_SUCCESS,
+
+    /// <summary>
+    /// ハッキングが失敗した時のSE
+    /// </summary>
+    BOSS_HACK_FAILURE,
 }
