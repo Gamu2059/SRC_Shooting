@@ -11,7 +11,7 @@ public class MultiForLoop : object
 
     [UnityEngine.Serialization.FormerlySerializedAs("m_OperationArray")]
     [SerializeField]
-    private ForBase[] m_ForArray;
+    public ForBase[] m_ForArray;
 
 
     /// <summary>

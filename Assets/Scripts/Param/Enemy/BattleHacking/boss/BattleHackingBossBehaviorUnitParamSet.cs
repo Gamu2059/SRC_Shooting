@@ -17,5 +17,6 @@ public class BattleHackingBossBehaviorUnitParamSet : ScriptableObject
 
     // ボスや攻撃に関わらず共通に使いそうなので、以下に書いておく。
     [SerializeField, Tooltip("")]
-    public HackingBossPhase m_HackingBossPhase;
+    private HackingBossPhase m_HackingBossPhase;
+    public HackingBossPhase HackingBossPhase => m_HackingBossPhase;
 }

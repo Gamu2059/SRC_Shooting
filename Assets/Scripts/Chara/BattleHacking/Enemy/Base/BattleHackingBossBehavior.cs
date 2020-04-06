@@ -19,7 +19,7 @@ public class BattleHackingBossBehavior : ControllableObject
     /// </summary>
     public virtual void OnEnd()
     {
-
+        HackingBossPhase = null;
     }
 
     /// <summary>
@@ -76,33 +76,19 @@ public class BattleHackingBossBehavior : ControllableObject
     }
 
 
-    [SerializeField, Tooltip("")]
-    public HackingBossPhase m_HackingBossPhase;
-
-
-    protected BattleHackingBossBehaviorUnitParamSet m_ParamSet;
-
-
-    // オーバーライド前提なのでひとまずnull
-    public virtual BattleHackingBossBehaviorUnitParamSet GetParamSet()
-    {
-        return null;
-    }
+    public HackingBossPhase HackingBossPhase { get; private set; }
 
     /// <summary>
     /// この行動パターンに入った瞬間に呼び出される
     /// </summary>
     public override void OnStart()
     {
-        var paramSet = GetParamSet();
-        if (paramSet == null)
+        if (BehaviorParamSet != null && BehaviorParamSet.HackingBossPhase != null)
         {
-            return;
+            HackingBossPhase = GameObject.Instantiate(BehaviorParamSet.HackingBossPhase);
+            HackingBossPhase.OnStarts();
         }
 
-        m_HackingBossPhase = m_ParamSet.m_HackingBossPhase;
-
-        m_HackingBossPhase.OnStarts();
     }
 
     public override void OnUpdate()
@@ -110,8 +96,9 @@ public class BattleHackingBossBehavior : ControllableObject
         base.OnUpdate();
 
         // なんで敵が倒れる時、このフィールドがnullになってしまうんだろう。
-        if (m_HackingBossPhase != null) {
-            TransformSimple transform = m_HackingBossPhase.OnUpdates(this);
+        if (HackingBossPhase != null)
+        {
+            TransformSimple transform = HackingBossPhase.OnUpdates(this);
             GetEnemy().transform.localPosition = new Vector3(transform.Position.x, 0, transform.Position.y);
             GetEnemy().transform.localEulerAngles = new Vector3(0, transform.Angle * Mathf.Rad2Deg, 0);
             GetEnemy().transform.localScale = Vector3.one * transform.Scale;
