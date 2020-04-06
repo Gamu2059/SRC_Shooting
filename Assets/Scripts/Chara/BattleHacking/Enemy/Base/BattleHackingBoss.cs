@@ -422,7 +422,6 @@ public class BattleHackingBoss : BattleHackingEnemyController
         BattleHackingEnemyManager.Instance.DeadBoss();
         RequestChangeState(E_PHASE.DEAD);
 
-        Debug.LogFormat("phase : {0}", m_CurrentBehavior.HackingBossPhase);
         // AudioManagerにBGMを切り替えるパラメータを渡す（パラメータがあれば）
         PlaySoundParam playSoundParam = m_CurrentBehavior.HackingBossPhase.PlaySoundParam;
         if(playSoundParam != null)

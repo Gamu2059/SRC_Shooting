@@ -83,7 +83,7 @@ public class BattleHackingBossBehavior : ControllableObject
     /// </summary>
     public override void OnStart()
     {
-        if (BehaviorParamSet != null)
+        if (BehaviorParamSet != null && BehaviorParamSet.HackingBossPhase != null)
         {
             HackingBossPhase = GameObject.Instantiate(BehaviorParamSet.HackingBossPhase);
             HackingBossPhase.OnStarts();

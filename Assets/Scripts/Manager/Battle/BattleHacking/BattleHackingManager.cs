@@ -112,11 +112,6 @@ public partial class BattleHackingManager : ControllableObject, IStateCallback<E
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            BattleHackingEnemyManager.Instance.KillAllBoss();
-        }
     }
 
     public override void OnLateUpdate()
