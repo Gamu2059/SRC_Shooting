@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードのボスのチャージ攻撃を行うための処理機構。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Group/Charge", fileName = "param.behavior_group.asset", order = 10)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Group/Charge", fileName = "param.behavior_group.asset")]
 public class BattleRealBossChargeBehaviorGroup : BattleRealEnemyBehaviorGroupBase
 {
     #region Field Inspector

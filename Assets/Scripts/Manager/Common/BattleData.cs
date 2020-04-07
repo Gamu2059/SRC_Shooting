@@ -24,7 +24,7 @@ public class BattleData
     /// <summary>
     /// ステージ
     /// </summary>
-    public E_STAGE Stage { get; private set; }
+    public E_CHAPTER Chapter { get; private set; }
 
     /// <summary>
     /// 残機
@@ -113,10 +113,10 @@ public class BattleData
         m_PlayerLevelParamSet = playerLevelParamSet;
 
         GameMode = E_GAME_MODE.STORY;
-        Stage = E_STAGE.NORMAL_1;
+        Chapter = E_CHAPTER.CHAPTER_1;
     }
 
-    public void ResetData(E_STAGE stage)
+    public void ResetData(E_CHAPTER stage)
     {
         if (m_PlayerLevelParamSet == null)
         {
@@ -145,10 +145,7 @@ public class BattleData
         // ステージに応じて初期値が異なるものを初期化
         switch (stage)
         {
-            case E_STAGE.EASY_0:
-            case E_STAGE.NORMAL_0:
-            case E_STAGE.HARD_0:
-            case E_STAGE.HADES_0:
+            case E_CHAPTER.CHAPTER_0:
                 InitData(m_PlayerLevelParamSet.Stage0InitData);
                 break;
             default:
@@ -263,6 +260,7 @@ public class BattleData
 
     public void AddEnergyCharge(float charge)
     {
+        Debug.LogFormat("Charge : {0} Max : {1}", charge, MaxEnergyCharge);
         var addedCharge = EnergyCharge + charge;
         while (addedCharge >= MaxEnergyCharge)
         {

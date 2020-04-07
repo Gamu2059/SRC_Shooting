@@ -10,51 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage0_103_\u30D5\u30A7\u30FC\u30BA1_\u8AB2\u984C\u9054\u6210.event_trigger"
+  m_Name: "stage0_001_callback_002_\u958B\u59CB\u4F1A\u8A71\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30D5\u30A7\u30FC\u30BA1 \u8AB2\u984C\u9054\u6210"
-  DontDestroy: 1
+  EventTriggerName: "\u4F1A\u8A71\u7D42\u4E86\u6642"
+  DontDestroy: 0
   Condition:
     IsReverse: 0
-    IsMultiCondition: 1
+    IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 0
+      VariableType: 3
       UseGeneralIntVariable: 0
       GeneralIntVariable: 0
-      UseGeneralTimePeriod: 0
+      UseGeneralTimePeriod: 1
       GeneralTimePeriod: 0
       VariableName: 
-      CompareType: 0
+      CompareType: 5
       BoolCompareType: 0
       CompareValue: 0
       BoolCompareValue: 0
-    MultiConditionType: 1
-    MultiConditions:
-    - IsReverse: 0
-      VariableType: 0
-      UseGeneralIntVariable: 0
-      GeneralIntVariable: 0
-      UseGeneralTimePeriod: 0
-      GeneralTimePeriod: 0
-      VariableName: Phase1 Disappear
-      CompareType: 5
-      BoolCompareType: 0
-      CompareValue: 27
-      BoolCompareValue: 0
-    - IsReverse: 0
-      VariableType: 0
-      UseGeneralIntVariable: 0
-      GeneralIntVariable: 0
-      UseGeneralTimePeriod: 0
-      GeneralTimePeriod: 0
-      VariableName: Phase1 Defeat
-      CompareType: 5
-      BoolCompareType: 0
-      CompareValue: 27
-      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
   Contents:
-  - ContentName: "\u5909\u6570\u30EA\u30BB\u30C3\u30C8"
+  - ContentName: "\u4F1A\u8A71\u7D42\u4E86\u30D5\u30E9\u30B0 ON"
     IsPassExecute: 0
     EventType: 4
     ExecuteTiming: 0
@@ -85,41 +63,38 @@ MonoBehaviour:
       RateCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams:
-    - VariableType: 0
-      VariableName: Phase1 Disappear
+    - VariableType: 2
+      VariableName: Start Talk End
       OperandType: 0
       BoolOperandType: 0
       OperandValueType: 0
       OperandValueName: 
       OperandValue: 0
-      BoolOperandValue: 0
-    - VariableType: 0
-      VariableName: Phase1 Defeat
-      OperandType: 0
-      BoolOperandType: 0
-      OperandValueType: 0
-      OperandValueName: 
-      OperandValue: 0
-      BoolOperandValue: 0
+      BoolOperandValue: 1
     CountStartTimePeriodNames: []
     CallScriptParams: []
     ExecuteEvents: []
-  - ContentName: "\u4F1A\u8A71"
+  - ContentName: "BGM Aisac \u30D5\u30A7\u30FC\u30BA1"
     IsPassExecute: 0
-    EventType: 14
-    ExecuteTiming: 1
-    DelayExecuteTime: 1
+    EventType: 3
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
     UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
     EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
-    ControlBgmParams: []
+    ControlBgmParams:
+    - ControlType: 2
+      PlaySoundParam: {fileID: 0}
+      StopSoundGroup: 0
+      OperateAisacParam: {fileID: 11400000, guid: c82f77d90f4170f44bd14416559d792d,
+        type: 2}
     ControlTelopParam:
       TargetTelopType: 0
     ShowCutsceneParam:
@@ -127,10 +102,9 @@ MonoBehaviour:
       AutoChangeToGameState: 0
       OnCompletedEvents: []
     ShowTalkParam:
-      ScenarioLabel: Stage0_0101
-      AutoChangeToGameState: 1
-      OnCompletedEvents:
-      - {fileID: 11400000, guid: 9885b5af34ae5b642b67376d7be86b96, type: 2}
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
     ChangeState: 0
     FadeParam:
       IsFadeOut: 0
@@ -140,9 +114,9 @@ MonoBehaviour:
       RateCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []

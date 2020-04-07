@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage0_003_\u958B\u59CB\u4F1A\u8A71\u7D42\u4E86.event_trigger"
+  m_Name: "stage0_103_callback_001_\u30D5\u30A7\u30FC\u30BA1_\u8AB2\u984C\u9054\u6210\u4F1A\u8A71\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u4F1A\u8A71\u7D42\u4E86\u6642"
+  EventTriggerName: "\u30D5\u30A7\u30FC\u30BA1 \u8AB2\u984C\u9054\u6210"
   DontDestroy: 0
   Condition:
     IsReverse: 0
@@ -27,14 +27,14 @@ MonoBehaviour:
       VariableName: 
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 0.1
+      CompareValue: 0
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
   Contents:
-  - ContentName: "\u4F1A\u8A71\u7D42\u4E86\u30D5\u30E9\u30B0 ON"
+  - ContentName: "DontDestory\u30A4\u30D9\u30F3\u30C8\u524A\u9664"
     IsPassExecute: 0
-    EventType: 4
+    EventType: 22
     ExecuteTiming: 0
     DelayExecuteTime: 0
     UseEnemyGroupParamArray: 0
@@ -63,38 +63,27 @@ MonoBehaviour:
       RateCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    OperateVariableParams:
-    - VariableType: 2
-      VariableName: Start Talk End
-      OperandType: 0
-      BoolOperandType: 0
-      OperandValueType: 0
-      OperandValueName: 
-      OperandValue: 0
-      BoolOperandValue: 1
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+    OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
     ExecuteEvents: []
-  - ContentName: "BGM Aisac \u30D5\u30A7\u30FC\u30BA1"
+  - ContentName: "\u30D5\u30A7\u30FC\u30BA2\u6575\u30B0\u30EB\u30FC\u30D7\u751F\u6210"
     IsPassExecute: 0
-    EventType: 3
+    EventType: 0
     ExecuteTiming: 0
     DelayExecuteTime: 0
-    UseEnemyGroupParamArray: 0
+    UseEnemyGroupParamArray: 1
     EnemyGroupParam: {fileID: 0}
-    EnemyGroupParams: []
+    EnemyGroupParams:
+    - {fileID: 11400000, guid: 886f4e1057f1adb4390cf9c7692cb8a0, type: 2}
+    - {fileID: 11400000, guid: 404cace8754ccf345ad65fb3dac60b6e, type: 2}
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
-    ControlBgmParams:
-    - ControlType: 2
-      PlaySoundParam: {fileID: 0}
-      StopSoundGroup: 0
-      OperateAisacParam: {fileID: 11400000, guid: c82f77d90f4170f44bd14416559d792d,
-        type: 2}
+    ControlBgmParams: []
     ControlTelopParam:
       TargetTelopType: 0
     ShowCutsceneParam:
@@ -114,9 +103,9 @@ MonoBehaviour:
       RateCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []

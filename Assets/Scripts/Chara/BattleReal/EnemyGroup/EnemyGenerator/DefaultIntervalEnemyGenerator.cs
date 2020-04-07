@@ -8,20 +8,16 @@ using System;
 namespace BattleReal.EnemyGenerator
 {
     /// <summary>
-    /// 生成座標とタイミングを指定して敵を生成していくジェネレータ。
+    /// 生成座標と生成間隔を指定して敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGenerator/Default", fileName = "param.enemy_generator.asset")]
-    public class DefaultEnemyGenerator : BattleRealEnemyGeneratorBase
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGenerator/DefaultInterval", fileName = "param.enemy_generator.asset")]
+    public class DefaultIntervalEnemyGenerator : BattleRealEnemyGeneratorBase
     {
         #region Define
 
         [Serializable]
         protected class IndividualParam
         {
-            [SerializeField, Tooltip("敵グループが生成されてからの相対的な生成時間。"), Min(0)]
-            private float m_GenerateTime;
-            public float GenerateTime => m_GenerateTime;
-
             [SerializeField, Tooltip("生成座標系を敵グループを基準にするか。")]
             private E_RELATIVE m_Relative = E_RELATIVE.RELATIVE;
             public E_RELATIVE Relative => m_Relative;
@@ -47,7 +43,15 @@ namespace BattleReal.EnemyGenerator
 
         #region Field Inspector
 
-        [Header("Default Enemy Parameter")]
+        [Header("Default Interval Enemy Parameter")]
+
+        [SerializeField]
+        private float m_GenerateOffsetTime;
+        protected float GenerateOffsetTime => m_GenerateOffsetTime;
+
+        [SerializeField]
+        private float m_GenerateInterval;
+        protected float GenerateInterval => m_GenerateInterval;
 
         [SerializeField]
         private BattleRealEnemyParamSetBase m_DefaultParamSet;
@@ -61,11 +65,8 @@ namespace BattleReal.EnemyGenerator
 
         #region Field
 
-        private List<IndividualParam> m_GenerateParams;
-        private int m_GenerateReserveEnemyNum;
         private float m_GenerateEnemyTimeCount;
-        private int m_GeneratedEnemyCount;
-        private List<BattleRealEnemyBase> m_GeneratedEnemies;
+        private bool m_IsWaitOffsetTime;
 
         #endregion
 
@@ -76,62 +77,46 @@ namespace BattleReal.EnemyGenerator
             base.OnStartGenerator();
 
             m_GenerateEnemyTimeCount = 0;
-            m_GenerateParams = new List<IndividualParam>();
-            m_GeneratedEnemies = new List<BattleRealEnemyBase>();
-            if (IndividualParams != null)
-            {
-                m_GenerateParams.AddRange(IndividualParams);
-            }
-            m_GenerateReserveEnemyNum = m_GenerateParams.Count;
-        }
-
-        protected override void OnLateUpdateGenerator()
-        {
-            base.OnLateUpdateGenerator();
-
-            if (m_GenerateReserveEnemyNum < 1)
-            {
-                EnemyGroup.Destory();
-                return;
-            }
-
-            // 生成すべき敵を全て生成し、かつそれらの敵が全て消滅したならグループを破棄する
-            if (m_GeneratedEnemyCount >= m_GenerateReserveEnemyNum && m_GeneratedEnemies.Count < 1)
-            {
-                EnemyGroup.Destory();
-                return;
-            }
-
-            m_GeneratedEnemies.RemoveAll(e => e.GetCycle() == E_POOLED_OBJECT_CYCLE.POOLED);
+            m_IsWaitOffsetTime = GenerateOffsetTime > 0;
         }
 
         protected override void OnFixedUpdateGenerator()
         {
             base.OnFixedUpdateGenerator();
 
-            if (m_GenerateParams.Count < 1)
+            if (m_IsWaitOffsetTime)
             {
-                return;
-            }
-
-            foreach (var param in m_GenerateParams)
-            {
-                if (m_GenerateEnemyTimeCount >= param.GenerateTime)
+                if (m_GenerateEnemyTimeCount >= GenerateOffsetTime)
                 {
-                    Generate(param);
+                    m_GenerateEnemyTimeCount -= GenerateOffsetTime;
+                    m_IsWaitOffsetTime = false;
+                }
+                else
+                {
+                    m_GenerateEnemyTimeCount += Time.fixedDeltaTime;
                 }
             }
-
-            m_GenerateParams.RemoveAll(p => m_GenerateEnemyTimeCount >= p.GenerateTime);
-            m_GenerateEnemyTimeCount += Time.fixedDeltaTime;
+            else
+            {
+                if (m_GenerateEnemyTimeCount >= GenerateInterval)
+                {
+                    m_GenerateEnemyTimeCount -= GenerateInterval;
+                    foreach (var param in IndividualParams)
+                    {
+                        Generate(param);
+                    }
+                }
+                else
+                {
+                    m_GenerateEnemyTimeCount += Time.fixedDeltaTime;
+                }
+            }
         }
 
         #endregion
 
         private void Generate(IndividualParam param)
         {
-            m_GeneratedEnemyCount++;
-
             if (param == null)
             {
                 return;
@@ -161,8 +146,6 @@ namespace BattleReal.EnemyGenerator
             {
                 enemyT.SetPositionAndRotation(pos, Quaternion.Euler(0, param.GenerateAngle, 0));
             }
-
-            m_GeneratedEnemies.Add(enemy);
         }
     }
 }

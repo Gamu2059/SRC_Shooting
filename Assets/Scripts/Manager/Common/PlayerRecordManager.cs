@@ -10,7 +10,7 @@ public class PlayerRecordManager : ControllableObject
     public static PlayerRecordManager Instance => GameManager.Instance.PlayerRecordManager;
 
     private Dictionary<E_DIFFICULTY, List<PlayerRecord>> m_StoryModePlayerRecords;
-    private Dictionary<E_STAGE, List<PlayerRecord>> m_ChapterModePlayerRecords;
+    private Dictionary<E_CHAPTER, List<PlayerRecord>> m_ChapterModePlayerRecords;
 
     private int m_MaxRecordNum;
 
@@ -22,43 +22,22 @@ public class PlayerRecordManager : ControllableObject
             {E_DIFFICULTY.HARD, new List<PlayerRecord>() },
             {E_DIFFICULTY.HADES, new List<PlayerRecord>() }
         };
-        m_ChapterModePlayerRecords = new Dictionary<E_STAGE, List<PlayerRecord>>
+        m_ChapterModePlayerRecords = new Dictionary<E_CHAPTER, List<PlayerRecord>>
         {
-            { E_STAGE.EASY_0, new List<PlayerRecord>() },
-            { E_STAGE.EASY_1, new List<PlayerRecord>() },
-            { E_STAGE.EASY_2, new List<PlayerRecord>() },
-            { E_STAGE.EASY_3, new List<PlayerRecord>() },
-            { E_STAGE.EASY_4, new List<PlayerRecord>() },
-            { E_STAGE.EASY_5, new List<PlayerRecord>() },
-            { E_STAGE.EASY_6, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_0, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_1, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_2, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_3, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_4, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_5, new List<PlayerRecord>() },
-            { E_STAGE.NORMAL_6, new List<PlayerRecord>() },
-            { E_STAGE.HARD_0, new List<PlayerRecord>() },
-            { E_STAGE.HARD_1, new List<PlayerRecord>() },
-            { E_STAGE.HARD_2, new List<PlayerRecord>() },
-            { E_STAGE.HARD_3, new List<PlayerRecord>() },
-            { E_STAGE.HARD_4, new List<PlayerRecord>() },
-            { E_STAGE.HARD_5, new List<PlayerRecord>() },
-            { E_STAGE.HARD_6, new List<PlayerRecord>() },
-            { E_STAGE.HADES_0, new List<PlayerRecord>() },
-            { E_STAGE.HADES_1, new List<PlayerRecord>() },
-            { E_STAGE.HADES_2, new List<PlayerRecord>() },
-            { E_STAGE.HADES_3, new List<PlayerRecord>() },
-            { E_STAGE.HADES_4, new List<PlayerRecord>() },
-            { E_STAGE.HADES_5, new List<PlayerRecord>() },
-            { E_STAGE.HADES_6, new List<PlayerRecord>() }
+            { E_CHAPTER.CHAPTER_0, new List<PlayerRecord>() },
+            { E_CHAPTER.CHAPTER_1, new List<PlayerRecord>() },
+            { E_CHAPTER.CHAPTER_2, new List<PlayerRecord>() },
+            { E_CHAPTER.CHAPTER_3, new List<PlayerRecord>() },
+            { E_CHAPTER.CHAPTER_4, new List<PlayerRecord>() },
+            { E_CHAPTER.CHAPTER_5, new List<PlayerRecord>() },
+            { E_CHAPTER.CHAPTER_6, new List<PlayerRecord>() },
         };
         
         m_MaxRecordNum = 1000;
 
         SaveDataManager.Load();
         int maxScore = SaveDataManager.GetInt("BestScore", 0);
-        m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL].Add(new PlayerRecord("Nanashi", maxScore, E_STAGE.NORMAL_1, new System.DateTime()));
+        m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL].Add(new PlayerRecord("Nanashi", maxScore, E_CHAPTER.CHAPTER_1, new System.DateTime()));
     }
 
     public void AddStoryModeRecord(PlayerRecord record)
@@ -91,7 +70,7 @@ public class PlayerRecordManager : ControllableObject
 
     public void AddChapterModeRecord(PlayerRecord record)
     {
-        void f(E_STAGE s)
+        void f(E_CHAPTER s)
         {
             var recs = m_ChapterModePlayerRecords[s];
             if (recs.Count + 1 > m_MaxRecordNum)
@@ -127,7 +106,7 @@ public class PlayerRecordManager : ControllableObject
         });
     }
 
-    public PlayerRecord GetDummyRecord(string name = "Nanashi", double score = 1, E_STAGE stage = E_STAGE.NORMAL_1, System.DateTime date = new System.DateTime())
+    public PlayerRecord GetDummyRecord(string name = "Nanashi", double score = 1, E_CHAPTER stage = E_CHAPTER.CHAPTER_1, System.DateTime date = new System.DateTime())
     {
         return new PlayerRecord(name, score, stage, date);
     }
@@ -158,7 +137,7 @@ public class PlayerRecordManager : ControllableObject
             var rem = range - len;
             while (rem != 0)
             {
-                res.Add(GetDummyRecord("Nanashi", 1, E_STAGE.NORMAL_1, new System.DateTime(2019, 5, 1)));
+                res.Add(GetDummyRecord("Nanashi", 1, E_CHAPTER.CHAPTER_1, new System.DateTime(2019, 5, 1)));
                 rem--;
             }
             return res;
@@ -169,7 +148,7 @@ public class PlayerRecordManager : ControllableObject
         }
     }
 
-    public List<PlayerRecord> GetChapterModeRecordsInRange(E_STAGE stage, int range)
+    public List<PlayerRecord> GetChapterModeRecordsInRange(E_CHAPTER stage, int range)
     {
         var recs = m_ChapterModePlayerRecords[stage];
         SortRecord(recs);

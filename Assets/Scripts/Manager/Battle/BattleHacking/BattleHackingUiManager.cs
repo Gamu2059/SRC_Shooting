@@ -60,7 +60,7 @@ public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManag
         var battleData = DataManager.Instance.BattleData;
 
         m_ModeIndicator.text = battleData.GameMode.ToString();
-        m_StageIndicator.text = battleData.Stage.ToString().Replace("_", " ");
+        m_StageIndicator.text = battleData.Chapter.ToString().Replace("_", " ");
 
         m_GridHoleEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();

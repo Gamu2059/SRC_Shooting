@@ -120,6 +120,11 @@ public class BattleRealEventContent
         /// 他のイベントを実行する
         /// </summary>
         EXECUTE_OTHER_EVENT,
+
+        /// <summary>
+        /// DontDestroyイベントを全て削除する
+        /// </summary>
+        CLEAN_DONT_DESTROY_EVENT,
     }
 
     /// <summary>

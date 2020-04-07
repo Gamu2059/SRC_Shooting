@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// アニメーションカーブによって動く敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/AnimationCurve", fileName = "param.behavior_unit.asset", order = 0)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/AnimationCurve", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyAnimationCurveBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector
@@ -21,15 +21,15 @@ public class BattleRealEnemyAnimationCurveBehavior : BattleRealEnemyBehaviorUnit
 
     [SerializeField, Tooltip("SpeedCurveにスケール補正を掛ける。判定させたい場合は-1等を指定するとよい。")]
     private float m_SpeedCurveScale = 1f;
-    public float SpeedCurveScale => m_SpeedCurveScale;
+    protected float SpeedCurveScale => m_SpeedCurveScale;
 
     [SerializeField]
     private AnimationCurve m_AngleSpeedCurve;
-    public AnimationCurve AngleSpeedCurve => m_AngleSpeedCurve;
+    protected AnimationCurve AngleSpeedCurve => m_AngleSpeedCurve;
 
     [SerializeField, Tooltip("AngleSpeedCurveにスケール補正を掛ける。判定させたい場合は-1等を指定するとよい。")]
     private float m_AngleSpeedCurveScale = 1f;
-    public float AngleSpeedCurveScale => m_AngleSpeedCurveScale;
+    protected float AngleSpeedCurveScale => m_AngleSpeedCurveScale;
 
     #endregion
 

@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage0_002_\u958B\u59CB\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86.event_trigger"
+  m_Name: "stage0_001_callback_001_\u958B\u59CB\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
   EventTriggerName: "\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86\u6642"
+  DontDestroy: 0
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
@@ -36,7 +37,9 @@ MonoBehaviour:
     EventType: 17
     ExecuteTiming: 0
     DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -66,12 +69,15 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []
   - ContentName: "BGM\u30B9\u30BF\u30FC\u30C8"
     IsPassExecute: 0
     EventType: 3
     ExecuteTiming: 0
     DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -105,12 +111,15 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []
   - ContentName: "\u4F1A\u8A71"
     IsPassExecute: 0
     EventType: 14
     ExecuteTiming: 1
     DelayExecuteTime: 0.5
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -122,7 +131,7 @@ MonoBehaviour:
       AutoChangeToGameState: 0
       OnCompletedEvents: []
     ShowTalkParam:
-      ScenarioLabel: Stage0_Start_0001
+      ScenarioLabel: Stage0_0100
       AutoChangeToGameState: 1
       OnCompletedEvents:
       - {fileID: 11400000, guid: 910970b84d9be744c947b8a357b981ed, type: 2}
@@ -149,3 +158,4 @@ MonoBehaviour:
       BoolOperandValue: 0
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []

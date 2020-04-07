@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// 座標と座標を結んで動く敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/LerpAnimation", fileName = "param.behavior_unit.asset", order = 30)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/LerpAnimation", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyLerpAnimationBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector
