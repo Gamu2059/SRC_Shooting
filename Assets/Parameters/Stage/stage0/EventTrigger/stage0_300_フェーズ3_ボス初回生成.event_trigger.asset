@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage0_201_callback_001_\u30D5\u30A7\u30FC\u30BA2_\u8AB2\u984C\u9054\u6210\u4F1A\u8A71\u7D42\u4E86.event_trigger"
+  m_Name: "stage0_300_\u30D5\u30A7\u30FC\u30BA3_\u30DC\u30B9\u521D\u56DE\u751F\u6210.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30D5\u30A7\u30FC\u30BA2 \u8AB2\u984C\u9054\u6210"
+  EventTriggerName: "\u30D5\u30A7\u30FC\u30BA3 \u30DC\u30B9\u751F\u6210"
   DontDestroy: 0
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 3
+      VariableType: 0
       UseGeneralIntVariable: 0
       GeneralIntVariable: 0
-      UseGeneralTimePeriod: 1
+      UseGeneralTimePeriod: 0
       GeneralTimePeriod: 0
-      VariableName: 
-      CompareType: 5
+      VariableName: Phase3 Talk Progress
+      CompareType: 0
       BoolCompareType: 0
-      CompareValue: 0
+      CompareValue: 1
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
   Contents:
-  - ContentName: "\u4F1A\u8A71\u7D42\u4E86\u30D5\u30E9\u30B0 ON"
+  - ContentName: "\u30DC\u30B9\u751F\u6210"
     IsPassExecute: 0
-    EventType: 4
+    EventType: 21
     ExecuteTiming: 0
     DelayExecuteTime: 0
     UseEnemyGroupParamArray: 0
@@ -66,15 +66,8 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-    OperateVariableParams:
-    - VariableType: 2
-      VariableName: Phase3 Talk End
-      OperandType: 0
-      BoolOperandType: 0
-      OperandValueType: 0
-      OperandValueName: 
-      OperandValue: 0
-      BoolOperandValue: 1
+    OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
-    ExecuteEvents: []
+    ExecuteEvents:
+    - {fileID: 11400000, guid: e2ec5d6e6f2c48f419c0920a18125c02, type: 2}

@@ -87,6 +87,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         public float DownHealTime;
         public float HpRateThresholdNextBehavior;
         public ItemCreateParam HackingSuccessItemParam;
+        public BattleRealEventContent[] OnChangeBehaviorEvents;
         public SequenceGroup SequenceGroupOnChangeBehavior;
     }
 
@@ -264,6 +265,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
             behaviorSet.HpRateThresholdNextBehavior = originBehaviorSet.HpRateThresholdNextBehavior;
             behaviorSet.HackingSuccessItemParam = originBehaviorSet.HackingSuccessItemParam;
             behaviorSet.SequenceGroupOnChangeBehavior = originBehaviorSet.SequenceGroupOnChangeBehavior;
+            behaviorSet.OnChangeBehaviorEvents = originBehaviorSet.OnChangeBehaviorEvents;
 
             m_BehaviorSets.Add(behaviorSet);
         }
