@@ -81,26 +81,26 @@ public class IconGageIndicator : ControllableMonoBehavior
         {
             case E_VALUE_TYPE.LEVEL:
                 float exp = battleData.Exp;
-                float necessaryExp = battleData.GetCurrentLevelParam().NecessaryExpToLevelUpNextLevel;
-                return exp / necessaryExp;
+                float necessaryExp = battleData.GetCurrentNecessaryExp();
+                return necessaryExp > 0 ? exp / necessaryExp : 0;
             case E_VALUE_TYPE.ENERGY:
-                float energy = battleData.EnergyCharge;
-                float maxEnergy = battleData.MaxEnergyCharge;
-                return energy / maxEnergy;
+                float energyCharge = battleData.EnergyCharge;
+                float necessaryEnergyCharge = battleData.GetCurrentNecessaryEnergyCharge();
+                return necessaryEnergyCharge > 0 ? energyCharge / necessaryEnergyCharge : 0;
             case E_VALUE_TYPE.BOSS_HP:
                 var boss = GetBoss();
                 if (boss == null)
                 {
                     return 0;
                 }
-                return boss.NowHp / boss.MaxHp;
+                return boss.MaxHp > 0 ? boss.NowHp / boss.MaxHp : 0;
             case E_VALUE_TYPE.BOSS_DOWN:
                 var b = GetBoss();
                 if (b == null)
                 {
                     return 0;
                 }
-                return b.NowDownHp / b.MaxDownHp;
+                return b.MaxDownHp > 0 ? b.NowDownHp / b.MaxDownHp : 0;
         }
 
         return 0;

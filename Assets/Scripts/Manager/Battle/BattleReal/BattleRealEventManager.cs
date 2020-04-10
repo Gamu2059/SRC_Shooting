@@ -916,6 +916,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case BattleRealEventContent.E_EVENT_TYPE.CLEAN_DONT_DESTROY_EVENT:
                 ExecuteCleanDontDestroyEvent();
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.RETIRE_ALL_ENEMY:
+                ExecuteRetireAllEnemy();
+                break;
         }
     }
 
@@ -1253,6 +1256,14 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     private void ExecuteCleanDontDestroyEvent()
     {
         m_GotoDestroyEventParams.AddRange(m_EventParams.Where(p => p.DontDestroy));
+    }
+
+    /// <summary>
+    /// 全ての敵を退場する。
+    /// </summary>
+    private void ExecuteRetireAllEnemy()
+    {
+        BattleRealEnemyManager.Instance.RetireAllEnemy();
     }
 
     #endregion

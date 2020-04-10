@@ -56,6 +56,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         /// 救出された時に遷移するステート
         /// </summary>
         RESCUE,
+
+        /// <summary>
+        /// 退場した瞬間だけ遷移するステート
+        /// </summary>
+        RETIRE,
     }
 
     private class StateCycle : StateCycleBase<BattleRealBossController, E_STATE> { }
@@ -180,6 +185,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
         m_StateMachine.AddState(new InnerState(E_STATE.RESCUE, this, new RescueState()));
+        m_StateMachine.AddState(new InnerState(E_STATE.RETIRE, this, new RetireState()));
 
         m_EnemyBodyCollider = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.ENEMY_MAIN_BODY)?.Transform;
         if (m_EnemyBodyCollider == null)
@@ -478,6 +484,15 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     {
         base.OnDead();
         RequestChangeState(E_STATE.DEAD);
+    }
+
+    /// <summary>
+    /// 退場した時の処理。
+    /// </summary>
+    protected sealed override void OnRetire()
+    {
+        base.OnRetire();
+        RequestChangeState(E_STATE.RETIRE);
     }
 
     protected void OnRescueDestroy()

@@ -8,7 +8,7 @@ partial class BattleRealPlayerController
         {
             base.OnStart();
 
-            if (Target.m_DefaultGameState != E_STATE.GAME)
+            if (Target.m_DefaultGameState != E_BATTLE_REAL_PLAYER_STATE.GAME)
             {
                 Target.RequestChangeDefaultGameState();
             }
@@ -18,7 +18,7 @@ partial class BattleRealPlayerController
         {
             base.OnUpdate();
 
-            if (Target.m_DefaultGameState != E_STATE.GAME)
+            if (Target.m_DefaultGameState != E_BATTLE_REAL_PLAYER_STATE.GAME)
             {
                 Target.RequestChangeDefaultGameState();
                 return;
@@ -62,9 +62,9 @@ partial class BattleRealPlayerController
 
             if (input.ChargeShot == E_INPUT_STATE.DOWN)
             {
-                if (DataManager.Instance.BattleData.EnergyCount > 0)
+                if (DataManager.Instance.BattleData.EnergyStock > 0)
                 {
-                    Target.RequestChangeState(E_STATE.CHARGE);
+                    Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE);
                 }
             }
 

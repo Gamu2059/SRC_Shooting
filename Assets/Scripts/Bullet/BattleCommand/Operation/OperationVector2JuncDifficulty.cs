@@ -40,7 +40,7 @@ public class OperationVector2JuncDifficulty : OperationVector2Base
     public override Vector2 GetResultVector2()
     {
         // 現在の難易度を取得する
-        E_DIFFICULTY difficulty = DataManager.Instance.BattleData.Difficulty;
+        E_DIFFICULTY difficulty = DataManager.Instance.Difficulty;
 
         switch (difficulty)
         {

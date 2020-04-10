@@ -10,39 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781030960a42df4459e648d312646f99, type: 3}
-  m_Name: "stage0_201_\u30DC\u30B9\u6551\u51FA.event_trigger"
+  m_Name: "stage0_201_callback_001_\u30D5\u30A7\u30FC\u30BA2_\u8AB2\u984C\u9054\u6210\u4F1A\u8A71\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
-  EventTriggerName: "\u30DC\u30B9\u6551\u51FA"
+  EventTriggerName: "\u30D5\u30A7\u30FC\u30BA2 \u8AB2\u984C\u9054\u6210"
+  DontDestroy: 0
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 0
+      VariableType: 3
       UseGeneralIntVariable: 0
       GeneralIntVariable: 0
-      UseGeneralTimePeriod: 0
+      UseGeneralTimePeriod: 1
       GeneralTimePeriod: 0
-      VariableName: Boss Rescue
+      VariableName: 
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 1
+      CompareValue: 0
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
   Contents:
-  - ContentName: "\u30B2\u30FC\u30E0\u30AF\u30EA\u30A2(\u6551\u52A9\u3042\u308A)"
+  - ContentName: "BGM Aisac \u30D5\u30A7\u30FC\u30BA3"
     IsPassExecute: 0
-    EventType: 12
+    EventType: 3
     ExecuteTiming: 0
     DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
-    ControlCameraParams:
-    - CameraType: 0
-      SequenceGroup: {fileID: 0}
+    ControlCameraParams: []
     ControlObjectParams: []
-    ControlBgmParams: []
+    ControlBgmParams:
+    - ControlType: 2
+      PlaySoundParam: {fileID: 0}
+      StopSoundGroup: 0
+      OperateAisacParam: {fileID: 11400000, guid: 24061c161b4d632478ca7bec623fdabf,
+        type: 2}
     ControlTelopParam:
       TargetTelopType: 0
     ShowCutsceneParam:
@@ -62,9 +68,10 @@ MonoBehaviour:
       RateCurve:
         serializedVersion: 2
         m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []

@@ -67,6 +67,18 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     {
         base.OnInitialize();
 
+        var paramSet = m_ParamSet;
+        if (!DataManager.Instance.IsSelectedGame)
+        {
+            DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
+            DataManager.Instance.Chapter = E_CHAPTER.CHAPTER_0;
+            DataManager.Instance.Difficulty = m_Difficulty;
+        }
+        else
+        {
+            paramSet = DataManager.Instance.BattleParamSet;
+        }
+
         m_StateMachine = new StateMachine<E_BATTLE_STATE, BattleManager>();
 
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.START, this, new StartState()));
@@ -76,12 +88,10 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.TO_HACKING, this, new ToHackingState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_STATE.END, this, new EndState()));
 
-        m_RealManager = BattleRealManager.Builder(this, m_ParamSet.BattleRealParamSet);
-        m_HackingManager = BattleHackingManager.Builder(this, m_ParamSet.BattleHackingParamSet);
+        m_RealManager = BattleRealManager.Builder(this, paramSet.BattleRealParamSet);
+        m_HackingManager = BattleHackingManager.Builder(this, paramSet.BattleHackingParamSet);
 
         m_HackInController.OnInitialize();
-
-        DataManager.Instance.BattleData.SetDifficulty(m_Difficulty);
     }
 
     public override void OnFinalize()

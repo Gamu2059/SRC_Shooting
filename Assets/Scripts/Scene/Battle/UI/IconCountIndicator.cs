@@ -86,7 +86,7 @@ public class IconCountIndicator : ControllableMonoBehavior
                 return battleData.Level;
             case E_COUNT_TYPE.ENERGY:
                 // エナジーは1の時に1個目が表示されてほしいので、-1
-                return battleData.EnergyCount - 1;
+                return battleData.EnergyStock - 1;
             case E_COUNT_TYPE.BOSS_HACKING:
                 var boss = GetBoss();
                 if(boss == null)

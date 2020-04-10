@@ -130,8 +130,6 @@ public class TitleManager : ControllableMonoBehavior
             m_OnUpdate = UpdateOnSelectExit,
         });
 
-        DataManager.Instance.BattleData.ResetData(E_CHAPTER.NORMAL_1);
-
         InputManager = new TitleInputManager();
         InputManager.OnInitialize();
         m_UiManager.OnInitialize();

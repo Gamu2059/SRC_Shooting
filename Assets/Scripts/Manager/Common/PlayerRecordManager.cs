@@ -36,7 +36,7 @@ public class PlayerRecordManager : ControllableObject
         m_MaxRecordNum = 1000;
 
         SaveDataManager.Load();
-        int maxScore = SaveDataManager.GetInt("BestScore", 0);
+        var maxScore = (ulong)SaveDataManager.GetInt("BestScore", 0);
         m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL].Add(new PlayerRecord("Nanashi", maxScore, E_CHAPTER.CHAPTER_1, new System.DateTime()));
     }
 
@@ -106,7 +106,7 @@ public class PlayerRecordManager : ControllableObject
         });
     }
 
-    public PlayerRecord GetDummyRecord(string name = "Nanashi", double score = 1, E_CHAPTER stage = E_CHAPTER.CHAPTER_1, System.DateTime date = new System.DateTime())
+    public PlayerRecord GetDummyRecord(string name = "Nanashi", ulong score = 1, E_CHAPTER stage = E_CHAPTER.CHAPTER_1, System.DateTime date = new System.DateTime())
     {
         return new PlayerRecord(name, score, stage, date);
     }

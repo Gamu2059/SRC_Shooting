@@ -10,15 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c27cae306a1b02488d90981a806d031, type: 3}
-  m_Name: "stage0_001_\u30D5\u30A7\u30FC\u30BA1.operate_aisac"
+  m_Name: "stage0_001_\u30D5\u30A7\u30FC\u30BA2.operate_aisac"
   m_EditorClassIdentifier: 
   m_AisacType: 0
   m_TargetCueSheet: 0
-  m_UseAnimationValue: 0
-  m_ConstantValue: 0.25
+  m_UseAnimationValue: 1
+  m_ConstantValue: 0
   m_AnimationValue:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.020406954
+      outSlope: 0.020406954
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.0763285
+    - serializedVersion: 3
+      time: 1
+      value: 0.25
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

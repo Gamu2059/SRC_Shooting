@@ -90,11 +90,6 @@ public class SequenceUnitPolarAnimation : SequenceUnit
         m_Up = m_UpAxisMatrix.MultiplyVector(Vector3.up);
         m_CurrentAngle = m_AngleOffset * Mathf.Deg2Rad;
         m_CurrentSpeed = m_StartSpeed;
-
-        Vector3 position;
-        Quaternion rotation;
-        Apply(m_UpAxisMatrix, m_Up, m_CurrentSpeed, m_CurrentAngle, Target.rotation, out position, out rotation);
-        Target.SetPositionAndRotation(position, rotation);
     }
 
     protected override void OnUpdate(float deltaTime)

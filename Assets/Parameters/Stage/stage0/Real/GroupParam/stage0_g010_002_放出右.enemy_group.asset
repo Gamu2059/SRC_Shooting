@@ -18,21 +18,21 @@ MonoBehaviour:
   m_EnemyGenerator: {fileID: 11400000, guid: 0d7b9b121ec35eb4992a37ed3934650d, type: 2}
   m_Behavior: {fileID: 11400000, guid: 0a94f66b0f1766444bc48c7ed7fae57e, type: 2}
   m_OnGenerateGroupEvents: []
-  m_UseDestroyCondition: 0
+  m_UseDestroyCondition: 1
   m_DestroyCondition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 0
+      VariableType: 2
       UseGeneralIntVariable: 0
       GeneralIntVariable: 0
       UseGeneralTimePeriod: 0
       GeneralTimePeriod: 0
-      VariableName: 
+      VariableName: Phase2 ChargeShot
       CompareType: 0
       BoolCompareType: 0
       CompareValue: 0
-      BoolCompareValue: 0
+      BoolCompareValue: 1
     MultiConditionType: 0
     MultiConditions: []

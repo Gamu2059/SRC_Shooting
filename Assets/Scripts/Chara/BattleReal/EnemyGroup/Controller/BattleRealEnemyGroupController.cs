@@ -126,6 +126,9 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
     public void Destory()
     {
+        // 所属している敵を破棄する
+
+
         BattleRealEnemyGroupManager.Instance.DestroyEnemyGroup(this);
     }
 

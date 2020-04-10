@@ -415,7 +415,7 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
             return null;
         }
 
-        var difficulty = DataManager.Instance.BattleData.Difficulty;
+        var difficulty = DataManager.Instance.Difficulty;
         var param = paramSet.GetEnemyParam(difficulty);
         if (param == null)
         {
@@ -507,6 +507,14 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
         }
 
         Enemies.Clear();
+    }
+
+    /// <summary>
+    /// 全ての敵キャラを退場扱いにする。
+    /// </summary>
+    public void RetireAllEnemy()
+    {
+        Enemies.ForEach(e => e.Retire());
     }
 
     /// <summary>

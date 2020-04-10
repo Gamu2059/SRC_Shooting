@@ -110,3 +110,94 @@ MonoBehaviour:
     CountStartTimePeriodNames: []
     CallScriptParams: []
     ExecuteEvents: []
+  - ContentName: "\u30A8\u30CA\u30B8\u30FC\u30B9\u30C8\u30C3\u30AF\u5897\u52A0\u691C\u51FA\u30B9\u30AF\u30EA\u30D7\u30C8\u8FFD\u52A0"
+    IsPassExecute: 0
+    EventType: 6
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams: []
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams:
+    - ScriptName: EnergyStockIncreaseEventController
+      ScriptArguments:
+      - Type: 3
+        Name: EventVarName
+        IntValue: 0
+        FloatValue: 0
+        BoolValue: 0
+        StringValue: Phase2 EnergyStock
+        Vector2Value: {x: 0, y: 0}
+        Vector3Value: {x: 0, y: 0, z: 0}
+    ExecuteEvents: []
+  - ContentName: "BGM Aisac \u30D5\u30A7\u30FC\u30BA2"
+    IsPassExecute: 0
+    EventType: 3
+    ExecuteTiming: 0
+    DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
+    EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
+    MovePlayerSequenceGroup: {fileID: 0}
+    ControlCameraParams: []
+    ControlObjectParams: []
+    ControlBgmParams:
+    - ControlType: 2
+      PlaySoundParam: {fileID: 0}
+      StopSoundGroup: 0
+      OperateAisacParam: {fileID: 11400000, guid: e0b1cd55acc20534d8f8814d42d64c8f,
+        type: 2}
+    ControlTelopParam:
+      TargetTelopType: 0
+    ShowCutsceneParam:
+      CutsceneName: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ShowTalkParam:
+      ScenarioLabel: 
+      AutoChangeToGameState: 0
+      OnCompletedEvents: []
+    ChangeState: 0
+    FadeParam:
+      IsFadeOut: 0
+      FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+      UseAnimation: 0
+      Duration: 0
+      RateCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+    OperateVariableParams: []
+    CountStartTimePeriodNames: []
+    CallScriptParams: []
+    ExecuteEvents: []

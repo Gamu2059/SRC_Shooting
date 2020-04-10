@@ -45,3 +45,8 @@ MonoBehaviour:
           Effect: {fileID: 11400000, guid: b7ac4877143ff78459191856e1f9cb0a, type: 2}
       m_DefeatHideTime: 0
       m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 89aea2cc86ea1624ba7c9e2a3bd47302, type: 2}
+      m_RetireHideTime: 0

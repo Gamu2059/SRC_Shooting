@@ -125,6 +125,11 @@ public class BattleRealEventContent
         /// DontDestroyイベントを全て削除する
         /// </summary>
         CLEAN_DONT_DESTROY_EVENT,
+
+        /// <summary>
+        /// 全ての敵を退場にする
+        /// </summary>
+        RETIRE_ALL_ENEMY
     }
 
     /// <summary>
