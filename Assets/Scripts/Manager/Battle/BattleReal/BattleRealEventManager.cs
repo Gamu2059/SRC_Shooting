@@ -916,8 +916,8 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case BattleRealEventContent.E_EVENT_TYPE.CLEAN_DONT_DESTROY_EVENT:
                 ExecuteCleanDontDestroyEvent();
                 break;
-            case BattleRealEventContent.E_EVENT_TYPE.RETIRE_ALL_ENEMY:
-                ExecuteRetireAllEnemy();
+            case BattleRealEventContent.E_EVENT_TYPE.RETIRE_ENEMY:
+                ExecuteRetireAllEnemy(eventContent.IsOnlyRetireNotBossEnemy);
                 break;
         }
     }
@@ -1259,11 +1259,18 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     }
 
     /// <summary>
-    /// 全ての敵を退場する。
+    /// 敵を退場させる。
     /// </summary>
-    private void ExecuteRetireAllEnemy()
+    private void ExecuteRetireAllEnemy(bool isOnlyRetireNotBossEnemy)
     {
-        BattleRealEnemyManager.Instance.RetireAllEnemy();
+        if (isOnlyRetireNotBossEnemy)
+        {
+            BattleRealEnemyManager.Instance.RetireAllNotBossEnemy();
+        }
+        else
+        {
+            BattleRealEnemyManager.Instance.RetireAllEnemy();
+        }
     }
 
     #endregion

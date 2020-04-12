@@ -518,6 +518,20 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
     }
 
     /// <summary>
+    /// ボス以外の全ての敵キャラを退場扱いにする。
+    /// </summary>
+    public void RetireAllNotBossEnemy()
+    {
+        foreach (var e in Enemies)
+        {
+            if (!e.IsBoss)
+            {
+                e.Retire();
+            }
+        }
+    }
+
+    /// <summary>
     /// 動体フィールド領域のビューポート座標から、実際の座標を取得する。
     /// </summary>
     /// <param name="x">フィールド領域x座標</param>
