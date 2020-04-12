@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4986c5dc230804db75660344e93281, type: 3}
+  m_Name: BulletShotParams
+  m_EditorClassIdentifier: 
+  m_MultiForLoop: {fileID: 11400000, guid: 48e4f9980b76e5f4b82448cf9c726e81, type: 2}
+  m_BulletParamFreeOperation: {fileID: 11400000, guid: 8f469dcd6bf0f2b438f8341cff95f901,
+    type: 2}
+  m_MultiForLoopForTransform: {fileID: 11400000, guid: ae34a6236bf37f4449e5c8acb005f646,
+    type: 2}
+  m_BulletTransform: {fileID: 11400000, guid: ca9f8a633cef80d44b30bcb48f9f731d, type: 2}
+  m_BulletShotParams: {fileID: 0}

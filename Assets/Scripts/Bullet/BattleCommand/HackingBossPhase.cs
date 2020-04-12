@@ -40,9 +40,10 @@ public class HackingBossPhase : ScriptableObject
 
         BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
 
-        //m_MultiForLoop.m_ForArray = new ForBase[0];
-
-        m_MultiForLoop.Setup();
+        if (m_MultiForLoop != null)
+        {
+            m_MultiForLoop.Setup();
+        }
     }
 
 
@@ -52,13 +53,13 @@ public class HackingBossPhase : ScriptableObject
 
         TransformSimple transform = null;
 
-        if (m_MultiForLoop.Init())
+        if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
         {
             do
             {
                 transform = m_BossTransform.GetResultTransform();
             }
-            while (m_MultiForLoop.Process());
+            while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
         }
 
         m_DanmakuArray.OnUpdates(

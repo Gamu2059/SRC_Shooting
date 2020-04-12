@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
   m_Name: UnitDanmaku
   m_EditorClassIdentifier: 
-  m_MultiForLoop:
-    m_ForArray:
-    - {fileID: 11400000, guid: 1cdbd1b451a6e1f47a5294172777a44f, type: 2}
-    - {fileID: 11400000, guid: 62b95c6ecb676a74ea50892ce5f60aaf, type: 2}
+  m_MultiForLoopUnscriptable:
+    m_ForArray: []
   m_ShotParam: {fileID: 0}
-  m_BulletParamFreeOperation: {fileID: 11400000, guid: 061872d305f67fd44958a375a53cff45,
-    type: 2}
-  m_BulletTransform: {fileID: 11400000, guid: db5106722d16f414380e6e4854eeb279, type: 2}
+  m_MultiForLoop: {fileID: 0}
+  m_BulletParamFreeOperation: {fileID: 0}
+  m_BulletTransform: {fileID: 0}
+  m_BulletShotParams: {fileID: 11400000, guid: c5c07445c01d72c498fa9d4adc7b0313, type: 2}

@@ -1,15 +1,17 @@
-﻿using System.Collections;
+﻿//#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 多重forループを表すクラス。（forループをメタ的に見ている）bool型のフィールドをつけて、Init()をなくすか？
+/// 多重forループを表すクラス。（forループをメタ的に見ている）
 /// </summary>
+[CreateAssetMenu(menuName = "Param/Danmaku/MultiForLoop", fileName = "MultiForLoop", order = 0)]
 [System.Serializable]
-public class MultiForLoop : object
+public class MultiForLoop : ScriptableObject
 {
 
-    [UnityEngine.Serialization.FormerlySerializedAs("m_OperationArray")]
     [SerializeField]
     public ForBase[] m_ForArray;
 
@@ -82,43 +84,3 @@ public class MultiForLoop : object
         }
     }
 }
-
-
-
-
-
-//if (index < 0)
-//{
-//    return false;
-//}
-
-//m_OperationArray[index].Process();
-
-//if (m_OperationArray[index].IsTrue())
-//{
-//    m_OperationArray[index + 1].Init();
-
-//    if (m_OperationArray[index + 1].IsTrue())
-//    {
-
-//    }
-//}
-//else
-//{
-//    return Process(index - 1);
-//}
-
-
-//for (int i = 0;i < m_OperationArray.Length;i++)
-//{
-//    m_OperationArray[i].Init();
-
-//    if (m_OperationArray[i].IsTrue())
-//    {
-//        continue;
-//    }
-//    else
-//    {
-//        break;
-//    }
-//}
