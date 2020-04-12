@@ -7,7 +7,7 @@ partial class BattleRealBossController
     private class BehaviorState : StateCycle
     {
         private BehaviorSet m_BehaviorSet;
-        private BattleRealEnemyBehaviorUnit m_Behavior;
+        private BattleRealEnemyBehaviorUnitBase m_Behavior;
         private BattleRealEnemyBehaviorController m_BehaviorController;
 
         /// <summary>
@@ -26,7 +26,6 @@ partial class BattleRealBossController
 
             // 通常ではダメージコライダーを有効にする
             Target.GetCollider().SetEnableCollider(Target.m_EnemyBodyCollider, true);
-            AudioManager.Instance.Stop(E_CUE_SHEET.ENEMY);
 
             if (m_IsFirstTime)
             {
@@ -78,6 +77,16 @@ partial class BattleRealBossController
                         break;
                 }
             }
+
+            if (Target.IsCharging)
+            {
+                Target.ChargeRemainTime -= Time.deltaTime;
+                Target.m_ChargeController?.OnUpdate();
+                if (Target.ChargeRemainTime <= 0)
+                {
+                    Target.ChargeSuccess();
+                }
+            }
         }
 
         public override void OnLateUpdate()
@@ -111,12 +120,17 @@ partial class BattleRealBossController
                     case E_ENEMY_BEHAVIOR_TYPE.NONE:
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
-                        m_Behavior?.OnEndUnit();
+                        m_Behavior?.OnStopUnit();
                         break;
                     case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_CONTROLLER:
-                        m_BehaviorController?.OnEndUnit();
+                        m_BehaviorController?.StopBehavior();
                         break;
                 }
+            }
+
+            if (Target.IsCharging)
+            {
+                Target.ChargeFailure();
             }
 
             base.OnEnd();

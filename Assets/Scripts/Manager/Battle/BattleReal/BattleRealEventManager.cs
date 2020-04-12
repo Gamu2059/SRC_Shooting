@@ -190,23 +190,17 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             if (IsMeetRootCondition(ref param.Condition))
             {
                 AddEvent(param.Contents);
-                m_GotoDestroyEventParams.Add(m_EventParams[i]);
+                if (!param.DontDestroy)
+                {
+                    m_GotoDestroyEventParams.Add(m_EventParams[i]);
+                }
             }
         }
 
         DestroyEventTrigger();
 
         // イベント実行
-        foreach (var param in m_WaitExecuteParams)
-        {
-            if (param.IsPassExecute)
-            {
-                continue;
-            }
-
-            ExecuteEvent(param);
-        }
-
+        m_WaitExecuteParams.ForEach(p => ExecuteEvent(p));
         m_WaitExecuteParams.Clear();
 
         // スクリプト実行
@@ -320,7 +314,8 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
         try
         {
             return m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
-        } catch(ArgumentException e)
+        }
+        catch (ArgumentException e)
         {
             Debug.LogError(name);
             return false;
@@ -518,7 +513,7 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
                 SetBool(name, !((v && !value) || (!v && value)));
                 break;
             case E_BOOL_OPERAND_TYPE.NOT:
-                SetBool(name, !v);
+                SetBool(name, !value);
                 break;
         }
     }
@@ -761,7 +756,7 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             return;
         }
 
-        foreach(var parameter in parameters)
+        foreach (var parameter in parameters)
         {
             AddEventParam(parameter);
         }
@@ -815,7 +810,8 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     {
         if (content.ExecuteTiming == BattleRealEventContent.E_EXECUTE_TIMING.IMMEDIATE)
         {
-            m_WaitExecuteParams.Add(content);
+            // 待機リストに追加せず即時実行
+            ExecuteEvent(content);
         }
         else
         {
@@ -835,10 +831,23 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public void ExecuteEvent(BattleRealEventContent eventContent)
     {
+        if (eventContent.IsPassExecute)
+        {
+            Debug.LogWarningFormat("イベントの実行をパスしました。 event content name : {0}", eventContent.ContentName);
+            return;
+        }
+
         switch (eventContent.EventType)
         {
             case BattleRealEventContent.E_EVENT_TYPE.APPEAR_ENEMY_GROUP:
-                ExecuteApperEnemyGroup(eventContent.EnemyGroupParam);
+                if (eventContent.UseEnemyGroupParamArray)
+                {
+                    ExecuteApperEnemyGroup(eventContent.EnemyGroupParams);
+                }
+                else
+                {
+                    ExecuteApperEnemyGroup(eventContent.EnemyGroupParam);
+                }
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.MOVE_PLAYER_BY_SEQUENCE:
                 ExecuteMovePlayerBySequence(eventContent.MovePlayerSequenceGroup);
@@ -849,11 +858,11 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_CAMERA:
                 ExecuteControlCamera(eventContent.ControlCameraParams);
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
+                ExecuteControlObject(eventContent.ControlObjectParams);
+                break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_BGM:
                 ExecuteControlBgm(eventContent.ControlBgmParams);
-                break;
-            case BattleRealEventContent.E_EVENT_TYPE.CONTROL_OBJECT:
-                // 何もしない
                 break;
             case BattleRealEventContent.E_EVENT_TYPE.CONTROL_TELOP_UI:
                 ExecuteControlTelop(eventContent.ControlTelopParam);
@@ -900,6 +909,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case BattleRealEventContent.E_EVENT_TYPE.GAME_OVER:
                 ExecuteGameOver();
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.EXECUTE_OTHER_EVENT:
+                ExecuteOtherEvents(eventContent.ExecuteEvents);
+                break;
         }
     }
 
@@ -909,6 +921,22 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     private void ExecuteApperEnemyGroup(BattleRealEnemyGroupParam enemyGroupParam)
     {
         BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(enemyGroupParam);
+    }
+
+    /// <summary>
+    /// 敵を出現させる。
+    /// </summary>
+    private void ExecuteApperEnemyGroup(BattleRealEnemyGroupParam[] enemyGroupParams)
+    {
+        if (enemyGroupParams == null)
+        {
+            return;
+        }
+
+        foreach (var param in enemyGroupParams)
+        {
+            BattleRealEnemyGroupManager.Instance.CreateEnemyGroup(param);
+        }
     }
 
     private void ExecuteMovePlayerBySequence(SequenceGroup sequenceGroup)
@@ -933,6 +961,17 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             {
                 camera.BuildSequence(param.SequenceGroup);
             }
+        }
+    }
+
+    /// <summary>
+    /// シーケンスオブジェクトを制御する。
+    /// </summary>
+    private void ExecuteControlObject(ControlObjectParam[] controlObjectParams)
+    {
+        foreach (var param in controlObjectParams)
+        {
+            BattleRealSequenceObjectManager.Instance.CreateSequenceObject(param.SequenceObjectPrefab, param.RootGroup);
         }
     }
 
@@ -973,7 +1012,7 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     private void ExecuteControlTelop(ControlTelopParam controlTelopParam)
     {
-        switch(controlTelopParam.TargetTelopType)
+        switch (controlTelopParam.TargetTelopType)
         {
             case E_TELOP_TYPE.START_TELOP:
                 BattleRealUiManager.Instance.PlayStartTelop();
@@ -1180,6 +1219,27 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     private void ExecuteGameOver()
     {
         GameOverAction?.Invoke();
+    }
+
+    /// <summary>
+    /// イベントを無条件で発生させる。
+    /// </summary>
+    private void ExecuteOtherEvents(BattleRealEventTriggerParam[] events)
+    {
+        if (events == null)
+        {
+            return;
+        }
+
+        foreach (var e in events)
+        {
+            if (e == null)
+            {
+                continue;
+            }
+
+            AddEvent(e.Contents);
+        }
     }
 
     #endregion

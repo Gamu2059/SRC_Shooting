@@ -18,12 +18,12 @@ public class BattleRealBossBehaviorSet
     public E_ENEMY_BEHAVIOR_TYPE BehaviorType => m_BehaviorType;
 
     [SerializeField, Tooltip("ボスの通常の振る舞い")]
-    private BattleRealEnemyBehaviorUnit m_Behavior;
-    public BattleRealEnemyBehaviorUnit Behavior => m_Behavior;
+    private BattleRealEnemyBehaviorUnitBase m_Behavior;
+    public BattleRealEnemyBehaviorUnitBase Behavior => m_Behavior;
 
     [SerializeField, Tooltip("ボスの通常の振る舞いのグループ")]
-    private BattleRealEnemyBehaviorGroup m_BehaviorGroup;
-    public BattleRealEnemyBehaviorGroup BehaviorGroup => m_BehaviorGroup;
+    private BattleRealEnemyBehaviorGroupBase m_BehaviorGroup;
+    public BattleRealEnemyBehaviorGroupBase BehaviorGroup => m_BehaviorGroup;
 
     [Header("ダウン時の振る舞い")]
 
@@ -32,12 +32,12 @@ public class BattleRealBossBehaviorSet
     public E_ENEMY_BEHAVIOR_TYPE DownBehaviorType => m_DownBehaviorType;
 
     [SerializeField, Tooltip("ボスのダウン時の振る舞い")]
-    private BattleRealEnemyBehaviorUnit m_DownBehavior;
-    public BattleRealEnemyBehaviorUnit DownBehavior => m_DownBehavior;
+    private BattleRealEnemyBehaviorUnitBase m_DownBehavior;
+    public BattleRealEnemyBehaviorUnitBase DownBehavior => m_DownBehavior;
 
     [SerializeField, Tooltip("ボスのダウン時の振る舞いのグループ")]
-    private BattleRealEnemyBehaviorGroup m_DownBehaviorGroup;
-    public BattleRealEnemyBehaviorGroup DownBehaviorGroup => m_DownBehaviorGroup;
+    private BattleRealEnemyBehaviorGroupBase m_DownBehaviorGroup;
+    public BattleRealEnemyBehaviorGroupBase DownBehaviorGroup => m_DownBehaviorGroup;
 
     [Space()]
 
@@ -46,8 +46,8 @@ public class BattleRealBossBehaviorSet
     public BattleHackingLevelParamSet HackingLevelParamSet => m_HackingLevelParamSet;
 
     [SerializeField, Tooltip("この振る舞いに切り替わった時に用いるシーケンスデータ")]
-    private SequenceGroup m_StartSequenceGroup;
-    public SequenceGroup StartSequenceGroup => m_StartSequenceGroup;
+    private SequenceGroup m_SequenceGroupOnChangeBehavior;
+    public SequenceGroup SequenceGroupOnChangeBehavior => m_SequenceGroupOnChangeBehavior;
 
     [SerializeField, Tooltip("この振る舞いでのダウンHP")]
     private int m_DownHp;

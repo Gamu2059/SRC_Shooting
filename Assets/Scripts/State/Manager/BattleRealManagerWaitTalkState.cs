@@ -12,6 +12,7 @@
             BattleRealBulletManager.Instance.GotoPool();
             BattleRealItemManager.Instance.GotoPool();
             BattleRealEffectManager.Instance.GotoPool();
+            BattleRealSequenceObjectManager.Instance.GotoDestroy();
             BattleRealCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
             BattleRealTimerManager.Instance.OnUpdate();
@@ -23,6 +24,7 @@
             BattleRealBulletManager.Instance.OnUpdate();
             BattleRealItemManager.Instance.OnUpdate();
             BattleRealEffectManager.Instance.OnUpdate();
+            BattleRealSequenceObjectManager.Instance.OnUpdate();
             BattleRealCameraManager.Instance.OnUpdate();
             BattleRealUiManager.Instance.OnUpdate();
         }
@@ -39,6 +41,7 @@
             BattleRealBulletManager.Instance.OnLateUpdate();
             BattleRealItemManager.Instance.OnLateUpdate();
             BattleRealEffectManager.Instance.OnLateUpdate();
+            BattleRealSequenceObjectManager.Instance.OnLateUpdate();
             BattleRealCameraManager.Instance.OnLateUpdate();
             BattleRealUiManager.Instance.OnLateUpdate();
         }
@@ -55,6 +58,7 @@
             BattleRealBulletManager.Instance.OnFixedUpdate();
             BattleRealItemManager.Instance.OnFixedUpdate();
             BattleRealEffectManager.Instance.OnFixedUpdate();
+            BattleRealSequenceObjectManager.Instance.OnFixedUpdate();
             BattleRealCameraManager.Instance.OnFixedUpdate();
             BattleRealUiManager.Instance.OnFixedUpdate();
         }

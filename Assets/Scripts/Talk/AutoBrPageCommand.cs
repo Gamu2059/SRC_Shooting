@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utage;
 
+/// <summary>
+/// 自動ページ送りを制御するコマンド。<br/>
+/// <br/>
+/// Command : AutoBrPage<br/>
+/// Parameter :<br/>
+/// arg1 : string : 自動ページ送りするかどうか。ON or OFF
+/// </summary>
 public class AutoBrPageCommand : AdvCommand
 {
     private bool m_UseAutoBrPageChange;

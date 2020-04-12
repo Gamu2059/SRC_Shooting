@@ -12,9 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a798c51e6790444418cfeda08c32862d, type: 3}
   m_Name: stage0.event
   m_EditorClassIdentifier: 
-  m_Variables: []
+  m_Variables:
+  - Type: 0
+    Name: Start Talk Progress
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 2
+    Name: Start Talk End
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 0
+    Name: Phase1 Disappear
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
+  - Type: 0
+    Name: Phase1 Defeat
+    IntInitValue: 0
+    FloatInitValue: 0
+    BoolInitValue: 0
   m_TimePeriodNames: []
   m_Params:
   - {fileID: 11400000, guid: d0e5b15c54f2c5749901dc9154bed333, type: 2}
-  - {fileID: 11400000, guid: 1d46313a3cede6146a91daacfef0a40a, type: 2}
-  - {fileID: 11400000, guid: ab40bc44e57b1da42873e223565856ca, type: 2}
+  - {fileID: 11400000, guid: 4cd6a353597e3c142b436739a88ed57a, type: 2}
+  - {fileID: 11400000, guid: 30cd3e90cafb0274689dfb9e04fe5e9e, type: 2}
+  - {fileID: 11400000, guid: c378d8164b4f18041b18e691ee83abfb, type: 2}

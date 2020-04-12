@@ -16,6 +16,13 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
         public CriAtomSource Source;
     }
 
+    [Serializable]
+    private struct CommonSoundSet
+    {
+        public E_COMMON_SOUND Type;
+        public PlaySoundParam Param;
+    }
+
     private class OperateAisacData
     {
         public OperateAisacParam OperateAisacParam;
@@ -38,6 +45,9 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
     [SerializeField]
     private SourceSet[] m_SourceSets;
 
+    [SerializeField]
+    private CommonSoundSet[] m_CommonSoundSets;
+
     #endregion
 
     #region Field
@@ -45,6 +55,7 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
     private AdxAssetParam m_AdxAssetParam;
 
     private Dictionary<E_CUE_SHEET, CriAtomSource> m_SourceDict;
+    private Dictionary<E_COMMON_SOUND, PlaySoundParam> m_CommonSoundDict;
     private Dictionary<E_AISAC_TYPE, string> m_AisacDict;
 
     private List<OperateAisacData> m_ProcessingOperateAisacList;
@@ -82,18 +93,26 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
             m_SourceDict.Add(sourceSet.CueSheet, sourceSet.Source);
         }
 
+        m_CommonSoundDict = new Dictionary<E_COMMON_SOUND, PlaySoundParam>();
+        foreach (var commonSoundSet in m_CommonSoundSets)
+        {
+            m_CommonSoundDict.Add(commonSoundSet.Type, commonSoundSet.Param);
+        }
+
         m_ProcessingOperateAisacList = new List<OperateAisacData>();
         m_DestroyOperateAisacList = new List<OperateAisacData>();
     }
 
     public override void OnFinalize()
     {
-        m_DestroyOperateAisacList.Clear();
-        m_ProcessingOperateAisacList.Clear();
-        m_SourceDict.Clear();
+        m_DestroyOperateAisacList?.Clear();
+        m_ProcessingOperateAisacList?.Clear();
+        m_CommonSoundDict?.Clear();
+        m_SourceDict?.Clear();
 
         m_DestroyOperateAisacList = null;
         m_ProcessingOperateAisacList = null;
+        m_CommonSoundDict = null;
         m_SourceDict = null;
 
         m_AdxAssetParam = null;
@@ -278,5 +297,26 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         var aisac = m_AisacDict[targetAisac];
         source.SetAisacControl(aisac, value);
+    }
+
+    /// <summary>
+    /// 汎用サウンドを再生する。
+    /// </summary>
+    public void Play(E_COMMON_SOUND type)
+    {
+        if (m_CommonSoundDict == null)
+        {
+            Debug.LogWarning("CommonSoundDict is null.");
+            return;
+        }
+
+        if (m_CommonSoundDict.TryGetValue(type, out PlaySoundParam param))
+        {
+            Play(param);
+        }
+        else
+        {
+            Debug.LogWarningFormat("指定したタイプのサウンドが登録されていませんでした。 type : {0}", type);
+        }
     }
 }

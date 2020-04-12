@@ -84,6 +84,11 @@ public class BulletController : BattleRealObjectBase
     private float m_NowLifeTime;
 
     /// <summary>
+    /// この弾の発射時SE。
+    /// </summary>
+    private PlaySoundParam m_ShotSe;
+
+    /// <summary>
     /// この弾が1秒間にどれくらい回転するか。
     /// </summary>
     private Vector3 m_NowDeltaRotation;
@@ -238,6 +243,14 @@ public class BulletController : BattleRealObjectBase
     public void SetCycle(E_POOLED_OBJECT_CYCLE cycle)
     {
         m_Cycle = cycle;
+    }
+
+    /// <summary>
+    /// この弾の発射時SEを設定する。
+    /// </summary>
+    public void SetShotSe(PlaySoundParam param)
+    {
+        m_ShotSe = param;
     }
 
     /// <summary>
@@ -552,6 +565,7 @@ public class BulletController : BattleRealObjectBase
         if (bulletParam != null)
         {
             bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
+            bullet.m_ShotSe = bulletParam.ShotSE;
         }
 
         bullet.m_BulletParam = bulletParam;
@@ -684,6 +698,7 @@ public class BulletController : BattleRealObjectBase
         {
             bullet.ChangeOrbital(bulletParam.GetOrbitalParam(shotParam.OrbitalIndex));
             bullet.m_OrbitalParamIndex = shotParam.OrbitalIndex;
+            bullet.m_ShotSe = bulletParam.ShotSE;
         }
 
         bullet.m_BulletParam = bulletParam;
@@ -777,6 +792,7 @@ public class BulletController : BattleRealObjectBase
         {
             bullet.ChangeOrbital(bulletParam.GetOrbitalParam());
             bullet.m_OrbitalParamIndex = 0;
+            bullet.m_ShotSe = bulletParam.ShotSE;
         }
 
         bullet.m_BulletParam = bulletParam;
@@ -1002,6 +1018,12 @@ public class BulletController : BattleRealObjectBase
         m_BulletHit.OnFinalize();
         m_BulletSuffer.OnFinalize();
         base.OnFinalize();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        AudioManager.Instance.Play(m_ShotSe);
     }
 
     public override void OnUpdate()

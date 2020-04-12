@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードのプレイヤーのレベルのパラメータセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/ParamSet/Manager/PlayerLevel", fileName = "param.player_level.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleCommon/PlayerLevel", fileName = "param.player_level.asset")]
 public class BattleRealPlayerLevelParamSet : ScriptableObject
 {
     [SerializeField]

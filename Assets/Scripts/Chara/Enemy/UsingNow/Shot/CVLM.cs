@@ -110,7 +110,7 @@ public class CVLM : object
         //        new TransformSimple(position, velocityRad, 0.8f),
         //        speed),
         //    dTime);
-        AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
+        AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
     }
 
     /// <summary>

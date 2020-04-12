@@ -60,7 +60,8 @@ public class BulletShotParams : ScriptableObject
             while (m_MultiForLoop.Process());
 
             // このフレーム内で1つでも弾が発射されたら、このフレーム内で1回だけ発射音を鳴らす。
-            AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
+            //AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
+            AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
         }
     }
 }

@@ -37,6 +37,8 @@ partial class BattleRealBossController
                 BattleRealTimerManager.Instance.RegistTimer(timer);
             }
 
+            AudioManager.Instance.Stop(E_CUE_SHEET.ENEMY);
+
             // 全弾削除
             BattleRealBulletManager.Instance.CheckPoolBullet(Target);
             Target.ExecuteResuceEvent();

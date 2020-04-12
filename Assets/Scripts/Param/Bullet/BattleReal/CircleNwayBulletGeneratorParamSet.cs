@@ -12,7 +12,7 @@ namespace BattleReal.BulletGenerator
     /// 円周上からNway弾を生成するジェネレータのパラメータセット。<br/>
     /// 主に4wayパラスで使用する。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/BulletGenerator/CircleNway", fileName = "circle_n_way.bullet_generator.asset", order = 10)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Bullet/BulletGenerator/CircleNway", fileName = "param.bullet_generator.asset", order = 10)]
     public class CircleNwayBulletGeneratorParamSet : BattleRealBulletGeneratorParamSetBase
     {
         [Serializable]

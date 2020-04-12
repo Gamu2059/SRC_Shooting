@@ -18,6 +18,7 @@ public class CutsceneController : MonoBehaviour
     public Action OnCompleteCutscene;
     public float TimeRate;
     private bool m_IsDone;
+    private bool m_IsPaused;
 
     #region Cycle
 
@@ -25,6 +26,7 @@ public class CutsceneController : MonoBehaviour
     {
         TimeRate = 1;
         m_IsDone = false;
+        m_IsPaused = false;
     }
 
     private void OnDestroy()
@@ -34,12 +36,12 @@ public class CutsceneController : MonoBehaviour
 
     private void Update()
     {
-        if (m_IsDone)
+        if (m_IsDone || m_IsPaused)
         {
             return;
         }
 
-        m_PlayableDirector.time += Time.deltaTime * Mathf.Max(TimeRate, 0f);
+        m_PlayableDirector.time += GetDeltaTime();
         m_PlayableDirector.Evaluate();
 
         var time = m_PlayableDirector.time;
@@ -67,11 +69,18 @@ public class CutsceneController : MonoBehaviour
 
     public void Pause()
     {
-        m_PlayableDirector.Pause();
+        //m_PlayableDirector.Pause();
+        m_IsPaused = true;
     }
 
     public void Resume()
     {
-        m_PlayableDirector.Resume();
+        //m_PlayableDirector.Resume();
+        m_IsPaused = false;
+    }
+
+    public float GetDeltaTime()
+    {
+        return Time.deltaTime * Mathf.Max(TimeRate, 0f);
     }
 }

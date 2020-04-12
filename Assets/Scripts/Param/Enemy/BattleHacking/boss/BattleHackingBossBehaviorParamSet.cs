@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// ハッキングモードのボスの基本的なパラメータのセット
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Boss/BaseBehavior", fileName = "param.hacking_boss_base_behavior.asset")]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleHacking/Enemy/BehaviorParam", fileName = "param.behavior.asset")]
 public class BattleHackingBossBehaviorParamSet : BattleHackingEnemyBehaviorParamSet
 {
     [SerializeField, Tooltip("攻撃の行動パターンの配列")]

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: "stage1_002_\u958B\u59CB\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86.event_trigger"
   m_EditorClassIdentifier: 
   EventTriggerName: "\u30AB\u30C3\u30C8\u30B7\u30FC\u30F3\u7D42\u4E86\u6642"
+  DontDestroy: 0
   Condition:
     IsReverse: 0
     IsMultiCondition: 0
@@ -36,7 +37,9 @@ MonoBehaviour:
     EventType: 17
     ExecuteTiming: 0
     DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -66,12 +69,15 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []
   - ContentName: "\u4F1A\u8A71"
     IsPassExecute: 0
     EventType: 14
     ExecuteTiming: 1
     DelayExecuteTime: 0.5
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -101,12 +107,15 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []
   - ContentName: "\u30D7\u30EC\u30A4\u30E4\u30FC\u30D5\u30A7\u30FC\u30C9\u30A4\u30F3"
     IsPassExecute: 0
     EventType: 18
     ExecuteTiming: 0
     DelayExecuteTime: 0
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 11400000, guid: 012bfdbc7120277419cc2fb28da3266d,
       type: 2}
     ControlCameraParams: []
@@ -137,12 +146,15 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []
   - ContentName: "\u30B9\u30BF\u30FC\u30C8\u30C6\u30ED\u30C3\u30D7"
     IsPassExecute: 0
     EventType: 20
     ExecuteTiming: 1
     DelayExecuteTime: 7
+    UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
+    EnemyGroupParams: []
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams: []
     ControlObjectParams: []
@@ -172,3 +184,4 @@ MonoBehaviour:
     OperateVariableParams: []
     CountStartTimePeriodNames: []
     CallScriptParams: []
+    ExecuteEvents: []

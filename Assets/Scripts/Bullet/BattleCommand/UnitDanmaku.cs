@@ -79,13 +79,21 @@ public class UnitDanmaku : ScriptableObject
                 while (m_MultiForLoopUnscriptable.Process());
 
                 // このフレーム内で1つでも弾が発射されたら、このフレーム内で1回だけ発射音を鳴らす。
-                AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
+                //AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
+                AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
             }
+            //<<<<<<< HEAD
         }
         // 新しいやり方なら
         else
         {
             m_BulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable);
+//=======
+            //while (m_MultiForLoop.Process());
+
+            //// このフレーム内で1つでも弾が発射されたら、このフレーム内で1回だけ発射音を鳴らす。
+            //AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+//>>>>>>> 8b193dda557252183fa094f2704cc8d901671d1e
         }
     }
 }

@@ -315,7 +315,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 
 		SetSceneCycle( E_SCENE_CYCLE.OUT );
 		yield return OnBeforeTransition( ( scene, callback ) => scene.OnBeforeHide( callback ) );
-
+		
 		// フェードアウト処理
 		//if( fadeOut != null )
 		//{
@@ -332,7 +332,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		yield return new WaitUntil( () => isCompleteTransition );
 
 		yield return OnBeforeTransition( ( scene, callback ) => scene.OnAfterHide( callback ) );
-
+		
 		m_CurrentScene = null;
 		m_CurrentAdditiveScenes = new List<BaseScene>();
 

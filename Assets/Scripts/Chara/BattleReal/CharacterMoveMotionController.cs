@@ -7,14 +7,17 @@ using UnityEngine;
 /// </summary>
 public class CharacterMoveMotionController : ControllableMonoBehavior, IAutoControlOnCharaController
 {
-    private const string V_SPEED = "VSpeed";
-    private const string H_SPEED = "HSpeed";
-
     [SerializeField]
     private Animator m_TargetAnimator;
 
     [SerializeField]
-    private float m_Leap;
+    private string m_VerticalKey = "VSpeed";
+
+    [SerializeField]
+    private string m_HorizontalKey = "HSpeed";
+
+    [SerializeField]
+    private float m_Leap = 0.1f;
 
     private bool m_IsEnableController;
     public bool IsEnableController { get { return m_IsEnableController; } set { m_IsEnableController = value; } }
@@ -45,17 +48,17 @@ public class CharacterMoveMotionController : ControllableMonoBehavior, IAutoCont
 
         var delta = transform.position - m_PrePosition;
         var d = (delta.ToVector2XZ()).normalized;
-        var rad = transform.eulerAngles.y;
+        var rad = transform.eulerAngles.y.DegToRad();
         var c = Mathf.Cos(rad);
         var s = Mathf.Sin(rad);
         m_TargetH = c * d.x - s * d.y;
         m_TargetV = s * d.x + c * d.y;
 
-        m_NowH = Mathf.Lerp(m_NowH, m_TargetH, m_Leap * Time.deltaTime);
-        m_NowV = Mathf.Lerp(m_NowV, m_TargetV, m_Leap * Time.deltaTime);
+        m_NowH = Mathf.Lerp(m_NowH, m_TargetH, m_Leap);
+        m_NowV = Mathf.Lerp(m_NowV, m_TargetV, m_Leap);
 
-        m_TargetAnimator.SetFloat(H_SPEED, m_NowH);
-        m_TargetAnimator.SetFloat(V_SPEED, m_NowV);
+        m_TargetAnimator.SetFloat(m_HorizontalKey, m_NowH);
+        m_TargetAnimator.SetFloat(m_VerticalKey, m_NowV);
 
         m_PrePosition = transform.position;
     }

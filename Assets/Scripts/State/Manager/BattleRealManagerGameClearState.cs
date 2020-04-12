@@ -16,26 +16,24 @@ partial class BattleRealManager
             AudioManager.Instance.StopAllBgm();
             AudioManager.Instance.StopAllSe();
 
+            BattleRealPlayerManager.Instance.StopChargeShot();
             BattleRealUiManager.Instance.SetEnableBossUI(false);
-            //AudioManager.Instance.Play(m_ParamSet.GameClearSe);
+            BattleRealUiManager.Instance.PlayClearTelop();
 
-            //var battleManager = Target.m_BattleManager;
-            //battleManager.BattleRealUiManager.SetEnableBossUI(false);
-            //Target.PlayerManager.StopChargeShot();
+            AudioManager.Instance.Play(E_COMMON_SOUND.GAME_CLEAR);
 
-            //battleManager.BattleRealUiManager.PlayGameClearAnimation();
-            //var hideViewWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
-            //hideViewWaitTimer.SetTimeoutCallBack(() =>
-            //{
-            //    battleManager.BattleRealUiManager.PlayMainViewHideAnimation();
-            //    var resultWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
-            //    resultWaitTimer.SetTimeoutCallBack(() =>
-            //    {
-            //        battleManager.BattleRealUiManager.DisplayResult();
-            //    });
-            //    TimerManager.Instance.RegistTimer(resultWaitTimer);
-            //});
-            //TimerManager.Instance.RegistTimer(hideViewWaitTimer);
+            var hideViewWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
+            hideViewWaitTimer.SetTimeoutCallBack(() =>
+            {
+                BattleRealUiManager.Instance.PlayMainViewHideAnimationBeforeShowResult();
+                var resultWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
+                resultWaitTimer.SetTimeoutCallBack(() =>
+                {
+                    BattleRealUiManager.Instance.ShowResult();
+                });
+                TimerManager.Instance.RegistTimer(resultWaitTimer);
+            });
+            TimerManager.Instance.RegistTimer(hideViewWaitTimer);
         }
 
         public override void OnUpdate()
@@ -48,17 +46,19 @@ partial class BattleRealManager
             BattleRealBulletManager.Instance.GotoPool();
             BattleRealItemManager.Instance.GotoPool();
             BattleRealEffectManager.Instance.GotoPool();
+            BattleRealSequenceObjectManager.Instance.GotoDestroy();
             BattleRealCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
             BattleRealTimerManager.Instance.OnUpdate();
             BattleRealEventManager.Instance.OnUpdate();
-            //BattleRealPlayerManager.Instance.OnUpdate();
+            BattleRealPlayerManager.Instance.OnUpdate();
             BattleRealEnemyGroupManager.Instance.OnUpdate();
             BattleRealEnemyManager.Instance.OnUpdate();
             BattleRealBulletGeneratorManager.Instance.OnUpdate();
             BattleRealBulletManager.Instance.OnUpdate();
             BattleRealItemManager.Instance.OnUpdate();
             BattleRealEffectManager.Instance.OnUpdate();
+            BattleRealSequenceObjectManager.Instance.OnUpdate();
             BattleRealCameraManager.Instance.OnUpdate();
             BattleRealUiManager.Instance.OnUpdate();
         }
@@ -68,37 +68,38 @@ partial class BattleRealManager
             base.OnLateUpdate();
             BattleRealTimerManager.Instance.OnLateUpdate();
             BattleRealEventManager.Instance.OnLateUpdate();
-            //BattleRealPlayerManager.Instance.OnLateUpdate();
+            BattleRealPlayerManager.Instance.OnLateUpdate();
             BattleRealEnemyGroupManager.Instance.OnLateUpdate();
             BattleRealEnemyManager.Instance.OnLateUpdate();
             BattleRealBulletGeneratorManager.Instance.OnLateUpdate();
             BattleRealBulletManager.Instance.OnLateUpdate();
             BattleRealItemManager.Instance.OnLateUpdate();
             BattleRealEffectManager.Instance.OnLateUpdate();
+            BattleRealSequenceObjectManager.Instance.OnLateUpdate();
             BattleRealCameraManager.Instance.OnLateUpdate();
             BattleRealUiManager.Instance.OnLateUpdate();
 
-            // 衝突フラグクリア
-            BattleRealPlayerManager.Instance.ClearColliderFlag();
-            BattleRealEnemyManager.Instance.ClearColliderFlag();
-            BattleRealBulletManager.Instance.ClearColliderFlag();
-            BattleRealItemManager.Instance.ClearColliderFlag();
+            //// 衝突フラグクリア
+            //BattleRealPlayerManager.Instance.ClearColliderFlag();
+            //BattleRealEnemyManager.Instance.ClearColliderFlag();
+            //BattleRealBulletManager.Instance.ClearColliderFlag();
+            //BattleRealItemManager.Instance.ClearColliderFlag();
 
-            // 衝突情報の更新
-            BattleRealPlayerManager.Instance.UpdateCollider();
-            BattleRealEnemyManager.Instance.UpdateCollider();
-            BattleRealBulletManager.Instance.UpdateCollider();
-            BattleRealItemManager.Instance.UpdateCollider();
+            //// 衝突情報の更新
+            //BattleRealPlayerManager.Instance.UpdateCollider();
+            //BattleRealEnemyManager.Instance.UpdateCollider();
+            //BattleRealBulletManager.Instance.UpdateCollider();
+            //BattleRealItemManager.Instance.UpdateCollider();
 
-            // 衝突判定処理
-            BattleRealCollisionManager.Instance.CheckCollision();
-            BattleRealCollisionManager.Instance.DrawCollider();
+            //// 衝突判定処理
+            //BattleRealCollisionManager.Instance.CheckCollision();
+            //BattleRealCollisionManager.Instance.DrawCollider();
 
-            // 衝突処理
-            BattleRealPlayerManager.Instance.ProcessCollision();
-            BattleRealEnemyManager.Instance.ProcessCollision();
-            BattleRealBulletManager.Instance.ProcessCollision();
-            BattleRealItemManager.Instance.ProcessCollision();
+            //// 衝突処理
+            //BattleRealPlayerManager.Instance.ProcessCollision();
+            //BattleRealEnemyManager.Instance.ProcessCollision();
+            //BattleRealBulletManager.Instance.ProcessCollision();
+            //BattleRealItemManager.Instance.ProcessCollision();
         }
 
         public override void OnFixedUpdate()
@@ -106,13 +107,14 @@ partial class BattleRealManager
             base.OnFixedUpdate();
             BattleRealTimerManager.Instance.OnFixedUpdate();
             BattleRealEventManager.Instance.OnFixedUpdate();
-            //BattleRealPlayerManager.Instance.OnFixedUpdate();
+            BattleRealPlayerManager.Instance.OnFixedUpdate();
             BattleRealEnemyGroupManager.Instance.OnFixedUpdate();
             BattleRealEnemyManager.Instance.OnFixedUpdate();
             BattleRealBulletGeneratorManager.Instance.OnFixedUpdate();
             BattleRealBulletManager.Instance.OnFixedUpdate();
             BattleRealItemManager.Instance.OnFixedUpdate();
             BattleRealEffectManager.Instance.OnFixedUpdate();
+            BattleRealSequenceObjectManager.Instance.OnFixedUpdate();
             BattleRealCameraManager.Instance.OnFixedUpdate();
             BattleRealUiManager.Instance.OnFixedUpdate();
         }

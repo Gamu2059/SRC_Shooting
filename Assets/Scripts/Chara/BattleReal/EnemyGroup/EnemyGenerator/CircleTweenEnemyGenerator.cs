@@ -10,8 +10,8 @@ namespace BattleReal.EnemyGenerator
     /// <summary>
     /// ある地点を指定してその円周上に敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGenerator/CircleTween", fileName = "circle_tween.enemy_generator.asset", order = 20)]
-    public class CircleTweenEnemyGenerator : BattleRealEnemyGenerator
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGenerator/CircleTween", fileName = "param.enemy_generator.asset", order = 20)]
+    public class CircleTweenEnemyGenerator : BattleRealEnemyGeneratorBase
     {
         #region Define
 
