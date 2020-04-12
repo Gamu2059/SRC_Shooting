@@ -19,15 +19,15 @@ MonoBehaviour:
     IsMultiCondition: 0
     SingleCondition:
       IsReverse: 0
-      VariableType: 0
+      VariableType: 3
       UseGeneralIntVariable: 0
       GeneralIntVariable: 0
-      UseGeneralTimePeriod: 0
+      UseGeneralTimePeriod: 1
       GeneralTimePeriod: 0
-      VariableName: Boss Rescue
+      VariableName: 
       CompareType: 5
       BoolCompareType: 0
-      CompareValue: 1
+      CompareValue: 0
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
@@ -40,6 +40,7 @@ MonoBehaviour:
     UseEnemyGroupParamArray: 0
     EnemyGroupParam: {fileID: 0}
     EnemyGroupParams: []
+    IsOnlyRetireNotBossEnemy: 1
     MovePlayerSequenceGroup: {fileID: 0}
     ControlCameraParams:
     - CameraType: 0

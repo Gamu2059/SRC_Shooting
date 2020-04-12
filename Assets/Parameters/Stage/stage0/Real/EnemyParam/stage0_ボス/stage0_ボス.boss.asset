@@ -29,10 +29,11 @@ MonoBehaviour:
         m_Behavior: {fileID: 0}
         m_BehaviorGroup: {fileID: 11400000, guid: 8fe7635eb43b5784e8e6607e44239993,
           type: 2}
-        m_DownBehaviorType: 2
-        m_DownBehavior: {fileID: 0}
+        m_DownBehaviorType: 0
+        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
+          type: 2}
         m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 138f571f6c9003642bc0a9b9126b29a2,
+        m_HackingLevelParamSet: {fileID: 11400000, guid: 12bf9f0826d36c24c8c6cccd6bdf3f52,
           type: 2}
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
@@ -55,7 +56,7 @@ MonoBehaviour:
         m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
           type: 2}
         m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 1a19522e2833a48419860e4f5e19b23f,
+        m_HackingLevelParamSet: {fileID: 11400000, guid: d77f50cfc594e5146bac655ce270f3aa,
           type: 2}
         m_OnChangeBehaviorEvents:
         - ContentName: "BGM Aisac\u5909\u66F4"
@@ -114,13 +115,15 @@ MonoBehaviour:
             Point: 100
             SpreadRadius: 0.1
           CenterCreateItemType: 0
-      - m_BehaviorType: 2
+      - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 0}
-        m_DownBehaviorType: 2
-        m_DownBehavior: {fileID: 0}
+        m_BehaviorGroup: {fileID: 11400000, guid: 45241ceba0843f8478b7b118227f2be6,
+          type: 2}
+        m_DownBehaviorType: 0
+        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
+          type: 2}
         m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 3c5a7d61399efb24b9959c43ec7b5897,
+        m_HackingLevelParamSet: {fileID: 11400000, guid: 3c2e6a350ffda93479767b642f0b5abe,
           type: 2}
         m_OnChangeBehaviorEvents:
         - ContentName: "BGM Aisac\u5909\u66F4"
@@ -287,7 +290,47 @@ MonoBehaviour:
       m_RescueItemParam:
         ItemSpreadParams: []
         CenterCreateItemType: 0
-      m_RescueEvents: []
+      m_RescueEvents:
+      - ContentName: "\u8AB2\u984C\u9054\u6210\u4F1A\u8A71"
+        IsPassExecute: 0
+        EventType: 14
+        ExecuteTiming: 1
+        DelayExecuteTime: 0.5
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 0
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: Stage0_0200
+          AutoChangeToGameState: 1
+          OnCompletedEvents:
+          - {fileID: 11400000, guid: 1d46313a3cede6146a91daacfef0a40a, type: 2}
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams: []
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
       m_RescueSequentialEffect:
         m_Params:
         - Delay: 0

@@ -16,7 +16,8 @@ MonoBehaviour:
   m_ApplyInterruptEnd: 0
   m_InterruptEndFunc: {fileID: 0}
   m_DefaultEndValue: 0
-  m_OnStartOptions: []
+  m_OnStartOptions:
+  - {fileID: 11400000, guid: 96a0bb6be9da3584dbf6c8598b8256a4, type: 2}
   m_OnEndOptions: []
   m_InitializeWorldPosition:
     Data: {x: 0, y: 0, z: 0}
@@ -28,7 +29,7 @@ MonoBehaviour:
     IsPassX: 1
     IsPassY: 0
     IsPassZ: 1
-  m_Duration: 1
+  m_Duration: 2
   m_AnimationParam:
     UsePosition: 1
     Position:
@@ -60,15 +61,15 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 0
             value: 0
-            inSlope: -0.009181551
-            outSlope: -0.009181551
+            inSlope: -1.7051597
+            outSlope: -1.7051597
             tangentMode: 0
             weightedMode: 0
             inWeight: 0.33333334
-            outWeight: 0.13450646
+            outWeight: 0.03768116
           - serializedVersion: 3
-            time: 1
-            value: -1.2
+            time: 2
+            value: -1.5
             inSlope: -0.010297993
             outSlope: -0.010297993
             tangentMode: 0
@@ -78,7 +79,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        EndValue: -1.2
+        EndValue: -1.5
         Scale: 1
     UseRotation: 0
     Rotation:

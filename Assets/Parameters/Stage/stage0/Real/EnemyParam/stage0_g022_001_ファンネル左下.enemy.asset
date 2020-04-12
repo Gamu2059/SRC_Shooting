@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da0582c4515ada419261774b0b9e77a, type: 3}
+  m_Name: "stage0_g022_001_\u30D5\u30A1\u30F3\u30CD\u30EB\u5DE6\u4E0B.enemy"
+  m_EditorClassIdentifier: 
+  m_ControllerType: 0
+  m_ControllerClassName: 
+  m_Params:
+  - Difficulty: 1
+    Param:
+      m_Hp: 60
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: c1768265e3b496846bff4e27abb72ace,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: 15818e5e7347cc148a9f1ea9bcb71f92,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 94a99ae04a67ad64bb5acb560a514616,
+        type: 2}
+      m_DefeatScore: 0
+      m_DefeatItemParam:
+        ItemSpreadParams:
+        - Type: 6
+          Num: 5
+          Point: 200
+          SpreadRadius: 0
+        CenterCreateItemType: 6
+      m_DefeatEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: b7ac4877143ff78459191856e1f9cb0a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 89aea2cc86ea1624ba7c9e2a3bd47302, type: 2}
+      m_RetireHideTime: 0
