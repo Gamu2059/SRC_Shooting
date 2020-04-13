@@ -115,5 +115,13 @@ public class BattleRealBossParam : BattleRealEnemyParamBase
     private BattleRealEventContent[] m_RetireEvents;
     public override BattleRealEventContent[] RetireEvents => m_RetireEvents;
 
+    [SerializeField, Tooltip("退場時の一連のエフェクト")]
+    private SequentialEffectParamSet m_RetireSequentialEffect;
+    public override SequentialEffectParamSet RetireSequentialEffect => m_RetireSequentialEffect;
+
+    [SerializeField, Tooltip("退場時の敵非表示タイミング")]
+    private float m_RetireHideTime;
+    public override float RetireHideTime => m_RetireHideTime;
+
     #endregion
 }

@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// Bulletに渡すパラメータ。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleCommon/BulletParam", fileName = "param.bullet", order = 0)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleCommon/BulletParam", fileName = "param.bullet.asset", order = 0)]
 public class BulletParam : ScriptableObject
 {
     [Tooltip("弾の継続時間 これを超えると自動消滅する")]

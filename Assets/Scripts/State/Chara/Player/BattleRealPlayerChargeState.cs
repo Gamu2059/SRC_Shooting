@@ -52,7 +52,7 @@ partial class BattleRealPlayerController
 
             if (input.ChargeShot == E_INPUT_STATE.UP)
             {
-                Target.RequestChangeState(E_STATE.CHARGE_SHOT);
+                Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE_SHOT);
             }
 
             Target.m_ShotDelay += Time.deltaTime;

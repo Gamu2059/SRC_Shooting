@@ -128,10 +128,8 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     {
         base.OnInitialize();
 
-        var battleData = DataManager.Instance.BattleData;
-
-        m_ModeIndicator.text = battleData.GameMode.ToString();
-        m_StageIndicator.text = battleData.Stage.ToString().Replace("_", " ");
+        m_ModeIndicator.text = DataManager.Instance.GameMode.ToString();
+        m_StageIndicator.text = DataManager.Instance.Chapter.ToString().Replace("_", " ");
 
         m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
@@ -283,7 +281,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     /// </summary>
     public void PlayClearTelop(Action onEnd = null)
     {
-        m_ClearTelop.Play(DataManager.Instance.BattleData.IsHackingComplete ? "Hacking Complete" : null, false, onEnd);
+        m_ClearTelop.Play(null, false, onEnd);
     }
 
     /// <summary>

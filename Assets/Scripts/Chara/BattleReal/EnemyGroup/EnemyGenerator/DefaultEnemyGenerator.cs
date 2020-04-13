@@ -10,7 +10,7 @@ namespace BattleReal.EnemyGenerator
     /// <summary>
     /// 生成座標とタイミングを指定して敵を生成していくジェネレータ。
     /// </summary>
-    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGenerator/Default", fileName = "param.enemy_generator.asset", order = 0)]
+    [Serializable, CreateAssetMenu(menuName = "Param/BattleReal/EnemyGroup/EnemyGenerator/Default", fileName = "param.enemy_generator.asset")]
     public class DefaultEnemyGenerator : BattleRealEnemyGeneratorBase
     {
         #region Define

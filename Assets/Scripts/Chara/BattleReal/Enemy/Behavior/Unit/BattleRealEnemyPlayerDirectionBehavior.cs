@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// プレイヤーに向かって飛んでくる敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/PlayerDirection", fileName = "param.behavior_unit.asset", order = 10)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/PlayerDirection", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyPlayerDirectionBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector

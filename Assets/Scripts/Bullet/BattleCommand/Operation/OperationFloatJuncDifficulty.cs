@@ -40,7 +40,7 @@ public class OperationFloatJuncDifficulty : OperationFloatBase
     public override float GetResultFloat()
     {
         // 現在の難易度を取得する
-        E_DIFFICULTY difficulty = DataManager.Instance.BattleData.Difficulty;
+        E_DIFFICULTY difficulty = DataManager.Instance.Difficulty;
 
         switch (difficulty)
         {

@@ -16,7 +16,7 @@ partial class BattleRealManager
             var isNotGameOver = testDataManager != null && testDataManager.IsNotGameOver;
 
             var battleData = DataManager.Instance.BattleData;
-            if (!isNotGameOver && battleData.PlayerLife < 1)
+            if (!isNotGameOver && battleData.IsGameOver())
             {
                 var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1);
                 timer.SetTimeoutCallBack(() =>

@@ -110,7 +110,8 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
         base.OnLateUpdate();
 
         EnemyGenerator?.OnLateUpdate();
-        Behavior?.OnUpdate();
+        Behavior?.OnLateUpdate();
+        CheckDestroy();
     }
 
     public override void OnFixedUpdate()
@@ -125,6 +126,28 @@ public class BattleRealEnemyGroupController : ControllableMonoBehavior
 
     public void Destory()
     {
+        // 所属している敵を破棄する
+
+
         BattleRealEnemyGroupManager.Instance.DestroyEnemyGroup(this);
+    }
+
+    private void CheckDestroy()
+    {
+        if (!Param.UseDestroyCondition)
+        {
+            return;
+        }
+
+        if (BattleRealEventManager.Instance == null)
+        {
+            return;
+        }
+
+        var condition = Param.DestroyCondition;
+        if (BattleRealEventManager.Instance.IsMeetRootCondition(ref condition))
+        {
+            Destory();
+        }
     }
 }

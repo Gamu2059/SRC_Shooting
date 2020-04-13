@@ -111,7 +111,7 @@ public abstract class AbstractEnemyMove : BattleRealEnemyBase
             // 全て終了しているか
             if (m_NowPhase == m_NumPhase)
             {
-                OnRetireDestroy();
+                Retire();
             }
 
             // 弾幕を出しているか

@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// 指定回数だけ繰り返すための処理機構
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Group/CountLoop", fileName = "param.behavior_group.asset", order = 20)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Group/CountLoop", fileName = "param.behavior_group.asset")]
 public class BattleRealCountLoopGroup : BattleRealEnemyBehaviorGroupBase
 {
     #region Field Inspector

@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードの敵を動かすための複数処理機構。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Group/Default", fileName = "default.behavior_group.asset", order = 0)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Group/Default", fileName = "default.behavior_group.asset")]
 public class BattleRealEnemyBehaviorGroupBase : BattleRealEnemyBehaviorElement
 {
     #region Field Inspector

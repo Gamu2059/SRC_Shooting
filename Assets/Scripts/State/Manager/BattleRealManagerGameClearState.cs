@@ -9,9 +9,9 @@ partial class BattleRealManager
             // ステージクリアした時しか記録しない
             var resultData = DataManager.Instance.BattleResultData;
             var battleData = DataManager.Instance.BattleData;
-            resultData.ClacScore(battleData);
+            //resultData.ClacScore(battleData);
 
-            GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_STAGE.NORMAL_1, DateTime.Now));
+            //GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_CHAPTER.NORMAL_1, DateTime.Now));
 
             AudioManager.Instance.StopAllBgm();
             AudioManager.Instance.StopAllSe();
