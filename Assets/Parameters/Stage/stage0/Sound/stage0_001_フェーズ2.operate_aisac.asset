@@ -15,7 +15,7 @@ MonoBehaviour:
   m_AisacType: 0
   m_TargetCueSheet: 0
   m_UseAnimationValue: 1
-  m_ConstantValue: 0
+  m_TargetValue: 0.25
   m_AnimationValue:
     serializedVersion: 2
     m_Curve:
@@ -29,8 +29,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.0763285
     - serializedVersion: 3
-      time: 1
-      value: 0.25
+      time: 2
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

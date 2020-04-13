@@ -70,6 +70,8 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     {
         base.OnInitialize();
 
+        AudioManager.Instance.ResetAisac();
+
         var paramSet = m_ParamSet;
         if (!DataManager.Instance.IsSelectedGame)
         {
@@ -112,6 +114,8 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
         m_HackingManager.OnFinalize();
         m_RealManager.OnFinalize();
+
+        AudioManager.Instance.ResetAisac();
 
         base.OnFinalize();
     }
