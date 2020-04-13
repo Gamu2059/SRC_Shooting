@@ -77,42 +77,17 @@ public class BattleData
         m_ConstantParam = param;
     }
 
-    public void ResetData(E_CHAPTER stage)
+    public void ResetDataOnChapterStart()
     {
-        if (m_ConstantParam == null)
-        {
-            Debug.LogError("PlayerLevelParamSetがありません。");
-            return;
-        }
-
-        // 定数の初期化
-        //var defData = m_PlayerLevelParamSet;
-        //MaxPlayerLife = defData.MaxPlayerLifeNum;
-        //MaxLevel = defData.MaxLevel;
-        //MaxEnergyCount = defData.MaxEnergyCount;
-        //MaxEnergyCharge = defData.MaxEnergyCharge;
-        //HackingSuccessBonus = defData.HackingSuccessBonus;
-
-        // 初期値が共通なものを初期化
         BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore;
         Score = 0;
+        Level = 0;
         Exp = 0;
+        EnergyStock = 0;
         EnergyCharge = 0;
-        MinHackingTryNum = 0;
-        HackingSuccessCount = 0;
         HackingTryCount = 0;
-        //IsHackingComplete = false;
-
-        // ステージに応じて初期値が異なるものを初期化
-        //switch (stage)
-        //{
-        //    case E_CHAPTER.CHAPTER_0:
-        //        InitData(m_PlayerLevelParamSet.Stage0InitData);
-        //        break;
-        //    default:
-        //        InitData(m_PlayerLevelParamSet.Stage1InitData);
-        //        break;
-        //}
+        HackingSuccessCount = 0;
+        MinHackingTryNum = 0;
     }
 
     public BattleRealPlayerLevelData GetCurrentLevelParam()
@@ -134,7 +109,26 @@ public class BattleData
 
     public void DecreasePlayerLife()
     {
+        // チャプター0は残機が減らない
+        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            return;
+        }
+
         PlayerLife = Mathf.Max(PlayerLife - 1, 0);
+    }
+
+    /// <summary>
+    /// ゲームオーバになるかどうか
+    /// </summary>
+    public bool IsGameOver()
+    {
+        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            return false;
+        }
+
+        return PlayerLife < 1;
     }
 
     #endregion
@@ -148,17 +142,18 @@ public class BattleData
             return;
         }
 
+        // チャプター0はスコアが入らない
+        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            return;
+        }
+
         Score += (ulong)score;
     }
 
     #endregion
 
     #region BestScore
-
-    public void ResetBestScore()
-    {
-        BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore;
-    }
 
     public void UpdateBestScore(ulong score)
     {

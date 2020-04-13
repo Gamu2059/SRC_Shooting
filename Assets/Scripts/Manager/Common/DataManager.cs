@@ -70,10 +70,33 @@ public class DataManager : Singleton<DataManager>
     }
 
     /// <summary>
-    /// 最初のバトル開始時に呼び出す。
+    /// ストーリーモードの開始時に呼び出す
     /// </summary>
-    public void OnBattleStart()
+    public void OnStoryStart()
     {
+    }
 
+    /// <summary>
+    /// ストーリーモードの終了時に呼び出す
+    /// </summary>
+    public void OnStoryEnd()
+    {
+        BattleResultData.AddStoryResult();
+    }
+
+    /// <summary>
+    /// ストーリーモードでもチャプターモードでも、チャプターごとに開始時に呼び出す
+    /// </summary>
+    public void OnChapterStart()
+    {
+        BattleData.ResetDataOnChapterStart();
+    }
+
+    /// <summary>
+    /// ストーリーモードでもチャプターモードでも、チャプターごとに終了時に呼び出す
+    /// </summary>
+    public void OnChapterEnd()
+    {
+        BattleResultData.AddChapterResult();
     }
 }

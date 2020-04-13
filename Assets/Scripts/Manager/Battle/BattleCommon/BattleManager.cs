@@ -27,9 +27,12 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     [SerializeField, Tooltip("緊急で用意した難易度設定パラメータ 本番使用はしません")]
     private E_DIFFICULTY m_Difficulty = E_DIFFICULTY.NORMAL;
 
+    [SerializeField, Tooltip("緊急で用意したチャプターデータ 本番使用はしません")]
+    private E_CHAPTER m_Chapter = E_CHAPTER.CHAPTER_0;
+
     [Header("ParamSet")]
 
-    [SerializeField]
+    [SerializeField, Tooltip("本番使用はしません")]
     private BattleParamSet m_ParamSet = default;
     public BattleParamSet ParamSet => m_ParamSet;
 
@@ -71,13 +74,20 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         if (!DataManager.Instance.IsSelectedGame)
         {
             DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
-            DataManager.Instance.Chapter = E_CHAPTER.CHAPTER_0;
+            DataManager.Instance.Chapter = m_Chapter;
             DataManager.Instance.Difficulty = m_Difficulty;
         }
         else
         {
             paramSet = DataManager.Instance.BattleParamSet;
         }
+
+        if (DataManager.Instance.GameMode == E_GAME_MODE.STORY && DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            DataManager.Instance.OnStoryStart();
+        }
+
+        DataManager.Instance.OnChapterStart();
 
         m_StateMachine = new StateMachine<E_BATTLE_STATE, BattleManager>();
 

@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212fb68f46159a04b8fe1312510efd51, type: 3}
   m_Name: "stage0_\u30DC\u30B9_300_021_\u5DE6\u3078.behavior_unit"
   m_EditorClassIdentifier: 
-  m_ApplyInterruptEnd: 0
-  m_InterruptEndFunc: {fileID: 0}
+  m_ApplyInterruptEnd: 1
+  m_InterruptEndFunc: {fileID: 11400000, guid: 1d88fda1f3514084ea4dbf858f7ece7c, type: 2}
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_OnStopOptions: []
-  m_BulletGeneratorDatas: []
+  m_BulletGeneratorDatas:
+  - ParamSet: {fileID: 11400000, guid: a8bea3565eaa59c418fc0deabad97d3f, type: 2}
+    StartTimeOnFirstActivate: 0
+    StopTimeFromFirstActivate: 1.1
+    ActivateInterval: 1
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpaceType: 0
   m_Duration: 2
