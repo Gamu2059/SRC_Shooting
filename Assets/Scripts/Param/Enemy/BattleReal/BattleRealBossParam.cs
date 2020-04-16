@@ -53,6 +53,10 @@ public class BattleRealBossParam : BattleRealEnemyParamBase
     private EffectParamSet m_HackingSuccessEffectParam;
     public EffectParamSet HackingSuccessEffectParam => m_HackingSuccessEffectParam;
 
+    [SerializeField, Tooltip("ハッキングに失敗した時に回復するダウンHPの割合")]
+    private float m_HackingFailureRecoverDownHpRate;
+    public float HackingFailureRecoverDownHpRate => m_HackingFailureRecoverDownHpRate;
+
     #endregion
 
     #region Defeat
