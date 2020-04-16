@@ -114,18 +114,18 @@ public class ResultItemIndicator : ControllableMonoBehavior
 
     private double GetValue()
     {
-        var data = DataManager.Instance.BattleResultData;
-        switch (m_ItemType)
-        {
-            case E_ITEM_TYPE.SCORE:
-                return data.Score;
-            case E_ITEM_TYPE.LIFE_BONUS:
-                return data.LifeBonusScore;
-            case E_ITEM_TYPE.PERFECT_HACKING:
-                return data.PerfectHackingBonusScore;
-            case E_ITEM_TYPE.TOTAL_SCORE:
-                return data.TotalScore;
-        }
+        //var data = DataManager.Instance.BattleResultData;
+        //switch (m_ItemType)
+        //{
+        //    case E_ITEM_TYPE.SCORE:
+        //        return data.Score;
+        //    case E_ITEM_TYPE.LIFE_BONUS:
+        //        return data.LifeBonusScore;
+        //    case E_ITEM_TYPE.PERFECT_HACKING:
+        //        return data.PerfectHackingBonusScore;
+        //    case E_ITEM_TYPE.TOTAL_SCORE:
+        //        return data.TotalScore;
+        //}
         return 0;
     }
 }
