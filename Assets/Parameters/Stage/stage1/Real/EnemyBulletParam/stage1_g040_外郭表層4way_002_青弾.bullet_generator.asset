@@ -33,3 +33,22 @@ MonoBehaviour:
       m_ShotNum: 25
       m_ShotOffsetTime: 0.55
       m_ShotInterval: 0.04
+  - Difficulty: 2
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 23e31bbfc057d9940a11daecc10ef47a, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 362b67ee89374e94ca49269762d14f4e, type: 2}
+      m_ShotTransformName: HeadBulletBase
+      m_ShotPointNum: 4
+      m_ShotPointRadius: 0
+      m_ShotPointOffsetAngleFromTransform: 0
+      m_ShotPointAngleSpeedFromTransform: 90
+      m_ShotOverallStartEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 02f92d9f75173e04d8468ef4f2de0528, type: 2}
+      m_ShotEffect: {fileID: 0}
+      m_ShotNum: 25
+      m_ShotOffsetTime: 0.55
+      m_ShotInterval: 0.04
