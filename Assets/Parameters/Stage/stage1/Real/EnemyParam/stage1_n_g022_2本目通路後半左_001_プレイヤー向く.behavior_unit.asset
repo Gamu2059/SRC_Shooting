@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ebe547ee8b2ece4785d6c90260ee84b, type: 3}
-  m_Name: "stage1_g022_2\u672C\u76EE\u901A\u8DEF\u5F8C\u534A\u5DE6_001_\u30D7\u30EC\u30A4\u30E4\u30FC\u5411\u304F.behavior_unit"
+  m_Name: "stage1_n_g022_2\u672C\u76EE\u901A\u8DEF\u5F8C\u534A\u5DE6_001_\u30D7\u30EC\u30A4\u30E4\u30FC\u5411\u304F.behavior_unit"
   m_EditorClassIdentifier: 
   m_ApplyInterruptEnd: 0
   m_InterruptEndFunc: {fileID: 0}
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []
+  m_OnStopOptions: []
   m_BulletGeneratorDatas:
   - ParamSet: {fileID: 11400000, guid: 7c83949cf3221a345b0aab3acee44f24, type: 2}
     StartTimeOnFirstActivate: 0
     StopTimeFromFirstActivate: 10
-    ActivateInterval: 1.2
+    ActivateInterval: 2.5
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_IsLookPlayerOnStart: 0
   m_SpeedCurve:
