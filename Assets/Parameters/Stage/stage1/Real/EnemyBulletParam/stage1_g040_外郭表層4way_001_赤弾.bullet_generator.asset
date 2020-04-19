@@ -26,7 +26,9 @@ MonoBehaviour:
       m_ShotPointOffsetAngleFromTransform: 45
       m_ShotPointAngleSpeedFromTransform: -90
       m_ShotOverallStartEffect:
-        m_Params: []
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 9f511652f65da1645aaa12cfbfe66819, type: 2}
       m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
       m_ShotNum: 50
       m_ShotOffsetTime: 0
