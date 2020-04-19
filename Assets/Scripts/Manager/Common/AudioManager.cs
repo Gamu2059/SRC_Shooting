@@ -27,10 +27,12 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
     {
         public OperateAisacParam OperateAisacParam;
         public float NowTime;
+        public float CurrentAisacValue;
 
-        public OperateAisacData(OperateAisacParam param)
+        public OperateAisacData(OperateAisacParam param, float currentAisacValue)
         {
             OperateAisacParam = param;
+            CurrentAisacValue = currentAisacValue;
             NowTime = 0;
         }
     }
@@ -57,6 +59,7 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
     private Dictionary<E_CUE_SHEET, CriAtomSource> m_SourceDict;
     private Dictionary<E_COMMON_SOUND, PlaySoundParam> m_CommonSoundDict;
     private Dictionary<E_AISAC_TYPE, string> m_AisacDict;
+    private Dictionary<E_AISAC_TYPE, float> m_BgmAisacValueDict;
 
     private List<OperateAisacData> m_ProcessingOperateAisacList;
     private List<OperateAisacData> m_DestroyOperateAisacList;
@@ -75,10 +78,12 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
         m_AdxAssetParam = adxParam;
 
         m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
+        m_BgmAisacValueDict = new Dictionary<E_AISAC_TYPE, float>();
 
         foreach (var aisacSet in adxParam.AisacSets)
         {
             m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
+            m_BgmAisacValueDict.Add(aisacSet.AisacType, 0f);
         }
     }
 
@@ -126,10 +131,19 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         foreach (var data in m_ProcessingOperateAisacList)
         {
-            var aisac = data.OperateAisacParam.AisacType;
             var sheet = data.OperateAisacParam.TargetCueSheet;
+            if (sheet != E_CUE_SHEET.BGM)
+            {
+                Debug.LogWarning("現在アニメーションAISACに対応しているのはBGMシートのみです。");
+                m_DestroyOperateAisacList.Add(data);
+                continue;
+            }
+
+            var aisac = data.OperateAisacParam.AisacType;
             var anim = data.OperateAisacParam.AnimationValue;
-            var value = anim.Evaluate(data.NowTime);
+            var rate = anim.Evaluate(data.NowTime);
+            var value = Mathf.Lerp(data.CurrentAisacValue, data.OperateAisacParam.TargetValue, rate);
+
             OperateAisac(aisac, sheet, value);
 
             if (data.NowTime > anim.Duration())
@@ -271,11 +285,12 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         if (operateAisacParam.UseAnimationValue)
         {
-            m_ProcessingOperateAisacList.Add(new OperateAisacData(operateAisacParam));
+            var aisacValue = GetCurrentBgmAisacValue(operateAisacParam.AisacType);
+            m_ProcessingOperateAisacList.Add(new OperateAisacData(operateAisacParam, aisacValue));
         }
         else
         {
-            OperateAisac(operateAisacParam.AisacType, operateAisacParam.TargetCueSheet, operateAisacParam.ConstantValue);
+            OperateAisac(operateAisacParam.AisacType, operateAisacParam.TargetCueSheet, operateAisacParam.TargetValue);
         }
     }
 
@@ -297,6 +312,40 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         var aisac = m_AisacDict[targetAisac];
         source.SetAisacControl(aisac, value);
+
+        if (targetSheet == E_CUE_SHEET.BGM)
+        {
+            SetCurrentBgmAisacValue(targetAisac, value);
+        }
+    }
+
+    /// <summary>
+    /// AISACをリセットする。
+    /// </summary>
+    public void ResetAisac()
+    {
+        OperateAisac(E_AISAC_TYPE.AISAC_BGM, E_CUE_SHEET.BGM, 0);
+        OperateAisac(E_AISAC_TYPE.AISAC_HACK, E_CUE_SHEET.BGM, 0);
+    }
+
+    private float GetCurrentBgmAisacValue(E_AISAC_TYPE targetAisac)
+    {
+        if (m_AisacDict == null || !m_BgmAisacValueDict.ContainsKey(targetAisac))
+        {
+            return -1;
+        }
+
+        return m_BgmAisacValueDict[targetAisac];
+    }
+
+    private void SetCurrentBgmAisacValue(E_AISAC_TYPE targetAisac, float value)
+    {
+        if (m_AisacDict == null || !m_BgmAisacValueDict.ContainsKey(targetAisac))
+        {
+            return;
+        }
+
+        m_BgmAisacValueDict[targetAisac] = value;
     }
 
     /// <summary>

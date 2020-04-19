@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// 座標と座標を結んで動く敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/LerpAnimation", fileName = "param.behavior_unit.asset", order = 30)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/LerpAnimation", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyLerpAnimationBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector
@@ -30,6 +30,10 @@ public class BattleRealEnemyLerpAnimationBehavior : BattleRealEnemyBehaviorUnitB
     protected bool UsePosition => m_UsePosition;
 
     [SerializeField]
+    private Vector3PassParam m_PositionPass;
+    protected Vector3PassParam PositionPass => m_PositionPass;
+
+    [SerializeField]
     private Vector3 m_TargetPosition;
     protected Vector3 TargetPosition => m_TargetPosition;
 
@@ -42,6 +46,10 @@ public class BattleRealEnemyLerpAnimationBehavior : BattleRealEnemyBehaviorUnitB
     [SerializeField]
     private bool m_UseRotation;
     protected bool UseRotation => m_UseRotation;
+
+    [SerializeField]
+    private Vector3PassParam m_RotationPass;
+    protected Vector3PassParam RotationPass => m_RotationPass;
 
     [SerializeField]
     private Vector3 m_TargetEulerAngles;
@@ -111,12 +119,42 @@ public class BattleRealEnemyLerpAnimationBehavior : BattleRealEnemyBehaviorUnitB
         {
             var posLerp = m_PositionLerp.Evaluate(CurrentTime);
             pos = Vector3.Lerp(m_CurrentPosition, m_NextPosition, posLerp);
+
+            if (PositionPass.IsPassX)
+            {
+                pos.x = m_CurrentPosition.x;
+            }
+
+            if (PositionPass.IsPassY)
+            {
+                pos.y = m_CurrentPosition.y;
+            }
+
+            if (PositionPass.IsPassZ)
+            {
+                pos.z = m_CurrentPosition.z;
+            }
         }
 
         if (UseRotation)
         {
             var rotLerp = m_RotationLerp.Evaluate(CurrentTime);
             rot = Vector3.Lerp(m_CurrentEulerAngles, m_NextEulerAngles, rotLerp);
+
+            if (RotationPass.IsPassX)
+            {
+                rot.x = m_CurrentEulerAngles.x;
+            }
+
+            if (RotationPass.IsPassY)
+            {
+                rot.y = m_CurrentEulerAngles.y;
+            }
+
+            if (RotationPass.IsPassZ)
+            {
+                rot.z = m_CurrentEulerAngles.z;
+            }
         }
 
         var t = Enemy.transform;

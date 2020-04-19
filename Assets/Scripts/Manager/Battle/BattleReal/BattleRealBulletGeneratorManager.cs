@@ -262,7 +262,7 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
             return null;
         }
 
-        var difficulty = DataManager.Instance.BattleData.Difficulty;
+        var difficulty = DataManager.Instance.Difficulty;
         var param = paramSet.GetGeneratorParam(difficulty);
         if (param == null)
         {

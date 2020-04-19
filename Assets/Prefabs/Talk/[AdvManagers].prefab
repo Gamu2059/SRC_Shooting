@@ -1174,7 +1174,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5672039975168615840}
+        - m_Target: {fileID: 0}
           m_MethodName: OnPointerDown
           m_Mode: 0
           m_Arguments:
@@ -1192,7 +1192,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5672039975168615840}
+        - m_Target: {fileID: 0}
           m_MethodName: OnPointerDown
           m_Mode: 0
           m_Arguments:
@@ -2479,7 +2479,7 @@ GameObject:
   - component: {fileID: 5672039975168615843}
   - component: {fileID: 5672039975168615847}
   - component: {fileID: 5672039975168615846}
-  - component: {fileID: 5672039975168615840}
+  - component: {fileID: 6969956514656522930}
   - component: {fileID: 5672039975168615841}
   - component: {fileID: 5672039975168615844}
   m_Layer: 15
@@ -2550,7 +2550,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &5672039975168615840
+--- !u!114 &6969956514656522930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2559,13 +2559,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5672039975168615842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f85b8733c7a5642bad541ab6b30ff1, type: 3}
+  m_Script: {fileID: 11500000, guid: bda762ba0675af34c9c7f2a4629aec16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   engine: {fileID: 5672039975778995328}
-  selection: {fileID: 5672039974945326362}
-  backLog: {fileID: 5672039975649264436}
-  disableMouseWheelBackLog: 0
 --- !u!114 &5672039975168615841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3920,7 +3917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphicManager: {fileID: 5672039974186413771}
   effectManager: {fileID: 5672039974496523577}
-  uiManager: {fileID: 5672039975168615840}
+  uiManager: {fileID: 0}
   soundManager: {fileID: 5672039974532150776}
   cameraManager: {fileID: 5672039975888655587}
   time: {fileID: 0}

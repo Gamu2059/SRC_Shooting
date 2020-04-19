@@ -55,7 +55,7 @@ public enum E_GENERAL_TIME_PERIOD
 /// イベントトリガを発動させるための条件
 /// </summary>
 [Serializable]
-public struct EventTriggerCondition
+public class EventTriggerCondition
 {
     /// <summary>
     /// 判定結果を逆にするかどうか。否定論理演算。
@@ -87,7 +87,7 @@ public struct EventTriggerCondition
 /// イベントトリガを発動させるルート条件
 /// </summary>
 [Serializable]
-public struct EventTriggerRootCondition
+public class EventTriggerRootCondition
 {
     /// <summary>
     /// 判定結果を逆にするかどうか。否定論理演算。

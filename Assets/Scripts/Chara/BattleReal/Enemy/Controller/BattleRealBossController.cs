@@ -56,6 +56,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         /// 救出された時に遷移するステート
         /// </summary>
         RESCUE,
+
+        /// <summary>
+        /// 退場した瞬間だけ遷移するステート
+        /// </summary>
+        RETIRE,
     }
 
     private class StateCycle : StateCycleBase<BattleRealBossController, E_STATE> { }
@@ -82,6 +87,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         public float DownHealTime;
         public float HpRateThresholdNextBehavior;
         public ItemCreateParam HackingSuccessItemParam;
+        public BattleRealEventContent[] OnChangeBehaviorEvents;
         public SequenceGroup SequenceGroupOnChangeBehavior;
     }
 
@@ -102,6 +108,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     private BattleRealEnemyBehaviorController m_DownBehaviorController;
 
     private BossChargeController m_ChargeController;
+
+    /// <summary>
+    /// 表示に用いる名前。
+    /// </summary>
+    public string BossName { get; private set; }
 
     /// <summary>
     /// ダウンHPの現在値。通常弾に被弾してこれが0以下になるとダウンする。
@@ -158,6 +169,13 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
     #endregion
 
+    #region Open Callback
+
+    public Action HideAction;
+    public Action FinalizeAction;
+
+    #endregion
+
     #region Game Cycle
 
     protected override void OnSetParamSet()
@@ -180,6 +198,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
         m_StateMachine.AddState(new InnerState(E_STATE.RESCUE, this, new RescueState()));
+        m_StateMachine.AddState(new InnerState(E_STATE.RETIRE, this, new RetireState()));
 
         m_EnemyBodyCollider = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.ENEMY_MAIN_BODY)?.Transform;
         if (m_EnemyBodyCollider == null)
@@ -202,6 +221,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_BehaviorController.OnInitialize();
         m_DownBehaviorController.OnInitialize();
 
+        BossName = m_BossParam.BossName;
         InitializeBehaviorSet();
 
         WillDestroyOnOutOfEnemyField = false;
@@ -258,6 +278,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
             behaviorSet.HpRateThresholdNextBehavior = originBehaviorSet.HpRateThresholdNextBehavior;
             behaviorSet.HackingSuccessItemParam = originBehaviorSet.HackingSuccessItemParam;
             behaviorSet.SequenceGroupOnChangeBehavior = originBehaviorSet.SequenceGroupOnChangeBehavior;
+            behaviorSet.OnChangeBehaviorEvents = originBehaviorSet.OnChangeBehaviorEvents;
 
             m_BehaviorSets.Add(behaviorSet);
         }
@@ -265,6 +286,10 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
     public override void OnFinalize()
     {
+        FinalizeAction?.Invoke();
+        FinalizeAction = null;
+        HideAction = null;
+
         m_DownBehaviorController.OnFinalize();
         m_BehaviorController.OnFinalize();
         m_DownBehaviorController = null;
@@ -480,6 +505,15 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         RequestChangeState(E_STATE.DEAD);
     }
 
+    /// <summary>
+    /// 退場した時の処理。
+    /// </summary>
+    protected sealed override void OnRetire()
+    {
+        base.OnRetire();
+        RequestChangeState(E_STATE.RETIRE);
+    }
+
     protected void OnRescueDestroy()
     {
         BattleRealItemManager.Instance.CreateItem(transform.position, m_BossParam.RescueItemParam);
@@ -527,5 +561,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         IsChargeSuccess = true;
         IsCharging = false;
         m_ChargeController?.Stop();
+    }
+
+    private void CallHideAction()
+    {
+        HideAction?.Invoke();
+        HideAction = null;
     }
 }

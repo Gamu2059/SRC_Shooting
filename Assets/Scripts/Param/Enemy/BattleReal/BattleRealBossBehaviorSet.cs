@@ -45,6 +45,10 @@ public class BattleRealBossBehaviorSet
     private BattleHackingLevelParamSet m_HackingLevelParamSet;
     public BattleHackingLevelParamSet HackingLevelParamSet => m_HackingLevelParamSet;
 
+    [SerializeField, Tooltip("この振る舞いに切り替わった時に実行するイベント")]
+    private BattleRealEventContent[] m_OnChangeBehaviorEvents;
+    public BattleRealEventContent[] OnChangeBehaviorEvents => m_OnChangeBehaviorEvents;
+
     [SerializeField, Tooltip("この振る舞いに切り替わった時に用いるシーケンスデータ")]
     private SequenceGroup m_SequenceGroupOnChangeBehavior;
     public SequenceGroup SequenceGroupOnChangeBehavior => m_SequenceGroupOnChangeBehavior;

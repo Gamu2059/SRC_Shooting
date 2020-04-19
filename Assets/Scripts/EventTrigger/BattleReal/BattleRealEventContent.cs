@@ -120,6 +120,16 @@ public class BattleRealEventContent
         /// 他のイベントを実行する
         /// </summary>
         EXECUTE_OTHER_EVENT,
+
+        /// <summary>
+        /// DontDestroyイベントを全て削除する
+        /// </summary>
+        CLEAN_DONT_DESTROY_EVENT,
+
+        /// <summary>
+        /// 敵を退場にする
+        /// </summary>
+        RETIRE_ENEMY
     }
 
     /// <summary>
@@ -159,6 +169,10 @@ public class BattleRealEventContent
     public bool UseEnemyGroupParamArray = false;
     public BattleRealEnemyGroupParam EnemyGroupParam;
     public BattleRealEnemyGroupParam[] EnemyGroupParams;
+
+    [Header("RETIRE_ENEMY")]
+
+    public bool IsOnlyRetireNotBossEnemy = true;
 
     [Header("MOVE_PLAYER_BY_SEQUENCE")]
 

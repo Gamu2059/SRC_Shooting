@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 /// <summary>
 /// BattleRealのイベントトリガを管理するマネージャ。
@@ -912,6 +913,12 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case BattleRealEventContent.E_EVENT_TYPE.EXECUTE_OTHER_EVENT:
                 ExecuteOtherEvents(eventContent.ExecuteEvents);
                 break;
+            case BattleRealEventContent.E_EVENT_TYPE.CLEAN_DONT_DESTROY_EVENT:
+                ExecuteCleanDontDestroyEvent();
+                break;
+            case BattleRealEventContent.E_EVENT_TYPE.RETIRE_ENEMY:
+                ExecuteRetireAllEnemy(eventContent.IsOnlyRetireNotBossEnemy);
+                break;
         }
     }
 
@@ -1239,6 +1246,30 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             }
 
             AddEvent(e.Contents);
+        }
+    }
+
+    /// <summary>
+    /// DontDestroyフラグが付いているイベントをリストから削除する。
+    /// ただし、完全に削除されることが保証されるのはこれを呼び出したタイミングから2フレーム後。
+    /// </summary>
+    private void ExecuteCleanDontDestroyEvent()
+    {
+        m_GotoDestroyEventParams.AddRange(m_EventParams.Where(p => p.DontDestroy));
+    }
+
+    /// <summary>
+    /// 敵を退場させる。
+    /// </summary>
+    private void ExecuteRetireAllEnemy(bool isOnlyRetireNotBossEnemy)
+    {
+        if (isOnlyRetireNotBossEnemy)
+        {
+            BattleRealEnemyManager.Instance.RetireAllNotBossEnemy();
+        }
+        else
+        {
+            BattleRealEnemyManager.Instance.RetireAllEnemy();
         }
     }
 

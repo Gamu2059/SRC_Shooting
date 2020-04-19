@@ -26,6 +26,8 @@ partial class BattleRealBossController
                 return;
             }
 
+            BattleRealEventManager.Instance.AddEvent(behaviorSet.OnChangeBehaviorEvents);
+
             var isStartSequence = Target.StartSequence(behaviorSet.SequenceGroupOnChangeBehavior);
             if (!isStartSequence)
             {

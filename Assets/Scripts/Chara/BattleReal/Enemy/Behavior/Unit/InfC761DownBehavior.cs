@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// INF-C-761のダウン時の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/InfC761Down", fileName = "param.behavior_unit.asset", order = 1000)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/InfC761Down", fileName = "param.behavior_unit.asset")]
 public class InfC761DownBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Define

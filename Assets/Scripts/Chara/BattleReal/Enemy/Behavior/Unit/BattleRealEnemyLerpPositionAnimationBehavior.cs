@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// 座標と座標を結んで動く敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/LerpPositionAnimation", fileName = "param.behavior_unit.asset", order = 40)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/LerpPositionAnimation", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyLerpPositionAnimationBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector
@@ -32,6 +32,18 @@ public class BattleRealEnemyLerpPositionAnimationBehavior : BattleRealEnemyBehav
     [SerializeField]
     private Vector3 m_TargetPosition;
     protected Vector3 TargetPosition => m_TargetPosition;
+
+    [SerializeField]
+    private bool m_IsPassX;
+    protected bool IsPassX => m_IsPassX;
+
+    [SerializeField]
+    private bool m_IsPassY;
+    protected bool IsPassY => m_IsPassY;
+
+    [SerializeField]
+    private bool m_IsPassZ;
+    protected bool IsPassZ => m_IsPassZ;
 
     [SerializeField]
     private AnimationCurve m_PositionLerp;
@@ -85,12 +97,24 @@ public class BattleRealEnemyLerpPositionAnimationBehavior : BattleRealEnemyBehav
 
     private void Move()
     {
-        Vector3 pos = Vector3.zero;
+        Vector3 pos = m_CurrentPosition;
 
         if (UsePosition)
         {
             var posLerp = m_PositionLerp.Evaluate(CurrentTime);
             pos = Vector3.Lerp(m_CurrentPosition, m_NextPosition, posLerp);
+            if (IsPassX)
+            {
+                pos.x = m_CurrentPosition.x;
+            }
+            if (IsPassY)
+            {
+                pos.y = m_CurrentPosition.y;
+            }
+            if (IsPassZ)
+            {
+                pos.z = m_CurrentPosition.z;
+            }
         }
 
         var t = Enemy.transform;

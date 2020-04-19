@@ -9,16 +9,16 @@ partial class BattleRealManager
             // ステージクリアした時しか記録しない
             var resultData = DataManager.Instance.BattleResultData;
             var battleData = DataManager.Instance.BattleData;
-            resultData.ClacScore(battleData);
+            //resultData.ClacScore(battleData);
 
-            GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_STAGE.NORMAL_1, DateTime.Now));
+            //GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_CHAPTER.NORMAL_1, DateTime.Now));
 
             AudioManager.Instance.StopAllBgm();
             AudioManager.Instance.StopAllSe();
 
             BattleRealPlayerManager.Instance.StopChargeShot();
-            BattleRealUiManager.Instance.SetEnableBossUI(false);
             BattleRealUiManager.Instance.PlayClearTelop();
+            BattleRealUiManager.Instance.DisableAllBossUI();
 
             AudioManager.Instance.Play(E_COMMON_SOUND.GAME_CLEAR);
 

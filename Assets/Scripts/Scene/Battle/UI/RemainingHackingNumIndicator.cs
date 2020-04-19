@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,9 +13,10 @@ public class RemainingHackingNumIndicator : ControllableMonoBehavior
     [SerializeField, Tooltip("trueの場合、コンソールにも表示する")]
     private bool m_IsShowOnConsole;
 
-    private BattleRealBossController m_Boss;
-
     private int m_PreRemainingHackingNum;
+
+    [HideInInspector()]
+    public BattleRealBossController Boss;
 
     #region Game Cycle
 
@@ -37,31 +40,13 @@ public class RemainingHackingNumIndicator : ControllableMonoBehavior
 
     #endregion
 
-    private BattleRealBossController GetBoss()
-    {
-        if (m_Boss != null && m_Boss.GetCycle() == E_POOLED_OBJECT_CYCLE.UPDATE)
-        {
-            return m_Boss;
-        }
-
-        m_Boss = null;
-        var enemies = BattleRealEnemyManager.Instance.Enemies;
-        foreach (var e in enemies)
-        {
-            if (e.IsBoss && e is BattleRealBossController boss)
-                m_Boss = boss;
-        }
-        return m_Boss;
-    }
-
     private int GetRemainingHackingNum()
     {
-        var boss = GetBoss();
-        if(boss == null)
+        if(Boss == null)
         {
             return m_PreRemainingHackingNum;
         }
-        return boss.HackingCompleteNum - boss.HackingSuccessCount;
+        return Boss.HackingCompleteNum - Boss.HackingSuccessCount;
     }
 
     public void Show(int remaining)

@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// プレイヤーのX座標と同じ位置へと移動する敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/PlayerXFollow", fileName = "param.behavior_unit.asset", order = 1010)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/PlayerXFollow", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyPlayerXFollowBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector

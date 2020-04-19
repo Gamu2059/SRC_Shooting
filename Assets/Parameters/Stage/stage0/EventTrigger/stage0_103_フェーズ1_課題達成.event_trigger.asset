@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "stage0_103_\u30D5\u30A7\u30FC\u30BA1_\u8AB2\u984C\u9054\u6210.event_trigger"
   m_EditorClassIdentifier: 
   EventTriggerName: "\u30D5\u30A7\u30FC\u30BA1 \u8AB2\u984C\u9054\u6210"
-  DontDestroy: 1
+  DontDestroy: 0
   Condition:
     IsReverse: 0
     IsMultiCondition: 1
@@ -127,9 +127,10 @@ MonoBehaviour:
       AutoChangeToGameState: 0
       OnCompletedEvents: []
     ShowTalkParam:
-      ScenarioLabel: Stage0_Start_0002
+      ScenarioLabel: Stage0_0101
       AutoChangeToGameState: 1
-      OnCompletedEvents: []
+      OnCompletedEvents:
+      - {fileID: 11400000, guid: 9885b5af34ae5b642b67376d7be86b96, type: 2}
     ChangeState: 0
     FadeParam:
       IsFadeOut: 0

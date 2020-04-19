@@ -165,7 +165,7 @@ public class BattleRealEnemyBase : BattleRealCharaController
         {
             if (IsShowFirst && WillDestroyOnOutOfEnemyField)
             {
-                OnRetireDestroy();
+                Retire();
             }
         }
         else
@@ -244,6 +244,9 @@ public class BattleRealEnemyBase : BattleRealCharaController
 
     #endregion
 
+    /// <summary>
+    /// 死亡させる
+    /// </summary>
     public sealed override void Dead()
     {
         base.Dead();
@@ -268,10 +271,20 @@ public class BattleRealEnemyBase : BattleRealCharaController
         BattleRealEventManager.Instance.AddEvent(Param.DefeatEvents);
     }
 
+    /// <summary>
+    /// 退場させる
+    /// </summary>
+    public void Retire()
+    {
+        GetCollider().SetEnableAllCollider(false);
+        OnRetire();
+    }
+
+    protected virtual void OnRetire() { }
+
     protected void OnRetireDestroy()
     {
         Destroy();
-        ExecuteRetireEvent();
     }
 
     protected void ExecuteRetireEvent()

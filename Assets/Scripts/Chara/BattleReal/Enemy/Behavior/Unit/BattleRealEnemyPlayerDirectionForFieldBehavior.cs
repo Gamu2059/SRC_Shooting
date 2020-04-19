@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// プレイヤーに向かって飛んでくるが、フィールド領域ギリギリで静止する敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/PlayerDirectionForField", fileName = "param.behavior_unit.asset", order = 1000)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/PlayerDirectionForField", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyPlayerDirectionForFieldBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector

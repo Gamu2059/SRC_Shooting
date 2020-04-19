@@ -50,7 +50,10 @@ public class OperationIntJuncDifficulty : OperationIntBase
 
     public override int GetResultInt()
     {
-        switch (Difficulty)
+        // 現在の難易度を取得する
+        E_DIFFICULTY difficulty = DataManager.Instance.Difficulty;
+
+        switch (difficulty)
         {
             case E_DIFFICULTY.EASY:
                 return m_Easy.GetResultInt();

@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードの敵のpublicパラメータを変更するためのオプション。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Option/EnemyParamChange", fileName = "param.behavior_option.asset", order = 0)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Option/EnemyParamChange", fileName = "param.behavior_option.asset")]
 
 public class BattleRealEnemyBehaviorParamChangeFunc : BattleRealEnemyBehaviorOptionFuncBase, IEnemyParamChange
 {

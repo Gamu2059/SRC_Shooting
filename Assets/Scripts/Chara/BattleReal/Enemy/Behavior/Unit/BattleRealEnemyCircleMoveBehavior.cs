@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// ある座標を指定してその円周上を動く敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/CircleMove", fileName = "param.behavior_unit.asset", order = 40)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/CircleMove", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemyCircleMoveBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector

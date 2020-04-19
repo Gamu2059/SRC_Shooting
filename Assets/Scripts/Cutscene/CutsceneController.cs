@@ -48,6 +48,13 @@ public class CutsceneController : MonoBehaviour
         var duration = m_PlayableDirector.duration;
         var isDone = duration <= 0f ? true : time / duration >= 1f;
 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isDone = true;
+        }
+#endif
+
         if (isDone)
         {
             m_IsDone = true;
