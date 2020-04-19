@@ -17,8 +17,8 @@ partial class BattleRealManager
             AudioManager.Instance.StopAllSe();
 
             BattleRealPlayerManager.Instance.StopChargeShot();
-            BattleRealUiManager.Instance.SetEnableBossUI(false);
             BattleRealUiManager.Instance.PlayClearTelop();
+            BattleRealUiManager.Instance.DisableAllBossUI();
 
             AudioManager.Instance.Play(E_COMMON_SOUND.GAME_CLEAR);
 
