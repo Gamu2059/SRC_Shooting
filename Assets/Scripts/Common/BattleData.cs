@@ -92,7 +92,8 @@ public class BattleData
 
     public BattleRealPlayerLevelData GetCurrentLevelParam()
     {
-        return m_ConstantParam.PlayerLevelDatas[Level];
+        var idx = Mathf.Min(Level, m_ConstantParam.MaxLevel - 1);
+        return m_ConstantParam.PlayerLevelDatas[idx];
     }
 
     #region Player Life

@@ -100,9 +100,12 @@ public class BattleRealBossUI : ControllableMonoBehavior
 
     public override void OnFinalize()
     {
-        ReferencedBoss.FinalizeAction -= DisableBossUI;
-        ReferencedBoss.HideAction -= DisableBossUI;
-        ReferencedBoss = null;
+        if (ReferencedBoss != null)
+        {
+            ReferencedBoss.FinalizeAction -= DisableBossUI;
+            ReferencedBoss.HideAction -= DisableBossUI;
+            ReferencedBoss = null;
+        }
 
         m_HackingNum.OnFinalize();
         m_DownGauge.OnFinalize();
