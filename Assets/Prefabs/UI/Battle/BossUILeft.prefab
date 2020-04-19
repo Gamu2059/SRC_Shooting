@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 6333104749066837764}
   - component: {fileID: 6333104749066837762}
   - component: {fileID: 6333104749066837763}
+  - component: {fileID: 7258621388608407339}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -228,6 +229,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &7258621388608407339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333104749066837765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa0abc0e871b6246965e7ff291840a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_colorTop: {r: 1, g: 1, b: 1, a: 1}
+  m_colorBottom: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_colorLeft: {r: 1, g: 1, b: 1, a: 1}
+  m_colorRight: {r: 1, g: 1, b: 1, a: 1}
+  m_gradientOffsetVertical: 0
+  m_gradientOffsetHorizontal: 0
+  m_splitTextGradient: 0
 --- !u!1 &6333104749095021027
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +1017,7 @@ GameObject:
   - component: {fileID: 6333104749812711403}
   - component: {fileID: 6333104749812711401}
   - component: {fileID: 6333104749812711402}
+  - component: {fileID: 5581342032972855964}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -1060,6 +1081,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &5581342032972855964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333104749812711404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa0abc0e871b6246965e7ff291840a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_colorTop: {r: 1, g: 1, b: 1, a: 1}
+  m_colorBottom: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_colorLeft: {r: 1, g: 1, b: 1, a: 1}
+  m_colorRight: {r: 1, g: 1, b: 1, a: 1}
+  m_gradientOffsetVertical: 0
+  m_gradientOffsetHorizontal: 0
+  m_splitTextGradient: 0
 --- !u!1 &6333104749904636684
 GameObject:
   m_ObjectHideFlags: 0
