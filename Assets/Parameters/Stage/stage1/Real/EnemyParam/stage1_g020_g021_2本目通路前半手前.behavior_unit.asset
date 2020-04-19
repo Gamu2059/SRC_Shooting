@@ -17,10 +17,11 @@ MonoBehaviour:
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []
+  m_OnStopOptions: []
   m_BulletGeneratorDatas:
   - ParamSet: {fileID: 11400000, guid: 35e0c2d13e3abe64a88dce86e6deaa57, type: 2}
-    StartTimeOnFirstActivate: 0.2
-    StopTimeFromFirstActivate: 0.7
+    StartTimeOnFirstActivate: 0.8
+    StopTimeFromFirstActivate: 1.4
     ActivateInterval: 0.7
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpeedCurve:
