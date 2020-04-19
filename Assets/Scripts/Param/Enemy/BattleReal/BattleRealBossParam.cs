@@ -11,6 +11,10 @@ using System;
 [Serializable]
 public class BattleRealBossParam : BattleRealEnemyParamBase
 {
+    [SerializeField, Tooltip("表示用に用いる名前")]
+    private string m_BossName;
+    public string BossName => m_BossName;
+
     [Header("振る舞いパラメータ")]
 
     [SerializeField, Tooltip("振る舞いパラメータ")]
@@ -52,6 +56,10 @@ public class BattleRealBossParam : BattleRealEnemyParamBase
     [SerializeField, Tooltip("ハッキング成功時のエフェクト")]
     private EffectParamSet m_HackingSuccessEffectParam;
     public EffectParamSet HackingSuccessEffectParam => m_HackingSuccessEffectParam;
+
+    [SerializeField, Tooltip("ハッキングに失敗した時に回復するダウンHPの割合")]
+    private float m_HackingFailureRecoverDownHpRate;
+    public float HackingFailureRecoverDownHpRate => m_HackingFailureRecoverDownHpRate;
 
     #endregion
 

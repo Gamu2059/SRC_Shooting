@@ -237,7 +237,7 @@ public class Timer
 
     public static Timer CreateTimeoutTimer(E_TIMER_TYPE timerType, float timeoutDuration)
     {
-        var timer = CreateTimeoutTimer(timerType, timeoutDuration, null, null);
+        var timer = CreateTimeoutTimer(timerType, timeoutDuration, null);
         return timer;
     }
 
@@ -263,6 +263,11 @@ public class Timer
 	public static Timer CreateTimeoutTimer( E_TIMER_TYPE timerType, float timeoutDuration, Action timeoutCallBack )
 	{
 		var timer = CreateTimeoutTimer( timerType, timeoutDuration, null, timeoutCallBack );
+		return timer;
+	}
+	public static Timer CreateIntervalTimer(E_TIMER_TYPE timerType, float intervalDuration)
+	{
+		var timer = CreateIntervalTimer(timerType, intervalDuration, null);
 		return timer;
 	}
 

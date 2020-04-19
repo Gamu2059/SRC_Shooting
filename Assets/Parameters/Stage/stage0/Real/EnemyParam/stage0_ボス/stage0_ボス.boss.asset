@@ -17,13 +17,14 @@ MonoBehaviour:
   m_Params:
   - Difficulty: 1
     Param:
-      m_Hp: 1000
+      m_Hp: 2000
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: 6ab26941ffecf4043b47b16d7744ac52,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
+      m_BossName: Dummy Code
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
@@ -105,7 +106,7 @@ MonoBehaviour:
           ExecuteEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
           type: 2}
-        m_DownHp: 150
+        m_DownHp: 200
         m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
@@ -172,7 +173,7 @@ MonoBehaviour:
           ExecuteEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
           type: 2}
-        m_DownHp: 200
+        m_DownHp: 400
         m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
@@ -236,6 +237,7 @@ MonoBehaviour:
         type: 2}
       m_HackingFailureEffectParam: {fileID: 0}
       m_HackingSuccessEffectParam: {fileID: 0}
+      m_HackingFailureRecoverDownHpRate: 0.5
       m_DefeatScore: 0
       m_DefeatItemParam:
         ItemSpreadParams: []

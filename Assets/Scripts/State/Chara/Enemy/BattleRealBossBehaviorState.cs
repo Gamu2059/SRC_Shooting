@@ -36,7 +36,7 @@ partial class BattleRealBossController
                 }
 
                 // ボスUIを表示する
-                BattleRealUiManager.Instance.SetEnableBossUI(true);
+                BattleRealUiManager.Instance.EnableBossUI(Target);
             }
 
             m_BehaviorSet = Target.m_CurrentBehaviorSet;

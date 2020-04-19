@@ -39,6 +39,7 @@ partial class BattleRealBossController
             // 全弾削除
             BattleRealBulletManager.Instance.CheckPoolBullet(Target);
             Target.ExecuteRetireEvent();
+            Target.CallHideAction();
         }
     }
 }
