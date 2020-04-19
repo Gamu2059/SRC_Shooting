@@ -18,6 +18,12 @@ public class BulletShotParams : ScriptableObject
     [SerializeField, Tooltip("弾が持つパラメータ（演算）")]
     private BulletParamFreeOperation m_BulletParamFreeOperation;
 
+    [SerializeField, Tooltip("弾の変更可能なパラメータの初期値（演算）")]
+    private BulletParamFreeOperation m_BulletParamFreeOperationChangeableInit;
+
+    [SerializeField, Tooltip("弾の変更可能なパラメータの更新した値（演算）")]
+    private BulletParamFreeOperation m_BulletParamFreeOperationChangeableUpdate;
+
     [SerializeField, Tooltip("弾の物理的な状態を決める時の多重forループ")]
     private MultiForLoop m_MultiForLoopForTransform;
 
@@ -51,6 +57,8 @@ public class BulletShotParams : ScriptableObject
                     commonOperationVariable.DTime.GetResultFloat(),
                     null,
                     m_BulletParamFreeOperation,
+                    m_BulletParamFreeOperationChangeableInit,
+                    m_BulletParamFreeOperationChangeableUpdate,
                     commonOperationVariable.BulletTimeProperty,
                     commonOperationVariable.LaunchParam,
                     m_BulletTransform,

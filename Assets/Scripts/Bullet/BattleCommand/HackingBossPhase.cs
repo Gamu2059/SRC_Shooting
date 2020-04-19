@@ -12,6 +12,9 @@ using UnityEngine;
 public class HackingBossPhase : ScriptableObject
 {
 
+    [SerializeField, Tooltip("難易度変動演算初期化オブジェクト")]
+    private DifficultyInitializer[] m_DifficultyInitializer;
+
     [SerializeField, Tooltip("多重forループ")]
     private MultiForLoop m_MultiForLoop;
 
@@ -35,6 +38,16 @@ public class HackingBossPhase : ScriptableObject
     public void OnStarts()
     {
         m_CommonOperationVariable.OnStarts();
+
+        //if (m_DifficultyInitializer != null)
+        //{
+        //    m_DifficultyInitializer.Setup();
+        //}
+
+        foreach (DifficultyInitializer difficultyInitializer in m_DifficultyInitializer)
+        {
+            difficultyInitializer.Setup();
+        }
 
         m_DanmakuArray.OnStarts();
 

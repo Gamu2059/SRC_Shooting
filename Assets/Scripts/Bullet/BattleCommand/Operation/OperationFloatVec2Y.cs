@@ -24,10 +24,3 @@ public class OperationFloatVec2Y : OperationFloatBase
         return m_Vector2.GetResultVector2().y;
     }
 }
-
-
-
-
-
-//Vector2 vec2 = m_Vector2.GetResultVector2();
-//Debug.Log(vec2.x.ToString() + ", " + vec2.y.ToString());

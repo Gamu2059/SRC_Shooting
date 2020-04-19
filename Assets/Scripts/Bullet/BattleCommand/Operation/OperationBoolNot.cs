@@ -16,11 +16,11 @@ public class OperationBoolNot : OperationBoolBase
     /// 値
     /// </summary>
     [SerializeField]
-    private OperationBoolBase m_Value;
+    private OperationBoolBase m_Not;
 
 
     public override bool GetResultBool()
     {
-        return !m_Value.GetResultBool();
+        return !m_Not.GetResultBool();
     }
 }

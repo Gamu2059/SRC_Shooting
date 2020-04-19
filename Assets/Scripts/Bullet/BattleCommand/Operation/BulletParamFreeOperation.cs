@@ -41,8 +41,6 @@ public class BulletParamFreeOperation : ScriptableObject
     /// </summary>
     public BulletParamFree GetResultBulletParamFree()
     {
-        if (m_Bool == null) Debug.Log("m_Bool");
-
         bool[] boolArray = new bool[m_Bool.Length];
 
         for (int i = 0;i < m_Bool.Length;i++)
@@ -74,3 +72,10 @@ public class BulletParamFreeOperation : ScriptableObject
         return new BulletParamFree(boolArray, intArray, floatArray, vector2Array);
     }
 }
+
+
+
+
+
+
+//if (m_Bool == null) Debug.Log("m_Bool");

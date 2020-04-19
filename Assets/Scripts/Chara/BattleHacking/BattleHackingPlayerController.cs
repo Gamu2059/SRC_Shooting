@@ -83,6 +83,8 @@ public class BattleHackingPlayerController : CommandCharaController
                     null,
                     null,
                     null,
+                    null,
+                    null,
                     null
                     );
             }

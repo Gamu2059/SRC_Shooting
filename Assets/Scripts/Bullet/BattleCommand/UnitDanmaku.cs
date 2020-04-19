@@ -70,6 +70,8 @@ public class UnitDanmaku : ScriptableObject
                         commonOperationVariable.DTime.GetResultFloat(),
                         m_ShotParam,
                         m_BulletParamFreeOperation,
+                        null,
+                        null,
                         commonOperationVariable.BulletTimeProperty,
                         commonOperationVariable.LaunchParam,
                         m_BulletTransform,

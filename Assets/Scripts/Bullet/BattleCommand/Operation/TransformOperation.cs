@@ -152,6 +152,7 @@ public class TransformOperation : ScriptableObject
         else
         {
             canCollide = m_CanCollide.GetResultBool();
+            //canCollide = false;
         }
 
         bool isAlive;

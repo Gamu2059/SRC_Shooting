@@ -16,14 +16,14 @@ public class OperationBoolOr : OperationBoolBase
     /// 値の配列
     /// </summary>
     [SerializeField]
-    private OperationBoolBase[] m_ValueArray;
+    private OperationBoolBase[] m_Or;
 
 
     public override bool GetResultBool()
     {
         bool resultBool = false;
 
-        foreach (OperationBoolBase value in m_ValueArray)
+        foreach (OperationBoolBase value in m_Or)
         {
             resultBool = resultBool || value.GetResultBool();
         }

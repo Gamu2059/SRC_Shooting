@@ -38,6 +38,8 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         float dTime,
         ShotParamOperation shotParamOperation,
         BulletParamFreeOperation bulletParamFreeOperation,
+        BulletParamFreeOperation bulletParamFreeOperationChangeableInit,
+        BulletParamFreeOperation bulletParamFreeOperationChangeableUpdate,
         OperationFloatVariable timeOperation,
         ShotParamOperationVariable launchParam,
         TransformOperation transformOperation,
@@ -120,6 +122,14 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             bullet.m_BulletParamFree = bulletParamFree;
         }
 
+
+        if (bulletParamFreeOperationChangeableInit != null)
+        {
+            bullet.m_BulletParamFreeChangeable = bulletParamFreeOperationChangeableInit.GetResultBulletParamFree();
+            bullet.m_BulletParamFreeChangeableOperation = bulletParamFreeOperationChangeableUpdate;
+        }
+
+
         bullet.m_MultiForLoop = multiForLoop;
 
         bullet.m_Time = dTime;
@@ -193,6 +203,16 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// 弾のパラメータ（保存用）
     /// </summary>
     private BulletParamFree m_BulletParamFree;
+
+    /// <summary>
+    /// 弾の変えられるパラメータ（保存用）
+    /// </summary>
+    private BulletParamFree m_BulletParamFreeChangeable;
+
+    /// <summary>
+    /// 弾の変えられるパラメータの演算（保存用）
+    /// </summary>
+    private BulletParamFreeOperation m_BulletParamFreeChangeableOperation;
 
     /// <summary>
     /// 発射時のパラメータを表す変数（入力用）
@@ -273,6 +293,9 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         // 時刻を更新する
         m_Time += Time.deltaTime;
 
+        // デルタタイムをstatic変数に反映する
+        BulletDeltaTime.DeltaTime = Time.deltaTime;
+
         // この弾の物理的な状態
         TransformSimple transformSimple;
 
@@ -315,14 +338,38 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
                 // Vector2型のパラメータをstatic変数に反映させる
                 BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
 
+                if (m_BulletParamFreeChangeableOperation != null)
+                {
+                    // 変更可能な弾パラメータをstatic変数にロードする
+                    BulletBool.BoolArrayChangeable = m_BulletParamFreeChangeable.m_Bool;
+                    BulletInt.IntArrayChangeable = m_BulletParamFreeChangeable.m_Int;
+                    BulletFloat.FloatArrayChangeable = m_BulletParamFreeChangeable.m_Float;
+                    BulletVector2.Vector2ArrayChangeable = m_BulletParamFreeChangeable.m_Vector2;
+                }
+
                 // 未割当てエラー回避のため
                 transformSimple = null;
 
-                // この弾の物理的な状態を外部の演算により求める（慣性に従って求めるための引数は意味がないものにした）
                 if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
                 {
                     do
                     {
+                        if (m_BulletParamFreeChangeableOperation != null)
+                        {
+                            // 新しい変更可能パラメータを求める
+                            BulletParamFree bulletParamFree = m_BulletParamFreeChangeableOperation.GetResultBulletParamFree();
+
+                            // 新しい変更可能パラメータをstatic変数にロードする
+                            BulletBool.BoolArrayChangeable = bulletParamFree.m_Bool;
+                            BulletInt.IntArrayChangeable = bulletParamFree.m_Int;
+                            BulletFloat.FloatArrayChangeable = bulletParamFree.m_Float;
+                            BulletVector2.Vector2ArrayChangeable = bulletParamFree.m_Vector2;
+
+                            // この弾の変更可能パラメータを更新する（次のフレームのために）
+                            m_BulletParamFreeChangeable = bulletParamFree;
+                        }
+
+                        // この弾の物理的な状態を外部の演算により求める（慣性に従って求めるための引数は意味がないものにした）
                         transformSimple = m_TransformOperation.GetResultTransform(null, 0);
                     }
                     while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
@@ -339,28 +386,24 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         spriteRenderer.color = new Color(1, 1, 1, transformSimple.Opacity);
         HasCollision = transformSimple.CanCollide;
 
-
         m_IsAlive = transformSimple.IsAlive;
-
 
         // もしこの弾が弾を発射するなら、発射の処理を行う
         if (m_BulletShotParams != null)
         {
             m_BulletShotParams.OnUpdates(m_Boss, m_CommonOperationVariable);
         }
+
+        //Debug.Log(m_CommonOperationVariable.PreviousTime.GetResultFloat().ToString() + ", " + m_CommonOperationVariable.NowTime.GetResultFloat().ToString());
     }
 
     public override void OnLateUpdate()
     {
+        // 以下、元々OnLateUpdate()内にあった処理。
+
         base.OnLateUpdate();
 
-        //Vector3 position = transform.localPosition;
-
-        if (
-            //position.x < CommonOperationVar.PositionXMin.GetResultFloat() || CommonOperationVar.PositionXMax.GetResultFloat() < position.x ||
-            //position.z < CommonOperationVar.PositionYMin.GetResultFloat() || CommonOperationVar.PositionYMax.GetResultFloat() < position.z
-            !m_IsAlive
-            )
+        if (!m_IsAlive)
         {
             DestroyBullet();
         }
@@ -642,3 +685,9 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 //{
 //    DestroyBullet();
 //}
+
+
+//Vector3 position = transform.localPosition;
+
+//position.x < CommonOperationVar.PositionXMin.GetResultFloat() || CommonOperationVar.PositionXMax.GetResultFloat() < position.x ||
+//position.z < CommonOperationVar.PositionYMin.GetResultFloat() || CommonOperationVar.PositionYMax.GetResultFloat() < position.z
