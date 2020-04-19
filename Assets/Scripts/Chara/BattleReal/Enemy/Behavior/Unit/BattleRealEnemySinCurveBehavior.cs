@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// Sinカーブで動く敵の挙動。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/SinCurve", fileName = "param.behavior_unit.asset", order = 20)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Unit/SinCurve", fileName = "param.behavior_unit.asset")]
 public class BattleRealEnemySinCurveBehavior : BattleRealEnemyBehaviorUnitBase
 {
     #region Field Inspector

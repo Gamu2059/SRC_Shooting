@@ -16,7 +16,7 @@
 
         private void CheckInterruptEnd()
         {
-            if (Target.m_DefaultGameState != E_STATE.NON_GAME)
+            if (Target.m_DefaultGameState != E_BATTLE_REAL_PLAYER_STATE.NON_GAME)
             {
                 Target.RequestChangeDefaultGameState();
             }

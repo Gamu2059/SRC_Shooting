@@ -5,40 +5,98 @@ using UnityEngine;
 /// <summary>
 /// ゲーム全体のデータを管理する。
 /// </summary>
-public class DataManager : ControllableObject
+public class DataManager : Singleton<DataManager>
 {
     #region Field
 
-    #endregion
+    /// <summary>
+    /// ゲームモードや難易度の選択などを行ったかどうか
+    /// </summary>
+    public bool IsSelectedGame;
 
-    public static DataManager Instance {
-        get {
-            if (GameManager.Instance == null)
-            {
-                return null;
-            }
+    /// <summary>
+    /// ゲームモード
+    /// </summary>
+    public E_GAME_MODE GameMode;
 
-            return GameManager.Instance.DataManager;
-        }
-    }
+    /// <summary>
+    /// 難易度
+    /// </summary>
+    public E_DIFFICULTY Difficulty;
 
+    /// <summary>
+    /// ステージ
+    /// </summary>
+    public E_CHAPTER Chapter;
+
+    /// <summary>
+    /// バトルパラメータセット
+    /// </summary>
+    public BattleParamSet BattleParamSet { get; private set; }
+
+    /// <summary>
+    /// 読み取り専用のパラメータを格納したデータ。
+    /// </summary>
+    public BattleConstantParam BattleConstantParam { get; private set; }
+
+    /// <summary>
+    /// バトル用変数データ。
+    /// </summary>
     public BattleData BattleData { get; private set; }
-
+    
+    /// <summary>
+    /// バトルのリザルトデータを格納するもの。
+    /// </summary>
     public BattleResultData BattleResultData { get; private set; }
 
-    public DataManager(BattleRealPlayerLevelParamSet playerLevelParamSet)
-    {
-        BattleData = new BattleData(playerLevelParamSet);
-        BattleResultData = new BattleResultData(playerLevelParamSet);
-    }
+    #endregion
 
-    public override void OnInitialize()
+    public static DataManager Builder(BattleConstantParam param)
     {
-        base.OnInitialize();
+        var manager = Create();
+        manager.OnInitialize();
+
+        manager.IsSelectedGame = false;
+        manager.BattleConstantParam = param;
+        manager.BattleData = new BattleData(param);
+
+        return manager;
     }
 
     public override void OnFinalize()
     {
+
         base.OnFinalize();
+    }
+
+    /// <summary>
+    /// ストーリーモードの開始時に呼び出す
+    /// </summary>
+    public void OnStoryStart()
+    {
+    }
+
+    /// <summary>
+    /// ストーリーモードの終了時に呼び出す
+    /// </summary>
+    public void OnStoryEnd()
+    {
+        BattleResultData.AddStoryResult();
+    }
+
+    /// <summary>
+    /// ストーリーモードでもチャプターモードでも、チャプターごとに開始時に呼び出す
+    /// </summary>
+    public void OnChapterStart()
+    {
+        BattleData.ResetDataOnChapterStart();
+    }
+
+    /// <summary>
+    /// ストーリーモードでもチャプターモードでも、チャプターごとに終了時に呼び出す
+    /// </summary>
+    public void OnChapterEnd()
+    {
+        BattleResultData.AddChapterResult();
     }
 }

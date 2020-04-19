@@ -8,49 +8,16 @@ using System;
 /// <summary>
 /// リアルモードのプレイヤーコントローラ
 /// </summary>
-public partial class BattleRealPlayerController : BattleRealCharaController
+public partial class BattleRealPlayerController : BattleRealCharaController, IStateCallback<E_BATTLE_REAL_PLAYER_STATE>
 {
     #region Define
 
-    private enum E_STATE
+    private class StateCycle : StateCycleBase<BattleRealPlayerController, E_BATTLE_REAL_PLAYER_STATE> { }
+
+    private class InnerState : State<E_BATTLE_REAL_PLAYER_STATE, BattleRealPlayerController>
     {
-        /// <summary>
-        /// リアルモードがGAMEステートでない時に遷移するデフォルトステート
-        /// </summary>
-        NON_GAME,
-
-        /// <summary>
-        /// リアルモードがGAMEステートの時に遷移するデフォルトステート
-        /// </summary>
-        GAME,
-
-        /// <summary>
-        /// リアルモードがGAMEステートの時、かつチャージ中の時に遷移するステート
-        /// </summary>
-        CHARGE,
-
-        /// <summary>
-        /// チャージショットを放つ瞬間だけ遷移するステート
-        /// </summary>
-        CHARGE_SHOT,
-
-        /// <summary>
-        /// シーケンスによる自動制御を受けるステート
-        /// </summary>
-        SEQUENCE,
-
-        /// <summary>
-        /// 撃破された瞬間だけ遷移するステート
-        /// </summary>
-        DEAD,
-    }
-
-    private class StateCycle : StateCycleBase<BattleRealPlayerController, E_STATE> { }
-
-    private class InnerState : State<E_STATE, BattleRealPlayerController>
-    {
-        public InnerState(E_STATE state, BattleRealPlayerController target) : base(state, target) { }
-        public InnerState(E_STATE state, BattleRealPlayerController target, StateCycle cycle) : base(state, target, cycle) { }
+        public InnerState(E_BATTLE_REAL_PLAYER_STATE state, BattleRealPlayerController target) : base(state, target) { }
+        public InnerState(E_BATTLE_REAL_PLAYER_STATE state, BattleRealPlayerController target, StateCycle cycle) : base(state, target, cycle) { }
     }
 
     #endregion
@@ -69,7 +36,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
 
     #region Field
 
-    private StateMachine<E_STATE, BattleRealPlayerController> m_StateMachine;
+    private StateMachine<E_BATTLE_REAL_PLAYER_STATE, BattleRealPlayerController> m_StateMachine;
     private BattleRealPlayerManagerParamSet m_ParamSet;
 
     private SequenceController m_SequenceController;
@@ -78,7 +45,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     private Transform m_Critical;
     private Transform m_Shield;
 
-    private E_STATE m_DefaultGameState;
+    private E_BATTLE_REAL_PLAYER_STATE m_DefaultGameState;
     private float m_ShotDelay;
     private BattleCommonEffectController m_ShieldEffect;
     private BattleCommonEffectController m_ChargeEffect;
@@ -95,6 +62,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     #region Open Callback
 
     public Action<bool> ChangeWeaponTypeAction { get; set; }
+    public Action<E_BATTLE_REAL_PLAYER_STATE> ChangeStateAction { get; set; }
 
     #endregion
 
@@ -104,19 +72,19 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     {
         base.OnInitialize();
 
-        m_StateMachine = new StateMachine<E_STATE, BattleRealPlayerController>();
-        m_StateMachine.AddState(new InnerState(E_STATE.NON_GAME, this, new NonGameState()));
-        m_StateMachine.AddState(new InnerState(E_STATE.GAME, this, new GameState()));
-        m_StateMachine.AddState(new InnerState(E_STATE.CHARGE, this, new ChargeState()));
-        m_StateMachine.AddState(new InnerState(E_STATE.CHARGE_SHOT, this, new ChargeShotState()));
-        m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
-        m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
+        m_StateMachine = new StateMachine<E_BATTLE_REAL_PLAYER_STATE, BattleRealPlayerController>();
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_PLAYER_STATE.NON_GAME, this, new NonGameState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_PLAYER_STATE.GAME, this, new GameState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_PLAYER_STATE.CHARGE, this, new ChargeState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_PLAYER_STATE.CHARGE_SHOT, this, new ChargeShotState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_PLAYER_STATE.SEQUENCE, this, new SequenceState()));
+        m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_PLAYER_STATE.DEAD, this, new DeadState()));
 
         Troop = E_CHARA_TROOP.PLAYER;
         IsLaserType = m_ParamSet == null ? true : m_ParamSet.IsLaserType;
         IsRestrictPosition = false;
         IsDead = false;
-        m_DefaultGameState = E_STATE.NON_GAME;
+        m_DefaultGameState = E_BATTLE_REAL_PLAYER_STATE.NON_GAME;
 
         m_SequenceController = GetComponent<SequenceController>();
         if (m_SequenceController == null)
@@ -130,12 +98,13 @@ public partial class BattleRealPlayerController : BattleRealCharaController
         SetEnableCollider(true);
 
         // とりあえずNON_GAMEへ遷移して待機しておく
-        RequestChangeState(E_STATE.NON_GAME);
+        RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.NON_GAME);
     }
 
     public override void OnFinalize()
     {
         m_SequenceController?.OnFinalize();
+        ChangeStateAction = null;
         ChangeWeaponTypeAction = null;
         m_StateMachine.OnFinalize();
         base.OnFinalize();
@@ -166,7 +135,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// <summary>
     /// BattleRealPlayerControllerのステートを変更する。
     /// </summary>
-    private void RequestChangeState(E_STATE state)
+    private void RequestChangeState(E_BATTLE_REAL_PLAYER_STATE state)
     {
         m_StateMachine?.Goto(state);
     }
@@ -176,7 +145,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// </summary>
     public void SetDefaultGameState(bool isBattleRealManagerGameState)
     {
-        m_DefaultGameState = isBattleRealManagerGameState ? E_STATE.GAME : E_STATE.NON_GAME;
+        m_DefaultGameState = isBattleRealManagerGameState ? E_BATTLE_REAL_PLAYER_STATE.GAME : E_BATTLE_REAL_PLAYER_STATE.NON_GAME;
     }
 
     /// <summary>
@@ -192,7 +161,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     /// </summary>
     public void RequestChangeToDeadState()
     {
-        RequestChangeState(E_STATE.DEAD);
+        RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.DEAD);
     }
 
     #endregion
@@ -255,7 +224,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
             return;
         }
 
-        var battleData = DataManager.Instance.BattleData.EnergyCount;
+        var battleData = DataManager.Instance.BattleData.EnergyStock;
         m_IsExistEnergyCharge = battleData > 0;
 
         if (!m_IsExistEnergyCharge)
@@ -292,7 +261,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController
             AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_BOMB);
         }
 
-        DataManager.Instance.BattleData.ConsumeEnergyCount(1);
+        DataManager.Instance.BattleData.ConsumeEnergyStock();
     }
 
     /// <summary>
@@ -561,6 +530,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController
     public void MoveBySequence(SequenceGroup sequenceGroup)
     {
         m_SequenceGroup = sequenceGroup;
-        RequestChangeState(E_STATE.SEQUENCE);
+        RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.SEQUENCE);
     }
 }

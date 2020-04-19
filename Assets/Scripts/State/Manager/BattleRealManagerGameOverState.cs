@@ -9,11 +9,9 @@
             //AudioManager.Instance.Play(m_ParamSet.GameOverSe);
             //m_GameOverController.PlayGameOver();
 
-            //Target.m_BattleManager.BattleRealUiManager.SetEnableBossUI(false);
             BattleRealPlayerManager.Instance.StopChargeShot();
             BattleRealUiManager.Instance.PlayGameOver();
-
-            BattleRealUiManager.Instance.SetEnableBossUI(false);
+            BattleRealUiManager.Instance.DisableAllBossUI();
         }
 
         public override void OnUpdate()

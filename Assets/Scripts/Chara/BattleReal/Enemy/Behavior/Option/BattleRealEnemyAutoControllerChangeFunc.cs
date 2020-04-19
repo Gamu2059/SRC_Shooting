@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// リアルモードの敵のIAutoControlOnCharaControllerを有効/無効を変更するためのオプション。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Option/AutoControllerChange", fileName = "param.behavior_option.asset", order = 10)]
+[Serializable, CreateAssetMenu(menuName = "Param/BattleReal/Enemy/Behavior/Option/AutoControllerChange", fileName = "param.behavior_option.asset")]
 public class BattleRealEnemyAutoControllerChangeFunc : BattleRealEnemyBehaviorOptionFuncBase, IAutoControllerChanger
 {
     [SerializeField]

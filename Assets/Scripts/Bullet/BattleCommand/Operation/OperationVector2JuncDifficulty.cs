@@ -44,7 +44,7 @@ public class OperationVector2JuncDifficulty : OperationVector2Base
 
     public override Vector2 GetResultVector2()
     {
-        switch (Difficulty)
+        switch (DanmakuDifficulty.Difficulty)
         {
             case E_DIFFICULTY.EASY:
                 return m_Easy.GetResultVector2();

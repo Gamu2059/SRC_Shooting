@@ -16,8 +16,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     private class GameManagerParamSet
     {
         [SerializeField]
-        private BattleRealPlayerLevelParamSet m_PlayerLevelParamSet;
-        public BattleRealPlayerLevelParamSet PlayerLevelParamSet => m_PlayerLevelParamSet;
+        private BattleConstantParam m_BattleConstantParam;
+        public BattleConstantParam BattleConstantParam => m_BattleConstantParam;
 
         [SerializeField]
         private AdxAssetParam m_AdxAssetParam;
@@ -35,10 +35,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     [SerializeField]
     private TransitionManager m_TransitionManager;
 
-    public DataManager DataManager { get; private set; }
-
-    private PlayerRecordManager m_PlayerRecordManager;
-    public PlayerRecordManager PlayerRecordManager => m_PlayerRecordManager;
+    public PlayerRecordManager PlayerRecordManager { get; private set; }
 
     #endregion
 
@@ -85,26 +82,20 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnInitialize();
 
         AudioManager.Instance.SetAdxParam(m_GameManagerParamSet.AdxAssetParam);
-        DataManager = new DataManager(m_GameManagerParamSet.PlayerLevelParamSet);
-        m_PlayerRecordManager = new PlayerRecordManager();
+        PlayerRecordManager = new PlayerRecordManager();
 
         TimerManager.Builder();
         AudioManager.Instance.OnInitialize();
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
-
-        DataManager.OnInitialize();
-
-        m_PlayerRecordManager.OnInitialize();
-
+        DataManager.Builder(m_GameManagerParamSet.BattleConstantParam);
+        PlayerRecordManager.OnInitialize();
 	}
 
 	public override void OnFinalize()
 	{
-        m_PlayerRecordManager.OnFinalize();
-
-        DataManager.OnFinalize();
-
+        PlayerRecordManager.OnFinalize();
+        DataManager.Instance.OnFinalize();
         m_SceneManager.OnFinalize();
         m_TransitionManager.OnFinalize();
         AudioManager.Instance.OnFinalize();

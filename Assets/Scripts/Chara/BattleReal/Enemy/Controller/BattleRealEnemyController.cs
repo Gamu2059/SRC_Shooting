@@ -31,6 +31,11 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
         /// 撃破された瞬間だけ遷移するステート
         /// </summary>
         DEAD,
+
+        /// <summary>
+        /// 退場した瞬間だけ遷移するステート
+        /// </summary>
+        RETIRE,
     }
 
     private class StateCycle : StateCycleBase<BattleRealEnemyController, E_STATE> { }
@@ -76,6 +81,7 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
         m_StateMachine.AddState(new InnerState(E_STATE.BEHAVIOR, this, new BehaviorState()));
         m_StateMachine.AddState(new InnerState(E_STATE.SEQUENCE, this, new SequenceState()));
         m_StateMachine.AddState(new InnerState(E_STATE.DEAD, this, new DeadState()));
+        m_StateMachine.AddState(new InnerState(E_STATE.RETIRE, this, new RetireState()));
 
         m_Behavior = null;
         m_BehaviorGroup = null;
@@ -144,5 +150,11 @@ public partial class BattleRealEnemyController : BattleRealEnemyBase
     {
         base.OnDead();
         RequestChangeState(E_STATE.DEAD);
+    }
+
+    protected sealed override void OnRetire()
+    {
+        base.OnRetire();
+        RequestChangeState(E_STATE.RETIRE);
     }
 }

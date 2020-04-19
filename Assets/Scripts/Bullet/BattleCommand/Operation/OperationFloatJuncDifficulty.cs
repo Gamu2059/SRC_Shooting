@@ -44,7 +44,7 @@ public class OperationFloatJuncDifficulty : OperationFloatBase
 
     public override float GetResultFloat()
     {
-        switch (Difficulty)
+        switch (DanmakuDifficulty.Difficulty)
         {
             case E_DIFFICULTY.EASY:
                 return m_Easy.GetResultFloat();

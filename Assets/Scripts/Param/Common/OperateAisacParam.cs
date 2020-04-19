@@ -24,8 +24,8 @@ public class OperateAisacParam : ScriptableObject
     public bool UseAnimationValue => m_UseAnimationValue;
 
     [SerializeField]
-    private float m_ConstantValue;
-    public float ConstantValue => m_ConstantValue;
+    private float m_TargetValue;
+    public float TargetValue => m_TargetValue;
 
     [SerializeField]
     private AnimationCurve m_AnimationValue;

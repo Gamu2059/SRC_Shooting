@@ -35,4 +35,12 @@ public class BattleRealEnemyGroupParam : ScriptableObject
     [SerializeField, Tooltip("敵グループが生成された時に実行されるイベント")]
     private BattleRealEventContent[] m_OnGenerateGroupEvents;
     public BattleRealEventContent[] OnGenerateGroupEvents => m_OnGenerateGroupEvents;
+
+    [SerializeField, Tooltip("敵グループの破棄条件を使用するかどうか")]
+    private bool m_UseDestroyCondition;
+    public bool UseDestroyCondition => m_UseDestroyCondition;
+
+    [SerializeField, Tooltip("敵グループの終了条件")]
+    private EventTriggerRootCondition m_DestroyCondition;
+    public EventTriggerRootCondition DestroyCondition => m_DestroyCondition;
 }

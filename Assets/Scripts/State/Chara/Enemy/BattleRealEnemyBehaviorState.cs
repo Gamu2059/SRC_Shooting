@@ -48,7 +48,7 @@ partial class BattleRealEnemyController
                 case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
                     if (m_Behavior == null)
                     {
-                        Target.OnRetireDestroy();
+                        Target.Retire();
                         return;
                     }
 
@@ -71,14 +71,14 @@ partial class BattleRealEnemyController
                 case E_ENEMY_BEHAVIOR_TYPE.BEHAVIOR_UNIT:
                     if (m_Behavior == null)
                     {
-                        Target.OnRetireDestroy();
+                        Target.Retire();
                         return;
                     }
 
                     m_Behavior.OnLateUpdateUnit(Time.deltaTime);
                     if (m_Behavior.IsEndUnit())
                     {
-                        Target.OnRetireDestroy();
+                        Target.Retire();
                         return;
                     }
                     break;

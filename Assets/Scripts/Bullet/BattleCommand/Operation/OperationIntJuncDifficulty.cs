@@ -50,7 +50,7 @@ public class OperationIntJuncDifficulty : OperationIntBase
 
     public override int GetResultInt()
     {
-        switch (Difficulty)
+        switch (DanmakuDifficulty.Difficulty)
         {
             case E_DIFFICULTY.EASY:
                 return m_Easy.GetResultInt();

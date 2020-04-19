@@ -130,8 +130,6 @@ public class TitleManager : ControllableMonoBehavior
             m_OnUpdate = UpdateOnSelectExit,
         });
 
-        DataManager.Instance.BattleData.ResetData(E_STAGE.NORMAL_1);
-
         InputManager = new TitleInputManager();
         InputManager.OnInitialize();
         m_UiManager.OnInitialize();
@@ -235,7 +233,7 @@ public class TitleManager : ControllableMonoBehavior
         if (InputManager.Submit == E_INPUT_STATE.DOWN)
         {
             PlayStart();
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE0);
             InputManager.RemoveInput();
         }
     }
