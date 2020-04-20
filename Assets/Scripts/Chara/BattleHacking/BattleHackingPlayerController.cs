@@ -74,9 +74,14 @@ public class BattleHackingPlayerController : CommandCharaController
                 // 弾を発射する
                 BattleHackingFreeTrajectoryBulletController.ShotBullet(
                     this,
+                    null,
+                    null,
                     0,
                     m_ShotParamOperation,
                     //m_BulletParamFreeOperation,
+                    null,
+                    null,
+                    null,
                     null,
                     null,
                     null,

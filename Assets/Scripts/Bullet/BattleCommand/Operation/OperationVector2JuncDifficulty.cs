@@ -13,6 +13,11 @@ public class OperationVector2JuncDifficulty : OperationVector2Base
 {
 
     /// <summary>
+    /// 難易度
+    /// </summary>
+    private static E_DIFFICULTY Difficulty = DanmakuDifficulty.Difficulty;
+
+    /// <summary>
     /// 難易度がEasyだった場合の値
     /// </summary>
     [SerializeField]

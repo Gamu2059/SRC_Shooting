@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d692613a4e243a749a799a508dc0a11c, type: 3}
+  m_Name: '[] NumOfBounceIncrease'
+  m_EditorClassIdentifier: 
+  m_Plus:
+  - {fileID: 11400000, guid: 2c23cc8caa3876441a8750fa42ae47f1, type: 2}
+  - {fileID: 11400000, guid: 5515c256dc4354149bad1280ec3fa7b5, type: 2}
+  m_Minus: []

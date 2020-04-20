@@ -32,6 +32,11 @@ public class TransformSimple : object
     /// </summary>
     public bool CanCollide { get; private set; }
 
+    /// <summary>
+    /// 弾が生存しているかどうか
+    /// </summary>
+    public bool IsAlive { get; private set; }
+
 
     /// <summary>
     /// コンストラクタ
@@ -41,7 +46,8 @@ public class TransformSimple : object
         float angle,
         float scale,
         float opacity,
-        bool canCollide
+        bool canCollide,
+        bool isAlive
         )
     {
         Position = position;
@@ -49,6 +55,7 @@ public class TransformSimple : object
         Scale = scale;
         Opacity = opacity;
         CanCollide = canCollide;
+        IsAlive = isAlive;
     }
 }
 
