@@ -31,10 +31,10 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     [Header("Indicator")]
 
     [SerializeField]
-    private Text m_ModeIndicator;
+    private Text m_ChapterIndicator;
 
     [SerializeField]
-    private Text m_StageIndicator;
+    private Text m_DifficultyIndicator;
 
     [SerializeField]
     private ScoreIndicator m_BestScoreIndicator;
@@ -125,8 +125,8 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     {
         base.OnInitialize();
 
-        m_ModeIndicator.text = DataManager.Instance.GameMode.ToString();
-        m_StageIndicator.text = DataManager.Instance.Chapter.ToString().Replace("_", " ");
+        m_ChapterIndicator.text = DataManager.Instance.GetChapterString();
+        m_DifficultyIndicator.text = DataManager.Instance.Difficulty.ToString();
 
         m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
