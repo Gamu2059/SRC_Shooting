@@ -99,4 +99,27 @@ public class DataManager : Singleton<DataManager>
     {
         BattleResultData.AddChapterResult();
     }
+
+    public string GetChapterString()
+    {
+        switch (Chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return "Chapter. 0";
+            case E_CHAPTER.CHAPTER_1:
+                return "Chapter. 1";
+            case E_CHAPTER.CHAPTER_2:
+                return "Chapter. 2";
+            case E_CHAPTER.CHAPTER_3:
+                return "Chapter. 3";
+            case E_CHAPTER.CHAPTER_4:
+                return "Chapter. 4";
+            case E_CHAPTER.CHAPTER_5:
+                return "Chapter. 5";
+            case E_CHAPTER.CHAPTER_6:
+                return "Final Chapter";
+        }
+
+        return "";
+    }
 }

@@ -43,10 +43,17 @@ public class BattleHackingBoss : BattleHackingEnemyController
     protected BattleHackingBossBehavior m_CurrentBehavior;
     protected int m_AttackPhase;
 
-    public float CurrentRemainTime { get; protected set; }
-    public float MaxRemainTime { get; protected set; }
-    public float CurrentRemainBonusTime { get; protected set; }
-    public float MaxRemainBonusTime { get; protected set; }
+    //public float CurrentRemainTime { get; protected set; }
+    //public float MaxRemainTime { get; protected set; }
+    //public float CurrentRemainBonusTime { get; protected set; }
+    //public float MaxRemainBonusTime { get; protected set; }
+
+    #endregion
+
+    #region Open Callback
+
+    public Action HideAction;
+    public Action FinalizeAction;
 
     #endregion
 
@@ -132,6 +139,10 @@ public class BattleHackingBoss : BattleHackingEnemyController
 
     public override void OnFinalize()
     {
+        FinalizeAction?.Invoke();
+        FinalizeAction = null;
+        HideAction = null;
+
         m_DeadBehavior?.OnFinalize();
 
         if (m_Behaviors != null)
@@ -239,16 +250,18 @@ public class BattleHackingBoss : BattleHackingEnemyController
 
     private void StartOnStart()
     {
-        CurrentRemainTime = 20;
-        MaxRemainTime = 20;
-        // ボーナスタイムはアイテムの取得数に応じる
-        CurrentRemainBonusTime = 10;
-        MaxRemainBonusTime = 10;
+        //CurrentRemainTime = 20;
+        //MaxRemainTime = 20;
+        //// ボーナスタイムはアイテムの取得数に応じる
+        //CurrentRemainBonusTime = 10;
+        //MaxRemainBonusTime = 10;
 
         m_AttackPhase = 0;
         m_CurrentBehavior = m_Behaviors[m_AttackPhase];
 
         transform.position = new Vector3(0, 0, 1);
+
+        BattleHackingUiManager.Instance.EnableBossUI(this);
 
         RequestChangeState(E_PHASE.ATTACK);
     }
@@ -341,6 +354,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
     private void StartOnDead()
     {
         m_DeadBehavior?.OnStart();
+        CallHideAction();
     }
 
     private void UpdateOnDead()
@@ -396,23 +410,23 @@ public class BattleHackingBoss : BattleHackingEnemyController
 
     private void UpdateRemainTime()
     {
-        if (CurrentRemainBonusTime <= 0)
-        {
-            CurrentRemainTime -= Time.deltaTime;
-            if (CurrentRemainTime <= 0)
-            {
-                CurrentRemainTime = 0;
-                BattleHackingEnemyManager.Instance.Timeout();
-            }
-        }
-        else
-        {
-            CurrentRemainBonusTime -= Time.deltaTime;
-            if (CurrentRemainBonusTime <= 0)
-            {
-                CurrentRemainBonusTime = 0;
-            }
-        }
+        //if (CurrentRemainBonusTime <= 0)
+        //{
+        //    CurrentRemainTime -= Time.deltaTime;
+        //    if (CurrentRemainTime <= 0)
+        //    {
+        //        CurrentRemainTime = 0;
+        //        BattleHackingEnemyManager.Instance.Timeout();
+        //    }
+        //}
+        //else
+        //{
+        //    CurrentRemainBonusTime -= Time.deltaTime;
+        //    if (CurrentRemainBonusTime <= 0)
+        //    {
+        //        CurrentRemainBonusTime = 0;
+        //    }
+        //}
     }
 
     public override void Dead()
@@ -426,5 +440,11 @@ public class BattleHackingBoss : BattleHackingEnemyController
         PlaySoundParam playSoundParam = m_CurrentBehavior.HackingBossPhase.PlaySoundParam;
         if(playSoundParam != null)
             AudioManager.Instance.Play(playSoundParam);
+    }
+
+    private void CallHideAction()
+    {
+        HideAction?.Invoke();
+        HideAction = null;
     }
 }
