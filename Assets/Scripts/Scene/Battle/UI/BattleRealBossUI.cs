@@ -33,9 +33,6 @@ public class BattleRealBossUI : ControllableMonoBehavior
     #region Field Inspector
 
     [SerializeField]
-    private CanvasGroup m_CanvasGroup;
-
-    [SerializeField]
     private Text m_NameText;
 
     [SerializeField]
@@ -60,8 +57,6 @@ public class BattleRealBossUI : ControllableMonoBehavior
     public BattleRealBossController ReferencedBoss { get; private set; }
     private StateMachine<E_STATE, BattleRealBossUI> m_StateMachine;
 
-    private Rect m_FieldRate;
-
     #endregion
 
     #region Game Cycle
@@ -79,23 +74,9 @@ public class BattleRealBossUI : ControllableMonoBehavior
         m_DownGauge.OnInitialize();
         m_HackingNum.OnInitialize();
 
-        CalcFieldRate();
-
         RequestChangeState(E_STATE.HIDE);
 
         gameObject.SetActive(false);
-    }
-
-    private void CalcFieldRate()
-    {
-        var rect = (transform as RectTransform).rect;
-        var size = (transform.parent as RectTransform).rect.size;
-        m_FieldRate = new Rect();
-        m_FieldRate.xMin = rect.xMin / size.x;
-        m_FieldRate.xMax = rect.xMax / size.x;
-        // y軸はsize.y分加算した値で考慮しないといけないので1を足す
-        m_FieldRate.yMin = rect.yMin / size.y + 1f;
-        m_FieldRate.yMax = rect.yMax / size.y + 1f;
     }
 
     public override void OnFinalize()
@@ -206,8 +187,6 @@ public class BattleRealBossUI : ControllableMonoBehavior
             }
 
             m_TimeCount += Time.deltaTime;
-
-            Target.CheckDuplicatePlayer();
         }
     }
 
@@ -224,8 +203,6 @@ public class BattleRealBossUI : ControllableMonoBehavior
             Target.m_HpGauge.OnUpdate();
             Target.m_DownGauge.OnUpdate();
             Target.m_HackingNum.OnUpdate();
-
-            Target.CheckDuplicatePlayer();
         }
     }
 
@@ -266,30 +243,5 @@ public class BattleRealBossUI : ControllableMonoBehavior
         }
 
         RequestChangeState(E_STATE.HIDE);
-    }
-
-    private void CheckDuplicatePlayer()
-    {
-        if (BattleRealPlayerManager.Instance == null)
-        {
-            return;
-        }
-
-        var player = BattleRealPlayerManager.Instance.Player;
-        if (player == null)
-        {
-            return;
-        }
-
-        var vPos = BattleRealStageManager.Instance.CalcViewportPosFromWorldPosition(player.transform, false);
-        vPos += Vector2.one * 0.5f;
-        if (vPos.x >= m_FieldRate.xMin && vPos.x <= m_FieldRate.xMax && vPos.y >= m_FieldRate.yMin && vPos.y <= m_FieldRate.yMax)
-        {
-            m_CanvasGroup.alpha = 0.2f;
-        }
-        else
-        {
-            m_CanvasGroup.alpha = 1;
-        }
     }
 }
