@@ -41,7 +41,6 @@ public class TransformOperationVariable : ScriptableObject
             m_Angle.GetResultFloat(),
             m_Scale.GetResultFloat(),
             1,
-            true,
             true
             );
     }

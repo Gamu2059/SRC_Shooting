@@ -86,16 +86,12 @@ public class ShotParam : object
     /// </summary>
     public TransformSimple GetTransformInertially(float time)
     {
-        Vector2 position = Position + Velocity * time;
-
         return new TransformSimple(
             Position + Velocity * time,
             Angle + AngleSpeed * time,
             Scale + ScaleSpeed * time,
             Opacity,
-            CanCollide,
-            -0.91 <= position.x && position.x <= 0.91 && 
-            -1.1 <= position.y && position.y <= 1.1
+            CanCollide
             );
     }
 }

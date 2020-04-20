@@ -17,17 +17,6 @@ public class BulletInt : OperationIntBase
     public static int[] IntArray { set; private get; }
 
     /// <summary>
-    /// 現在ロードされている、弾が持つ変更可能なint型の配列
-    /// </summary>
-    public static int[] IntArrayChangeable { set; private get; }
-
-    /// <summary>
-    /// 参照するのは変更可能な方の配列かどうか
-    /// </summary>
-    [SerializeField]
-    private bool m_IsChangeable;
-
-    /// <summary>
     /// 配列のインデックス
     /// </summary>
     [SerializeField]
@@ -41,13 +30,6 @@ public class BulletInt : OperationIntBase
 
     public override int GetResultInt()
     {
-        if (!m_IsChangeable)
-        {
-            return IntArray[m_Index];
-        }
-        else
-        {
-            return IntArrayChangeable[m_Index];
-        }
+        return IntArray[m_Index];
     }
 }

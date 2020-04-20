@@ -24,10 +24,3 @@ public class OperationFloatAngle : OperationFloatBase
         return Mathf.Atan2(m_Vector2.GetResultVector2().y, m_Vector2.GetResultVector2().x);
     }
 }
-
-
-
-
-
-//Vector2 vec2 = m_Vector2.GetResultVector2();
-//Debug.Log(vec2.x.ToString() + ", " + vec2.y.ToString());

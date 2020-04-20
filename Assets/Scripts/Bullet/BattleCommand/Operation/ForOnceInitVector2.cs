@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 開始時に一度だけVector2値を代入する、ループしないfor文を表すクラス。
+/// 開始時に一度だけVector2値を代入する、、ループしないfor文を表すクラス。
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/for/onceInit/Vector2", fileName = "ForOnceInitVector2", order = 0)]
 [System.Serializable]

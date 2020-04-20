@@ -12,9 +12,6 @@ using UnityEngine;
 public class HackingBossPhase : ScriptableObject
 {
 
-    [SerializeField, Tooltip("難易度変動演算初期化オブジェクト")]
-    private DifficultyInitializer[] m_DifficultyInitializer;
-
     [SerializeField, Tooltip("多重forループ")]
     private MultiForLoop m_MultiForLoop;
 
@@ -39,24 +36,13 @@ public class HackingBossPhase : ScriptableObject
     {
         m_CommonOperationVariable.OnStarts();
 
-        //if (m_DifficultyInitializer != null)
-        //{
-        //    m_DifficultyInitializer.Setup();
-        //}
-
-        foreach (DifficultyInitializer difficultyInitializer in m_DifficultyInitializer)
-        {
-            difficultyInitializer.Setup();
-        }
-
         m_DanmakuArray.OnStarts();
 
         BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
 
-        if (m_MultiForLoop != null)
-        {
-            m_MultiForLoop.Setup();
-        }
+        //m_MultiForLoop.m_ForArray = new ForBase[0];
+
+        m_MultiForLoop.Setup();
     }
 
 
@@ -66,13 +52,13 @@ public class HackingBossPhase : ScriptableObject
 
         TransformSimple transform = null;
 
-        if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
+        if (m_MultiForLoop.Init())
         {
             do
             {
                 transform = m_BossTransform.GetResultTransform();
             }
-            while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
+            while (m_MultiForLoop.Process());
         }
 
         m_DanmakuArray.OnUpdates(

@@ -13,11 +13,6 @@ public class OperationFloatJuncDifficulty : OperationFloatBase
 {
 
     /// <summary>
-    /// 難易度
-    /// </summary>
-    private static E_DIFFICULTY Difficulty = DanmakuDifficulty.Difficulty;
-
-    /// <summary>
     /// 難易度がEasyだった場合の値
     /// </summary>
     [SerializeField]
@@ -66,11 +61,3 @@ public class OperationFloatJuncDifficulty : OperationFloatBase
         }
     }
 }
-
-
-
-
-
-// 現在の難易度を取得する
-//E_DIFFICULTY difficulty = DataManager.Instance.BattleData.Difficulty;
-//E_DIFFICULTY difficulty = DanmakuDifficulty.Difficulty;

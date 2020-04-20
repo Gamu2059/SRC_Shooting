@@ -12,20 +12,9 @@ using UnityEngine;
 public class BulletBool : OperationBoolBase
 {
     /// <summary>
-    /// 現在ロードされている、弾が持つbool型の配列
+    /// 現在ロードされている、弾が持つfloat型の配列
     /// </summary>
     public static bool[] BoolArray { set; private get; }
-
-    /// <summary>
-    /// 現在ロードされている、弾が持つ変更可能なbool型の配列
-    /// </summary>
-    public static bool[] BoolArrayChangeable { set; private get; }
-
-    /// <summary>
-    /// 参照するのは変更可能な方の配列かどうか
-    /// </summary>
-    [SerializeField]
-    private bool m_IsChangeable;
 
     /// <summary>
     /// 配列のインデックス
@@ -36,13 +25,6 @@ public class BulletBool : OperationBoolBase
 
     public override bool GetResultBool()
     {
-        if (!m_IsChangeable)
-        {
-            return BoolArray[m_Index];
-        }
-        else
-        {
-            return BoolArrayChangeable[m_Index];
-        }
+        return BoolArray[m_Index];
     }
 }

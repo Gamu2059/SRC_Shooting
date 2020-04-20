@@ -17,17 +17,6 @@ public class BulletFloat : OperationFloatBase
     public static float[] FloatArray { set; private get; }
 
     /// <summary>
-    /// 現在ロードされている、弾が持つ変更可能なfloat型の配列
-    /// </summary>
-    public static float[] FloatArrayChangeable { set; private get; }
-
-    /// <summary>
-    /// 参照するのは変更可能な方の配列かどうか
-    /// </summary>
-    [SerializeField]
-    private bool m_IsChangeable;
-
-    /// <summary>
     /// 配列のインデックス
     /// </summary>
     [SerializeField]
@@ -36,13 +25,6 @@ public class BulletFloat : OperationFloatBase
 
     public override float GetResultFloat()
     {
-        if (!m_IsChangeable)
-        {
-            return FloatArray[m_Index];
-        }
-        else
-        {
-            return FloatArrayChangeable[m_Index];
-        }
+        return FloatArray[m_Index];
     }
 }
