@@ -48,6 +48,16 @@ public class BattleData
     public int EnergyCharge { get; private set; }
 
     /// <summary>
+    /// 現在のチェイン数
+    /// </summary>
+    public ulong Chain { get; private set; }
+
+    /// <summary>
+    /// 現在のチャプターにおける最高チェイン数
+    /// </summary>
+    public ulong MaxChain { get; private set; }
+
+    /// <summary>
     /// ハッキング挑戦回数
     /// </summary>
     public int HackingTryCount { get; private set; }
@@ -85,6 +95,8 @@ public class BattleData
         Exp = 0;
         EnergyStock = 0;
         EnergyCharge = 0;
+        Chain = 0;
+        MaxChain = 0;
         HackingTryCount = 0;
         HackingSuccessCount = 0;
         MinHackingTryNum = 0;
@@ -305,6 +317,21 @@ public class BattleData
 
         EnergyStock = Mathf.Max(EnergyStock - 1, 0);
         ConsumeEnergyStockAction?.Invoke();
+    }
+
+    #endregion
+
+    #region Chain
+
+    public void IncreaseChain()
+    {
+        Chain++;
+        MaxChain = Math.Max(MaxChain, Chain);
+    }
+
+    public void ResetChain()
+    {
+        Chain = 0;
     }
 
     #endregion
