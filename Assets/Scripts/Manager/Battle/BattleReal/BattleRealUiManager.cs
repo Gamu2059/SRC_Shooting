@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 {
@@ -62,6 +63,15 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
     [SerializeField]
     private WeaponIndicator m_WeaponIndicator;
+
+    [Space()]
+    [Header("Achievement")]
+
+    [SerializeField]
+    private GameObject m_AchievementRoot;
+
+    [SerializeField]
+    private List<AchievementIndicator> m_AchievementIndicators;
 
     [Space()]
     [Header("Boss UI")]
@@ -153,12 +163,27 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_WarningTelop.OnInitialize();
         m_ClearTelop.OnInitialize();
 
+        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            m_AchievementRoot?.SetActive(false);
+        }
+
+        if (m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnInitialize());
+        }
+
         DisableAllBossUI();
     }
 
     public override void OnFinalize()
     {
         EndAction = null;
+
+        if (m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnFinalize());
+        }
 
         m_ClearTelop.OnFinalize();
         m_WarningTelop.OnFinalize();
@@ -207,7 +232,13 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_StartTelop.OnUpdate();
         m_WarningTelop.OnUpdate();
         m_ClearTelop.OnUpdate();
-        
+
+        if (m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnUpdate());
+        }
+
+
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;

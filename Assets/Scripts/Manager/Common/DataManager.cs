@@ -35,11 +35,6 @@ public class DataManager : Singleton<DataManager>
     public BattleParamSet BattleParamSet { get; private set; }
 
     /// <summary>
-    /// 読み取り専用のパラメータを格納したデータ。
-    /// </summary>
-    public BattleConstantParam BattleConstantParam { get; private set; }
-
-    /// <summary>
     /// バトル用変数データ。
     /// </summary>
     public BattleData BattleData { get; private set; }
@@ -51,14 +46,13 @@ public class DataManager : Singleton<DataManager>
 
     #endregion
 
-    public static DataManager Builder(BattleConstantParam param)
+    public static DataManager Builder(BattleConstantParam constantParam, BattleAchievementParamSet achievementParamSet)
     {
         var manager = Create();
         manager.OnInitialize();
 
         manager.IsSelectedGame = false;
-        manager.BattleConstantParam = param;
-        manager.BattleData = new BattleData(param);
+        manager.BattleData = new BattleData(constantParam, achievementParamSet);
 
         return manager;
     }
