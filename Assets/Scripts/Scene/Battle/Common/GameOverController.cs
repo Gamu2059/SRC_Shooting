@@ -67,6 +67,7 @@ public class GameOverController : ControllableMonoBehavior
     public void PlayGameOver()
     {
         gameObject.SetActive(true);
+        AudioManager.Instance.Play(E_COMMON_SOUND.GAME_OVER);
         m_Animator.Play(GAME_OVER, 0);
     }
 
