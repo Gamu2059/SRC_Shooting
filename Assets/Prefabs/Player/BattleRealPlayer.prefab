@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 6653802767552009265}
   - component: {fileID: 7390825650648201114}
   - component: {fileID: 8453511990393507666}
+  - component: {fileID: 4777543106163593180}
   m_Layer: 11
   m_Name: BattleRealPlayer
   m_TagString: Untagged
@@ -425,7 +426,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CharacterView: {fileID: 1649599693813289333}
   m_OffsetAngle: 40
-  m_ApplyOffsetAngleWithoutForward: 1
 --- !u!114 &8453511990393507666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +438,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e38e11a8e814e40be24a581c7cb065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4777543106163593180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706234202080481650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002cba6196ec2c544822a280839c016c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 7653355896551701478}
+  m_InitializePosition: {x: 0, y: -4, z: 0}
+  m_Lerp: 0.01
 --- !u!1 &4174537380625799561
 GameObject:
   m_ObjectHideFlags: 0
