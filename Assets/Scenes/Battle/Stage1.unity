@@ -1856,12 +1856,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 192315199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da1d4a2923104af48a41885cf7231bcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 83c04ae2e6b13a940a090177c1c1cce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_OutText: {fileID: 192315201}
-  m_IsShowBestScore: 0
-  m_IsShowOnConsole: 0
+  m_Type: 1
 --- !u!1001 &211547399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11995,12 +11994,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1198585397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da1d4a2923104af48a41885cf7231bcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 83c04ae2e6b13a940a090177c1c1cce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_OutText: {fileID: 1198585399}
-  m_IsShowBestScore: 0
-  m_IsShowOnConsole: 0
+  m_Type: 1
 --- !u!1 &1209927348
 GameObject:
   m_ObjectHideFlags: 0
@@ -12012,6 +12010,7 @@ GameObject:
   - component: {fileID: 1209927349}
   - component: {fileID: 1209927351}
   - component: {fileID: 1209927350}
+  - component: {fileID: 1209927352}
   m_Layer: 5
   m_Name: ChainIndicator
   m_TagString: Untagged
@@ -12080,6 +12079,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209927348}
   m_CullTransparentMesh: 0
+--- !u!114 &1209927352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209927348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c04ae2e6b13a940a090177c1c1cce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OutText: {fileID: 1209927350}
+  m_Type: 2
 --- !u!1 &1215457338
 GameObject:
   m_ObjectHideFlags: 0
@@ -13701,12 +13714,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1433445890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da1d4a2923104af48a41885cf7231bcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 83c04ae2e6b13a940a090177c1c1cce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_OutText: {fileID: 1433445892}
-  m_IsShowBestScore: 1
-  m_IsShowOnConsole: 0
+  m_Type: 0
 --- !u!1 &1446066803
 GameObject:
   m_ObjectHideFlags: 0
@@ -15044,12 +15056,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1545730190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da1d4a2923104af48a41885cf7231bcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 83c04ae2e6b13a940a090177c1c1cce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_OutText: {fileID: 1545730192}
-  m_IsShowBestScore: 1
-  m_IsShowOnConsole: 0
+  m_Type: 0
 --- !u!1 &1560868423
 GameObject:
   m_ObjectHideFlags: 0
@@ -15465,6 +15476,7 @@ MonoBehaviour:
   m_DifficultyIndicator: {fileID: 1669573679}
   m_BestScoreIndicator: {fileID: 1433445894}
   m_ScoreIndicator: {fileID: 192315203}
+  m_ChainIndicator: {fileID: 1209927352}
   m_LifeIndicator: {fileID: 913390740}
   m_LevelIcon: {fileID: 1804919059}
   m_LevelGage: {fileID: 800844743}

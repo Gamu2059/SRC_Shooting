@@ -37,10 +37,13 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     private Text m_DifficultyIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_BestScoreIndicator;
+    private TextValueIndicator m_BestScoreIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_ScoreIndicator;
+    private TextValueIndicator m_ScoreIndicator;
+
+    [SerializeField]
+    private TextValueIndicator m_ChainIndicator;
 
     [SerializeField]
     private IconCountIndicator m_LifeIndicator;
@@ -131,6 +134,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
+        m_ChainIndicator.OnInitialize();
         m_LifeIndicator.OnInitialize();
         m_LevelIcon.OnInitialize();
         m_LevelGage.OnInitialize();
@@ -172,6 +176,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_LevelGage.OnFinalize();
         m_LevelIcon.OnFinalize();
         m_LifeIndicator.OnFinalize();
+        m_ChainIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
         m_FrontViewEffect.OnFinalize();
@@ -185,6 +190,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_FrontViewEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
+        m_ChainIndicator.OnUpdate();
         m_LifeIndicator.OnUpdate();
         m_LevelIcon.OnUpdate();
         m_LevelGage.OnUpdate();

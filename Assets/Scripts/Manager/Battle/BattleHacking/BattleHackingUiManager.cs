@@ -30,10 +30,10 @@ public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManag
     private Text m_DifficultyIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_BestScoreIndicator;
+    private TextValueIndicator m_BestScoreIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_ScoreIndicator;
+    private TextValueIndicator m_ScoreIndicator;
 
     [SerializeField]
     private BattleHackingBossUI m_BossUi;
