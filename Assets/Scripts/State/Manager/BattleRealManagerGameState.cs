@@ -81,12 +81,6 @@
 
         private void CheckDeadPlayer()
         {
-            var testDataManager = BattleTestDataManager.Instance;
-            if (testDataManager != null && testDataManager.IsNotPlayerDead)
-            {
-                return;
-            }
-
             var player = BattleRealPlayerManager.Instance.Player;
             if (player != null && player.IsDead)
             {
