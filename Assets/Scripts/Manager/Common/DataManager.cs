@@ -116,4 +116,12 @@ public class DataManager : Singleton<DataManager>
 
         return "";
     }
+
+    /// <summary>
+    /// Achievementを無効にするかどうか
+    /// </summary>
+    public bool IsInvalidAchievement()
+    {
+        return Chapter == E_CHAPTER.CHAPTER_0;
+    }
 }

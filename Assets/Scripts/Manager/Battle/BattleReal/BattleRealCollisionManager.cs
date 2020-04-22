@@ -27,11 +27,10 @@ public class BattleRealCollisionManager : BattleCollisionManagerBase<BattleRealC
     /// </summary>
     public override void DrawCollider()
     {
-        return;
-        //if (!BattleManager.Instance.m_IsDrawColliderArea)
-        //{
-        //    return;
-        //}
+        if (BattleTestDataManager.Instance == null || !BattleTestDataManager.Instance.IsDrawColliderArea)
+        {
+            return;
+        }
 
         var player = BattleRealPlayerManager.Instance.Player;
         DrawCollider(player);

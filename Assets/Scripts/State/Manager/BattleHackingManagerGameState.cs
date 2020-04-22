@@ -9,6 +9,7 @@ partial class BattleHackingManager
         public override void OnStart()
         {
             base.OnStart();
+            BattleHackingStageManager.Instance.gameObject.SetActive(true);
             BattleHackingUiManager.Instance.SetAlpha(1);
             BattleHackingInputManager.Instance.RegistInput();
         }

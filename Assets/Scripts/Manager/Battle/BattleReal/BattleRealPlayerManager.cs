@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
-using System;
 
 /// <summary>
 /// リアルモードのプレイヤーキャラを管理する。
