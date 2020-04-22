@@ -36,15 +36,13 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     private BattleParamSet m_ParamSet = default;
     public BattleParamSet ParamSet => m_ParamSet;
 
-    [Header("Video")]
-
-    [SerializeField]
-    private VideoPlayer m_VideoPlayer = default;
-
     [Header("Hacking In Out")]
 
     [SerializeField]
     private HackInOutController m_HackInController;
+
+    [SerializeField]
+    private HackInOutController m_HackOutController;
 
     #endregion
 
@@ -104,12 +102,14 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_HackingManager = BattleHackingManager.Builder(this, paramSet.BattleHackingParamSet);
 
         m_HackInController.OnInitialize();
+        m_HackOutController.OnInitialize();
     }
 
     public override void OnFinalize()
     {
         m_OnChangeState = null;
 
+        m_HackOutController.OnFinalize();
         m_HackInController.OnFinalize();
 
         m_HackingManager.OnFinalize();

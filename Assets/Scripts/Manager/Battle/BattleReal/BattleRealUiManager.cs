@@ -154,7 +154,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
         m_BossUiLeft.OnInitialize();
         m_BossUiRight.OnInitialize();
-        
+
         m_ResultIndicator.OnInitialize();
         m_GameOverController.OnInitialize();
         m_GameOverController.EndAction += OnEndGameOver;
@@ -163,14 +163,16 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_WarningTelop.OnInitialize();
         m_ClearTelop.OnInitialize();
 
-        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        if (DataManager.Instance.IsInvalidAchievement())
         {
             m_AchievementRoot?.SetActive(false);
         }
-
-        if (m_AchievementIndicators != null)
+        else
         {
-            m_AchievementIndicators.ForEach(i => i.OnInitialize());
+            if (m_AchievementIndicators != null)
+            {
+                m_AchievementIndicators.ForEach(i => i.OnInitialize());
+            }
         }
 
         DisableAllBossUI();
@@ -180,7 +182,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     {
         EndAction = null;
 
-        if (m_AchievementIndicators != null)
+        if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
         {
             m_AchievementIndicators.ForEach(i => i.OnFinalize());
         }
@@ -194,7 +196,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
         m_BossUiRight.OnFinalize();
         m_BossUiLeft.OnFinalize();
-        
+
         m_WeaponIndicator.OnFinalize();
         m_EnergyGage.OnFinalize();
         m_EnergyIcon.OnFinalize();
@@ -233,7 +235,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_WarningTelop.OnUpdate();
         m_ClearTelop.OnUpdate();
 
-        if (m_AchievementIndicators != null)
+        if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
         {
             m_AchievementIndicators.ForEach(i => i.OnUpdate());
         }

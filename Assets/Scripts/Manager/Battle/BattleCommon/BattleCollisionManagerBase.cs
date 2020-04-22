@@ -15,6 +15,10 @@ public abstract class BattleCollisionManagerBase<T> : Singleton<T> where T : Bat
     public BattleCollisionManagerBase()
     {
         m_CollisionMaterial = null;
+        if (BattleTestDataManager.Instance != null && BattleTestDataManager.Instance.ColliderMaterial != null)
+        {
+            m_CollisionMaterial = BattleTestDataManager.Instance.ColliderMaterial;
+        }
     }
 
     public override void OnInitialize()
@@ -102,10 +106,10 @@ public abstract class BattleCollisionManagerBase<T> : Singleton<T> where T : Bat
                     break;
             }
 
-            //if (BattleManager.Instance.m_IsDrawOutSideColliderArea)
-            //{
-            //    DrawOutSideRect(cData);
-            //}
+            if (BattleTestDataManager.Instance != null && BattleTestDataManager.Instance.IsDrawOutSideColliderArea)
+            {
+                DrawOutSideRect(cData);
+            }
         }
     }
 

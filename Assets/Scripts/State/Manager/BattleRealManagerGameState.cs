@@ -5,6 +5,7 @@
         public override void OnStart()
         {
             base.OnStart();
+            BattleRealStageManager.Instance.gameObject.SetActive(true);
             BattleRealUiManager.Instance.SetAlpha(1);
             BattleRealInputManager.Instance.RegistInput();
         }

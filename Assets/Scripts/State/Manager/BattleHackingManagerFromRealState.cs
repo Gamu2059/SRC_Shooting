@@ -15,9 +15,6 @@ partial class BattleHackingManager
                 return;
             }
 
-            BattleHackingStageManager.Instance.gameObject.SetActive(true);
-            BattleHackingUiManager.Instance.PlayToHacking();
-
             Target.m_IsDeadPlayer = false;
             Target.m_IsDeadBoss = false;
             Target.m_IsTimeout = false;
