@@ -12,6 +12,10 @@ public class BattleData
 
     private BattleConstantParam m_ConstantParam;
 
+    private BattleAchievementParamSet m_AchievementParamSet;
+
+    private BattleAchievementParam m_AchievementParam;
+
     /// <summary>
     /// 残機
     /// </summary>
@@ -58,6 +62,16 @@ public class BattleData
     public ulong MaxChain { get; private set; }
 
     /// <summary>
+    /// 消した敵弾の数
+    /// </summary>
+    public ulong BulletRemoveCount { get; private set; }
+
+    /// <summary>
+    /// 取得した秘密アイテムの数
+    /// </summary>
+    public ulong SecretItemCount { get; private set; }
+
+    /// <summary>
     /// ハッキング挑戦回数
     /// </summary>
     public int HackingTryCount { get; private set; }
@@ -82,9 +96,10 @@ public class BattleData
 
     #endregion
 
-    public BattleData(BattleConstantParam param)
+    public BattleData(BattleConstantParam constantParam, BattleAchievementParamSet achievementParamSet)
     {
-        m_ConstantParam = param;
+        m_ConstantParam = constantParam;
+        m_AchievementParamSet = achievementParamSet;
     }
 
     public void ResetDataOnChapterStart()
@@ -97,9 +112,15 @@ public class BattleData
         EnergyCharge = 0;
         Chain = 0;
         MaxChain = 0;
+        BulletRemoveCount = 0;
+        SecretItemCount = 0;
         HackingTryCount = 0;
         HackingSuccessCount = 0;
         MinHackingTryNum = 0;
+
+        var chapter = DataManager.Instance.Chapter;
+        var difficulty = DataManager.Instance.Difficulty;
+        m_AchievementParam = m_AchievementParamSet.GetAchievementParam(chapter, difficulty);
     }
 
     public BattleRealPlayerLevelData GetCurrentLevelParam()
@@ -336,6 +357,24 @@ public class BattleData
 
     #endregion
 
+    #region Remove Bullet
+
+    public void IncreaseRemoveBullet()
+    {
+        BulletRemoveCount++;
+    }
+
+    #endregion
+
+    #region Secret Item
+
+    public void IncreaseSecretItem()
+    {
+        SecretItemCount++;
+    }
+
+    #endregion
+
     #region Hacking Succeed Count
 
     public void SetPerfectHackingSuccessCount(int count)
@@ -367,6 +406,60 @@ public class BattleData
         //{
         //    HackingSuccessCount = 0;
         //}
+    }
+
+    #endregion
+
+    #region Achievement
+
+    public ulong GetAchievementTargetLevel()
+    {
+        if (m_AchievementParam == null)
+        {
+            return 0;
+        }
+
+        return m_AchievementParam.TargetLevel;
+    }
+
+    public ulong GetAchievementTargetMaxChain()
+    {
+        if (m_AchievementParam == null)
+        {
+            return 0;
+        }
+
+        return m_AchievementParam.TargetMaxChain;
+    }
+
+    public ulong GetAchievementTargetBulletRemove()
+    {
+        if (m_AchievementParam == null)
+        {
+            return 0;
+        }
+
+        return m_AchievementParam.TargetBulletRemove;
+    }
+
+    public ulong GetAchievementTargetSecretItem()
+    {
+        if (m_AchievementParam == null)
+        {
+            return 0;
+        }
+
+        return m_AchievementParam.TargetSecretItem;
+    }
+
+    public ulong GetAchievementTargetRescue()
+    {
+        if (m_AchievementParam == null)
+        {
+            return 0;
+        }
+
+        return m_AchievementParam.TargetRescue;
     }
 
     #endregion
