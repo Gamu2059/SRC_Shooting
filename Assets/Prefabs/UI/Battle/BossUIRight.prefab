@@ -899,6 +899,7 @@ GameObject:
   - component: {fileID: 717837399648623987}
   - component: {fileID: 717837399648623986}
   - component: {fileID: 1601305602727896628}
+  - component: {fileID: 6299654683391136459}
   m_Layer: 5
   m_Name: BossUIRight
   m_TagString: Untagged
@@ -983,6 +984,22 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_BeginHackDuration: 0.1
+--- !u!114 &6299654683391136459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717837399648623980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e62daa78668c2742951439406c099e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CanvasGroup: {fileID: 717837399648623986}
+  m_Mode: 0
+  m_NormalAlpha: 1
+  m_DuplicateAlpha: 0.2
 --- !u!1 &717837399681521788
 GameObject:
   m_ObjectHideFlags: 0

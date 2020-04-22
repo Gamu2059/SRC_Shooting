@@ -8,9 +8,8 @@
             Target.m_RealManager.RequestChangeState(E_BATTLE_REAL_STATE.FROM_HACKING);
             Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.TO_REAL);
 
-            Target.m_VideoPlayer.clip = Target.m_ParamSet.ToRealMovie;
-            Target.m_VideoPlayer.Play();
-            Target.m_VideoPlayer.gameObject.SetActive(true);
+            Target.m_HackOutController.ChangeToRealModeAction += OnChangeToRealMode;
+            Target.m_HackOutController.OnStart();
 
             AudioManager.Instance.Play(E_COMMON_SOUND.HACK_END);
         }
@@ -18,12 +17,9 @@
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (!Target.m_VideoPlayer.isPlaying)
-            {
-                Target.RequestChangeState(E_BATTLE_STATE.REAL_MODE);
-            }
             Target.m_RealManager.OnUpdate();
             Target.m_HackingManager.OnUpdate();
+            Target.m_HackOutController.OnUpdate();
         }
 
         public override void OnLateUpdate()
@@ -43,8 +39,13 @@
         public override void OnEnd()
         {
             base.OnEnd();
-            Target.m_VideoPlayer.gameObject.SetActive(false);
-            Target.m_VideoPlayer.Stop();
+            Target.m_HackOutController.OnEnd();
+            Target.m_HackOutController.ChangeToRealModeAction -= OnChangeToRealMode;
+        }
+
+        private void OnChangeToRealMode()
+        {
+            Target.RequestChangeState(E_BATTLE_STATE.REAL_MODE);
         }
     }
 }

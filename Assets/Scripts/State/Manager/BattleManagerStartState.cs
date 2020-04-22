@@ -11,10 +11,6 @@
             Target.m_RealManager.RequestChangeState(E_BATTLE_REAL_STATE.START);
             Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.START);
 
-            Target.m_VideoPlayer.gameObject.SetActive(false);
-
-            //Target.BattleRealUiManager.PlayStartTelop();
-
             Target.IsReadyBeforeShow = true;
             Target.RequestChangeState(E_BATTLE_STATE.REAL_MODE);
         }
