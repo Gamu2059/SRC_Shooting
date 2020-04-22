@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bfcd844a8efa330478c0f90ce208cfeb
+guid: b3f95a1781747a946b2fd5bd1bbe4cfd
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -71,7 +71,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: 12
     textureCompression: 1
@@ -102,18 +102,29 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 756f6f25a0563b9469a40278adc16793
+    spriteID: 6059a62cc8bcf784db9e81bbe51f0173
     vertices: []
     indices: 
     edges: []
     weights: []
-  spritePackingTag: InfC761 Hacker1
+  spritePackingTag: Hacking Boss Common
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
