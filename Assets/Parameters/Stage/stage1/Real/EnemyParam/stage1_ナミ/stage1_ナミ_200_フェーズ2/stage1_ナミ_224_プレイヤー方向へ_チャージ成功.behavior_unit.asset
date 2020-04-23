@@ -18,21 +18,37 @@ MonoBehaviour:
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_OnStopOptions: []
-  m_ReferenceDifficultyForBulletGenerator: 0
-  m_BulletGeneratorDatas:
-  - ParamSet: {fileID: 11400000, guid: 6c4d5d48ab7f28045a85771e6129bcbd, type: 2}
-    StartTimeOnFirstActivate: 0
-    StopTimeFromFirstActivate: 0.9
-    ActivateInterval: 0.1
-  - ParamSet: {fileID: 11400000, guid: 9cca174a68e64c448a98599344801f53, type: 2}
-    StartTimeOnFirstActivate: 0
-    StopTimeFromFirstActivate: 0.9
-    ActivateInterval: 0.1
-  - ParamSet: {fileID: 11400000, guid: 9728c8db752f5b342be7d13ba8516e0c, type: 2}
-    StartTimeOnFirstActivate: 2.4
-    StopTimeFromFirstActivate: 2.4
-    ActivateInterval: 100
-  m_DifficultyBulletGeneratorDatas: []
+  m_ReferenceDifficultyForBulletGenerator: 1
+  m_BulletGeneratorDatas: []
+  m_DifficultyBulletGeneratorDatas:
+  - m_Difficulty: 1
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 6c4d5d48ab7f28045a85771e6129bcbd, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0.9
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: 9cca174a68e64c448a98599344801f53, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0.9
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: 9728c8db752f5b342be7d13ba8516e0c, type: 2}
+      StartTimeOnFirstActivate: 2.4
+      StopTimeFromFirstActivate: 2.4
+      ActivateInterval: 100
+  - m_Difficulty: 2
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 6c4d5d48ab7f28045a85771e6129bcbd, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0.9
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: 9cca174a68e64c448a98599344801f53, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0.9
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: 9728c8db752f5b342be7d13ba8516e0c, type: 2}
+      StartTimeOnFirstActivate: 2.4
+      StopTimeFromFirstActivate: 2.4
+      ActivateInterval: 100
   m_DestroyBulletGeneratorOnBehaviorEnd: 1
   m_Duration: 2.5
   m_LerpForTargetCurve:

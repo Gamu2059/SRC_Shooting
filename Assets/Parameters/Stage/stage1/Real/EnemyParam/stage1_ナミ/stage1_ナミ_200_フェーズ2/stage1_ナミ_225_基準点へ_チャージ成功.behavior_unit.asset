@@ -17,36 +17,70 @@ MonoBehaviour:
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []
-  m_BulletGeneratorDatas:
-  - ParamSet: {fileID: 11400000, guid: 69061ddc312bc3645b85cc5643d91f31, type: 2}
-    StartTimeOnFirstActivate: 0.5
-    StopTimeFromFirstActivate: 5
-    ActivateInterval: 1
-  - ParamSet: {fileID: 11400000, guid: 9416e8d6eb18a8b4ab0c22e24b2dd6f7, type: 2}
-    StartTimeOnFirstActivate: 0.5
-    StopTimeFromFirstActivate: 5
-    ActivateInterval: 1
-  - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
-    StartTimeOnFirstActivate: 1
-    StopTimeFromFirstActivate: 0.6
-    ActivateInterval: 0.06
-  - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
-    StartTimeOnFirstActivate: 2
-    StopTimeFromFirstActivate: 0.6
-    ActivateInterval: 0.06
-  - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
-    StartTimeOnFirstActivate: 3
-    StopTimeFromFirstActivate: 0.6
-    ActivateInterval: 0.06
-  - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
-    StartTimeOnFirstActivate: 4
-    StopTimeFromFirstActivate: 0.6
-    ActivateInterval: 0.06
+  m_OnStopOptions: []
+  m_ReferenceDifficultyForBulletGenerator: 1
+  m_BulletGeneratorDatas: []
+  m_DifficultyBulletGeneratorDatas:
+  - m_Difficulty: 1
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 69061ddc312bc3645b85cc5643d91f31, type: 2}
+      StartTimeOnFirstActivate: 0.5
+      StopTimeFromFirstActivate: 5
+      ActivateInterval: 1
+    - ParamSet: {fileID: 11400000, guid: 9416e8d6eb18a8b4ab0c22e24b2dd6f7, type: 2}
+      StartTimeOnFirstActivate: 0.5
+      StopTimeFromFirstActivate: 5
+      ActivateInterval: 1
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 1
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 2
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 3
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 4
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+  - m_Difficulty: 2
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 69061ddc312bc3645b85cc5643d91f31, type: 2}
+      StartTimeOnFirstActivate: 0.5
+      StopTimeFromFirstActivate: 5
+      ActivateInterval: 1
+    - ParamSet: {fileID: 11400000, guid: 9416e8d6eb18a8b4ab0c22e24b2dd6f7, type: 2}
+      StartTimeOnFirstActivate: 0.5
+      StopTimeFromFirstActivate: 5
+      ActivateInterval: 1
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 1
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 2
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 3
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
+    - ParamSet: {fileID: 11400000, guid: 158fab691e0d38140ade533f485d473e, type: 2}
+      StartTimeOnFirstActivate: 4
+      StopTimeFromFirstActivate: 0.6
+      ActivateInterval: 0.06
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpaceType: 1
   m_Duration: 5
   m_UsePosition: 1
   m_TargetPosition: {x: 0, y: 0, z: 0.7}
+  m_IsPassX: 0
+  m_IsPassY: 0
+  m_IsPassZ: 0
   m_PositionLerp:
     serializedVersion: 2
     m_Curve:
