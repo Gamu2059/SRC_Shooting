@@ -24,18 +24,18 @@ MonoBehaviour:
   - m_Difficulty: 1
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: 89041dfaecf428745ad8f5ef9b83b1a4, type: 2}
-      StartTimeOnFirstActivate: 0
-      StopTimeFromFirstActivate: 4
-      ActivateInterval: 0.8
+      StartTimeOnFirstActivate: 0.3
+      StopTimeFromFirstActivate: 3.7
+      ActivateInterval: 1.2
     - ParamSet: {fileID: 11400000, guid: 2f919d4875142f14a907b55907c01478, type: 2}
       StartTimeOnFirstActivate: 0
       StopTimeFromFirstActivate: 4
-      ActivateInterval: 0.8
+      ActivateInterval: 1.2
   - m_Difficulty: 2
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: 89041dfaecf428745ad8f5ef9b83b1a4, type: 2}
-      StartTimeOnFirstActivate: 0
-      StopTimeFromFirstActivate: 4
+      StartTimeOnFirstActivate: 0.3
+      StopTimeFromFirstActivate: 3.7
       ActivateInterval: 0.8
     - ParamSet: {fileID: 11400000, guid: 2f919d4875142f14a907b55907c01478, type: 2}
       StartTimeOnFirstActivate: 0
