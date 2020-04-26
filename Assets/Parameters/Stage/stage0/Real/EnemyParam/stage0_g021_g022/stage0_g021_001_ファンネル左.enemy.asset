@@ -38,8 +38,45 @@ MonoBehaviour:
         - Type: 6
           Num: 5
           Point: 200
-          SpreadRadius: 0
-        CenterCreateItemType: 6
+          SpreadRadius: 0.1
+        CenterCreateItemType: 0
+      m_DefeatEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: b7ac4877143ff78459191856e1f9cb0a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 89aea2cc86ea1624ba7c9e2a3bd47302, type: 2}
+      m_RetireHideTime: 0
+  - Difficulty: 2
+    Param:
+      m_Hp: 120
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: c1768265e3b496846bff4e27abb72ace,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: d949e3f888a1c694695959eb9cfb1e1b,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: db7ce5d55bfb4e54eaa1185dd203306a,
+        type: 2}
+      m_DefeatScore: 0
+      m_DefeatItemParam:
+        ItemSpreadParams:
+        - Type: 6
+          Num: 5
+          Point: 100
+          SpreadRadius: 0.1
+        CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
         m_Params:
