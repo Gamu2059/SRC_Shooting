@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Script: {fileID: 11500000, guid: bd4986c5dc230804db75660344e93281, type: 3}
   m_Name: UD2Golden
   m_EditorClassIdentifier: 
-  m_MultiForLoopUnscriptable:
-    m_ForArray: []
-  m_ShotParam: {fileID: 0}
-  m_MultiForLoop: {fileID: 0}
+  m_ForSetup: {fileID: 11400000, guid: c5ee9d0edad6e6740a65278c0add5927, type: 2}
+  m_MultiForLoop: {fileID: 11400000, guid: a077ecf127eefb8468b3cbd1d7f242e6, type: 2}
   m_BulletParamFreeOperation: {fileID: 0}
-  m_BulletTransform: {fileID: 0}
-  m_BulletShotParams: {fileID: 11400000, guid: ba850303923f53f45aecc542533d9c8f, type: 2}
+  m_BulletParamFreeOperationChangeableInit: {fileID: 11400000, guid: 472ac1c72ba83094b816506384749792,
+    type: 2}
+  m_BulletParamFreeOperationChangeableUpdate: {fileID: 11400000, guid: 9755c02de43db994ea42476de634e14a,
+    type: 2}
+  m_MultiForLoopForTransform: {fileID: 0}
+  m_BulletTransform: {fileID: 11400000, guid: f9ef4add8bc58eb45bd337de2aefe3bf, type: 2}
+  m_BulletShotParams: {fileID: 0}

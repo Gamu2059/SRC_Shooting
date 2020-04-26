@@ -15,6 +15,9 @@ public class HackingBossPhase : ScriptableObject
     [SerializeField, Tooltip("難易度変動演算初期化オブジェクト")]
     private DifficultyInitializer[] m_DifficultyInitializer;
 
+    [SerializeField, Tooltip("攻撃が始まる前の初期化処理")]
+    private ForSetupBase m_ForSetup;
+
     [SerializeField, Tooltip("多重forループ")]
     private MultiForLoop m_MultiForLoop;
 
@@ -49,6 +52,11 @@ public class HackingBossPhase : ScriptableObject
             difficultyInitializer.Setup();
         }
 
+        if (m_ForSetup != null)
+        {
+            m_ForSetup.Setup();
+        }
+
         m_DanmakuArray.OnStarts();
 
         BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
@@ -66,13 +74,16 @@ public class HackingBossPhase : ScriptableObject
 
         TransformSimple transform = null;
 
-        if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
+        if (m_MultiForLoop == null)
         {
-            do
+            transform = m_BossTransform.GetResultTransform();
+        }
+        else
+        {
+            for (m_MultiForLoop.Init(); m_MultiForLoop.IsTrue(); m_MultiForLoop.Process())
             {
                 transform = m_BossTransform.GetResultTransform();
             }
-            while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
         }
 
         m_DanmakuArray.OnUpdates(
@@ -127,3 +138,13 @@ public class HackingBossPhase : ScriptableObject
 //m_CommonOperationVariable.m_PlayerPosition.Value = playerPositionVec2;
 
 //m_CommonOperationVariable.m_ArgumentTime.Value = m_CommonOperationVariable.m_Time.Value;
+
+
+//if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
+//{
+//    do
+//    {
+//        transform = m_BossTransform.GetResultTransform();
+//    }
+//    while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
+//}

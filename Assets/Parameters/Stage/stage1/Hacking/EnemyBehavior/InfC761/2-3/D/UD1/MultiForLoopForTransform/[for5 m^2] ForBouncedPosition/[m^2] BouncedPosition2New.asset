@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928d0fd363f0aae43800a405c68207ed, type: 3}
+  m_Name: '[m^2] BouncedPosition2New'
+  m_EditorClassIdentifier: 
+  m_If: {fileID: 11400000, guid: 893c9393bd924de41b762687d0e34bae, type: 2}
+  m_Vector2Array:
+  - {fileID: 11400000, guid: 4196b23818d1f58459cc91e9d945996c, type: 2}
+  - {fileID: 11400000, guid: 8c6fca759d41ced40a04c13781bf818a, type: 2}
+  - {fileID: 11400000, guid: 3927162dd4c3ea44f90bcae095f22426, type: 2}
+  m_Vector2Last: {fileID: 11400000, guid: 66dbfab79131e0045ae7321c65296dd9, type: 2}

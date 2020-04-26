@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Script: {fileID: 11500000, guid: bd4986c5dc230804db75660344e93281, type: 3}
   m_Name: UD1OmniDirection
   m_EditorClassIdentifier: 
-  m_MultiForLoopUnscriptable:
-    m_ForArray: []
-  m_ShotParam: {fileID: 0}
-  m_MultiForLoop: {fileID: 0}
+  m_ForSetup: {fileID: 0}
+  m_MultiForLoop: {fileID: 11400000, guid: 73e363dedbc9f9a45aff072e09c31e30, type: 2}
   m_BulletParamFreeOperation: {fileID: 0}
-  m_BulletTransform: {fileID: 0}
-  m_BulletShotParams: {fileID: 11400000, guid: e657030354d0e5a4eb34fc6229ff8103, type: 2}
+  m_BulletParamFreeOperationChangeableInit: {fileID: 11400000, guid: ab13577eb37582d4290c3001ad037340,
+    type: 2}
+  m_BulletParamFreeOperationChangeableUpdate: {fileID: 11400000, guid: 542cf4c6983b30d4d8a37059314f8a54,
+    type: 2}
+  m_MultiForLoopForTransform: {fileID: 0}
+  m_BulletTransform: {fileID: 11400000, guid: 3219415b0607275448d95a22fc9ecd8e, type: 2}
+  m_BulletShotParams: {fileID: 0}

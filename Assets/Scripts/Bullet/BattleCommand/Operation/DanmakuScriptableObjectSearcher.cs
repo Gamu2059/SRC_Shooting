@@ -81,4 +81,6 @@ public class DanmakuScriptableObjectSearcher : ScriptableObject
     public OperationVector2Polar operationVector2Polar;
     public OperationVector2Scalartimes operationVector2Scalartimes;
     public OperationVector2Variable operationVector2Variable;
+
+    public OperationFloatSymmetrical operationFloatSymmetrical;
 }

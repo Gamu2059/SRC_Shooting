@@ -19,6 +19,12 @@ public class OperationBoolCompare2 : OperationBoolBase
     private OperationFloatBase m_FloatA;
 
     /// <summary>
+    /// 等号が入るかどうか
+    /// </summary>
+    [SerializeField]
+    private bool m_IsEqual;
+
+    /// <summary>
     /// 値
     /// </summary>
     [SerializeField]
@@ -27,6 +33,13 @@ public class OperationBoolCompare2 : OperationBoolBase
 
     public override bool GetResultBool()
     {
-        return m_FloatA.GetResultFloat() < m_FloatB.GetResultFloat();
+        if (m_IsEqual)
+        {
+            return m_FloatA.GetResultFloat() <= m_FloatB.GetResultFloat();
+        }
+        else
+        {
+            return m_FloatA.GetResultFloat() < m_FloatB.GetResultFloat();
+        }
     }
 }

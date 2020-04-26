@@ -34,7 +34,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     public static BattleHackingFreeTrajectoryBulletController ShotBullet(
         CommandCharaController shotOwner,
         CommonOperationVariable commonOperationVariable,
-        MultiForLoop multiForLoop,
+        ForOnceBase forOnceBase,
         float dTime,
         ShotParamOperation shotParamOperation,
         BulletParamFreeOperation bulletParamFreeOperation,
@@ -60,23 +60,26 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         // 付け足した部分
 
-        // 新しい弾のパラメータの値（今までのやり方なら、nullが入っている）
-        BulletParamFree bulletParamFree;
-
         // 弾の外見のインデックス
         int bulletIndex;
 
-        // 今まで通りなら
-        if (bulletParamFreeOperation == null)
+        if (bulletParamFreeOperationChangeableInit == null)
         {
-            bulletParamFree = null;
-            bulletIndex = shotParamOperation.BulletIndex.GetResultInt();
+            // 1
+            if (bulletParamFreeOperation == null)
+            {
+                bulletIndex = shotParamOperation.BulletIndex.GetResultInt();
+            }
+            // 2
+            else
+            {
+                bulletIndex = bulletParamFreeOperation.GetResultBulletParamFree().m_Int[0];
+            }
         }
-        // 新しいやり方なら
+        // 3
         else
         {
-            bulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
-            bulletIndex = bulletParamFree.m_Int[0];
+            bulletIndex = bulletParamFreeOperationChangeableInit.GetResultBulletParamFree().m_Int[0];
         }
 
 
@@ -109,28 +112,36 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         bullet.m_CommonOperationVariable = commonOperationVariable;
 
 
-        // 今まで通りなら
-        if (bulletParamFreeOperation == null)
+        if (bulletParamFreeOperationChangeableInit == null)
         {
-            bullet.m_ShotParam = new ShotParam(shotParamOperation);
-            bullet.m_BulletParamFree = null;
+            // 1
+            if (bulletParamFreeOperation == null)
+            {
+                bullet.m_ShotParam = new ShotParam(shotParamOperation);
+                bullet.m_BulletParamFree = null;
+                bullet.m_BulletParamFreeChangeable = null;
+                bullet.m_BulletParamFreeChangeableOperation = null;
+            }
+            // 2
+            else
+            {
+                bullet.m_ShotParam = null;
+                bullet.m_BulletParamFree = bulletParamFreeOperation.GetResultBulletParamFree();
+                bullet.m_BulletParamFreeChangeable = null;
+                bullet.m_BulletParamFreeChangeableOperation = null;
+            }
         }
-        // 新しいやり方なら
+        // 3
         else
         {
             bullet.m_ShotParam = null;
-            bullet.m_BulletParamFree = bulletParamFree;
-        }
-
-
-        if (bulletParamFreeOperationChangeableInit != null)
-        {
+            bullet.m_BulletParamFree = null;
             bullet.m_BulletParamFreeChangeable = bulletParamFreeOperationChangeableInit.GetResultBulletParamFree();
             bullet.m_BulletParamFreeChangeableOperation = bulletParamFreeOperationChangeableUpdate;
         }
 
 
-        bullet.m_MultiForLoop = multiForLoop;
+        bullet.m_ForOnceBase = forOnceBase;
 
         bullet.m_Time = dTime;
 
@@ -177,12 +188,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// </summary>
     private CommonOperationVariable m_CommonOperationVariable;
 
-
     /// <summary>
-    /// この弾の物理的状態を決める時の多重forループ
+    /// この弾の物理的状態を決める時の処理
     /// </summary>
-    private MultiForLoop m_MultiForLoop;
-
+    private ForOnceBase m_ForOnceBase;
 
     /// <summary>
     /// 発射してからの経過時間（保存用）
@@ -257,28 +266,12 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         m_CharaHit.OnEnter = OnEnterHitChara;
         m_CharaHit.OnStay = OnStayHitChara;
         m_CharaHit.OnExit = OnExitHitChara;
-
-        //Debug.Log("OnInitialize");
-
-        //if (m_MultiForLoop != null)
-        //{
-        //    Debug.Log("m_MultiForLoop != null");
-        //    m_MultiForLoop.Setup();
-        //}
     }
 
 
     public override void OnStart()
     {
         base.OnStart();
-
-        //Debug.Log("OnStart");
-
-        if (m_MultiForLoop != null)
-        {
-            //Debug.Log("m_MultiForLoop != null");
-            m_MultiForLoop.Setup();
-        }
 
         // もしこの弾が弾を発射するなら、発射のための処理を行う
         if (m_BulletShotParams != null)
@@ -315,7 +308,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             BulletTime.Time = m_Time;
 
             // 今まで通り
-            if (m_BulletParamFree == null)
+            if (m_BulletParamFree == null && m_BulletParamFreeChangeable == null)
             {
                 // 発射パラメータを外部に反映させる
                 m_LaunchParam.SetValue(m_ShotParam);
@@ -326,19 +319,17 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             // 新しいやり方
             else
             {
-                // bool型のパラメータをstatic変数に反映させる
-                BulletBool.BoolArray = m_BulletParamFree.m_Bool;
-
-                // int型のパラメータをstatic変数に反映させる
-                BulletInt.IntArray = m_BulletParamFree.m_Int;
-
-                // float型のパラメータをstatic変数に反映させる
-                BulletFloat.FloatArray = m_BulletParamFree.m_Float;
-
-                // Vector2型のパラメータをstatic変数に反映させる
-                BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
-
-                if (m_BulletParamFreeChangeableOperation != null)
+                // 2
+                if (m_BulletParamFreeChangeable == null)
+                {
+                    // パラメータをstatic変数に反映させる
+                    BulletBool.BoolArray = m_BulletParamFree.m_Bool;
+                    BulletInt.IntArray = m_BulletParamFree.m_Int;
+                    BulletFloat.FloatArray = m_BulletParamFree.m_Float;
+                    BulletVector2.Vector2Array = m_BulletParamFree.m_Vector2;
+                }
+                // 3
+                else
                 {
                     // 変更可能な弾パラメータをstatic変数にロードする
                     BulletBool.BoolArrayChangeable = m_BulletParamFreeChangeable.m_Bool;
@@ -350,30 +341,29 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
                 // 未割当てエラー回避のため
                 transformSimple = null;
 
-                if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
+                if (m_ForOnceBase != null)
                 {
-                    do
-                    {
-                        if (m_BulletParamFreeChangeableOperation != null)
-                        {
-                            // 新しい変更可能パラメータを求める
-                            BulletParamFree bulletParamFree = m_BulletParamFreeChangeableOperation.GetResultBulletParamFree();
-
-                            // 新しい変更可能パラメータをstatic変数にロードする
-                            BulletBool.BoolArrayChangeable = bulletParamFree.m_Bool;
-                            BulletInt.IntArrayChangeable = bulletParamFree.m_Int;
-                            BulletFloat.FloatArrayChangeable = bulletParamFree.m_Float;
-                            BulletVector2.Vector2ArrayChangeable = bulletParamFree.m_Vector2;
-
-                            // この弾の変更可能パラメータを更新する（次のフレームのために）
-                            m_BulletParamFreeChangeable = bulletParamFree;
-                        }
-
-                        // この弾の物理的な状態を外部の演算により求める（慣性に従って求めるための引数は意味がないものにした）
-                        transformSimple = m_TransformOperation.GetResultTransform(null, 0);
-                    }
-                    while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
+                    m_ForOnceBase.Do();
                 }
+
+                // 3
+                if (m_BulletParamFreeChangeableOperation != null)
+                {
+                    // 新しい変更可能パラメータを求める
+                    BulletParamFree bulletParamFree = m_BulletParamFreeChangeableOperation.GetResultBulletParamFree();
+
+                    // 新しい変更可能パラメータをstatic変数にロードする
+                    BulletBool.BoolArrayChangeable = bulletParamFree.m_Bool;
+                    BulletInt.IntArrayChangeable = bulletParamFree.m_Int;
+                    BulletFloat.FloatArrayChangeable = bulletParamFree.m_Float;
+                    BulletVector2.Vector2ArrayChangeable = bulletParamFree.m_Vector2;
+
+                    // この弾の変更可能パラメータを更新する（次のフレームのために）
+                    m_BulletParamFreeChangeable = bulletParamFree;
+                }
+
+                // この弾の物理的な状態を外部の演算により求める（慣性に従って求めるための引数は意味がないものにした）
+                transformSimple = m_TransformOperation.GetResultTransform(null, 0);
             }
         }
 
@@ -393,14 +383,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         {
             m_BulletShotParams.OnUpdates(m_Boss, m_CommonOperationVariable);
         }
-
-        //Debug.Log(m_CommonOperationVariable.PreviousTime.GetResultFloat().ToString() + ", " + m_CommonOperationVariable.NowTime.GetResultFloat().ToString());
     }
 
     public override void OnLateUpdate()
     {
-        // 以下、元々OnLateUpdate()内にあった処理。
-
         base.OnLateUpdate();
 
         if (!m_IsAlive)
@@ -691,3 +677,40 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
 //position.x < CommonOperationVar.PositionXMin.GetResultFloat() || CommonOperationVar.PositionXMax.GetResultFloat() < position.x ||
 //position.z < CommonOperationVar.PositionYMin.GetResultFloat() || CommonOperationVar.PositionYMax.GetResultFloat() < position.z
+
+
+//Debug.Log(m_CommonOperationVariable.PreviousTime.GetResultFloat().ToString() + ", " + m_CommonOperationVariable.NowTime.GetResultFloat().ToString());
+
+
+// 以下、元々OnLateUpdate()内にあった処理。
+
+
+// 新しい弾のパラメータの値（今までのやり方なら、nullが入っている）
+
+
+//BulletParamFree bulletParamFree;
+
+
+//Debug.Log("OnInitialize");
+
+//if (m_MultiForLoop != null)
+//{
+//    Debug.Log("m_MultiForLoop != null");
+//    m_MultiForLoop.Setup();
+//}
+
+
+//if (m_MultiForLoop == null ? true : m_MultiForLoop.Init())
+//{
+//    do
+//    {
+
+//    }
+//    while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
+//}
+
+
+//if (m_ForOnceBase != null)
+//{
+//    m_ForOnceBase.Setup();
+//}

@@ -9,15 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Script: {fileID: 11500000, guid: bd4986c5dc230804db75660344e93281, type: 3}
   m_Name: UD1U
   m_EditorClassIdentifier: 
-  m_DifficultyInitializer: {fileID: 11400000, guid: 5ee2e7b68e412f847a7cb914c8152d8f,
-    type: 2}
-  m_MultiForLoopUnscriptable:
-    m_ForArray: []
-  m_ShotParam: {fileID: 0}
-  m_MultiForLoop: {fileID: 0}
+  m_ForSetup: {fileID: 0}
+  m_MultiForLoop: {fileID: 11400000, guid: cc2616faa259e9e418b102ad53194f42, type: 2}
   m_BulletParamFreeOperation: {fileID: 0}
-  m_BulletTransform: {fileID: 0}
-  m_BulletShotParams: {fileID: 11400000, guid: f9013bbf372ac67409e458a2b5193501, type: 2}
+  m_BulletParamFreeOperationChangeableInit: {fileID: 11400000, guid: d8b0c098071f7f34bbc1a4f2b2386554,
+    type: 2}
+  m_BulletParamFreeOperationChangeableUpdate: {fileID: 11400000, guid: d4befe05dac24c44e819d0212e1a1f18,
+    type: 2}
+  m_MultiForLoopForTransform: {fileID: 11400000, guid: dbfd2ce926a4cb440abd860efb614b7c,
+    type: 2}
+  m_BulletTransform: {fileID: 11400000, guid: 208bae1a841c26240bd9b128a353409f, type: 2}
+  m_BulletShotParams: {fileID: 0}

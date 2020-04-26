@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b8a6b4a652a6f409ec12c6e0aa732b, type: 3}
+  m_Script: {fileID: 11500000, guid: bd4986c5dc230804db75660344e93281, type: 3}
   m_Name: UD2Jikinerai
   m_EditorClassIdentifier: 
-  m_MultiForLoopUnscriptable:
-    m_ForArray: []
-  m_ShotParam: {fileID: 0}
-  m_MultiForLoop: {fileID: 0}
+  m_ForSetup: {fileID: 0}
+  m_MultiForLoop: {fileID: 11400000, guid: 2758fa1c5cca6234c8e49f79df16275f, type: 2}
   m_BulletParamFreeOperation: {fileID: 0}
-  m_BulletTransform: {fileID: 0}
-  m_BulletShotParams: {fileID: 11400000, guid: c5c07445c01d72c498fa9d4adc7b0313, type: 2}
+  m_BulletParamFreeOperationChangeableInit: {fileID: 11400000, guid: 061872d305f67fd44958a375a53cff45,
+    type: 2}
+  m_BulletParamFreeOperationChangeableUpdate: {fileID: 11400000, guid: 3069769b96854b043b07c08e7c813b62,
+    type: 2}
+  m_MultiForLoopForTransform: {fileID: 0}
+  m_BulletTransform: {fileID: 11400000, guid: db5106722d16f414380e6e4854eeb279, type: 2}
+  m_BulletShotParams: {fileID: 0}

@@ -30,6 +30,7 @@ MonoBehaviour:
   operationFloatAriari: {fileID: 0}
   operationFloatArithmeseq: {fileID: 0}
   operationFloatConstant: {fileID: 0}
+  operationFloatConstantJuncDifficulty: {fileID: 0}
   operationFloatCos: {fileID: 0}
   operationFloatCross: {fileID: 0}
   operationFloatDelegate: {fileID: 0}
@@ -53,6 +54,7 @@ MonoBehaviour:
   operationIntBase: {fileID: 0}
   bulletInt: {fileID: 0}
   operationIntConstant: {fileID: 0}
+  operationIntConstantJuncDifficulty: {fileID: 0}
   operationIntDelegate: {fileID: 0}
   operationIntFloor: {fileID: 0}
   operationIntJuncDifficulty: {fileID: 0}
@@ -68,6 +70,7 @@ MonoBehaviour:
   operationVector2BezierPV: {fileID: 0}
   operationVector2Cartesian: {fileID: 0}
   operationVector2Constant: {fileID: 0}
+  operationVector2ConstantJuncDifficulty: {fileID: 0}
   operationVector2Delegate: {fileID: 0}
   operationVector2JuncDifficulty: {fileID: 0}
   operationVector2JuncFloat: {fileID: 0}
@@ -77,3 +80,5 @@ MonoBehaviour:
   operationVector2Polar: {fileID: 0}
   operationVector2Scalartimes: {fileID: 0}
   operationVector2Variable: {fileID: 0}
+  operationFloatSymmetrical: {fileID: 11400000, guid: 4e56345e36e27bc4bb9ffe81deaf366a,
+    type: 2}

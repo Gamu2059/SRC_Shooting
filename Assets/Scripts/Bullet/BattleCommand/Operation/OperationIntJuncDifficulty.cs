@@ -42,12 +42,6 @@ public class OperationIntJuncDifficulty : OperationIntBase
     private OperationIntBase m_Hades;
 
 
-    public override float GetResultFloat()
-    {
-        return GetResultInt();
-    }
-
-
     public override int GetResultInt()
     {
         switch (DanmakuDifficulty.Difficulty)
