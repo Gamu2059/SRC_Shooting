@@ -30,7 +30,7 @@ MonoBehaviour:
       m_OnStartBehaviorEvents: []
       m_BehaviorType: 1
       m_Behavior: {fileID: 0}
-      m_BehaviorGroup: {fileID: 11400000, guid: b4c1f3027e874464ba08ead57a2bb9a2,
+      m_BehaviorGroup: {fileID: 11400000, guid: c2ee769dddc4b4d42afbb668ed78ccbb,
         type: 2}
       m_DefeatScore: 100
       m_DefeatItemParam:
@@ -43,3 +43,37 @@ MonoBehaviour:
           Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
       m_DefeatHideTime: 0
       m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0
+  - Difficulty: 2
+    Param:
+      m_Hp: 100
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 80c0b1f1409a6df4581faed5b1bb6eda,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: aea7ce051e8a73047a08a41c1c009d07,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: c2ee769dddc4b4d42afbb668ed78ccbb,
+        type: 2}
+      m_DefeatScore: 100
+      m_DefeatItemParam:
+        ItemSpreadParams: []
+        CenterCreateItemType: 0
+      m_DefeatEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0

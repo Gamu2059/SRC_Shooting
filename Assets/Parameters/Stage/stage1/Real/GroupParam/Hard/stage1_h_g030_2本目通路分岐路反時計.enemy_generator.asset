@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99a5c759d485134cacde491a61d1e7e, type: 3}
+  m_Name: "stage1_h_g030_2\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF\u53CD\u6642\u8A08.enemy_generator"
+  m_EditorClassIdentifier: 
+  m_UseStopCondition: 0
+  m_StopCondition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 0
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
+  m_ParamSet: {fileID: 11400000, guid: 25ca2d59df9bb414897d201745aad817, type: 2}
+  m_CenterPositionType: 0
+  m_SpecifyCenterPosition: {x: 0, y: 0}
+  m_Radius: 1.5
+  m_BeginAngle: 0
+  m_EndAngle: 337.5
+  m_GenerateAngle: 0
+  m_GenerateNum: 16
+  m_GenerateTimingType: 1
+  m_GenerateOffsetTime: 0
+  m_GenerateInterval: 0

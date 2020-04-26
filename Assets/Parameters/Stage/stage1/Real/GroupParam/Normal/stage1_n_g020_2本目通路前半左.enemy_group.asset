@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91201f4ed5c7adb42a51159df391dd9f, type: 3}
+  m_Name: "stage1_n_g020_2\u672C\u76EE\u901A\u8DEF\u524D\u534A\u5DE6.enemy_group"
+  m_EditorClassIdentifier: 
+  m_ViewPortPos: {x: 0.25, y: 1.2}
+  m_OffsetPosFromViewPort: {x: 0, y: 0, z: 0}
+  m_GenerateAngle: 180
+  m_EnemyGenerator: {fileID: 11400000, guid: a748917d137a1c44bb594a1a63437d6d, type: 2}
+  m_Behavior: {fileID: 11400000, guid: e7a15bb870e46eb47805222fe3c602e5, type: 2}
+  m_OnGenerateGroupEvents: []
+  m_UseDestroyCondition: 0
+  m_DestroyCondition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 0
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
