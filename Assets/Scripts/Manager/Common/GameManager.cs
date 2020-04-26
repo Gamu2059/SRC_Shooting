@@ -20,12 +20,20 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         public BattleConstantParam BattleConstantParam => m_BattleConstantParam;
 
         [SerializeField]
+        private BattleAchievementParamSet m_BattleAchievementParamSet;
+        public BattleAchievementParamSet BattleAchievementParamSet => m_BattleAchievementParamSet;
+
+        [SerializeField]
         private AdxAssetParam m_AdxAssetParam;
         public AdxAssetParam AdxAssetParam => m_AdxAssetParam;
     }
 
     [SerializeField]
     private GameManagerParamSet m_GameManagerParamSet;
+
+    [SerializeField]
+    private BattleParamSetHolder m_BattleParamSetHolder;
+    public BattleParamSetHolder BattleParamSetHolder => m_BattleParamSetHolder;
 
     #region Manager
 
@@ -88,7 +96,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         AudioManager.Instance.OnInitialize();
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
-        DataManager.Builder(m_GameManagerParamSet.BattleConstantParam);
+        DataManager.Builder(m_GameManagerParamSet.BattleConstantParam, m_GameManagerParamSet.BattleAchievementParamSet);
         PlayerRecordManager.OnInitialize();
 	}
 

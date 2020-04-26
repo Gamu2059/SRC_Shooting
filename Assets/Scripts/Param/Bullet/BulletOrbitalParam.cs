@@ -80,14 +80,4 @@ public struct BulletOrbitalParam
 
 	[Tooltip( "Lerpの適用は絶対か相対か" )]
 	public E_RELATIVE LerpRelative;
-
-
-	[Space()]
-	[Header( "Option" )]
-
-	[Tooltip( "オプションのGameObjectパラメータ" )]
-	public OptionObjectParam[] OptionObjectParams;
-
-	[Tooltip( "オプションのfloatパラメータ" )]
-	public OptionValueParam[] OptionValueParams;
 }

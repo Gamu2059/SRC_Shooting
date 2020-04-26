@@ -9,6 +9,8 @@ using System;
 [Serializable]
 public class BattleRealEventContent
 {
+    #region Define
+
     public enum E_EVENT_TYPE
     {
         /// <summary>
@@ -148,6 +150,10 @@ public class BattleRealEventContent
         DELAY,
     }
 
+    #endregion
+
+    #region Field Inspector
+
     public string ContentName;
 
     [Header("共通パラメータ")]
@@ -230,4 +236,5 @@ public class BattleRealEventContent
 
     public BattleRealEventTriggerParam[] ExecuteEvents;
 
+    #endregion
 }

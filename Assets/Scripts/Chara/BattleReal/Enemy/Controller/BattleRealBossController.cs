@@ -110,6 +110,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     private BossChargeController m_ChargeController;
 
     /// <summary>
+    /// 表示に用いる名前。
+    /// </summary>
+    public string BossName { get; private set; }
+
+    /// <summary>
     /// ダウンHPの現在値。通常弾に被弾してこれが0以下になるとダウンする。
     /// </summary>
     public float NowDownHp { get; private set; }
@@ -164,6 +169,13 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
     #endregion
 
+    #region Open Callback
+
+    public Action HideAction;
+    public Action FinalizeAction;
+
+    #endregion
+
     #region Game Cycle
 
     protected override void OnSetParamSet()
@@ -209,6 +221,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         m_BehaviorController.OnInitialize();
         m_DownBehaviorController.OnInitialize();
 
+        BossName = m_BossParam.BossName;
         InitializeBehaviorSet();
 
         WillDestroyOnOutOfEnemyField = false;
@@ -273,6 +286,10 @@ public partial class BattleRealBossController : BattleRealEnemyBase
 
     public override void OnFinalize()
     {
+        FinalizeAction?.Invoke();
+        FinalizeAction = null;
+        HideAction = null;
+
         m_DownBehaviorController.OnFinalize();
         m_BehaviorController.OnFinalize();
         m_DownBehaviorController = null;
@@ -544,5 +561,11 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         IsChargeSuccess = true;
         IsCharging = false;
         m_ChargeController?.Stop();
+    }
+
+    private void CallHideAction()
+    {
+        HideAction?.Invoke();
+        HideAction = null;
     }
 }

@@ -31,3 +31,20 @@ MonoBehaviour:
       m_ShotNum: 10
       m_ShotOffsetTime: 0
       m_ShotInterval: 0.1
+  - Difficulty: 2
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 8f9f084ebd1e90b48b42654bd55d3e4f, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 380543fcfd9a09141aaafc2cc7438e8d, type: 2}
+      m_ShotTransformName: Core
+      m_ShotPointNum: 1
+      m_ShotPointRadius: 0.1
+      m_ShotPointOffsetAngleFromTransform: 0
+      m_ShotPointAngleSpeedFromTransform: 0
+      m_ShotOverallStartEffect:
+        m_Params: []
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotNum: 10
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0.1

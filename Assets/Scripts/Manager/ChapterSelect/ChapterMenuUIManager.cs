@@ -7,53 +7,61 @@ using UnityEngine.UI;
 
 public class ChapterMenuUIManager : ControllableMonoBehavior
 {
-    private const string MENU_ENABLE = "menu_enable";
-    private const string MENU_DISABLE = "menu_disable";
-    private const string MENU_ENABLE_FORCE = "menu_enable_force";
-    private const string MENU_DISABLE_FORCE = "menu_disable_force";
+    #region Field Inspector
 
     [SerializeField]
-    private Animator[] m_MenuAnimators;
+    private CommonUiStatedButton m_BackButton;
+    public CommonUiStatedButton BackButton => m_BackButton;
 
-    private int m_EnableIdx;
+    [SerializeField]
+    private CommonUiStatedButton m_StartButton;
+    public CommonUiStatedButton StartButton => m_StartButton;
+
+    [SerializeField]
+    private CommonUiMenu m_DifficultyMenu;
+    public CommonUiMenu DifficultyMenu => m_DifficultyMenu;
+
+    [SerializeField]
+    private CommonUiMenu m_ChapterMenu;
+    public CommonUiMenu ChapterMenu => m_ChapterMenu;
+
+    [SerializeField]
+    private CommonUiMenu m_OptionMenu;
+    public CommonUiMenu OptionMenu => m_OptionMenu;
+
+    #endregion
+
+    #region Game Cycle
 
     public override void OnInitialize()
     {
         base.OnInitialize();
-        DisableAllMenuForce();
-
-        ForcusMenu(0, true);
+        m_DifficultyMenu.OnInitialize();
+        m_ChapterMenu.OnInitialize();
+        m_OptionMenu.OnInitialize();
+        m_BackButton.OnInitialize();
+        m_StartButton.OnInitialize();
     }
 
-    public void DisableAllMenuForce()
+    public override void OnFinalize()
     {
-        foreach (var m in m_MenuAnimators)
-        {
-            m.Play(MENU_DISABLE_FORCE, 0);
-        }
+        m_StartButton.OnFinalize();
+        m_BackButton.OnFinalize();
+        m_OptionMenu.OnFinalize();
+        m_ChapterMenu.OnFinalize();
+        m_DifficultyMenu.OnFinalize();
+        base.OnFinalize();
     }
 
-    private void EnableMenu(int idx)
+    public override void OnUpdate()
     {
-        var i = Mathf.Clamp(idx, 0, m_MenuAnimators.Length - 1);
-        var m = m_MenuAnimators[i];
-        m.Play(MENU_ENABLE_FORCE, 0);
+        base.OnUpdate();
+        m_DifficultyMenu.OnUpdate();
+        m_ChapterMenu.OnUpdate();
+        m_OptionMenu.OnUpdate();
+        m_BackButton.OnUpdate();
+        m_StartButton.OnUpdate();
     }
 
-    private void DisableMenu(int idx)
-    {
-        var i = Mathf.Clamp(idx, 0, m_MenuAnimators.Length - 1);
-        var m = m_MenuAnimators[i];
-        m.Play(MENU_DISABLE, 0);
-    }
-
-    public void ForcusMenu(int idx, bool isForce = false)
-    {
-        if (m_EnableIdx != idx || isForce)
-        {
-            DisableMenu(m_EnableIdx);
-            EnableMenu(idx);
-            m_EnableIdx = idx;
-        }
-    }
+    #endregion
 }

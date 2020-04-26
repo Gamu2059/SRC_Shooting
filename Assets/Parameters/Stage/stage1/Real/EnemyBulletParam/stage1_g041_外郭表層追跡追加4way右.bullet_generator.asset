@@ -30,6 +30,25 @@ MonoBehaviour:
         - Delay: 0
           Effect: {fileID: 11400000, guid: 10fd497e54257754299abb8b7a969948, type: 2}
       m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
+      m_ShotNum: 40
+      m_ShotOffsetTime: 0.6
+      m_ShotInterval: 0.2
+  - Difficulty: 2
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 28e5a99ca7e28b842a96de528b3b4033, type: 2}
+      m_ShotTransformName: CannonBulletBase
+      m_ShotPointNum: 4
+      m_ShotPointRadius: 0.27
+      m_ShotPointOffsetAngleFromTransform: 45
+      m_ShotPointAngleSpeedFromTransform: 90
+      m_ShotOverallStartEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 10fd497e54257754299abb8b7a969948, type: 2}
+      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
       m_ShotNum: 50
       m_ShotOffsetTime: 0.6
-      m_ShotInterval: 0.18
+      m_ShotInterval: 0.16

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0036afe2e7ad8e54e8d398a0aa6ea376, type: 3}
+  m_Name: "stage0_\u30DC\u30B9_lv2.hacker"
+  m_EditorClassIdentifier: 
+  m_BehaviorClass: BattleHackingBoss
+  m_BulletSetParam: {fileID: 11400000, guid: 75e32b629273e75448bd8c342cd6ae5e, type: 2}
+  m_EnemyLookParamSet: {fileID: 11400000, guid: 2da267c608cee1e4da66234f558b3d84,
+    type: 2}
+  m_BehaviorParamSets:
+  - {fileID: 11400000, guid: fa58aca3753deff4185098eb3534a97e, type: 2}
+  m_DeadBehaviorParamSet: {fileID: 11400000, guid: 0b8e41c72cf736f41b69797a2bf0d357,
+    type: 2}

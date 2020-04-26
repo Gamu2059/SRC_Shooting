@@ -16,6 +16,8 @@ partial class BattleRealBossController
                 BattleRealEffectManager.Instance.CreateEffect(Target.m_BossParam.HackingFailureEffectParam, Target.transform);
             }
 
+            var recoverDownHp = Target.MaxDownHp * Target.m_BossParam.HackingFailureRecoverDownHpRate;
+            Target.RecoverDownHp(recoverDownHp);
             Target.RequestChangeState(E_STATE.BEHAVIOR);
         }
     }

@@ -13,8 +13,7 @@ public class CharacterUpAxisController : ControllableMonoBehavior, IAutoControlO
     [SerializeField]
     private float m_OffsetAngle;
 
-    private bool m_IsEnableController;
-    public bool IsEnableController { get { return m_IsEnableController; } set { m_IsEnableController = value; } }
+    public bool IsEnableController { get; set; }
 
     private Transform m_FrontCamera;
 

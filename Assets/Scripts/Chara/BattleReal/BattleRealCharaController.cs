@@ -379,33 +379,23 @@ public class BattleRealCharaController : BattleRealObjectBase
     #endregion
 
     /// <summary>
-    /// 複数の弾を拡散させたい時の拡散角度のリストを取得する。
+    /// キャラクタに付属しているコンポーネントを取得する。
     /// </summary>
-    /// <param name="bulletNum">弾の個数</param>
-    /// <param name="spreadAngle">弾同士の角度間隔</param>
-    public static List<float> GetBulletSpreadAngles(int bulletNum, float spreadAngle)
+    public T GetAutoController<T>() where T : ControllableMonoBehavior, IAutoControlOnCharaController
     {
-        List<float> spreadAngles = new List<float>();
-
-        if (bulletNum % 2 == 1)
+        if (AutoControlBehaviors == null)
         {
-            spreadAngles.Add(0f);
-
-            for (int i = 0; i < (bulletNum - 1) / 2; i++)
-            {
-                spreadAngles.Add(spreadAngle * (i + 1f));
-                spreadAngles.Add(spreadAngle * -(i + 1f));
-            }
+            return null;
         }
-        else
+
+        foreach (var b in AutoControlBehaviors)
         {
-            for (int i = 0; i < bulletNum / 2; i++)
+            if (b is T c)
             {
-                spreadAngles.Add(spreadAngle * (i + 0.5f));
-                spreadAngles.Add(spreadAngle * -(i + 0.5f));
+                return c;
             }
         }
 
-        return spreadAngles;
+        return null;
     }
 }

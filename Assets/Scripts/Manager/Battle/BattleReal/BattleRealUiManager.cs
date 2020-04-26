@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 {
@@ -31,16 +32,19 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     [Header("Indicator")]
 
     [SerializeField]
-    private Text m_ModeIndicator;
+    private Text m_ChapterIndicator;
 
     [SerializeField]
-    private Text m_StageIndicator;
+    private Text m_DifficultyIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_BestScoreIndicator;
+    private TextValueIndicator m_BestScoreIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_ScoreIndicator;
+    private TextValueIndicator m_ScoreIndicator;
+
+    [SerializeField]
+    private TextValueIndicator m_ChainIndicator;
 
     [SerializeField]
     private IconCountIndicator m_LifeIndicator;
@@ -49,25 +53,34 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     private IconCountIndicator m_LevelIcon;
 
     [SerializeField]
-    private IconGageIndicator m_LevelGage;
+    private IconGaugeIndicator m_LevelGage;
 
     [SerializeField]
     private IconCountIndicator m_EnergyIcon;
 
     [SerializeField]
-    private IconGageIndicator m_EnergyGage;
+    private IconGaugeIndicator m_EnergyGage;
 
     [SerializeField]
     private WeaponIndicator m_WeaponIndicator;
-    [SerializeField]
-    private IconGageIndicator m_BossHpGage;
-    [SerializeField]
-    private IconGageIndicator m_BossDownGage;
-    [SerializeField]
-    private RemainingHackingNumIndicator m_BossRemainingHackingIndicator;
+
+    [Space()]
+    [Header("Achievement")]
 
     [SerializeField]
-    private GameObject m_BossUI;
+    private GameObject m_AchievementRoot;
+
+    [SerializeField]
+    private List<AchievementIndicator> m_AchievementIndicators;
+
+    [Space()]
+    [Header("Boss UI")]
+
+    [SerializeField]
+    private BattleRealBossUI m_BossUiLeft;
+
+    [SerializeField]
+    private BattleRealBossUI m_BossUiRight;
 
     [Header("Telop Indicator")]
 
@@ -87,9 +100,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
     [SerializeField]
     private Animator m_ResultViewAnimator;
-
-    [SerializeField]
-    private Animator m_StageClearAnimator;
 
     [Header("Result")]
 
@@ -128,21 +138,23 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     {
         base.OnInitialize();
 
-        m_ModeIndicator.text = DataManager.Instance.GameMode.ToString();
-        m_StageIndicator.text = DataManager.Instance.Chapter.ToString().Replace("_", " ");
+        m_ChapterIndicator.text = DataManager.Instance.GetChapterString();
+        m_DifficultyIndicator.text = DataManager.Instance.Difficulty.ToString();
 
         m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
+        m_ChainIndicator.OnInitialize();
         m_LifeIndicator.OnInitialize();
         m_LevelIcon.OnInitialize();
         m_LevelGage.OnInitialize();
         m_EnergyIcon.OnInitialize();
         m_EnergyGage.OnInitialize();
         m_WeaponIndicator.OnInitialize();
-        m_BossHpGage.OnInitialize();
-        m_BossDownGage.OnInitialize();
-        m_BossRemainingHackingIndicator.OnInitialize();
+
+        m_BossUiLeft.OnInitialize();
+        m_BossUiRight.OnInitialize();
+
         m_ResultIndicator.OnInitialize();
         m_GameOverController.OnInitialize();
         m_GameOverController.EndAction += OnEndGameOver;
@@ -151,12 +163,29 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_WarningTelop.OnInitialize();
         m_ClearTelop.OnInitialize();
 
-        SetEnableBossUI(false);
+        if (DataManager.Instance.IsInvalidAchievement())
+        {
+            m_AchievementRoot?.SetActive(false);
+        }
+        else
+        {
+            if (m_AchievementIndicators != null)
+            {
+                m_AchievementIndicators.ForEach(i => i.OnInitialize());
+            }
+        }
+
+        DisableAllBossUI();
     }
 
     public override void OnFinalize()
     {
         EndAction = null;
+
+        if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnFinalize());
+        }
 
         m_ClearTelop.OnFinalize();
         m_WarningTelop.OnFinalize();
@@ -164,15 +193,17 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
         m_GameOverController.OnFinalize();
         m_ResultIndicator.OnFinalize();
-        m_BossRemainingHackingIndicator.OnFinalize();
-        m_BossDownGage.OnFinalize();
-        m_BossHpGage.OnFinalize();
+
+        m_BossUiRight.OnFinalize();
+        m_BossUiLeft.OnFinalize();
+
         m_WeaponIndicator.OnFinalize();
         m_EnergyGage.OnFinalize();
         m_EnergyIcon.OnFinalize();
         m_LevelGage.OnFinalize();
         m_LevelIcon.OnFinalize();
         m_LifeIndicator.OnFinalize();
+        m_ChainIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
         m_FrontViewEffect.OnFinalize();
@@ -186,22 +217,30 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_FrontViewEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
+        m_ChainIndicator.OnUpdate();
         m_LifeIndicator.OnUpdate();
         m_LevelIcon.OnUpdate();
         m_LevelGage.OnUpdate();
         m_EnergyIcon.OnUpdate();
         m_EnergyGage.OnUpdate();
         m_WeaponIndicator.OnUpdate();
-        m_BossHpGage.OnUpdate();
-        m_BossDownGage.OnUpdate();
-        m_BossRemainingHackingIndicator.OnUpdate();
+
+        m_BossUiLeft.OnUpdate();
+        m_BossUiRight.OnUpdate();
+
         m_ResultIndicator.OnUpdate();
         m_GameOverController.OnUpdate();
 
         m_StartTelop.OnUpdate();
         m_WarningTelop.OnUpdate();
         m_ClearTelop.OnUpdate();
-        
+
+        if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnUpdate());
+        }
+
+
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;
@@ -210,16 +249,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     }
 
     #endregion
-
-    /// <summary>
-    /// ハッキングモードに遷移する時のビューの透明度アニメーションを再生する。
-    /// </summary>
-    [Obsolete("ハッキングモードに遷移する時は新しい演出を使用して下さい。")]
-    public void PlayToHacking()
-    {
-        m_MainViewAnimator.Play(TO_HACKING, 0);
-        m_ResultViewAnimator.Play(TO_HACKING, 0);
-    }
 
     /// <summary>
     /// リアルモードに遷移する時のビューの透明度アニメーションを再生する。
@@ -240,10 +269,29 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     }
 
     /// <summary>
-    /// リアルモードのボスUIの有効無効を設定する。
+    /// ボスUIを有効にする。
     /// </summary>
-    public void SetEnableBossUI(bool isEnable){
-        m_BossUI.SetActive(isEnable);
+    public void EnableBossUI(BattleRealBossController boss)
+    {
+        if (boss == null)
+        {
+            return;
+        }
+
+        if (m_BossUiLeft != null && m_BossUiLeft.ReferencedBoss == null)
+        {
+            m_BossUiLeft.EnableBossUI(boss);
+        }
+        else if (m_BossUiRight != null && m_BossUiRight.ReferencedBoss == null)
+        {
+            m_BossUiRight.EnableBossUI(boss);
+        }
+    }
+
+    public void DisableAllBossUI()
+    {
+        m_BossUiLeft?.DisableBossUI();
+        m_BossUiRight?.DisableBossUI();
     }
 
     /// <summary>

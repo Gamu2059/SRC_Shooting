@@ -20,11 +20,6 @@ public class HackInOutController : ControllableMonoBehavior
 
     #endregion
 
-    private void Awake()
-    {
-        gameObject.SetActive(false);
-    }
-
     public override void OnInitialize()
     {
         base.OnInitialize();
