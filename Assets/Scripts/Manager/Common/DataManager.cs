@@ -30,11 +30,6 @@ public class DataManager : Singleton<DataManager>
     public E_CHAPTER Chapter;
 
     /// <summary>
-    /// バトルパラメータセット
-    /// </summary>
-    public BattleParamSet BattleParamSet { get; private set; }
-
-    /// <summary>
     /// バトル用変数データ。
     /// </summary>
     public BattleData BattleData { get; private set; }
@@ -61,6 +56,14 @@ public class DataManager : Singleton<DataManager>
     {
 
         base.OnFinalize();
+    }
+
+    /// <summary>
+    /// バトルパラメータセットを取得する。
+    /// </summary>
+    public BattleParamSet GetCurrentBattleParamSet()
+    {
+        return GameManager.Instance.BattleParamSetHolder.GetBattleParamSet(Chapter, Difficulty);
     }
 
     /// <summary>

@@ -31,6 +31,10 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
     [SerializeField]
     private GameManagerParamSet m_GameManagerParamSet;
 
+    [SerializeField]
+    private BattleParamSetHolder m_BattleParamSetHolder;
+    public BattleParamSetHolder BattleParamSetHolder => m_BattleParamSetHolder;
+
     #region Manager
 
     [SerializeField]
