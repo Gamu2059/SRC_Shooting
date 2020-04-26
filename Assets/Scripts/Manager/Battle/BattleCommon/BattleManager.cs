@@ -175,29 +175,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     }
 
     /// <summary>
-    /// このステージでは最短で何回でハッキング完了になるかを計上する。
-    /// </summary>
-    private void CalcPerfectHackingSuccessNum()
-    {
-        var generator = m_ParamSet.BattleRealParamSet.EnemyManagerParamSet.Generator;
-        int sum = 0;
-
-        //現状は、理論的に計上不可能
-        //foreach (var group in generator.Contents)
-        //{
-        //    foreach (var enemy in group.GroupGenerateParamSet.IndividualGenerateParamSets)
-        //    {
-        //        if (enemy.EnemyGenerateParamSet is BattleRealBossGenerateParamSet bossParamSet)
-        //        {
-        //            sum += bossParamSet.HackingCompleteNum;
-        //        }
-        //    }
-        //}
-
-        DataManager.Instance.BattleData.SetPerfectHackingSuccessCount(sum);
-    }
-
-    /// <summary>
     /// GameOverControllerがBattleManagerに紐づいているのでとりあえずここで再生メソッドを定義する。
     /// しかし、最終的にはBattleRealUiManagerに紐づける。
     /// </summary>

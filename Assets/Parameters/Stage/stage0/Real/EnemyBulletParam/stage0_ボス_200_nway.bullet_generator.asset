@@ -35,3 +35,24 @@ MonoBehaviour:
       m_ShotAngle: 20
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
+  - Difficulty: 2
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 63a990b7914fc0f47a1c95fb112d20ce, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 4c3a9df2781e72046a1a8f137ede5d1f, type: 2}
+      m_ShotTransformName: Core
+      m_ShotNum: 30
+      m_AxisType: 1
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 11400000, guid: 639e4f7ee875fd749a1fc11ad30fe1d2, type: 2}
+      m_ShotRadius: 0.02
+      m_ShotDeltaRadius: 0
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 12
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0
