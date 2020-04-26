@@ -233,7 +233,7 @@ public class TitleManager : ControllableMonoBehavior
         if (InputManager.Submit == E_INPUT_STATE.DOWN)
         {
             PlayStart();
-            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.STAGE1);
+            BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.CHAPTER_MENU);
             InputManager.RemoveInput();
         }
     }
