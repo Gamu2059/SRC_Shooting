@@ -79,7 +79,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         }
         else
         {
-            paramSet = DataManager.Instance.BattleParamSet;
+            paramSet = DataManager.Instance.GetCurrentBattleParamSet();
         }
 
         if (DataManager.Instance.GameMode == E_GAME_MODE.STORY && DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
