@@ -265,12 +265,12 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
 
     #region General Variable TimePeriod
 
-    private string GetGeneralIntName(E_GENERAL_INT_VARIABLE type)
+    public string GetGeneralIntName(E_GENERAL_INT_VARIABLE type)
     {
         return m_GeneralIntNames != null && m_GeneralIntNames.ContainsKey(type) ? m_GeneralIntNames[type] : null;
     }
 
-    private string GetGeneralTimePeriodName(E_GENERAL_TIME_PERIOD type)
+    public string GetGeneralTimePeriodName(E_GENERAL_TIME_PERIOD type)
     {
         return m_GeneralTimePeriodNames != null && m_GeneralTimePeriodNames.ContainsKey(type) ? m_GeneralTimePeriodNames[type] : null;
     }

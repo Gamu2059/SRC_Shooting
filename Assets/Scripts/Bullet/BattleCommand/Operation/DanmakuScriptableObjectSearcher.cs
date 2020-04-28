@@ -83,4 +83,8 @@ public class DanmakuScriptableObjectSearcher : ScriptableObject
     public OperationVector2Variable operationVector2Variable;
 
     public OperationFloatSymmetrical operationFloatSymmetrical;
+
+    public BattleRealBossBehaviorSet battleRealBossBehaviorSet;
+    public BattleRealBossParam battleRealBossParam;
+    public BattleRealBossParamSet battleRealBossParamSet;
 }

@@ -5,6 +5,7 @@
         public override void OnStart()
         {
             base.OnStart();
+            BattleRealStageManager.Instance.gameObject.SetActive(true);
             BattleRealUiManager.Instance.SetAlpha(1);
             BattleRealInputManager.Instance.RegistInput();
         }
@@ -80,12 +81,6 @@
 
         private void CheckDeadPlayer()
         {
-            var testDataManager = BattleTestDataManager.Instance;
-            if (testDataManager != null && testDataManager.IsNotPlayerDead)
-            {
-                return;
-            }
-
             var player = BattleRealPlayerManager.Instance.Player;
             if (player != null && player.IsDead)
             {

@@ -468,12 +468,18 @@ public class BattleRealEnemyManager : Singleton<BattleRealEnemyManager>, ICollid
     /// </summary>
     private void BuildEnemyGroupAppearEvents()
     {
-        if (ParamSet == null || ParamSet.Generator == null)
+        if (ParamSet == null)
         {
             return;
         }
 
-        var groups = ParamSet.Generator.Contents;
+        var generator = ParamSet.GetGenerator();
+        if (generator == null)
+        {
+            return;
+        }
+
+        var groups = generator.Contents;
         foreach(var param in groups)
         {
             var eventParam = ScriptableObject.CreateInstance<BattleRealEventTriggerParam>();

@@ -80,5 +80,58 @@ MonoBehaviour:
   operationVector2Polar: {fileID: 0}
   operationVector2Scalartimes: {fileID: 0}
   operationVector2Variable: {fileID: 0}
-  operationFloatSymmetrical: {fileID: 11400000, guid: 4e56345e36e27bc4bb9ffe81deaf366a,
+  operationFloatSymmetrical: {fileID: 0}
+  battleRealBossBehaviorSet:
+    m_BehaviorType: 0
+    m_Behavior: {fileID: 0}
+    m_BehaviorGroup: {fileID: 0}
+    m_DownBehaviorType: 0
+    m_DownBehavior: {fileID: 0}
+    m_DownBehaviorGroup: {fileID: 0}
+    m_HackingLevelParamSet: {fileID: 0}
+    m_OnChangeBehaviorEvents: []
+    m_SequenceGroupOnChangeBehavior: {fileID: 0}
+    m_DownHp: 0
+    m_DownHealTime: 0
+    m_HpRateThresholdNextBehavior: 0
+    m_HackingSuccessItemParam:
+      ItemSpreadParams: []
+      CenterCreateItemType: 0
+  battleRealBossParam:
+    m_Hp: 0
+    m_BulletSetParam: {fileID: 0}
+    m_EnemyLookParamSet: {fileID: 0}
+    m_DamageEffectMaterial: {fileID: 0}
+    m_DamageEffectDuration: 0
+    m_BossName: 
+    m_BehaviorSets: []
+    m_OnInitializeEvents: []
+    m_OnInitializeSequence: {fileID: 0}
+    m_OnStartBehaviorEvents: []
+    m_DownEffectParam: {fileID: 0}
+    m_PlayerTriangleEffectParam: {fileID: 0}
+    m_HackingFailureEffectParam: {fileID: 0}
+    m_HackingSuccessEffectParam: {fileID: 0}
+    m_HackingFailureRecoverDownHpRate: 0
+    m_DefeatScore: 0
+    m_DefeatItemParam:
+      ItemSpreadParams: []
+      CenterCreateItemType: 0
+    m_DefeatEvents: []
+    m_DefeatSequentialEffect:
+      m_Params: []
+    m_DefeatHideTime: 0
+    m_RescueScore: 0
+    m_RescueItemParam:
+      ItemSpreadParams: []
+      CenterCreateItemType: 0
+    m_RescueEvents: []
+    m_RescueSequentialEffect:
+      m_Params: []
+    m_RescueHideTime: 0
+    m_RetireEvents: []
+    m_RetireSequentialEffect:
+      m_Params: []
+    m_RetireHideTime: 0
+  battleRealBossParamSet: {fileID: 11400000, guid: 7dc9c420be7835849922d8359c77f843,
     type: 2}

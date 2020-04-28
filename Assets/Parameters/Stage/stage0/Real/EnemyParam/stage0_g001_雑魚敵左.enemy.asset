@@ -45,6 +45,7 @@ MonoBehaviour:
         UseEnemyGroupParamArray: 0
         EnemyGroupParam: {fileID: 0}
         EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
         MovePlayerSequenceGroup: {fileID: 0}
         ControlCameraParams: []
         ControlObjectParams: []
@@ -105,6 +106,7 @@ MonoBehaviour:
         UseEnemyGroupParamArray: 0
         EnemyGroupParam: {fileID: 0}
         EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
         MovePlayerSequenceGroup: {fileID: 0}
         ControlCameraParams: []
         ControlObjectParams: []
@@ -143,3 +145,139 @@ MonoBehaviour:
         CountStartTimePeriodNames: []
         CallScriptParams: []
         ExecuteEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0
+  - Difficulty: 2
+    Param:
+      m_Hp: 2
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 45f5187658f081a47858fb9c2fd60f1e,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: d10cb365888b02543b5e66281df7c2fa,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 9856faecce6beac4d801573841230981,
+        type: 2}
+      m_DefeatScore: 0
+      m_DefeatItemParam:
+        ItemSpreadParams: []
+        CenterCreateItemType: 0
+      m_DefeatEvents:
+      - ContentName: "\u30D5\u30A7\u30FC\u30BA1 \u6483\u7834\u6D88\u5931\u5909\u6570\u30AB\u30A6\u30F3\u30C8"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 0
+          VariableName: Phase1 Disappear
+          OperandType: 1
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 1
+          BoolOperandValue: 0
+        - VariableType: 0
+          VariableName: Phase1 Defeat
+          OperandType: 1
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 1
+          BoolOperandValue: 0
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: b7ac4877143ff78459191856e1f9cb0a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents:
+      - ContentName: "\u30D5\u30A7\u30FC\u30BA1 \u6D88\u5931\u5909\u6570\u30AB\u30A6\u30F3\u30C8"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 0
+          VariableName: Phase1 Disappear
+          OperandType: 1
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 1
+          BoolOperandValue: 0
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0

@@ -78,7 +78,6 @@ public class BattleHackingPlayerController : CommandCharaController
                     null,
                     0,
                     m_ShotParamOperation,
-                    //m_BulletParamFreeOperation,
                     null,
                     null,
                     null,

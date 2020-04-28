@@ -39,6 +39,7 @@ partial class BattleHackingManager
             BattleHackingEnemyManager.Instance.OnUpdate();
             BattleHackingEffectManager.Instance.OnUpdate();
             BattleHackingCameraManager.Instance.OnUpdate();
+            BattleHackingUiManager.Instance.OnUpdate();
         }
 
         public override void OnLateUpdate()
@@ -47,6 +48,7 @@ partial class BattleHackingManager
             BattleHackingEnemyManager.Instance.OnLateUpdate();
             BattleHackingEffectManager.Instance.OnLateUpdate();
             BattleHackingCameraManager.Instance.OnLateUpdate();
+            BattleHackingUiManager.Instance.OnLateUpdate();
         }
 
         public override void OnFixedUpdate()
@@ -55,6 +57,7 @@ partial class BattleHackingManager
             BattleHackingEnemyManager.Instance.OnFixedUpdate();
             BattleHackingEffectManager.Instance.OnFixedUpdate();
             BattleHackingCameraManager.Instance.OnFixedUpdate();
+            BattleHackingUiManager.Instance.OnFixedUpdate();
         }
     }
 }

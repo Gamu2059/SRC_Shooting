@@ -24,25 +24,19 @@ public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManag
     [Header("Indicator")]
 
     [SerializeField]
-    private Text m_ModeIndicator;
+    private Text m_ChapterIndicator;
 
     [SerializeField]
-    private Text m_StageIndicator;
+    private Text m_DifficultyIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_BestScoreIndicator;
+    private TextValueIndicator m_BestScoreIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_ScoreIndicator;
+    private TextValueIndicator m_ScoreIndicator;
 
     [SerializeField]
-    private GridGageIndicator m_TimeIndicator;
-
-    [SerializeField]
-    private GridGageIndicator m_BonusTimeIndicator;
-
-    [SerializeField]
-    private GridGageIndicator m_BossHpIndicator;
+    private BattleHackingBossUI m_BossUi;
 
     [Header("Animator")]
 
@@ -57,22 +51,20 @@ public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManag
     {
         base.OnInitialize();
 
-        m_ModeIndicator.text = DataManager.Instance.GameMode.ToString();
-        m_StageIndicator.text = DataManager.Instance.Chapter.ToString().Replace("_", " ");
+        m_ChapterIndicator.text = DataManager.Instance.GetChapterString();
+        m_DifficultyIndicator.text = DataManager.Instance.Difficulty.ToString();
 
         m_GridHoleEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
-        m_TimeIndicator.OnInitialize();
-        m_BonusTimeIndicator.OnInitialize();
-        m_BossHpIndicator.OnInitialize();
+        m_BossUi.OnInitialize();
+
+        DisableAllBossUI();
     }
 
     public override void OnFinalize()
     {
-        m_BossHpIndicator.OnFinalize();
-        m_BonusTimeIndicator.OnFinalize();
-        m_TimeIndicator.OnFinalize();
+        m_BossUi.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
         m_GridHoleEffect.OnFinalize();
@@ -87,9 +79,7 @@ public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManag
         m_GridHoleEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
-        m_TimeIndicator.OnUpdate();
-        m_BonusTimeIndicator.OnUpdate();
-        m_BossHpIndicator.OnUpdate();
+        m_BossUi.OnUpdate();
     }
 
     #endregion
@@ -97,6 +87,27 @@ public class BattleHackingUiManager : SingletonMonoBehavior<BattleHackingUiManag
     public void SetAlpha(float normalizedAlpha)
     {
         m_CanvasGroup.alpha = normalizedAlpha;
+    }
+
+    /// <summary>
+    /// ボスUIを有効にする。
+    /// </summary>
+    public void EnableBossUI(BattleHackingBoss boss)
+    {
+        if (boss == null)
+        {
+            return;
+        }
+
+        if (m_BossUi != null && m_BossUi.ReferencedBoss == null )
+        {
+            m_BossUi.EnableBossUI(boss);
+        }
+    }
+
+    public void DisableAllBossUI()
+    {
+        m_BossUi?.DisableBossUI();
     }
 
     public void PlayToHacking()

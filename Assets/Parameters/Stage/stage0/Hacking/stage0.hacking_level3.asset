@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea47b8c2bdd575740b805664c0ff770e, type: 3}
+  m_Name: stage0.hacking_level3
+  m_EditorClassIdentifier: 
+  m_GeneratorLabel: Dummy Code
+  m_InitAppearViewportPosition: {x: 0.5, y: 0.2}
+  m_EnemyContents:
+  - m_GenerateTime: 0
+    m_GenerateParamSet: {fileID: 11400000, guid: c01d417fa8ef3ed48b7e3bcecb7eee54,
+      type: 2}
+    m_BehaviorParamSet: {fileID: 11400000, guid: b3a0ba5564747f645b5378c8c59c2a54,
+      type: 2}

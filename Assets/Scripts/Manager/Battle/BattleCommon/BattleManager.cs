@@ -36,15 +36,13 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     private BattleParamSet m_ParamSet = default;
     public BattleParamSet ParamSet => m_ParamSet;
 
-    [Header("Video")]
-
-    [SerializeField]
-    private VideoPlayer m_VideoPlayer = default;
-
     [Header("Hacking In Out")]
 
     [SerializeField]
     private HackInOutController m_HackInController;
+
+    [SerializeField]
+    private HackInOutController m_HackOutController;
 
     #endregion
 
@@ -81,7 +79,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         }
         else
         {
-            paramSet = DataManager.Instance.BattleParamSet;
+            paramSet = DataManager.Instance.GetCurrentBattleParamSet();
         }
 
         if (DataManager.Instance.GameMode == E_GAME_MODE.STORY && DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
@@ -104,12 +102,14 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_HackingManager = BattleHackingManager.Builder(this, paramSet.BattleHackingParamSet);
 
         m_HackInController.OnInitialize();
+        m_HackOutController.OnInitialize();
     }
 
     public override void OnFinalize()
     {
         m_OnChangeState = null;
 
+        m_HackOutController.OnFinalize();
         m_HackInController.OnFinalize();
 
         m_HackingManager.OnFinalize();
@@ -172,29 +172,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         }
 
         m_StateMachine.Goto(state);
-    }
-
-    /// <summary>
-    /// このステージでは最短で何回でハッキング完了になるかを計上する。
-    /// </summary>
-    private void CalcPerfectHackingSuccessNum()
-    {
-        var generator = m_ParamSet.BattleRealParamSet.EnemyManagerParamSet.Generator;
-        int sum = 0;
-
-        //現状は、理論的に計上不可能
-        //foreach (var group in generator.Contents)
-        //{
-        //    foreach (var enemy in group.GroupGenerateParamSet.IndividualGenerateParamSets)
-        //    {
-        //        if (enemy.EnemyGenerateParamSet is BattleRealBossGenerateParamSet bossParamSet)
-        //        {
-        //            sum += bossParamSet.HackingCompleteNum;
-        //        }
-        //    }
-        //}
-
-        DataManager.Instance.BattleData.SetPerfectHackingSuccessCount(sum);
     }
 
     /// <summary>

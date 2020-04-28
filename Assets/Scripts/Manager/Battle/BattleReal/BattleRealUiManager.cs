@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 {
@@ -31,16 +32,19 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     [Header("Indicator")]
 
     [SerializeField]
-    private Text m_ModeIndicator;
+    private Text m_ChapterIndicator;
 
     [SerializeField]
-    private Text m_StageIndicator;
+    private Text m_DifficultyIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_BestScoreIndicator;
+    private TextValueIndicator m_BestScoreIndicator;
 
     [SerializeField]
-    private ScoreIndicator m_ScoreIndicator;
+    private TextValueIndicator m_ScoreIndicator;
+
+    [SerializeField]
+    private TextValueIndicator m_ChainIndicator;
 
     [SerializeField]
     private IconCountIndicator m_LifeIndicator;
@@ -59,6 +63,15 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
     [SerializeField]
     private WeaponIndicator m_WeaponIndicator;
+
+    [Space()]
+    [Header("Achievement")]
+
+    [SerializeField]
+    private GameObject m_AchievementRoot;
+
+    [SerializeField]
+    private List<AchievementIndicator> m_AchievementIndicators;
 
     [Space()]
     [Header("Boss UI")]
@@ -125,12 +138,13 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     {
         base.OnInitialize();
 
-        m_ModeIndicator.text = DataManager.Instance.GameMode.ToString();
-        m_StageIndicator.text = DataManager.Instance.Chapter.ToString().Replace("_", " ");
+        m_ChapterIndicator.text = DataManager.Instance.GetChapterString();
+        m_DifficultyIndicator.text = DataManager.Instance.Difficulty.ToString();
 
         m_FrontViewEffect.OnInitialize();
         m_BestScoreIndicator.OnInitialize();
         m_ScoreIndicator.OnInitialize();
+        m_ChainIndicator.OnInitialize();
         m_LifeIndicator.OnInitialize();
         m_LevelIcon.OnInitialize();
         m_LevelGage.OnInitialize();
@@ -140,7 +154,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
         m_BossUiLeft.OnInitialize();
         m_BossUiRight.OnInitialize();
-        
+
         m_ResultIndicator.OnInitialize();
         m_GameOverController.OnInitialize();
         m_GameOverController.EndAction += OnEndGameOver;
@@ -149,12 +163,29 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_WarningTelop.OnInitialize();
         m_ClearTelop.OnInitialize();
 
+        if (DataManager.Instance.IsInvalidAchievement())
+        {
+            m_AchievementRoot?.SetActive(false);
+        }
+        else
+        {
+            if (m_AchievementIndicators != null)
+            {
+                m_AchievementIndicators.ForEach(i => i.OnInitialize());
+            }
+        }
+
         DisableAllBossUI();
     }
 
     public override void OnFinalize()
     {
         EndAction = null;
+
+        if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnFinalize());
+        }
 
         m_ClearTelop.OnFinalize();
         m_WarningTelop.OnFinalize();
@@ -165,13 +196,14 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
         m_BossUiRight.OnFinalize();
         m_BossUiLeft.OnFinalize();
-        
+
         m_WeaponIndicator.OnFinalize();
         m_EnergyGage.OnFinalize();
         m_EnergyIcon.OnFinalize();
         m_LevelGage.OnFinalize();
         m_LevelIcon.OnFinalize();
         m_LifeIndicator.OnFinalize();
+        m_ChainIndicator.OnFinalize();
         m_ScoreIndicator.OnFinalize();
         m_BestScoreIndicator.OnFinalize();
         m_FrontViewEffect.OnFinalize();
@@ -185,6 +217,7 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_FrontViewEffect.OnUpdate();
         m_BestScoreIndicator.OnUpdate();
         m_ScoreIndicator.OnUpdate();
+        m_ChainIndicator.OnUpdate();
         m_LifeIndicator.OnUpdate();
         m_LevelIcon.OnUpdate();
         m_LevelGage.OnUpdate();
@@ -201,7 +234,13 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_StartTelop.OnUpdate();
         m_WarningTelop.OnUpdate();
         m_ClearTelop.OnUpdate();
-        
+
+        if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
+        {
+            m_AchievementIndicators.ForEach(i => i.OnUpdate());
+        }
+
+
         if (m_IsShowResult && Input.anyKey)
         {
             m_IsShowResult = false;

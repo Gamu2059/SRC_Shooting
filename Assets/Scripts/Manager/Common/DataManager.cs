@@ -30,16 +30,6 @@ public class DataManager : Singleton<DataManager>
     public E_CHAPTER Chapter;
 
     /// <summary>
-    /// バトルパラメータセット
-    /// </summary>
-    public BattleParamSet BattleParamSet { get; private set; }
-
-    /// <summary>
-    /// 読み取り専用のパラメータを格納したデータ。
-    /// </summary>
-    public BattleConstantParam BattleConstantParam { get; private set; }
-
-    /// <summary>
     /// バトル用変数データ。
     /// </summary>
     public BattleData BattleData { get; private set; }
@@ -51,14 +41,13 @@ public class DataManager : Singleton<DataManager>
 
     #endregion
 
-    public static DataManager Builder(BattleConstantParam param)
+    public static DataManager Builder(BattleConstantParam constantParam, BattleAchievementParamSet achievementParamSet)
     {
         var manager = Create();
         manager.OnInitialize();
 
         manager.IsSelectedGame = false;
-        manager.BattleConstantParam = param;
-        manager.BattleData = new BattleData(param);
+        manager.BattleData = new BattleData(constantParam, achievementParamSet);
 
         return manager;
     }
@@ -67,6 +56,14 @@ public class DataManager : Singleton<DataManager>
     {
 
         base.OnFinalize();
+    }
+
+    /// <summary>
+    /// バトルパラメータセットを取得する。
+    /// </summary>
+    public BattleParamSet GetCurrentBattleParamSet()
+    {
+        return GameManager.Instance.BattleParamSetHolder.GetBattleParamSet(Chapter, Difficulty);
     }
 
     /// <summary>
@@ -98,5 +95,36 @@ public class DataManager : Singleton<DataManager>
     public void OnChapterEnd()
     {
         BattleResultData.AddChapterResult();
+    }
+
+    public string GetChapterString()
+    {
+        switch (Chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return "Chapter. 0";
+            case E_CHAPTER.CHAPTER_1:
+                return "Chapter. 1";
+            case E_CHAPTER.CHAPTER_2:
+                return "Chapter. 2";
+            case E_CHAPTER.CHAPTER_3:
+                return "Chapter. 3";
+            case E_CHAPTER.CHAPTER_4:
+                return "Chapter. 4";
+            case E_CHAPTER.CHAPTER_5:
+                return "Chapter. 5";
+            case E_CHAPTER.CHAPTER_6:
+                return "Final Chapter";
+        }
+
+        return "";
+    }
+
+    /// <summary>
+    /// Achievementを無効にするかどうか
+    /// </summary>
+    public bool IsInvalidAchievement()
+    {
+        return Chapter == E_CHAPTER.CHAPTER_0;
     }
 }

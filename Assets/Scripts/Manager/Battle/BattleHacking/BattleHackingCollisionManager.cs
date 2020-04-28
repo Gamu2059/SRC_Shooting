@@ -25,11 +25,10 @@ public class BattleHackingCollisionManager : BattleCollisionManagerBase<BattleHa
     /// </summary>
     public override void DrawCollider()
     {
-        return;
-        //if (!BattleManager.Instance.m_IsDrawColliderArea)
-        //{
-        //    return;
-        //}
+        if (BattleTestDataManager.Instance == null || !BattleTestDataManager.Instance.IsDrawColliderArea)
+        {
+            return;
+        }
 
         var player = BattleHackingPlayerManager.Instance.Player;
         DrawCollider(player);

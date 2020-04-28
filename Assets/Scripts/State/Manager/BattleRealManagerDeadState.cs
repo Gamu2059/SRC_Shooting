@@ -29,6 +29,7 @@ partial class BattleRealManager
             else
             {
                 battleData.DecreasePlayerLife();
+                battleData.ResetChain();
                 var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1);
                 timer.SetTimeoutCallBack(() =>
                 {

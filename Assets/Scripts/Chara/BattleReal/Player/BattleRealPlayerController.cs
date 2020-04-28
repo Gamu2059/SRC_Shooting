@@ -524,6 +524,13 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     public override void Dead()
     {
         base.Dead();
+
+        var testDataManager = BattleTestDataManager.Instance;
+        if (testDataManager != null && testDataManager.IsNotPlayerDead)
+        {
+            return;
+        }
+
         IsDead = true;
     }
 

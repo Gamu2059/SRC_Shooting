@@ -18,7 +18,7 @@ public class BattleRealEnemyBehaviorUnitBase : BattleRealEnemyBehaviorElement
     /// 弾生成に関するパラメータ
     /// </summary>
     [Serializable]
-    public class BulletGeneratorData
+    private class BulletGeneratorData
     {
         [Tooltip("弾生成パラメータセット")]
         public BattleRealBulletGeneratorParamSetBase ParamSet;
@@ -31,6 +31,21 @@ public class BattleRealEnemyBehaviorUnitBase : BattleRealEnemyBehaviorElement
 
         [Tooltip("最初の弾生成インスタンスを発動して以降の発動間隔")]
         public float ActivateInterval;
+    }
+
+    /// <summary>
+    /// 難易度別の弾生成に関するパラメータ
+    /// </summary>
+    [Serializable]
+    private class BulletGeneratorDataSet
+    {
+        [SerializeField]
+        private E_DIFFICULTY m_Difficulty;
+        public E_DIFFICULTY Difficulty => m_Difficulty;
+
+        [SerializeField, Tooltip("弾生成に関するパラメータ")]
+        private BulletGeneratorData[] m_BulletGeneratorDatas;
+        public BulletGeneratorData[] BulletGeneratorDatas => m_BulletGeneratorDatas;
     }
 
     /// <summary>
@@ -73,9 +88,16 @@ public class BattleRealEnemyBehaviorUnitBase : BattleRealEnemyBehaviorElement
 
     [Header("Shot Parameter")]
 
+    [SerializeField, Tooltip("難易度を参照して、難易度別の弾生成パラメータを取得するかどうか")]
+    private bool m_ReferenceDifficultyForBulletGenerator;
+
     [SerializeField, Tooltip("弾生成に関するパラメータ")]
     private BulletGeneratorData[] m_BulletGeneratorDatas;
 
+    [SerializeField, Tooltip("難易度別の弾生成に関するパラメータ")]
+    private List<BulletGeneratorDataSet> m_DifficultyBulletGeneratorDatas;
+
+    [Space()]
     [SerializeField, Tooltip("振る舞いが終了した時に弾生成を破棄する")]
     private bool m_DestroyBulletGeneratorOnBehaviorEnd;
 
@@ -95,16 +117,22 @@ public class BattleRealEnemyBehaviorUnitBase : BattleRealEnemyBehaviorElement
 
         m_BulletGeneratorList = new List<BattleRealBulletGeneratorBase>();
         m_BulletGeneratorFieldDataList = new List<BulletGeneratorFieldData>();
-        for (var i = 0; i < m_BulletGeneratorDatas.Length; i++)
+
+        var bulletGeneratordatas = GetBulletGeneratorDatas();
+        if (bulletGeneratordatas != null)
         {
-            m_BulletGeneratorFieldDataList.Add(new BulletGeneratorFieldData()
+            for (var i = 0; i < bulletGeneratordatas.Length; i++)
             {
-                Data = m_BulletGeneratorDatas[i],
-                IsStart = false,
-                IsStop = false,
-                TimeCount = 0,
-                TotalTimeCountFromFirstActivate = 0
-            });
+                m_BulletGeneratorFieldDataList.Add(new BulletGeneratorFieldData()
+                {
+                    Data = bulletGeneratordatas[i],
+                    IsStart = false,
+                    IsStop = false,
+                    TimeCount = 0,
+                    TotalTimeCountFromFirstActivate = 0
+                });
+            }
+
         }
 
         if (m_OnStartOptions != null)
@@ -252,6 +280,26 @@ public class BattleRealEnemyBehaviorUnitBase : BattleRealEnemyBehaviorElement
 
             d.TimeCount += deltaTime;
         }
+    }
+
+    /// <summary>
+    /// 弾生成に関するパラメータを取得する。
+    /// </summary>
+    private BulletGeneratorData[] GetBulletGeneratorDatas()
+    {
+        if (!m_ReferenceDifficultyForBulletGenerator)
+        {
+            return m_BulletGeneratorDatas;
+        }
+
+        if (m_DifficultyBulletGeneratorDatas == null || DataManager.Instance == null)
+        {
+            return m_BulletGeneratorDatas;
+        }
+
+        var difficulty = DataManager.Instance.Difficulty;
+        var foundData = m_DifficultyBulletGeneratorDatas.Find(d => d.Difficulty == difficulty);
+        return foundData != null ? foundData.BulletGeneratorDatas : m_BulletGeneratorDatas;
     }
 
     #region Have to Override Method

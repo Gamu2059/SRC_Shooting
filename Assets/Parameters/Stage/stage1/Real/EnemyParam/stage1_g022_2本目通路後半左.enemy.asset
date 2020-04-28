@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Params:
   - Difficulty: 1
     Param:
-      m_Hp: 60
+      m_Hp: 40
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: 7ac48f589c4adeb46ac691fe999c923c,
         type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
       m_OnStartBehaviorEvents: []
       m_BehaviorType: 1
       m_Behavior: {fileID: 0}
-      m_BehaviorGroup: {fileID: 11400000, guid: b47866612cb743448881c54626c8ea16,
+      m_BehaviorGroup: {fileID: 11400000, guid: 0453cc14349b36c4f8c7e0ac77c55aa5,
         type: 2}
       m_DefeatScore: 100
       m_DefeatItemParam:
@@ -51,3 +51,45 @@ MonoBehaviour:
           Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
       m_DefeatHideTime: 0
       m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0
+  - Difficulty: 2
+    Param:
+      m_Hp: 60
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 7ac48f589c4adeb46ac691fe999c923c,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: d5fd4a52a16c78c468569a188a1f13d2,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 0453cc14349b36c4f8c7e0ac77c55aa5,
+        type: 2}
+      m_DefeatScore: 100
+      m_DefeatItemParam:
+        ItemSpreadParams:
+        - Type: 6
+          Num: 10
+          Point: 20
+          SpreadRadius: 0.2
+        - Type: 4
+          Num: 1
+          Point: 100
+          SpreadRadius: 0
+        CenterCreateItemType: 2
+      m_DefeatEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0
