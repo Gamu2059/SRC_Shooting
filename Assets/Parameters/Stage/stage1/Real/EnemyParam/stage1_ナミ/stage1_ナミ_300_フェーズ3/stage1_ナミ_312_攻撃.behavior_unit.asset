@@ -43,8 +43,8 @@ MonoBehaviour:
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: dc335657dbc1a9242b05ea625c57b6e4, type: 2}
       StartTimeOnFirstActivate: 0
-      StopTimeFromFirstActivate: 1.1
-      ActivateInterval: 1
+      StopTimeFromFirstActivate: 1
+      ActivateInterval: 0.1
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpaceType: 1
   m_Duration: 1

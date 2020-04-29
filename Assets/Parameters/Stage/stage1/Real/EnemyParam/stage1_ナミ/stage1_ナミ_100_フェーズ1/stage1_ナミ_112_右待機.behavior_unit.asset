@@ -50,17 +50,17 @@ MonoBehaviour:
     - ParamSet: {fileID: 11400000, guid: 7486f12f457c23a488d66a873546a27c, type: 2}
       StartTimeOnFirstActivate: 0.5
       StopTimeFromFirstActivate: 1
-      ActivateInterval: 0.06
+      ActivateInterval: 0.1
   - m_Difficulty: 3
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: bef03ddfac65d654ab2506115de6561c, type: 2}
       StartTimeOnFirstActivate: 0
-      StopTimeFromFirstActivate: 0.21
-      ActivateInterval: 0.1
+      StopTimeFromFirstActivate: 1.5
+      ActivateInterval: 0.15
     - ParamSet: {fileID: 11400000, guid: 7486f12f457c23a488d66a873546a27c, type: 2}
       StartTimeOnFirstActivate: 0.5
-      StopTimeFromFirstActivate: 1
-      ActivateInterval: 0.06
+      StopTimeFromFirstActivate: 2.4
+      ActivateInterval: 0.08
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpaceType: 1
   m_Duration: 1
