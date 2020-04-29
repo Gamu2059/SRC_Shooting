@@ -1,0 +1,718 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a51da7b124d5e7479a76a3a57499b40, type: 3}
+  m_Name: stage1_e.generator
+  m_EditorClassIdentifier: 
+  m_Contents:
+  - m_Commnet: "\u30B9\u30BF\u30FC\u30C8\u524D"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 2
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: c310e6d416d944a4cb4cb2d39f2cd32c, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u524D\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 9
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: ff02c8d855936f243a0158dcfa5bb289, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u524D\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 11
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 473ce31077cc27f4c95fe43310b8f58e, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u524D\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 13
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: ff02c8d855936f243a0158dcfa5bb289, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u524D\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 15
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 473ce31077cc27f4c95fe43310b8f58e, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5F8C\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 17
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 441bf966752dc3c449de2ef9f3dd4697, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5F8C\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 19
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 6f619b3bcca3d274fa1e02984098d7bf, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5F8C\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 21
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 441bf966752dc3c449de2ef9f3dd4697, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5F8C\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 23
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 6f619b3bcca3d274fa1e02984098d7bf, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u30C0\u30DF\u30FC"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 27
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 472945e3b99188a41b8dcf6fc2fba216, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u5DE6\u304B\u3089"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 28
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: b7027996d191e6f4fa9a509026eb7e36, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u53F3\u304B\u3089"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 29.5
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: e17a34bac0f7b2b45a27d0dac29a9c97, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u5DE6Sin"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 31
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: e503a0296c8d15049a78a1047cc36ea6, type: 2}
+  - m_Commnet: "1\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u53F3Sin"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 31
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: b6084aa7936dbb84588744205ee88fe5, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 37
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: a35e398514099174284958ff1e661ad2, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 38
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 9086d78b8b0778440b070f94d312902c, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 39
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: a35e398514099174284958ff1e661ad2, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 40
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 9086d78b8b0778440b070f94d312902c, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 41
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: a35e398514099174284958ff1e661ad2, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 42
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 9086d78b8b0778440b070f94d312902c, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 43
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: a35e398514099174284958ff1e661ad2, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u524D\u534A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 44
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 9086d78b8b0778440b070f94d312902c, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u5F8C\u534A"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 45
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: d4f5503569f5ec74e96189192181b373, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u53CD\u6642\u8A08"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 63
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: f6cfab79e7fc45440aad20372fa97c09, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u6642\u8A08"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 65
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: acafe9a6b03b9234ab652b2de885ad32, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u53CD\u6642\u8A08"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 67
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: f6cfab79e7fc45440aad20372fa97c09, type: 2}
+  - m_Commnet: "2\u672C\u76EE\u901A\u8DEF\u5206\u5C90\u8DEF \u6642\u8A08"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 69
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: acafe9a6b03b9234ab652b2de885ad32, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C644way"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 75
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: e2789ff98a78bbb4fbb7b6c26e9eb46f, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u8DE14way"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 83
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 6c253f19dfdc8fb45bbfb273d5106758, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u8DE1\u96D1\u9B5A \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 85.5
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: d34391d94b9428d49b7bdb4ddfdc4052, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u8DE1\u96D1\u9B5A \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 85.5
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: e54279242aec7d4498c7ab93c47e4e26, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u52A04way \u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 2
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 0
+        GeneralTimePeriod: 0
+        VariableName: G041 Left Defeat
+        CompareType: 0
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 1
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 4372aaf8abb1e4b42b2eede2977cc551, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u52A04way \u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 2
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 0
+        GeneralTimePeriod: 0
+        VariableName: G041 Right Defeat
+        CompareType: 0
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 1
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 80d402c67f2dcc246ac1362e130b7001, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u52A0\u7A81\u6483\u5DE6"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 2
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 0
+        GeneralTimePeriod: 0
+        VariableName: G041 Left Defeat
+        CompareType: 0
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 1
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 51c8091d14f249843bc27fd7c01481ad, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u52A0\u7A81\u6483\u53F3"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 2
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 0
+        GeneralTimePeriod: 0
+        VariableName: G041 Right Defeat
+        CompareType: 0
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 1
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: d51dd86459b39db4282c4ba8b2a81377, type: 2}
+  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u56DE\u8EE2"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 1
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 92
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 616fb0643cceef64eb837456e8d15607, type: 2}
+  - m_Commnet: "\u30CA\u30DF"
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 2
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 0
+        GeneralTimePeriod: 1
+        VariableName: G048 Defeat
+        CompareType: 0
+        BoolCompareType: 0
+        CompareValue: 0
+        BoolCompareValue: 1
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: ae4bdaeb462ebe14ebcd4142f446ba44, type: 2}
