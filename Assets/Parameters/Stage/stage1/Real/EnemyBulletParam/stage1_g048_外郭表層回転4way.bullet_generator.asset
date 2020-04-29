@@ -71,3 +71,22 @@ MonoBehaviour:
       m_ShotNum: 100
       m_ShotOffsetTime: 0.6
       m_ShotInterval: 0.36
+  - Difficulty: 3
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: b9c03e52ec1285c4c9650362df704d15, type: 2}
+      m_ShotTransformName: CannonBulletBase
+      m_ShotPointNum: 4
+      m_ShotPointRadius: 0.27
+      m_ShotPointOffsetAngleFromTransform: 45
+      m_ShotPointAngleSpeedFromTransform: -90
+      m_ShotOverallStartEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 416c50791f55966419aca564fd3abeda, type: 2}
+      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
+      m_ShotNum: 100
+      m_ShotOffsetTime: 0.6
+      m_ShotInterval: 0.36
