@@ -27,9 +27,12 @@ public class DifficultyInitializer : ScriptableObject
     /// </summary>
     public void Setup()
     {
-        foreach (OperationFloatDifficultyBase operation in m_Float)
+        if (m_Float != null)
         {
-            operation.Setup();
+            foreach (OperationFloatDifficultyBase operation in m_Float)
+            {
+                operation.Setup();
+            }
         }
 
         if (m_Int != null)

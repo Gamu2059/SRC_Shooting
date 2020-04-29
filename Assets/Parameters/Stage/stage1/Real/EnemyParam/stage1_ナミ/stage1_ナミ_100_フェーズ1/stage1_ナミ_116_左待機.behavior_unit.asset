@@ -17,20 +17,38 @@ MonoBehaviour:
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []
-  m_BulletGeneratorDatas:
-  - ParamSet: {fileID: 11400000, guid: bef03ddfac65d654ab2506115de6561c, type: 2}
-    StartTimeOnFirstActivate: 0
-    StopTimeFromFirstActivate: 0.21
-    ActivateInterval: 0.1
-  - ParamSet: {fileID: 11400000, guid: d4d10caaa0a4dd54680d045319f5f4c5, type: 2}
-    StartTimeOnFirstActivate: 0.5
-    StopTimeFromFirstActivate: 0.8
-    ActivateInterval: 0.06
+  m_OnStopOptions: []
+  m_ReferenceDifficultyForBulletGenerator: 1
+  m_BulletGeneratorDatas: []
+  m_DifficultyBulletGeneratorDatas:
+  - m_Difficulty: 1
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: bef03ddfac65d654ab2506115de6561c, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0.21
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: d4d10caaa0a4dd54680d045319f5f4c5, type: 2}
+      StartTimeOnFirstActivate: 0.5
+      StopTimeFromFirstActivate: 0.8
+      ActivateInterval: 0.1
+  - m_Difficulty: 2
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: bef03ddfac65d654ab2506115de6561c, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0.4
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: d4d10caaa0a4dd54680d045319f5f4c5, type: 2}
+      StartTimeOnFirstActivate: 0.5
+      StopTimeFromFirstActivate: 1.2
+      ActivateInterval: 0.06
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpaceType: 1
   m_Duration: 1
   m_UsePosition: 0
   m_TargetPosition: {x: -0.4, y: 0, z: 0.6}
+  m_IsPassX: 0
+  m_IsPassY: 0
+  m_IsPassZ: 0
   m_PositionLerp:
     serializedVersion: 2
     m_Curve:
