@@ -33,6 +33,12 @@ MonoBehaviour:
       StartTimeOnFirstActivate: 0
       StopTimeFromFirstActivate: 1.5
       ActivateInterval: 0.1
+  - m_Difficulty: 0
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 551f02bce540d644db4fade6e9a520d8, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 1.5
+      ActivateInterval: 0.1
   m_DestroyBulletGeneratorOnBehaviorEnd: 1
   m_Duration: 2
   m_LerpForTargetCurve:
