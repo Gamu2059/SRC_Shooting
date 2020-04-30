@@ -14,6 +14,9 @@ public class Danmaku : ScriptableObject
     [SerializeField, Tooltip("単位弾幕の配列")]
     private UnitDanmaku[] m_UnitDanmakuArray;
 
+    [SerializeField, Tooltip("単位弾幕の配列")]
+    private BulletShotParams[] m_BulletShotParamsArray;
+
 
     public void OnStarts()
     {
@@ -21,20 +24,29 @@ public class Danmaku : ScriptableObject
         {
             unitDanmaku.OnStarts();
         }
+
+        if (m_BulletShotParamsArray != null)
+        {
+            foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
+            {
+                bulletShotParams.OnStarts();
+            }
+        }
     }
 
 
-    public void OnUpdates(
-        BattleHackingBossBehavior boss,
-        CommonOperationVariable commonOperationVariable
-        )
+    public void OnUpdates(BattleHackingBossBehavior boss, CommonOperationVariable commonOperationVariable)
     {
         foreach (UnitDanmaku unitDanmaku in m_UnitDanmakuArray)
         {
-            unitDanmaku.OnUpdates(
-                boss,
-                commonOperationVariable
-                );
+            unitDanmaku.OnUpdates(boss, commonOperationVariable);
+        }
+        if (m_BulletShotParamsArray != null)
+        {
+            foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
+            {
+                bulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable);
+            }
         }
     }
 }

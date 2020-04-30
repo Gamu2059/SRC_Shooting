@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c4432918c09d7468cd89a0b4d1b26a, type: 3}
+  m_Name: '[] BounceDirectionNew'
+  m_EditorClassIdentifier: 
+  m_If:
+  - {fileID: 11400000, guid: be22dfaa28dbbbf46a6eb031d831886b, type: 2}
+  - {fileID: 11400000, guid: 922f1b9cc9eccd24ca9ade9b05e69e52, type: 2}
+  - {fileID: 11400000, guid: 8da03000becc3b746a14cee1b96cc556, type: 2}
+  - {fileID: 11400000, guid: 2ed5d058ef83289479d0983dc4ef7e96, type: 2}

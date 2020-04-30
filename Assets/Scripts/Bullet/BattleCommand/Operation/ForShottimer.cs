@@ -21,6 +21,8 @@ public class ForShottimer : ForBase
     [SerializeField, Tooltip("発射時刻を表す演算")]
     private OperationFloatBase m_LaunchTimeOperation;
 
+    private float m_NowTime;
+
 
     public override void Setup()
     {
@@ -31,7 +33,7 @@ public class ForShottimer : ForBase
 
     public override void Init()
     {
-
+        m_NowTime = BulletTime.Time;
     }
 
 
@@ -47,13 +49,17 @@ public class ForShottimer : ForBase
         m_RealShotNumVariable.Value++;
 
         // 現在、既に次の発射がされているかどうか
-        if (m_LaunchTimeOperation.GetResultFloat() <= m_CommonOperationVariable.Time.GetResultFloat())
+        if (m_LaunchTimeOperation.GetResultFloat() <= m_NowTime)
         {
             // 発射時刻
-            m_CommonOperationVariable.ArgumentTime.Value = m_LaunchTimeOperation.GetResultFloat();
+            m_CommonOperationVariable.LaunchTime.Value = m_LaunchTimeOperation.GetResultFloat();
+
+            m_CommonOperationVariable.BulletTimeProperty.Value = m_LaunchTimeOperation.GetResultFloat();
+
+            BulletTime.Time = m_LaunchTimeOperation.GetResultFloat();
 
             // 発射からの経過時間
-            m_CommonOperationVariable.DTimeOperation.Value = m_CommonOperationVariable.Time.GetResultFloat() - m_CommonOperationVariable.ArgumentTime.Value;
+            m_CommonOperationVariable.DTime.Value = m_NowTime - m_CommonOperationVariable.LaunchTime.Value;
 
             return true;
         }

@@ -8,6 +8,12 @@ using UnityEngine;
 [System.Serializable]
 public abstract class OperationIntBase : OperationFloatBase
 {
+
+    public override float GetResultFloat()
+    {
+        return GetResultInt();
+    }
+
     /// <summary>
     /// intの演算結果を取得する
     /// </summary>

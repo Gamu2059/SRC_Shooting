@@ -12,10 +12,10 @@ public class BulletTime : OperationFloatBase
     /// <summary>
     /// 弾の発射からの時刻
     /// </summary>
-    public static float m_Time { set; get; }
+    public static float Time { set; get; }
 
     public override float GetResultFloat()
     {
-        return m_Time;
+        return Time;
     }
 }
