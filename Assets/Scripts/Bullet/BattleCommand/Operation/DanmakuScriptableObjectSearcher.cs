@@ -87,4 +87,10 @@ public class DanmakuScriptableObjectSearcher : ScriptableObject
     public BattleRealBossBehaviorSet battleRealBossBehaviorSet;
     public BattleRealBossParam battleRealBossParam;
     public BattleRealBossParamSet battleRealBossParamSet;
+
+    public OperationIntConstantJuncDifficulty m_OperationIntConstantJuncDifficulty;
+    public OperationFloatConstantJuncDifficulty m_OperationFloatConstantJuncDifficulty;
+    public OperationVector2ConstantJuncDifficulty m_OperationVector2ConstantJuncDifficulty;
+    [Space]
+    public OperationVector2DifficultyDelegate m_OperationVector2DifficultyDelegate;
 }
