@@ -77,3 +77,24 @@ MonoBehaviour:
       m_ShotAngle: 0
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
+  - Difficulty: 3
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: 7f82fcaa557c58847a6115466899005f, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: a364307eb8b39134984c4d58817a91bd, type: 2}
+      m_ShotTransformName: Scaler
+      m_ShotNum: 21
+      m_AxisType: 0
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.1
+      m_ShotDeltaRadius: -0.02
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 0.3
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0
