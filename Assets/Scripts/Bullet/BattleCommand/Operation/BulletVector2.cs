@@ -17,6 +17,17 @@ public class BulletVector2 : OperationVector2Base
     public static Vector2[] Vector2Array { set; private get; }
 
     /// <summary>
+    /// 現在ロードされている、弾が持つ変更可能なVector2型の配列
+    /// </summary>
+    public static Vector2[] Vector2ArrayChangeable { set; private get; }
+
+    /// <summary>
+    /// 参照するのは変更可能な方の配列かどうか
+    /// </summary>
+    [SerializeField]
+    private bool m_IsChangeable;
+
+    /// <summary>
     /// 配列のインデックス
     /// </summary>
     [SerializeField]
@@ -25,6 +36,13 @@ public class BulletVector2 : OperationVector2Base
 
     public override Vector2 GetResultVector2()
     {
-        return Vector2Array[m_Index];
+        if (!m_IsChangeable)
+        {
+            return  Vector2Array[m_Index];
+        }
+        else
+        {
+            return Vector2ArrayChangeable[m_Index];
+        }
     }
 }

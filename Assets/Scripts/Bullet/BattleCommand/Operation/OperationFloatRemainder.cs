@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// int型の剰余を求める演算を表すクラス。
+/// float型の剰余を求める演算を表すクラス。
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/operation/float/remainder", fileName = "OperationFloatRemainder", order = 0)]
 [System.Serializable]

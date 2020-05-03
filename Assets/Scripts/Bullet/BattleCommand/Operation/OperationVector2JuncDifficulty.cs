@@ -13,6 +13,11 @@ public class OperationVector2JuncDifficulty : OperationVector2Base
 {
 
     /// <summary>
+    /// 難易度
+    /// </summary>
+    private static E_DIFFICULTY Difficulty = DanmakuDifficulty.Difficulty;
+
+    /// <summary>
     /// 難易度がEasyだった場合の値
     /// </summary>
     [SerializeField]
@@ -39,10 +44,7 @@ public class OperationVector2JuncDifficulty : OperationVector2Base
 
     public override Vector2 GetResultVector2()
     {
-        // 現在の難易度を取得する
-        E_DIFFICULTY difficulty = DataManager.Instance.Difficulty;
-
-        switch (difficulty)
+        switch (DanmakuDifficulty.Difficulty)
         {
             case E_DIFFICULTY.EASY:
                 return m_Easy.GetResultVector2();

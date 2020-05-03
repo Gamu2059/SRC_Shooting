@@ -11,19 +11,19 @@ public class CommonOperationVariable : ScriptableObject
 {
 
     [SerializeField, Tooltip("発射から現在までの時刻を表す変数")]
-    private OperationFloatVariable m_DTimeOperation;
-    public OperationFloatVariable DTimeOperation
+    private OperationFloatVariable m_DTime;
+    public OperationFloatVariable DTime
     {
-        set { m_DTimeOperation = value; }
-        get { return m_DTimeOperation; }
+        set { m_DTime = value; }
+        get { return m_DTime; }
     }
 
     [SerializeField, Tooltip("発射からの時刻を表す変数")]
-    private OperationFloatVariable m_TimeOperation;
-    public OperationFloatVariable TimeOperation
+    private OperationFloatVariable m_BulletTime;
+    public OperationFloatVariable BulletTimeProperty
     {
-        set { m_TimeOperation = value; }
-        get { return m_TimeOperation; }
+        set { m_BulletTime = value; }
+        get { return m_BulletTime; }
     }
 
     [SerializeField, Tooltip("発射時のパラメータを表す変数")]
@@ -43,19 +43,19 @@ public class CommonOperationVariable : ScriptableObject
     }
 
     [SerializeField, Tooltip("ハッキングの開始からの時刻を表す変数（どの演算からも参照されないなら、float型で良さそう（？））")]
-    private OperationFloatVariable m_Time;
-    public OperationFloatVariable Time
+    private OperationFloatVariable m_NowTime;
+    public OperationFloatVariable NowTime
     {
-        set { m_Time = value; }
-        get { return m_Time; }
+        set { m_NowTime = value; }
+        get { return m_NowTime; }
     }
 
     [SerializeField, Tooltip("発射時刻（引数の代わり）（必要なのは移行期間だけだと思う）")]
-    private OperationFloatVariable m_ArgumentTime;
-    public OperationFloatVariable ArgumentTime
+    private OperationFloatVariable m_LaunchTime;
+    public OperationFloatVariable LaunchTime
     {
-        set { m_ArgumentTime = value; }
-        get { return m_ArgumentTime; }
+        set { m_LaunchTime = value; }
+        get { return m_LaunchTime; }
     }
 
     [SerializeField, Tooltip("自機の位置")]
@@ -82,19 +82,25 @@ public class CommonOperationVariable : ScriptableObject
     public void OnStarts()
     {
         PreviousTime.Value = 0;
-        Time.Value = 0;
+        NowTime.Value = 0;
+
+        BulletTime.Time = 0;
     }
 
 
     public void OnUpdates()
     {
-        PreviousTime.Value = Time.Value;
-        Time.Value += UnityEngine.Time.deltaTime;
+        PreviousTime.Value = NowTime.Value;
+        NowTime.Value += Time.deltaTime;
+
+        BulletTime.Time = NowTime.Value;
 
         Vector3 playerPositionvec3 = BattleHackingPlayerManager.Instance.Player.transform.position;
         Vector2 playerPositionVec2 = new Vector2(playerPositionvec3.x, playerPositionvec3.z);
         PlayerPosition.Value = playerPositionVec2;
 
-        ArgumentTime.Value = Time.Value;
+        LaunchTime.Value = NowTime.Value;
+
+        BulletTimeProperty.Value = NowTime.Value;
     }
 }

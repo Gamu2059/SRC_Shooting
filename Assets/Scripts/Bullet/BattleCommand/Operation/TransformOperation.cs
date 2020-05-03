@@ -66,6 +66,17 @@ public class TransformOperation : ScriptableObject
         get { return m_CanCollide; }
     }
 
+    /// <summary>
+    /// 弾が生存しているかどうか
+    /// </summary>
+    [SerializeField]
+    private OperationBoolBase m_IsAlive;
+    public OperationBoolBase IsAlive
+    {
+        set { m_IsAlive = value; }
+        get { return m_IsAlive; }
+    }
+
 
     /// <summary>
     /// 演算結果を取得する
@@ -77,7 +88,8 @@ public class TransformOperation : ScriptableObject
             m_Angle.GetResultFloat(),
             m_Scale.GetResultFloat(),
             m_Opacity != null ? m_Opacity.GetResultFloat() : 1,
-            m_CanCollide != null ? m_CanCollide.GetResultBool() : true
+            m_CanCollide != null ? m_CanCollide.GetResultBool() : true,
+            m_IsAlive != null ? m_IsAlive.GetResultBool() : true
             );
     }
 
@@ -140,8 +152,22 @@ public class TransformOperation : ScriptableObject
         else
         {
             canCollide = m_CanCollide.GetResultBool();
+            //canCollide = false;
         }
 
-        return new TransformSimple(position, angle, scale, opacity, canCollide);
+        bool isAlive;
+
+        if (m_IsAlive == null)
+        {
+            isAlive =
+                -0.91 <= position.x && position.x <= 0.91 &&
+                -1.1 <= position.y && position.y <= 1.1;
+        }
+        else
+        {
+            isAlive = m_IsAlive.GetResultBool();
+        }
+
+        return new TransformSimple(position, angle, scale, opacity, canCollide, isAlive);
     }
 }
