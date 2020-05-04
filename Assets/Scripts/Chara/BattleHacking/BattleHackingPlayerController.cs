@@ -30,6 +30,9 @@ public class BattleHackingPlayerController : CommandCharaController
     [SerializeField, Tooltip("発射位置を表す変数オブジェクト")]
     private OperationVector2Variable m_ShotPositionVariable;
 
+    [SerializeField, Tooltip("弾発射パラメータ群")]
+    private BulletShotParams m_BulletShotParams;
+
 
     private float m_ShotTimeCount;
 

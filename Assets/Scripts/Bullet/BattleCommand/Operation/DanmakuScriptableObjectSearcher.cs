@@ -84,9 +84,9 @@ public class DanmakuScriptableObjectSearcher : ScriptableObject
 
     public OperationFloatSymmetrical operationFloatSymmetrical;
 
-    public BattleRealBossBehaviorSet battleRealBossBehaviorSet;
-    public BattleRealBossParam battleRealBossParam;
-    public BattleRealBossParamSet battleRealBossParamSet;
+    //public BattleRealBossBehaviorSet battleRealBossBehaviorSet;
+    //public BattleRealBossParam battleRealBossParam;
+    //public BattleRealBossParamSet battleRealBossParamSet;
 
     public OperationIntConstantJuncDifficulty m_OperationIntConstantJuncDifficulty;
     public OperationFloatConstantJuncDifficulty m_OperationFloatConstantJuncDifficulty;

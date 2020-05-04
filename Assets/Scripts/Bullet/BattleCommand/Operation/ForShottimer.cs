@@ -26,7 +26,7 @@ public class ForShottimer : ForBase
 
     public override void Setup()
     {
-        // 発射回数を初期化する
+        // 発射回数を初期化する（フィールド宣言と同時に行えば、ここに書く必要はなさそう？）
         m_RealShotNumVariable.Value = -1;
     }
 
