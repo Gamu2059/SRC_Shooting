@@ -14,4 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MinOffsetFieldPosition: {x: -0.3, y: -0.3}
   m_MaxOffsetFieldPosition: {x: 0.3, y: 0.3}
+  m_ReferenceDifficultyForGenerator: 1
   m_Generator: {fileID: 11400000, guid: 43c0dd87d3295f64280c6873234ec309, type: 2}
+  m_DifficultyReferencedGenerators:
+  - Difficulty: 0
+    Generator: {fileID: 11400000, guid: 907d610b787b19145ab97d910ad2bdf7, type: 2}
+  - Difficulty: 1
+    Generator: {fileID: 11400000, guid: 43c0dd87d3295f64280c6873234ec309, type: 2}
+  - Difficulty: 2
+    Generator: {fileID: 11400000, guid: 6d02c41f40582b244adc31ea25542a02, type: 2}
+  - Difficulty: 3
+    Generator: {fileID: 11400000, guid: ed936323fdc6ace4a8c27b4eed62c989, type: 2}

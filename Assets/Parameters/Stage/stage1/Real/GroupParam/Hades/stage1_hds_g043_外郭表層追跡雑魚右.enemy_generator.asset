@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060f34c0cf2c4a34e884e5135098f092, type: 3}
+  m_Name: "stage1_hds_g043_\u5916\u90ED\u8868\u5C64\u8FFD\u8DE1\u96D1\u9B5A\u53F3.enemy_generator"
+  m_EditorClassIdentifier: 
+  m_UseStopCondition: 1
+  m_StopCondition:
+    IsReverse: 0
+    IsMultiCondition: 1
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 0
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions:
+    - IsReverse: 0
+      VariableType: 2
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: G041 Right Defeat
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 1
+    - IsReverse: 0
+      VariableType: 3
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: G041 Appear
+      CompareType: 5
+      BoolCompareType: 0
+      CompareValue: 9.5
+      BoolCompareValue: 0
+  m_ParamSets:
+  - {fileID: 11400000, guid: 5881e79ef02247a43bd09f89895024d3, type: 2}
+  m_BeginPosition: {x: 0, y: 0}
+  m_EndPosition: {x: 0, y: 0}
+  m_GenerateAngle: 0
+  m_GenerateNum: 35
+  m_GenerateOffsetTime: 0
+  m_GenerateInterval: 0.2

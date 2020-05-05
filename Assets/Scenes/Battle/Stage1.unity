@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsNotPlayerDead: 0
-  m_IsNotGameOver: 0
+  m_IsNotGameOver: 1
   m_ColliderMaterial: {fileID: 2100000, guid: da5a8fa657aff5d40a3991eb63cd03ba, type: 2}
   m_IsDrawColliderArea: 0
   m_IsDrawOutSideColliderArea: 0
@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Difficulty: 2
+  m_Difficulty: 3
   m_Chapter: 1
   m_ParamSet: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
   m_HackInController: {fileID: 1411170273}

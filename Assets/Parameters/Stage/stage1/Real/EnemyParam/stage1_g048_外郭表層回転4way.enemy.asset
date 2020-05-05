@@ -265,3 +265,253 @@ MonoBehaviour:
       m_RetireSequentialEffect:
         m_Params: []
       m_RetireHideTime: 0
+  - Difficulty: 0
+    Param:
+      m_Hp: 100
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 5ee425089de5504448ae7c2d7dc0656b,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: b0f87a3b2a1f50c438af39080fb4e598,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 22b06eaf7946eaf45bf1fc90dd886a12,
+        type: 2}
+      m_DefeatScore: 100
+      m_DefeatItemParam:
+        ItemSpreadParams: []
+        CenterCreateItemType: 0
+      m_DefeatEvents:
+      - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 2
+          VariableName: G048 Defeat
+          OperandType: 0
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 0
+          BoolOperandValue: 1
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents:
+      - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 2
+          VariableName: G048 Defeat
+          OperandType: 0
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 0
+          BoolOperandValue: 1
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0
+  - Difficulty: 3
+    Param:
+      m_Hp: 100
+      m_BulletSetParam: {fileID: 0}
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 5ee425089de5504448ae7c2d7dc0656b,
+        type: 2}
+      m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
+        type: 2}
+      m_DamageEffectDuration: 0.1
+      m_OnInitializeEvents: []
+      m_OnInitializeSequence: {fileID: 11400000, guid: b0f87a3b2a1f50c438af39080fb4e598,
+        type: 2}
+      m_OnStartBehaviorEvents: []
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 22b06eaf7946eaf45bf1fc90dd886a12,
+        type: 2}
+      m_DefeatScore: 100
+      m_DefeatItemParam:
+        ItemSpreadParams: []
+        CenterCreateItemType: 0
+      m_DefeatEvents:
+      - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 2
+          VariableName: G048 Defeat
+          OperandType: 0
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 0
+          BoolOperandValue: 1
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
+      m_DefeatSequentialEffect:
+        m_Params:
+        - Delay: 0
+          Effect: {fileID: 11400000, guid: 32b8abd54d6eeca42b42e7bdcf4ae87a, type: 2}
+      m_DefeatHideTime: 0
+      m_RetireEvents:
+      - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
+        IsPassExecute: 0
+        EventType: 4
+        ExecuteTiming: 0
+        DelayExecuteTime: 0
+        UseEnemyGroupParamArray: 0
+        EnemyGroupParam: {fileID: 0}
+        EnemyGroupParams: []
+        IsOnlyRetireNotBossEnemy: 1
+        MovePlayerSequenceGroup: {fileID: 0}
+        ControlCameraParams: []
+        ControlObjectParams: []
+        ControlBgmParams: []
+        ControlTelopParam:
+          TargetTelopType: 0
+        ShowCutsceneParam:
+          CutsceneName: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ShowTalkParam:
+          ScenarioLabel: 
+          AutoChangeToGameState: 0
+          OnCompletedEvents: []
+        ChangeState: 0
+        FadeParam:
+          IsFadeOut: 0
+          FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
+          UseAnimation: 0
+          Duration: 0
+          RateCurve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
+        OperateVariableParams:
+        - VariableType: 2
+          VariableName: G048 Defeat
+          OperandType: 0
+          BoolOperandType: 0
+          OperandValueType: 0
+          OperandValueName: 
+          OperandValue: 0
+          BoolOperandValue: 1
+        CountStartTimePeriodNames: []
+        CallScriptParams: []
+        ExecuteEvents: []
+      m_RetireSequentialEffect:
+        m_Params: []
+      m_RetireHideTime: 0
