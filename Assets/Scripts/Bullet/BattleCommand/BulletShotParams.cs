@@ -50,7 +50,8 @@ public class BulletShotParams : ScriptableObject
 
     public void OnUpdates(
         CommandCharaController owner,
-        CommonOperationVariable commonOperationVariable
+        CommonOperationVariable commonOperationVariable,
+        E_COMMON_SOUND shotSE
         )
     {
 
@@ -80,7 +81,7 @@ public class BulletShotParams : ScriptableObject
 
         if (isShoot)
         {
-            AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+            AudioManager.Instance.Play(shotSE);
         }
     }
 }

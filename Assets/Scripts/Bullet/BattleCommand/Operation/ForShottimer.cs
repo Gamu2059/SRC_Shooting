@@ -21,12 +21,12 @@ public class ForShottimer : ForBase
     [SerializeField, Tooltip("発射時刻を表す演算")]
     private OperationFloatBase m_LaunchTimeOperation;
 
-    private float m_NowTime;
+    protected float m_NowTime;
 
 
     public override void Setup()
     {
-        // 発射回数を初期化する（フィールド宣言と同時に行えば、ここに書く必要はなさそう？）
+        // 発射回数を初期化する（フィールド宣言と同時に行えば、ここに書く必要はなさそう？いやでも、それだと同じハッキングに再挑戦した時に困るか。）
         m_RealShotNumVariable.Value = -1;
     }
 

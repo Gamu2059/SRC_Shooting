@@ -88,7 +88,7 @@ public class UnitDanmaku : ScriptableObject
         // 新しいやり方なら
         else
         {
-            m_BulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable);
+            m_BulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
         }
     }
 }

@@ -45,7 +45,7 @@ public class Danmaku : ScriptableObject
         {
             foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
             {
-                bulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable);
+                bulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
             }
         }
     }

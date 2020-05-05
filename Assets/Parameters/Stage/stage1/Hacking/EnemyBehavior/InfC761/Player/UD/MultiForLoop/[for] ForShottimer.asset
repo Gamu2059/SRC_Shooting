@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e53c5f5c18cce40aa6deffaaee1a13, type: 3}
+  m_Name: '[for] ForShottimer'
+  m_EditorClassIdentifier: 
+  m_CommonOperationVariable: {fileID: 11400000, guid: f65db94a283c6324d92d6fa7ebb863a3,
+    type: 2}
+  m_RealShotNumVariable: {fileID: 11400000, guid: b2e3c451f387a7e4c979c0544d191633,
+    type: 2}
+  m_LaunchTimeOperation: {fileID: 11400000, guid: cb3785183d93b1249b6db3c096d02c5b,
+    type: 2}
+  m_IsShotButtonPressed: {fileID: 11400000, guid: d1097ac6a80a27f46bf06dc9fccf2d69,
+    type: 2}

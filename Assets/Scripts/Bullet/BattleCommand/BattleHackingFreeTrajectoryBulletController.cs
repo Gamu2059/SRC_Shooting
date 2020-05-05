@@ -381,7 +381,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         // もしこの弾が弾を発射するなら、発射の処理を行う
         if (m_BulletShotParams != null)
         {
-            m_BulletShotParams.OnUpdates(m_Boss, m_CommonOperationVariable);
+            m_BulletShotParams.OnUpdates(m_Boss, m_CommonOperationVariable, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
         }
     }
 
