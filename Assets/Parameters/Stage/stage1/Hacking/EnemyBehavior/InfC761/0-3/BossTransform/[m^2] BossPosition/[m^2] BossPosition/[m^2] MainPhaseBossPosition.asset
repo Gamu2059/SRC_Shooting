@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa69e8dcd376cb49b7104331c0df75f, type: 3}
+  m_Name: '[m^2] MainPhaseBossPosition'
+  m_EditorClassIdentifier: 
+  m_T: {fileID: 11400000, guid: b730a08b080dfee418db56f8f62e2983, type: 2}
+  m_BezierArray:
+  - m_Position: {fileID: 11400000, guid: 0484c745bab8b4e43b3247f5aa2e3345, type: 2}
+    m_Velocity: {fileID: 11400000, guid: 3deb0ee481c7b6847b325462982636ba, type: 2}
+    m_T: {fileID: 11400000, guid: b87f79cb79d41d34393daacb357823ea, type: 2}
+  - m_Position: {fileID: 11400000, guid: 4d5c22eb333ebef4bbe6f0881ed4d125, type: 2}
+    m_Velocity: {fileID: 11400000, guid: 3deb0ee481c7b6847b325462982636ba, type: 2}
+    m_T: {fileID: 11400000, guid: e8e69c458ff9c3944adb140b833f381e, type: 2}
+  m_EndPosition: {fileID: 11400000, guid: 0484c745bab8b4e43b3247f5aa2e3345, type: 2}
+  m_EndVelocity: {fileID: 11400000, guid: 3deb0ee481c7b6847b325462982636ba, type: 2}

@@ -107,14 +107,6 @@ public class BattleHackingBulletController : BattleHackingObjectBase
     {
         base.OnAwake();
         m_CharaHit = new HitSufferController<CommandCharaController>();
-
-        //Debug.Log("OnAwake");
-
-        //if (m_MultiForLoop != null)
-        //{
-        //    //Debug.Log("m_MultiForLoop != null");
-        //    m_MultiForLoop.Setup();
-        //}
     }
 
 
@@ -151,3 +143,15 @@ public class BattleHackingBulletController : BattleHackingObjectBase
 
     #endregion
 }
+
+
+
+
+
+//Debug.Log("OnAwake");
+
+//if (m_MultiForLoop != null)
+//{
+//    //Debug.Log("m_MultiForLoop != null");
+//    m_MultiForLoop.Setup();
+//}

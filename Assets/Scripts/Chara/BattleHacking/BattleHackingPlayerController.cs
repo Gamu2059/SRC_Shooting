@@ -19,32 +19,48 @@ public class BattleHackingPlayerController : CommandCharaController
     private Transform[] m_ShotPositions = default;
 
 
-    [SerializeField, Tooltip("発射パラメータ（演算）")]
-    private ShotParamOperation m_ShotParamOperation;
-
-
-    [SerializeField, Tooltip("弾が持つパラメータ（演算）")]
-    private BulletParamFreeOperation m_BulletParamFreeOperation;
-
+    [SerializeField, Tooltip("発射位置を表す変数オブジェクト")]
+    private OperationVector2Variable m_ShotPosition1;
 
     [SerializeField, Tooltip("発射位置を表す変数オブジェクト")]
-    private OperationVector2Variable m_ShotPositionVariable;
+    private OperationVector2Variable m_ShotPosition2;
 
+    [SerializeField, Tooltip("ショットボタンが押されているかどうか")]
+    private OperationBoolVariable m_IsShotButtonPressed;
 
-    private float m_ShotTimeCount;
+    [SerializeField, Tooltip("弾発射パラメータ群")]
+    private BulletShotParams m_BulletShotParams;
+
+    /// <summary>
+    /// ハッキング開始からの時刻
+    /// </summary>
+    private float m_Time;
+
 
     public override void OnStart()
     {
         base.OnStart();
 
-        m_ShotTimeCount = 0;
+        m_Time = 0;
+        BulletTime.Time = 0;
+
+        m_BulletShotParams.OnStarts();
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
 
-        m_ShotTimeCount -= Time.deltaTime;
+        m_Time += Time.deltaTime;
+        BulletTime.Time = m_Time;
+
+        // 自機本体の位置を外部に知らせる
+        m_ShotPosition1.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[0].position.x, 0);
+        m_ShotPosition2.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[1].position.x, 0);
+
+        m_BulletShotParams.OnUpdates(this, E_COMMON_SOUND.PLAYER_HACKING_SHOT);
+
+        m_IsShotButtonPressed.Value = false;
     }
 
     /// <summary>
@@ -52,44 +68,7 @@ public class BattleHackingPlayerController : CommandCharaController
     /// </summary>
     public void ShotBullet()
     {
-        if (m_ShotTimeCount > 0)
-        {
-            return;
-        }
-
-        if (m_ShotPositions == null)
-        {
-            return;
-        }
-
-        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_HACKING_SHOT);
-
-        for(int j = 0;j < 1; j++)
-        {
-            for (int i = 0; i < m_ShotPositions.Length; i++)
-            {
-                // 自機本体の位置を外部に知らせる
-                m_ShotPositionVariable.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[i].position.x, 0);
-
-                // 弾を発射する
-                BattleHackingFreeTrajectoryBulletController.ShotBullet(
-                    this,
-                    null,
-                    null,
-                    0,
-                    m_ShotParamOperation,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-                    );
-            }
-        }
-
-        m_ShotTimeCount += m_ShotInterval;
+        m_IsShotButtonPressed.Value = true;
     }
 
     protected override void OnEnterSufferBullet(HitSufferData<BattleHackingFreeTrajectoryBulletController> sufferData)
@@ -170,3 +149,62 @@ public class BattleHackingPlayerController : CommandCharaController
 //    "\nparent : " + transform.parent.position.x.ToString() + ", " + transform.parent.position.y.ToString() + ", " + transform.parent.position.z.ToString());
 //Vector2 localPositionVector2 = new Vector2(transform.localPosition.x, transform.localPosition.z);
 //Debug.Log(localPositionVector2.x.ToString() + ", " + localPositionVector2.y.ToString());
+
+
+//[SerializeField, Tooltip("発射パラメータ（演算）")]
+//private ShotParamOperation m_ShotParamOperation;
+
+//[SerializeField, Tooltip("弾が持つパラメータ（演算）")]
+//private BulletParamFreeOperation m_BulletParamFreeOperation;
+
+//private float m_ShotTimeCount;
+
+
+//m_ShotTimeCount = 0;
+
+
+//m_ShotTimeCount -= Time.deltaTime;
+
+
+//if (m_ShotTimeCount > 0)
+//{
+//    return;
+//}
+
+//if (m_ShotPositions == null)
+//{
+//    return;
+//}
+
+//AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_HACKING_SHOT);
+
+//for(int j = 0;j < 1; j++)
+//{
+//    for (int i = 0; i < m_ShotPositions.Length; i++)
+//    {
+//        // 自機本体の位置を外部に知らせる
+//        m_ShotPositionVariable.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[i].position.x, 0);
+
+//        // 弾を発射する
+//        BattleHackingFreeTrajectoryBulletController.ShotBullet(
+//            this,
+//            null,
+//            null,
+//            0,
+//            m_ShotParamOperation,
+//            null,
+//            null,
+//            null,
+//            null,
+//            null,
+//            null,
+//            null
+//            );
+//    }
+//}
+
+//m_ShotTimeCount += m_ShotInterval;
+
+
+//[SerializeField, Tooltip("ゲーム全体で共通の変数へのリンク")]
+//private CommonOperationVariable m_CommonOperationVariable;

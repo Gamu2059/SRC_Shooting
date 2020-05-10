@@ -25,12 +25,6 @@ public class ForOnceBool : ForOnceBase
     private OperationBoolBase m_BoolValue;
 
 
-    public override void Setup()
-    {
-
-    }
-
-
     public override void Do()
     {
         m_BoolVariable.Value = m_BoolValue.GetResultBool();

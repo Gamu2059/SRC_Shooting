@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 弾が持つ、bool,int,float,Vector2型のパラメータの演算を表すクラス。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/operation/bulletParamFree", fileName = "BulletParamFree", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/bulletParamFree", fileName = "BulletParamFree", order = 0)]
 [System.Serializable]
 public class BulletParamFreeOperation : ScriptableObject
 {

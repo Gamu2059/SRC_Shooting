@@ -19,12 +19,6 @@ public class ForOnceArray : ForOnceBase
     private ForOnceBase[] m_Array;
 
 
-    public override void Setup()
-    {
-
-    }
-
-
     public override void Do()
     {
         foreach (ForOnceBase forOnceBase in m_Array)
