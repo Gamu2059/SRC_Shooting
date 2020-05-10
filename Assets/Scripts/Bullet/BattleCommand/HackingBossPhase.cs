@@ -13,19 +13,19 @@ public class HackingBossPhase : ScriptableObject
 {
 
     [SerializeField, Tooltip("難易度変動演算初期化オブジェクト")]
-    private DifficultyInitializer[] m_DifficultyInitializer;
+    private DifficultyInitializerBase m_DifficultyInitializer;
 
     [SerializeField, Tooltip("攻撃が始まる前の初期化処理")]
     private ForSetupBase m_ForSetup;
 
     [SerializeField, Tooltip("多重forループ")]
-    private MultiForLoop m_MultiForLoop;
+    private ForBase m_MultiForLoop;
 
     [SerializeField, Tooltip("敵本体の物理的な状態")]
     private TransformOperation m_BossTransform;
 
     [SerializeField, Tooltip("弾幕")]
-    private Danmaku m_DanmakuArray;
+    private BulletShotParamBase m_DanmakuArray;
 
     [SerializeField, Tooltip("BGM再生用のパラメータ")]
     private PlaySoundParam m_PlaySoundParam;
@@ -34,23 +34,18 @@ public class HackingBossPhase : ScriptableObject
         get { return m_PlaySoundParam; }
     }
 
-    [SerializeField, Tooltip("ゲーム全体で共通の変数へのリンク")]
-    private CommonOperationVariable m_CommonOperationVariable;
+    /// <summary>
+    /// この攻撃の開始からの時刻
+    /// </summary>
+    private float m_Time;
 
 
     public void OnStarts()
     {
-        m_CommonOperationVariable.OnStarts();
+        m_Time = 0;
+        BulletTime.Time = 0;
 
-        //if (m_DifficultyInitializer != null)
-        //{
-        //    m_DifficultyInitializer.Setup();
-        //}
-
-        foreach (DifficultyInitializer difficultyInitializer in m_DifficultyInitializer)
-        {
-            difficultyInitializer.Setup();
-        }
+        m_DifficultyInitializer.Setup();
 
         if (m_ForSetup != null)
         {
@@ -58,8 +53,6 @@ public class HackingBossPhase : ScriptableObject
         }
 
         m_DanmakuArray.OnStarts();
-
-        BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
 
         if (m_MultiForLoop != null)
         {
@@ -70,7 +63,8 @@ public class HackingBossPhase : ScriptableObject
 
     public TransformSimple OnUpdates(BattleHackingBossBehavior boss)
     {
-        m_CommonOperationVariable.OnUpdates();
+        m_Time += Time.deltaTime;
+        BulletTime.Time = m_Time;
 
         TransformSimple transform = null;
 
@@ -86,10 +80,7 @@ public class HackingBossPhase : ScriptableObject
             }
         }
 
-        m_DanmakuArray.OnUpdates(
-            boss,
-            m_CommonOperationVariable
-            );
+        m_DanmakuArray.OnUpdates(boss.GetEnemy(), E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
 
         return transform;
     }
@@ -147,4 +138,22 @@ public class HackingBossPhase : ScriptableObject
 //        transform = m_BossTransform.GetResultTransform();
 //    }
 //    while (m_MultiForLoop == null ? false : m_MultiForLoop.Process());
+//}
+
+
+//if (m_DifficultyInitializer != null)
+//{
+//    m_DifficultyInitializer.Setup();
+//}
+
+//BattleHackingFreeTrajectoryBulletController.CommonOperationVar = m_CommonOperationVariable;
+
+
+//[SerializeField, Tooltip("ゲーム全体で共通の変数へのリンク")]
+//private CommonOperationVariable m_CommonOperationVariable;
+
+
+//foreach (DifficultyInitializerBase difficultyInitializer in m_DifficultyInitializer)
+//{
+//    difficultyInitializer.Setup();
 //}

@@ -9,44 +9,65 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/Danmaku", fileName = "Danmaku", order = 0)]
 [System.Serializable]
-public class Danmaku : ScriptableObject
+public class Danmaku : BulletShotParamBase
 {
-    [SerializeField, Tooltip("単位弾幕の配列")]
-    private UnitDanmaku[] m_UnitDanmakuArray;
 
     [SerializeField, Tooltip("単位弾幕の配列")]
     private BulletShotParams[] m_BulletShotParamsArray;
 
 
-    public void OnStarts()
+    public override void OnStarts()
     {
-        foreach (UnitDanmaku unitDanmaku in m_UnitDanmakuArray)
+        foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
         {
-            unitDanmaku.OnStarts();
-        }
-
-        if (m_BulletShotParamsArray != null)
-        {
-            foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
-            {
-                bulletShotParams.OnStarts();
-            }
+            bulletShotParams.OnStarts();
         }
     }
 
 
-    public void OnUpdates(BattleHackingBossBehavior boss, CommonOperationVariable commonOperationVariable)
+    public override void OnUpdates(CommandCharaController owner, E_COMMON_SOUND shotSE)
     {
-        foreach (UnitDanmaku unitDanmaku in m_UnitDanmakuArray)
+        foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
         {
-            unitDanmaku.OnUpdates(boss, commonOperationVariable);
-        }
-        if (m_BulletShotParamsArray != null)
-        {
-            foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
-            {
-                bulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
-            }
+            bulletShotParams.OnUpdates(owner, shotSE);
         }
     }
 }
+
+
+
+
+
+//[SerializeField, Tooltip("単位弾幕の配列")]
+//private UnitDanmaku[] m_UnitDanmakuArray;
+
+
+//foreach (UnitDanmaku unitDanmaku in m_UnitDanmakuArray)
+//{
+//    unitDanmaku.OnStarts();
+//}
+
+//if (m_BulletShotParamsArray != null)
+//{
+//    foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
+//    {
+//        bulletShotParams.OnStarts();
+//    }
+//}
+
+
+//foreach (UnitDanmaku unitDanmaku in m_UnitDanmakuArray)
+//{
+//    unitDanmaku.OnUpdates(boss, commonOperationVariable);
+//}
+
+//if (m_BulletShotParamsArray != null)
+//{
+//    foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
+//    {
+//        bulletShotParams.OnUpdates(boss.GetEnemy(), commonOperationVariable, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+//    }
+//}
+
+
+//bulletShotParams.OnUpdates(boss.GetEnemy(), E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// for文を表すクラスの基底クラス。
+/// for文を表すクラスの基底クラス。（Setup()で何もしないという要素だけを追加した派生クラスを作るか？）
 /// </summary>
 [System.Serializable]
 public abstract class ForBase : ScriptableObject

@@ -25,12 +25,6 @@ public class ForOnceFloat : ForOnceBase
     private OperationFloatBase m_FloatValue;
 
 
-    public override void Setup()
-    {
-
-    }
-
-
     public override void Do()
     {
         m_FloatVariable.Value = m_FloatValue.GetResultFloat();

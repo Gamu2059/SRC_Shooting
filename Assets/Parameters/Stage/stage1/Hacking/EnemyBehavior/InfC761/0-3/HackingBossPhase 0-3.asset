@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70248ff9a48f69447847bd894c3c5604, type: 3}
   m_Name: HackingBossPhase 0-3
   m_EditorClassIdentifier: 
-  m_DifficultyInitializer:
-  - {fileID: 11400000, guid: b1e83e873bbe130458d02fb0c87be9a0, type: 2}
+  m_DifficultyInitializer: {fileID: 11400000, guid: 5a656302a2ca7094fb8d512f7ba8ed4e,
+    type: 2}
   m_ForSetup: {fileID: 0}
   m_MultiForLoop: {fileID: 0}
   m_BossTransform: {fileID: 11400000, guid: ff3dc250d01a5944ea6676a9aa0f2277, type: 2}
   m_DanmakuArray: {fileID: 11400000, guid: 80297278478e91241b9d1efcbfdf453b, type: 2}
   m_PlaySoundParam: {fileID: 0}
-  m_CommonOperationVariable: {fileID: 11400000, guid: f65db94a283c6324d92d6fa7ebb863a3,
-    type: 2}

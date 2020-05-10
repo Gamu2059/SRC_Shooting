@@ -19,9 +19,6 @@ public class BattleHackingPlayerController : CommandCharaController
     private Transform[] m_ShotPositions = default;
 
 
-    [SerializeField, Tooltip("ゲーム全体で共通の変数へのリンク")]
-    private CommonOperationVariable m_CommonOperationVariable;
-
     [SerializeField, Tooltip("発射位置を表す変数オブジェクト")]
     private OperationVector2Variable m_ShotPosition1;
 
@@ -61,7 +58,7 @@ public class BattleHackingPlayerController : CommandCharaController
         m_ShotPosition1.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[0].position.x, 0);
         m_ShotPosition2.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[1].position.x, 0);
 
-        m_BulletShotParams.OnUpdates(this, m_CommonOperationVariable, E_COMMON_SOUND.PLAYER_HACKING_SHOT);
+        m_BulletShotParams.OnUpdates(this, E_COMMON_SOUND.PLAYER_HACKING_SHOT);
 
         m_IsShotButtonPressed.Value = false;
     }
@@ -207,3 +204,7 @@ public class BattleHackingPlayerController : CommandCharaController
 //}
 
 //m_ShotTimeCount += m_ShotInterval;
+
+
+//[SerializeField, Tooltip("ゲーム全体で共通の変数へのリンク")]
+//private CommonOperationVariable m_CommonOperationVariable;
