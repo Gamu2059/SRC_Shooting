@@ -25,12 +25,6 @@ public class ForOnceVector2 : ForOnceBase
     private OperationVector2Base m_Vector2Value;
 
 
-    public override void Setup()
-    {
-
-    }
-
-
     public override void Do()
     {
         m_Vector2Variable.Value = m_Vector2Value.GetResultVector2();

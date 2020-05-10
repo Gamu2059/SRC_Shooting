@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 敵や弾の物理的な状態を表す演算を表すクラス。
 /// </summary>
-[CreateAssetMenu(menuName = "Param/Danmaku/operation/transform/transform", fileName = "TransformOperation", order = 0)]
+[CreateAssetMenu(menuName = "Param/Danmaku/transform", fileName = "TransformOperation", order = 0)]
 [System.Serializable]
 public class TransformOperation : ScriptableObject
 {
@@ -87,87 +87,92 @@ public class TransformOperation : ScriptableObject
             m_Position.GetResultVector2(),
             m_Angle.GetResultFloat(),
             m_Scale.GetResultFloat(),
-            m_Opacity != null ? m_Opacity.GetResultFloat() : 1,
-            m_CanCollide != null ? m_CanCollide.GetResultBool() : true,
-            m_IsAlive != null ? m_IsAlive.GetResultBool() : true
+            m_Opacity.GetResultFloat(),
+            m_CanCollide.GetResultBool(),
+            //false,
+            m_IsAlive.GetResultBool()
             );
     }
-
-
-    /// <summary>
-    /// 演算結果を取得する（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
-    /// </summary>
-    public TransformSimple GetResultTransform(ShotParam shotParam, float time)
-    {
-        Vector2 position;
-
-        if (m_Position == null)
-        {
-            position = shotParam.Position + shotParam.Velocity * time;
-        }
-        else
-        {
-            position = m_Position.GetResultVector2();
-        }
-
-        float angle;
-
-        if (m_Angle == null)
-        {
-            angle = shotParam.Angle + shotParam.AngleSpeed * time;
-        }
-        else
-        {
-            angle = m_Angle.GetResultFloat();
-        }
-
-        float scale;
-
-        if (m_Scale == null)
-        {
-            scale = shotParam.Scale + shotParam.ScaleSpeed * time;
-        }
-        else
-        {
-            scale = m_Scale.GetResultFloat();
-        }
-
-        float opacity;
-
-        if (m_Opacity == null)
-        {
-            opacity = shotParam.Opacity;
-        }
-        else
-        {
-            opacity = m_Opacity.GetResultFloat();
-        }
-
-        bool canCollide;
-
-        if (m_CanCollide == null)
-        {
-            canCollide = shotParam.CanCollide;
-        }
-        else
-        {
-            canCollide = m_CanCollide.GetResultBool();
-            //canCollide = false;
-        }
-
-        bool isAlive;
-
-        if (m_IsAlive == null)
-        {
-            isAlive =
-                -0.91 <= position.x && position.x <= 0.91 &&
-                -1.1 <= position.y && position.y <= 1.1;
-        }
-        else
-        {
-            isAlive = m_IsAlive.GetResultBool();
-        }
-
-        return new TransformSimple(position, angle, scale, opacity, canCollide, isAlive);
-    }
 }
+
+
+
+
+
+
+///// <summary>
+///// 演算結果を取得する（それぞれのパラメータがもしnullなら、それについては慣性に従って求める）
+///// </summary>
+//public TransformSimple GetResultTransform(ShotParam shotParam, float time)
+//{
+//    Vector2 position;
+
+//    if (m_Position == null)
+//    {
+//        position = shotParam.Position + shotParam.Velocity * time;
+//    }
+//    else
+//    {
+//        position = m_Position.GetResultVector2();
+//    }
+
+//    float angle;
+
+//    if (m_Angle == null)
+//    {
+//        angle = shotParam.Angle + shotParam.AngleSpeed * time;
+//    }
+//    else
+//    {
+//        angle = m_Angle.GetResultFloat();
+//    }
+
+//    float scale;
+
+//    if (m_Scale == null)
+//    {
+//        scale = shotParam.Scale + shotParam.ScaleSpeed * time;
+//    }
+//    else
+//    {
+//        scale = m_Scale.GetResultFloat();
+//    }
+
+//    float opacity;
+
+//    if (m_Opacity == null)
+//    {
+//        opacity = shotParam.Opacity;
+//    }
+//    else
+//    {
+//        opacity = m_Opacity.GetResultFloat();
+//    }
+
+//    bool canCollide;
+
+//    if (m_CanCollide == null)
+//    {
+//        canCollide = shotParam.CanCollide;
+//    }
+//    else
+//    {
+//        //canCollide = m_CanCollide.GetResultBool();
+//        canCollide = false;
+//    }
+
+//    bool isAlive;
+
+//    if (m_IsAlive == null)
+//    {
+//        isAlive =
+//            -0.91 <= position.x && position.x <= 0.91 &&
+//            -1.1 <= position.y && position.y <= 1.1;
+//    }
+//    else
+//    {
+//        isAlive = m_IsAlive.GetResultBool();
+//    }
+
+//    return new TransformSimple(position, angle, scale, opacity, canCollide, isAlive);
+//}

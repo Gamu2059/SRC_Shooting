@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/bulletShotParams", fileName = "BulletShotParams", order = 0)]
 [System.Serializable]
-public class BulletShotParams : ScriptableObject
+public class BulletShotParams : BulletShotParamBase
 {
 
     [SerializeField, Tooltip("攻撃が始まる前の初期化処理")]
@@ -17,9 +17,6 @@ public class BulletShotParams : ScriptableObject
 
     [SerializeField, Tooltip("弾を撃つ時の多重forループ")]
     private MultiForLoop m_MultiForLoop;
-
-    [SerializeField, Tooltip("弾が持つパラメータ（演算）")]
-    private BulletParamFreeOperation m_BulletParamFreeOperation;
 
     [SerializeField, Tooltip("弾の変更可能なパラメータの初期値（演算）")]
     private BulletParamFreeOperation m_BulletParamFreeOperationChangeableInit;
@@ -37,7 +34,7 @@ public class BulletShotParams : ScriptableObject
     private BulletShotParams m_BulletShotParams;
 
 
-    public void OnStarts()
+    public override void OnStarts()
     {
         if (m_ForSetup != null)
         {
@@ -48,10 +45,7 @@ public class BulletShotParams : ScriptableObject
     }
 
 
-    public void OnUpdates(
-        CommandCharaController owner,
-        CommonOperationVariable commonOperationVariable
-        )
+    public override void OnUpdates(CommandCharaController owner, E_COMMON_SOUND shotSE)
     {
 
         // 一度でも弾を発射したかどうか
@@ -62,15 +56,9 @@ public class BulletShotParams : ScriptableObject
             // 弾を撃つ
             BattleHackingFreeTrajectoryBulletController.ShotBullet(
                 owner,
-                commonOperationVariable,
                 m_MultiForLoopForTransform,
-                commonOperationVariable.DTime.GetResultFloat(),
-                null,
-                m_BulletParamFreeOperation,
                 m_BulletParamFreeOperationChangeableInit,
                 m_BulletParamFreeOperationChangeableUpdate,
-                commonOperationVariable.BulletTimeProperty,
-                commonOperationVariable.LaunchParam,
                 m_BulletTransform,
                 m_BulletShotParams
                 );
@@ -80,7 +68,7 @@ public class BulletShotParams : ScriptableObject
 
         if (isShoot)
         {
-            AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+            AudioManager.Instance.Play(shotSE);
         }
     }
 }
@@ -101,3 +89,19 @@ public class BulletShotParams : ScriptableObject
 //    //AudioManager.Instance.Play(BattleHackingEnemyManager.Instance.ParamSet.MediumShot02Se);
 //    AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
 //}
+
+
+//CommonOperationVariable commonOperationVariable,
+
+
+//commonOperationVariable.DTime.GetResultFloat(),
+//BulletDTime.DTime,
+//null,
+//m_BulletParamFreeOperation,
+
+//commonOperationVariable.BulletTimeProperty,
+//commonOperationVariable.LaunchParam,
+
+
+//[SerializeField, Tooltip("弾が持つパラメータ（演算）")]
+//private BulletParamFreeOperation m_BulletParamFreeOperation;
