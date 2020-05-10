@@ -12,21 +12,18 @@ using UnityEngine;
 public class ForShottimer : ForBase
 {
 
-    [SerializeField, Tooltip("このゲームで共通の変数群")]
-    private CommonOperationVariable m_CommonOperationVariable;
-
     [SerializeField, Tooltip("実際の発射回数を表す変数")]
     private OperationIntVariable m_RealShotNumVariable;
 
     [SerializeField, Tooltip("発射時刻を表す演算")]
     private OperationFloatBase m_LaunchTimeOperation;
 
-    private float m_NowTime;
+    protected float m_NowTime;
 
 
     public override void Setup()
     {
-        // 発射回数を初期化する
+        // 発射回数を初期化する（フィールド宣言と同時に行えば、ここに書く必要はなさそう？いやでも、それだと同じハッキングに再挑戦した時に困るか。）
         m_RealShotNumVariable.Value = -1;
     }
 
@@ -48,18 +45,17 @@ public class ForShottimer : ForBase
         // 試しに発射回数を1増やす
         m_RealShotNumVariable.Value++;
 
+        // この発射回数での発射時刻
+        float launchTime = m_LaunchTimeOperation.GetResultFloat();
+
         // 現在、既に次の発射がされているかどうか
-        if (m_LaunchTimeOperation.GetResultFloat() <= m_NowTime)
+        if (launchTime <= m_NowTime)
         {
             // 発射時刻
-            m_CommonOperationVariable.LaunchTime.Value = m_LaunchTimeOperation.GetResultFloat();
-
-            m_CommonOperationVariable.BulletTimeProperty.Value = m_LaunchTimeOperation.GetResultFloat();
-
-            BulletTime.Time = m_LaunchTimeOperation.GetResultFloat();
+            BulletTime.Time = launchTime;
 
             // 発射からの経過時間
-            m_CommonOperationVariable.DTime.Value = m_NowTime - m_CommonOperationVariable.LaunchTime.Value;
+            BulletDTime.DTime = m_NowTime - launchTime;
 
             return true;
         }
@@ -112,3 +108,15 @@ public class ForShottimer : ForBase
 
 //[SerializeField, Tooltip("理想的な発射回数を表す演算")]
 //private OperationIntBase m_ProperShotNumOperation;
+
+
+//[SerializeField, Tooltip("このゲームで共通の変数群")]
+//private CommonOperationVariable m_CommonOperationVariable;
+
+
+//m_CommonOperationVariable.LaunchTime.Value = m_LaunchTimeOperation.GetResultFloat();
+
+//m_CommonOperationVariable.BulletTimeProperty.Value = m_LaunchTimeOperation.GetResultFloat();
+
+
+//m_CommonOperationVariable.DTime.Value = m_NowTime - m_CommonOperationVariable.LaunchTime.Value;

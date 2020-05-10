@@ -15,6 +15,12 @@ public abstract class ForOnceBase : ForBase
     private bool m_IsLoop;
 
 
+    public override void Setup()
+    {
+
+    }
+
+
     public override void Init()
     {
         // 実行する

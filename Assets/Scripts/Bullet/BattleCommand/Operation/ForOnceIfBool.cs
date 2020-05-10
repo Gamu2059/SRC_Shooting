@@ -31,27 +31,6 @@ public class ForOnceIfBool : ForOnceBase
     private ForOnceBase m_False;
 
 
-    public override void Setup()
-    {
-        for (int i = 0; i < m_If.Length; i++)
-        {
-            if (m_If[i].GetResultBool())
-            {
-                if (m_True[i] != null)
-                {
-                    m_True[i].Setup();
-                }
-                return;
-            }
-        }
-
-        if (m_False != null)
-        {
-            m_False.Setup();
-        }
-    }
-
-
     public override void Do()
     {
         for (int i = 0; i < m_If.Length; i++)
@@ -72,3 +51,26 @@ public class ForOnceIfBool : ForOnceBase
         }
     }
 }
+
+
+
+
+//public override void Setup()
+//{
+//    //for (int i = 0; i < m_If.Length; i++)
+//    //{
+//    //    if (m_If[i].GetResultBool())
+//    //    {
+//    //        if (m_True[i] != null)
+//    //        {
+//    //            m_True[i].Setup();
+//    //        }
+//    //        return;
+//    //    }
+//    //}
+
+//    //if (m_False != null)
+//    //{
+//    //    m_False.Setup();
+//    //}
+//}

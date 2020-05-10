@@ -25,12 +25,6 @@ public class ForOnceInt : ForOnceBase
     private OperationIntBase m_IntValue;
 
 
-    public override void Setup()
-    {
-
-    }
-
-
     public override void Do()
     {
         m_IntVariable.Value = m_IntValue.GetResultInt();

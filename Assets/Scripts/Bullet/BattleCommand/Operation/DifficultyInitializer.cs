@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/difficultyInitializer", fileName = "DifficultyInitializer", order = 0)]
 [System.Serializable]
-public class DifficultyInitializer : ScriptableObject
+public class DifficultyInitializer : DifficultyInitializerBase
 {
 
     [SerializeField, Tooltip("難易度によって変わるfloat型の演算オブジェクトの配列")]
@@ -25,7 +25,7 @@ public class DifficultyInitializer : ScriptableObject
     /// <summary>
     /// 初期化する
     /// </summary>
-    public void Setup()
+    public override void Setup()
     {
         if (m_Float != null)
         {
@@ -42,10 +42,6 @@ public class DifficultyInitializer : ScriptableObject
                 operation.Setup();
             }
         }
-        else
-        {
-            Debug.Log("m_Int == null");
-        }
 
         if (m_Vector2 != null)
         {
@@ -53,10 +49,6 @@ public class DifficultyInitializer : ScriptableObject
             {
                 operation.Setup();
             }
-        }
-        else
-        {
-            Debug.Log("m_Vector2 == null");
         }
     }
 }
