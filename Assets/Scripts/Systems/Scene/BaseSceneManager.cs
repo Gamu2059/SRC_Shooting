@@ -35,6 +35,7 @@ public class BaseSceneManager : SingletonMonoBehavior<BaseSceneManager>
 		RANKING = 11,
 		STAFF_ROLL = 12,
 		EXTRA = 13,
+		PRE_TITLE = 16,
 
 		// 以下はテスト用(必要ならば追加していって)
 		CAMERA_TEST = 14,

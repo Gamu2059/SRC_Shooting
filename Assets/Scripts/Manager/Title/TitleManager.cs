@@ -160,11 +160,11 @@ public class TitleManager : ControllableMonoBehavior
     {
         base.OnUpdate();
 
-        InputManager.OnUpdate();
-        m_StateMachine?.OnUpdate();
+        //InputManager.OnUpdate();
+        //m_StateMachine?.OnUpdate();
 
-        m_Overall.RotateAround(m_Overall.position, m_Overall.up, m_OverallRotateSpeed * Time.deltaTime);
-        m_MotherColony.RotateAround(m_MotherColony.position, m_MotherColony.up, m_MotherColonyRotateSpeed * Time.deltaTime);
+        //m_Overall.RotateAround(m_Overall.position, m_Overall.up, m_OverallRotateSpeed * Time.deltaTime);
+        //m_MotherColony.RotateAround(m_MotherColony.position, m_MotherColony.up, m_MotherColonyRotateSpeed * Time.deltaTime);
     }
 
     #endregion
