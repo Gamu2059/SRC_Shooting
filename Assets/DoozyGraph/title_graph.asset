@@ -25,7 +25,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: c6d8356c-133e-4a71-ab31-7d5e7d6248d7
-  m_lastModified: 132338307303659347
+  m_lastModified: 132338430701329910
 --- !u!114 &114134269395485046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,7 +128,7 @@ MonoBehaviour:
       m_outputSocketId: 6c8c5337-f4dc-4029-88bf-8f54783fd202
     - m_inputConnectionPoint: {x: 202, y: 4}
       m_outputConnectionPoint: {x: -2, y: 4}
-      m_id: 045df155-0e46-4bfe-a71c-5a755e8a3491
+      m_id: 6b3d964a-bf27-463c-b2f3-827091cccf92
       m_inputNodeId: 91c4090c-fea8-4b3b-ba7d-78a176ec078f
       m_inputSocketId: 1dff480a-f7cf-44f6-af5f-312d1485600b
       m_outputNodeId: d895dc7f-7661-4668-bed1-c88f98dda613
@@ -257,7 +257,7 @@ MonoBehaviour:
     m_connections:
     - m_inputConnectionPoint: {x: 202, y: 4}
       m_outputConnectionPoint: {x: -2, y: 4}
-      m_id: 045df155-0e46-4bfe-a71c-5a755e8a3491
+      m_id: 6b3d964a-bf27-463c-b2f3-827091cccf92
       m_inputNodeId: 91c4090c-fea8-4b3b-ba7d-78a176ec078f
       m_inputSocketId: 1dff480a-f7cf-44f6-af5f-312d1485600b
       m_outputNodeId: d895dc7f-7661-4668-bed1-c88f98dda613
@@ -276,7 +276,7 @@ MonoBehaviour:
     m_id: 9328f229-8303-49e0-a986-1c5eaad22099
     m_nodeId: d895dc7f-7661-4668-bed1-c88f98dda613
     m_socketName: OutputSocket_0
-    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_value: '{"ButtonCategory":"StoryStart","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_nodeType: 4
@@ -297,10 +297,16 @@ MonoBehaviour:
   m_id: d895dc7f-7661-4668-bed1-c88f98dda613
   m_name: PlayStory
   m_notes: 
-  m_onEnterShowViews: []
+  m_onEnterShowViews:
+  - Category: StoryStartMenu
+    InstantAction: 0
+    Name: StoryStart
   m_onEnterHideViews: []
   m_onExitShowViews: []
-  m_onExitHideViews: []
+  m_onExitHideViews:
+  - Category: StoryStartMenu
+    InstantAction: 0
+    Name: StoryStart
 --- !u!114 &114444071500679000
 MonoBehaviour:
   m_ObjectHideFlags: 1
