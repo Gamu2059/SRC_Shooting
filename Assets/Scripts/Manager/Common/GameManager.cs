@@ -93,6 +93,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         PlayerRecordManager = new PlayerRecordManager();
 
         TimerManager.Builder();
+        RewiredInputManager.Instance.OnInitialize();
         AudioManager.Instance.OnInitialize();
         m_TransitionManager.OnInitialize();
         m_SceneManager.OnInitialize();
@@ -107,6 +108,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         m_SceneManager.OnFinalize();
         m_TransitionManager.OnFinalize();
         AudioManager.Instance.OnFinalize();
+        RewiredInputManager.Instance.OnFinalize();
         TimerManager.Instance.OnFinalize();
 
         base.OnFinalize();
@@ -117,6 +119,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnStart();
 
         TimerManager.Instance.OnStart();
+        RewiredInputManager.Instance.OnStart();
         AudioManager.Instance.OnStart();
         m_TransitionManager.OnStart();
         m_SceneManager.OnStart();
@@ -129,11 +132,10 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnUpdate();
 
         TimerManager.Instance.OnUpdate();
+        RewiredInputManager.Instance.OnUpdate();
         AudioManager.Instance.OnUpdate();
         m_TransitionManager.OnUpdate();
         m_SceneManager.OnUpdate();
-
-        DOTween.ManualUpdate(Time.deltaTime, Time.unscaledDeltaTime);
 	}
 
 	public override void OnLateUpdate()
@@ -141,6 +143,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnLateUpdate();
 
         TimerManager.Instance.OnLateUpdate();
+        RewiredInputManager.Instance.OnLateUpdate();
         AudioManager.Instance.OnLateUpdate();
         m_TransitionManager.OnLateUpdate();
         m_SceneManager.OnLateUpdate();
@@ -151,6 +154,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnFixedUpdate();
 
         TimerManager.Instance.OnFixedUpdate();
+        RewiredInputManager.Instance.OnFixedUpdate();
         AudioManager.Instance.OnFixedUpdate();
         m_TransitionManager.OnFixedUpdate();
         m_SceneManager.OnFixedUpdate();

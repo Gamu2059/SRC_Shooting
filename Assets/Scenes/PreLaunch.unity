@@ -407,7 +407,7 @@ MonoBehaviour:
   m_VerticalAxis: UI Vertical
   m_SubmitButton: UI Submit
   m_CancelButton: UI Cancel
-  m_InputActionsPerSecond: 4.5
+  m_InputActionsPerSecond: 6
   m_RepeatDelay: 0
   m_allowMouseInput: 0
   m_allowMouseInputIfTouchSupported: 0
@@ -1755,6 +1755,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad959add97bb204b875bb23966ff143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1171375924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1171375925}
+  - component: {fileID: 1171375927}
+  - component: {fileID: 1171375926}
+  m_Layer: 0
+  m_Name: GameEvent - Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1171375925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171375924}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1321496884}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1171375926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171375924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974b7c42f9c85314fbcadd54938d5257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CallOnStart: 0
+  m_UseSoundParam: 0
+  m_SoundParam: {fileID: 0}
+  m_SoundType: 2
+--- !u!114 &1171375927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171375924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea9f92203d31e240bc110ff7b26d05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1171375926}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Doozy.Engine.Events.StringEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  GameEvent: Back
+  ListenForAllGameEvents: 0
 --- !u!1 &1281577260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,6 +1866,37 @@ Transform:
   - {fileID: 120875730}
   - {fileID: 1823029310}
   - {fileID: 498450088}
+  m_Father: {fileID: 1379646825}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1321496883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321496884}
+  m_Layer: 0
+  m_Name: '[DoozyUI]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1321496884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321496883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1171375925}
   m_Father: {fileID: 1379646825}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1952,6 +2062,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2069828998}
+  - {fileID: 1321496884}
+  - {fileID: 1724892863}
   - {fileID: 1281577261}
   - {fileID: 2056746958}
   m_Father: {fileID: 0}
@@ -2299,6 +2411,62 @@ MonoBehaviour:
   m_Scene: 0
   m_SceneCycle: 0
   m_ManagerList: []
+--- !u!1 &1724892862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1724892863}
+  - component: {fileID: 1724892864}
+  m_Layer: 0
+  m_Name: '[InputManager]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1724892863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724892862}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1379646825}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1724892864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724892862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4633b8d10dadc45429b510447a4636d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiCategory: UI
+  m_InGameCategory: InGame
+  m_UiHorizontal: UI Horizontal
+  m_UiVertical: UI Vertical
+  m_UiSubmit: UI Submit
+  m_UiCancel: UI Cancel
+  m_InGameHorizontal: InGame Horizontal
+  m_InGameVertical: InGame Vertical
+  m_InGameShot: InGame Shot
+  m_InGameChargeShot: InGame ChargeShot
+  m_InGameChangeWeapon: InGame ChangeWeapon
+  m_InGameSlowly: InGame Slowly Move
+  m_InGameOpenMenu: InGame Menu Open
 --- !u!1 &1725309341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,7 +2713,7 @@ RectTransform:
   m_Children:
   - {fileID: 2135274158}
   m_Father: {fileID: 1379646825}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

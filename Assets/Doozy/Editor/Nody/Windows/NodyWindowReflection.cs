@@ -33,7 +33,16 @@ namespace Doozy.Editor.Nody.Windows
         {
             var types = new List<Type>();
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (Assembly assembly in assemblies) types.AddRange(assembly.GetTypes().Where(t => !t.IsAbstract && baseType.IsAssignableFrom(t)).ToArray());
+            foreach (Assembly assembly in assemblies)
+            {
+                try {
+                    types.AddRange(assembly.GetTypes().Where(t => !t.IsAbstract && baseType.IsAssignableFrom(t)).ToArray());
+                }
+                catch (System.Reflection.ReflectionTypeLoadException e)
+                {
+                    Debug.LogException(e);
+                }
+            }
             return types.ToArray();
         }
 
