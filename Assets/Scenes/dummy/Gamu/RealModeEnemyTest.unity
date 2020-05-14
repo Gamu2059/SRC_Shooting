@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2969,15 +2969,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
-        type: 3}
-      propertyPath: m_Type
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 2745788726366617073, guid: 72401b82d19941e4cb6a1b1c73da74db,
         type: 3}
       propertyPath: m_Text
       value: Hacking Complete
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
+        type: 3}
+      propertyPath: m_Type
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72401b82d19941e4cb6a1b1c73da74db, type: 3}
@@ -4402,8 +4402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eddfedd5159174e8b86558b24fb698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Difficulty: 1
-  m_Chapter: 0
+  m_Difficulty: 3
+  m_Chapter: 1
   m_ParamSet: {fileID: 11400000, guid: 3b208da5d3ccc884a822a0b62dd13f79, type: 2}
   m_HackInController: {fileID: 164541804}
   m_HackOutController: {fileID: 385382727}
@@ -4451,7 +4451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsNotPlayerDead: 0
-  m_IsNotGameOver: 0
+  m_IsNotGameOver: 1
   m_ColliderMaterial: {fileID: 2100000, guid: da5a8fa657aff5d40a3991eb63cd03ba, type: 2}
   m_IsDrawColliderArea: 0
   m_IsDrawOutSideColliderArea: 0
@@ -4669,15 +4669,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
-        type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 2745788726366617073, guid: 72401b82d19941e4cb6a1b1c73da74db,
         type: 3}
       propertyPath: m_Text
       value: Secret Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
+        type: 3}
+      propertyPath: m_Type
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72401b82d19941e4cb6a1b1c73da74db, type: 3}
@@ -7547,15 +7547,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
-        type: 3}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2745788726366617073, guid: 72401b82d19941e4cb6a1b1c73da74db,
         type: 3}
       propertyPath: m_Text
       value: Max Chain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72401b82d19941e4cb6a1b1c73da74db, type: 3}
@@ -7855,15 +7855,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
-        type: 3}
-      propertyPath: m_Type
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2745788726366617073, guid: 72401b82d19941e4cb6a1b1c73da74db,
         type: 3}
       propertyPath: m_Text
       value: Bullet Remove
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873416055569714897, guid: 72401b82d19941e4cb6a1b1c73da74db,
+        type: 3}
+      propertyPath: m_Type
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72401b82d19941e4cb6a1b1c73da74db, type: 3}

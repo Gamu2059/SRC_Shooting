@@ -39,7 +39,7 @@ public class ChapterStartMenu : MonoBehaviour
 
     public void OnSubmitStart()
     {
-        DataManager.Instance.GameMode = E_GAME_MODE.STORY;
+        DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
         DataManager.Instance.Difficulty = m_DifficultyMenu.DifficultyValue;
         DataManager.Instance.Chapter = m_ChapterMenu.ChapterValue;
         DataManager.Instance.IsSelectedGame = true;

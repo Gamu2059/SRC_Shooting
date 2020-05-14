@@ -368,4 +368,72 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
             Debug.LogWarningFormat("指定したタイプのサウンドが登録されていませんでした。 type : {0}", type);
         }
     }
+
+    /// <summary>
+    /// BGMグループのボリュームを取得する。
+    /// </summary>
+    public float GetBgmVolume()
+    {
+        var count = m_AdxAssetParam.BgmCueSheets.Length;
+        float volume = 0;
+        foreach (var t in m_AdxAssetParam.BgmCueSheets)
+        {
+            var bgm = GetSource(t);
+            volume += bgm.volume;
+        }
+
+        if (count > 0)
+        {
+            volume /= count;
+        }
+
+        SetBgmVolume(count);
+        return volume;
+    }
+
+    /// <summary>
+    /// BGMグループのボリュームを設定する。
+    /// </summary>
+    public void SetBgmVolume(float value)
+    {
+        foreach (var t in m_AdxAssetParam.BgmCueSheets)
+        {
+            var bgm = GetSource(t);
+            bgm.volume = value;
+        }
+    }
+
+    /// <summary>
+    /// SEグループのボリュームを取得する。
+    /// </summary>
+    public float GetSeVolume()
+    {
+        var count = m_AdxAssetParam.SeCueSheets.Length;
+        float volume = 0;
+        foreach (var t in m_AdxAssetParam.SeCueSheets)
+        {
+            var se = GetSource(t);
+            volume += se.volume;
+        }
+
+        if (count > 0)
+        {
+            volume /= count;
+        }
+
+        SetSeVolume(count);
+        return volume;
+    }
+
+    /// <summary>
+    /// SEグループのボリュームを設定する。
+    /// </summary>
+    public void SetSeVolume(float value)
+    {
+        foreach (var t in m_AdxAssetParam.SeCueSheets)
+        {
+            var se = GetSource(t);
+            se.volume = value;
+        }
+    }
 }

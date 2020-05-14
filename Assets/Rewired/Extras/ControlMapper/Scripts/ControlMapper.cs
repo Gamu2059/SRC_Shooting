@@ -3118,7 +3118,7 @@ namespace Rewired.UI.ControlMapper
                 if(ReInput.userDataStore != null) ReInput.userDataStore.Save();
             }
             Clear();
-            canvas.SetActive(false);
+            //canvas.SetActive(false);
             SetUISelection(null); // deselect
             if(_ScreenClosedEvent != null) _ScreenClosedEvent();
             if(_onScreenClosed != null) _onScreenClosed.Invoke();

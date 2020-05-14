@@ -11,7 +11,7 @@ using UniRx;
 /// ChoiceMenuを制御する
 /// </summary>
 [RequireComponent(typeof(ChoiceMenuIndicator))]
-public class ChoiceMenuController : MonoBehaviour, ISelectHandler
+public class ChoiceMenuController : MonoBehaviour, IMoveHandler
 {
     #region Field Inspector
 
@@ -34,12 +34,6 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
     private float m_AllowSlideXAmount;
 
     [SerializeField]
-    private float m_InputRecoverDuration;
-
-    [SerializeField]
-    private float m_InputDisableSelecteDuration;
-
-    [SerializeField]
     private Ease m_OutEase;
 
     [SerializeField]
@@ -55,13 +49,13 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
     private ChoiceMenuIndicator m_Indicator;
     private int m_PrevIndicatorIndex;
     private int m_CurrentIndicatorIndex;
-    private bool m_IsEnableInput;
+    private bool m_CheckAllows;
 
     #endregion
 
     private void Awake()
     {
-        m_IsEnableInput = true;
+        m_CheckAllows = true;
         m_Indicator = GetComponent<ChoiceMenuIndicator>();
         m_PrevIndicatorIndex = -1;
         m_CurrentIndicatorIndex = 0;
@@ -73,41 +67,6 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
         ChangeValueForce();
     }
 
-    private void Update()
-    {
-        if (EventSystem.current.currentSelectedGameObject != gameObject)
-        {
-            return;
-        }
-
-        var im = RewiredInputManager.Instance;
-        if (im == null)
-        {
-            return;
-        }
-
-        if (!m_IsEnableInput)
-        {
-            return;
-        }
-
-        m_IsEnableInput = false;
-        Observable
-            .Timer(TimeSpan.FromSeconds(m_InputRecoverDuration))
-            .Subscribe(_ => m_IsEnableInput = true)
-            .AddTo(this);
-
-        var x = im.UiAxisDir.x;
-        if (x < 0)
-        {
-            GoPrev();
-        }
-        else if (x > 0)
-        {
-            GoNext();
-        }
-    }
-
     private void GoPrev()
     {
         if (m_Indicator == null || !m_Indicator.CanGoPrev())
@@ -115,6 +74,7 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
             return;
         }
 
+        m_CheckAllows = false;
         m_Indicator.GoPrev();
         Move(-m_SlideXAmount, m_LeftAllow.transform as RectTransform);
     }
@@ -126,6 +86,7 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
             return;
         }
 
+        m_CheckAllows = false;
         m_Indicator.GoNext();
         Move(m_SlideXAmount, m_RightAllow.transform as RectTransform);
     }
@@ -159,14 +120,22 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
         DOTween.Sequence()
             .Append(allowRect.DOAnchorPosX(m_AllowSlideXAmount, m_MoveDuration / 2f).SetEase(Ease.OutQuad))
             .Append(allowRect.DOAnchorPosX(0, m_MoveDuration / 2f).SetEase(Ease.InQuad))
-            .OnComplete(ChangeEnableAllows);
+            .OnComplete(() =>
+            {
+                ChangeEnableAllows();
+                m_CheckAllows = true;
+            });
     }
 
     private void ChangeValueForce()
     {
         var ind = m_Indicators[m_CurrentIndicatorIndex];
         ind.text = GetStringValue();
-        ChangeEnableAllows();
+
+        if (m_CheckAllows)
+        {
+            ChangeEnableAllows();
+        }
     }
 
     private void ChangeEnableAllows()
@@ -200,12 +169,16 @@ public class ChoiceMenuController : MonoBehaviour, ISelectHandler
         return null;
     }
 
-    public void OnSelect(BaseEventData e)
+    public void OnMove(AxisEventData e)
     {
-        m_IsEnableInput = false;
-        var di = Observable
-            .Timer(TimeSpan.FromSeconds(m_InputDisableSelecteDuration))
-            .Subscribe(_ => m_IsEnableInput = true)
-            .AddTo(this);
+        switch (e.moveDir)
+        {
+            case MoveDirection.Left:
+                GoPrev();
+                break;
+            case MoveDirection.Right:
+                GoNext();
+                break;
+        }
     }
 }
