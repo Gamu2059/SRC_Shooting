@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Doozy.Engine;
 
 /// <summary>
 /// バトルのリアルモードの処理を管理する。
@@ -79,7 +80,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.GAME_OVER, this, new GameOverState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_REAL_STATE.END, this, new EndState()));
 
-        BattleRealInputManager.Builder();
+        //BattleRealInputManager.Builder();
         BattleRealTimerManager.Builder();
         BattleRealEventManager.Builder(this, m_ParamSet.EventTriggerParamSet);
         BattleRealPlayerManager.Builder(this, m_ParamSet.PlayerManagerParamSet);
@@ -122,7 +123,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealPlayerManager.Instance.OnFinalize();
         BattleRealEventManager.Instance.OnFinalize();
         BattleRealTimerManager.Instance.OnFinalize();
-        BattleRealInputManager.Instance.OnFinalize();
 
         m_StateMachine.OnFinalize();
         m_StateMachine = null;
@@ -135,11 +135,6 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
-
-        if (BattleRealInputManager.Instance.Menu == E_INPUT_STATE.DOWN)
-        {
-            m_BattleManager.ExitGame();
-        }
     }
 
     public override void OnLateUpdate()

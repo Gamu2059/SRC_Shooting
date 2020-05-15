@@ -163,7 +163,7 @@ public abstract class RewiredSingleInputManagerBase<T> : Singleton<T> where T : 
 
     public void SetActionCategory(string category, bool isEnable)
     {
-        if (m_Player == null)
+        if (m_Player != null)
         {
             m_Player.controllers.maps.SetMapsEnabled(isEnable, category);
         }
