@@ -20,16 +20,16 @@ public class ChapterStartMenu : MonoBehaviour
     };
 
     [SerializeField]
-    private ChoiceMenuIndicator m_DifficultyMenu;
+    private ChoiceDifficultyMenuIndicator m_DifficultyMenu;
 
     [SerializeField]
-    private ChoiceMenuIndicator m_ChapterMenu;
+    private ChoiceChapterMenuIndicator m_ChapterMenu;
 
     [SerializeField]
-    private ChoiceMenuIndicator m_LifeMenu;
+    private ChoiceNumMenuIndicator m_LifeMenu;
 
     [SerializeField]
-    private ChoiceMenuIndicator m_EnergyMenu;
+    private ChoiceNumMenuIndicator m_EnergyMenu;
 
     public void OnSubmitResetOptions()
     {
@@ -40,10 +40,10 @@ public class ChapterStartMenu : MonoBehaviour
     public void OnSubmitStart()
     {
         DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
-        DataManager.Instance.Difficulty = m_DifficultyMenu.DifficultyValue;
-        DataManager.Instance.Chapter = m_ChapterMenu.ChapterValue;
+        DataManager.Instance.Difficulty = m_DifficultyMenu.Difficulty;
+        DataManager.Instance.Chapter = m_ChapterMenu.Chapter;
         DataManager.Instance.IsSelectedGame = true;
-        BaseSceneManager.Instance.LoadScene(m_Dict[m_ChapterMenu.ChapterValue]);
+        BaseSceneManager.Instance.LoadScene(m_Dict[m_ChapterMenu.Chapter]);
         AudioManager.Instance.Play(E_COMMON_SOUND.SYSTEM_START);
     }
 }

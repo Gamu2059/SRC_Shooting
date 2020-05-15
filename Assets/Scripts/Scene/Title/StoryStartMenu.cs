@@ -9,13 +9,13 @@ using E_SCENE = BaseSceneManager.E_SCENE;
 public class StoryStartMenu : MonoBehaviour
 {
     [SerializeField]
-    private ChoiceMenuIndicator m_DifficultyMenu;
+    private ChoiceDifficultyMenuIndicator m_DifficultyMenu;
 
     [SerializeField]
-    private ChoiceMenuIndicator m_LifeMenu;
+    private ChoiceNumMenuIndicator m_LifeMenu;
 
     [SerializeField]
-    private ChoiceMenuIndicator m_EnergyMenu;
+    private ChoiceNumMenuIndicator m_EnergyMenu;
 
     public void OnSubmitResetOptions()
     {
@@ -26,7 +26,7 @@ public class StoryStartMenu : MonoBehaviour
     public void OnSubmitStart()
     {
         DataManager.Instance.GameMode = E_GAME_MODE.STORY;
-        DataManager.Instance.Difficulty = m_DifficultyMenu.DifficultyValue;
+        DataManager.Instance.Difficulty = m_DifficultyMenu.Difficulty;
         DataManager.Instance.Chapter = E_CHAPTER.CHAPTER_0;
         DataManager.Instance.IsSelectedGame = true;
         BaseSceneManager.Instance.LoadScene(E_SCENE.STAGE0);
