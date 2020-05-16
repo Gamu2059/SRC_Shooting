@@ -31,7 +31,7 @@ public class StoryStartMenu : MonoBehaviour
         DataManager.Instance.Difficulty = m_DifficultyMenu.Difficulty;
         DataManager.Instance.Chapter = E_CHAPTER.CHAPTER_0;
         DataManager.Instance.IsSelectedGame = true;
-        BaseSceneManager.Instance.LoadScene(E_SCENE.STAGE0);
+        DataManager.Instance.TransitionToCurrentChapterScene();
         AudioManager.Instance.Play(E_COMMON_SOUND.SYSTEM_START);
     }
 

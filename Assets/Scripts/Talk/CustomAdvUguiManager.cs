@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utage;
+using Rewired;
 
 public class CustomAdvUguiManager : AdvUiManager
 {
@@ -64,7 +65,10 @@ public class CustomAdvUguiManager : AdvUiManager
     protected virtual void Update()
     {
         //読み進みなどの入力
-        bool IsInput = Input.GetButtonDown("Submit");
+        var uiSubmit = RewiredInputManager.Instance.UiSubmit;
+        var ingameSubmit = RewiredInputManager.Instance.Shot;
+        bool IsInput = uiSubmit == E_REWIRED_INPUT_STATE.DOWN || ingameSubmit == E_REWIRED_INPUT_STATE.DOWN;
+
         switch (Status)
         {
             case UiStatus.Backlog:
