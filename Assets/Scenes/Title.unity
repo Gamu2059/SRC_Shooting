@@ -9979,6 +9979,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5748439293104362568, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
+        type: 3}
+      propertyPath: m_Text
+      value: Energy
+      objectReference: {fileID: 0}
     - target: {fileID: 8134843213109906837, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
         type: 3}
       propertyPath: m_Navigation.m_Mode
@@ -12042,6 +12047,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5748439293104362568, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
+        type: 3}
+      propertyPath: m_Text
+      value: Life
+      objectReference: {fileID: 0}
     - target: {fileID: 8134843213109906837, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
         type: 3}
       propertyPath: m_Navigation.m_Mode
@@ -12443,6 +12453,7 @@ GameObject:
   - component: {fileID: 936237055}
   - component: {fileID: 936237057}
   - component: {fileID: 936237056}
+  - component: {fileID: 936237058}
   m_Layer: 5
   m_Name: Text - Version
   m_TagString: Untagged
@@ -12511,6 +12522,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936237054}
   m_CullTransparentMesh: 0
+--- !u!114 &936237058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936237054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3370c20e5bd19241bac8eeda72b8dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Text: {fileID: 936237056}
+  m_Format: version {0}
 --- !u!1 &945710731
 GameObject:
   m_ObjectHideFlags: 0
@@ -14019,6 +14044,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5748439293104362568, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
+        type: 3}
+      propertyPath: m_Text
+      value: Energy
       objectReference: {fileID: 0}
     - target: {fileID: 8134843213109906837, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
         type: 3}
@@ -21962,6 +21992,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5748439293104362568, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
+        type: 3}
+      propertyPath: m_Text
+      value: Life
       objectReference: {fileID: 0}
     - target: {fileID: 8134843213109906837, guid: acc7b2b6aaf57cd4a9ae9a062875300e,
         type: 3}

@@ -79,13 +79,13 @@ public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
             return;
         }
 
-        var input = BattleHackingInputManager.Instance;
+        var input = RewiredInputManager.Instance;
 
-        var moveDir = input.MoveDir;
+        var moveDir = input.AxisDir;
         if (moveDir.x != 0 || moveDir.y != 0)
         {
             float speed = 0;
-            if (input.Slow == E_INPUT_STATE.STAY)
+            if (input.Slowly == E_REWIRED_INPUT_STATE.STAY)
             {
                 speed = ParamSet.PlayerSlowMoveSpeed;
             }
@@ -101,7 +101,7 @@ public class BattleHackingPlayerManager : Singleton<BattleHackingPlayerManager>
         // 移動直後に位置制限を掛ける
         RestrictPlayerPosition();
 
-        if (input.Shot == E_INPUT_STATE.STAY)
+        if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
         {
             Player.ShotBullet();
         }

@@ -11,7 +11,6 @@ partial class BattleHackingManager
             base.OnStart();
             BattleHackingStageManager.Instance.gameObject.SetActive(true);
             BattleHackingUiManager.Instance.SetAlpha(1);
-            BattleHackingInputManager.Instance.RegistInput();
         }
 
         public override void OnUpdate()
@@ -23,7 +22,6 @@ partial class BattleHackingManager
             BattleHackingEffectManager.Instance.GotoPool();
             BattleHackingCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
-            BattleHackingInputManager.Instance.OnUpdate();
             BattleHackingTimerManager.Instance.OnUpdate();
             BattleHackingPlayerManager.Instance.OnUpdate();
             BattleHackingEnemyManager.Instance.OnUpdate();
@@ -80,12 +78,6 @@ partial class BattleHackingManager
             BattleHackingCollisionManager.Instance.OnFixedUpdate();
             BattleHackingCameraManager.Instance.OnFixedUpdate();
             BattleHackingUiManager.Instance.OnFixedUpdate();
-        }
-
-        public override void OnEnd()
-        {
-            base.OnEnd();
-            BattleHackingInputManager.Instance.RemoveInput();
         }
 
         private void CheckGameEnd()

@@ -30,6 +30,16 @@ public class DataManager : Singleton<DataManager>
     public E_CHAPTER Chapter;
 
     /// <summary>
+    /// 残機オプション
+    /// </summary>
+    public int LifeOption;
+
+    /// <summary>
+    /// エナジーオプション
+    /// </summary>
+    public int EnergyOption;
+
+    /// <summary>
     /// バトル用変数データ。
     /// </summary>
     public BattleData BattleData { get; private set; }

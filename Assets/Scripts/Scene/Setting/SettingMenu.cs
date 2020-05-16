@@ -33,11 +33,13 @@ public class SettingMenu : MonoBehaviour
 
     private void ChangeBgmVolume(float value)
     {
+        SaveDataManager.SetFloat("Bgm", value);
         AudioManager.Instance.SetBgmVolume(value);
     }
 
     private void ChangeSeVolume(float value)
     {
+        SaveDataManager.SetFloat("Se", value);
         AudioManager.Instance.SetSeVolume(value);
     }
 

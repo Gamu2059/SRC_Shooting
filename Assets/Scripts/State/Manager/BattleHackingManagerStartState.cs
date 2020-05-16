@@ -6,7 +6,6 @@
         {
             base.OnStart();
             BattleHackingStageManager.Instance.gameObject.SetActive(false);
-            BattleHackingInputManager.Instance.OnStart();
             BattleHackingTimerManager.Instance.OnStart();
             BattleHackingPlayerManager.Instance.OnStart();
             BattleHackingEnemyManager.Instance.OnStart();

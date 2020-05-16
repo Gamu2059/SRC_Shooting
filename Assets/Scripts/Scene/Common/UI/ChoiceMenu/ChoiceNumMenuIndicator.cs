@@ -58,4 +58,9 @@ public class ChoiceNumMenuIndicator : ChoiceMenuIndicator
     {
         return Num.ToString();
     }
+
+    public void SetNum(int num)
+    {
+        m_Num.Value = num;
+    }
 }

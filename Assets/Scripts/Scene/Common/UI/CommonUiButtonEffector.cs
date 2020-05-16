@@ -51,6 +51,8 @@ public class CommonUiButtonEffector : MonoBehaviour
     private Color m_SeqColor;
     private float m_SeqWidth;
     private float m_SeqDilate;
+
+    [SerializeField, Range(0, 1)]
     private float m_SeqVerticalEffectTime;
 
     private Tween m_SubmitTween;
@@ -122,6 +124,11 @@ public class CommonUiButtonEffector : MonoBehaviour
 
     private void ApplyEffect(Color color, float offset, float outer, float vert)
     {
+        if (m_UseMaterial == null)
+        {
+            m_UseMaterial = Instantiate(m_Text.fontSharedMaterial);
+        }
+
         m_UseMaterial.SetColor(GLOW_COLOR, color);
         m_UseMaterial.SetFloat(GLOW_OFFSET, offset);
         m_UseMaterial.SetFloat(GLOW_OUTER, outer);

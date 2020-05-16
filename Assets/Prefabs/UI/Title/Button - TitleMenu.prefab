@@ -69,8 +69,7 @@ MonoBehaviour:
   m_text: Play Story
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e698e9142e9b664ca881692bb6a9548, type: 2}
-  m_sharedMaterial: {fileID: 21306028072078554, guid: 7e698e9142e9b664ca881692bb6a9548,
-    type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -180,6 +179,7 @@ MonoBehaviour:
   m_OutlineColor: {r: 0.759434, g: 0.9764151, b: 1, a: 1}
   m_OutlineWidth: 3
   m_FaceDilate: 3
+  m_SeqVerticalEffectTime: 1
 --- !u!1 &8570978172802650084
 GameObject:
   m_ObjectHideFlags: 0

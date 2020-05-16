@@ -64,8 +64,8 @@ public class IconCountIndicator : ControllableMonoBehavior
                 // 残機は1の時に1個目が表示されてほしいので、-1
                 return battleData.PlayerLife - 1;
             case E_COUNT_TYPE.LEVEL:
-                // レベルは0の時に1個目が表示されてほしいので、そのまま
-                return battleData.Level;
+                // レベルは0から始まるので -1
+                return battleData.Level - 1;
             case E_COUNT_TYPE.ENERGY:
                 // エナジーは1の時に1個目が表示されてほしいので、-1
                 return battleData.EnergyStock - 1;

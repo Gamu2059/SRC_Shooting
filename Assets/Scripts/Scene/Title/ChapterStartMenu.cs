@@ -39,11 +39,19 @@ public class ChapterStartMenu : MonoBehaviour
 
     public void OnSubmitStart()
     {
+        DataManager.Instance.LifeOption = m_LifeMenu.Num;
+        DataManager.Instance.EnergyOption = m_EnergyMenu.Num;
         DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
         DataManager.Instance.Difficulty = m_DifficultyMenu.Difficulty;
         DataManager.Instance.Chapter = m_ChapterMenu.Chapter;
         DataManager.Instance.IsSelectedGame = true;
         BaseSceneManager.Instance.LoadScene(m_Dict[m_ChapterMenu.Chapter]);
         AudioManager.Instance.Play(E_COMMON_SOUND.SYSTEM_START);
+    }
+
+    private void Start()
+    {
+        m_LifeMenu.SetNum(DataManager.Instance.LifeOption);
+        m_EnergyMenu.SetNum(DataManager.Instance.EnergyOption);
     }
 }

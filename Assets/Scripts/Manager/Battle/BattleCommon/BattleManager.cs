@@ -198,7 +198,8 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     public void OnAfterHide()
     {
-
+        AudioManager.Instance.StopAllBgm();
+        AudioManager.Instance.StopAllSe();
     }
 
     /// <summary>

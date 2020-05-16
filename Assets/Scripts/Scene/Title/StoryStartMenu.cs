@@ -25,11 +25,19 @@ public class StoryStartMenu : MonoBehaviour
 
     public void OnSubmitStart()
     {
+        DataManager.Instance.LifeOption = m_LifeMenu.Num;
+        DataManager.Instance.EnergyOption = m_EnergyMenu.Num;
         DataManager.Instance.GameMode = E_GAME_MODE.STORY;
         DataManager.Instance.Difficulty = m_DifficultyMenu.Difficulty;
         DataManager.Instance.Chapter = E_CHAPTER.CHAPTER_0;
         DataManager.Instance.IsSelectedGame = true;
         BaseSceneManager.Instance.LoadScene(E_SCENE.STAGE0);
         AudioManager.Instance.Play(E_COMMON_SOUND.SYSTEM_START);
+    }
+
+    private void Start()
+    {
+        m_LifeMenu.SetNum(DataManager.Instance.LifeOption);
+        m_EnergyMenu.SetNum(DataManager.Instance.EnergyOption);
     }
 }

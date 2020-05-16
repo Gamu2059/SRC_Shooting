@@ -106,6 +106,11 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         m_ProcessingOperateAisacList = new List<OperateAisacData>();
         m_DestroyOperateAisacList = new List<OperateAisacData>();
+
+        var bgm = SaveDataManager.GetFloat("Bgm", 0.5f);
+        var se = SaveDataManager.GetFloat("Se", 0.5f);
+        SetBgmVolume(bgm);
+        SetSeVolume(se);
     }
 
     public override void OnFinalize()

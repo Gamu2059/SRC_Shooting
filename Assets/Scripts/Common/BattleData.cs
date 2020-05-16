@@ -108,8 +108,9 @@ public class BattleData
         Score = 0;
         Level = 0;
         Exp = 0;
-        EnergyStock = 0;
+        EnergyStock = DataManager.Instance.EnergyOption;
         EnergyCharge = 0;
+        PlayerLife = DataManager.Instance.LifeOption;
         Chain = 0;
         MaxChain = 0;
         BulletRemoveCount = 0;

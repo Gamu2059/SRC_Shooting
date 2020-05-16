@@ -89,6 +89,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 	{
         base.OnInitialize();
 
+        SaveDataManager.Load();
         AudioManager.Instance.SetAdxParam(m_GameManagerParamSet.AdxAssetParam);
         PlayerRecordManager = new PlayerRecordManager();
 
@@ -110,6 +111,7 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         AudioManager.Instance.OnFinalize();
         RewiredInputManager.Instance.OnFinalize();
         TimerManager.Instance.OnFinalize();
+        SaveDataManager.Save();
 
         base.OnFinalize();
 	}
