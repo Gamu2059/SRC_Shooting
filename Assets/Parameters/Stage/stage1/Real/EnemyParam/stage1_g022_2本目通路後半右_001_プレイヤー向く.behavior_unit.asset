@@ -44,7 +44,11 @@ MonoBehaviour:
     - ParamSet: {fileID: 11400000, guid: 7c83949cf3221a345b0aab3acee44f24, type: 2}
       StartTimeOnFirstActivate: 1
       StopTimeFromFirstActivate: 10
-      ActivateInterval: 4
+      ActivateInterval: 3
+    - ParamSet: {fileID: 11400000, guid: 9e519bfb8b807e04d822772e79e2e9e3, type: 2}
+      StartTimeOnFirstActivate: 2
+      StopTimeFromFirstActivate: 10
+      ActivateInterval: 3
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_IsLookPlayerOnStart: 0
   m_SpeedCurve:
