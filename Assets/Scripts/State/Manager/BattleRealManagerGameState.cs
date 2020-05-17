@@ -7,7 +7,6 @@
             base.OnStart();
             BattleRealStageManager.Instance.gameObject.SetActive(true);
             BattleRealUiManager.Instance.SetAlpha(1);
-            BattleRealInputManager.Instance.RegistInput();
         }
 
         public override void OnUpdate()
@@ -23,7 +22,6 @@
             BattleRealSequenceObjectManager.Instance.GotoDestroy();
             BattleRealCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
-            BattleRealInputManager.Instance.OnUpdate();
             BattleRealTimerManager.Instance.OnUpdate();
             BattleRealEventManager.Instance.OnUpdate();
             BattleRealPlayerManager.Instance.OnUpdate();

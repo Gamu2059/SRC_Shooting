@@ -355,6 +355,7 @@ public class BattleHackingBoss : BattleHackingEnemyController
     {
         m_DeadBehavior?.OnStart();
         CallHideAction();
+        AudioManager.Instance.Play(E_COMMON_SOUND.HACKING_BOSS_BREAK);
     }
 
     private void UpdateOnDead()

@@ -17,6 +17,7 @@ public class BaseScene : ControllableMonoBehavior
 	/// </summary>
 	[SerializeField]
 	private BaseSceneManager.E_SCENE m_Scene;
+	public BaseSceneManager.E_SCENE Scene => m_Scene;
 
 	/// <summary>
 	/// このシーンのサイクル。

@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 10
   ShotSE: {fileID: 11400000, guid: 03d6ed973106efd48a4e396c0caf7587, type: 2}
+  m_ReferenceDifficulty: 1
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: -0.25, y: -0.25, z: -0.25}
+    Scale: {x: 0, y: 0, z: 0}
     ScaleRelative: 0
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
@@ -28,15 +29,100 @@ MonoBehaviour:
     DeltaScaleRelative: 0
     Damage: 0
     DamageRelative: 0
-    Speed: 1
-    SpeedRelative: 1
+    Speed: 0
+    SpeedRelative: 0
     Accel: 0
-    AccelRelative: 1
+    AccelRelative: 0
     IsSearch: 0
     Lerp: 0
     LerpRelative: 0
-    OptionObjectParams: []
-    OptionValueParams: []
+  m_DifficultyReferecedOrbitalParams:
+  - Difficulty: 0
+    Param:
+      Target: 0
+      Position: {x: 0, y: 0, z: 0}
+      PositionRelative: 0
+      Rotation: {x: 0, y: 0, z: 0}
+      RotationRelative: 0
+      Scale: {x: -0.25, y: -0.25, z: -0.25}
+      ScaleRelative: 0
+      DeltaRotation: {x: 0, y: 0, z: 0}
+      DeltaRotationRelative: 0
+      DeltaScale: {x: 0, y: 0, z: 0}
+      DeltaScaleRelative: 0
+      Damage: 0
+      DamageRelative: 0
+      Speed: 0.8
+      SpeedRelative: 1
+      Accel: 0
+      AccelRelative: 1
+      IsSearch: 0
+      Lerp: 0
+      LerpRelative: 0
+  - Difficulty: 1
+    Param:
+      Target: 0
+      Position: {x: 0, y: 0, z: 0}
+      PositionRelative: 0
+      Rotation: {x: 0, y: 0, z: 0}
+      RotationRelative: 0
+      Scale: {x: -0.25, y: -0.25, z: -0.25}
+      ScaleRelative: 0
+      DeltaRotation: {x: 0, y: 0, z: 0}
+      DeltaRotationRelative: 0
+      DeltaScale: {x: 0, y: 0, z: 0}
+      DeltaScaleRelative: 0
+      Damage: 0
+      DamageRelative: 0
+      Speed: 1
+      SpeedRelative: 1
+      Accel: 0
+      AccelRelative: 1
+      IsSearch: 0
+      Lerp: 0
+      LerpRelative: 0
+  - Difficulty: 2
+    Param:
+      Target: 0
+      Position: {x: 0, y: 0, z: 0}
+      PositionRelative: 0
+      Rotation: {x: 0, y: 0, z: 0}
+      RotationRelative: 0
+      Scale: {x: -0.25, y: -0.25, z: -0.25}
+      ScaleRelative: 0
+      DeltaRotation: {x: 0, y: 0, z: 0}
+      DeltaRotationRelative: 0
+      DeltaScale: {x: 0, y: 0, z: 0}
+      DeltaScaleRelative: 0
+      Damage: 0
+      DamageRelative: 0
+      Speed: 1.2
+      SpeedRelative: 1
+      Accel: 0
+      AccelRelative: 1
+      IsSearch: 0
+      Lerp: 0
+      LerpRelative: 0
+  - Difficulty: 3
+    Param:
+      Target: 0
+      Position: {x: 0, y: 0, z: 0}
+      PositionRelative: 0
+      Rotation: {x: 0, y: 0, z: 0}
+      RotationRelative: 0
+      Scale: {x: -0.25, y: -0.25, z: -0.25}
+      ScaleRelative: 0
+      DeltaRotation: {x: 0, y: 0, z: 0}
+      DeltaRotationRelative: 0
+      DeltaScale: {x: 0, y: 0, z: 0}
+      DeltaScaleRelative: 0
+      Damage: 0
+      DamageRelative: 0
+      Speed: 1.4
+      SpeedRelative: 1
+      Accel: 0
+      AccelRelative: 1
+      IsSearch: 0
+      Lerp: 0
+      LerpRelative: 0
   ConditionalOrbitalParams: []
-  OptionObjectParams: []
-  OptionValueParams: []

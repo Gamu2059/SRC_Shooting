@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 10
   ShotSE: {fileID: 11400000, guid: 03d6ed973106efd48a4e396c0caf7587, type: 2}
+  m_ReferenceDifficulty: 0
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
@@ -32,11 +33,8 @@ MonoBehaviour:
     SpeedRelative: 1
     Accel: 2
     AccelRelative: 1
-    IsSearch: 1
+    IsSearch: 0
     Lerp: 0
     LerpRelative: 1
-    OptionObjectParams: []
-    OptionValueParams: []
+  m_DifficultyReferecedOrbitalParams: []
   ConditionalOrbitalParams: []
-  OptionObjectParams: []
-  OptionValueParams: []
