@@ -80,6 +80,8 @@ Properties {
 	_StencilReadMask	("Stencil Read Mask", Float) = 255
 
 	_ColorMask			("Color Mask", Float) = 15
+
+	_VerticalEffectTime	("Vertical Effect Time", Range(0, 1)) = 0
 }
 
 SubShader {
@@ -154,6 +156,8 @@ SubShader {
 		float4 _FaceTex_ST;
 		float4 _OutlineTex_ST;
 
+		float _VerticalEffectTime;
+
 		pixel_t VertShader(vertex_t input)
 		{
 			float bold = step(input.texcoord1.y, 0);
@@ -225,7 +229,13 @@ SubShader {
 
 		fixed4 PixShader(pixel_t input) : SV_Target
 		{
-			float c = tex2D(_MainTex, input.atlas).a;
+			// additional code
+			half2 _uv = input.atlas;
+			_uv.y = clamp(_uv.y, 0.0, _VerticalEffectTime);
+			float c = tex2D(_MainTex, _uv).a;
+			// end
+
+			// float c = tex2D(_MainTex, input.atlas).a;
 		
 		#ifndef UNDERLAY_ON
 			clip(c - input.param.x);
@@ -243,7 +253,7 @@ SubShader {
 			half4 outlineColor = _OutlineColor;
 
 			faceColor.rgb *= input.color.rgb;
-			
+
 			faceColor *= tex2D(_FaceTex, input.textures.xy + float2(_FaceUVSpeedX, _FaceUVSpeedY) * _Time.y);
 			outlineColor *= tex2D(_OutlineTex, input.textures.zw + float2(_OutlineUVSpeedX, _OutlineUVSpeedY) * _Time.y);
 

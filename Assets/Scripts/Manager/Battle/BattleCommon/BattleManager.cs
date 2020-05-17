@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.Video;
+using Doozy.Engine;
 
 /// <summary>
 /// バトル画面のマネージャーを管理する上位マネージャ。
@@ -44,6 +44,11 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     [SerializeField]
     private HackInOutController m_HackOutController;
 
+    [Header("DoozyUI GameEvent Key")]
+
+    [SerializeField]
+    private string m_OpenGameMenuKey = "Open InGameMenu";
+
     #endregion
 
     #region Field
@@ -53,6 +58,12 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     private BattleRealManager m_RealManager;
     private BattleHackingManager m_HackingManager;
     public bool IsReadyBeforeShow { get; private set; }
+
+    /// <summary>
+    /// ゲームメニューを開いているかどうか。<br>
+    /// メニューはゲームステートを超越したステートであるため、専用のフラグで管理する
+    /// </summary>
+    private bool m_IsOpenGameMenu;
 
     #endregion
 
@@ -103,6 +114,8 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
         m_HackInController.OnInitialize();
         m_HackOutController.OnInitialize();
+
+        m_IsOpenGameMenu = false;
     }
 
     public override void OnFinalize()
@@ -123,18 +136,44 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     public override void OnUpdate()
     {
         base.OnUpdate();
+        
+        if (RewiredInputManager.Instance != null)
+        {
+            if (RewiredInputManager.Instance.OpenMenu == E_REWIRED_INPUT_STATE.DOWN)
+            {
+                OpenGameMenu();
+            }
+        }
+
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
         m_StateMachine.OnUpdate();
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
+
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
         m_StateMachine.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
+
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
         m_StateMachine.OnFixedUpdate();
     }
 
@@ -148,17 +187,19 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     public void OnAfterShow()
     {
-
+        //RewiredInputManager.Instance.ChangeToInGameInput();
     }
 
     public void OnBeforeHide()
     {
+        //RewiredInputManager.Instance.ChangeToUIInput();
         Time.timeScale = 1;
     }
 
     public void OnAfterHide()
     {
-
+        AudioManager.Instance.StopAllBgm();
+        AudioManager.Instance.StopAllSe();
     }
 
     /// <summary>
@@ -174,17 +215,32 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_StateMachine.Goto(state);
     }
 
-    /// <summary>
-    /// GameOverControllerがBattleManagerに紐づいているのでとりあえずここで再生メソッドを定義する。
-    /// しかし、最終的にはBattleRealUiManagerに紐づける。
-    /// </summary>
-    public void PlayGameOverPerformance()
-    {
-
-    }
-
     public void ExitGame()
     {
         BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+    }
+
+    /// <summary>
+    /// ゲームメニューを開く
+    /// </summary>
+    public void OpenGameMenu()
+    {
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
+        m_IsOpenGameMenu = true;
+        GameEventMessage.SendEvent(m_OpenGameMenuKey);
+        //RewiredInputManager.Instance.ChangeToUIInput();
+    }
+
+    /// <summary>
+    /// ゲームメニューを閉じる
+    /// </summary>
+    public void CloseGameMenu()
+    {
+        //RewiredInputManager.Instance.ChangeToInGameInput();
+        m_IsOpenGameMenu = false;
     }
 }

@@ -131,4 +131,9 @@ public enum E_COMMON_SOUND
     /// ハッキングが失敗した時のSE
     /// </summary>
     BOSS_HACK_FAILURE,
+
+    /// <summary>
+    /// ハッキングのボスを倒した時のSE
+    /// </summary>
+    HACKING_BOSS_BREAK,
 }

@@ -54,7 +54,6 @@ partial class BattleRealManager
             BattleRealSequenceObjectManager.Instance.GotoDestroy();
             BattleRealCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
-            BattleRealInputManager.Instance.OnUpdate();
             BattleRealTimerManager.Instance.OnUpdate();
             BattleRealEventManager.Instance.OnUpdate();
             BattleRealPlayerManager.Instance.OnUpdate();

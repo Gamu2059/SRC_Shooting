@@ -94,6 +94,21 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         bullet.spriteRenderer = (SpriteRenderer)bullet.gameObject.GetComponentInChildren(typeof(SpriteRenderer));
 
+
+        // この弾の親がプレイヤーなら
+        if (bullet.m_Boss is BattleHackingPlayerController)
+        {
+            // すぐに動き始める
+            bullet.m_IsMoving = true;
+        }
+        // この弾の親がプレイヤー以外なら
+        else
+        {
+            // ブラー状態から始める
+            bullet.m_IsMoving = false;
+        }
+
+
         return bullet;
     }
 
@@ -166,6 +181,22 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     private bool m_IsAlive;
 
 
+    /// <summary>
+    /// 弾が進んでいるかどうか
+    /// </summary>
+    private bool m_IsMoving;
+
+    /// <summary>
+    /// ブラーの時間の長さ
+    /// </summary>
+    private static readonly float BlurTimeLength = 0.15F;
+
+    /// <summary>
+    /// ブラーの最初の時点での弾の大きさの倍率（アセットを使ってやった時は4だった）
+    /// </summary>
+    private static readonly float InitialScaleMag = 3F;
+
+
     public override void OnInitialize()
     {
         base.OnInitialize();
@@ -196,11 +227,29 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         // デルタタイムをstatic変数に反映する
         BulletDeltaTime.DeltaTime = Time.deltaTime;
 
-        // 時刻をstatic変数に反映させる
-        BulletTime.Time = m_Time;
+        // ブラー中なら
+        if (!m_IsMoving)
+        {
+            // 実際にまだブラー中なら
+            if (m_Time < BlurTimeLength)
+            {
+                // static変数の時刻を0にする
+                BulletTime.Time = 0;
+            }
+            // もし弾が既に動いていたら
+            else
+            {
+                m_IsMoving = true;
+                m_Time -= BlurTimeLength;
+            }
+        }
 
-        // この弾の物理的な状態
-        TransformSimple transformSimple;
+        // 動いているなら
+        if (m_IsMoving)
+        {
+            // 時刻をstatic変数に反映させる
+            BulletTime.Time = m_Time;
+        }
 
         // 変更可能な弾パラメータをstatic変数にロードする
         BulletBool.BoolArrayChangeable = m_BulletParamFreeChangeable.m_Bool;
@@ -226,7 +275,17 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         m_BulletParamFreeChangeable = bulletParamFree;
 
         // この弾の物理的な状態を外部の演算により求める
-        transformSimple = m_TransformOperation.GetResultTransform();
+        TransformSimple transformSimple = m_TransformOperation.GetResultTransform();
+
+        // ブラー中なら
+        if (!m_IsMoving)
+        {
+            transformSimple.Scale = transformSimple.Scale + transformSimple.Scale * (InitialScaleMag - 1) * (1 - m_Time / BlurTimeLength);
+
+            transformSimple.Opacity = m_Time / BlurTimeLength;
+
+            transformSimple.CanCollide = false;
+        }
 
         // 実際にこの弾の物理的な状態を更新する
 
@@ -749,3 +808,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 ///// ゲーム全体で共通の変数
 ///// </summary>
 //public static CommonOperationVariable CommonOperationVar { get; set; }
+
+
+//// ブラーの時間の長さ
+//float BlurTimeLength = 0.15F;
+
+//// ブラーの最初の時点での弾の大きさの倍率（アセットを使ってやった時は4だった）
+//float InitialScaleMag = 3F;
