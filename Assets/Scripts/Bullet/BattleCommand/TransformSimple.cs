@@ -10,32 +10,38 @@ public class TransformSimple : object
     /// <summary>
     /// 位置
     /// </summary>
-    public Vector2 Position { get; private set; }
+    //public Vector2 Position { get; private set; }
+    public Vector2 Position { get; set; }
 
     /// <summary>
     /// 回転角度
     /// </summary>
-    public float Angle { get; private set; }
+    //public float Angle { get; private set; }
+    public float Angle { get; set; }
 
     /// <summary>
     /// 大きさ
     /// </summary>
-    public float Scale { get; private set; }
+    //public float Scale { get; private set; }
+    public float Scale { get; set; }
 
     /// <summary>
     /// 不透明度
     /// </summary>
-    public float Opacity { get; private set; }
+    //public float Opacity { get; private set; }
+    public float Opacity { get; set; }
 
     /// <summary>
     /// 衝突判定があるかどうか
     /// </summary>
-    public bool CanCollide { get; private set; }
+    //public bool CanCollide { get; private set; }
+    public bool CanCollide { get; set; }
 
     /// <summary>
     /// 弾が生存しているかどうか
     /// </summary>
-    public bool IsAlive { get; private set; }
+    //public bool IsAlive { get; private set; }
+    public bool IsAlive { get; set; }
 
 
     /// <summary>
