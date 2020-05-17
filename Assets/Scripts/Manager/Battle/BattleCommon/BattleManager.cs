@@ -187,12 +187,12 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     public void OnAfterShow()
     {
-        RewiredInputManager.Instance.ChangeToInGameInput();
+        //RewiredInputManager.Instance.ChangeToInGameInput();
     }
 
     public void OnBeforeHide()
     {
-        RewiredInputManager.Instance.ChangeToUIInput();
+        //RewiredInputManager.Instance.ChangeToUIInput();
         Time.timeScale = 1;
     }
 
@@ -232,7 +232,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
         m_IsOpenGameMenu = true;
         GameEventMessage.SendEvent(m_OpenGameMenuKey);
-        RewiredInputManager.Instance.ChangeToUIInput();
+        //RewiredInputManager.Instance.ChangeToUIInput();
     }
 
     /// <summary>
@@ -240,7 +240,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     /// </summary>
     public void CloseGameMenu()
     {
-        RewiredInputManager.Instance.ChangeToInGameInput();
+        //RewiredInputManager.Instance.ChangeToInGameInput();
         m_IsOpenGameMenu = false;
     }
 }

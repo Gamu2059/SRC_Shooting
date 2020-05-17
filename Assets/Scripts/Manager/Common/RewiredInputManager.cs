@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using Rewired.Integration.UnityUI;
 
 /// <summary>
 /// Rewiredを用いた単体プレイヤー用のInputManager
@@ -16,13 +17,33 @@ public class RewiredInputManager : SingletonMonoBehavior<RewiredInputManager>
 
     #region Field Inspector
 
-    [Header("Action Category")]
+    [SerializeField]
+    private RewiredStandaloneInputModule m_StandaloneInputModule;
+
+    [Header("Map Category")]
+
+    [SerializeField]
+    private string m_KeyConCategory;
 
     [SerializeField]
     private string m_UiCategory;
 
     [SerializeField]
     private string m_InGameCategory;
+
+    [Header("KeyCon Input")]
+
+    [SerializeField]
+    private string m_KeyConHorizontal;
+
+    [SerializeField]
+    private string m_KeyConVertical;
+
+    [SerializeField]
+    private string m_KeyConSubmit;
+
+    [SerializeField]
+    private string m_KeyConCancel;
 
     [Header("UI Input")]
 
@@ -172,16 +193,37 @@ public class RewiredInputManager : SingletonMonoBehavior<RewiredInputManager>
         InnerInputManager.Instance.RemoveAxis(m_UiHorizontal);
     }
 
-    public void ChangeToUIInput()
-    {
-        InnerInputManager.Instance.SetActionCategory(m_UiCategory, true);
-        InnerInputManager.Instance.SetActionCategory(m_InGameCategory, false);
-    }
+    //public void ChangeToUIInput()
+    //{
+    //    InnerInputManager.Instance.SetActionCategory(m_UiCategory, true);
+    //    InnerInputManager.Instance.SetActionCategory(m_InGameCategory, false);
+    //}
 
-    public void ChangeToInGameInput()
+    //public void ChangeToInGameInput()
+    //{
+    //    InnerInputManager.Instance.SetActionCategory(m_UiCategory, false);
+    //    InnerInputManager.Instance.SetActionCategory(m_InGameCategory, true);
+    //}
+
+    public void ChangeToKeyConInputModule()
     {
+        m_StandaloneInputModule.horizontalAxis = m_KeyConHorizontal;
+        m_StandaloneInputModule.verticalAxis = m_KeyConVertical;
+        m_StandaloneInputModule.submitButton = m_KeyConSubmit;
+        m_StandaloneInputModule.cancelButton = m_KeyConCategory;
+
         InnerInputManager.Instance.SetActionCategory(m_UiCategory, false);
-        InnerInputManager.Instance.SetActionCategory(m_InGameCategory, true);
+        InnerInputManager.Instance.SetActionCategory(m_KeyConCategory, true);
     }
 
+    public void ChangeToUIInputModule()
+    {
+        m_StandaloneInputModule.horizontalAxis = m_UiHorizontal;
+        m_StandaloneInputModule.verticalAxis = m_UiVertical;
+        m_StandaloneInputModule.submitButton = m_UiSubmit;
+        m_StandaloneInputModule.cancelButton = m_UiCancel;
+
+        InnerInputManager.Instance.SetActionCategory(m_UiCategory, true);
+        InnerInputManager.Instance.SetActionCategory(m_KeyConCategory, false);
+    }
 }

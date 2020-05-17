@@ -81,22 +81,27 @@ MonoBehaviour:
       _fillClockwise: 0
       _fillOrigin: 0
   _buttonSettings:
-    _transition: 1
+    _transition: 2
     _colors:
       m_ColorMultiplier: 1
       m_DisabledColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.5019608}
       m_FadeDuration: 0.1
-      m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
-      m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+      m_HighlightedColor: {r: 0, g: 0.90163946, b: 1, a: 1}
+      m_NormalColor: {r: 1, g: 1, b: 1, a: 0.5019608}
       m_PressedColor: {r: 0.759434, g: 0.9764151, b: 1, a: 1}
       m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
       m_DisabledHighlightedColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.5019608}
     _spriteState:
-      m_DisabledSprite: {fileID: 0}
-      m_HighlightedSprite: {fileID: 0}
-      m_PressedSprite: {fileID: 0}
-      m_SelectedSprite: {fileID: 0}
-      m_DisabledHighlightedSprite: {fileID: 0}
+      m_DisabledSprite: {fileID: 21300000, guid: 2dc15ae0c0624a447b84384a4dfc6ea4,
+        type: 3}
+      m_HighlightedSprite: {fileID: 21300000, guid: 035b7a6bcc082124ebb6dec1956ba906,
+        type: 3}
+      m_PressedSprite: {fileID: 21300000, guid: 035b7a6bcc082124ebb6dec1956ba906,
+        type: 3}
+      m_SelectedSprite: {fileID: 21300000, guid: 035b7a6bcc082124ebb6dec1956ba906,
+        type: 3}
+      m_DisabledHighlightedSprite: {fileID: 21300000, guid: 09f7d6cebe27739429798fddb4d20f9a,
+        type: 3}
     _animationTriggers:
       m_DisabledTrigger: 
       m_HighlightedTrigger: 
@@ -106,7 +111,7 @@ MonoBehaviour:
       m_DisabledHighlightedTrigger: 
     _imageSettings:
       _color: {r: 1, g: 1, b: 1, a: 1}
-      _sprite: {fileID: 21300000, guid: 189cc5f8c809fe744a48b93c903ee60a, type: 3}
+      _sprite: {fileID: 21300000, guid: f660798159e8d834a9adc98d9c0e6d7c, type: 3}
       _materal: {fileID: 0}
       _type: 1
       _preserveAspect: 0
@@ -119,13 +124,13 @@ MonoBehaviour:
     _transition: 1
     _colors:
       m_ColorMultiplier: 1
-      m_DisabledColor: {r: 0.14037678, g: 0.18981342, b: 0.21960784, a: 1}
+      m_DisabledColor: {r: 0.20710216, g: 0.23001066, b: 0.24528301, a: 0.5882353}
       m_FadeDuration: 0.1
-      m_HighlightedColor: {r: 0, g: 0.41992915, b: 0.6691177, a: 1}
-      m_NormalColor: {r: 0.30048442, g: 0.39928094, b: 0.45882353, a: 1}
-      m_PressedColor: {r: 0, g: 0.62758636, b: 1, a: 1}
-      m_SelectedColor: {r: 0, g: 0.41992915, b: 0.6691177, a: 1}
-      m_DisabledHighlightedColor: {r: 0, g: 0.41992915, b: 0.6691177, a: 0.49411765}
+      m_HighlightedColor: {r: 0.504895, g: 0.5666645, b: 0.5849056, a: 1}
+      m_NormalColor: {r: 0.33641866, g: 0.36098257, b: 0.3773585, a: 1}
+      m_PressedColor: {r: 0.622241, g: 0.7302852, b: 0.745283, a: 1}
+      m_SelectedColor: {r: 0.504895, g: 0.5666645, b: 0.5849056, a: 1}
+      m_DisabledHighlightedColor: {r: 0.20710216, g: 0.23001066, b: 0.24528301, a: 1}
     _spriteState:
       m_DisabledSprite: {fileID: 0}
       m_HighlightedSprite: {fileID: 0}

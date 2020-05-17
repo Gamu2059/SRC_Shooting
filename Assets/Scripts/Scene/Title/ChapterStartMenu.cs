@@ -20,6 +20,8 @@ public class ChapterStartMenu : MonoBehaviour
     [SerializeField]
     private ChoiceNumMenuIndicator m_EnergyMenu;
 
+    private bool m_IsSubmitStart = false;
+
     public void OnSubmitResetOptions()
     {
         m_LifeMenu?.ResetDefault();
@@ -28,6 +30,12 @@ public class ChapterStartMenu : MonoBehaviour
 
     public void OnSubmitStart()
     {
+        if (m_IsSubmitStart)
+        {
+            return;
+        }
+
+        m_IsSubmitStart = true;
         DataManager.Instance.LifeOption = m_LifeMenu.Num;
         DataManager.Instance.EnergyOption = m_EnergyMenu.Num;
         DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;

@@ -32,6 +32,7 @@ public class ChoiceNumMenuIndicator : ChoiceMenuIndicator
     public override void ResetDefault()
     {
         m_Num.Value = Mathf.Clamp(m_DefaultNum, m_MinNum, m_MaxNum);
+        OnChangeValue?.Invoke();
     }
 
     public override bool CanGoPrev()

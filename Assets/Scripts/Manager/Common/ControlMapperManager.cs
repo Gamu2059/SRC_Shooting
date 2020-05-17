@@ -63,6 +63,7 @@ public class ControlMapperManager : SingletonMonoBehavior<ControlMapperManager>
 
     private void OnScreenOpened()
     {
+        RewiredInputManager.Instance.ChangeToKeyConInputModule();
         GameEventMessage.SendEvent(m_OpenGameEvent);
 
         DOTween.Sequence()
@@ -81,6 +82,7 @@ public class ControlMapperManager : SingletonMonoBehavior<ControlMapperManager>
             .OnComplete(() =>
             {
                 m_ControlMapperCanvasGroup.gameObject.SetActive(false);
+                RewiredInputManager.Instance.ChangeToUIInputModule();
             });
     }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using E_SCENE = BaseSceneManager.E_SCENE;
+using UnityEngine.UI;
 
 /// <summary>
 /// StoryStartMenuの制御クラス
@@ -17,6 +17,8 @@ public class StoryStartMenu : MonoBehaviour
     [SerializeField]
     private ChoiceNumMenuIndicator m_EnergyMenu;
 
+    private bool m_IsSubmitStart = false;
+
     public void OnSubmitResetOptions()
     {
         m_LifeMenu?.ResetDefault();
@@ -25,6 +27,12 @@ public class StoryStartMenu : MonoBehaviour
 
     public void OnSubmitStart()
     {
+        if (m_IsSubmitStart)
+        {
+            return;
+        }
+
+        m_IsSubmitStart = true;
         DataManager.Instance.LifeOption = m_LifeMenu.Num;
         DataManager.Instance.EnergyOption = m_EnergyMenu.Num;
         DataManager.Instance.GameMode = E_GAME_MODE.STORY;

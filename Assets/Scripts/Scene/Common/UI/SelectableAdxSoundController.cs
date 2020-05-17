@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,6 +10,9 @@ using UnityEditor;
 
 public class SelectableAdxSoundController : MonoBehaviour, ISelectHandler, ISubmitHandler
 {
+    [SerializeField]
+    private Selectable m_Target;
+
     [SerializeField]
     private bool m_UseSelectSound;
 
@@ -21,6 +25,11 @@ public class SelectableAdxSoundController : MonoBehaviour, ISelectHandler, ISubm
     [SerializeField]
     private E_COMMON_SOUND m_SubmitSound;
 
+    [SerializeField]
+    private E_COMMON_SOUND m_DisableSound;
+
+    private bool m_OnClicked = false;
+
     public void OnSelect(BaseEventData e)
     {
         if (AudioManager.Instance != null && m_UseSelectSound)
@@ -31,40 +40,39 @@ public class SelectableAdxSoundController : MonoBehaviour, ISelectHandler, ISubm
 
     public void OnSubmit(BaseEventData e)
     {
-        if (AudioManager.Instance != null && m_UseSubmitSound)
+        if (m_OnClicked)
         {
-            AudioManager.Instance.Play(m_SubmitSound);
+            m_OnClicked = false;
+            return;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            if (m_Target == null || m_Target.IsInteractable())
+            {
+                AudioManager.Instance.Play(m_SubmitSound);
+            }
+            else
+            {
+                AudioManager.Instance.Play(m_DisableSound);
+            }
         }
     }
 
-#if UNITY_EDITOR
-
-    [CustomEditor(typeof(SelectableAdxSoundController))]
-    private class SelectableAdxSoundControllerEditor : Editor
+    public void OnClick()
     {
-        public override void OnInspectorGUI()
+        if (AudioManager.Instance != null)
         {
-            var t = target as SelectableAdxSoundController;
-
-            using (new EditorGUILayout.HorizontalScope())
+            if (m_Target == null || m_Target.IsInteractable())
             {
-                t.m_UseSelectSound = EditorGUILayout.Toggle("Use Select Sound", t.m_UseSelectSound);
-                if (t.m_UseSelectSound)
-                {
-                    t.m_SelectSound = (E_COMMON_SOUND) EditorGUILayout.EnumFlagsField("", t.m_SelectSound);
-                }
+                AudioManager.Instance.Play(m_SubmitSound);
             }
-
-            using (new EditorGUILayout.HorizontalScope())
+            else
             {
-                t.m_UseSubmitSound = EditorGUILayout.Toggle("Use Submit Sound", t.m_UseSubmitSound);
-                if (t.m_UseSubmitSound)
-                {
-                    t.m_SubmitSound = (E_COMMON_SOUND)EditorGUILayout.EnumFlagsField("", t.m_SubmitSound);
-                }
+                AudioManager.Instance.Play(m_DisableSound);
             }
         }
-    }
 
-#endif
+        m_OnClicked = true;
+    }
 }
