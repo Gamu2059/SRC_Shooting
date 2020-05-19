@@ -35,12 +35,12 @@ partial class BattleRealPlayerController
         {
             base.OnUpdate();
 
-            var input = BattleRealInputManager.Instance;
-            var moveDir = input.MoveDir;
+            var input = RewiredInputManager.Instance;
+            var moveDir = input.AxisDir;
             if (moveDir.x != 0 || moveDir.y != 0)
             {
                 float speed = 0;
-                if (input.Slow == E_INPUT_STATE.STAY)
+                if (input.Slowly == E_REWIRED_INPUT_STATE.STAY)
                 {
                     speed = Target.m_ParamSet.PlayerSlowMoveSpeed;
                 }
@@ -59,7 +59,7 @@ partial class BattleRealPlayerController
                 Target.RestrictPosition();
             }
 
-            if (input.Shot == E_INPUT_STATE.STAY)
+            if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
             {
                 Target.ShotBullet();
             }

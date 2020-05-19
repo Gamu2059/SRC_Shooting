@@ -11,7 +11,6 @@
 
             BattleRealStageManager.Instance.gameObject.SetActive(true);
 
-            BattleRealInputManager.Instance.OnStart();
             BattleRealTimerManager.Instance.OnStart();
             BattleRealEventManager.Instance.OnStart();
             BattleRealPlayerManager.Instance.OnStart();

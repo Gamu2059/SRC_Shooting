@@ -30,6 +30,16 @@ public class DataManager : Singleton<DataManager>
     public E_CHAPTER Chapter;
 
     /// <summary>
+    /// 残機オプション
+    /// </summary>
+    public int LifeOption;
+
+    /// <summary>
+    /// エナジーオプション
+    /// </summary>
+    public int EnergyOption;
+
+    /// <summary>
     /// バトル用変数データ。
     /// </summary>
     public BattleData BattleData { get; private set; }
@@ -78,7 +88,7 @@ public class DataManager : Singleton<DataManager>
     /// </summary>
     public void OnStoryEnd()
     {
-        BattleResultData.AddStoryResult();
+        //BattleResultData.AddStoryResult();
     }
 
     /// <summary>
@@ -94,7 +104,66 @@ public class DataManager : Singleton<DataManager>
     /// </summary>
     public void OnChapterEnd()
     {
-        BattleResultData.AddChapterResult();
+        //BattleResultData.AddChapterResult();
+    }
+
+    /// <summary>
+    /// 次のチャプターに直接遷移するかどうか。簡易実装
+    /// </summary>
+    public bool IsDirectTransitionNextChapter()
+    {
+        return GameMode == E_GAME_MODE.STORY && Chapter == E_CHAPTER.CHAPTER_0;
+    }
+
+    public BaseSceneManager.E_SCENE GetChapterScene(E_CHAPTER chapter)
+    {
+        switch (chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return BaseSceneManager.E_SCENE.STAGE0;
+            case E_CHAPTER.CHAPTER_1:
+                return BaseSceneManager.E_SCENE.STAGE1;
+            case E_CHAPTER.CHAPTER_2:
+                return BaseSceneManager.E_SCENE.STAGE2;
+            case E_CHAPTER.CHAPTER_3:
+                return BaseSceneManager.E_SCENE.STAGE3;
+            case E_CHAPTER.CHAPTER_4:
+                return BaseSceneManager.E_SCENE.STAGE4;
+            case E_CHAPTER.CHAPTER_5:
+                return BaseSceneManager.E_SCENE.STAGE5;
+            case E_CHAPTER.CHAPTER_6:
+                return BaseSceneManager.E_SCENE.STAGE6;
+        }
+
+        return BaseSceneManager.E_SCENE.DEFAULT;
+    }
+
+    /// <summary>
+    /// 次のチャプターが存在するかどうか。簡易実装
+    /// </summary>
+    public bool ExistNextChapter()
+    {
+        switch (Chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    /// 次のチャプターの値を取得する。簡易実装
+    /// </summary>
+    public E_CHAPTER GetNextChapter()
+    {
+        switch (Chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return E_CHAPTER.CHAPTER_1;
+        }
+
+        return E_CHAPTER.CHAPTER_0;
     }
 
     public string GetChapterString()
@@ -126,5 +195,20 @@ public class DataManager : Singleton<DataManager>
     public bool IsInvalidAchievement()
     {
         return Chapter == E_CHAPTER.CHAPTER_0;
+    }
+
+    /// <summary>
+    /// 現在のチャプターに対応するシーンに遷移する
+    /// </summary>
+    public void TransitionToCurrentChapterScene()
+    {
+        var scene = GetChapterScene(Chapter);
+        if (scene == BaseSceneManager.E_SCENE.DEFAULT)
+        {
+            Debug.LogWarning("Default scene is not chapter scene.");
+            return;
+        }
+
+        BaseSceneManager.Instance.LoadScene(scene);
     }
 }

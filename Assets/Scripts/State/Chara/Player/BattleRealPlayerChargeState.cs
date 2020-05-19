@@ -14,12 +14,12 @@ partial class BattleRealPlayerController
         {
             base.OnUpdate();
 
-            var input = BattleRealInputManager.Instance;
-            var moveDir = input.MoveDir;
+            var input = RewiredInputManager.Instance;
+            var moveDir = input.AxisDir;
             if (moveDir.x != 0 || moveDir.y != 0)
             {
                 float speed = 0;
-                if (input.Slow == E_INPUT_STATE.STAY)
+                if (input.Slowly == E_REWIRED_INPUT_STATE.STAY)
                 {
                     speed = Target.m_ParamSet.PlayerSlowMoveSpeed;
                 }
@@ -38,19 +38,12 @@ partial class BattleRealPlayerController
                 Target.RestrictPosition();
             }
 
-            if (input.Shot == E_INPUT_STATE.STAY)
+            if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
             {
                 Target.ShotBullet();
             }
 
-            //if (input.ChangeMode == E_INPUT_STATE.DOWN)
-            //{
-            //    Target.IsLaserType = !Target.IsLaserType;
-            //    Target.ChangeWeapon();
-            //    Target.ChangeWeaponTypeAction?.Invoke(Target.IsLaserType);
-            //}
-
-            if (input.ChargeShot == E_INPUT_STATE.UP)
+            if (input.ChargeShot == E_REWIRED_INPUT_STATE.UP)
             {
                 Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE_SHOT);
             }

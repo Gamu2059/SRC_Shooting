@@ -9,7 +9,6 @@
     WAIT_CUTSCENE,
     WAIT_TALK,
     WAIT_DIALOG,
-    OPEN_MENU,
     GAME_CLEAR,
     GAME_OVER,
     END,
