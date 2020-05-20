@@ -21,9 +21,9 @@ MonoBehaviour:
       m_BulletParams:
       - {fileID: 11400000, guid: add7dd11409242e4492197942f3e3f99, type: 2}
       m_ShotTransformName: Scaler
-      m_ShotNum: 9
+      m_ShotNum: 8
       m_AxisType: 1
-      m_AxisOffsetAngle: 0
+      m_AxisOffsetAngle: 22.5
       m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
       m_ShotRadius: 0
       m_ShotDeltaRadius: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 40
+      m_ShotAngle: 45
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 2
@@ -42,7 +42,28 @@ MonoBehaviour:
       m_BulletParams:
       - {fileID: 11400000, guid: add7dd11409242e4492197942f3e3f99, type: 2}
       m_ShotTransformName: Scaler
-      m_ShotNum: 9
+      m_ShotNum: 10
+      m_AxisType: 1
+      m_AxisOffsetAngle: 18
+      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
+      m_ShotRadius: 0
+      m_ShotDeltaRadius: 0
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 36
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0
+  - Difficulty: 0
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: c5bcfd5ec57c4894b9f72751cd354fcf, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: add7dd11409242e4492197942f3e3f99, type: 2}
+      m_ShotTransformName: Scaler
+      m_ShotNum: 0
       m_AxisType: 1
       m_AxisOffsetAngle: 0
       m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
@@ -53,28 +74,7 @@ MonoBehaviour:
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 40
-      m_ShotDeltaAngle: 0
-      m_ShotDeltaDeltaAngle: 0
-  - Difficulty: 0
-    Param:
-      m_Bullets:
-      - {fileID: 6531663667767994548, guid: c5bcfd5ec57c4894b9f72751cd354fcf, type: 3}
-      m_BulletParams:
-      - {fileID: 11400000, guid: add7dd11409242e4492197942f3e3f99, type: 2}
-      m_ShotTransformName: Scaler
-      m_ShotNum: 4
-      m_AxisType: 1
-      m_AxisOffsetAngle: 45
-      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
-      m_ShotRadius: 0
-      m_ShotDeltaRadius: 0
-      m_ShotDeltaDeltaRadius: 0
-      m_ShotOffsetTime: 0
-      m_ShotInterval: 0
-      m_ShotDeltaInterval: 0
-      m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 90
+      m_ShotAngle: 0
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 3
