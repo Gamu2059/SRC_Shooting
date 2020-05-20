@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9768669efa4d51143a2edf0402706824, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_302_\u672C\u4F53\u30AA\u30EC\u30F3\u30B8\u30B5\u30FC\u30C1\u5F3E.bullet_generator"
+  m_Name: "stage1_\u30CA\u30DF_302_\u672C\u4F53\u6697\u30AA\u30EC\u30F3\u30B8\u30B5\u30FC\u30C1\u5F3E.bullet_generator"
   m_EditorClassIdentifier: 
   m_GeneratorClassName: BattleReal.BulletGenerator.NwayBulletGenerator
   m_Params:
   - Difficulty: 1
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 2b2b57a1b91b8214bae1c0bd45f68b88, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
+      - {fileID: 11400000, guid: a643651388cb45b49867243d8cb59501, type: 2}
       m_ShotTransformName: Scaler
       m_ShotNum: 1
       m_AxisType: 0
@@ -38,9 +38,9 @@ MonoBehaviour:
   - Difficulty: 2
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 2b2b57a1b91b8214bae1c0bd45f68b88, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
+      - {fileID: 11400000, guid: a643651388cb45b49867243d8cb59501, type: 2}
       m_ShotTransformName: Scaler
       m_ShotNum: 1
       m_AxisType: 0
@@ -59,9 +59,9 @@ MonoBehaviour:
   - Difficulty: 0
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 2b2b57a1b91b8214bae1c0bd45f68b88, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
+      - {fileID: 11400000, guid: a643651388cb45b49867243d8cb59501, type: 2}
       m_ShotTransformName: Scaler
       m_ShotNum: 1
       m_AxisType: 0
@@ -80,13 +80,13 @@ MonoBehaviour:
   - Difficulty: 3
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 2b2b57a1b91b8214bae1c0bd45f68b88, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
+      - {fileID: 11400000, guid: a643651388cb45b49867243d8cb59501, type: 2}
       m_ShotTransformName: Scaler
-      m_ShotNum: 10
-      m_AxisType: 0
-      m_AxisOffsetAngle: 0
+      m_ShotNum: 8
+      m_AxisType: 1
+      m_AxisOffsetAngle: 22.5
       m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
       m_ShotRadius: 0.1
       m_ShotDeltaRadius: 0
@@ -95,6 +95,6 @@ MonoBehaviour:
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 36
+      m_ShotAngle: 45
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
