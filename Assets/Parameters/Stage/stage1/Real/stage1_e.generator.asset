@@ -640,44 +640,6 @@ MonoBehaviour:
       MultiConditionType: 0
       MultiConditions: []
     m_Param: {fileID: 11400000, guid: 80d402c67f2dcc246ac1362e130b7001, type: 2}
-  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u52A0\u7A81\u6483\u5DE6"
-    m_Condition:
-      IsReverse: 0
-      IsMultiCondition: 0
-      SingleCondition:
-        IsReverse: 0
-        VariableType: 2
-        UseGeneralIntVariable: 0
-        GeneralIntVariable: 0
-        UseGeneralTimePeriod: 0
-        GeneralTimePeriod: 0
-        VariableName: G041 Left Defeat
-        CompareType: 0
-        BoolCompareType: 0
-        CompareValue: 0
-        BoolCompareValue: 1
-      MultiConditionType: 0
-      MultiConditions: []
-    m_Param: {fileID: 11400000, guid: 51c8091d14f249843bc27fd7c01481ad, type: 2}
-  - m_Commnet: "\u5916\u90ED\u8868\u5C64\u8FFD\u52A0\u7A81\u6483\u53F3"
-    m_Condition:
-      IsReverse: 0
-      IsMultiCondition: 0
-      SingleCondition:
-        IsReverse: 0
-        VariableType: 2
-        UseGeneralIntVariable: 0
-        GeneralIntVariable: 0
-        UseGeneralTimePeriod: 0
-        GeneralTimePeriod: 0
-        VariableName: G041 Right Defeat
-        CompareType: 0
-        BoolCompareType: 0
-        CompareValue: 0
-        BoolCompareValue: 1
-      MultiConditionType: 0
-      MultiConditions: []
-    m_Param: {fileID: 11400000, guid: d51dd86459b39db4282c4ba8b2a81377, type: 2}
   - m_Commnet: "\u5916\u90ED\u8868\u5C64\u56DE\u8EE2"
     m_Condition:
       IsReverse: 0
