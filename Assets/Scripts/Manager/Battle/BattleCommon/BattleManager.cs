@@ -232,6 +232,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
         m_IsOpenGameMenu = true;
         GameEventMessage.SendEvent(m_OpenGameMenuKey);
+        AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_OPEN);
         //RewiredInputManager.Instance.ChangeToUIInput();
     }
 
@@ -242,5 +243,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     {
         //RewiredInputManager.Instance.ChangeToInGameInput();
         m_IsOpenGameMenu = false;
+        AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_CLOSE);
     }
 }

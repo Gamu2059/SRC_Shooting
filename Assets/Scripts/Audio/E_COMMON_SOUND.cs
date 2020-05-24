@@ -136,4 +136,14 @@ public enum E_COMMON_SOUND
     /// ハッキングのボスを倒した時のSE
     /// </summary>
     HACKING_BOSS_BREAK,
+
+    /// <summary>
+    /// インゲームのメニューを開いた時のSE
+    /// </summary>
+    INGAME_MENU_OPEN,
+
+    /// <summary>
+    /// インゲームのメニューを閉じた時のSE
+    /// </summary>
+    INGAME_MENU_CLOSE,
 }
