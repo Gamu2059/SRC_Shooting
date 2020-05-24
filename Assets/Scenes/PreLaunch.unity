@@ -2754,7 +2754,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 122
+        _keyboardKeyCode: 304
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -2765,7 +2765,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 108
+        _keyboardKeyCode: 303
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -4825,6 +4825,7 @@ GameObject:
   - component: {fileID: 1171375925}
   - component: {fileID: 1171375927}
   - component: {fileID: 1171375926}
+  - component: {fileID: 1171375928}
   m_Layer: 0
   m_Name: GameEvent - Back
   m_TagString: Untagged
@@ -4891,8 +4892,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: Doozy.Engine.Events.StringEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  GameEvent: Back
+  GameEvent: BackSe
   ListenForAllGameEvents: 0
+--- !u!114 &1171375928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171375924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800f04ef6b82dd5479e60ab0dd77be13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BackActionId: 3
+  m_BackEventName: Back
 --- !u!1 &1227606936
 GameObject:
   m_ObjectHideFlags: 0
@@ -5606,7 +5621,7 @@ MonoBehaviour:
     Scene: 1000
   - Name: RealModeEnemyTest
     Scene: 1001
-  m_IsStartFromBeginningScene: 1
+  m_IsStartFromBeginningScene: 0
   m_StartScene: 14
   m_TransitionInfos:
   - CurrentScene: -1
