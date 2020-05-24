@@ -10,91 +10,91 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9768669efa4d51143a2edf0402706824, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_302_\u672C\u4F53\u30AA\u30EC\u30F3\u30B8\u30B5\u30FC\u30C1\u5F3E.bullet_generator"
+  m_Name: "stage1_g022_2\u672C\u76EE\u901A\u8DEF\u5F8C\u534A\u81EA\u6A5F\u5916\u3057.bullet_generator"
   m_EditorClassIdentifier: 
   m_GeneratorClassName: BattleReal.BulletGenerator.NwayBulletGenerator
   m_Params:
   - Difficulty: 1
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 8f9f084ebd1e90b48b42654bd55d3e4f, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
-      m_ShotTransformName: Scaler
-      m_ShotNum: 1
+      - {fileID: 11400000, guid: d7e3503f9fd01ca419d979cac11b462a, type: 2}
+      m_ShotTransformName: ShotTransform
+      m_ShotNum: 10
       m_AxisType: 0
       m_AxisOffsetAngle: 0
-      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
-      m_ShotRadius: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.05
       m_ShotDeltaRadius: 0
       m_ShotDeltaDeltaRadius: 0
       m_ShotOffsetTime: 0
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 0
+      m_ShotAngle: 18
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 2
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 8f9f084ebd1e90b48b42654bd55d3e4f, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
-      m_ShotTransformName: Scaler
-      m_ShotNum: 1
+      - {fileID: 11400000, guid: d7e3503f9fd01ca419d979cac11b462a, type: 2}
+      m_ShotTransformName: ShotTransform
+      m_ShotNum: 20
       m_AxisType: 0
       m_AxisOffsetAngle: 0
-      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
-      m_ShotRadius: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.05
       m_ShotDeltaRadius: 0
       m_ShotDeltaDeltaRadius: 0
       m_ShotOffsetTime: 0
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 0
+      m_ShotAngle: 9
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 0
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 8f9f084ebd1e90b48b42654bd55d3e4f, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
-      m_ShotTransformName: Scaler
-      m_ShotNum: 1
+      - {fileID: 11400000, guid: d7e3503f9fd01ca419d979cac11b462a, type: 2}
+      m_ShotTransformName: ShotTransform
+      m_ShotNum: 10
       m_AxisType: 0
       m_AxisOffsetAngle: 0
-      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
-      m_ShotRadius: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.05
       m_ShotDeltaRadius: 0
       m_ShotDeltaDeltaRadius: 0
       m_ShotOffsetTime: 0
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 0
+      m_ShotAngle: 18
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 3
     Param:
       m_Bullets:
-      - {fileID: 6531663667767994548, guid: 8a7695c859be37843b20e74055b2e1c7, type: 3}
+      - {fileID: 6531663667767994548, guid: 8f9f084ebd1e90b48b42654bd55d3e4f, type: 3}
       m_BulletParams:
-      - {fileID: 11400000, guid: 1eeb452b8840e0249b980214fea9a70b, type: 2}
-      m_ShotTransformName: Scaler
-      m_ShotNum: 10
+      - {fileID: 11400000, guid: d7e3503f9fd01ca419d979cac11b462a, type: 2}
+      m_ShotTransformName: ShotTransform
+      m_ShotNum: 24
       m_AxisType: 0
       m_AxisOffsetAngle: 0
-      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
-      m_ShotRadius: 0.1
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.05
       m_ShotDeltaRadius: 0
       m_ShotDeltaDeltaRadius: 0
       m_ShotOffsetTime: 0
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 36
+      m_ShotAngle: 7.5
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0

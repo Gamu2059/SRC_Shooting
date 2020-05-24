@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: "stage1_\u30CA\u30DF_302_\u672C\u4F53\u30AA\u30EC\u30F3\u30B8\u30B5\u30FC\u30C1\u5F3E.bullet"
+  m_Name: "stage1_\u30CA\u30DF_302_\u672C\u4F53\u6697\u30AA\u30EC\u30F3\u30B8\u30B5\u30FC\u30C1\u5F3E.bullet"
   m_EditorClassIdentifier: 
   LifeTime: 10
   ShotSE: {fileID: 11400000, guid: 03d6ed973106efd48a4e396c0caf7587, type: 2}
@@ -31,7 +31,7 @@ MonoBehaviour:
     DamageRelative: 1
     Speed: 0
     SpeedRelative: 1
-    Accel: 2
+    Accel: 1.4
     AccelRelative: 1
     IsSearch: 0
     Lerp: 0
