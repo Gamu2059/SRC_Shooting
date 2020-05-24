@@ -146,4 +146,19 @@ public enum E_COMMON_SOUND
     /// インゲームのメニューを閉じた時のSE
     /// </summary>
     INGAME_MENU_CLOSE,
+
+    /// <summary>
+    /// 敵の発射SE その1
+    /// </summary>
+    ENEMY_HACK_SHOT_SMALL_01,
+
+    /// <summary>
+    /// 敵の中級発射SE その1
+    /// </summary>
+    ENEMY_HACK_SHOT_MEDIUM_01,
+
+    /// <summary>
+    /// 敵の中級発射SE その2
+    /// </summary>
+    ENEMY_HACK_SHOT_MEDIUM_02,
 }
