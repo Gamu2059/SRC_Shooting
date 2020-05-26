@@ -1,16 +1,13 @@
-﻿#pragma warning disable 0649
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
 
 /// <summary>
 /// リアルモードのAchievementのパラメータセット。
 /// </summary>
-[Serializable, CreateAssetMenu(menuName = "Param/BattleCommon/BattleAchievement", fileName = "param.battle_achievement.asset")]
-public class BattleAchievementParamSet : ScriptableObject
+[Serializable]
+public class BattleAchievementParamSet
 {
     [Serializable]
     private class AchievementParamOnDifficulty
@@ -78,22 +75,22 @@ public class BattleAchievementParamSet : ScriptableObject
 public class BattleAchievementParam
 {
     [SerializeField, Tooltip("達成条件とするレベル")]
-    private ulong m_TargetLevel;
-    public ulong TargetLevel => m_TargetLevel;
+    private int m_TargetLevel;
+    public int TargetLevel => m_TargetLevel;
 
     [SerializeField, Tooltip("達成条件とする最大チェイン数")]
-    private ulong m_TargetMaxChain;
-    public ulong TargetMaxChain => m_TargetMaxChain;
+    private int m_TargetMaxChain;
+    public int TargetMaxChain => m_TargetMaxChain;
 
     [SerializeField, Tooltip("達成条件とする弾消し数")]
-    private ulong m_TargetBulletRemove;
-    public ulong TargetBulletRemove => m_TargetBulletRemove;
+    private int m_TargetBulletRemove;
+    public int TargetBulletRemove => m_TargetBulletRemove;
 
     [SerializeField, Tooltip("達成条件とする秘密アイテム取得数")]
-    private ulong m_TargetSecretItem;
-    public ulong TargetSecretItem => m_TargetSecretItem;
+    private int m_TargetSecretItem;
+    public int TargetSecretItem => m_TargetSecretItem;
 
     [SerializeField, Tooltip("達成条件とするボス救出数")]
-    private ulong m_TargetRescue;
-    public ulong TargetRescue => m_TargetRescue;
+    private int m_TargetRescue;
+    public int TargetRescue => m_TargetRescue;
 }

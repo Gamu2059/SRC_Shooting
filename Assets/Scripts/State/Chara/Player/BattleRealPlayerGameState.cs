@@ -62,7 +62,7 @@ partial class BattleRealPlayerController
 
             if (input.ChargeShot == E_REWIRED_INPUT_STATE.DOWN)
             {
-                if (DataManager.Instance.BattleData.EnergyStock > 0)
+                if (DataManager.Instance.BattleData.EnergyStock.Value > 0)
                 {
                     Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE);
                 }

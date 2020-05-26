@@ -5226,6 +5226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1281577261}
+  - component: {fileID: 1281577262}
   m_Layer: 0
   m_Name: '[AudioSources]'
   m_TagString: Untagged
@@ -5252,6 +5253,87 @@ Transform:
   m_Father: {fileID: 1379646825}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1281577262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281577260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09755cf473c63704e92f8a1c9f84a34b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CriWareInitializer: {fileID: 120875731}
+  m_SourceSets:
+  - CueSheet: 0
+    Source: {fileID: 1072788107}
+  - CueSheet: 1
+    Source: {fileID: 589815191}
+  - CueSheet: 2
+    Source: {fileID: 1339261327}
+  - CueSheet: 3
+    Source: {fileID: 1541977758}
+  - CueSheet: 4
+    Source: {fileID: 68704729}
+  m_CommonSoundSets:
+  - Type: 0
+    Param: {fileID: 11400000, guid: 63e49934ea1c436429172ee073a230c8, type: 2}
+  - Type: 1
+    Param: {fileID: 11400000, guid: bee20d5bda485084e92e585bac8663cf, type: 2}
+  - Type: 2
+    Param: {fileID: 11400000, guid: 9985097bc0ff5f24bb8a7d659fc8f14f, type: 2}
+  - Type: 3
+    Param: {fileID: 11400000, guid: 89e6f4ad4aecc1e4eaf55c04a81c9727, type: 2}
+  - Type: 4
+    Param: {fileID: 11400000, guid: a8f3fd1268064da4784985a500b4f698, type: 2}
+  - Type: 5
+    Param: {fileID: 11400000, guid: 4ef814f6d1b5f834986b411e83f7c826, type: 2}
+  - Type: 6
+    Param: {fileID: 11400000, guid: b08813d195a114f498bc51f3553fd18a, type: 2}
+  - Type: 7
+    Param: {fileID: 11400000, guid: cabcb92012c15c5498b2fc441315fc73, type: 2}
+  - Type: 8
+    Param: {fileID: 11400000, guid: 369ec181e199c8f4bbb28f1c01bbb611, type: 2}
+  - Type: 9
+    Param: {fileID: 11400000, guid: 1657aa1738f30c14791fd4342507e5c9, type: 2}
+  - Type: 10
+    Param: {fileID: 11400000, guid: 7367ed0c23e38f84cb7bafb7ca79f461, type: 2}
+  - Type: 11
+    Param: {fileID: 11400000, guid: ac296fee44d442848a98cb215266bbfb, type: 2}
+  - Type: 12
+    Param: {fileID: 11400000, guid: 4fbe31b12d71a0d46937156dfb777297, type: 2}
+  - Type: 13
+    Param: {fileID: 11400000, guid: 809ad8ad0c37ecd4a9dafbd24a72d8aa, type: 2}
+  - Type: 14
+    Param: {fileID: 11400000, guid: 45b2ef676f59c8948899b279fcc791a0, type: 2}
+  - Type: 15
+    Param: {fileID: 11400000, guid: d1f2985e6fd531f4a835bde5228d0a70, type: 2}
+  - Type: 16
+    Param: {fileID: 11400000, guid: 9f0cf8ca142cccc429f0e86934b004fe, type: 2}
+  - Type: 17
+    Param: {fileID: 11400000, guid: 6219c6404d1f98e43a051dd453d3e8f1, type: 2}
+  - Type: 18
+    Param: {fileID: 11400000, guid: a4ca02145cf13b842a5f7694005d02f0, type: 2}
+  - Type: 19
+    Param: {fileID: 11400000, guid: c77ef119077380a489030bcf848daa87, type: 2}
+  - Type: 20
+    Param: {fileID: 11400000, guid: 03d6ed973106efd48a4e396c0caf7587, type: 2}
+  - Type: 21
+    Param: {fileID: 11400000, guid: 0c6a8bc83afbaef4c99719e5933a83a1, type: 2}
+  - Type: 22
+    Param: {fileID: 11400000, guid: 760a73742e93d224e9446a5976b373ac, type: 2}
+  - Type: 23
+    Param: {fileID: 11400000, guid: 39a37fc2620873d4a9705386523b4c47, type: 2}
+  - Type: 24
+    Param: {fileID: 11400000, guid: 5cb1d4268a7f8fb4c9ddb98f58b3d6c7, type: 2}
+  - Type: 25
+    Param: {fileID: 11400000, guid: 89256adcf1926ea4dbe9608536868e72, type: 2}
+  - Type: 26
+    Param: {fileID: 11400000, guid: c806296796190d440a8a9a182125fad7, type: 2}
+  - Type: 27
+    Param: {fileID: 11400000, guid: 7aa97112fd7488b4b9765f9228dd9d30, type: 2}
 --- !u!1 &1320366616
 GameObject:
   m_ObjectHideFlags: 0
@@ -5565,8 +5647,6 @@ GameObject:
   - component: {fileID: 1379646825}
   - component: {fileID: 1379646824}
   - component: {fileID: 1379646823}
-  - component: {fileID: 1379646827}
-  - component: {fileID: 1379646826}
   m_Layer: 0
   m_Name: '[GameManager]'
   m_TagString: Untagged
@@ -5681,7 +5761,7 @@ MonoBehaviour:
       - m_Difficulty: 3
         m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
   m_SceneManager: {fileID: 1379646823}
-  m_TransitionManager: {fileID: 1379646827}
+  m_TransitionManager: {fileID: 0}
 --- !u!4 &1379646825
 Transform:
   m_ObjectHideFlags: 0
@@ -5701,100 +5781,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1379646826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379646822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09755cf473c63704e92f8a1c9f84a34b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CriWareInitializer: {fileID: 120875731}
-  m_SourceSets:
-  - CueSheet: 0
-    Source: {fileID: 1072788107}
-  - CueSheet: 1
-    Source: {fileID: 589815191}
-  - CueSheet: 2
-    Source: {fileID: 1339261327}
-  - CueSheet: 3
-    Source: {fileID: 1541977758}
-  - CueSheet: 4
-    Source: {fileID: 68704729}
-  m_CommonSoundSets:
-  - Type: 0
-    Param: {fileID: 11400000, guid: 63e49934ea1c436429172ee073a230c8, type: 2}
-  - Type: 1
-    Param: {fileID: 11400000, guid: bee20d5bda485084e92e585bac8663cf, type: 2}
-  - Type: 2
-    Param: {fileID: 11400000, guid: 9985097bc0ff5f24bb8a7d659fc8f14f, type: 2}
-  - Type: 3
-    Param: {fileID: 11400000, guid: 89e6f4ad4aecc1e4eaf55c04a81c9727, type: 2}
-  - Type: 4
-    Param: {fileID: 11400000, guid: a8f3fd1268064da4784985a500b4f698, type: 2}
-  - Type: 5
-    Param: {fileID: 11400000, guid: 4ef814f6d1b5f834986b411e83f7c826, type: 2}
-  - Type: 6
-    Param: {fileID: 11400000, guid: b08813d195a114f498bc51f3553fd18a, type: 2}
-  - Type: 7
-    Param: {fileID: 11400000, guid: cabcb92012c15c5498b2fc441315fc73, type: 2}
-  - Type: 8
-    Param: {fileID: 11400000, guid: 369ec181e199c8f4bbb28f1c01bbb611, type: 2}
-  - Type: 9
-    Param: {fileID: 11400000, guid: 1657aa1738f30c14791fd4342507e5c9, type: 2}
-  - Type: 10
-    Param: {fileID: 11400000, guid: 7367ed0c23e38f84cb7bafb7ca79f461, type: 2}
-  - Type: 11
-    Param: {fileID: 11400000, guid: ac296fee44d442848a98cb215266bbfb, type: 2}
-  - Type: 12
-    Param: {fileID: 11400000, guid: 4fbe31b12d71a0d46937156dfb777297, type: 2}
-  - Type: 13
-    Param: {fileID: 11400000, guid: 809ad8ad0c37ecd4a9dafbd24a72d8aa, type: 2}
-  - Type: 14
-    Param: {fileID: 11400000, guid: 45b2ef676f59c8948899b279fcc791a0, type: 2}
-  - Type: 15
-    Param: {fileID: 11400000, guid: d1f2985e6fd531f4a835bde5228d0a70, type: 2}
-  - Type: 16
-    Param: {fileID: 11400000, guid: 9f0cf8ca142cccc429f0e86934b004fe, type: 2}
-  - Type: 17
-    Param: {fileID: 11400000, guid: 6219c6404d1f98e43a051dd453d3e8f1, type: 2}
-  - Type: 18
-    Param: {fileID: 11400000, guid: a4ca02145cf13b842a5f7694005d02f0, type: 2}
-  - Type: 19
-    Param: {fileID: 11400000, guid: c77ef119077380a489030bcf848daa87, type: 2}
-  - Type: 20
-    Param: {fileID: 11400000, guid: 03d6ed973106efd48a4e396c0caf7587, type: 2}
-  - Type: 21
-    Param: {fileID: 11400000, guid: 0c6a8bc83afbaef4c99719e5933a83a1, type: 2}
-  - Type: 22
-    Param: {fileID: 11400000, guid: 760a73742e93d224e9446a5976b373ac, type: 2}
-  - Type: 23
-    Param: {fileID: 11400000, guid: 39a37fc2620873d4a9705386523b4c47, type: 2}
-  - Type: 24
-    Param: {fileID: 11400000, guid: 5cb1d4268a7f8fb4c9ddb98f58b3d6c7, type: 2}
-  - Type: 25
-    Param: {fileID: 11400000, guid: 89256adcf1926ea4dbe9608536868e72, type: 2}
-  - Type: 26
-    Param: {fileID: 11400000, guid: c806296796190d440a8a9a182125fad7, type: 2}
-  - Type: 27
-    Param: {fileID: 11400000, guid: 7aa97112fd7488b4b9765f9228dd9d30, type: 2}
---- !u!114 &1379646827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379646822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a39ad69236d4eeb40b3317a67671af6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DefaultTransition: {fileID: 2135274159}
 --- !u!1 &1442658866
 GameObject:
   m_ObjectHideFlags: 0
@@ -7192,6 +7178,7 @@ GameObject:
   - component: {fileID: 2056746957}
   - component: {fileID: 2056746956}
   - component: {fileID: 2056746955}
+  - component: {fileID: 2056746959}
   m_Layer: 5
   m_Name: '[TransitionUi]'
   m_TagString: Untagged
@@ -7280,6 +7267,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2056746959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056746954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39ad69236d4eeb40b3317a67671af6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DefaultTransition: {fileID: 2135274159}
 --- !u!1 &2069828997
 GameObject:
   m_ObjectHideFlags: 0

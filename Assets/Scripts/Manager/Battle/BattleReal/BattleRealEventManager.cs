@@ -316,7 +316,7 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
         {
             return m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
         }
-        catch (ArgumentException e)
+        catch (ArgumentException)
         {
             Debug.LogError(name);
             return false;
@@ -1024,9 +1024,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case E_TELOP_TYPE.START_TELOP:
                 BattleRealUiManager.Instance.PlayStartTelop();
                 break;
-            case E_TELOP_TYPE.WARNING_TELOP:
-                BattleRealUiManager.Instance.PlayWarningTelop();
-                break;
+            //case E_TELOP_TYPE.WARNING_TELOP:
+            //    BattleRealUiManager.Instance.PlayWarningTelop();
+            //    break;
             case E_TELOP_TYPE.GAME_CLEAR_TELOP:
                 BattleRealUiManager.Instance.PlayClearTelop();
                 break;

@@ -1,29 +1,15 @@
-﻿#pragma warning disable 0649
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UniRx;
 
 /// <summary>
 /// Achievementの項目を表示する。
 /// </summary>
 public class AchievementIndicator : ControllableMonoBehavior
 {
-    #region Define
-
-    private enum E_ACHIEVEMENT_TYPE
-    {
-        LEVEL,
-        MAX_CHAIN,
-        BULLET_REMOVE,
-        SECRET_ITEM,
-        RESCUE,
-    }
-
-    #endregion
-
     #region Field Inspector
 
     [SerializeField]
@@ -48,9 +34,8 @@ public class AchievementIndicator : ControllableMonoBehavior
 
     #region Field
 
-    private ulong m_PreValue;
-    private ulong m_MaxValue;
-    private bool m_Achieved;
+    private IDisposable m_OnValueChange;
+    private int m_MaxValue;
 
     #endregion
 
@@ -61,30 +46,16 @@ public class AchievementIndicator : ControllableMonoBehavior
         base.OnInitialize();
 
         InitializeLabel();
-
-        m_PreValue = GetCurrentValue();
+        m_OnValueChange = SubscribeAchievement();
         m_MaxValue = GetMaxValue();
-        SetValue(m_PreValue);
+        SetValue(GetCurrentValue());
         m_MaxValueText.text = m_MaxValue.ToString();
-        m_Achieved = false;
     }
 
-    public override void OnUpdate()
+    public override void OnFinalize()
     {
-        base.OnUpdate();
-
-        var value = GetCurrentValue();
-        if (value != m_PreValue)
-        {
-            m_PreValue = value;
-            SetValue(m_PreValue);
-        }
-
-        if (value >= m_MaxValue && !m_Achieved)
-        {
-            m_Achieved = true;
-            PlayAchievedAnimation();
-        }
+        m_OnValueChange?.Dispose();
+        base.OnFinalize();
     }
 
     #endregion
@@ -116,7 +87,27 @@ public class AchievementIndicator : ControllableMonoBehavior
         }
     }
 
-    private ulong GetCurrentValue()
+    private IDisposable SubscribeAchievement()
+    {
+        var battleData = DataManager.Instance.BattleData;
+        switch (m_Type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return battleData.LevelInChapter.Subscribe(x => OnChangeValue(x));
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return battleData.MaxChainInChapter.Subscribe(x => OnChangeValue(x));
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return battleData.BulletRemoveInChapter.Subscribe(x => OnChangeValue(x));
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return battleData.SecretItemInChapter.Subscribe(x => OnChangeValue(x));
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return battleData.BossRescueCountInChapter.Subscribe(x => OnChangeValue(x));
+        }
+
+        return null;
+    }
+
+    private int GetCurrentValue()
     {
         if (DataManager.Instance == null || DataManager.Instance.BattleData == null)
         {
@@ -127,23 +118,21 @@ public class AchievementIndicator : ControllableMonoBehavior
         switch (m_Type)
         {
             case E_ACHIEVEMENT_TYPE.LEVEL:
-                return (ulong)battleData.Level;
+                return battleData.LevelInChapter.Value;
             case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
-                return battleData.MaxChain;
+                return battleData.MaxChainInChapter.Value;
             case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
-                return battleData.BulletRemoveCount;
+                return battleData.BulletRemoveInChapter.Value;
             case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
-                return battleData.SecretItemCount;
+                return battleData.SecretItemInChapter.Value;
             case E_ACHIEVEMENT_TYPE.RESCUE:
-                var rescueName = BattleRealEventManager.Instance.GetGeneralIntName(E_GENERAL_INT_VARIABLE.BOSS_RESCUE);
-                var rescueNum = BattleRealEventManager.Instance.GetInt(rescueName, 0);
-                return (ulong) rescueNum;
+                return battleData.BossRescueCountInChapter.Value;
         }
 
         return 0;
     }
 
-    private ulong GetMaxValue()
+    private int GetMaxValue()
     {
         if (DataManager.Instance == null || DataManager.Instance.BattleData == null)
         {
@@ -168,7 +157,18 @@ public class AchievementIndicator : ControllableMonoBehavior
         return 0;
     }
 
-    public void SetValue(ulong value)
+    private void OnChangeValue(int value)
+    {
+        SetValue(value);
+
+        if (value >= m_MaxValue)
+        {
+            PlayAchievedAnimation();
+            m_OnValueChange?.Dispose();
+        }
+    }
+
+    public void SetValue(int value)
     {
         if (m_CurrentValueText != null)
         {

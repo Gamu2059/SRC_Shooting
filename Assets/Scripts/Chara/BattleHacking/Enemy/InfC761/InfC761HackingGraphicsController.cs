@@ -24,8 +24,8 @@ public class InfC761HackingGraphicsController : ControllableMonoBehavior
     [SerializeField]
     private SpriteRenderer m_BodyLightRenderer = default;
 
-    [SerializeField]
-    private SpriteRenderer m_EyeLightRenderer = default;
+    //[SerializeField]
+    //private SpriteRenderer m_EyeLightRenderer = default;
 
     [SerializeField]
     private float m_EyeMoveRadius = default;

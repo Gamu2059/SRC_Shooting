@@ -6,6 +6,9 @@ partial class BattleRealManager
         public override void OnStart()
         {
             base.OnStart();
+
+            Target.IsChapterClear = true;
+
             // ステージクリアした時しか記録しない
             var resultData = DataManager.Instance.BattleResultData;
             var battleData = DataManager.Instance.BattleData;

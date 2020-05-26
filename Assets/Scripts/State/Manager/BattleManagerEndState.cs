@@ -9,7 +9,7 @@
             Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.END);
             
             // とりあえず呼び出しているが、クリアしたかどうかとかは判定していないので、それは今後やる
-            DataManager.Instance.OnChapterEnd();
+            DataManager.Instance.OnChapterEnd(Target.m_RealManager.IsChapterClear);
             // 何をもってしてストーリークリアかはまだ未定義なのでコメントアウト
             // DataManager.Instance.OnStoryEnd();
 

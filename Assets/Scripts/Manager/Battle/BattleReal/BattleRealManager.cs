@@ -28,6 +28,8 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     private StateMachine<E_BATTLE_REAL_STATE, BattleRealManager> m_StateMachine;
     private BattleManager m_BattleManager;
 
+    public bool IsChapterClear { get; private set; }
+
     /// <summary>
     /// カットシーン呼び出し制御用インスタンス
     /// </summary>
@@ -98,6 +100,8 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
         m_CutsceneCaller = null;
         m_TalkCaller = null;
+
+        IsChapterClear = false;
     }
 
     public override void OnFinalize()
@@ -237,13 +241,11 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     public void GameClearWithoutHackingComplete()
     {
-        DataManager.Instance.BattleData.SetHackingComplete(false);
         RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
     }
 
     public void GameClearWithHackingComplete()
     {
-        DataManager.Instance.BattleData.SetHackingComplete(true);
         RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
     }
 

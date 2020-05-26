@@ -12,8 +12,8 @@ public class BattleHackingPlayerController : CommandCharaController
     public const string OUT_WALL_COLLIDE_NAME = "OUT WALL COLLIDE";
     public const string CRITICAL_COLLIDE_NAME = "CRITICAL COLLIDE";
 
-    [SerializeField, Tooltip("弾を撃つ間隔")]
-    private float m_ShotInterval = default;
+    //[SerializeField, Tooltip("弾を撃つ間隔")]
+    //private float m_ShotInterval = default;
 
     [SerializeField, Tooltip("弾を撃つ基準点")]
     private Transform[] m_ShotPositions = default;

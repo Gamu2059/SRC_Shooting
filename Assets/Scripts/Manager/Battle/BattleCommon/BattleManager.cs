@@ -54,7 +54,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     #region Field
 
     private StateMachine<E_BATTLE_STATE, BattleManager> m_StateMachine;
-    private Action<E_BATTLE_STATE> m_OnChangeState;
     private BattleRealManager m_RealManager;
     private BattleHackingManager m_HackingManager;
     public bool IsReadyBeforeShow { get; private set; }
@@ -93,11 +92,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
             paramSet = DataManager.Instance.GetCurrentBattleParamSet();
         }
 
-        if (DataManager.Instance.GameMode == E_GAME_MODE.STORY && DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
-        {
-            DataManager.Instance.OnStoryStart();
-        }
-
         DataManager.Instance.OnChapterStart();
 
         m_StateMachine = new StateMachine<E_BATTLE_STATE, BattleManager>();
@@ -120,8 +114,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     public override void OnFinalize()
     {
-        m_OnChangeState = null;
-
         m_HackOutController.OnFinalize();
         m_HackInController.OnFinalize();
 

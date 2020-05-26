@@ -36,7 +36,7 @@ public class IconCountIndicator : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_PreCount = GetValueCount();
+        m_PreCount = GetValueCount() - 1;
         ShowCountOnForce(m_PreCount);
     }
 
@@ -44,7 +44,7 @@ public class IconCountIndicator : ControllableMonoBehavior
     {
         base.OnUpdate();
 
-        var count = GetValueCount();
+        var count = GetValueCount() - 1;
         if (m_PreCount != count)
         {
             ShowCount(count);
@@ -61,23 +61,20 @@ public class IconCountIndicator : ControllableMonoBehavior
         switch (m_CountType)
         {
             case E_COUNT_TYPE.LIFE:
-                // 残機は1の時に1個目が表示されてほしいので、-1
-                return battleData.PlayerLife - 1;
+                return battleData.PlayerLife.Value;
             case E_COUNT_TYPE.LEVEL:
-                // レベルは0から始まるので -1
-                return battleData.Level - 1;
+                return battleData.LevelInChapter.Value;
             case E_COUNT_TYPE.ENERGY:
-                // エナジーは1の時に1個目が表示されてほしいので、-1
-                return battleData.EnergyStock - 1;
+                return battleData.EnergyStock.Value;
             case E_COUNT_TYPE.BOSS_HACKING:
-                if(Boss == null)
+                if (Boss == null)
                 {
                     return -1;
                 }
-                return (Boss.HackingCompleteNum - Boss.HackingSuccessCount) - 1;
+                return Boss.HackingCompleteNum - Boss.HackingSuccessCount;
         }
 
-        return 0;
+        return -1;
     }
     public void ShowCountOnForce(int count)
     {

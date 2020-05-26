@@ -5,9 +5,14 @@ using UnityEngine;
 /// <summary>
 /// スコア・ステージ進度などの記録を管理するマネージャ
 /// </summary>
-public class PlayerRecordManager : ControllableObject
+public class PlayerRecordManager : SingletonMonoBehavior<PlayerRecordManager>
 {
-    public static PlayerRecordManager Instance => GameManager.Instance.PlayerRecordManager;
+    #region Field Inspector
+
+    [SerializeField]
+    private PlayerRecordManagerParamSet m_ParamSet;
+
+    #endregion
 
     private Dictionary<E_DIFFICULTY, List<PlayerRecord>> m_StoryModePlayerRecords;
     private Dictionary<E_CHAPTER, List<PlayerRecord>> m_ChapterModePlayerRecords;

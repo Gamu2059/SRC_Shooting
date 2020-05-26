@@ -2,13 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UniRx;
+using System;
 
+/// <summary>
+/// チャプターリザルト画面を管理するクラス
+/// </summary>
 public class ResultIndicator : ControllableMonoBehavior
 {
-    private const string RESULT_GROUP_ON = "result_group_on";
+    #region Field Inspector
 
     [SerializeField]
-    private Animator m_ResultGroupAnimator;
+    private CanvasGroup m_ResultCanvasGroup;
+
+    [SerializeField]
+    private ResultItemIndicator[] m_BonusItems;
+
+    [SerializeField]
+    private ResultItemIndicator m_TotalScore;
+
+    [SerializeField]
+    private Text m_RankLabel;
+
+    [SerializeField]
+    private Text m_Rank;
+
+    [SerializeField]
+    private float m_ShowItemDuration;
+
 
     [SerializeField]
     private ResultItemIndicator m_ScoreIndicator;
@@ -22,8 +44,10 @@ public class ResultIndicator : ControllableMonoBehavior
     [SerializeField]
     private ResultItemIndicator m_TotalScoreIndicator;
 
-    [SerializeField]
-    private Text m_Text;
+
+    #endregion
+
+    #region Game Cycle
 
     public override void OnInitialize()
     {
@@ -53,28 +77,55 @@ public class ResultIndicator : ControllableMonoBehavior
         m_TotalScoreIndicator.OnUpdate();
     }
 
+    #endregion
+
     public void PlayResult()
     {
-        m_ResultGroupAnimator.Play(RESULT_GROUP_ON);
     }
 
-    public void PlayScore()
+    /// <summary>
+    /// リザルトのシーケンスを開始する
+    /// </summary>
+    public void StartResultSequence()
     {
-        m_ScoreIndicator.PlayResultItem();
     }
 
-    public void PlayLifeBonus()
+    private IEnumerator ResultSequence()
     {
-        m_LifeBonusIndicator.PlayResultItem();
+        foreach (var i in m_BonusItems)
+        {
+            i.InitValue();
+        }
+
+        var seq = DOTween.Sequence();
+        seq.Append(m_ResultCanvasGroup.DOFade(1, 0.5f));
+        foreach (var i in m_BonusItems)
+        {
+            seq.Append(i.ShowItemSequence(m_ShowItemDuration));
+        }
+        seq.Append(m_TotalScore.ShowItemSequence(m_ShowItemDuration));
+
+        // スコア表示
+        var scoreType = E_RESULT_SCORE_TYPE.SCORE;
+        foreach (var i in m_BonusItems)
+        {
+            scoreType |= i.ItemType;
+            i.DramUpItem(0.5f);
+            m_TotalScore.DramUpTotalScore(scoreType, 0.5f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // ランクラベル表示
+        m_RankLabel.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+
+        // ランク表示
+        m_Rank.text = "SS";
+        m_Rank.gameObject.SetActive(true);
     }
 
-    public void PlayPerfectHacking()
+    public void HideResult()
     {
-        m_PerfectHackingIndicator.PlayResultItem();
-    }
 
-    public void PlayTotalScore()
-    {
-        m_TotalScoreIndicator.PlayResultItem();
     }
 }
