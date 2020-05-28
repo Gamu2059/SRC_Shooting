@@ -89,7 +89,7 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
         BattleRealBulletGeneratorManager.Builder();
         BattleRealBulletManager.Builder(this, m_ParamSet.BulletManagerParamSet);
         BattleRealItemManager.Builder(this, m_ParamSet.ItemManagerParamSet);
-        BattleRealEffectManager.Builder(this);
+        BattleRealEffectManager.Builder(this, m_ParamSet.EffectManagerParamSet);
         BattleRealSequenceObjectManager.Builder();
         BattleRealCollisionManager.Builder();
         BattleRealCameraManager.Instance.OnInitialize();

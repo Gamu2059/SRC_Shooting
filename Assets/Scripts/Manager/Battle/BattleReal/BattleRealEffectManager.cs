@@ -42,6 +42,8 @@ public class BattleRealEffectManager : Singleton<BattleRealEffectManager>
 
     #region Field
 
+    private BattleRealEffectManagerParamSet m_ParamSet;
+
     private Transform m_EffectHolder;
 
     /// <summary>
@@ -76,9 +78,10 @@ public class BattleRealEffectManager : Singleton<BattleRealEffectManager>
 
     #endregion
 
-    public static BattleRealEffectManager Builder(BattleRealManager realManager)
+    public static BattleRealEffectManager Builder(BattleRealManager realManager, BattleRealEffectManagerParamSet param)
     {
         var manager = Create();
+        manager.SetParam(param);
         manager.SetCallback(realManager);
         manager.OnInitialize();
         return manager;
@@ -87,6 +90,11 @@ public class BattleRealEffectManager : Singleton<BattleRealEffectManager>
     private void SetCallback(BattleRealManager manager)
     {
         manager.ChangeStateAction += OnChangeStateBattleRealManager;
+    }
+
+    private void SetParam(BattleRealEffectManagerParamSet param)
+    {
+        m_ParamSet = param;
     }
 
     #region Game Cycle
@@ -476,6 +484,18 @@ public class BattleRealEffectManager : Singleton<BattleRealEffectManager>
                 break;
             default:
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 弾消しエフェクトを表示する
+    /// </summary>
+    public void CreateBulletRemoveEffect(Transform owner, int value)
+    {
+        var effect = CreateEffect(m_ParamSet.BulletRemoveEffect, owner);
+        if (effect != null && effect is BattleRealBulletRemoveEffect e)
+        {
+            e.SetPoint(value);
         }
     }
 }
