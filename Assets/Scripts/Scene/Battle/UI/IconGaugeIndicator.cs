@@ -75,7 +75,7 @@ public class IconGaugeIndicator : ControllableMonoBehavior
     private float GetLevel()
     {
         var battleData = DataManager.Instance.BattleData;
-        float exp = battleData.Exp;
+        float exp = battleData.ExpInChapter.Value;
         float necessaryExp = battleData.GetCurrentNecessaryExp();
         return necessaryExp > 0 ? exp / necessaryExp : 0;
     }
@@ -83,7 +83,7 @@ public class IconGaugeIndicator : ControllableMonoBehavior
     private float GetEnergy()
     {
         var battleData = DataManager.Instance.BattleData;
-        float energyCharge = battleData.EnergyCharge;
+        float energyCharge = battleData.EnergyCharge.Value;
         float necessaryEnergyCharge = battleData.GetCurrentNecessaryEnergyCharge();
         return necessaryEnergyCharge > 0 ? energyCharge / necessaryEnergyCharge : 0;
     }

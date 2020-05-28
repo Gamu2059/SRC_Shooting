@@ -136,7 +136,7 @@ public class BattleRealBossUI : ControllableMonoBehavior
 
             Target.m_HpGauge.SetValue(0);
             Target.m_DownGauge.SetValue(0);
-            Target.m_HackingNum.ShowCount(0);
+            Target.m_HackingNum.ShowCount(-1);
             Target.gameObject.SetActive(true);
 
             m_Duration = Target.m_BeginGaugeRateCurve.Duration();

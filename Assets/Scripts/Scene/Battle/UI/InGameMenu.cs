@@ -12,6 +12,8 @@ public class InGameMenu : MonoBehaviour
 
     public void OnSubmitRetire()
     {
+        // ここに配置するのは良くないが、とりあえずここに処理を置く
+        DataManager.Instance.OnShootingEnd();
         BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
     }
 }

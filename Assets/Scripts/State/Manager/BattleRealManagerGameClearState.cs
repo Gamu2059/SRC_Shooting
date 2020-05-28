@@ -1,39 +1,38 @@
 ﻿using System;
+using UniRx;
+
 partial class BattleRealManager
 {
     private class GameClearState : StateCycle
     {
+        private IDisposable m_Disposable;
+
         public override void OnStart()
         {
             base.OnStart();
-            // ステージクリアした時しか記録しない
-            var resultData = DataManager.Instance.BattleResultData;
-            var battleData = DataManager.Instance.BattleData;
-            //resultData.ClacScore(battleData);
+
+            // チャプターをして終了
+            DataManager.Instance.OnChapterEnd(true);
 
             //GameManager.Instance.PlayerRecordManager.AddStoryModeRecord(new PlayerRecord("Nanashi", resultData.TotalScore, E_CHAPTER.NORMAL_1, DateTime.Now));
 
             AudioManager.Instance.StopAllBgm();
             AudioManager.Instance.StopAllSe();
 
-            BattleRealPlayerManager.Instance.StopChargeShot();
-            BattleRealUiManager.Instance.PlayClearTelop();
-            BattleRealUiManager.Instance.DisableAllBossUI();
-
             AudioManager.Instance.Play(E_COMMON_SOUND.GAME_CLEAR);
-
-            var hideViewWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
-            hideViewWaitTimer.SetTimeoutCallBack(() =>
+            BattleRealPlayerManager.Instance.StopChargeShot();
+            BattleRealUiManager.Instance.DisableAllBossUI();
+            BattleRealUiManager.Instance.PlayClearTelop(() =>
             {
-                BattleRealUiManager.Instance.PlayMainViewHideAnimationBeforeShowResult();
-                var resultWaitTimer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 1f);
-                resultWaitTimer.SetTimeoutCallBack(() =>
+                if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
                 {
-                    BattleRealUiManager.Instance.ShowResult();
-                });
-                TimerManager.Instance.RegistTimer(resultWaitTimer);
+                    // チャプター0の時はリザルト表示をスキップする
+                    m_Disposable = Observable.Timer(TimeSpan.FromSeconds(1f)).Subscribe(_ => Target.End());
+                    return;
+                }
+
+                BattleRealUiManager.Instance.ShowResult(Target.End);
             });
-            TimerManager.Instance.RegistTimer(hideViewWaitTimer);
         }
 
         public override void OnUpdate()
@@ -78,28 +77,6 @@ partial class BattleRealManager
             BattleRealSequenceObjectManager.Instance.OnLateUpdate();
             BattleRealCameraManager.Instance.OnLateUpdate();
             BattleRealUiManager.Instance.OnLateUpdate();
-
-            //// 衝突フラグクリア
-            //BattleRealPlayerManager.Instance.ClearColliderFlag();
-            //BattleRealEnemyManager.Instance.ClearColliderFlag();
-            //BattleRealBulletManager.Instance.ClearColliderFlag();
-            //BattleRealItemManager.Instance.ClearColliderFlag();
-
-            //// 衝突情報の更新
-            //BattleRealPlayerManager.Instance.UpdateCollider();
-            //BattleRealEnemyManager.Instance.UpdateCollider();
-            //BattleRealBulletManager.Instance.UpdateCollider();
-            //BattleRealItemManager.Instance.UpdateCollider();
-
-            //// 衝突判定処理
-            //BattleRealCollisionManager.Instance.CheckCollision();
-            //BattleRealCollisionManager.Instance.DrawCollider();
-
-            //// 衝突処理
-            //BattleRealPlayerManager.Instance.ProcessCollision();
-            //BattleRealEnemyManager.Instance.ProcessCollision();
-            //BattleRealBulletManager.Instance.ProcessCollision();
-            //BattleRealItemManager.Instance.ProcessCollision();
         }
 
         public override void OnFixedUpdate()
@@ -117,6 +94,12 @@ partial class BattleRealManager
             BattleRealSequenceObjectManager.Instance.OnFixedUpdate();
             BattleRealCameraManager.Instance.OnFixedUpdate();
             BattleRealUiManager.Instance.OnFixedUpdate();
+        }
+
+        public override void OnEnd()
+        {
+            m_Disposable?.Dispose();
+            base.OnEnd();
         }
     }
 }

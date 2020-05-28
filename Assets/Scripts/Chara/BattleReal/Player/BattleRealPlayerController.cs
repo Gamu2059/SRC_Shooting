@@ -224,8 +224,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        var battleData = DataManager.Instance.BattleData.EnergyStock;
-        m_IsExistEnergyCharge = battleData > 0;
+        m_IsExistEnergyCharge = DataManager.Instance.BattleData.EnergyStock.Value > 0;
 
         if (!m_IsExistEnergyCharge)
         {

@@ -12,41 +12,6 @@ using DG.Tweening;
 /// </summary>
 public class GameManager : GlobalSingletonMonoBehavior<GameManager>
 {
-    [Serializable]
-    private class GameManagerParamSet
-    {
-        [SerializeField]
-        private BattleConstantParam m_BattleConstantParam;
-        public BattleConstantParam BattleConstantParam => m_BattleConstantParam;
-
-        [SerializeField]
-        private BattleAchievementParamSet m_BattleAchievementParamSet;
-        public BattleAchievementParamSet BattleAchievementParamSet => m_BattleAchievementParamSet;
-
-        [SerializeField]
-        private AdxAssetParam m_AdxAssetParam;
-        public AdxAssetParam AdxAssetParam => m_AdxAssetParam;
-    }
-
-    [SerializeField]
-    private GameManagerParamSet m_GameManagerParamSet;
-
-    [SerializeField]
-    private BattleParamSetHolder m_BattleParamSetHolder;
-    public BattleParamSetHolder BattleParamSetHolder => m_BattleParamSetHolder;
-
-    #region Manager
-
-    [SerializeField]
-    private BaseSceneManager m_SceneManager;
-
-    [SerializeField]
-    private TransitionManager m_TransitionManager;
-
-    public PlayerRecordManager PlayerRecordManager { get; private set; }
-
-    #endregion
-
     #region Unity Game Cycle
 
     protected override void OnAwake()
@@ -90,27 +55,32 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         base.OnInitialize();
 
         SaveDataManager.Load();
-        AudioManager.Instance.SetAdxParam(m_GameManagerParamSet.AdxAssetParam);
-        PlayerRecordManager = new PlayerRecordManager();
+
+        SystemRecordManager.Instance.OnInitialize();
+        PlayerRecordManager.Instance.OnInitialize();
+        DataManager.Instance.OnInitialize();
 
         TimerManager.Builder();
+
         RewiredInputManager.Instance.OnInitialize();
         AudioManager.Instance.OnInitialize();
-        m_TransitionManager.OnInitialize();
-        m_SceneManager.OnInitialize();
-        DataManager.Builder(m_GameManagerParamSet.BattleConstantParam, m_GameManagerParamSet.BattleAchievementParamSet);
-        PlayerRecordManager.OnInitialize();
+        TransitionManager.Instance.OnInitialize();
+        BaseSceneManager.Instance.OnInitialize();
 	}
 
 	public override void OnFinalize()
 	{
-        PlayerRecordManager.OnFinalize();
-        DataManager.Instance.OnFinalize();
-        m_SceneManager.OnFinalize();
-        m_TransitionManager.OnFinalize();
+        BaseSceneManager.Instance.OnFinalize();
+        TransitionManager.Instance.OnFinalize();
         AudioManager.Instance.OnFinalize();
         RewiredInputManager.Instance.OnFinalize();
+
         TimerManager.Instance.OnFinalize();
+
+        DataManager.Instance.OnFinalize();
+        PlayerRecordManager.Instance.OnFinalize();
+        SystemRecordManager.Instance.OnFinalize();
+
         SaveDataManager.Save();
 
         base.OnFinalize();
@@ -123,8 +93,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         TimerManager.Instance.OnStart();
         RewiredInputManager.Instance.OnStart();
         AudioManager.Instance.OnStart();
-        m_TransitionManager.OnStart();
-        m_SceneManager.OnStart();
+        TransitionManager.Instance.OnStart();
+        BaseSceneManager.Instance.OnStart();
 
 		BaseSceneManager.Instance.LoadOnGameStart();
 	}
@@ -136,8 +106,8 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         TimerManager.Instance.OnUpdate();
         RewiredInputManager.Instance.OnUpdate();
         AudioManager.Instance.OnUpdate();
-        m_TransitionManager.OnUpdate();
-        m_SceneManager.OnUpdate();
+        TransitionManager.Instance.OnUpdate();
+        BaseSceneManager.Instance.OnUpdate();
 	}
 
 	public override void OnLateUpdate()
@@ -147,9 +117,9 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         TimerManager.Instance.OnLateUpdate();
         RewiredInputManager.Instance.OnLateUpdate();
         AudioManager.Instance.OnLateUpdate();
-        m_TransitionManager.OnLateUpdate();
-        m_SceneManager.OnLateUpdate();
-	}
+        TransitionManager.Instance.OnLateUpdate();
+        BaseSceneManager.Instance.OnLateUpdate();
+    }
 
 	public override void OnFixedUpdate()
 	{
@@ -158,9 +128,9 @@ public class GameManager : GlobalSingletonMonoBehavior<GameManager>
         TimerManager.Instance.OnFixedUpdate();
         RewiredInputManager.Instance.OnFixedUpdate();
         AudioManager.Instance.OnFixedUpdate();
-        m_TransitionManager.OnFixedUpdate();
-        m_SceneManager.OnFixedUpdate();
-	}
+        TransitionManager.Instance.OnFixedUpdate();
+        BaseSceneManager.Instance.OnFixedUpdate();
+    }
 
     #endregion
 }

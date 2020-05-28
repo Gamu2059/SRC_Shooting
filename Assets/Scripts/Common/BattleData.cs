@@ -2,90 +2,137 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 
 /// <summary>
 /// 複数ステージを跨ぐようなバトルデータを保持する。
 /// </summary>
 public class BattleData
 {
+    #region Define
+
+    public class DataOnConstructor
+    {
+        public BattleConstantParam ConstParam;
+        public ulong BestScore;
+        public int LifeOption;
+        public int EnergyOption;
+    }
+
+    public class DataOnChapterStart
+    {
+        public E_CHAPTER Chapter;
+        public BattleAchievementParam AchievementParam;
+    }
+
+    #endregion
+
     #region Field
 
     private BattleConstantParam m_ConstantParam;
 
-    private BattleAchievementParamSet m_AchievementParamSet;
-
     private BattleAchievementParam m_AchievementParam;
 
     /// <summary>
-    /// 残機
+    /// 残機<br/>
+    /// チャプターを跨いで保持される
     /// </summary>
-    public int PlayerLife { get; private set; }
+    public ReactiveProperty<int> PlayerLife { get; private set; }
 
     /// <summary>
-    /// 同じ挑戦条件のベストスコア
+    /// 同じ挑戦条件のベストスコア<br/>
+    /// ストーリーモードかチャプターモードかの違いによって取得されるデータが異なる<br/>
+    /// チャプターを跨いで保持される
     /// </summary>
-    public ulong BestScore { get; private set; }
+    public ReactiveProperty<ulong> BestScore { get; private set; }
 
     /// <summary>
-    /// 現在スコア
+    /// 現在の累積スコア<br/>
+    /// チャプターモードの場合はChapterScoreと同値となる<br/>
+    /// ストーリーモードの場合は今までのスコアの累計値となる<br/>
+    /// チャプターを跨いで保持される
     /// </summary>
-    public ulong Score { get; private set; }
+    public ReactiveProperty<ulong> Score { get; private set; }
 
     /// <summary>
-    /// 現在レベル
+    /// 現在のチャプターにおけるスコア<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public int Level { get; private set; }
+    public ReactiveProperty<ulong> ScoreInChapter { get; private set; }
 
     /// <summary>
-    /// 現在EXP
+    /// レベル<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public int Exp { get; private set; }
+    public ReactiveProperty<int> LevelInChapter { get; private set; }
 
     /// <summary>
-    /// チャージしきったエナジーの数
+    /// EXP<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public int EnergyStock { get; private set; }
+    public ReactiveProperty<int> ExpInChapter { get; private set; }
 
     /// <summary>
-    /// チャージ中のエナジー
+    /// チャージしきったエナジーの数<br/>
+    /// チャプターを跨いで保持される
     /// </summary>
-    public int EnergyCharge { get; private set; }
+    public ReactiveProperty<int> EnergyStock { get; private set; }
 
     /// <summary>
-    /// 現在のチェイン数
+    /// チャージ中のエナジー<br/>
+    /// チャプターを跨いで保持される
     /// </summary>
-    public ulong Chain { get; private set; }
+    public ReactiveProperty<int> EnergyCharge { get; private set; }
 
     /// <summary>
-    /// 現在のチャプターにおける最高チェイン数
+    /// ハッキングを連続で成功させた回数<br/>
+    /// チャプターを跨いで保持される
     /// </summary>
-    public ulong MaxChain { get; private set; }
+    public ReactiveProperty<int> HackingSuccessChain { get; private set; }
 
     /// <summary>
-    /// 消した敵弾の数
+    /// チェイン数<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public ulong BulletRemoveCount { get; private set; }
+    public ReactiveProperty<int> ChainInChapter { get; private set; }
 
     /// <summary>
-    /// 取得した秘密アイテムの数
+    /// 最高チェイン数<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public ulong SecretItemCount { get; private set; }
+    public ReactiveProperty<int> MaxChainInChapter { get; private set; }
 
     /// <summary>
-    /// ハッキング挑戦回数
+    /// 消した敵弾の数<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public int HackingTryCount { get; private set; }
+    public ReactiveProperty<int> BulletRemoveInChapter { get; private set; }
 
     /// <summary>
-    /// ハッキング成功回数
+    /// 取得した秘密アイテムの数<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public int HackingSuccessCount { get; private set; }
+    public ReactiveProperty<int> SecretItemInChapter { get; private set; }
 
     /// <summary>
-    /// チャプター全体を通して必要な最小のハッキング挑戦回数<br/>
-    /// ある意味では定数
+    /// チャプターのボス撃破数<br/>
+    /// チャプターごとに初期化される
     /// </summary>
-    public int MinHackingTryNum { get; private set; }
+    public ReactiveProperty<int> BossDefeatCountInChapter { get; private set; }
+
+    /// <summary>
+    /// チャプターのボス救出数<br/>
+    /// チャプターごとに初期化される
+    /// </summary>
+    public ReactiveProperty<int> BossRescueCountInChapter { get; private set; }
+
+    /// <summary>
+    /// 全チャプターの累計ボス救出数<br/>
+    /// チャプターを跨いで保持される
+    /// </summary>
+    public ReactiveProperty<int> TotalBossRescue { get; private set; }
+
+    public E_CHAPTER m_CurrentChapter;
 
     #endregion
 
@@ -96,37 +143,67 @@ public class BattleData
 
     #endregion
 
-    public BattleData(BattleConstantParam constantParam, BattleAchievementParamSet achievementParamSet)
+    public BattleData(DataOnConstructor data)
     {
-        m_ConstantParam = constantParam;
-        m_AchievementParamSet = achievementParamSet;
+        m_ConstantParam = data.ConstParam;
+
+        PlayerLife = new ReactiveProperty<int>(data.LifeOption);
+        BestScore = new ReactiveProperty<ulong>(data.BestScore);
+        Score = new ReactiveProperty<ulong>(0);
+        ScoreInChapter = new ReactiveProperty<ulong>(0);
+        LevelInChapter = new ReactiveProperty<int>(0);
+        ExpInChapter = new ReactiveProperty<int>(0);
+        EnergyStock = new ReactiveProperty<int>(data.EnergyOption);
+        EnergyCharge = new ReactiveProperty<int>(0);
+        HackingSuccessChain = new ReactiveProperty<int>(0);
+        ChainInChapter = new ReactiveProperty<int>(0);
+        MaxChainInChapter = new ReactiveProperty<int>(0);
+        BulletRemoveInChapter = new ReactiveProperty<int>(0);
+        SecretItemInChapter = new ReactiveProperty<int>(0);
+        BossDefeatCountInChapter = new ReactiveProperty<int>(0);
+        BossRescueCountInChapter = new ReactiveProperty<int>(0);
+        TotalBossRescue = new ReactiveProperty<int>(0);
     }
 
-    public void ResetDataOnChapterStart()
+    public void OnFinalize()
     {
-        BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore;
-        Score = 0;
-        Level = 0;
-        Exp = 0;
-        EnergyStock = DataManager.Instance.EnergyOption;
-        EnergyCharge = 0;
-        PlayerLife = DataManager.Instance.LifeOption;
-        Chain = 0;
-        MaxChain = 0;
-        BulletRemoveCount = 0;
-        SecretItemCount = 0;
-        HackingTryCount = 0;
-        HackingSuccessCount = 0;
-        MinHackingTryNum = 0;
+        TotalBossRescue?.Dispose();
+        BossRescueCountInChapter?.Dispose();
+        BossDefeatCountInChapter?.Dispose();
+        SecretItemInChapter?.Dispose();
+        BulletRemoveInChapter?.Dispose();
+        MaxChainInChapter?.Dispose();
+        ChainInChapter?.Dispose();
+        HackingSuccessChain?.Dispose();
+        EnergyCharge?.Dispose();
+        EnergyStock?.Dispose();
+        ExpInChapter?.Dispose();
+        LevelInChapter?.Dispose();
+        ScoreInChapter?.Dispose();
+        Score?.Dispose();
+        BestScore?.Dispose();
+        PlayerLife?.Dispose();
+    }
 
-        var chapter = DataManager.Instance.Chapter;
-        var difficulty = DataManager.Instance.Difficulty;
-        m_AchievementParam = m_AchievementParamSet.GetAchievementParam(chapter, difficulty);
+    public void InitDataOnChapterStart(DataOnChapterStart data)
+    {
+        m_CurrentChapter = data.Chapter;
+        m_AchievementParam = data.AchievementParam;
+
+        ScoreInChapter.Value = 0;
+        LevelInChapter.Value = 0;
+        ExpInChapter.Value = 0;
+        ChainInChapter.Value = 0;
+        MaxChainInChapter.Value = 0;
+        BulletRemoveInChapter.Value = 0;
+        SecretItemInChapter.Value = 0;
+        BossDefeatCountInChapter.Value = 0;
+        BossRescueCountInChapter.Value = 0;
     }
 
     public BattleRealPlayerLevelData GetCurrentLevelParam()
     {
-        var idx = Mathf.Min(Level, m_ConstantParam.MaxLevel - 1);
+        var idx = Mathf.Min(LevelInChapter.Value, m_ConstantParam.MaxLevel - 1);
         return m_ConstantParam.PlayerLevelDatas[idx];
     }
 
@@ -139,18 +216,26 @@ public class BattleData
             return;
         }
 
-        PlayerLife = Mathf.Min(PlayerLife + num, m_ConstantParam.MaxLife);
+        var newNum = Mathf.Min(PlayerLife.Value + num, m_ConstantParam.MaxLife);
+        if (newNum != PlayerLife.Value)
+        {
+            PlayerLife.Value = newNum;
+        }
     }
 
     public void DecreasePlayerLife()
     {
         // チャプター0は残機が減らない
-        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        if (m_CurrentChapter == E_CHAPTER.CHAPTER_0)
         {
             return;
         }
 
-        PlayerLife = Mathf.Max(PlayerLife - 1, 0);
+        var newNum = Mathf.Max(PlayerLife.Value - 1, 0);
+        if (newNum != PlayerLife.Value)
+        {
+            PlayerLife.Value = newNum;
+        }
     }
 
     /// <summary>
@@ -158,12 +243,12 @@ public class BattleData
     /// </summary>
     public bool IsGameOver()
     {
-        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        if (m_CurrentChapter == E_CHAPTER.CHAPTER_0)
         {
             return false;
         }
 
-        return PlayerLife < 1;
+        return PlayerLife.Value < 1;
     }
 
     #endregion
@@ -178,21 +263,18 @@ public class BattleData
         }
 
         // チャプター0はスコアが入らない
-        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        if (m_CurrentChapter == E_CHAPTER.CHAPTER_0)
         {
             return;
         }
 
-        Score += (ulong)score;
-    }
+        Score.Value += (ulong)score;
+        ScoreInChapter.Value += (ulong)score;
 
-    #endregion
-
-    #region BestScore
-
-    public void UpdateBestScore(ulong score)
-    {
-        BestScore = score;
+        if (Score.Value > BestScore.Value)
+        {
+            BestScore.Value = Score.Value;
+        }
     }
 
     #endregion
@@ -201,13 +283,11 @@ public class BattleData
 
     public void IncreaseLevel()
     {
-        var maxLevel = m_ConstantParam.MaxLevel;
-        if (Level == maxLevel - 1)
+        var newNum = Mathf.Min(LevelInChapter.Value + 1, m_ConstantParam.MaxLevel);
+        if (newNum != LevelInChapter.Value)
         {
-            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_POWER_UP);
+            LevelInChapter.Value = newNum;
         }
-
-        Level = Mathf.Min(Level + 1, maxLevel);
     }
 
     #endregion
@@ -231,17 +311,17 @@ public class BattleData
         var maxLevel = m_ConstantParam.MaxLevel;
 
         // スコア増加(レベルMAXの時)
-        if (Level >= maxLevel)
+        if (LevelInChapter.Value >= maxLevel)
         {
             AddScore(exp);
             return;
         }
 
-        var addedExp = Exp + exp;
+        var addedExp = ExpInChapter.Value + exp;
         var necessaryExp = GetCurrentNecessaryExp();
         while (addedExp >= necessaryExp)
         {
-            if (Level < maxLevel)
+            if (LevelInChapter.Value < maxLevel)
             {
                 IncreaseLevel();
                 addedExp -= necessaryExp;
@@ -252,16 +332,15 @@ public class BattleData
                 AddScore(addedExp);
                 break;
             }
-
         }
 
         // Levelが最大の時はExpゲージも最大状態にしておく
-        if (Level >= maxLevel)
+        if (LevelInChapter.Value >= maxLevel)
         {
             addedExp = necessaryExp;
         }
 
-        Exp = addedExp;
+        ExpInChapter.Value = addedExp;
     }
 
     #endregion
@@ -277,14 +356,14 @@ public class BattleData
             return 0;
         }
 
-        var index = Mathf.Min(necessaryChargeValues.Length - 1, EnergyStock);
+        var index = Mathf.Min(necessaryChargeValues.Length - 1, EnergyStock.Value);
         return necessaryChargeValues[index];
     }
 
     public void AddEnergyCharge(int charge)
     {
         var maxEnergy = m_ConstantParam.MaxEnergy;
-        if (EnergyStock >= maxEnergy)
+        if (EnergyStock.Value >= maxEnergy)
         {
             // すでにストックが上限に達している場合
             AddScore(charge);
@@ -292,10 +371,10 @@ public class BattleData
         }
 
         var necessaryChargeValue = GetCurrentNecessaryEnergyCharge();
-        var addedCharge = EnergyCharge + charge;
+        var addedCharge = EnergyCharge.Value + charge;
         while (addedCharge >= necessaryChargeValue)
         {
-            if (EnergyStock < maxEnergy)
+            if (EnergyStock.Value < maxEnergy)
             {
                 IncreaseEnergyStock();
                 addedCharge -= necessaryChargeValue;
@@ -309,12 +388,12 @@ public class BattleData
         }
 
         // ストックが最大の時はEnergyChargeゲージも最大状態にしておく
-        if (EnergyStock >= maxEnergy)
+        if (EnergyStock.Value >= maxEnergy)
         {
             addedCharge = necessaryChargeValue;
         }
 
-        EnergyCharge = addedCharge;
+        EnergyCharge.Value = addedCharge;
     }
 
     /// <summary>
@@ -322,8 +401,12 @@ public class BattleData
     /// </summary>
     public void IncreaseEnergyStock()
     {
-        EnergyStock = Mathf.Min(EnergyStock + 1, m_ConstantParam.MaxEnergy);
-        IncreaseEnergyStockAction?.Invoke();
+        var newNum = Mathf.Min(EnergyStock.Value + 1, m_ConstantParam.MaxEnergy);
+        if (newNum != EnergyStock.Value)
+        {
+            EnergyStock.Value = newNum;
+            IncreaseEnergyStockAction?.Invoke();
+        }
     }
 
     /// <summary>
@@ -332,13 +415,17 @@ public class BattleData
     public void ConsumeEnergyStock()
     {
         // ストックが最大の時はゲージが最大状態になっているので、0に戻す
-        if (EnergyStock >= m_ConstantParam.MaxEnergy)
+        if (EnergyStock.Value >= m_ConstantParam.MaxEnergy)
         {
-            EnergyCharge = 0;
+            EnergyCharge.Value = 0;
         }
 
-        EnergyStock = Mathf.Max(EnergyStock - 1, 0);
-        ConsumeEnergyStockAction?.Invoke();
+        var newNum = Mathf.Max(EnergyStock.Value - 1, 0);
+        if (newNum != EnergyStock.Value)
+        {
+            EnergyStock.Value = newNum;
+            ConsumeEnergyStockAction?.Invoke();
+        }
     }
 
     #endregion
@@ -347,13 +434,13 @@ public class BattleData
 
     public void IncreaseChain()
     {
-        Chain++;
-        MaxChain = Math.Max(MaxChain, Chain);
+        ChainInChapter.Value++;
+        MaxChainInChapter.Value = Math.Max(MaxChainInChapter.Value, ChainInChapter.Value);
     }
 
     public void ResetChain()
     {
-        Chain = 0;
+        ChainInChapter.Value = 0;
     }
 
     #endregion
@@ -362,7 +449,7 @@ public class BattleData
 
     public void IncreaseRemoveBullet()
     {
-        BulletRemoveCount++;
+        BulletRemoveInChapter.Value++;
     }
 
     #endregion
@@ -371,49 +458,85 @@ public class BattleData
 
     public void IncreaseSecretItem()
     {
-        SecretItemCount++;
+        SecretItemInChapter.Value++;
     }
 
     #endregion
 
-    #region Hacking Succeed Count
+    #region Hacking Success Chain
 
-    public void SetPerfectHackingSuccessCount(int count)
+    public void IncreaseHackingSuccessChain()
     {
-        MinHackingTryNum = count;
+        HackingSuccessChain.Value++;
     }
 
-    public void IncreaseHackingTryCount()
+    public void ResetHackingSuccessChain()
     {
-        HackingTryCount++;
-    }
-
-    public void SetHackingComplete(bool isComplete)
-    {
-        //IsHackingComplete = isComplete;
-    }
-
-    public void OnHackingResult(bool isHackingSuccess)
-    {
-        //if (isHackingSuccess)
-        //{
-        //    HackingSuccessCount++;
-        //    if (HackingSuccessCount >= 1)
-        //    {
-        //        AddScore(HackingSuccessBonus * HackingSuccessCount);
-        //    }
-        //}
-        //else
-        //{
-        //    HackingSuccessCount = 0;
-        //}
+        HackingSuccessChain.Value = 0;
     }
 
     #endregion
 
     #region Achievement
 
-    public ulong GetAchievementTargetLevel()
+    public int GetAchievementTargetValue(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return GetAchievementTargetLevel();
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return GetAchievementTargetMaxChain();
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return GetAchievementTargetBulletRemove();
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return GetAchievementTargetSecretItem();
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return GetAchievementTargetRescue();
+        }
+
+        return 0;
+    }
+
+    public int GetAchievementCurrentValue(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return LevelInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return MaxChainInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return BulletRemoveInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return SecretItemInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return BossRescueCountInChapter.Value;
+        }
+
+        return 0;
+    }
+
+    public bool IsAchieve(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return IsAchieveLevel();
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return IsAchieveMaxChain();
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return IsAchieveBulletRemove();
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return IsAchieveSecretItem();
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return IsAchieveRescue();
+        }
+
+        return false;
+    }
+
+    public int GetAchievementTargetLevel()
     {
         if (m_AchievementParam == null)
         {
@@ -423,7 +546,12 @@ public class BattleData
         return m_AchievementParam.TargetLevel;
     }
 
-    public ulong GetAchievementTargetMaxChain()
+    public bool IsAchieveLevel()
+    {
+        return LevelInChapter.Value >= GetAchievementTargetLevel();
+    }
+
+    public int GetAchievementTargetMaxChain()
     {
         if (m_AchievementParam == null)
         {
@@ -433,7 +561,12 @@ public class BattleData
         return m_AchievementParam.TargetMaxChain;
     }
 
-    public ulong GetAchievementTargetBulletRemove()
+    public bool IsAchieveMaxChain()
+    {
+        return MaxChainInChapter.Value >= GetAchievementTargetMaxChain();
+    }
+
+    public int GetAchievementTargetBulletRemove()
     {
         if (m_AchievementParam == null)
         {
@@ -443,7 +576,12 @@ public class BattleData
         return m_AchievementParam.TargetBulletRemove;
     }
 
-    public ulong GetAchievementTargetSecretItem()
+    public bool IsAchieveBulletRemove()
+    {
+        return BulletRemoveInChapter.Value >= GetAchievementTargetBulletRemove();
+    }
+
+    public int GetAchievementTargetSecretItem()
     {
         if (m_AchievementParam == null)
         {
@@ -453,7 +591,12 @@ public class BattleData
         return m_AchievementParam.TargetSecretItem;
     }
 
-    public ulong GetAchievementTargetRescue()
+    public bool IsAchieveSecretItem()
+    {
+        return SecretItemInChapter.Value >= GetAchievementTargetSecretItem();
+    }
+
+    public int GetAchievementTargetRescue()
     {
         if (m_AchievementParam == null)
         {
@@ -463,5 +606,15 @@ public class BattleData
         return m_AchievementParam.TargetRescue;
     }
 
+    public bool IsAchieveRescue()
+    {
+        return BossRescueCountInChapter.Value >= GetAchievementTargetRescue();
+    }
+
     #endregion
+
+    public bool IsOpenFinalChapter()
+    {
+        return false;
+    }
 }

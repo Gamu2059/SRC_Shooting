@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-/// <summary>
-/// リアルモードのプレイヤーのレベルのパラメータセット。
-/// </summary>
 [Serializable, CreateAssetMenu(menuName = "Param/BattleCommon/BattleConstant", fileName = "param.battle_constant.asset")]
 public class BattleConstantParam : ScriptableObject
 {

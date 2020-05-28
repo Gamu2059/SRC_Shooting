@@ -54,7 +54,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     #region Field
 
     private StateMachine<E_BATTLE_STATE, BattleManager> m_StateMachine;
-    private Action<E_BATTLE_STATE> m_OnChangeState;
     private BattleRealManager m_RealManager;
     private BattleHackingManager m_HackingManager;
     public bool IsReadyBeforeShow { get; private set; }
@@ -87,15 +86,11 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
             DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
             DataManager.Instance.Chapter = m_Chapter;
             DataManager.Instance.Difficulty = m_Difficulty;
+            DataManager.Instance.OnShootingStart();
         }
         else
         {
             paramSet = DataManager.Instance.GetCurrentBattleParamSet();
-        }
-
-        if (DataManager.Instance.GameMode == E_GAME_MODE.STORY && DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
-        {
-            DataManager.Instance.OnStoryStart();
         }
 
         DataManager.Instance.OnChapterStart();
@@ -120,8 +115,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     public override void OnFinalize()
     {
-        m_OnChangeState = null;
-
         m_HackOutController.OnFinalize();
         m_HackInController.OnFinalize();
 
@@ -233,7 +226,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_IsOpenGameMenu = true;
         GameEventMessage.SendEvent(m_OpenGameMenuKey);
         AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_OPEN);
-        //RewiredInputManager.Instance.ChangeToUIInput();
     }
 
     /// <summary>
@@ -241,7 +233,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     /// </summary>
     public void CloseGameMenu()
     {
-        //RewiredInputManager.Instance.ChangeToInGameInput();
         m_IsOpenGameMenu = false;
         AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_CLOSE);
     }

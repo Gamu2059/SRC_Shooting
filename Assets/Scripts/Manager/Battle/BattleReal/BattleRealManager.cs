@@ -237,13 +237,11 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
 
     public void GameClearWithoutHackingComplete()
     {
-        DataManager.Instance.BattleData.SetHackingComplete(false);
         RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
     }
 
     public void GameClearWithHackingComplete()
     {
-        DataManager.Instance.BattleData.SetHackingComplete(true);
         RequestChangeState(E_BATTLE_REAL_STATE.GAME_CLEAR);
     }
 

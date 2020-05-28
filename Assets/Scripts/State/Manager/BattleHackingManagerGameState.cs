@@ -97,6 +97,11 @@ partial class BattleHackingManager
                     Target.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
                 }
             }
+
+            if (Target.m_IsTimeout)
+            {
+                Target.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
+            }
         }
     }
 }
