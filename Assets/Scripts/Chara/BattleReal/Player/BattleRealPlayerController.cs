@@ -501,9 +501,9 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             case E_ITEM_TYPE.LIFE_RECOVERY:
                 battleData.AddPlayerLife(item.ItemPoint);
                 break;
-            case E_ITEM_TYPE.SMALL_SCORE:
-            case E_ITEM_TYPE.BIG_SCORE:
-                battleData.AddScore(item.ItemPoint);
+            //case E_ITEM_TYPE.SMALL_SCORE:
+            //case E_ITEM_TYPE.BIG_SCORE:
+            //    battleData.AddScore(item.ItemPoint);
                 break;
             case E_ITEM_TYPE.SMALL_EXP:
             case E_ITEM_TYPE.BIG_EXP:

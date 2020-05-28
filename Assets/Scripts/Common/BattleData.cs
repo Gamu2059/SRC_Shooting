@@ -255,7 +255,7 @@ public class BattleData
 
     #region Score
 
-    public void AddScore(int score)
+    public void AddScore(int score, bool applyChainCorrection = false)
     {
         if (score < 1)
         {
@@ -268,13 +268,24 @@ public class BattleData
             return;
         }
 
-        Score.Value += (ulong)score;
-        ScoreInChapter.Value += (ulong)score;
+        ulong s = (ulong)score;
+        if (applyChainCorrection)
+        {
+            s = CalcCorrectChainScore(score);
+        }
+
+        Score.Value += s;
+        ScoreInChapter.Value += s;
 
         if (Score.Value > BestScore.Value)
         {
             BestScore.Value = Score.Value;
         }
+    }
+
+    private ulong CalcCorrectChainScore(int score)
+    {
+        return (ulong)(score * (1 + ChainInChapter.Value / 100f));
     }
 
     #endregion

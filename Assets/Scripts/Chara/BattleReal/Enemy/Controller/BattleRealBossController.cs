@@ -517,7 +517,7 @@ public partial class BattleRealBossController : BattleRealEnemyBase
     protected void OnRescueDestroy()
     {
         BattleRealItemManager.Instance.CreateItem(transform.position, m_BossParam.RescueItemParam);
-        DataManager.Instance.BattleData.AddScore(m_BossParam.RescueScore);
+        DataManager.Instance.BattleData.AddScore(m_BossParam.RescueScore, true);
 
         Destroy();
     }
