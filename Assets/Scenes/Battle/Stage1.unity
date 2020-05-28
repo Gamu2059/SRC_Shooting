@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2445,6 +2445,72 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1232449319}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1285467316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1285467319}
+  - component: {fileID: 1285467318}
+  - component: {fileID: 1285467317}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1285467317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285467316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1285467318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285467316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1285467319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285467316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1300005747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4778,46 +4844,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_StageObjectHolder
-      value: 
-      objectReference: {fileID: 662550145}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_PlayerCharaHolder
-      value: 
-      objectReference: {fileID: 662550144}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_EnemyGroupHolder
-      value: 
-      objectReference: {fileID: 662550143}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_EnemyCharaHolder
-      value: 
-      objectReference: {fileID: 662550142}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_BulletHolder
-      value: 
-      objectReference: {fileID: 662550141}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_ItemHolder
-      value: 
-      objectReference: {fileID: 662550140}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_EffectHolder
-      value: 
-      objectReference: {fileID: 662550138}
-    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
-        type: 3}
-      propertyPath: m_SequenceObjectHolder
-      value: 
-      objectReference: {fileID: 662550146}
     - target: {fileID: 5712697600192887802, guid: 338a1716005f2904c919b853bad2febd,
         type: 3}
       propertyPath: m_Camera
@@ -5478,6 +5504,46 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_StageObjectHolder
+      value: 
+      objectReference: {fileID: 662550145}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_PlayerCharaHolder
+      value: 
+      objectReference: {fileID: 662550144}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_EnemyGroupHolder
+      value: 
+      objectReference: {fileID: 662550143}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_EnemyCharaHolder
+      value: 
+      objectReference: {fileID: 662550142}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_BulletHolder
+      value: 
+      objectReference: {fileID: 662550141}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_ItemHolder
+      value: 
+      objectReference: {fileID: 662550140}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_EffectHolder
+      value: 
+      objectReference: {fileID: 662550138}
+    - target: {fileID: 5712697599724910114, guid: 338a1716005f2904c919b853bad2febd,
+        type: 3}
+      propertyPath: m_SequenceObjectHolder
+      value: 
+      objectReference: {fileID: 662550146}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 338a1716005f2904c919b853bad2febd, type: 3}
 --- !u!4 &1803319289 stripped

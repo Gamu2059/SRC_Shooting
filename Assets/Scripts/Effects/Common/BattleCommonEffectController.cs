@@ -59,10 +59,8 @@ public class BattleCommonEffectController : ControllableMonoBehavior
 
     private bool m_IsAutoDestroyDuration;
 
-    private float m_Duration;
     public float Duration { get; private set; }
 
-    private float m_NowLifeTime;
     public float NowLifeTime { get; private set; }
 
     private PlaySoundParam[] m_PlaySoundParams;
@@ -125,7 +123,7 @@ public class BattleCommonEffectController : ControllableMonoBehavior
         IsAllowOwner = paramSet.IsAllowOwnerPosition && Owner != null;
         IsAllowOwnerAngle = paramSet.IsAllowOwnerRotation && Owner != null;
         m_IsAutoDestroyDuration = paramSet.IsAutoDestroyDuration;
-        m_Duration = paramSet.Duration;
+        Duration = paramSet.Duration;
 
         m_PlaySoundParams = paramSet.PlaySoundParams;
     }
@@ -134,7 +132,7 @@ public class BattleCommonEffectController : ControllableMonoBehavior
     {
         base.OnInitialize();
 
-        m_NowLifeTime = 0;
+        NowLifeTime = 0;
     }
 
     public override void OnFinalize()
@@ -200,14 +198,14 @@ public class BattleCommonEffectController : ControllableMonoBehavior
             }
         }
 
-        m_NowLifeTime += Time.deltaTime;
+        NowLifeTime += Time.deltaTime;
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
 
-        if (m_IsAutoDestroyDuration && m_Duration >= 0 && m_NowLifeTime >= m_Duration)
+        if (m_IsAutoDestroyDuration && Duration >= 0 && NowLifeTime >= Duration)
         {
             OnCompleteEffect?.Invoke();
             OnCompleteEffect = null;

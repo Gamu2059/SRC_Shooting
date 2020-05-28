@@ -1116,6 +1116,11 @@ public class BulletController : BattleRealObjectBase
             var sufferType = sufferData.SufferCollider.Transform.ColliderType;
             if (sufferType == E_COLLIDER_TYPE.ENEMY_BULLET)
             {
+                // 弾消しされる
+                DataManager.Instance.BattleData.IncreaseRemoveBullet();
+                DataManager.Instance.BattleData.AddScore(100);
+                BattleRealEffectManager.Instance.CreateBulletRemoveEffect(transform, 100);
+
                 DestroyBullet();
             }
         }
