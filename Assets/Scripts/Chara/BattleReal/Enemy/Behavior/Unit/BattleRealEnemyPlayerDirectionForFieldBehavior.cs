@@ -19,6 +19,10 @@ public class BattleRealEnemyPlayerDirectionForFieldBehavior : BattleRealEnemyBeh
     private float m_Duration;
     protected float Duration => m_Duration;
 
+    [SerializeField, Tooltip("フィールド領域の縁からどのくらい離れた距離を目標座標とするか")]
+    private float m_DistanceFromField = 0.05f;
+    protected float DistanceFromField => m_DistanceFromField;
+
     [SerializeField, Tooltip("現在座標から目標座標までの線形補間カーブ")]
     private AnimationCurve m_LerpForTargetCurve;
     protected AnimationCurve LerpForTargetCurve => m_LerpForTargetCurve;
@@ -100,6 +104,9 @@ public class BattleRealEnemyPlayerDirectionForFieldBehavior : BattleRealEnemyBeh
         }
 
         m_TargetPosition = new Vector3(xTarget, 0, zTarget);
+        var startPos = new Vector3(m_StartPosition.x, 0, m_StartPosition.z);
+        var offset = (startPos - m_TargetPosition).normalized * m_DistanceFromField;
+        m_TargetPosition += offset;
     }
 
     protected override void OnUpdate(float deltaTime)
@@ -125,6 +132,12 @@ public class BattleRealEnemyPlayerDirectionForFieldBehavior : BattleRealEnemyBeh
         var rate = CurrentTime / Duration;
         var posLerp = LerpForTargetCurve.Evaluate(rate);
         var pos = Vector3.Lerp(m_StartPosition, m_TargetPosition, posLerp);
+
+        if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z))
+        {
+            Debug.LogWarningFormat("NaN Value Found. {0}", pos);
+            return;
+        }
         Enemy.transform.position = pos;
     }
 }
