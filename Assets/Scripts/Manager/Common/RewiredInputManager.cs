@@ -193,18 +193,6 @@ public class RewiredInputManager : SingletonMonoBehavior<RewiredInputManager>
         InnerInputManager.Instance.RemoveAxis(m_UiHorizontal);
     }
 
-    //public void ChangeToUIInput()
-    //{
-    //    InnerInputManager.Instance.SetActionCategory(m_UiCategory, true);
-    //    InnerInputManager.Instance.SetActionCategory(m_InGameCategory, false);
-    //}
-
-    //public void ChangeToInGameInput()
-    //{
-    //    InnerInputManager.Instance.SetActionCategory(m_UiCategory, false);
-    //    InnerInputManager.Instance.SetActionCategory(m_InGameCategory, true);
-    //}
-
     public void ChangeToKeyConInputModule()
     {
         m_StandaloneInputModule.horizontalAxis = m_KeyConHorizontal;

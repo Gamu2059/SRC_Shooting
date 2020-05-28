@@ -479,6 +479,63 @@ public class BattleData
 
     #region Achievement
 
+    public int GetAchievementTargetValue(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return GetAchievementTargetLevel();
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return GetAchievementTargetMaxChain();
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return GetAchievementTargetBulletRemove();
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return GetAchievementTargetSecretItem();
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return GetAchievementTargetRescue();
+        }
+
+        return 0;
+    }
+
+    public int GetAchievementCurrentValue(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return LevelInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return MaxChainInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return BulletRemoveInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return SecretItemInChapter.Value;
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return BossRescueCountInChapter.Value;
+        }
+
+        return 0;
+    }
+
+    public bool IsAchieve(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return IsAchieveLevel();
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return IsAchieveMaxChain();
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return IsAchieveBulletRemove();
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return IsAchieveSecretItem();
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return IsAchieveRescue();
+        }
+
+        return false;
+    }
+
     public int GetAchievementTargetLevel()
     {
         if (m_AchievementParam == null)

@@ -13,11 +13,35 @@ public class BattleChapterResultData
     public bool IsClear;
     public int Level;
     public int MaxChain;
-    public int RemoveBullet;
+    public int BulletRemove;
     public int SecretItem;
     public int BossDefeat;
     public int BossRescue;
     public ulong Score;
-    public ulong ScoreInBonus;
+    public ulong LevelBonusScore;
+    public ulong MaxChainBonusScore;
+    public ulong BulletRemoveBonusScore;
+    public ulong SecretItemBonusScore;
+    public ulong HackingCompleteBonusScore;
+    public ulong TotalScore;
     public E_GAME_RANK Rank;
+
+    public ulong GetBonusScore(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return LevelBonusScore;
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return MaxChainBonusScore;
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return BulletRemoveBonusScore;
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return SecretItemBonusScore;
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return HackingCompleteBonusScore;
+        }
+
+        return 0;
+    }
 }

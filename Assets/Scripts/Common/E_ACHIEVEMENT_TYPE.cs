@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum E_ACHIEVEMENT_TYPE
 {
-    LEVEL,
-    MAX_CHAIN,
-    BULLET_REMOVE,
-    SECRET_ITEM,
-    RESCUE,
+    LEVEL = 1 << 0,
+    MAX_CHAIN = 1 << 1,
+    BULLET_REMOVE = 1 << 2,
+    SECRET_ITEM = 1 << 3,
+    RESCUE = 1 << 4,
 }

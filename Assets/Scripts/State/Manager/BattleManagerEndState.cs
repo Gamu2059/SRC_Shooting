@@ -8,11 +8,6 @@
             Target.m_RealManager.RequestChangeState(E_BATTLE_REAL_STATE.END);
             Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.END);
             
-            // とりあえず呼び出しているが、クリアしたかどうかとかは判定していないので、それは今後やる
-            DataManager.Instance.OnChapterEnd(Target.m_RealManager.IsChapterClear);
-            // 何をもってしてストーリークリアかはまだ未定義なのでコメントアウト
-            // DataManager.Instance.OnStoryEnd();
-
             if (DataManager.Instance.IsDirectTransitionNextChapter())
             {
                 if (DataManager.Instance.ExistNextChapter())
@@ -23,11 +18,13 @@
                 }
                 else
                 {
+                    DataManager.Instance.OnShootingEnd();
                     Target.ExitGame();
                 }
             }
             else
             {
+                DataManager.Instance.OnShootingEnd();
                 Target.ExitGame();
             }
         }

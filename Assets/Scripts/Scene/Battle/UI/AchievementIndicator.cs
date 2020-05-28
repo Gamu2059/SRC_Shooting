@@ -36,6 +36,7 @@ public class AchievementIndicator : ControllableMonoBehavior
 
     private IDisposable m_OnValueChange;
     private int m_MaxValue;
+    private bool m_IsAchieved;
 
     #endregion
 
@@ -46,10 +47,11 @@ public class AchievementIndicator : ControllableMonoBehavior
         base.OnInitialize();
 
         InitializeLabel();
-        m_OnValueChange = SubscribeAchievement();
         m_MaxValue = GetMaxValue();
         SetValue(GetCurrentValue());
         m_MaxValueText.text = m_MaxValue.ToString();
+        m_OnValueChange = SubscribeAchievement();
+        m_IsAchieved = false;
     }
 
     public override void OnFinalize()
@@ -115,18 +117,9 @@ public class AchievementIndicator : ControllableMonoBehavior
         }
 
         var battleData = DataManager.Instance.BattleData;
-        switch (m_Type)
+        if (battleData != null)
         {
-            case E_ACHIEVEMENT_TYPE.LEVEL:
-                return battleData.LevelInChapter.Value;
-            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
-                return battleData.MaxChainInChapter.Value;
-            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
-                return battleData.BulletRemoveInChapter.Value;
-            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
-                return battleData.SecretItemInChapter.Value;
-            case E_ACHIEVEMENT_TYPE.RESCUE:
-                return battleData.BossRescueCountInChapter.Value;
+            return battleData.GetAchievementCurrentValue(m_Type);
         }
 
         return 0;
@@ -140,18 +133,9 @@ public class AchievementIndicator : ControllableMonoBehavior
         }
 
         var battleData = DataManager.Instance.BattleData;
-        switch (m_Type)
+        if (battleData != null)
         {
-            case E_ACHIEVEMENT_TYPE.LEVEL:
-                return battleData.GetAchievementTargetLevel();
-            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
-                return battleData.GetAchievementTargetMaxChain();
-            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
-                return battleData.GetAchievementTargetBulletRemove();
-            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
-                return battleData.GetAchievementTargetSecretItem();
-            case E_ACHIEVEMENT_TYPE.RESCUE:
-                return battleData.GetAchievementTargetRescue();
+            return battleData.GetAchievementTargetValue(m_Type);
         }
 
         return 0;
@@ -161,10 +145,10 @@ public class AchievementIndicator : ControllableMonoBehavior
     {
         SetValue(value);
 
-        if (value >= m_MaxValue)
+        if (value >= m_MaxValue && !m_IsAchieved)
         {
+            m_IsAchieved = true;
             PlayAchievedAnimation();
-            m_OnValueChange?.Dispose();
         }
     }
 

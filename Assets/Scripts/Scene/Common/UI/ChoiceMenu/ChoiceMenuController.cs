@@ -58,11 +58,11 @@ public class ChoiceMenuController : MonoBehaviour, IMoveHandler
         m_CheckAllows = true;
         m_PrevIndicatorIndex = -1;
         m_CurrentIndicatorIndex = 0;
+        m_Target.OnChangeValue += ChangeValueForce;
     }
 
     private void Start()
     {
-        m_Target.OnChangeValue += ChangeValueForce;
         ChangeValueForce();
     }
 

@@ -42,6 +42,9 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
     #region Field Inspector
 
     [SerializeField]
+    private AudioManagerParamSet m_ParamSet;
+
+    [SerializeField]
     private CriWareInitializer m_CriWareInitializer;
 
     [SerializeField]
@@ -68,41 +71,14 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
     #region Game Cycle
 
-    /// <summary>
-    /// Adxパラメータをセットする。
-    /// OnInitializeより先に呼び出す。
-    /// </summary>
-    /// <param name="adxParam"></param>
-    public void SetAdxParam(AdxAssetParam adxParam)
-    {
-        m_AdxAssetParam = adxParam;
-
-        m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
-        m_BgmAisacValueDict = new Dictionary<E_AISAC_TYPE, float>();
-
-        foreach (var aisacSet in adxParam.AisacSets)
-        {
-            m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
-            m_BgmAisacValueDict.Add(aisacSet.AisacType, 0f);
-        }
-    }
-
     public override void OnInitialize()
     {
         base.OnInitialize();
         m_CriWareInitializer.Initialize();
 
-        m_SourceDict = new Dictionary<E_CUE_SHEET, CriAtomSource>();
-        foreach (var sourceSet in m_SourceSets)
-        {
-            m_SourceDict.Add(sourceSet.CueSheet, sourceSet.Source);
-        }
-
-        m_CommonSoundDict = new Dictionary<E_COMMON_SOUND, PlaySoundParam>();
-        foreach (var commonSoundSet in m_CommonSoundSets)
-        {
-            m_CommonSoundDict.Add(commonSoundSet.Type, commonSoundSet.Param);
-        }
+        InitSourceDict();
+        InitCommonSoundDict();
+        InitAdxParam();
 
         m_ProcessingOperateAisacList = new List<OperateAisacData>();
         m_DestroyOperateAisacList = new List<OperateAisacData>();
@@ -111,6 +87,38 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
         var se = SaveDataManager.GetFloat("Se", 0.5f);
         SetBgmVolume(bgm);
         SetSeVolume(se);
+    }
+
+    private void InitSourceDict()
+    {
+        m_SourceDict = new Dictionary<E_CUE_SHEET, CriAtomSource>();
+        foreach (var sourceSet in m_SourceSets)
+        {
+            m_SourceDict.Add(sourceSet.CueSheet, sourceSet.Source);
+        }
+    }
+
+    private void InitCommonSoundDict()
+    {
+        m_CommonSoundDict = new Dictionary<E_COMMON_SOUND, PlaySoundParam>();
+        foreach (var commonSoundSet in m_CommonSoundSets)
+        {
+            m_CommonSoundDict.Add(commonSoundSet.Type, commonSoundSet.Param);
+        }
+    }
+
+    private void InitAdxParam()
+    {
+        m_AdxAssetParam = m_ParamSet.AdxAssetParam;
+
+        m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
+        m_BgmAisacValueDict = new Dictionary<E_AISAC_TYPE, float>();
+
+        foreach (var aisacSet in m_AdxAssetParam.AisacSets)
+        {
+            m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
+            m_BgmAisacValueDict.Add(aisacSet.AisacType, 0f);
+        }
     }
 
     public override void OnFinalize()

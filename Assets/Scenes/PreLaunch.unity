@@ -5265,6 +5265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09755cf473c63704e92f8a1c9f84a34b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ParamSet: {fileID: 11400000, guid: d54163c4170386a4d934ed997ad6882b, type: 2}
   m_CriWareInitializer: {fileID: 120875731}
   m_SourceSets:
   - CueSheet: 0
@@ -5647,6 +5648,9 @@ GameObject:
   - component: {fileID: 1379646825}
   - component: {fileID: 1379646824}
   - component: {fileID: 1379646823}
+  - component: {fileID: 1379646827}
+  - component: {fileID: 1379646826}
+  - component: {fileID: 1379646828}
   m_Layer: 0
   m_Name: '[GameManager]'
   m_TagString: Untagged
@@ -5732,36 +5736,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347c4a47961631d4ab1b369b5acff547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GameManagerParamSet:
-    m_BattleConstantParam: {fileID: 11400000, guid: da88837ded6f4cf49b509676f0d847a0,
-      type: 2}
-    m_BattleAchievementParamSet: {fileID: 11400000, guid: e50ea59ca12e077428bdc1efd88363b5,
-      type: 2}
-    m_AdxAssetParam: {fileID: 11400000, guid: e694442f98e43b7439e93c18b83a687b, type: 2}
-  m_BattleParamSetHolder:
-    m_Params:
-    - m_Chapter: 0
-      m_Params:
-      - m_Difficulty: 1
-        m_Param: {fileID: 11400000, guid: c570d9abf557c7742bbf3d51282c463f, type: 2}
-      - m_Difficulty: 2
-        m_Param: {fileID: 11400000, guid: c570d9abf557c7742bbf3d51282c463f, type: 2}
-      - m_Difficulty: 0
-        m_Param: {fileID: 11400000, guid: c570d9abf557c7742bbf3d51282c463f, type: 2}
-      - m_Difficulty: 3
-        m_Param: {fileID: 11400000, guid: c570d9abf557c7742bbf3d51282c463f, type: 2}
-    - m_Chapter: 1
-      m_Params:
-      - m_Difficulty: 1
-        m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
-      - m_Difficulty: 2
-        m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
-      - m_Difficulty: 0
-        m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
-      - m_Difficulty: 3
-        m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
-  m_SceneManager: {fileID: 1379646823}
-  m_TransitionManager: {fileID: 0}
 --- !u!4 &1379646825
 Transform:
   m_ObjectHideFlags: 0
@@ -5781,6 +5755,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1379646826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379646822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dc06421294d2c41b3b1446789655af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ParamSet: {fileID: 11400000, guid: 742e3e546b31e2d4489608a4974f114c, type: 2}
+--- !u!114 &1379646827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379646822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78007110d78744b4a8ebb43efc278663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ParamSet: {fileID: 11400000, guid: 11daf747e414b3a42bf8e73e3f76feb9, type: 2}
+--- !u!114 &1379646828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379646822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eaabe7f542e52841a8f16ca1c36a9c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ParamSet: {fileID: 11400000, guid: 0a2eb4cacaf05254dbc6178cfd77610f, type: 2}
+  IsSelectedGame: 0
+  GameMode: 0
+  Difficulty: 0
+  Chapter: 0
+  LifeOption: 0
+  EnergyOption: 0
 --- !u!1 &1442658866
 GameObject:
   m_ObjectHideFlags: 0

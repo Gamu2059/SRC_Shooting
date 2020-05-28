@@ -1027,9 +1027,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             //case E_TELOP_TYPE.WARNING_TELOP:
             //    BattleRealUiManager.Instance.PlayWarningTelop();
             //    break;
-            case E_TELOP_TYPE.GAME_CLEAR_TELOP:
-                BattleRealUiManager.Instance.PlayClearTelop();
-                break;
+            //case E_TELOP_TYPE.GAME_CLEAR_TELOP:
+            //    BattleRealUiManager.Instance.PlayClearTelop();
+            //    break;
         }
     }
 

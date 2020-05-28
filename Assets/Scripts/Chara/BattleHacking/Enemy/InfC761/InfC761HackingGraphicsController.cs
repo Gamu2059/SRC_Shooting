@@ -46,7 +46,7 @@ public class InfC761HackingGraphicsController : ControllableMonoBehavior
 
     private bool m_IsMoveEye = default;
 
-    private float m_ColorReturnTime = default;
+    //private float m_ColorReturnTime = default;
 
     /// <summary>
     /// OnInitializeやOnStartは複数回呼ばれてしまうのでOnAwakeにした

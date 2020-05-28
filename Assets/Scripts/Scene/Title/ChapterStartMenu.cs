@@ -42,6 +42,7 @@ public class ChapterStartMenu : MonoBehaviour
         DataManager.Instance.Difficulty = m_DifficultyMenu.Difficulty;
         DataManager.Instance.Chapter = m_ChapterMenu.Chapter;
         DataManager.Instance.IsSelectedGame = true;
+        DataManager.Instance.OnShootingStart();
         DataManager.Instance.TransitionToCurrentChapterScene();
         AudioManager.Instance.Play(E_COMMON_SOUND.SYSTEM_START);
     }

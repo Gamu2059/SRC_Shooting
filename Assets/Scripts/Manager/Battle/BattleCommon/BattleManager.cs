@@ -86,6 +86,7 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
             DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
             DataManager.Instance.Chapter = m_Chapter;
             DataManager.Instance.Difficulty = m_Difficulty;
+            DataManager.Instance.OnShootingStart();
         }
         else
         {
@@ -225,7 +226,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_IsOpenGameMenu = true;
         GameEventMessage.SendEvent(m_OpenGameMenuKey);
         AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_OPEN);
-        //RewiredInputManager.Instance.ChangeToUIInput();
     }
 
     /// <summary>
@@ -233,7 +233,6 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     /// </summary>
     public void CloseGameMenu()
     {
-        //RewiredInputManager.Instance.ChangeToInGameInput();
         m_IsOpenGameMenu = false;
         AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_CLOSE);
     }
