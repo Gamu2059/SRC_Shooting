@@ -46,4 +46,9 @@ public enum E_ITEM_TYPE
     /// 大きなボムポイント増加アイテム
     /// </summary>
     BIG_ENERGY,
+
+    /// <summary>
+    /// 隠しアイテム
+    /// </summary>
+    SECRET,
 }

@@ -513,6 +513,9 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             case E_ITEM_TYPE.BIG_ENERGY:
                 battleData.AddEnergyCharge(item.ItemPoint);
                 break;
+            case E_ITEM_TYPE.SECRET:
+                battleData.IncreaseSecretItem();
+                break;
             default:
                 break;
         }
