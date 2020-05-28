@@ -105,11 +105,15 @@ MonoBehaviour:
       m_DefeatScore: 100
       m_DefeatItemParam:
         ItemSpreadParams:
-        - Type: 6
+        - Type: 4
           Num: 10
           Point: 20
           SpreadRadius: 0.2
-        CenterCreateItemType: 2
+        - Type: 7
+          Num: 1
+          Point: 1250
+          SpreadRadius: 0
+        CenterCreateItemType: 7
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
         m_Params:
