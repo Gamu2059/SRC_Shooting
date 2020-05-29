@@ -53,6 +53,9 @@ public class ResultIndicator : ControllableMonoBehavior
     [SerializeField]
     private float m_DramUpItemDuration;
 
+    [SerializeField]
+    private float m_DramUpItemWaitTime;
+
     #endregion
 
     #region Game Cycle
@@ -208,7 +211,7 @@ public class ResultIndicator : ControllableMonoBehavior
                     scoreType |= i.BonusType;
                     i.DramUpItem(m_DramUpItemDuration);
                     m_TotalScore.DramUpTotalScore(scoreType, m_DramUpItemDuration);
-                    return Observable.Timer(TimeSpan.FromSeconds(m_DramUpItemDuration)).AsUnitObservable();
+                    return Observable.Timer(TimeSpan.FromSeconds(m_DramUpItemWaitTime)).AsUnitObservable();
                 });
                 obs.Add(bonusScoreObservable);
             }

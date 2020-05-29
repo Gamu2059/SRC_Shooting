@@ -43,13 +43,9 @@ MonoBehaviour:
         m_HackingSuccessItemParam:
           ItemSpreadParams:
           - Type: 6
-            Num: 6
-            Point: 200
-            SpreadRadius: 0.5
-          - Type: 4
-            Num: 6
-            Point: 100
-            SpreadRadius: 0.5
+            Num: 10
+            Point: 250
+            SpreadRadius: 0.4
           CenterCreateItemType: 0
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
@@ -69,13 +65,9 @@ MonoBehaviour:
         m_HackingSuccessItemParam:
           ItemSpreadParams:
           - Type: 6
-            Num: 6
-            Point: 200
-            SpreadRadius: 0.5
-          - Type: 4
-            Num: 6
-            Point: 100
-            SpreadRadius: 0.5
+            Num: 10
+            Point: 250
+            SpreadRadius: 0.4
           CenterCreateItemType: 0
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
@@ -95,13 +87,9 @@ MonoBehaviour:
         m_HackingSuccessItemParam:
           ItemSpreadParams:
           - Type: 6
-            Num: 6
-            Point: 200
-            SpreadRadius: 0.5
-          - Type: 4
-            Num: 6
-            Point: 100
-            SpreadRadius: 0.5
+            Num: 10
+            Point: 250
+            SpreadRadius: 0.4
           CenterCreateItemType: 0
       m_OnInitializeEvents: []
       m_OnInitializeSequence: {fileID: 11400000, guid: cd30be567eeb7744c9e29c3f3b30a174,
@@ -119,13 +107,21 @@ MonoBehaviour:
       m_DefeatScore: 10000
       m_DefeatItemParam:
         ItemSpreadParams:
-        - Type: 4
-          Num: 20
+        - Type: 6
+          Num: 5
           Point: 200
           SpreadRadius: 0.5
         - Type: 5
-          Num: 5
+          Num: 3
           Point: 1000
+          SpreadRadius: 0.2
+        - Type: 7
+          Num: 1
+          Point: 1000
+          SpreadRadius: 0.2
+        - Type: 4
+          Num: 5
+          Point: 200
           SpreadRadius: 0.5
         CenterCreateItemType: 0
       m_DefeatEvents:
@@ -189,15 +185,7 @@ MonoBehaviour:
       m_DefeatHideTime: 5
       m_RescueScore: 30000
       m_RescueItemParam:
-        ItemSpreadParams:
-        - Type: 4
-          Num: 20
-          Point: 200
-          SpreadRadius: 0.5
-        - Type: 5
-          Num: 5
-          Point: 1000
-          SpreadRadius: 0.5
+        ItemSpreadParams: []
         CenterCreateItemType: 0
       m_RescueEvents:
       - ContentName: 
@@ -539,7 +527,7 @@ MonoBehaviour:
           - Type: 6
             Num: 10
             Point: 250
-            SpreadRadius: 0.5
+            SpreadRadius: 0.4
           CenterCreateItemType: 0
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
@@ -561,7 +549,7 @@ MonoBehaviour:
           - Type: 6
             Num: 10
             Point: 250
-            SpreadRadius: 0.5
+            SpreadRadius: 0.4
           CenterCreateItemType: 0
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
@@ -583,7 +571,7 @@ MonoBehaviour:
           - Type: 6
             Num: 10
             Point: 250
-            SpreadRadius: 0.5
+            SpreadRadius: 0.4
           CenterCreateItemType: 0
       m_OnInitializeEvents: []
       m_OnInitializeSequence: {fileID: 11400000, guid: cd30be567eeb7744c9e29c3f3b30a174,
