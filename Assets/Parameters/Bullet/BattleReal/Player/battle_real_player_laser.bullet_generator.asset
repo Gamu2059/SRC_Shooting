@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 890290b6f78267a4791bba3333c6f364, type: 3}
+  m_Name: battle_real_player_laser.bullet_generator
+  m_EditorClassIdentifier: 
+  m_GeneratorClassName: BattleReal.BulletGenerator.PlayerLaserGenerator
+  m_Params:
+  - Difficulty: 0
+    Param:
+      m_ShotTransformName: MainShotPosition
+      m_LevelIndividualParams:
+      - m_Laser: {fileID: 1106232148059971361, guid: 6a3d63a255c823c4faedf1f9ed2be69c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 14141bb559ed40c45b99556946a6cb7f, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 675e0e1c851ecf040a7ba3b630f1ae2b,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 8c44c2a87037da8478e0b904ed0b2f40, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 94356c8c8aee9e84494371bc31e5608c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: b23495343eeff2643959b43f0e41e5d9, type: 2}
+  - Difficulty: 1
+    Param:
+      m_ShotTransformName: MainShotPosition
+      m_LevelIndividualParams:
+      - m_Laser: {fileID: 1106232148059971361, guid: 6a3d63a255c823c4faedf1f9ed2be69c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 14141bb559ed40c45b99556946a6cb7f, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 675e0e1c851ecf040a7ba3b630f1ae2b,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 8c44c2a87037da8478e0b904ed0b2f40, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 94356c8c8aee9e84494371bc31e5608c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: b23495343eeff2643959b43f0e41e5d9, type: 2}
+  - Difficulty: 2
+    Param:
+      m_ShotTransformName: MainShotPosition
+      m_LevelIndividualParams:
+      - m_Laser: {fileID: 1106232148059971361, guid: 6a3d63a255c823c4faedf1f9ed2be69c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 14141bb559ed40c45b99556946a6cb7f, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 675e0e1c851ecf040a7ba3b630f1ae2b,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 8c44c2a87037da8478e0b904ed0b2f40, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 94356c8c8aee9e84494371bc31e5608c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: b23495343eeff2643959b43f0e41e5d9, type: 2}
+  - Difficulty: 3
+    Param:
+      m_ShotTransformName: MainShotPosition
+      m_LevelIndividualParams:
+      - m_Laser: {fileID: 1106232148059971361, guid: 6a3d63a255c823c4faedf1f9ed2be69c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 14141bb559ed40c45b99556946a6cb7f, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 675e0e1c851ecf040a7ba3b630f1ae2b,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: 8c44c2a87037da8478e0b904ed0b2f40, type: 2}
+      - m_Laser: {fileID: 1106232148059971361, guid: 94356c8c8aee9e84494371bc31e5608c,
+          type: 3}
+        m_LaserParam: {fileID: 11400000, guid: b23495343eeff2643959b43f0e41e5d9, type: 2}

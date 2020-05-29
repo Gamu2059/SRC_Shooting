@@ -37,8 +37,8 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     public bool IsLaserType => m_IsLaserType;
 
     [SerializeField, Tooltip("チャージエフェクト")]
-    private EffectParamSet m_ChargeEffectParam;
-    public EffectParamSet ChargeEffectParam => m_ChargeEffectParam;
+    private EffectParamSet[] m_ChargeEffectParams;
+    public EffectParamSet[] ChargeEffectParams => m_ChargeEffectParams;
 
     [SerializeField, Tooltip("シールドエフェクト")]
     private EffectParamSet m_ShieldEffectParam;

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
@@ -455,6 +456,12 @@ public class BulletController : BattleRealObjectBase
     {
         m_LerpRestrictAngle = value;
     }
+
+    #endregion
+
+    #region Event
+
+    public Subject<Unit> OnDestroyObservable { get; private set; }
 
     #endregion
 
@@ -993,10 +1000,15 @@ public class BulletController : BattleRealObjectBase
         m_BulletSuffer = new HitSufferController<BulletController>();
         m_BulletHit = new HitSufferController<BulletController>();
         m_CharaHit = new HitSufferController<BattleRealCharaController>();
+
+        OnDestroyObservable = new Subject<Unit>();
     }
 
     protected override void OnDestroyed()
     {
+        OnDestroyObservable?.Dispose();
+        OnDestroyObservable = null;
+
         m_CharaHit.OnFinalize();
         m_BulletHit.OnFinalize();
         m_BulletSuffer.OnFinalize();
@@ -1030,6 +1042,9 @@ public class BulletController : BattleRealObjectBase
         m_CharaHit.OnFinalize();
         m_BulletHit.OnFinalize();
         m_BulletSuffer.OnFinalize();
+
+        OnDestroyObservable?.OnNext(Unit.Default);
+
         base.OnFinalize();
     }
 
@@ -1050,9 +1065,13 @@ public class BulletController : BattleRealObjectBase
 
         if (m_Target != null)
         {
+            var targetDeltaPos = m_Target.transform.position - transform.position;
+            var forward = transform.forward;
+            targetDeltaPos.y = 0;
+            forward.y = 0;
+            
             var lerp = m_NowLerp;
-            Vector3 targetDeltaPos = m_Target.transform.position - transform.position;
-            var angle = Vector3.Angle(transform.forward, targetDeltaPos);
+            var angle = Vector3.Angle(forward, targetDeltaPos);
             if (angle > m_LerpRestrictAngle)
             {
                 lerp = 0;

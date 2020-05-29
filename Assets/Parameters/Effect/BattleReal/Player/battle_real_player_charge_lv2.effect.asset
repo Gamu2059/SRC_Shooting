@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9e4b8dc684c00345b377bc238b23c5c, type: 3}
-  m_Name: hacker_down_triangle.effect
+  m_Name: battle_real_player_charge_lv2.effect
   m_EditorClassIdentifier: 
-  m_Effect: {fileID: 8062093955763083968, guid: 58d0fe6096852714fa68701d65d761d0,
+  m_Effect: {fileID: 5996861524069773491, guid: 70240d28eeba21a44849741025d0d76f,
     type: 3}
   m_FirePositionRelative: 0
   m_FirePosition:
     m_ValueType: 0
-    m_ConstantValue: {x: 0, y: 0, z: 0}
+    m_ConstantValue: {x: 0, y: 0, z: 0.15}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
-  m_FireRotationRelative: 0
+  m_FireRotationRelative: 1
   m_FireRotation:
     m_ValueType: 0
     m_ConstantValue: {x: 0, y: 0, z: 0}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
-  m_FireScaleRelative: 0
+  m_FireScaleRelative: 1
   m_FireScale:
     m_ValueType: 0
-    m_ConstantValue: {x: 1, y: 1, z: 1}
+    m_ConstantValue: {x: 1.5, y: 1.5, z: 1.5}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
-  m_IsAllowOwnerPosition: 0
+  m_IsAllowOwnerPosition: 1
   m_IsAllowOwnerRotation: 0
   m_IsAutoDestroyDuration: 0
   m_Duration: 0

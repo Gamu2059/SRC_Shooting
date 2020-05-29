@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97497ac148d311f4aa4409775bdda3e2, type: 3}
   m_Name: param.battle_constant
   m_EditorClassIdentifier: 
-  m_InitLife: 2
   m_MaxLife: 5
   m_MaxLevel: 5
-  m_MaxEnergy: 5
   m_PlayerLevelDatas:
   - m_NecessaryExpNextLevel: 1000
     m_ItemAtractScale: 1
@@ -57,4 +55,10 @@ MonoBehaviour:
     m_BombTypeShotDownDamage: 1
     m_LaserDamagePerSeconds: 100
     m_BombDamage: 100
+  m_MaxEnergy: 5
   m_NecessaryEnergyChargeNextStocks: e8030000e2040000dc050000d6060000d0070000
+  m_MaxChargeLevel: 3
+  m_ChargeTimeNextLevels:
+  - 3
+  - 3
+  - 3

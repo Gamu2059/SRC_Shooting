@@ -70,12 +70,6 @@ partial class BattleRealPlayerController
                     Target.StopShotBullet();
                     break;
             }
-            //if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
-            //{
-            //    Target.ShotBullet();
-            //}
-
-            Target.m_ShotDelay += Time.deltaTime;
 
             if (m_IsShotted && !Target.IsUsingChargeShot())
             {

@@ -132,6 +132,11 @@ public class BattleData
     /// </summary>
     public ReactiveProperty<int> TotalBossRescue { get; private set; }
 
+    /// <summary>
+    /// チャージショットの強化段階
+    /// </summary>
+    public ReactiveProperty<int> ChargeLevel { get; private set; }
+
     public E_CHAPTER m_CurrentChapter;
 
     #endregion
@@ -163,6 +168,7 @@ public class BattleData
         BossDefeatCountInChapter = new ReactiveProperty<int>(0);
         BossRescueCountInChapter = new ReactiveProperty<int>(0);
         TotalBossRescue = new ReactiveProperty<int>(0);
+        ChargeLevel = new ReactiveProperty<int>(0);
     }
 
     public void OnFinalize()
@@ -199,13 +205,9 @@ public class BattleData
         SecretItemInChapter.Value = 0;
         BossDefeatCountInChapter.Value = 0;
         BossRescueCountInChapter.Value = 0;
+        ChargeLevel.Value = 0;
     }
 
-    public BattleRealPlayerLevelData GetCurrentLevelParam()
-    {
-        var idx = Mathf.Min(LevelInChapter.Value, m_ConstantParam.MaxLevel - 1);
-        return m_ConstantParam.PlayerLevelDatas[idx];
-    }
 
     #region Player Life
 
@@ -291,6 +293,12 @@ public class BattleData
     #endregion
 
     #region Level
+
+    public BattleRealPlayerLevelData GetCurrentLevelParam()
+    {
+        var idx = Mathf.Min(LevelInChapter.Value, m_ConstantParam.MaxLevel - 1);
+        return m_ConstantParam.PlayerLevelDatas[idx];
+    }
 
     public void IncreaseLevel()
     {
@@ -620,6 +628,49 @@ public class BattleData
     public bool IsAchieveRescue()
     {
         return BossRescueCountInChapter.Value >= GetAchievementTargetRescue();
+    }
+
+    #endregion
+
+    #region Charge Shot
+
+    public float GetCurrentChargeWaitTime()
+    {
+        var chargeTimeNextLevels = m_ConstantParam.ChargeTimeNextLevels;
+        if (chargeTimeNextLevels == null || chargeTimeNextLevels.Length < 1)
+        {
+            Debug.LogWarning("チャージ強化時間を指定する配列の要素数が0です");
+            return 0;
+        }
+
+        var index = Mathf.Min(chargeTimeNextLevels.Length - 1, ChargeLevel.Value);
+        return chargeTimeNextLevels[index];
+    }
+
+    /// <summary>
+    /// チャージ強化レベルを一つ上げる
+    /// </summary>
+    public void IncreaseChargeLevel()
+    {
+        var newNum = Mathf.Min(ChargeLevel.Value + 1, m_ConstantParam.MaxChargeLevel - 1);
+        if (newNum != ChargeLevel.Value)
+        {
+            ChargeLevel.Value = newNum;
+        }
+    }
+
+    public void ResetChargeLevel()
+    {
+        ChargeLevel.Value = 0;
+    }
+
+    /// <summary>
+    /// 最大レベルかどうか
+    /// </summary>
+    public bool IsMaxChargeLevel()
+    {
+        // 0から始まるので、-1にする
+        return ChargeLevel.Value >= m_ConstantParam.MaxChargeLevel - 1;
     }
 
     #endregion
