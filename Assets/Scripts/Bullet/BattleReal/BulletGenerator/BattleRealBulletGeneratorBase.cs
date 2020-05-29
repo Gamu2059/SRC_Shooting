@@ -27,9 +27,9 @@ namespace BattleReal.BulletGenerator
 
         protected abstract void OnSetParam();
 
-        public sealed override void OnFixedUpdate()
+        public sealed override void OnUpdate()
         {
-            base.OnFixedUpdate();
+            base.OnUpdate();
 
             if (Owner == null)
             {
