@@ -77,8 +77,6 @@ public class ResultItemIndicator : ControllableMonoBehavior
     {
         base.OnInitialize();
         m_IsDramUp = false;
-        m_CurrentBonusValue = 0;
-        m_TargetBonusValue = 0;
     }
 
     public override void OnFinalize()
@@ -188,11 +186,17 @@ public class ResultItemIndicator : ControllableMonoBehavior
         m_Label.color = m_LabelColor;
         if (m_IsTotalScore)
         {
+            var score = GetScore();
             m_BonusValueText.color = m_AchievedPercentageColor;
-            m_BonusValueText.text = GetScore().ToString();
+            m_BonusValueText.text = score.ToString();
+
+            m_CurrentBonusValue = score;
+            m_TargetBonusValue = score;
         }
         else
         {
+            m_CurrentBonusValue = 0;
+            m_TargetBonusValue = 0;
             var color = IsValidValue() ? m_AchievedPercentageColor : m_NotAchievedPercentageColor;
             m_PercentageValueText.color = color;
             m_BonusValueText.color = color;
@@ -203,6 +207,9 @@ public class ResultItemIndicator : ControllableMonoBehavior
             m_TargetValueText.text = targetValue.ToString();
             m_PercentageValueText.text = string.Format("{0}%", targetValue < 1 ? 0 : (currentValue * 100 / targetValue));
             m_BonusValueText.text = 0.ToString();
+
+            m_CurrentBonusValue = 0;
+            m_TargetBonusValue = 0;
         }
 
         m_CanvasGroup.alpha = 0;
@@ -233,7 +240,7 @@ public class ResultItemIndicator : ControllableMonoBehavior
             }
         }
 
-        m_CurrentValueText = m_TargetValueText;
+        m_CurrentBonusValue = m_TargetBonusValue;
         PlayDramUp(m_CurrentBonusValue, value, duration);
     }
 

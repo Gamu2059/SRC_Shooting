@@ -2923,7 +2923,7 @@ PrefabInstance:
     - target: {fileID: 8755888155118185902, guid: 553394418d74bbe4fa1738f6545e21e6,
         type: 3}
       propertyPath: m_Difficulty
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8755888155118185902, guid: 553394418d74bbe4fa1738f6545e21e6,
         type: 3}
@@ -2933,6 +2933,11 @@ PrefabInstance:
     - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
         type: 3}
       propertyPath: m_IsNotPlayerDead
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
+        type: 3}
+      propertyPath: m_IsNotGameOver
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
