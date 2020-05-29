@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using BattleReal.BulletGenerator;
 
 /// <summary>
 /// リアルモードのPlayerManagerのパラメータのセット。
@@ -46,6 +47,20 @@ public class BattleRealPlayerManagerParamSet : ScriptableObject
     [SerializeField, Tooltip("死亡エフェクト")]
     private EffectParamSet m_DeadEffectParam;
     public EffectParamSet DeadEffectParam => m_DeadEffectParam;
+
+    [Header("弾ジェネレータ")]
+
+    [SerializeField, Tooltip("通常弾ジェネレータのパラメータ")]
+    private PlayerNormalBulletGeneratorParamSet m_NormalBulletGeneratorParamSet;
+    public PlayerNormalBulletGeneratorParamSet NormalBulletGeneratorParamSet => m_NormalBulletGeneratorParamSet;
+
+    [SerializeField, Tooltip("レーザージェネレータのパラメータ")]
+    private PlayerLaserGeneratorParamSet m_LaserGeneratorParamSet;
+    public PlayerLaserGeneratorParamSet LaserGeneratorParamSet => m_LaserGeneratorParamSet;
+
+    [SerializeField, Tooltip("ボムジェネレータのパラメータ")]
+    private PlayerBombGeneratorParamSet m_BombGeneratorParamSet;
+    public PlayerBombGeneratorParamSet BombGeneratorParamSet => m_BombGeneratorParamSet;
 
     [Header("カメラウェーブ")]
 

@@ -38,10 +38,21 @@ partial class BattleRealPlayerController
                 Target.RestrictPosition();
             }
 
-            if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
+            switch (input.Shot)
             {
-                Target.ShotBullet();
+                case E_REWIRED_INPUT_STATE.DOWN:
+                case E_REWIRED_INPUT_STATE.STAY:
+                    Target.StartShotBullet();
+                    break;
+                case E_REWIRED_INPUT_STATE.UP:
+                case E_REWIRED_INPUT_STATE.NONE:
+                    Target.StopShotBullet();
+                    break;
             }
+            //if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
+            //{
+            //    Target.ShotBullet();
+            //}
 
             if (input.ChargeShot == E_REWIRED_INPUT_STATE.UP)
             {

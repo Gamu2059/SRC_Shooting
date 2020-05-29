@@ -41,10 +41,10 @@ namespace BattleReal.BulletGenerator
                 Destroy();
             }
 
-            OnGeneratorUpdate();
+            OnGeneratorUpdate(Time.deltaTime);
         }
 
-        protected abstract void OnGeneratorUpdate();
+        protected abstract void OnGeneratorUpdate(float deltaTime);
 
         public void Destroy()
         {

@@ -123,6 +123,8 @@ public class BulletController : BattleRealObjectBase
     /// </summary>
     private float m_NowLerp;
 
+    private float m_LerpRestrictAngle;
+
     protected Vector2 PrePosition { get; private set; }
 
     protected Vector2 MoveDir { get; private set; }
@@ -442,6 +444,16 @@ public class BulletController : BattleRealObjectBase
     public void SetNowLerp(float value, E_RELATIVE relative = E_RELATIVE.ABSOLUTE)
     {
         m_NowLerp = GetRelativeValue(relative, GetNowLerp(), value);
+    }
+
+    public float GetLerpRestrictAngle()
+    {
+        return m_LerpRestrictAngle;
+    }
+
+    public void SetLerpRestrictAngle(float value)
+    {
+        m_LerpRestrictAngle = value;
     }
 
     #endregion
@@ -836,6 +848,7 @@ public class BulletController : BattleRealObjectBase
         SetNowAccel(m_OrbitalParam.Accel, m_OrbitalParam.AccelRelative);
         SetSearch(m_OrbitalParam.IsSearch);
         SetNowLerp(m_OrbitalParam.Lerp, m_OrbitalParam.LerpRelative);
+        SetLerpRestrictAngle(m_OrbitalParam.LerpRestrictAngle);
 
         // オプションパラメータは後で実装
 
@@ -1037,8 +1050,14 @@ public class BulletController : BattleRealObjectBase
 
         if (m_Target != null)
         {
+            var lerp = m_NowLerp;
             Vector3 targetDeltaPos = m_Target.transform.position - transform.position;
-            transform.forward = Vector3.Lerp(transform.forward, targetDeltaPos.normalized, m_NowLerp);
+            var angle = Vector3.Angle(transform.forward, targetDeltaPos);
+            if (angle > m_LerpRestrictAngle)
+            {
+                lerp = 0;
+            }
+            transform.forward = Vector3.Lerp(transform.forward, targetDeltaPos.normalized, lerp);
         }
 
         var speed = GetNowSpeed() * Time.deltaTime;
@@ -1050,13 +1069,6 @@ public class BulletController : BattleRealObjectBase
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-
-        //var pos = transform.position.ToVector2XZ();
-        //MoveDir = pos - PrePosition;
-        //PrePosition = pos;
-        //if (m_IsLookMoveDir) {
-        //    transform.LookAt(transform.position + MoveDir.ToVector3XZ());
-        //}
 
         if (BattleRealBulletManager.Instance.IsOutOfField(this))
         {

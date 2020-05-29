@@ -24,6 +24,10 @@ MonoBehaviour:
   m_ShieldEffectParam: {fileID: 11400000, guid: a25de3426a5eac24493d75dbef68e359,
     type: 2}
   m_DeadEffectParam: {fileID: 11400000, guid: b9e00ef7308498c4390e7e80ef2d3d4d, type: 2}
+  m_NormalBulletGeneratorParamSet: {fileID: 11400000, guid: 27404d839a82a7d4d92d94677a6db066,
+    type: 2}
+  m_LaserGeneratorParamSet: {fileID: 0}
+  m_BombGeneratorParamSet: {fileID: 0}
   m_LaserShakeParam:
     XAmp: 0.3
     YAmp: 0.3
@@ -36,11 +40,3 @@ MonoBehaviour:
     Freq: 50
     Dec: 5
     Duration: 3
-  m_ShotSe: {fileID: 11400000, guid: 809ad8ad0c37ecd4a9dafbd24a72d8aa, type: 2}
-  m_LaserSe: {fileID: 11400000, guid: 9f0cf8ca142cccc429f0e86934b004fe, type: 2}
-  m_BombSe: {fileID: 11400000, guid: 6219c6404d1f98e43a051dd453d3e8f1, type: 2}
-  m_ChargeSe: {fileID: 11400000, guid: d1f2985e6fd531f4a835bde5228d0a70, type: 2}
-  m_WeaponChangeSe: {fileID: 11400000, guid: a4ca02145cf13b842a5f7694005d02f0, type: 2}
-  m_GetItemSe: {fileID: 11400000, guid: c77ef119077380a489030bcf848daa87, type: 2}
-  m_DeadSe: {fileID: 11400000, guid: 61654a56975a98f4b9f66e0d23738538, type: 2}
-  m_PowerUpSe: {fileID: 11400000, guid: cabcb92012c15c5498b2fc441315fc73, type: 2}

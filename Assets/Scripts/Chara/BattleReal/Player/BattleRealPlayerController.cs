@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using BattleReal.BulletGenerator;
 
 /// <summary>
 /// リアルモードのプレイヤーコントローラ
@@ -29,9 +30,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     [SerializeField]
     private Transform[] m_MainShotPosition;
 
-    [SerializeField]
-    private float m_MainShotInterval;
-
     #endregion
 
     #region Field
@@ -52,6 +50,10 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     private BulletController m_Laser;
     private BulletController m_Bomb;
     private bool m_IsExistEnergyCharge;
+
+    private PlayerNormalBulletGenerator m_NormalBulletGenerator;
+    private PlayerLaserGenerator m_LaserGenerator;
+    private PlayerBombGenerator m_BombGenerator;
 
     public bool IsDead { get; private set; }
     public bool IsLaserType { get; private set; }
@@ -97,6 +99,10 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
         m_Shield = GetCollider().GetColliderTransform(E_COLLIDER_TYPE.DEFAULT).Transform;
         SetEnableCollider(true);
 
+        var bulletGeneratorParamSet = m_ParamSet.NormalBulletGeneratorParamSet;
+        var bulletGenerator = BattleRealBulletGeneratorManager.Instance.CreateBulletGenerator(bulletGeneratorParamSet, this);
+        m_NormalBulletGenerator = bulletGenerator as PlayerNormalBulletGenerator;
+
         // とりあえずNON_GAMEへ遷移して待機しておく
         RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.NON_GAME);
     }
@@ -140,12 +146,17 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
         m_StateMachine?.Goto(state);
     }
 
-    /// <summary>
-    /// デフォルトゲームステートを切り替える。
-    /// </summary>
-    public void SetDefaultGameState(bool isBattleRealManagerGameState)
+    public void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
     {
-        m_DefaultGameState = isBattleRealManagerGameState ? E_BATTLE_REAL_PLAYER_STATE.GAME : E_BATTLE_REAL_PLAYER_STATE.NON_GAME;
+        if (state == E_BATTLE_REAL_STATE.GAME)
+        {
+            m_DefaultGameState = E_BATTLE_REAL_PLAYER_STATE.GAME;
+        }
+        else
+        {
+            m_DefaultGameState = E_BATTLE_REAL_PLAYER_STATE.NON_GAME;
+            StopShotBullet();
+        }
     }
 
     /// <summary>
@@ -182,36 +193,14 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
 
     #region Shot
 
-    /// <summary>
-    /// 通常弾を放つ
-    /// </summary>
-    private void ShotBullet()
+    private void StartShotBullet()
     {
-        if (m_ShotDelay >= m_MainShotInterval)
-        {
-            var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
-            for (int i = 0; i < m_MainShotPosition.Length; i++)
-            {
-                var shotParam = new BulletShotParam(this);
-                shotParam.Position = m_MainShotPosition[i].transform.position;
-                var bullet = BulletController.ShotBullet(shotParam);
+        m_NormalBulletGenerator?.StartShot();
+    }
 
-                // 現状は、レーザータイプの通常弾だけを使う
-                bullet.SetNowDamage(levelParam.LaserTypeShotDamage);
-
-                // ダウンダメージを設定する
-                switch (bullet)
-                {
-                    case BattleRealPlayerMainBullet hackerBullet:
-                        hackerBullet.SetNowDownDamage(levelParam.LaserTypeShotDownDamage);
-                        break;
-                }
-            }
-            m_ShotDelay = 0;
-        }
-
-        // 押している間SEを鳴らしたいので、プレイヤー弾のSE再生このタイミングで行う
-        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_SHOT_01);
+    private void StopShotBullet()
+    {
+        m_NormalBulletGenerator?.StopShot();
     }
 
     /// <summary>
