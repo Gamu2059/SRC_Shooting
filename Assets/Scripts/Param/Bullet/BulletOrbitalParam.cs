@@ -80,4 +80,7 @@ public struct BulletOrbitalParam
 
 	[Tooltip( "Lerpの適用は絶対か相対か" )]
 	public E_RELATIVE LerpRelative;
+
+	[Tooltip( "Lerpを有効にする角度 弾の直進方向と弾から対象への方向のなす角が、この角度以下ならばLerpを適用する" )]
+	public float LerpRestrictAngle;
 }

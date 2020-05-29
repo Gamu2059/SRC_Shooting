@@ -27,9 +27,9 @@ namespace BattleReal.BulletGenerator
 
         protected abstract void OnSetParam();
 
-        public sealed override void OnFixedUpdate()
+        public sealed override void OnUpdate()
         {
-            base.OnFixedUpdate();
+            base.OnUpdate();
 
             if (Owner == null)
             {
@@ -41,10 +41,10 @@ namespace BattleReal.BulletGenerator
                 Destroy();
             }
 
-            OnGeneratorUpdate();
+            OnGeneratorUpdate(Time.deltaTime);
         }
 
-        protected abstract void OnGeneratorUpdate();
+        protected abstract void OnGeneratorUpdate(float deltaTime);
 
         public void Destroy()
         {

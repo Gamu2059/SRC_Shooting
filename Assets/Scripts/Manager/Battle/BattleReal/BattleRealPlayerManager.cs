@@ -83,7 +83,7 @@ public class BattleRealPlayerManager : Singleton<BattleRealPlayerManager>, IColl
 
     private void OnChangeStateBattleRealManager(E_BATTLE_REAL_STATE state)
     {
-        Player?.SetDefaultGameState(state == E_BATTLE_REAL_STATE.GAME);
+        Player?.OnChangeStateBattleRealManager(state);
     }
 
     /// <summary>

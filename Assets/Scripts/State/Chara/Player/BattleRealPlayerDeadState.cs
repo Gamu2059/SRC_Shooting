@@ -12,6 +12,9 @@
 
             var deadEffect = BattleRealPlayerManager.Instance.ParamSet.DeadEffectParam;
             BattleRealEffectManager.Instance.CreateEffect(deadEffect, Target.transform);
+
+            // Gameステートでないので通常弾を撃つのを止める
+            Target.StopShotBullet();
         }
 
         public override void OnUpdate()

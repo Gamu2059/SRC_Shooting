@@ -174,7 +174,7 @@ namespace BattleReal.BulletGenerator
             m_IsFirstShot = true;
         }
 
-        protected override void OnGeneratorUpdate()
+        protected override void OnGeneratorUpdate(float deltaTime)
         {
             if (m_ShotPhaseDataList.Count < 1)
             {
@@ -191,7 +191,7 @@ namespace BattleReal.BulletGenerator
             }
 
             m_ShotPhaseDataList.RemoveAll(d => m_ShotTimeCount >= d.ShotTime);
-            m_ShotTimeCount += Time.fixedDeltaTime;
+            m_ShotTimeCount += deltaTime;
         }
 
         #endregion

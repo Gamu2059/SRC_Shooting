@@ -16,6 +16,9 @@
 
             sequenceController.OnEndSequence += OnEndSequence;
             sequenceController.BuildSequence(sequenceGroup);
+
+            // Gameステートでないので通常弾を撃つのを止める
+            Target.StopShotBullet();
         }
 
         public override void OnUpdate()

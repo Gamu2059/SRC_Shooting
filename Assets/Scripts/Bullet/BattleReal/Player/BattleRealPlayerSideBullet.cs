@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealPlayerMainBullet : BulletController, IBattleRealPlayerNormalBullet
+public class BattleRealPlayerSideBullet : BulletController, IBattleRealPlayerNormalBullet
 {
     private float m_NowDownDamage;
-    
+
     public float GetNowDownDamage()
     {
         return m_NowDownDamage;
