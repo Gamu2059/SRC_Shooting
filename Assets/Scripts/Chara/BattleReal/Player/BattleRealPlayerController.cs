@@ -225,7 +225,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
         var existChargeEffect = !(m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED);
         if (existChargeEffect)
         {
-            AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
+            AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER_CHARGE);
             m_ChargeEffect.DestroyEffect(true);
             m_ChargeEffect = null;
         }
@@ -246,18 +246,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
-        // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
-        if (IsLaserType)
-        {
-            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_LASER);
-        }
-        else
-        {
-            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_BOMB);
-        }
-
-        DataManager.Instance.BattleData.ConsumeEnergyStock();
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER_CHARGE);
+        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_CHARGE_SHOT);
     }
 
     /// <summary>
@@ -265,18 +255,17 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     /// </summary>
     private void ChargeShot()
     {
+        DataManager.Instance.BattleData.ConsumeEnergyStock();
         BattleRealUiManager.Instance.FrontViewEffect.StopEffect();
         BattleRealEffectManager.Instance.ResumeAllEffect();
 
         if (IsLaserType)
         {
             ShotLaser();
-            BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
         }
         else
         {
             ShotBomb();
-            BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
         }
     }
 
@@ -306,12 +295,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             m_LaserGenerator = null;
         });
 
-        //var param = new BulletShotParam(this);
-        //param.Position = m_MainShotPosition[0].transform.position;
-        //m_Laser = BulletController.ShotBullet(param, true);
-
-        //var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
-        //m_Laser.SetNowDamage(levelParam.LaserDamagePerSeconds, E_RELATIVE.ABSOLUTE);
+        BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
     }
 
     /// <summary>
@@ -325,23 +309,22 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        if (m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
-        {
-            return;
-        }
-
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             m_ChargeEffect.DestroyEffect(true);
         }
 
-        var param = new BulletShotParam(this);
-        param.BulletIndex = 1;
-        param.BulletParamIndex = 1;
-        m_Bomb = BulletController.ShotBullet(param, true);
+        var paramset = m_ParamSet.BombGeneratorParamSet;
+        var generator = BattleRealBulletGeneratorManager.Instance.CreateBulletGenerator(paramset, this);
+        m_BombGenerator = generator as PlayerBombGenerator;
+        m_BombDestroy = m_BombGenerator.OnDestroyObservable.Subscribe(_ =>
+        {
+            m_BombDestroy?.Dispose();
+            m_BombDestroy = null;
+            m_BombGenerator = null;
+        });
 
-        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
-        m_Bomb.SetNowDamage(levelParam.BombDamage, E_RELATIVE.ABSOLUTE);
+        BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
     }
 
     /// <summary>
@@ -502,7 +485,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             //case E_ITEM_TYPE.SMALL_SCORE:
             //case E_ITEM_TYPE.BIG_SCORE:
             //    battleData.AddScore(item.ItemPoint);
-                break;
+            //    break;
             case E_ITEM_TYPE.SMALL_EXP:
             case E_ITEM_TYPE.BIG_EXP:
                 battleData.AddExp(item.ItemPoint);

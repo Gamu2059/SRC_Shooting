@@ -83,7 +83,7 @@ partial class BattleRealPlayerController
         private void ChargeReset()
         {
             var battleData = DataManager.Instance.BattleData;
-            m_WaitTime = battleData.GetCurrentChargeWaitTime();
+            m_WaitTime = battleData.GetCurrentChargeLevelParam().ChargeTimeNextLevel;
             m_WaitCount = 0;
             Target.FireChargeEffect();
         }

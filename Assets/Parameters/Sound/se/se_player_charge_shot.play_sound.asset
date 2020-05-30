@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9afa3fb365ac4947b3149e2c5125cfc, type: 3}
-  m_Name: param.adx_param
+  m_Script: {fileID: 11500000, guid: 13fd667d64172d742bfc6e97a0f9497d, type: 3}
+  m_Name: se_player_charge_shot.play_sound
   m_EditorClassIdentifier: 
-  m_AisacSets:
-  - AisacType: 0
-    Name: AISAC_BGM
-  - AisacType: 1
-    Name: AISAC_Hack
-  m_BgmCueSheets: 00000000
-  m_SeCueSheets: 0100000002000000030000000400000005000000
+  m_CueSheet: 4
+  m_CueName: SE_Player_ChargeShot
+  m_StartTime: 0
+  m_Pitch: 0

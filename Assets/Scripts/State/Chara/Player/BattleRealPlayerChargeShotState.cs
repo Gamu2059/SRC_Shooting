@@ -10,7 +10,7 @@ partial class BattleRealPlayerController
         {
             base.OnStart();
 
-            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.UNSCALED_TIMER, 0.3f);
+            var timer = Timer.CreateTimeoutTimer(E_TIMER_TYPE.SCALED_TIMER, 0.3f);
             timer.SetTimeoutCallBack(() =>
             {
                 timer = null;
@@ -57,18 +57,6 @@ partial class BattleRealPlayerController
             {
                 // 移動直後に位置制限を掛ける
                 Target.RestrictPosition();
-            }
-
-            switch (input.Shot)
-            {
-                case E_REWIRED_INPUT_STATE.DOWN:
-                case E_REWIRED_INPUT_STATE.STAY:
-                    Target.StartShotBullet();
-                    break;
-                case E_REWIRED_INPUT_STATE.UP:
-                case E_REWIRED_INPUT_STATE.NONE:
-                    Target.StopShotBullet();
-                    break;
             }
 
             if (m_IsShotted && !Target.IsUsingChargeShot())

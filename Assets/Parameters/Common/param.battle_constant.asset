@@ -16,49 +16,43 @@ MonoBehaviour:
   m_MaxLevel: 5
   m_PlayerLevelDatas:
   - m_NecessaryExpNextLevel: 1000
-    m_ItemAtractScale: 1
-    m_LaserTypeShotDamage: 1
-    m_LaserTypeShotDownDamage: 1
-    m_BombTypeShotDamage: 1
-    m_BombTypeShotDownDamage: 1
-    m_LaserDamagePerSeconds: 100
-    m_BombDamage: 100
+    m_MainShotDamage: 1
+    m_MainShotDownDamage: 1
+    m_SideShotDamage: 0.5
+    m_SideShotDownDamage: 0.5
   - m_NecessaryExpNextLevel: 1500
-    m_ItemAtractScale: 1.25
-    m_LaserTypeShotDamage: 1
-    m_LaserTypeShotDownDamage: 1
-    m_BombTypeShotDamage: 1
-    m_BombTypeShotDownDamage: 1
-    m_LaserDamagePerSeconds: 100
-    m_BombDamage: 100
+    m_MainShotDamage: 1.2
+    m_MainShotDownDamage: 1.2
+    m_SideShotDamage: 0.6
+    m_SideShotDownDamage: 0.6
   - m_NecessaryExpNextLevel: 2500
-    m_ItemAtractScale: 1.5
-    m_LaserTypeShotDamage: 1
-    m_LaserTypeShotDownDamage: 1
-    m_BombTypeShotDamage: 1
-    m_BombTypeShotDownDamage: 1
-    m_LaserDamagePerSeconds: 100
-    m_BombDamage: 100
+    m_MainShotDamage: 1.4
+    m_MainShotDownDamage: 1.4
+    m_SideShotDamage: 0.7
+    m_SideShotDownDamage: 0.7
   - m_NecessaryExpNextLevel: 4000
-    m_ItemAtractScale: 2
-    m_LaserTypeShotDamage: 1
-    m_LaserTypeShotDownDamage: 1
-    m_BombTypeShotDamage: 1
-    m_BombTypeShotDownDamage: 1
-    m_LaserDamagePerSeconds: 100
-    m_BombDamage: 100
+    m_MainShotDamage: 1.6
+    m_MainShotDownDamage: 1.6
+    m_SideShotDamage: 0.8
+    m_SideShotDownDamage: 0.8
   - m_NecessaryExpNextLevel: 6000
-    m_ItemAtractScale: 100
-    m_LaserTypeShotDamage: 1
-    m_LaserTypeShotDownDamage: 1
-    m_BombTypeShotDamage: 1
-    m_BombTypeShotDownDamage: 1
-    m_LaserDamagePerSeconds: 100
-    m_BombDamage: 100
+    m_MainShotDamage: 2
+    m_MainShotDownDamage: 2
+    m_SideShotDamage: 1
+    m_SideShotDownDamage: 1
   m_MaxEnergy: 5
   m_NecessaryEnergyChargeNextStocks: e8030000e2040000dc050000d6060000d0070000
   m_MaxChargeLevel: 3
-  m_ChargeTimeNextLevels:
-  - 3
-  - 3
-  - 3
+  m_ChargeLevelDatas:
+  - m_ChargeTimeNextLevel: 3
+    m_LaserDamagePerSeconds: 100
+    m_BombDamage: 50
+    m_RemoveBulletScore: 100
+  - m_ChargeTimeNextLevel: 3
+    m_LaserDamagePerSeconds: 150
+    m_BombDamage: 50
+    m_RemoveBulletScore: 200
+  - m_ChargeTimeNextLevel: 3
+    m_LaserDamagePerSeconds: 200
+    m_BombDamage: 50
+    m_RemoveBulletScore: 300

@@ -294,7 +294,7 @@ public class BattleData
 
     #region Level
 
-    public BattleRealPlayerLevelData GetCurrentLevelParam()
+    public BattleRealPlayerLevelData GetCurrentPlayerLevelParam()
     {
         var idx = Mathf.Min(LevelInChapter.Value, m_ConstantParam.MaxLevel - 1);
         return m_ConstantParam.PlayerLevelDatas[idx];
@@ -315,7 +315,7 @@ public class BattleData
 
     public int GetCurrentNecessaryExp()
     {
-        var param = GetCurrentLevelParam();
+        var param = GetCurrentPlayerLevelParam();
         if (param == null)
         {
             Debug.LogWarning("Expパラメータを参照できませんでした");
@@ -634,17 +634,10 @@ public class BattleData
 
     #region Charge Shot
 
-    public float GetCurrentChargeWaitTime()
+    public BattleRealChargeShotLevelData GetCurrentChargeLevelParam()
     {
-        var chargeTimeNextLevels = m_ConstantParam.ChargeTimeNextLevels;
-        if (chargeTimeNextLevels == null || chargeTimeNextLevels.Length < 1)
-        {
-            Debug.LogWarning("チャージ強化時間を指定する配列の要素数が0です");
-            return 0;
-        }
-
-        var index = Mathf.Min(chargeTimeNextLevels.Length - 1, ChargeLevel.Value);
-        return chargeTimeNextLevels[index];
+        var idx = Mathf.Min(ChargeLevel.Value, m_ConstantParam.MaxChargeLevel - 1);
+        return m_ConstantParam.ChargeLevelDatas[idx];
     }
 
     /// <summary>

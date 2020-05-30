@@ -792,7 +792,7 @@ public class BulletController : BattleRealObjectBase
 
         return bullet;
     }
-    
+
     /// <summary>
     /// 指定したパラメータを用いて弾を発射する。
     /// </summary>
@@ -1069,7 +1069,7 @@ public class BulletController : BattleRealObjectBase
             var forward = transform.forward;
             targetDeltaPos.y = 0;
             forward.y = 0;
-            
+
             var lerp = m_NowLerp;
             var angle = Vector3.Angle(forward, targetDeltaPos);
             if (angle > m_LerpRestrictAngle)
@@ -1147,14 +1147,19 @@ public class BulletController : BattleRealObjectBase
             var sufferType = sufferData.SufferCollider.Transform.ColliderType;
             if (sufferType == E_COLLIDER_TYPE.ENEMY_BULLET)
             {
-                // 弾消しされる
-                DataManager.Instance.BattleData.IncreaseRemoveBullet();
-                DataManager.Instance.BattleData.AddScore(100);
-                BattleRealEffectManager.Instance.CreateBulletRemoveEffect(transform, 100);
-
-                DestroyBullet();
+                RemoveBulletByChargeShot();
             }
         }
+    }
+
+    private void RemoveBulletByChargeShot()
+    {
+        var battleData = DataManager.Instance.BattleData;
+        battleData.IncreaseRemoveBullet();
+        var score = battleData.GetCurrentChargeLevelParam().RemoveBulletScore;
+        DataManager.Instance.BattleData.AddScore(score);
+        BattleRealEffectManager.Instance.CreateBulletRemoveEffect(transform, score);
+        DestroyBullet();
     }
 
     protected virtual void OnStaySufferBullet(HitSufferData<BulletController> sufferData)

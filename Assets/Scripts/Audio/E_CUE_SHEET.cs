@@ -6,4 +6,5 @@ public enum E_CUE_SHEET
     GLOBAL,
     ENEMY,
     PLAYER,
+    PLAYER_CHARGE,
 }

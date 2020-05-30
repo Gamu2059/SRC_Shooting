@@ -75,7 +75,6 @@ namespace BattleReal.BulletGenerator
                 return;
             }
 
-            Debug.Log(11);
             Shot();
         }
 
@@ -92,8 +91,8 @@ namespace BattleReal.BulletGenerator
 
         private void Shot()
         {
-            var levelParam = GetIndividualParam();
-            var playerLevelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
+            var chargeLevelParam = GetIndividualParam();
+            var constnatChargeLevelParam = DataManager.Instance.BattleData.GetCurrentChargeLevelParam();
 
             var camera = BattleRealCameraManager.Instance.GetCameraController(E_CAMERA_TYPE.FRONT_CAMERA);
             var viewportPos = camera.Camera.WorldToViewportPoint(ShotTransform.position);
@@ -102,16 +101,15 @@ namespace BattleReal.BulletGenerator
             var shotParam = new BulletGeneratorShotParam()
             {
                 BulletOwner = Owner,
-                Bullet = levelParam.Laser,
-                BulletParam = levelParam.LaserParam,
+                Bullet = chargeLevelParam.Laser,
+                BulletParam = chargeLevelParam.LaserParam,
                 Position = pos,
                 Rotation = 0f,
                 Scale = Vector3.one
             };
             m_Laser = BulletController.ShotBullet(shotParam);
 
-            // 現状は、レーザータイプの通常弾だけを使う
-            m_Laser.SetNowDamage(playerLevelParam.LaserDamagePerSeconds);
+            m_Laser.SetNowDamage(constnatChargeLevelParam.LaserDamagePerSeconds);
             m_OnDestroyLaser = m_Laser.OnDestroyObservable.Subscribe(_ => Destroy());
         }
 
