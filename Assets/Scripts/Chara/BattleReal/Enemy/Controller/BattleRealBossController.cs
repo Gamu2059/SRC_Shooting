@@ -355,14 +355,17 @@ public partial class BattleRealBossController : BattleRealEnemyBase
         }
     }
 
-    protected override void OnEnterSufferChara(HitSufferData<BattleRealCharaController> sufferData)
+    protected override void OnStaySufferChara(HitSufferData<BattleRealCharaController> sufferData)
     {
-        base.OnEnterSufferChara(sufferData);
+        base.OnStaySufferChara(sufferData);
+        CheckHackingStart(sufferData);
+    }
+
+    private void CheckHackingStart(HitSufferData<BattleRealCharaController> sufferData)
+    {
         var sufferType = sufferData.SufferCollider.Transform.ColliderType;
         switch (sufferType)
         {
-            case E_COLLIDER_TYPE.CRITICAL:
-                break;
             case E_COLLIDER_TYPE.ENEMY_HACKING:
                 var currentState = m_StateMachine.CurrentState.Key;
                 if (currentState == E_STATE.DOWN_BEHAVIOR)
