@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 320c46a8c3776794ea65be21994ceda8, type: 3}
-  m_Name: battle_real_player_bomb.bullet
+  m_Name: battle_real_player_laser_lv3.bullet
   m_EditorClassIdentifier: 
-  LifeTime: 1
-  ShotSE: {fileID: 11400000, guid: 6219c6404d1f98e43a051dd453d3e8f1, type: 2}
+  LifeTime: 3
+  ShotSE: {fileID: 11400000, guid: 9f0cf8ca142cccc429f0e86934b004fe, type: 2}
   m_ReferenceDifficulty: 0
   OrbitalParam:
     Target: 0
-    Position: {x: 0, y: 0, z: 0}
+    Position: {x: 0, y: 0, z: 0.3}
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 using BattleReal.BulletGenerator;
 
 /// <summary>
@@ -25,13 +26,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
 
     private const string INVINSIBLE_KEY = "Invinsible";
 
-    #region Field Inspector
-
-    [SerializeField]
-    private Transform[] m_MainShotPosition;
-
-    #endregion
-
     #region Field
 
     private StateMachine<E_BATTLE_REAL_PLAYER_STATE, BattleRealPlayerController> m_StateMachine;
@@ -44,16 +38,15 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     private Transform m_Shield;
 
     private E_BATTLE_REAL_PLAYER_STATE m_DefaultGameState;
-    private float m_ShotDelay;
     private BattleCommonEffectController m_ShieldEffect;
     private BattleCommonEffectController m_ChargeEffect;
-    private BulletController m_Laser;
-    private BulletController m_Bomb;
-    private bool m_IsExistEnergyCharge;
 
+    private bool m_IsExistEnergyCharge;
     private PlayerNormalBulletGenerator m_NormalBulletGenerator;
     private PlayerLaserGenerator m_LaserGenerator;
     private PlayerBombGenerator m_BombGenerator;
+    private IDisposable m_LaserDestory;
+    private IDisposable m_BombDestroy;
 
     public bool IsDead { get; private set; }
     public bool IsLaserType { get; private set; }
@@ -204,9 +197,9 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     }
 
     /// <summary>
-    /// チャージ開始の一度だけ呼ばれる
+    /// チャージエフェクトをつける
     /// </summary>
-    private void ChargeStart()
+    private void FireChargeEffect()
     {
         if (IsUsingChargeShot())
         {
@@ -220,12 +213,18 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        if (m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED)
+        var existChargeEffect = !(m_ChargeEffect == null || m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.POOLED);
+        if (existChargeEffect)
         {
-            var paramSet = BattleRealPlayerManager.Instance.ParamSet;
-            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_CHARGE_01);
-            m_ChargeEffect = BattleRealEffectManager.Instance.CreateEffect(paramSet.ChargeEffectParam, transform);
+            AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER_CHARGE);
+            m_ChargeEffect.DestroyEffect(true);
+            m_ChargeEffect = null;
         }
+
+        var chargeLevel = DataManager.Instance.BattleData.ChargeLevel.Value;
+        var paramSet = BattleRealPlayerManager.Instance.ParamSet;
+        var effect = paramSet.ChargeEffectParams[chargeLevel];
+        m_ChargeEffect = BattleRealEffectManager.Instance.CreateEffect(effect, transform);
     }
 
     /// <summary>
@@ -238,18 +237,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
-        // チャージを放った瞬間にレーザーかボムかの識別ができていないとSEのタイミングが合わない
-        if (IsLaserType)
-        {
-            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_LASER);
-        }
-        else
-        {
-            AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_BOMB);
-        }
-
-        DataManager.Instance.BattleData.ConsumeEnergyStock();
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER_CHARGE);
+        AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_CHARGE_SHOT);
     }
 
     /// <summary>
@@ -257,18 +246,17 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     /// </summary>
     private void ChargeShot()
     {
+        DataManager.Instance.BattleData.ConsumeEnergyStock();
         BattleRealUiManager.Instance.FrontViewEffect.StopEffect();
         BattleRealEffectManager.Instance.ResumeAllEffect();
 
         if (IsLaserType)
         {
             ShotLaser();
-            BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
         }
         else
         {
             ShotBomb();
-            BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
         }
     }
 
@@ -283,22 +271,22 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        if (m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
-        {
-            return;
-        }
-
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             m_ChargeEffect.DestroyEffect(true);
         }
 
-        var param = new BulletShotParam(this);
-        param.Position = m_MainShotPosition[0].transform.position;
-        m_Laser = BulletController.ShotBullet(param, true);
+        var paramset = m_ParamSet.LaserGeneratorParamSet;
+        var generator = BattleRealBulletGeneratorManager.Instance.CreateBulletGenerator(paramset, this);
+        m_LaserGenerator = generator as PlayerLaserGenerator;
+        m_LaserDestory = m_LaserGenerator.OnDestroyObservable.Subscribe(_ =>
+        {
+            m_LaserDestory?.Dispose();
+            m_LaserDestory = null;
+            m_LaserGenerator = null;
+        });
 
-        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
-        m_Laser.SetNowDamage(levelParam.LaserDamagePerSeconds, E_RELATIVE.ABSOLUTE);
+        BattleRealCameraManager.Instance.Shake(m_ParamSet.LaserShakeParam);
     }
 
     /// <summary>
@@ -312,23 +300,22 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             return;
         }
 
-        if (m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED)
-        {
-            return;
-        }
-
         if (m_ChargeEffect != null && m_ChargeEffect.Cycle == E_POOLED_OBJECT_CYCLE.UPDATE)
         {
             m_ChargeEffect.DestroyEffect(true);
         }
 
-        var param = new BulletShotParam(this);
-        param.BulletIndex = 1;
-        param.BulletParamIndex = 1;
-        m_Bomb = BulletController.ShotBullet(param, true);
+        var paramset = m_ParamSet.BombGeneratorParamSet;
+        var generator = BattleRealBulletGeneratorManager.Instance.CreateBulletGenerator(paramset, this);
+        m_BombGenerator = generator as PlayerBombGenerator;
+        m_BombDestroy = m_BombGenerator.OnDestroyObservable.Subscribe(_ =>
+        {
+            m_BombDestroy?.Dispose();
+            m_BombDestroy = null;
+            m_BombGenerator = null;
+        });
 
-        var levelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
-        m_Bomb.SetNowDamage(levelParam.BombDamage, E_RELATIVE.ABSOLUTE);
+        BattleRealCameraManager.Instance.Shake(m_ParamSet.BombShakeParam);
     }
 
     /// <summary>
@@ -370,17 +357,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     /// </summary>
     public void StopChargeShot()
     {
-        if (m_Laser != null)
-        {
-            m_Laser.DestroyBullet();
-            m_Laser = null;
-        }
-
-        if (m_Bomb != null)
-        {
-            m_Bomb.DestroyBullet();
-            m_Bomb = null;
-        }
+        m_LaserGenerator?.StopChargeShot();
+        m_BombGenerator?.StopChargeShot();
 
         if (m_ChargeEffect != null)
         {
@@ -389,12 +367,13 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
         }
 
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER_CHARGE);
     }
 
     private bool IsUsingChargeShot()
     {
-        var useLaser = m_Laser != null && m_Laser.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
-        var useBomb = m_Bomb != null && m_Bomb.GetCycle() != E_POOLED_OBJECT_CYCLE.POOLED;
+        var useLaser = m_LaserGenerator != null && m_LaserGenerator.Cycle != E_POOLED_OBJECT_CYCLE.POOLED;
+        var useBomb = m_BombGenerator != null && m_BombGenerator.Cycle != E_POOLED_OBJECT_CYCLE.POOLED;
         return useLaser || useBomb;
     }
 
@@ -493,7 +472,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
             //case E_ITEM_TYPE.SMALL_SCORE:
             //case E_ITEM_TYPE.BIG_SCORE:
             //    battleData.AddScore(item.ItemPoint);
-                break;
+            //    break;
             case E_ITEM_TYPE.SMALL_EXP:
             case E_ITEM_TYPE.BIG_EXP:
                 battleData.AddExp(item.ItemPoint);

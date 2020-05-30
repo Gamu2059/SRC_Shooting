@@ -59,10 +59,6 @@ partial class BattleRealPlayerController
                     Target.StopShotBullet();
                     break;
             }
-            //if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
-            //{
-            //    Target.ShotBullet();
-            //}
 
             if (input.ChangeWeapon == E_REWIRED_INPUT_STATE.DOWN)
             {
@@ -78,8 +74,6 @@ partial class BattleRealPlayerController
                     Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE);
                 }
             }
-
-            Target.m_ShotDelay += Time.deltaTime;
         }
 
         public override void OnEnd()

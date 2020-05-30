@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 
 namespace BattleReal.BulletGenerator
 {
@@ -17,6 +18,8 @@ namespace BattleReal.BulletGenerator
         protected BattleRealCharaController Owner { get; private set; }
         protected BattleRealEnemyBase EnemyOwner { get; private set; }
 
+        public Subject<Unit> OnDestroyObservable { get; private set; }
+
         public void SetParam(IBattleRealBulletGeneratorParamBase param, BattleRealCharaController owner)
         {
             Param = param;
@@ -26,6 +29,20 @@ namespace BattleReal.BulletGenerator
         }
 
         protected abstract void OnSetParam();
+
+        public override void OnInitialize()
+        {
+            base.OnInitialize();
+            OnDestroyObservable = new Subject<Unit>();
+        }
+
+        public override void OnFinalize()
+        {
+            OnDestroyObservable?.OnNext(Unit.Default);
+            OnDestroyObservable?.OnCompleted();
+            OnDestroyObservable = null;
+            base.OnFinalize();
+        }
 
         public sealed override void OnUpdate()
         {

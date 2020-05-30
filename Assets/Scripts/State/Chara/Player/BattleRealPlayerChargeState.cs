@@ -4,10 +4,16 @@ partial class BattleRealPlayerController
 {
     private class ChargeState : StateCycle
     {
+        private float m_WaitTime;
+        private float m_WaitCount;
+
         public override void OnStart()
         {
             base.OnStart();
-            Target.ChargeStart();
+
+            var battleData = DataManager.Instance.BattleData;
+            battleData.ResetChargeLevel();
+            ChargeReset();
         }
 
         public override void OnUpdate()
@@ -49,23 +55,37 @@ partial class BattleRealPlayerController
                     Target.StopShotBullet();
                     break;
             }
-            //if (input.Shot == E_REWIRED_INPUT_STATE.STAY)
-            //{
-            //    Target.ShotBullet();
-            //}
 
             if (input.ChargeShot == E_REWIRED_INPUT_STATE.UP)
             {
                 Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE_SHOT);
             }
 
-            Target.m_ShotDelay += Time.deltaTime;
+            var battleData = DataManager.Instance.BattleData;
+            if (!battleData.IsMaxChargeLevel())
+            {
+                if (m_WaitCount >= m_WaitTime)
+                {
+                    battleData.IncreaseChargeLevel();
+                    ChargeReset();
+                }
+
+                m_WaitCount += Time.deltaTime;
+            }
         }
 
         public override void OnEnd()
         {
             base.OnEnd();
             Target.ChargeEnd();
+        }
+
+        private void ChargeReset()
+        {
+            var battleData = DataManager.Instance.BattleData;
+            m_WaitTime = battleData.GetCurrentChargeLevelParam().ChargeTimeNextLevel;
+            m_WaitCount = 0;
+            Target.FireChargeEffect();
         }
     }
 }

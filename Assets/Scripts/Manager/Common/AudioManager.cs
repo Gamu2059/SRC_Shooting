@@ -212,6 +212,7 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         source.cueName = playSoundParam.CueName;
         source.player.SetStartTime(Math.Max(playSoundParam.StartTime, 0));
+        source.pitch = playSoundParam.Pitch;
         source.Play();
     }
 

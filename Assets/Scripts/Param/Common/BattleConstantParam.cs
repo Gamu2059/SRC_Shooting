@@ -8,30 +8,40 @@ using System;
 [Serializable, CreateAssetMenu(menuName = "Param/BattleCommon/BattleConstant", fileName = "param.battle_constant.asset")]
 public class BattleConstantParam : ScriptableObject
 {
-    [SerializeField, Tooltip("初期残機数")]
-    private int m_InitLife = 2;
-    public int InitLife => m_InitLife;
-
     [SerializeField, Tooltip("最大残機数")]
     private int m_MaxLife = 5;
     public int MaxLife => m_MaxLife;
+
+    [Header("Level")]
 
     [SerializeField, Tooltip("最大レベル")]
     private int m_MaxLevel = 5;
     public int MaxLevel => m_MaxLevel;
 
-    [SerializeField, Tooltip("最大エナジーストック")]
-    private int m_MaxEnergy = 5;
-    public int MaxEnergy => m_MaxEnergy;
-
     [SerializeField, Tooltip("プレイヤーのレベルごとのデータ")]
     private BattleRealPlayerLevelData[] m_PlayerLevelDatas;
 
     public BattleRealPlayerLevelData[] PlayerLevelDatas => m_PlayerLevelDatas;
+    
+    [Header("Energy")]
+
+    [SerializeField, Tooltip("最大エナジーストック")]
+    private int m_MaxEnergy = 5;
+    public int MaxEnergy => m_MaxEnergy;
 
     [SerializeField, Tooltip("次のエナジーストックまでに必要なエナジーチャージ量")]
     private int[] m_NecessaryEnergyChargeNextStocks;
     public int[] NecessaryEnergyChargeNextStocks => m_NecessaryEnergyChargeNextStocks;
+
+    [Header("Charge Shot")]
+    
+    [SerializeField, Tooltip("チャージショットの最大強化レベル")]
+    private int m_MaxChargeLevel = 3;
+    public int MaxChargeLevel => m_MaxChargeLevel;
+
+    [SerializeField, Tooltip("チャージのレベルごとのデータ")]
+    private BattleRealChargeShotLevelData[] m_ChargeLevelDatas;
+    public BattleRealChargeShotLevelData[] ChargeLevelDatas => m_ChargeLevelDatas;
 }
 
 /// <summary>
@@ -44,25 +54,32 @@ public class BattleRealPlayerLevelData
     private int m_NecessaryExpNextLevel;
     public int NecessaryExpNextLevel => m_NecessaryExpNextLevel;
 
-    [SerializeField, Tooltip("アイテム吸収範囲の相対スケール")]
-    private float m_ItemAtractScale;
-    public float ItemAtractScale => m_ItemAtractScale;
+    [SerializeField]
+    private float m_MainShotDamage;
+    public float MainShotDamage => m_MainShotDamage;
 
-    [SerializeField, Tooltip("レーザータイプでの通常弾1発のダメージ")]
-    private float m_LaserTypeShotDamage;
-    public float LaserTypeShotDamage => m_LaserTypeShotDamage;
+    [SerializeField]
+    private float m_MainShotDownDamage;
+    public float MainShotDownDamage => m_MainShotDownDamage;
 
-    [SerializeField, Tooltip("レーザータイプでの通常弾1発のダウンダメージ")]
-    private float m_LaserTypeShotDownDamage;
-    public float LaserTypeShotDownDamage => m_LaserTypeShotDownDamage;
+    [SerializeField]
+    private float m_SideShotDamage;
+    public float SideShotDamage => m_SideShotDamage;
 
-    [SerializeField, Tooltip("ボムタイプでの通常弾1発のダメージ")]
-    private float m_BombTypeShotDamage;
-    public float BombTypeShotDamage => m_BombTypeShotDamage;
+    [SerializeField]
+    private float m_SideShotDownDamage;
+    public float SideShotDownDamage => m_SideShotDownDamage;
+}
 
-    [SerializeField, Tooltip("ボムタイプでの通常弾1発のダウンダメージ")]
-    private float m_BombTypeShotDownDamage;
-    public float BombTypeShotDownDamage => m_BombTypeShotDownDamage;
+/// <summary>
+/// チャージショットのレベルに関するパラメータ。
+/// </summary>
+[Serializable]
+public class BattleRealChargeShotLevelData
+{
+    [SerializeField, Tooltip("次のチャージ強化レベルまでに必要なチャージ時間")]
+    private float m_ChargeTimeNextLevel;
+    public float ChargeTimeNextLevel => m_ChargeTimeNextLevel;
 
     [SerializeField, Tooltip("レーザーの1秒あたりのダメージ")]
     private float m_LaserDamagePerSeconds;
@@ -71,4 +88,8 @@ public class BattleRealPlayerLevelData
     [SerializeField, Tooltip("ボムの1発あたりのダメージ")]
     private float m_BombDamage;
     public float BombDamage => m_BombDamage;
+
+    [SerializeField, Tooltip("弾消し時のスコア")]
+    private int m_RemoveBulletScore;
+    public int RemoveBulletScore => m_RemoveBulletScore;
 }

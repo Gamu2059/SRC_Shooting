@@ -4690,6 +4690,71 @@ MonoBehaviour:
   m_CloseGameEvent: ControlMapper Close
   m_CloseDuration: 0.25
   m_CloseEndXPosition: -20
+--- !u!1 &1131730902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1131730903}
+  - component: {fileID: 1131730905}
+  - component: {fileID: 1131730904}
+  m_Layer: 0
+  m_Name: SE_Player_Charge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1131730903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131730902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1848087190}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1131730904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131730902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad959add97bb204b875bb23966ff143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1131730905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131730902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _cueName: 
+  _cueSheet: SE_Player
+  _use3dPositioning: 1
+  _loop: 0
+  _volume: 1
+  _pitch: 0
+  _androidUseLowLatencyVoicePool: 0
+  need_to_player_update_all: 1
 --- !u!1 &1166132487
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,6 +5343,8 @@ MonoBehaviour:
     Source: {fileID: 1541977758}
   - CueSheet: 4
     Source: {fileID: 68704729}
+  - CueSheet: 5
+    Source: {fileID: 1131730905}
   m_CommonSoundSets:
   - Type: 0
     Param: {fileID: 11400000, guid: 63e49934ea1c436429172ee073a230c8, type: 2}
@@ -5335,6 +5402,8 @@ MonoBehaviour:
     Param: {fileID: 11400000, guid: c806296796190d440a8a9a182125fad7, type: 2}
   - Type: 27
     Param: {fileID: 11400000, guid: 7aa97112fd7488b4b9765f9228dd9d30, type: 2}
+  - Type: 31
+    Param: {fileID: 11400000, guid: 023ec05796a85db498daee4d2977c3c4, type: 2}
 --- !u!1 &1320366616
 GameObject:
   m_ObjectHideFlags: 0
@@ -6358,7 +6427,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1848087190}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1541977758
 MonoBehaviour:
@@ -7087,6 +7156,7 @@ Transform:
   - {fileID: 1339261326}
   - {fileID: 589815190}
   - {fileID: 68704728}
+  - {fileID: 1131730903}
   - {fileID: 1541977757}
   m_Father: {fileID: 1281577261}
   m_RootOrder: 1

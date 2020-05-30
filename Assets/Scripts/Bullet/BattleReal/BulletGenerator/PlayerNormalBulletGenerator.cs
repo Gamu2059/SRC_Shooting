@@ -123,21 +123,26 @@ namespace BattleReal.BulletGenerator
             }
 
             var levelParam = GetIndividualParam();
-            var playerLevelParam = DataManager.Instance.BattleData.GetCurrentLevelParam();
+            var playerLevelParam = DataManager.Instance.BattleData.GetCurrentPlayerLevelParam();
 
             if (m_MainShotTimeCount >= levelParam.MainShotInterval)
             {
+                var damage = playerLevelParam.MainShotDamage;
+                var downDamge = playerLevelParam.MainShotDownDamage;
                 m_MainShotTimeCount -= levelParam.MainShotInterval;
-                Shot(MainShotTransform, MainShotBullet, MainShotParam, playerLevelParam.LaserTypeShotDamage, playerLevelParam.LaserTypeShotDownDamage);
+                Shot(MainShotTransform, MainShotBullet, MainShotParam, damage, downDamge);
 
                 AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_SHOT_01);
             }
 
             if (levelParam.UseSideShot && m_SideShotTimeCount >= levelParam.SideShotInterval)
             {
+                var damage = playerLevelParam.SideShotDamage;
+                var downDamge = playerLevelParam.SideShotDownDamage;
+                Debug.LogFormat("d : {0} dd: {1}", damage, downDamge);
                 m_SideShotTimeCount -= levelParam.SideShotInterval;
-                Shot(LeftSideShotTransform, SideShotBullet, SideShotParam, playerLevelParam.LaserTypeShotDamage, playerLevelParam.LaserTypeShotDownDamage);
-                Shot(RightSideShotTransform, SideShotBullet, SideShotParam, playerLevelParam.LaserTypeShotDamage, playerLevelParam.LaserTypeShotDownDamage);
+                Shot(LeftSideShotTransform, SideShotBullet, SideShotParam, damage, downDamge);
+                Shot(RightSideShotTransform, SideShotBullet, SideShotParam, damage, downDamge);
             }
 
             m_MainShotTimeCount += deltaTime;
@@ -173,10 +178,7 @@ namespace BattleReal.BulletGenerator
             };
             var bullet = BulletController.ShotBullet(shotParam);
 
-            // 現状は、レーザータイプの通常弾だけを使う
             bullet.SetNowDamage(damage);
-
-            // ダウンダメージを設定する
             if (bullet is IBattleRealPlayerNormalBullet playerBullet)
             {
                 playerBullet.SetNowDownDamage(downDamage);
