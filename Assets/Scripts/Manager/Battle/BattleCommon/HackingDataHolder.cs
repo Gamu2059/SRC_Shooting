@@ -23,4 +23,9 @@ public static class HackingDataHolder
     /// ハッキングが成功したかどうか。
     /// </summary>
     public static bool IsHackingSuccess = false;
+
+    /// <summary>
+    /// ハッキング対象の名前。
+    /// </summary>
+    public static string HackingTargetName = null;
 }
