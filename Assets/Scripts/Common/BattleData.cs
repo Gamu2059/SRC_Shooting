@@ -309,6 +309,11 @@ public class BattleData
         }
     }
 
+    public bool IsPlayerLevelMax()
+    {
+        return LevelInChapter.Value >= m_ConstantParam.MaxLevel;
+    }
+
     #endregion
 
     #region Exp
