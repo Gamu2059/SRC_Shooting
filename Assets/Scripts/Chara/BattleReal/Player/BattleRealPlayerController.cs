@@ -26,13 +26,6 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
 
     private const string INVINSIBLE_KEY = "Invinsible";
 
-    #region Field Inspector
-
-    [SerializeField]
-    private Transform[] m_MainShotPosition;
-
-    #endregion
-
     #region Field
 
     private StateMachine<E_BATTLE_REAL_PLAYER_STATE, BattleRealPlayerController> m_StateMachine;
@@ -47,10 +40,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     private E_BATTLE_REAL_PLAYER_STATE m_DefaultGameState;
     private BattleCommonEffectController m_ShieldEffect;
     private BattleCommonEffectController m_ChargeEffect;
-    private BulletController m_Laser;
-    private BulletController m_Bomb;
-    private bool m_IsExistEnergyCharge;
 
+    private bool m_IsExistEnergyCharge;
     private PlayerNormalBulletGenerator m_NormalBulletGenerator;
     private PlayerLaserGenerator m_LaserGenerator;
     private PlayerBombGenerator m_BombGenerator;
@@ -367,12 +358,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     public void StopChargeShot()
     {
         m_LaserGenerator?.StopChargeShot();
-
-        if (m_Bomb != null)
-        {
-            m_Bomb.DestroyBullet();
-            m_Bomb = null;
-        }
+        m_BombGenerator?.StopChargeShot();
 
         if (m_ChargeEffect != null)
         {
@@ -381,6 +367,7 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
         }
 
         AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER);
+        AudioManager.Instance.Stop(E_CUE_SHEET.PLAYER_CHARGE);
     }
 
     private bool IsUsingChargeShot()
