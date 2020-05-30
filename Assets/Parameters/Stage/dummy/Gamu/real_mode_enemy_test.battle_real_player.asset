@@ -19,7 +19,10 @@ MonoBehaviour:
   m_PlayerBaseMoveSpeed: 1
   m_PlayerSlowMoveSpeed: 0.5
   m_IsLaserType: 1
-  m_ChargeEffectParams: []
+  m_ChargeEffectParams:
+  - {fileID: 11400000, guid: 831e12128ad097c46803a62a083f7f8f, type: 2}
+  - {fileID: 11400000, guid: c5eb244e6b4e99c40ba81c7f1377ff54, type: 2}
+  - {fileID: 11400000, guid: 222cee1e98cf5a0498915929b5b37b07, type: 2}
   m_ShieldEffectParam: {fileID: 11400000, guid: a25de3426a5eac24493d75dbef68e359,
     type: 2}
   m_DeadEffectParam: {fileID: 11400000, guid: b9e00ef7308498c4390e7e80ef2d3d4d, type: 2}
