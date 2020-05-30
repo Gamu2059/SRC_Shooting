@@ -139,7 +139,6 @@ namespace BattleReal.BulletGenerator
             {
                 var damage = playerLevelParam.SideShotDamage;
                 var downDamge = playerLevelParam.SideShotDownDamage;
-                Debug.LogFormat("d : {0} dd: {1}", damage, downDamge);
                 m_SideShotTimeCount -= levelParam.SideShotInterval;
                 Shot(LeftSideShotTransform, SideShotBullet, SideShotParam, damage, downDamge);
                 Shot(RightSideShotTransform, SideShotBullet, SideShotParam, damage, downDamge);

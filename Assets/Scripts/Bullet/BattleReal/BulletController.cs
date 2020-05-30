@@ -1157,6 +1157,13 @@ public class BulletController : BattleRealObjectBase
         var battleData = DataManager.Instance.BattleData;
         battleData.IncreaseRemoveBullet();
         var score = battleData.GetCurrentChargeLevelParam().RemoveBulletScore;
+        
+        // チャプター0では弾消しでスコア加算しない
+        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            score = 0;
+        }
+
         DataManager.Instance.BattleData.AddScore(score);
         BattleRealEffectManager.Instance.CreateBulletRemoveEffect(transform, score);
         DestroyBullet();

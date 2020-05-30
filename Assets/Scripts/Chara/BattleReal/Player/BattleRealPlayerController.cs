@@ -48,6 +48,8 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
     private IDisposable m_LaserDestory;
     private IDisposable m_BombDestroy;
 
+    private IDisposable m_Level;
+
     public bool IsDead { get; private set; }
     public bool IsLaserType { get; private set; }
     public bool IsRestrictPosition;
@@ -98,10 +100,24 @@ public partial class BattleRealPlayerController : BattleRealCharaController, ISt
 
         // ‚Æ‚è‚ ‚¦‚¸NON_GAME‚Ö‘JˆÚ‚µ‚Ä‘Ò‹@‚µ‚Ä‚¨‚­
         RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.NON_GAME);
+
+        m_Level = DataManager.Instance.BattleData.LevelInChapter.Subscribe(x =>
+        {
+            if (DataManager.Instance.BattleData.IsPlayerLevelMax())
+            {
+                AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_LEVEL_MAX);
+                m_Level?.Dispose();
+                m_Level = null;
+            }
+        });
     }
 
     public override void OnFinalize()
     {
+        m_Level?.Dispose();
+        m_LaserDestory?.Dispose();
+        m_BombDestroy?.Dispose();
+
         m_SequenceController?.OnFinalize();
         ChangeStateAction = null;
         ChangeWeaponTypeAction = null;

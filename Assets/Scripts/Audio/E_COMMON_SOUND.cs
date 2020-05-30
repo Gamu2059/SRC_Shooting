@@ -166,4 +166,9 @@ public enum E_COMMON_SOUND
     /// チャージショットを放った瞬間のSE
     /// </summary>
     PLAYER_CHARGE_SHOT,
+
+    /// <summary>
+    /// プレイヤーが最大レベルに到達した時のSE
+    /// </summary>
+    PLAYER_LEVEL_MAX,
 }
