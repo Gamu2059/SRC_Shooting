@@ -21,8 +21,8 @@ MonoBehaviour:
   m_OnLoopedOptions: []
   m_OnStopOptions: []
   m_ChargeDuration: 12
-  m_DamageUntilChargeFailure: 100
-  m_ChargeEffect: {fileID: 0}
+  m_DamageUntilChargeFailure: 300
+  m_ChargeEffect: {fileID: 11400000, guid: 10fd497e54257754299abb8b7a969948, type: 2}
   m_ChargeSuccessElements:
   - {fileID: 11400000, guid: d0b930d5e8568c04e8890a06d6238158, type: 2}
   - {fileID: 11400000, guid: acaf9164b38091d4e853ed5952420c24, type: 2}
