@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7636016840afa304fbd8704cb996e00e, type: 3}
-  m_Name: "stage0_\u30DC\u30B9.boss"
+  m_Name: "stage0_\u518D\u751F\u6210\u30DC\u30B9.boss"
   m_EditorClassIdentifier: 
   m_ControllerType: 1
   m_ControllerClassName: 
@@ -28,96 +28,6 @@ MonoBehaviour:
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: 8fe7635eb43b5784e8e6607e44239993,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 9ad25d9706dc93040a1a0f862678011a,
-          type: 2}
-        m_OnChangeBehaviorEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 100
-        m_DownHealTime: 10
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: a0fae9ccf52c0b545b1d29410df81879,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 530b2945fc906064594d3eb5be8ba7e3,
-          type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 9029163087d4c2346b7f4c5b84c5caa5,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 200
-        m_DownHealTime: 10
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
         m_BehaviorGroup: {fileID: 11400000, guid: 45241ceba0843f8478b7b118227f2be6,
           type: 2}
         m_DownBehaviorType: 0
@@ -126,51 +36,7 @@ MonoBehaviour:
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: ea28a0217515df84797f9879a27e2223,
           type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
+        m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
           type: 2}
         m_DownHp: 400
@@ -203,7 +69,7 @@ MonoBehaviour:
         - ControlType: 2
           PlaySoundParam: {fileID: 0}
           StopSoundGroup: 0
-          OperateAisacParam: {fileID: 11400000, guid: 24061c161b4d632478ca7bec623fdabf,
+          OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
             type: 2}
         ControlTelopParam:
           TargetTelopType: 0
@@ -355,96 +221,6 @@ MonoBehaviour:
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: 8fe7635eb43b5784e8e6607e44239993,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 9ad25d9706dc93040a1a0f862678011a,
-          type: 2}
-        m_OnChangeBehaviorEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 150
-        m_DownHealTime: 5
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: a0fae9ccf52c0b545b1d29410df81879,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 530b2945fc906064594d3eb5be8ba7e3,
-          type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 9029163087d4c2346b7f4c5b84c5caa5,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 300
-        m_DownHealTime: 5
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
         m_BehaviorGroup: {fileID: 11400000, guid: 45241ceba0843f8478b7b118227f2be6,
           type: 2}
         m_DownBehaviorType: 0
@@ -453,51 +229,7 @@ MonoBehaviour:
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: ea28a0217515df84797f9879a27e2223,
           type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
+        m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
           type: 2}
         m_DownHp: 600
@@ -530,7 +262,7 @@ MonoBehaviour:
         - ControlType: 2
           PlaySoundParam: {fileID: 0}
           StopSoundGroup: 0
-          OperateAisacParam: {fileID: 11400000, guid: 24061c161b4d632478ca7bec623fdabf,
+          OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
             type: 2}
         ControlTelopParam:
           TargetTelopType: 0
@@ -682,96 +414,6 @@ MonoBehaviour:
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: 8fe7635eb43b5784e8e6607e44239993,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 9ad25d9706dc93040a1a0f862678011a,
-          type: 2}
-        m_OnChangeBehaviorEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 50
-        m_DownHealTime: 10
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: a0fae9ccf52c0b545b1d29410df81879,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 530b2945fc906064594d3eb5be8ba7e3,
-          type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 9029163087d4c2346b7f4c5b84c5caa5,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 100
-        m_DownHealTime: 10
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
         m_BehaviorGroup: {fileID: 11400000, guid: 45241ceba0843f8478b7b118227f2be6,
           type: 2}
         m_DownBehaviorType: 0
@@ -780,51 +422,7 @@ MonoBehaviour:
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: ea28a0217515df84797f9879a27e2223,
           type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
+        m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
           type: 2}
         m_DownHp: 200
@@ -857,7 +455,7 @@ MonoBehaviour:
         - ControlType: 2
           PlaySoundParam: {fileID: 0}
           StopSoundGroup: 0
-          OperateAisacParam: {fileID: 11400000, guid: 24061c161b4d632478ca7bec623fdabf,
+          OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
             type: 2}
         ControlTelopParam:
           TargetTelopType: 0
@@ -1009,96 +607,6 @@ MonoBehaviour:
       m_BehaviorSets:
       - m_BehaviorType: 1
         m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: 8fe7635eb43b5784e8e6607e44239993,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 9ad25d9706dc93040a1a0f862678011a,
-          type: 2}
-        m_OnChangeBehaviorEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 150
-        m_DownHealTime: 3
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
-        m_BehaviorGroup: {fileID: 11400000, guid: a0fae9ccf52c0b545b1d29410df81879,
-          type: 2}
-        m_DownBehaviorType: 0
-        m_DownBehavior: {fileID: 11400000, guid: 174b10aa6a594aa42983bb463fe18e22,
-          type: 2}
-        m_DownBehaviorGroup: {fileID: 0}
-        m_HackingLevelParamSet: {fileID: 11400000, guid: 530b2945fc906064594d3eb5be8ba7e3,
-          type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 9029163087d4c2346b7f4c5b84c5caa5,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
-        m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
-          type: 2}
-        m_DownHp: 300
-        m_DownHealTime: 2.5
-        m_HpRateThresholdNextBehavior: 0
-        m_HackingSuccessItemParam:
-          ItemSpreadParams:
-          - Type: 6
-            Num: 5
-            Point: 100
-            SpreadRadius: 0.1
-          CenterCreateItemType: 0
-      - m_BehaviorType: 1
-        m_Behavior: {fileID: 0}
         m_BehaviorGroup: {fileID: 11400000, guid: 45241ceba0843f8478b7b118227f2be6,
           type: 2}
         m_DownBehaviorType: 0
@@ -1107,51 +615,7 @@ MonoBehaviour:
         m_DownBehaviorGroup: {fileID: 0}
         m_HackingLevelParamSet: {fileID: 11400000, guid: ea28a0217515df84797f9879a27e2223,
           type: 2}
-        m_OnChangeBehaviorEvents:
-        - ContentName: "BGM Aisac\u5909\u66F4"
-          IsPassExecute: 0
-          EventType: 3
-          ExecuteTiming: 0
-          DelayExecuteTime: 0
-          UseEnemyGroupParamArray: 0
-          EnemyGroupParam: {fileID: 0}
-          EnemyGroupParams: []
-          IsOnlyRetireNotBossEnemy: 0
-          MovePlayerSequenceGroup: {fileID: 0}
-          ControlCameraParams: []
-          ControlObjectParams: []
-          ControlBgmParams:
-          - ControlType: 2
-            PlaySoundParam: {fileID: 0}
-            StopSoundGroup: 0
-            OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
-              type: 2}
-          ControlTelopParam:
-            TargetTelopType: 0
-          ShowCutsceneParam:
-            CutsceneName: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ShowTalkParam:
-            ScenarioLabel: 
-            AutoChangeToGameState: 0
-            OnCompletedEvents: []
-          ChangeState: 0
-          FadeParam:
-            IsFadeOut: 0
-            FadeOutColor: {r: 0, g: 0, b: 0, a: 0}
-            UseAnimation: 0
-            Duration: 0
-            RateCurve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 0
-              m_PostInfinity: 0
-              m_RotationOrder: 0
-          OperateVariableParams: []
-          CountStartTimePeriodNames: []
-          CallScriptParams: []
-          ExecuteEvents: []
+        m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 321250fcc0106284a80f510151c66b11,
           type: 2}
         m_DownHp: 600
@@ -1184,7 +648,7 @@ MonoBehaviour:
         - ControlType: 2
           PlaySoundParam: {fileID: 0}
           StopSoundGroup: 0
-          OperateAisacParam: {fileID: 11400000, guid: 24061c161b4d632478ca7bec623fdabf,
+          OperateAisacParam: {fileID: 11400000, guid: 6cfb26206e340b443858c7a5d448f497,
             type: 2}
         ControlTelopParam:
           TargetTelopType: 0
