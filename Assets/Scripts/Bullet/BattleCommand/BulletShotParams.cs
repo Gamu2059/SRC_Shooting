@@ -18,6 +18,9 @@ public class BulletShotParams : BulletShotParamBase
     [SerializeField, Tooltip("弾を撃つ時の多重forループ")]
     private MultiForLoop m_MultiForLoop;
 
+    [SerializeField, Tooltip("弾を撃つ時の効果音")]
+    private E_COMMON_SOUND m_ShotSE;
+
     [SerializeField, Tooltip("弾の変更可能なパラメータの初期値（演算）")]
     private BulletParamFreeOperation m_BulletParamFreeOperationChangeableInit;
 
@@ -45,11 +48,11 @@ public class BulletShotParams : BulletShotParamBase
     }
 
 
-    public override void OnUpdates(CommandCharaController owner, E_COMMON_SOUND shotSE)
+    public override void OnUpdates(CommandCharaController owner)
     {
 
-        // 一度でも弾を発射したかどうか
-        bool isShoot = false;
+        //// 一度でも弾を発射したかどうか
+        //bool isShoot = false;
 
         for (m_MultiForLoop.Init(); m_MultiForLoop.IsTrue(); m_MultiForLoop.Process())
         {
@@ -60,16 +63,17 @@ public class BulletShotParams : BulletShotParamBase
                 m_BulletParamFreeOperationChangeableInit,
                 m_BulletParamFreeOperationChangeableUpdate,
                 m_BulletTransform,
-                m_BulletShotParams
+                m_BulletShotParams,
+                m_ShotSE
                 );
 
-            isShoot = true;
+            //isShoot = true;
         }
 
-        if (isShoot)
-        {
-            AudioManager.Instance.Play(shotSE);
-        }
+        //if (isShoot)
+        //{
+        //    AudioManager.Instance.Play(shotSE);
+        //}
     }
 }
 

@@ -38,6 +38,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         BulletParamFreeOperation bulletParamFreeOperationChangeableUpdate,
         TransformOperation transformOperation,
         BulletShotParams bulletShotParams,
+        E_COMMON_SOUND shotSE,
         bool isCheck = true
         )
     {
@@ -95,11 +96,18 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         bullet.spriteRenderer = (SpriteRenderer)bullet.gameObject.GetComponentInChildren(typeof(SpriteRenderer));
 
 
+        bullet.m_ShotSE = shotSE;
+
+
         // この弾の親がプレイヤーなら
         if (bullet.m_Boss is BattleHackingPlayerController)
         {
             // すぐに動き始める
             bullet.m_IsMoving = true;
+
+            // 弾の発射音を鳴らす
+            AudioManager.Instance.Play(bullet.m_ShotSE);
+            //AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_HACKING_SHOT);
         }
         // この弾の親がプレイヤー以外なら
         else
@@ -197,6 +205,12 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     private static readonly float InitialScaleMag = 3F;
 
 
+    /// <summary>
+    /// 発射音
+    /// </summary>
+    private E_COMMON_SOUND m_ShotSE;
+
+
     public override void OnInitialize()
     {
         base.OnInitialize();
@@ -241,6 +255,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             {
                 m_IsMoving = true;
                 m_Time -= BlurTimeLength;
+
+                // 弾の発射音を鳴らす
+                AudioManager.Instance.Play(m_ShotSE);
+                //AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
             }
         }
 
@@ -301,7 +319,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         // もしこの弾が弾を発射するなら、発射の処理を行う
         if (m_BulletShotParams != null)
         {
-            m_BulletShotParams.OnUpdates(m_Boss, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+            m_BulletShotParams.OnUpdates(m_Boss);
         }
     }
 
