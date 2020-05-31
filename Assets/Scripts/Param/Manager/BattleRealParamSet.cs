@@ -30,6 +30,10 @@ public class BattleRealParamSet : ScriptableObject
     public BattleRealItemManagerParamSet ItemManagerParamSet => m_ItemManagerParamSet;
 
     [SerializeField]
+    private BattleRealEffectManagerParamSet m_EffectManagerParamSet;
+    public BattleRealEffectManagerParamSet EffectManagerParamSet => m_EffectManagerParamSet;
+
+    [SerializeField]
     private BattleRealEventTriggerParamSet m_EventTriggerParamSet;
     public BattleRealEventTriggerParamSet EventTriggerParamSet => m_EventTriggerParamSet;
 }

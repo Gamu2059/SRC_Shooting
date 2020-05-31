@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRealPlayerMainBullet : BulletController
+public class BattleRealPlayerMainBullet : BulletController, IBattleRealPlayerNormalBullet
 {
     private float m_NowDownDamage;
     

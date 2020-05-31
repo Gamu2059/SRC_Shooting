@@ -5,16 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Linq;
+using UniRx;
 
 public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 {
-    private const string TO_HACKING = "battle_real_ui_to_hacking";
-    private const string TO_REAL = "battle_real_ui_to_real";
-    private const string CLEAR_WITHOUT_HACKING_COMPLETE = "stage_clear_without_hacking_complete";
-    private const string CLEAR_WITH_HACKING_COMPLETE = "stage_clear_with_hacking_complete";
-    private const string CLEAR_CLOSE = "stage_clear_close_banner";
-
     #region Field Inspector
 
     [SerializeField]
@@ -82,24 +76,13 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     [SerializeField]
     private BattleRealBossUI m_BossUiRight;
 
-    [Header("Telop Indicator")]
+    [Header("Telop")]
 
     [SerializeField]
-    private TelopEffectIndicator m_StartTelop;
+    private SimpleAnimatorController m_StartTelop;
 
     [SerializeField]
-    private TelopEffectIndicator m_WarningTelop;
-
-    [SerializeField]
-    private TelopEffectIndicator m_ClearTelop;
-
-    [Header("Animator")]
-
-    [SerializeField]
-    private Animator m_MainViewAnimator;
-
-    [SerializeField]
-    private Animator m_ResultViewAnimator;
+    private SimpleAnimatorController m_ClearTelop;
 
     [Header("Result")]
 
@@ -113,8 +96,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
 
     #endregion
 
-    private bool m_IsShowResult;
-
     #region Closed Callback
 
     private Action EndAction { get; set; }
@@ -127,12 +108,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     }
 
     #region Game Cycle
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        m_IsShowResult = false;
-    }
 
     public override void OnInitialize()
     {
@@ -160,7 +135,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_GameOverController.EndAction += OnEndGameOver;
 
         m_StartTelop.OnInitialize();
-        m_WarningTelop.OnInitialize();
         m_ClearTelop.OnInitialize();
 
         if (DataManager.Instance.IsInvalidAchievement())
@@ -188,7 +162,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         }
 
         m_ClearTelop.OnFinalize();
-        m_WarningTelop.OnFinalize();
         m_StartTelop.OnFinalize();
 
         m_GameOverController.OnFinalize();
@@ -232,32 +205,15 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
         m_GameOverController.OnUpdate();
 
         m_StartTelop.OnUpdate();
-        m_WarningTelop.OnUpdate();
         m_ClearTelop.OnUpdate();
 
         if (!DataManager.Instance.IsInvalidAchievement() && m_AchievementIndicators != null)
         {
             m_AchievementIndicators.ForEach(i => i.OnUpdate());
         }
-
-
-        if (m_IsShowResult && Input.anyKey)
-        {
-            m_IsShowResult = false;
-            EndAction?.Invoke();
-        }
     }
 
     #endregion
-
-    /// <summary>
-    /// リアルモードに遷移する時のビューの透明度アニメーションを再生する。
-    /// </summary>
-    public void PlayToReal()
-    {
-        m_MainViewAnimator.Play(TO_REAL, 0);
-        m_ResultViewAnimator.Play(TO_REAL, 0);
-    }
 
     /// <summary>
     /// リアルモードのUIの透明度を設定する。
@@ -265,7 +221,6 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     public void SetAlpha(float normalizedAlpha)
     {
         m_MainUiGroup.alpha = normalizedAlpha;
-        m_ResultUiGroup.alpha = normalizedAlpha;
     }
 
     /// <summary>
@@ -312,16 +267,12 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     /// </summary>
     public void PlayStartTelop(Action onEnd = null)
     {
-        m_StartTelop.Play(null, false, onEnd);
-    }
+        m_StartTelop.OnComplete.Subscribe(_ =>
+        {
+            onEnd?.Invoke();
+        });
 
-    /// <summary>
-    /// 警告演出を再生する。
-    /// </summary>
-    [Obsolete("どこにも使用しないはずです。")]
-    public void PlayWarningTelop(Action onEnd = null)
-    {
-        m_WarningTelop.Play(null, false, onEnd);
+        m_StartTelop.Play();
     }
 
     /// <summary>
@@ -329,23 +280,19 @@ public class BattleRealUiManager : SingletonMonoBehavior<BattleRealUiManager>
     /// </summary>
     public void PlayClearTelop(Action onEnd = null)
     {
-        m_ClearTelop.Play(null, false, onEnd);
-    }
+        m_ClearTelop.OnComplete.Subscribe(_ =>
+        {
+            onEnd?.Invoke();
+        });
 
-    /// <summary>
-    /// 結果UIを表示することに先立ってメインビューを隠すアニメーションを再生する。
-    /// </summary>
-    public void PlayMainViewHideAnimationBeforeShowResult()
-    {
-        m_MainViewAnimator.Play(TO_HACKING, 0);
+        m_ClearTelop.Play();
     }
 
     /// <summary>
     /// 結果UIを表示する。
     /// </summary>
-    public void ShowResult()
+    public void ShowResult(Action onEnd = null)
     {
-        m_ResultIndicator.PlayResult();
-        m_IsShowResult = true;
+        m_ResultIndicator.ShowResult(onEnd);
     }
 }

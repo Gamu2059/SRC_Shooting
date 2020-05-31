@@ -34,8 +34,12 @@ MonoBehaviour:
         type: 2}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
-        CenterCreateItemType: 0
+        ItemSpreadParams:
+        - Type: 8
+          Num: 1
+          Point: 1
+          SpreadRadius: 0
+        CenterCreateItemType: 8
       m_DefeatEvents:
       - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
         IsPassExecute: 0
@@ -159,8 +163,12 @@ MonoBehaviour:
         type: 2}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
-        CenterCreateItemType: 0
+        ItemSpreadParams:
+        - Type: 8
+          Num: 1
+          Point: 1
+          SpreadRadius: 0
+        CenterCreateItemType: 8
       m_DefeatEvents:
       - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
         IsPassExecute: 0
@@ -284,8 +292,12 @@ MonoBehaviour:
         type: 2}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
-        CenterCreateItemType: 0
+        ItemSpreadParams:
+        - Type: 8
+          Num: 1
+          Point: 1
+          SpreadRadius: 0
+        CenterCreateItemType: 8
       m_DefeatEvents:
       - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
         IsPassExecute: 0
@@ -409,8 +421,12 @@ MonoBehaviour:
         type: 2}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
-        CenterCreateItemType: 0
+        ItemSpreadParams:
+        - Type: 8
+          Num: 1
+          Point: 1
+          SpreadRadius: 0
+        CenterCreateItemType: 8
       m_DefeatEvents:
       - ContentName: "\u6483\u7834\u30D5\u30E9\u30B0 ON"
         IsPassExecute: 0

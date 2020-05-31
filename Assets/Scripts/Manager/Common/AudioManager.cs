@@ -42,6 +42,9 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
     #region Field Inspector
 
     [SerializeField]
+    private AudioManagerParamSet m_ParamSet;
+
+    [SerializeField]
     private CriWareInitializer m_CriWareInitializer;
 
     [SerializeField]
@@ -68,44 +71,54 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
     #region Game Cycle
 
-    /// <summary>
-    /// Adxパラメータをセットする。
-    /// OnInitializeより先に呼び出す。
-    /// </summary>
-    /// <param name="adxParam"></param>
-    public void SetAdxParam(AdxAssetParam adxParam)
-    {
-        m_AdxAssetParam = adxParam;
-
-        m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
-        m_BgmAisacValueDict = new Dictionary<E_AISAC_TYPE, float>();
-
-        foreach (var aisacSet in adxParam.AisacSets)
-        {
-            m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
-            m_BgmAisacValueDict.Add(aisacSet.AisacType, 0f);
-        }
-    }
-
     public override void OnInitialize()
     {
         base.OnInitialize();
         m_CriWareInitializer.Initialize();
 
+        InitSourceDict();
+        InitCommonSoundDict();
+        InitAdxParam();
+
+        m_ProcessingOperateAisacList = new List<OperateAisacData>();
+        m_DestroyOperateAisacList = new List<OperateAisacData>();
+
+        var bgm = SaveDataManager.GetFloat("Bgm", 0.5f);
+        var se = SaveDataManager.GetFloat("Se", 0.5f);
+        SetBgmVolume(bgm);
+        SetSeVolume(se);
+    }
+
+    private void InitSourceDict()
+    {
         m_SourceDict = new Dictionary<E_CUE_SHEET, CriAtomSource>();
         foreach (var sourceSet in m_SourceSets)
         {
             m_SourceDict.Add(sourceSet.CueSheet, sourceSet.Source);
         }
+    }
 
+    private void InitCommonSoundDict()
+    {
         m_CommonSoundDict = new Dictionary<E_COMMON_SOUND, PlaySoundParam>();
         foreach (var commonSoundSet in m_CommonSoundSets)
         {
             m_CommonSoundDict.Add(commonSoundSet.Type, commonSoundSet.Param);
         }
+    }
 
-        m_ProcessingOperateAisacList = new List<OperateAisacData>();
-        m_DestroyOperateAisacList = new List<OperateAisacData>();
+    private void InitAdxParam()
+    {
+        m_AdxAssetParam = m_ParamSet.AdxAssetParam;
+
+        m_AisacDict = new Dictionary<E_AISAC_TYPE, string>();
+        m_BgmAisacValueDict = new Dictionary<E_AISAC_TYPE, float>();
+
+        foreach (var aisacSet in m_AdxAssetParam.AisacSets)
+        {
+            m_AisacDict.Add(aisacSet.AisacType, aisacSet.Name);
+            m_BgmAisacValueDict.Add(aisacSet.AisacType, 0f);
+        }
     }
 
     public override void OnFinalize()
@@ -199,6 +212,7 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
 
         source.cueName = playSoundParam.CueName;
         source.player.SetStartTime(Math.Max(playSoundParam.StartTime, 0));
+        source.pitch = playSoundParam.Pitch;
         source.Play();
     }
 
@@ -366,6 +380,74 @@ public class AudioManager : SingletonMonoBehavior<AudioManager>
         else
         {
             Debug.LogWarningFormat("指定したタイプのサウンドが登録されていませんでした。 type : {0}", type);
+        }
+    }
+
+    /// <summary>
+    /// BGMグループのボリュームを取得する。
+    /// </summary>
+    public float GetBgmVolume()
+    {
+        var count = m_AdxAssetParam.BgmCueSheets.Length;
+        float volume = 0;
+        foreach (var t in m_AdxAssetParam.BgmCueSheets)
+        {
+            var bgm = GetSource(t);
+            volume += bgm.volume;
+        }
+
+        if (count > 0)
+        {
+            volume /= count;
+        }
+
+        SetBgmVolume(count);
+        return volume;
+    }
+
+    /// <summary>
+    /// BGMグループのボリュームを設定する。
+    /// </summary>
+    public void SetBgmVolume(float value)
+    {
+        foreach (var t in m_AdxAssetParam.BgmCueSheets)
+        {
+            var bgm = GetSource(t);
+            bgm.volume = value;
+        }
+    }
+
+    /// <summary>
+    /// SEグループのボリュームを取得する。
+    /// </summary>
+    public float GetSeVolume()
+    {
+        var count = m_AdxAssetParam.SeCueSheets.Length;
+        float volume = 0;
+        foreach (var t in m_AdxAssetParam.SeCueSheets)
+        {
+            var se = GetSource(t);
+            volume += se.volume;
+        }
+
+        if (count > 0)
+        {
+            volume /= count;
+        }
+
+        SetSeVolume(count);
+        return volume;
+    }
+
+    /// <summary>
+    /// SEグループのボリュームを設定する。
+    /// </summary>
+    public void SetSeVolume(float value)
+    {
+        foreach (var t in m_AdxAssetParam.SeCueSheets)
+        {
+            var se = GetSource(t);
+            se.volume = value;
         }
     }
 }

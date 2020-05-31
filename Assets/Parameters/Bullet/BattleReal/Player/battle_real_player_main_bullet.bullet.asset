@@ -13,29 +13,29 @@ MonoBehaviour:
   m_Name: battle_real_player_main_bullet.bullet
   m_EditorClassIdentifier: 
   LifeTime: 5
+  ShotSE: {fileID: 0}
+  m_ReferenceDifficulty: 0
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
     PositionRelative: 0
     Rotation: {x: 0, y: 0, z: 0}
     RotationRelative: 0
-    Scale: {x: 6, y: 1, z: 4}
+    Scale: {x: 3, y: 1, z: 2}
     ScaleRelative: 1
     DeltaRotation: {x: 0, y: 0, z: 0}
     DeltaRotationRelative: 0
-    DeltaScale: {x: -12, y: 0, z: 0}
+    DeltaScale: {x: 0, y: 0, z: 0}
     DeltaScaleRelative: 1
     Damage: 0
     DamageRelative: 0
-    Speed: 0
+    Speed: 5
     SpeedRelative: 1
-    Accel: 60
+    Accel: 0
     AccelRelative: 1
     IsSearch: 0
     Lerp: 0
     LerpRelative: 0
-    OptionObjectParams: []
-    OptionValueParams: []
+    LerpRestrictAngle: 0
+  m_DifficultyReferecedOrbitalParams: []
   ConditionalOrbitalParams: []
-  OptionObjectParams: []
-  OptionValueParams: []

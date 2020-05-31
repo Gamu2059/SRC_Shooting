@@ -8,8 +8,6 @@
             Target.m_RealManager.RequestChangeState(E_BATTLE_REAL_STATE.TO_HACKING);
             Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.FROM_REAL);
 
-            DataManager.Instance.BattleData.IncreaseHackingTryCount();
-
             Target.m_HackInController.ChangeToHackingModeAction += OnChangeToHackingMode;
             Target.m_HackInController.OnStart();
 

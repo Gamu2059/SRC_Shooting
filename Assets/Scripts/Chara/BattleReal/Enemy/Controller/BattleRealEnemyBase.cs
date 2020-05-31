@@ -261,7 +261,7 @@ public class BattleRealEnemyBase : BattleRealCharaController
     protected void OnDefeatDestroy()
     {
         BattleRealItemManager.Instance.CreateItem(transform.position, Param.DefeatItemParam);
-        DataManager.Instance.BattleData.AddScore(Param.DefeatScore);
+        DataManager.Instance.BattleData.AddScore(Param.DefeatScore, true);
         DataManager.Instance.BattleData.IncreaseChain();
 
         Destroy();

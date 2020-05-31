@@ -24,8 +24,8 @@ public class InfC761HackingGraphicsController : ControllableMonoBehavior
     [SerializeField]
     private SpriteRenderer m_BodyLightRenderer = default;
 
-    [SerializeField]
-    private SpriteRenderer m_EyeLightRenderer = default;
+    //[SerializeField]
+    //private SpriteRenderer m_EyeLightRenderer = default;
 
     [SerializeField]
     private float m_EyeMoveRadius = default;
@@ -46,7 +46,7 @@ public class InfC761HackingGraphicsController : ControllableMonoBehavior
 
     private bool m_IsMoveEye = default;
 
-    private float m_ColorReturnTime = default;
+    //private float m_ColorReturnTime = default;
 
     /// <summary>
     /// OnInitializeやOnStartは複数回呼ばれてしまうのでOnAwakeにした

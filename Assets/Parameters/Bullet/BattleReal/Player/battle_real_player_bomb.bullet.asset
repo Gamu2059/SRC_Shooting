@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: battle_real_player_bomb.bullet
   m_EditorClassIdentifier: 
   LifeTime: 1
+  ShotSE: {fileID: 11400000, guid: 6219c6404d1f98e43a051dd453d3e8f1, type: 2}
+  m_ReferenceDifficulty: 0
   OrbitalParam:
     Target: 0
     Position: {x: 0, y: 0, z: 0}
@@ -34,8 +36,6 @@ MonoBehaviour:
     IsSearch: 0
     Lerp: 0
     LerpRelative: 0
-    OptionObjectParams: []
-    OptionValueParams: []
+    LerpRestrictAngle: 0
+  m_DifficultyReferecedOrbitalParams: []
   ConditionalOrbitalParams: []
-  OptionObjectParams: []
-  OptionValueParams: []

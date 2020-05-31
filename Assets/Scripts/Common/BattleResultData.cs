@@ -11,15 +11,9 @@ public class BattleResultData
 {
     #region Field
 
-    /// <summary>
-    /// ゲームモード
-    /// </summary>
-    public E_GAME_MODE GameMode { get; private set; }
+    private E_GAME_MODE m_GameMode;
 
-    /// <summary>
-    /// 難易度
-    /// </summary>
-    public E_DIFFICULTY Difficulty { get; private set; }
+    private E_DIFFICULTY m_Difficulty;
 
     /// <summary>
     /// チャプターごとのリザルト
@@ -33,15 +27,12 @@ public class BattleResultData
 
     #endregion
 
-    /// <summary>
-    /// ゲーム開始時にゲームモードと難易度が確定するので、そこで初めてコンストラクタが呼べるはず。
-    /// </summary>
     public BattleResultData(E_GAME_MODE gameMode, E_DIFFICULTY difficulty)
     {
-        GameMode = gameMode;
-        Difficulty = difficulty;
         ChapterResultDict = new Dictionary<E_CHAPTER, BattleChapterResultData>();
         StoryResult = null;
+        m_GameMode = gameMode;
+        m_Difficulty = difficulty;
     }
 
     public void OnFinalize()
@@ -54,9 +45,71 @@ public class BattleResultData
     /// <summary>
     /// チャプターのリザルトを記録する
     /// </summary>
-    public void AddChapterResult()
+    public void AddChapterResult(E_CHAPTER chapter, BattleData battleData, BattleRankParam rankParam, bool isClear)
     {
+        var levelBonus = CalcBonusScore(battleData, rankParam, E_ACHIEVEMENT_TYPE.LEVEL);
+        var maxChainBonus = CalcBonusScore(battleData, rankParam, E_ACHIEVEMENT_TYPE.MAX_CHAIN);
+        var bulletRemoveBonus = CalcBonusScore(battleData, rankParam, E_ACHIEVEMENT_TYPE.BULLET_REMOVE);
+        var secretItemBonus = CalcBonusScore(battleData, rankParam, E_ACHIEVEMENT_TYPE.SECRET_ITEM);
+        var rescueBonus = CalcBonusScore(battleData, rankParam, E_ACHIEVEMENT_TYPE.RESCUE);
+        var totalBonus = CalcTotalScore(battleData.ScoreInChapter.Value, levelBonus, maxChainBonus, bulletRemoveBonus, secretItemBonus, rescueBonus);
+        
+        var data = new BattleChapterResultData
+        {
+            GameMode = m_GameMode,
+            Chapter = chapter,
+            Difficulty = m_Difficulty,
+            IsClear = isClear,
+            Level = battleData.LevelInChapter.Value,
+            MaxChain = battleData.MaxChainInChapter.Value,
+            BulletRemove = battleData.BulletRemoveInChapter.Value,
+            SecretItem = battleData.SecretItemInChapter.Value,
+            BossDefeat = battleData.BossDefeatCountInChapter.Value,
+            BossRescue = battleData.BossRescueCountInChapter.Value,
+            Score = battleData.ScoreInChapter.Value,
+            LevelBonusScore = levelBonus,
+            MaxChainBonusScore = maxChainBonus,
+            BulletRemoveBonusScore = bulletRemoveBonus,
+            SecretItemBonusScore = secretItemBonus,
+            HackingCompleteBonusScore = rescueBonus,
+            TotalScore = totalBonus,
+            Rank = rankParam.GetRank(totalBonus),
+        };
 
+        ChapterResultDict.Add(chapter, data);
+    }
+
+    private ulong CalcBonusScore(BattleData battleData, BattleRankParam rankParam, E_ACHIEVEMENT_TYPE type)
+    {
+        if (battleData == null || rankParam == null)
+        {
+            return 0;
+        }
+
+        if (!battleData.IsAchieve(type))
+        {
+            return 0;
+        }
+
+        var current = (double)battleData.GetAchievementCurrentValue(type);
+        var target = battleData.GetAchievementTargetValue(type);
+        if (target < 1)
+        {
+            return 0;
+        }
+
+        return (ulong) Math.Round((current / target) * rankParam.AchievementBonusScore);
+    }
+
+    private ulong CalcTotalScore(params ulong[] scores)
+    {
+        ulong value = 0;
+        foreach (var i in scores)
+        {
+            value = Math.Max(value + i, ulong.MaxValue);
+        }
+
+        return value;
     }
 
     /// <summary>
@@ -67,16 +120,13 @@ public class BattleResultData
 
     }
 
+    public BattleChapterResultData GetChapterResult(E_CHAPTER chapter)
+    {
+        if (ChapterResultDict != null && ChapterResultDict.TryGetValue(chapter, out var data))
+        {
+            return data;
+        }
 
-    [Obsolete]
-    public double Score { get; private set; }
-
-    [Obsolete]
-    public double LifeBonusScore { get; private set; }
-
-    [Obsolete]
-    public double PerfectHackingBonusScore { get; private set; }
-
-    [Obsolete]
-    public double TotalScore { get; private set; }
+        return null;
+    }
 }

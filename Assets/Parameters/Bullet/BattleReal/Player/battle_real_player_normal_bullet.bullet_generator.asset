@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551256ab977217a4a89fa5cfca6f116a, type: 3}
+  m_Name: battle_real_player_normal_bullet.bullet_generator
+  m_EditorClassIdentifier: 
+  m_GeneratorClassName: BattleReal.BulletGenerator.PlayerNormalBulletGenerator
+  m_Params:
+  - Difficulty: 0
+    Param:
+      m_MainShotTransformName: MainShotPosition
+      m_LeftSideShotTransformName: LeftSideShotPosition
+      m_RightSideShotTransformName: RightSideShotPosition
+      m_MainShotBullet: {fileID: 7292297653876647175, guid: 7fa1804904bc01647a9280f9a489ab53,
+        type: 3}
+      m_SideShotBullet: {fileID: 655844287423973259, guid: 8ecd58b2d474a9841984eef1a229ca63,
+        type: 3}
+      m_MainShotParam: {fileID: 11400000, guid: 84276435b60151046bad7ceb614c0700,
+        type: 2}
+      m_SideShotParam: {fileID: 11400000, guid: d1912e1468c446040af2f0eda191c616,
+        type: 2}
+      m_LevelIndividualParams:
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0
+      - m_UseSideShot: 1
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0.1
+  - Difficulty: 1
+    Param:
+      m_MainShotTransformName: MainShotPosition
+      m_LeftSideShotTransformName: LeftSideShotPosition
+      m_RightSideShotTransformName: RightSideShotPosition
+      m_MainShotBullet: {fileID: 7292297653876647175, guid: 7fa1804904bc01647a9280f9a489ab53,
+        type: 3}
+      m_SideShotBullet: {fileID: 655844287423973259, guid: 8ecd58b2d474a9841984eef1a229ca63,
+        type: 3}
+      m_MainShotParam: {fileID: 11400000, guid: 84276435b60151046bad7ceb614c0700,
+        type: 2}
+      m_SideShotParam: {fileID: 11400000, guid: d1912e1468c446040af2f0eda191c616,
+        type: 2}
+      m_LevelIndividualParams:
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0
+      - m_UseSideShot: 1
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0.1
+  - Difficulty: 2
+    Param:
+      m_MainShotTransformName: MainShotPosition
+      m_LeftSideShotTransformName: LeftSideShotPosition
+      m_RightSideShotTransformName: RightSideShotPosition
+      m_MainShotBullet: {fileID: 7292297653876647175, guid: 7fa1804904bc01647a9280f9a489ab53,
+        type: 3}
+      m_SideShotBullet: {fileID: 655844287423973259, guid: 8ecd58b2d474a9841984eef1a229ca63,
+        type: 3}
+      m_MainShotParam: {fileID: 11400000, guid: 84276435b60151046bad7ceb614c0700,
+        type: 2}
+      m_SideShotParam: {fileID: 11400000, guid: d1912e1468c446040af2f0eda191c616,
+        type: 2}
+      m_LevelIndividualParams:
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0
+      - m_UseSideShot: 1
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0.1
+  - Difficulty: 3
+    Param:
+      m_MainShotTransformName: MainShotPosition
+      m_LeftSideShotTransformName: LeftSideShotPosition
+      m_RightSideShotTransformName: RightSideShotPosition
+      m_MainShotBullet: {fileID: 7292297653876647175, guid: 7fa1804904bc01647a9280f9a489ab53,
+        type: 3}
+      m_SideShotBullet: {fileID: 655844287423973259, guid: 8ecd58b2d474a9841984eef1a229ca63,
+        type: 3}
+      m_MainShotParam: {fileID: 11400000, guid: 84276435b60151046bad7ceb614c0700,
+        type: 2}
+      m_SideShotParam: {fileID: 11400000, guid: d1912e1468c446040af2f0eda191c616,
+        type: 2}
+      m_LevelIndividualParams:
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.05
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.04
+        m_SideShotInterval: 0
+      - m_UseSideShot: 0
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0
+      - m_UseSideShot: 1
+        m_MainShotInterval: 0.03
+        m_SideShotInterval: 0.1

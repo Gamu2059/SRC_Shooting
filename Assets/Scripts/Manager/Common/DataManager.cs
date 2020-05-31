@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ゲーム全体のデータを管理する。
+/// シューティングパートに関するデータを管理する。
 /// </summary>
-public class DataManager : Singleton<DataManager>
+public class DataManager : SingletonMonoBehavior<DataManager>
 {
+    #region Field Inspector
+
+    [SerializeField]
+    private DataManagerParamSet m_ParamSet;
+
+    #endregion
+
     #region Field
 
     /// <summary>
@@ -30,6 +37,16 @@ public class DataManager : Singleton<DataManager>
     public E_CHAPTER Chapter;
 
     /// <summary>
+    /// 残機オプション
+    /// </summary>
+    public int LifeOption;
+
+    /// <summary>
+    /// エナジーオプション
+    /// </summary>
+    public int EnergyOption;
+
+    /// <summary>
     /// バトル用変数データ。
     /// </summary>
     public BattleData BattleData { get; private set; }
@@ -41,20 +58,23 @@ public class DataManager : Singleton<DataManager>
 
     #endregion
 
-    public static DataManager Builder(BattleConstantParam constantParam, BattleAchievementParamSet achievementParamSet)
+    public override void OnInitialize()
     {
-        var manager = Create();
-        manager.OnInitialize();
-
-        manager.IsSelectedGame = false;
-        manager.BattleData = new BattleData(constantParam, achievementParamSet);
-
-        return manager;
+        base.OnInitialize();
+        IsSelectedGame = false;
+        GameMode = default;
+        Difficulty = default;
+        Chapter = default;
+        LifeOption = 0;
+        EnergyOption = 0;
     }
 
     public override void OnFinalize()
     {
-
+        BattleResultData?.OnFinalize();
+        BattleData?.OnFinalize();
+        BattleResultData = null;
+        BattleData = null;
         base.OnFinalize();
     }
 
@@ -63,22 +83,35 @@ public class DataManager : Singleton<DataManager>
     /// </summary>
     public BattleParamSet GetCurrentBattleParamSet()
     {
-        return GameManager.Instance.BattleParamSetHolder.GetBattleParamSet(Chapter, Difficulty);
+        return m_ParamSet.BattleParamSetHolder.GetBattleParamSet(Chapter, Difficulty);
     }
 
     /// <summary>
-    /// ストーリーモードの開始時に呼び出す
+    /// シューティングパート開始時に呼び出す
     /// </summary>
-    public void OnStoryStart()
+    public void OnShootingStart()
     {
+        var data = new BattleData.DataOnConstructor
+        {
+            ConstParam = m_ParamSet.BattleConstantParam,
+            LifeOption = LifeOption,
+            EnergyOption = EnergyOption,
+            BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore,
+        };
+
+        BattleData = new BattleData(data);
+        BattleResultData = new BattleResultData(GameMode, Difficulty);
     }
 
     /// <summary>
-    /// ストーリーモードの終了時に呼び出す
+    /// シューティングパート終了時に呼び出す
     /// </summary>
-    public void OnStoryEnd()
+    public void OnShootingEnd()
     {
-        BattleResultData.AddStoryResult();
+        BattleResultData?.OnFinalize();
+        BattleData?.OnFinalize();
+        BattleResultData = null;
+        BattleData = null;
     }
 
     /// <summary>
@@ -86,15 +119,87 @@ public class DataManager : Singleton<DataManager>
     /// </summary>
     public void OnChapterStart()
     {
-        BattleData.ResetDataOnChapterStart();
+        BattleData.InitDataOnChapterStart(new BattleData.DataOnChapterStart
+        {
+            AchievementParam = m_ParamSet.BattleAchievementParamSet.GetAchievementParam(Chapter, Difficulty),
+            Chapter = Chapter,
+        });
     }
 
     /// <summary>
     /// ストーリーモードでもチャプターモードでも、チャプターごとに終了時に呼び出す
     /// </summary>
-    public void OnChapterEnd()
+    public void OnChapterEnd(bool isGameClear)
     {
-        BattleResultData.AddChapterResult();
+        var rankParam = m_ParamSet.BattleRankParamSet.GetRankParam(Chapter, Difficulty);
+        BattleResultData.AddChapterResult(Chapter, BattleData, rankParam, isGameClear);
+    }
+
+    /// <summary>
+    /// ストーリーモードの終了時に呼び出す
+    /// </summary>
+    public void OnStoryEnd()
+    {
+
+    }
+
+    /// <summary>
+    /// 次のチャプターに直接遷移するかどうか。簡易実装
+    /// </summary>
+    public bool IsDirectTransitionNextChapter()
+    {
+        return GameMode == E_GAME_MODE.STORY && Chapter == E_CHAPTER.CHAPTER_0;
+    }
+
+    public BaseSceneManager.E_SCENE GetChapterScene(E_CHAPTER chapter)
+    {
+        switch (chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return BaseSceneManager.E_SCENE.STAGE0;
+            case E_CHAPTER.CHAPTER_1:
+                return BaseSceneManager.E_SCENE.STAGE1;
+            case E_CHAPTER.CHAPTER_2:
+                return BaseSceneManager.E_SCENE.STAGE2;
+            case E_CHAPTER.CHAPTER_3:
+                return BaseSceneManager.E_SCENE.STAGE3;
+            case E_CHAPTER.CHAPTER_4:
+                return BaseSceneManager.E_SCENE.STAGE4;
+            case E_CHAPTER.CHAPTER_5:
+                return BaseSceneManager.E_SCENE.STAGE5;
+            case E_CHAPTER.CHAPTER_6:
+                return BaseSceneManager.E_SCENE.STAGE6;
+        }
+
+        return BaseSceneManager.E_SCENE.DEFAULT;
+    }
+
+    /// <summary>
+    /// 次のチャプターが存在するかどうか。簡易実装
+    /// </summary>
+    public bool ExistNextChapter()
+    {
+        switch (Chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    /// 次のチャプターの値を取得する。簡易実装
+    /// </summary>
+    public E_CHAPTER GetNextChapter()
+    {
+        switch (Chapter)
+        {
+            case E_CHAPTER.CHAPTER_0:
+                return E_CHAPTER.CHAPTER_1;
+        }
+
+        return E_CHAPTER.CHAPTER_0;
     }
 
     public string GetChapterString()
@@ -126,5 +231,20 @@ public class DataManager : Singleton<DataManager>
     public bool IsInvalidAchievement()
     {
         return Chapter == E_CHAPTER.CHAPTER_0;
+    }
+
+    /// <summary>
+    /// 現在のチャプターに対応するシーンに遷移する
+    /// </summary>
+    public void TransitionToCurrentChapterScene()
+    {
+        var scene = GetChapterScene(Chapter);
+        if (scene == BaseSceneManager.E_SCENE.DEFAULT)
+        {
+            Debug.LogWarning("Default scene is not chapter scene.");
+            return;
+        }
+
+        BaseSceneManager.Instance.LoadScene(scene);
     }
 }

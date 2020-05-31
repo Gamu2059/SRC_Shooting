@@ -12,6 +12,9 @@ public class BattleRealPlayerLaser : BulletController
     [SerializeField]
     private ParticleSystem m_Particle;
 
+    [SerializeField]
+    private EffectParamSet m_EndEffect;
+
     private Vector3 m_OwnerPosition;
     private Vector3 m_OwnerRotation;
 
@@ -65,6 +68,7 @@ public class BattleRealPlayerLaser : BulletController
 
         if (GetNowLifeTime() >= GetBulletParam().LifeTime)
         {
+            BattleRealEffectManager.Instance.CreateEffect(m_EndEffect, transform);
             DestroyBullet();
         }
     }

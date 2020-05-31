@@ -23,8 +23,8 @@ TagManager:
   - UtageUI
   - HackingEffect
   - FadeUI
-  - 
-  - 
+  - OutGameBackView
+  - GameOverView
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: GameOver
     uniqueID: 2033234969
+    locked: 0
+  - name: PlayerSideBullet
+    uniqueID: 4018112411
     locked: 0

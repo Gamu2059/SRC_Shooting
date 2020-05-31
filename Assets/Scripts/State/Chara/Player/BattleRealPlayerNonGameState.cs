@@ -6,6 +6,9 @@
         {
             base.OnStart();
             CheckInterruptEnd();
+
+            // Gameステートでないので通常弾を撃つのを止める
+            Target.StopShotBullet();
         }
 
         public override void OnUpdate()

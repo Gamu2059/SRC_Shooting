@@ -7,7 +7,26 @@
             base.OnStart();
             Target.m_RealManager.RequestChangeState(E_BATTLE_REAL_STATE.END);
             Target.m_HackingManager.RequestChangeState(E_BATTLE_HACKING_STATE.END);
-            Target.ExitGame();
+            
+            if (DataManager.Instance.IsDirectTransitionNextChapter())
+            {
+                if (DataManager.Instance.ExistNextChapter())
+                {
+                    var nextChapter = DataManager.Instance.GetNextChapter();
+                    DataManager.Instance.Chapter = nextChapter;
+                    DataManager.Instance.TransitionToCurrentChapterScene();
+                }
+                else
+                {
+                    DataManager.Instance.OnShootingEnd();
+                    Target.ExitGame();
+                }
+            }
+            else
+            {
+                DataManager.Instance.OnShootingEnd();
+                Target.ExitGame();
+            }
         }
 
         public override void OnUpdate()

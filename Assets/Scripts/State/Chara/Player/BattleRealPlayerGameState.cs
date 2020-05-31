@@ -24,12 +24,12 @@ partial class BattleRealPlayerController
                 return;
             }
 
-            var input = BattleRealInputManager.Instance;
-            var moveDir = input.MoveDir;
+            var input = RewiredInputManager.Instance;
+            var moveDir = input.AxisDir;
             if (moveDir.x != 0 || moveDir.y != 0)
             {
                 float speed = 0;
-                if (input.Slow == E_INPUT_STATE.STAY)
+                if (input.Slowly == E_REWIRED_INPUT_STATE.STAY)
                 {
                     speed = Target.m_ParamSet.PlayerSlowMoveSpeed;
                 }
@@ -48,27 +48,32 @@ partial class BattleRealPlayerController
                 Target.RestrictPosition();
             }
 
-            if (input.Shot == E_INPUT_STATE.STAY)
+            switch (input.Shot)
             {
-                Target.ShotBullet();
+                case E_REWIRED_INPUT_STATE.DOWN:
+                case E_REWIRED_INPUT_STATE.STAY:
+                    Target.StartShotBullet();
+                    break;
+                case E_REWIRED_INPUT_STATE.UP:
+                case E_REWIRED_INPUT_STATE.NONE:
+                    Target.StopShotBullet();
+                    break;
             }
 
-            if (input.ChangeMode == E_INPUT_STATE.DOWN)
+            if (input.ChangeWeapon == E_REWIRED_INPUT_STATE.DOWN)
             {
                 Target.IsLaserType = !Target.IsLaserType;
                 Target.ChangeWeapon();
                 Target.ChangeWeaponTypeAction?.Invoke(Target.IsLaserType);
             }
 
-            if (input.ChargeShot == E_INPUT_STATE.DOWN)
+            if (input.ChargeShot == E_REWIRED_INPUT_STATE.DOWN)
             {
-                if (DataManager.Instance.BattleData.EnergyStock > 0)
+                if (DataManager.Instance.BattleData.EnergyStock.Value > 0)
                 {
                     Target.RequestChangeState(E_BATTLE_REAL_PLAYER_STATE.CHARGE);
                 }
             }
-
-            Target.m_ShotDelay += Time.deltaTime;
         }
 
         public override void OnEnd()

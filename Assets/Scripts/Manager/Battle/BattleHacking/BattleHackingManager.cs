@@ -79,7 +79,6 @@ public partial class BattleHackingManager : ControllableObject, IStateCallback<E
         m_StateMachine.AddState(new InnerState(E_BATTLE_HACKING_STATE.GAME_OVER, this, new GameOverState()));
         m_StateMachine.AddState(new InnerState(E_BATTLE_HACKING_STATE.END, this, new EndState()));
 
-        BattleHackingInputManager.Builder();
         BattleHackingTimerManager.Builder();
         BattleHackingPlayerManager.Builder(this, m_ParamSet.PlayerManagerParamSet);
         BattleHackingEnemyManager.Builder(this, m_ParamSet.EnemyManagerParamSet);
@@ -103,7 +102,6 @@ public partial class BattleHackingManager : ControllableObject, IStateCallback<E
         BattleHackingEnemyManager.Instance.OnFinalize();
         BattleHackingPlayerManager.Instance.OnFinalize();
         BattleHackingTimerManager.Instance.OnFinalize();
-        BattleHackingInputManager.Instance.OnFinalize();
         m_StateMachine.OnFinalize();
         base.OnFinalize();
     }

@@ -6,7 +6,14 @@
         {
             base.OnStart();
             var battleData = DataManager.Instance.BattleData;
-            battleData.OnHackingResult(HackingDataHolder.IsHackingSuccess);
+            if (HackingDataHolder.IsHackingSuccess)
+            {
+                battleData.IncreaseHackingSuccessChain();
+            }
+            else
+            {
+                battleData.ResetHackingSuccessChain();
+            }
         }
     }
 }

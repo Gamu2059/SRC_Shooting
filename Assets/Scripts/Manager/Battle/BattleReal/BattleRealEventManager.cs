@@ -119,9 +119,9 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
         m_FloatVariables = new Dictionary<string, float>();
         m_BoolVariables = new Dictionary<string, bool>();
 
-        // 組み込み系の追加
-        m_IntVariables.Add(BOSS_DEFEAT_INT_NAME, 0);
-        m_IntVariables.Add(BOSS_RESCUE_INT_NAME, 0);
+        // 組み込み系の追加 BattleDataに元データを移した
+        //m_IntVariables.Add(BOSS_DEFEAT_INT_NAME, 0);
+        //m_IntVariables.Add(BOSS_RESCUE_INT_NAME, 0);
 
         foreach (var variable in m_ParamSet.Variables)
         {
@@ -285,7 +285,20 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public bool ExistInt(string name)
     {
-        return m_IntVariables != null && m_IntVariables.ContainsKey(name);
+        switch (name)
+        {
+            case BOSS_DEFEAT_INT_NAME:
+            case BOSS_RESCUE_INT_NAME:
+                return true;
+        }
+
+        var exist = m_IntVariables != null && m_IntVariables.ContainsKey(name);
+        if (!exist)
+        {
+            Debug.LogWarningFormat("int variable not exist. name : {0}", name);
+        }
+
+        return exist;
     }
 
     /// <summary>
@@ -294,7 +307,13 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public bool ExistFloat(string name)
     {
-        return m_FloatVariables != null && m_FloatVariables.ContainsKey(name);
+        var exist = m_FloatVariables != null && m_FloatVariables.ContainsKey(name);
+        if (!exist)
+        {
+            Debug.LogWarningFormat("float variable not exist. name : {0}", name);
+        }
+
+        return exist;
     }
 
     /// <summary>
@@ -303,7 +322,13 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public bool ExistBool(string name)
     {
-        return m_BoolVariables != null && m_BoolVariables.ContainsKey(name);
+        var exist = m_BoolVariables != null && m_BoolVariables.ContainsKey(name);
+        if (!exist)
+        {
+            Debug.LogWarningFormat("bool variable not exist. name : {0}", name);
+        }
+
+        return exist;
     }
 
     /// <summary>
@@ -312,15 +337,13 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public bool ExistTimePeriod(string name)
     {
-        try
+        var exist = m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
+        if (!exist)
         {
-            return m_TimePeriods != null && m_TimePeriods.ContainsKey(name);
+            Debug.LogWarningFormat("time period not exist. name : {0}", name);
         }
-        catch (ArgumentException e)
-        {
-            Debug.LogError(name);
-            return false;
-        }
+
+        return exist;
     }
 
     /// <summary>
@@ -329,7 +352,33 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public int GetInt(string name, int _default = 0)
     {
+        switch (name)
+        {
+            case BOSS_DEFEAT_INT_NAME:
+            case BOSS_RESCUE_INT_NAME:
+                return GetBattleDataInt(name, _default);
+        }
+
         return ExistInt(name) ? m_IntVariables[name] : _default;
+    }
+
+    private int GetBattleDataInt(string name, int _default = 0)
+    {
+        if (DataManager.Instance == null || DataManager.Instance.BattleData == null)
+        {
+            return _default;
+        }
+
+        var battleData = DataManager.Instance.BattleData;
+        switch (name)
+        {
+            case BOSS_DEFEAT_INT_NAME:
+                return battleData.BossDefeatCountInChapter.Value;
+            case BOSS_RESCUE_INT_NAME:
+                return battleData.BossRescueCountInChapter.Value;
+        }
+
+        return _default;
     }
 
     /// <summary>
@@ -356,9 +405,36 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
     /// </summary>
     public void SetInt(string name, int value)
     {
+        switch (name)
+        {
+            case BOSS_DEFEAT_INT_NAME:
+            case BOSS_RESCUE_INT_NAME:
+                SetBattleDataInt(name, value);
+                return;
+        }
+
         if (ExistInt(name))
         {
             m_IntVariables[name] = value;
+        }
+    }
+
+    private void SetBattleDataInt(string name, int value)
+    {
+        if (DataManager.Instance == null || DataManager.Instance.BattleData == null)
+        {
+            return;
+        }
+
+        var battleData = DataManager.Instance.BattleData;
+        switch (name)
+        {
+            case BOSS_DEFEAT_INT_NAME:
+                battleData.BossDefeatCountInChapter.Value = value;
+                break;
+            case BOSS_RESCUE_INT_NAME:
+                battleData.BossRescueCountInChapter.Value = value;
+                break;
         }
     }
 
@@ -398,6 +474,7 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
         }
 
         var v = GetInt(name);
+
         switch (operandType)
         {
             case E_OPERAND_TYPE.ADD:
@@ -551,21 +628,22 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             return false;
         }
 
-        var value = m_IntVariables[name];
+        var v = GetInt(name);
+
         switch (condition.CompareType)
         {
             case E_COMPARE_TYPE.EQUAL:
-                return value == condition.CompareValue;
+                return v == condition.CompareValue;
             case E_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.CompareValue;
+                return v != condition.CompareValue;
             case E_COMPARE_TYPE.LESS_THAN:
-                return value < condition.CompareValue;
+                return v < condition.CompareValue;
             case E_COMPARE_TYPE.LESS_THAN_EQUAL:
-                return value <= condition.CompareValue;
+                return v <= condition.CompareValue;
             case E_COMPARE_TYPE.MORE_THAN:
-                return value > condition.CompareValue;
+                return v > condition.CompareValue;
             case E_COMPARE_TYPE.MORE_THAN_EQUAL:
-                return value >= condition.CompareValue;
+                return v >= condition.CompareValue;
         }
 
         return false;
@@ -582,21 +660,22 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             return false;
         }
 
-        var value = m_FloatVariables[name];
+        var v = GetFloat(name);
+
         switch (condition.CompareType)
         {
             case E_COMPARE_TYPE.EQUAL:
-                return value == condition.CompareValue;
+                return v == condition.CompareValue;
             case E_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.CompareValue;
+                return v != condition.CompareValue;
             case E_COMPARE_TYPE.LESS_THAN:
-                return value < condition.CompareValue;
+                return v < condition.CompareValue;
             case E_COMPARE_TYPE.LESS_THAN_EQUAL:
-                return value <= condition.CompareValue;
+                return v <= condition.CompareValue;
             case E_COMPARE_TYPE.MORE_THAN:
-                return value > condition.CompareValue;
+                return v > condition.CompareValue;
             case E_COMPARE_TYPE.MORE_THAN_EQUAL:
-                return value >= condition.CompareValue;
+                return v >= condition.CompareValue;
         }
 
         return false;
@@ -613,13 +692,14 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             return false;
         }
 
-        var value = m_BoolVariables[name];
+        var v = GetBool(name);
+
         switch (condition.BoolCompareType)
         {
             case E_BOOL_COMPARE_TYPE.EQUAL:
-                return value == condition.BoolCompareValue;
+                return v == condition.BoolCompareValue;
             case E_BOOL_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.BoolCompareValue;
+                return v != condition.BoolCompareValue;
         }
 
         return false;
@@ -636,27 +716,27 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             return false;
         }
 
-        var period = m_TimePeriods[name];
+        var period = GetTimePeriod(name);
         if (period == null || !period.IsStart)
         {
             return false;
         }
 
-        var value = period.GetPeriod();
+        var v = period.GetPeriod();
         switch (condition.CompareType)
         {
             case E_COMPARE_TYPE.EQUAL:
-                return value == condition.CompareValue;
+                return v == condition.CompareValue;
             case E_COMPARE_TYPE.NOT_EQUAL:
-                return value != condition.CompareValue;
+                return v != condition.CompareValue;
             case E_COMPARE_TYPE.LESS_THAN:
-                return value < condition.CompareValue;
+                return v < condition.CompareValue;
             case E_COMPARE_TYPE.LESS_THAN_EQUAL:
-                return value <= condition.CompareValue;
+                return v <= condition.CompareValue;
             case E_COMPARE_TYPE.MORE_THAN:
-                return value > condition.CompareValue;
+                return v > condition.CompareValue;
             case E_COMPARE_TYPE.MORE_THAN_EQUAL:
-                return value >= condition.CompareValue;
+                return v >= condition.CompareValue;
         }
 
         return false;
@@ -1024,12 +1104,12 @@ public class BattleRealEventManager : Singleton<BattleRealEventManager>
             case E_TELOP_TYPE.START_TELOP:
                 BattleRealUiManager.Instance.PlayStartTelop();
                 break;
-            case E_TELOP_TYPE.WARNING_TELOP:
-                BattleRealUiManager.Instance.PlayWarningTelop();
-                break;
-            case E_TELOP_TYPE.GAME_CLEAR_TELOP:
-                BattleRealUiManager.Instance.PlayClearTelop();
-                break;
+            //case E_TELOP_TYPE.WARNING_TELOP:
+            //    BattleRealUiManager.Instance.PlayWarningTelop();
+            //    break;
+            //case E_TELOP_TYPE.GAME_CLEAR_TELOP:
+            //    BattleRealUiManager.Instance.PlayClearTelop();
+            //    break;
         }
     }
 

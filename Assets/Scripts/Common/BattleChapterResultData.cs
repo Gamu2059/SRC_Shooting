@@ -7,55 +7,41 @@ using UnityEngine;
 /// </summary>
 public class BattleChapterResultData
 {
-    /// <summary>
-    /// ハッキング成功回数
-    /// </summary>
-    public int HackingSuccessCount { get; private set; }
+    public E_GAME_MODE GameMode;
+    public E_CHAPTER Chapter;
+    public E_DIFFICULTY Difficulty;
+    public bool IsClear;
+    public int Level;
+    public int MaxChain;
+    public int BulletRemove;
+    public int SecretItem;
+    public int BossDefeat;
+    public int BossRescue;
+    public ulong Score;
+    public ulong LevelBonusScore;
+    public ulong MaxChainBonusScore;
+    public ulong BulletRemoveBonusScore;
+    public ulong SecretItemBonusScore;
+    public ulong HackingCompleteBonusScore;
+    public ulong TotalScore;
+    public E_GAME_RANK Rank;
 
-    /// <summary>
-    /// ハッキング挑戦回数
-    /// </summary>
-    public int HackingTryCount { get; private set; }
+    public ulong GetBonusScore(E_ACHIEVEMENT_TYPE type)
+    {
+        switch (type)
+        {
+            case E_ACHIEVEMENT_TYPE.LEVEL:
+                return LevelBonusScore;
+            case E_ACHIEVEMENT_TYPE.MAX_CHAIN:
+                return MaxChainBonusScore;
+            case E_ACHIEVEMENT_TYPE.BULLET_REMOVE:
+                return BulletRemoveBonusScore;
+            case E_ACHIEVEMENT_TYPE.SECRET_ITEM:
+                return SecretItemBonusScore;
+            case E_ACHIEVEMENT_TYPE.RESCUE:
+                return HackingCompleteBonusScore;
+        }
 
-    /// <summary>
-    /// チャプター全体を通して必要な最小のハッキング挑戦回数<br/>
-    /// ある意味では定数
-    /// </summary>
-    public int MinHackingTryNum { get; private set; }
-
-    /// <summary>
-    /// チャプター終了時のレベル
-    /// </summary>
-    public int Level { get; private set; }
-
-    /// <summary>
-    /// 隠しアイテム獲得数
-    /// </summary>
-    public int SecretItemGetCount { get; private set; }
-
-    /// <summary>
-    /// チャプター終了までに出した最高チェイン数
-    /// </summary>
-    public int MaxChainCount { get; private set; }
-
-    /// <summary>
-    /// チャプター終了までに消した敵弾の合計数
-    /// </summary>
-    public int EnemyBulletCancelCount { get; private set; }
-
-    /// <summary>
-    /// チャプターボード達成数
-    /// </summary>
-    public int AchievementCount { get; private set; }
-
-    /// <summary>
-    /// チャプターで獲得したスコア<br/>
-    /// クリア時のボーナスも加味される
-    /// </summary>
-    public ulong Score { get; private set; }
-
-    /// <summary>
-    /// チャプターでのランク
-    /// </summary>
-    public int Rank { get; private set; }
+        return 0;
+    }
 }

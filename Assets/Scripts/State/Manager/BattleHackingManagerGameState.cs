@@ -11,7 +11,6 @@ partial class BattleHackingManager
             base.OnStart();
             BattleHackingStageManager.Instance.gameObject.SetActive(true);
             BattleHackingUiManager.Instance.SetAlpha(1);
-            BattleHackingInputManager.Instance.RegistInput();
         }
 
         public override void OnUpdate()
@@ -23,7 +22,6 @@ partial class BattleHackingManager
             BattleHackingEffectManager.Instance.GotoPool();
             BattleHackingCollisionManager.Instance.DestroyDrawingColliderMeshes();
 
-            BattleHackingInputManager.Instance.OnUpdate();
             BattleHackingTimerManager.Instance.OnUpdate();
             BattleHackingPlayerManager.Instance.OnUpdate();
             BattleHackingEnemyManager.Instance.OnUpdate();
@@ -82,12 +80,6 @@ partial class BattleHackingManager
             BattleHackingUiManager.Instance.OnFixedUpdate();
         }
 
-        public override void OnEnd()
-        {
-            base.OnEnd();
-            BattleHackingInputManager.Instance.RemoveInput();
-        }
-
         private void CheckGameEnd()
         {
             if (Target.m_IsDeadPlayer && Target.m_IsDeadBoss)
@@ -104,6 +96,11 @@ partial class BattleHackingManager
                 {
                     Target.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_CLEAR);
                 }
+            }
+
+            if (Target.m_IsTimeout)
+            {
+                Target.RequestChangeState(E_BATTLE_HACKING_STATE.GAME_OVER);
             }
         }
     }

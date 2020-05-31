@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx;
 
 /// <summary>
 /// 全ての弾オブジェクトの基礎クラス。
@@ -122,6 +123,8 @@ public class BulletController : BattleRealObjectBase
     /// この弾が1秒間にどれくらいターゲットに設定されているキャラを追従するか。
     /// </summary>
     private float m_NowLerp;
+
+    private float m_LerpRestrictAngle;
 
     protected Vector2 PrePosition { get; private set; }
 
@@ -443,6 +446,22 @@ public class BulletController : BattleRealObjectBase
     {
         m_NowLerp = GetRelativeValue(relative, GetNowLerp(), value);
     }
+
+    public float GetLerpRestrictAngle()
+    {
+        return m_LerpRestrictAngle;
+    }
+
+    public void SetLerpRestrictAngle(float value)
+    {
+        m_LerpRestrictAngle = value;
+    }
+
+    #endregion
+
+    #region Event
+
+    public Subject<Unit> OnDestroyObservable { get; private set; }
 
     #endregion
 
@@ -773,7 +792,7 @@ public class BulletController : BattleRealObjectBase
 
         return bullet;
     }
-    
+
     /// <summary>
     /// 指定したパラメータを用いて弾を発射する。
     /// </summary>
@@ -836,6 +855,7 @@ public class BulletController : BattleRealObjectBase
         SetNowAccel(m_OrbitalParam.Accel, m_OrbitalParam.AccelRelative);
         SetSearch(m_OrbitalParam.IsSearch);
         SetNowLerp(m_OrbitalParam.Lerp, m_OrbitalParam.LerpRelative);
+        SetLerpRestrictAngle(m_OrbitalParam.LerpRestrictAngle);
 
         // オプションパラメータは後で実装
 
@@ -980,10 +1000,15 @@ public class BulletController : BattleRealObjectBase
         m_BulletSuffer = new HitSufferController<BulletController>();
         m_BulletHit = new HitSufferController<BulletController>();
         m_CharaHit = new HitSufferController<BattleRealCharaController>();
+
+        OnDestroyObservable = new Subject<Unit>();
     }
 
     protected override void OnDestroyed()
     {
+        OnDestroyObservable?.Dispose();
+        OnDestroyObservable = null;
+
         m_CharaHit.OnFinalize();
         m_BulletHit.OnFinalize();
         m_BulletSuffer.OnFinalize();
@@ -1017,6 +1042,9 @@ public class BulletController : BattleRealObjectBase
         m_CharaHit.OnFinalize();
         m_BulletHit.OnFinalize();
         m_BulletSuffer.OnFinalize();
+
+        OnDestroyObservable?.OnNext(Unit.Default);
+
         base.OnFinalize();
     }
 
@@ -1037,8 +1065,18 @@ public class BulletController : BattleRealObjectBase
 
         if (m_Target != null)
         {
-            Vector3 targetDeltaPos = m_Target.transform.position - transform.position;
-            transform.forward = Vector3.Lerp(transform.forward, targetDeltaPos.normalized, m_NowLerp);
+            var targetDeltaPos = m_Target.transform.position - transform.position;
+            var forward = transform.forward;
+            targetDeltaPos.y = 0;
+            forward.y = 0;
+
+            var lerp = m_NowLerp;
+            var angle = Vector3.Angle(forward, targetDeltaPos);
+            if (angle > m_LerpRestrictAngle)
+            {
+                lerp = 0;
+            }
+            transform.forward = Vector3.Lerp(transform.forward, targetDeltaPos.normalized, lerp);
         }
 
         var speed = GetNowSpeed() * Time.deltaTime;
@@ -1050,13 +1088,6 @@ public class BulletController : BattleRealObjectBase
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
-
-        //var pos = transform.position.ToVector2XZ();
-        //MoveDir = pos - PrePosition;
-        //PrePosition = pos;
-        //if (m_IsLookMoveDir) {
-        //    transform.LookAt(transform.position + MoveDir.ToVector3XZ());
-        //}
 
         if (BattleRealBulletManager.Instance.IsOutOfField(this))
         {
@@ -1116,9 +1147,26 @@ public class BulletController : BattleRealObjectBase
             var sufferType = sufferData.SufferCollider.Transform.ColliderType;
             if (sufferType == E_COLLIDER_TYPE.ENEMY_BULLET)
             {
-                DestroyBullet();
+                RemoveBulletByChargeShot();
             }
         }
+    }
+
+    private void RemoveBulletByChargeShot()
+    {
+        var battleData = DataManager.Instance.BattleData;
+        battleData.IncreaseRemoveBullet();
+        var score = battleData.GetCurrentChargeLevelParam().RemoveBulletScore;
+        
+        // チャプター0では弾消しでスコア加算しない
+        if (DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
+        {
+            score = 0;
+        }
+
+        DataManager.Instance.BattleData.AddScore(score);
+        BattleRealEffectManager.Instance.CreateBulletRemoveEffect(transform, score);
+        DestroyBullet();
     }
 
     protected virtual void OnStaySufferBullet(HitSufferData<BulletController> sufferData)

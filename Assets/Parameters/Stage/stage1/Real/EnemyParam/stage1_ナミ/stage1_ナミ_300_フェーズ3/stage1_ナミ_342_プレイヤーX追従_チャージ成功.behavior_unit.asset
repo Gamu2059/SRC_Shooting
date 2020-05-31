@@ -18,6 +18,7 @@ MonoBehaviour:
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_OnStopOptions: []
+  m_ReferenceDifficultyForBulletGenerator: 1
   m_BulletGeneratorDatas:
   - ParamSet: {fileID: 11400000, guid: 1271c72d10fb59e43a0860d1c26204c0, type: 2}
     StartTimeOnFirstActivate: 0
@@ -31,5 +32,62 @@ MonoBehaviour:
     StartTimeOnFirstActivate: 0
     StopTimeFromFirstActivate: 100
     ActivateInterval: 0.2
+  m_DifficultyBulletGeneratorDatas:
+  - m_Difficulty: 0
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 1271c72d10fb59e43a0860d1c26204c0, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.2
+    - ParamSet: {fileID: 11400000, guid: c13024d490465944d8db761055626b30, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.2
+    - ParamSet: {fileID: 11400000, guid: ce81b0fa3aadc9743bfa94f22e97e32a, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.2
+  - m_Difficulty: 1
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 1271c72d10fb59e43a0860d1c26204c0, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.2
+    - ParamSet: {fileID: 11400000, guid: c13024d490465944d8db761055626b30, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.2
+    - ParamSet: {fileID: 11400000, guid: ce81b0fa3aadc9743bfa94f22e97e32a, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.2
+  - m_Difficulty: 2
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 1271c72d10fb59e43a0860d1c26204c0, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.15
+    - ParamSet: {fileID: 11400000, guid: c13024d490465944d8db761055626b30, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.15
+    - ParamSet: {fileID: 11400000, guid: ce81b0fa3aadc9743bfa94f22e97e32a, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.15
+  - m_Difficulty: 3
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 1271c72d10fb59e43a0860d1c26204c0, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: c13024d490465944d8db761055626b30, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: ce81b0fa3aadc9743bfa94f22e97e32a, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 100
+      ActivateInterval: 0.1
   m_DestroyBulletGeneratorOnBehaviorEnd: 1
   m_XMoveSpeed: 0.5

@@ -32,7 +32,11 @@ MonoBehaviour:
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
+        ItemSpreadParams:
+        - Type: 4
+          Num: 1
+          Point: 100
+          SpreadRadius: 0
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
@@ -61,7 +65,11 @@ MonoBehaviour:
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
+        ItemSpreadParams:
+        - Type: 4
+          Num: 1
+          Point: 100
+          SpreadRadius: 0
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
@@ -90,7 +98,11 @@ MonoBehaviour:
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
+        ItemSpreadParams:
+        - Type: 4
+          Num: 1
+          Point: 100
+          SpreadRadius: 0
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
@@ -119,7 +131,11 @@ MonoBehaviour:
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams: []
+        ItemSpreadParams:
+        - Type: 4
+          Num: 1
+          Point: 100
+          SpreadRadius: 0
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:

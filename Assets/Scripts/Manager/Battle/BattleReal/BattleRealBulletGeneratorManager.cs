@@ -56,11 +56,11 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
         base.OnStart();
     }
 
-    public override void OnFixedUpdate()
+    public override void OnUpdate()
     {
-        base.OnFixedUpdate();
+        base.OnUpdate();
 
-        // BulletGeneratorはOnFixedUpdateしか拡張できないという仕様でいく
+        // BulletGeneratorはOnUpdateしか拡張できないという仕様でいく
 
         // Start処理
         foreach (var g in m_StandbyUpdateGenerators)
@@ -93,7 +93,7 @@ public class BattleRealBulletGeneratorManager : Singleton<BattleRealBulletGenera
                 continue;
             }
 
-            g.OnFixedUpdate();
+            g.OnUpdate();
         }
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.Video;
+using Doozy.Engine;
 
 /// <summary>
 /// バトル画面のマネージャーを管理する上位マネージャ。
@@ -44,15 +44,25 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     [SerializeField]
     private HackInOutController m_HackOutController;
 
+    [Header("DoozyUI GameEvent Key")]
+
+    [SerializeField]
+    private string m_OpenGameMenuKey = "Open InGameMenu";
+
     #endregion
 
     #region Field
 
     private StateMachine<E_BATTLE_STATE, BattleManager> m_StateMachine;
-    private Action<E_BATTLE_STATE> m_OnChangeState;
     private BattleRealManager m_RealManager;
     private BattleHackingManager m_HackingManager;
     public bool IsReadyBeforeShow { get; private set; }
+
+    /// <summary>
+    /// ゲームメニューを開いているかどうか。<br>
+    /// メニューはゲームステートを超越したステートであるため、専用のフラグで管理する
+    /// </summary>
+    private bool m_IsOpenGameMenu;
 
     #endregion
 
@@ -76,15 +86,11 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
             DataManager.Instance.GameMode = E_GAME_MODE.CHAPTER;
             DataManager.Instance.Chapter = m_Chapter;
             DataManager.Instance.Difficulty = m_Difficulty;
+            DataManager.Instance.OnShootingStart();
         }
         else
         {
             paramSet = DataManager.Instance.GetCurrentBattleParamSet();
-        }
-
-        if (DataManager.Instance.GameMode == E_GAME_MODE.STORY && DataManager.Instance.Chapter == E_CHAPTER.CHAPTER_0)
-        {
-            DataManager.Instance.OnStoryStart();
         }
 
         DataManager.Instance.OnChapterStart();
@@ -103,12 +109,12 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
         m_HackInController.OnInitialize();
         m_HackOutController.OnInitialize();
+
+        m_IsOpenGameMenu = false;
     }
 
     public override void OnFinalize()
     {
-        m_OnChangeState = null;
-
         m_HackOutController.OnFinalize();
         m_HackInController.OnFinalize();
 
@@ -123,18 +129,44 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
     public override void OnUpdate()
     {
         base.OnUpdate();
+        
+        if (RewiredInputManager.Instance != null)
+        {
+            if (RewiredInputManager.Instance.OpenMenu == E_REWIRED_INPUT_STATE.DOWN)
+            {
+                OpenGameMenu();
+            }
+        }
+
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
         m_StateMachine.OnUpdate();
     }
 
     public override void OnLateUpdate()
     {
         base.OnLateUpdate();
+
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
         m_StateMachine.OnLateUpdate();
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
+
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
         m_StateMachine.OnFixedUpdate();
     }
 
@@ -148,17 +180,19 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
 
     public void OnAfterShow()
     {
-
+        //RewiredInputManager.Instance.ChangeToInGameInput();
     }
 
     public void OnBeforeHide()
     {
+        //RewiredInputManager.Instance.ChangeToUIInput();
         Time.timeScale = 1;
     }
 
     public void OnAfterHide()
     {
-
+        AudioManager.Instance.StopAllBgm();
+        AudioManager.Instance.StopAllSe();
     }
 
     /// <summary>
@@ -174,17 +208,32 @@ public partial class BattleManager : ControllableMonoBehavior, IStateCallback<E_
         m_StateMachine.Goto(state);
     }
 
-    /// <summary>
-    /// GameOverControllerがBattleManagerに紐づいているのでとりあえずここで再生メソッドを定義する。
-    /// しかし、最終的にはBattleRealUiManagerに紐づける。
-    /// </summary>
-    public void PlayGameOverPerformance()
-    {
-
-    }
-
     public void ExitGame()
     {
         BaseSceneManager.Instance.LoadScene(BaseSceneManager.E_SCENE.TITLE);
+    }
+
+    /// <summary>
+    /// ゲームメニューを開く
+    /// </summary>
+    public void OpenGameMenu()
+    {
+        if (m_IsOpenGameMenu)
+        {
+            return;
+        }
+
+        m_IsOpenGameMenu = true;
+        GameEventMessage.SendEvent(m_OpenGameMenuKey);
+        AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_OPEN);
+    }
+
+    /// <summary>
+    /// ゲームメニューを閉じる
+    /// </summary>
+    public void CloseGameMenu()
+    {
+        m_IsOpenGameMenu = false;
+        AudioManager.Instance.Play(E_COMMON_SOUND.INGAME_MENU_CLOSE);
     }
 }

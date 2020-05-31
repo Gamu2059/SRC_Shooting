@@ -123,7 +123,7 @@ namespace BattleReal.BulletGenerator
             BattleRealEffectManager.Instance.RegisterSequentialEffect(ShotOverallStartEffect, Owner.transform, true);
         }
 
-        protected override void OnGeneratorUpdate()
+        protected override void OnGeneratorUpdate(float deltaTime)
         {
             if (m_ShotCount >= ShotNum)
             {
@@ -140,7 +140,7 @@ namespace BattleReal.BulletGenerator
                 }
                 else
                 {
-                    m_ShotTimeCount += Time.fixedDeltaTime;
+                    m_ShotTimeCount += deltaTime;
                 }
             }
             else
@@ -152,10 +152,10 @@ namespace BattleReal.BulletGenerator
                     m_ShotCount++;
                 }
 
-                m_ShotTimeCount += Time.fixedDeltaTime;
+                m_ShotTimeCount += deltaTime;
             }
 
-            m_CurrentAngleFromTransform += ShotPointAngleSpeedFromTransform * Time.fixedDeltaTime;
+            m_CurrentAngleFromTransform += ShotPointAngleSpeedFromTransform * deltaTime;
         }
 
         #endregion
