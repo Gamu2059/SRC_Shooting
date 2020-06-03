@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9e4b8dc684c00345b377bc238b23c5c, type: 3}
-  m_Name: inf_c_761_hacking_failure.effect
+  m_Name: enemy_charge_purple_allow_position.effect
   m_EditorClassIdentifier: 
-  m_Effect: {fileID: 6149805381065593889, guid: 1ff3303bb6c46dd4585a5d7b4c358a4e,
+  m_Effect: {fileID: 3007492986554732069, guid: ab79c690277ebc24383bf09414cc0c37,
     type: 3}
   m_FirePositionRelative: 0
   m_FirePosition:
     m_ValueType: 0
-    m_ConstantValue: {x: 0, y: 0, z: 0}
+    m_ConstantValue: {x: 0, y: 0.02, z: 0}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
   m_FireRotationRelative: 0
@@ -29,12 +29,12 @@ MonoBehaviour:
   m_FireScaleRelative: 1
   m_FireScale:
     m_ValueType: 0
-    m_ConstantValue: {x: 0.5, y: 0.5, z: 0.5}
+    m_ConstantValue: {x: 1, y: 1, z: 1}
     m_RandomMinValue: {x: 0, y: 0, z: 0}
     m_RandomMaxValue: {x: 0, y: 0, z: 0}
-  m_IsAllowOwnerPosition: 0
+  m_IsAllowOwnerPosition: 1
   m_IsAllowOwnerRotation: 0
   m_IsAutoDestroyDuration: 1
-  m_Duration: 3
+  m_Duration: 1.2
   m_PlaySoundParams:
-  - {fileID: 11400000, guid: 5cb1d4268a7f8fb4c9ddb98f58b3d6c7, type: 2}
+  - {fileID: 11400000, guid: 760a73742e93d224e9446a5976b373ac, type: 2}
