@@ -16,7 +16,7 @@ public class BulletShotParams : BulletShotParamBase
     private ForSetupBase m_ForSetup;
 
     [SerializeField, Tooltip("弾を撃つ時の多重forループ")]
-    private MultiForLoop m_MultiForLoop;
+    public MultiForLoop m_MultiForLoop;
 
     [SerializeField, Tooltip("弾を撃つ時の効果音")]
     private E_COMMON_SOUND m_ShotSE;

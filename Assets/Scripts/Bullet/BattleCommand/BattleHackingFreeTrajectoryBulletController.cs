@@ -93,6 +93,27 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         bullet.m_BulletShotParams = bulletShotParams;
 
+
+        bullet.m_ShotNum = -1;
+
+        // もしこの弾が弾を発射するなら、発射するときのForShottimerオブジェクトをフィールドに代入する
+        if (bullet.m_BulletShotParams == null)
+        {
+            bullet.m_ForShottimer = null;
+        }
+        else
+        {
+            foreach (ForBase forBase in bullet.m_BulletShotParams.m_MultiForLoop.m_ForArray)
+            {
+                if (forBase is ForShottimer)
+                {
+                    bullet.m_ForShottimer = (ForShottimer)forBase;
+                    break;
+                }
+            }
+        }
+
+
         bullet.spriteRenderer = (SpriteRenderer)bullet.gameObject.GetComponentInChildren(typeof(SpriteRenderer));
 
 
@@ -172,6 +193,18 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// 弾の発射と軌道をまとめて表すオブジェクト（このオブジェクトが弾を発射できるようにするため）
     /// </summary>
     private BulletShotParams m_BulletShotParams;
+
+
+    /// <summary>
+    /// この弾が今までに弾を発射した回数
+    /// </summary>
+    public int m_ShotNum;
+
+    /// <summary>
+    /// この弾が弾を発射するときのForShottimerオブジェクト
+    /// </summary>
+    private ForShottimer m_ForShottimer;
+
 
     /// <summary>
     /// 衝突判定があるかどうか
@@ -316,9 +349,12 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         m_IsAlive = transformSimple.IsAlive;
 
-        // もしこの弾が弾を発射するなら、発射の処理を行う
         if (m_BulletShotParams != null)
         {
+            // もしこの弾が弾を発射するなら、発射するときのForShottimerオブジェクトの親弾フィールドに、この弾オブジェクトを代入する
+            m_ForShottimer.m_BulletController = this;
+
+            // もしこの弾が弾を発射するなら、発射の処理を行う
             m_BulletShotParams.OnUpdates(m_Boss);
         }
     }
