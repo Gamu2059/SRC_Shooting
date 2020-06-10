@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c27f2f93a620f4e9520a483749d134, type: 3}
   m_Name: stage6.battle_real_enemy
   m_EditorClassIdentifier: 
-  m_MinOffsetFieldPosition: {x: 0, y: 0}
-  m_MaxOffsetFieldPosition: {x: 0, y: 0}
-  m_ReferenceDifficultyForGenerator: 0
+  m_MinOffsetFieldPosition: {x: -0.3, y: -0.3}
+  m_MaxOffsetFieldPosition: {x: 0.3, y: 0.3}
+  m_ReferenceDifficultyForGenerator: 1
   m_Generator: {fileID: 0}
-  m_DifficultyReferencedGenerators: []
+  m_DifficultyReferencedGenerators:
+  - Difficulty: 0
+    Generator: {fileID: 11400000, guid: 8ec660f5d35d96044b6803f6705561ae, type: 2}
+  - Difficulty: 1
+    Generator: {fileID: 11400000, guid: f338be400d3dcf540b9ad102c0ed02a4, type: 2}
+  - Difficulty: 2
+    Generator: {fileID: 11400000, guid: d39693e28851aee46b580af0ea438864, type: 2}
+  - Difficulty: 3
+    Generator: {fileID: 11400000, guid: 5ab10dda9a7513545845033185f620e6, type: 2}

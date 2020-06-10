@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e28ba1d5e92e54fad91b8cf4993aa8, type: 3}
   m_Name: stage6.battle_real
   m_EditorClassIdentifier: 
-  m_PlayerManagerParamSet: {fileID: 0}
-  m_EnemyManagerParamSet: {fileID: 0}
-  m_BulletManagerParamSet: {fileID: 0}
-  m_ItemManagerParamSet: {fileID: 0}
-  m_EffectManagerParamSet: {fileID: 0}
-  m_EventTriggerParamSet: {fileID: 0}
+  m_PlayerManagerParamSet: {fileID: 11400000, guid: 76e86597affcb6e49943c8700cd19d3b,
+    type: 2}
+  m_EnemyManagerParamSet: {fileID: 11400000, guid: da52b11b8bcfae947b38fdc4755fe0b9,
+    type: 2}
+  m_BulletManagerParamSet: {fileID: 11400000, guid: 0eb7c58effc165f4ea0f01adcd55a9ae,
+    type: 2}
+  m_ItemManagerParamSet: {fileID: 11400000, guid: ab30d5993a4622b48bc610f7a5b3a0e5,
+    type: 2}
+  m_EffectManagerParamSet: {fileID: 11400000, guid: 4be4224ffb5a9e045aaf4b94efc53c21,
+    type: 2}
+  m_EventTriggerParamSet: {fileID: 11400000, guid: 65546e322db26ca48910a19373710617,
+    type: 2}
