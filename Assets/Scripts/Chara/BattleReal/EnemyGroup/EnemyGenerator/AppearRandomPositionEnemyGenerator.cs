@@ -6,7 +6,6 @@ using UnityEngine;
 using System;
 using UnityEditor;
 using Rewired;
-using System.Xml.Schema;
 
 namespace BattleReal.EnemyGenerator
 {
@@ -161,9 +160,10 @@ namespace BattleReal.EnemyGenerator
             else
             {
                 if(m_GenerateTimeCount >= GenerateInterval)
-                {
+                {                    
+                    Debug.Log("Call Generate");
                     Generate();
-                    m_GeneratedEnemyCount--;
+                    m_GeneratedEnemyCount++;
                     m_GenerateTimeCount -= GenerateInterval;
                 }
                 m_GenerateTimeCount += Time.fixedDeltaTime;
@@ -202,64 +202,155 @@ namespace BattleReal.EnemyGenerator
             var enemyT = enemy.transform;
             enemyT.SetParent(EnemyGroup.transform, false);
 
-            enemyT.localPosition = GetEnemyPosition();
+
+            Vector3 playerPos = BattleRealPlayerManager.Instance.Player.transform.position;
+            enemyT.localPosition = GetEnemyPosition(new Vector2(playerPos.x, playerPos.z));
+            enemyT.LookAt(playerPos);
 
             m_GeneratedEnemies.Add(enemy);
         }
 
-        private Vector3 GetEnemyPosition()
+        private Vector3 GetEnemyPosition(Vector2 playerPos2D)
         {
+            Debug.Log("Enter GetEnemyPosition");
+
             Vector2 min = BattleRealStageManager.Instance.MinLocalFieldPosition;
             Vector2 max = BattleRealStageManager.Instance.MaxLocalFieldPosition;
-            Vector3 playerPos = BattleRealPlayerManager.Instance.Player.transform.position;
+            
+            float radius;
+            float angle;
 
-            var res = GetPlayersViewPortPosition(playerPos, min, max);
-
-            if(res == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
+            void CalcAngleAndRadius(Vector2 vert1, Vector2 vert2)
             {
-                return new Vector3(UnityEngine.Random.Range(playerPos.x + m_OffsetRadius, max.x),
-                                   0,
-                                   UnityEngine.Random.Range(playerPos.z + m_OffsetRadius, min.y));
+                Debug.Log("vert1 = " + vert1 + " | vert2 = " + vert2);
+
+                float ang1 = Vector2.Angle(playerPos2D, vert1);
+                float ang2 = Vector2.Angle(playerPos2D, vert2);
+
+                Debug.Log("ang1 = " + ang1 + " | ang2 = " + ang2);
+
+                if(ang1 < ang2)
+                {
+                    angle = UnityEngine.Random.Range(ang1, ang2);
+                }
+                else
+                {
+                    angle = UnityEngine.Random.Range(ang2, ang1);
+                }
+                
+                radius = UnityEngine.Random.Range(m_OffsetRadius, CalcMaxRadius(angle, playerPos2D, vert1, vert2));
+            }
+
+            E_PLAYERS_VIEWPORT_POSITION res = GetPlayersViewPortPosition(playerPos2D, min, max);
+
+            if (res == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
+            {
+                CalcAngleAndRadius(new Vector2(max.x, min.y), new Vector2(min.x, max.y));
+
             }
             else if(res == E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT)
             {
-                return new Vector3(UnityEngine.Random.Range(playerPos.x + m_OffsetRadius, min.x),
-                                   0,
-                                   UnityEngine.Random.Range(playerPos.z + m_OffsetRadius, max.y));
+                CalcAngleAndRadius(new Vector2(min.x, min.y), new Vector2(max.x, max.y));                
             }
             else if(res == E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT)
             {
-                return new Vector3(UnityEngine.Random.Range(playerPos.x + m_OffsetRadius, max.x),
-                                   0,
-                                   UnityEngine.Random.Range(playerPos.z + m_OffsetRadius, min.y));
+                CalcAngleAndRadius(new Vector2(max.x, min.y), new Vector2(min.x, max.y));
             }
             else
             {
-                return new Vector3(UnityEngine.Random.Range(playerPos.x + m_OffsetRadius, min.x),
-                                   0,
-                                   UnityEngine.Random.Range(playerPos.z + m_OffsetRadius, max.y));
+                CalcAngleAndRadius(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
             }
+
+            Debug.Log("angle = " + angle + " | radius = " + radius);
+
+            return new Vector3(radius * Mathf.Cos(angle * Mathf.Deg2Rad), 0, radius * Mathf.Sin(angle * Mathf.Deg2Rad));
         }
 
-        private E_PLAYERS_VIEWPORT_POSITION GetPlayersViewPortPosition(Vector3 playerPos3D, Vector2 min, Vector2 max)
-        {
-            var pos2D = new Vector2(playerPos3D.x, playerPos3D.z);
-            Vector2 center = (max - min) / 2.0f;
+        private float CalcMaxRadius(float angle, Vector2 playerPos2D, Vector2 min, Vector3 max) 
+        {            
+            List<Vector2> viewport = new List<Vector2>
+            {
+                new Vector2(max.x, max.y), new Vector2(min.x, max.y),  // up
+                new Vector2(max.x, min.y), new Vector2(max.x, max.y),  // right
+                new Vector2(min.x, min.y), new Vector2(max.x, min.y),  // bottom
+                new Vector2(min.x, max.y), new Vector2(min.x, min.y),  // left
+            };
 
-            int h = CalcPositionRelationship(center, center + Vector2.up, pos2D);
+            float length = 1000.0f;
+            Vector2 ray = new Vector2(playerPos2D.x + length * Mathf.Cos(angle * Mathf.Deg2Rad), playerPos2D.y + length * Mathf.Sin(angle * Mathf.Deg2Rad));            
+
+            Vector2 intercept = new Vector2();
+
+            Vector2? CalcIntercept(Vector2 from1, Vector2 to1, Vector2 from2, Vector2 to2)
+            {
+                var v1 = new Vector2(to1.x - from1.x, to1.y - from1.y);
+                var v2 = new Vector2(to2.x - from2.x, to2.y - from2.y);
+                var v3 = new Vector2(from2.x - from1.x, from2.y - from1.y);
+                var v4 = new Vector2(to1.x - from2.x, to1.y - from2.y);
+                var area1 = Cross2D(v2, v3);
+                var area2 = Cross2D(v2, v4);
+                var total = area1 + area2;
+                if (Math.Abs(total) > 0)
+                {
+                    var ratio = area1 / total;
+
+                    return new Vector2(from1.x + ratio * v1.x, from1.y + ratio * v1.y);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            for(int i = 0; i < viewport.Count - 1; i = i + 2)
+            {
+                Vector2? tmp = CalcIntercept(playerPos2D, ray, viewport[i], viewport[i + 1]);                                
+
+                if(tmp != null)
+                {
+                    Vector2 v = (Vector2)tmp - viewport[i];
+                    Vector2 w = viewport[i + 1] - viewport[i];
+
+                    if(Mathf.Pow(Vector2.Dot(v, w), 2) == v.sqrMagnitude * w.sqrMagnitude && v.sqrMagnitude <= w.sqrMagnitude)
+                    {
+
+                    }
+                    else
+                    {
+                        tmp = null;
+                    }
+                }
+
+                if(tmp != null)
+                {
+                    Debug.Log("viewport[i] = " + viewport[i] + " | viewport[i+1] = " + viewport[i + 1]);
+                    intercept = (Vector2)tmp;
+                    break;
+                }
+            }
+
+            Debug.Log("playerPos = " + playerPos2D + " | intercept = " + intercept);
+
+            return Vector2.Distance(playerPos2D, intercept);
+        }
+
+        private E_PLAYERS_VIEWPORT_POSITION GetPlayersViewPortPosition(Vector2 playerPos2D, Vector2 min, Vector2 max)
+        {
+            Vector2 center = (max + min) / 2.0f;
+            int h = CalcPositionRelationship(center, center + Vector2.up, playerPos2D);
             int v = CalcPositionRelationship(Rotation(center, -90.0f * Mathf.Deg2Rad),
                                              Rotation(center + Vector2.up, -90.0f * Mathf.Deg2Rad),
-                                             pos2D);
+                                             playerPos2D);
 
-            if (h == 1 && v == 1)
+            if (h == -1 && v == 1)
             {
                 return E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT;
             }
-            else if (h == -1 && v == 1)
+            else if (h == 1 && v == 1)
             {
                 return E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT;
             }
-            else if (h == -1 && v == -1)
+            else if (h == 1 && v == -1)
             {
                 return E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT;
             }
@@ -279,7 +370,7 @@ namespace BattleReal.EnemyGenerator
         {
             Vector2 v = p - a;
             Vector2 w = b - a;
-            float res = w.x * v.y - w.y * v.x;
+            float res = Cross2D(w,v);
 
             if (res >= 0)
             {
@@ -289,6 +380,11 @@ namespace BattleReal.EnemyGenerator
             {
                 return -1;
             }
+        }
+
+        private float Cross2D(Vector2 a, Vector2 b)
+        {
+            return a.x * b.y - a.y * b.x;
         }
     }
 }

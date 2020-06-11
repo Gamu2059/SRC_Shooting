@@ -195,6 +195,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d4572bdfce7b66a42af400d68e78b7a4,
         type: 2}
+    - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
+        type: 3}
+      propertyPath: m_IsDrawColliderArea
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
+        type: 3}
+      propertyPath: m_IsDrawOutSideColliderArea
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
+        type: 3}
+      propertyPath: m_IsNotPlayerDead
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
+        type: 3}
+      propertyPath: m_IsNotGameOver
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 553394418d74bbe4fa1738f6545e21e6, type: 3}
 --- !u!1001 &596978485

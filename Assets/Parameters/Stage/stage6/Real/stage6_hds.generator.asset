@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: stage6_hds.generator
   m_EditorClassIdentifier: 
   m_Contents:
-  - m_Commnet: 
+  - m_Commnet: g001
     m_Condition:
       IsReverse: 0
       IsMultiCondition: 0
@@ -23,11 +23,11 @@ MonoBehaviour:
         UseGeneralIntVariable: 0
         GeneralIntVariable: 0
         UseGeneralTimePeriod: 1
-        GeneralTimePeriod: 1
+        GeneralTimePeriod: 0
         VariableName: 
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 1
+        CompareValue: 3
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
