@@ -84,6 +84,7 @@ namespace BattleReal.EnemyGenerator
 
         private Vector2 m_GameFieldMin;
         private Vector2 m_GameFieldMax;
+        private Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> m_GameFieldVertices;
         private bool m_IsCountOffset;
         private float m_GenerateTimeCount;
         private int m_GeneratedEnemyCount;
@@ -99,6 +100,13 @@ namespace BattleReal.EnemyGenerator
 
             m_GameFieldMin = new Vector2(1.0f, 1.0f);
             m_GameFieldMax = new Vector2(-1.0f, -1.0f);
+            m_GameFieldVertices = new Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> 
+            {
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, new Vector2(m_GameFieldMin.x, m_GameFieldMin.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, new Vector2(m_GameFieldMin.x, m_GameFieldMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMin.y)},
+            };
             m_IsCountOffset = true;
             m_GenerateTimeCount = 0;
             m_GeneratedEnemyCount = 0;
@@ -260,36 +268,11 @@ namespace BattleReal.EnemyGenerator
 
 
             //    radius = m_OffsetRadius;
-            //}
+            //}            
 
-            E_PLAYERS_VIEWPORT_POSITION pvp = GetPlayersViewPortPosition(playerPos2D);
-            Vector3 dbg;
+            var pos2D = m_GameFieldVertices[GetPlayersViewPortPosition(playerPos2D)];
 
-            if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
-            {
-                dbg = new Vector3(m_GameFieldMin.x, 0, m_GameFieldMax.y);
-                Debug.Log(dbg);
-                return dbg;
-
-            }
-            else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT)
-            {
-                dbg = new Vector3(m_GameFieldMax.x, 0, m_GameFieldMax.y);
-                Debug.Log(dbg);
-                return dbg;
-            }
-            else if (pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT)
-            {
-                dbg = new Vector3(m_GameFieldMax.x, 0, m_GameFieldMin.y);
-                Debug.Log(dbg);
-                return dbg;
-            }
-            else
-            {
-                dbg = new Vector3(m_GameFieldMin.x, 0, m_GameFieldMin.y);
-                Debug.Log(dbg);
-                return dbg;
-            }
+            return new Vector3(pos2D.x, 0, pos2D.y);
 
 
             ////angle = angle.MathAngleToUnityObjectAngle();
