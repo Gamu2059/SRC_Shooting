@@ -7,6 +7,7 @@ using System;
 using UnityEditor;
 using Rewired;
 
+
 namespace BattleReal.EnemyGenerator
 {
     /// <summary>
@@ -161,7 +162,6 @@ namespace BattleReal.EnemyGenerator
             {
                 if(m_GenerateTimeCount >= GenerateInterval)
                 {                    
-                    Debug.Log("Call Generate");
                     Generate();
                     m_GeneratedEnemyCount++;
                     m_GenerateTimeCount -= GenerateInterval;
@@ -212,7 +212,7 @@ namespace BattleReal.EnemyGenerator
 
         private Vector3 GetEnemyPosition(Vector2 playerPos2D)
         {
-            Debug.Log("Enter GetEnemyPosition");
+            //Debug.Log("Enter GetEnemyPosition");
 
             Vector2 min = BattleRealStageManager.Instance.MinLocalFieldPosition;
             Vector2 max = BattleRealStageManager.Instance.MaxLocalFieldPosition;
@@ -220,25 +220,39 @@ namespace BattleReal.EnemyGenerator
             float radius;
             float angle;
 
+
+            float CalcAngle(Vector2 self, Vector2 target)
+            {
+                var diff = target - self;
+                return Vector2.Angle(self, diff) * Cross2D(self, diff) < 0 ? -1 : 1;
+            }
+
             void CalcAngleAndRadius(Vector2 vert1, Vector2 vert2)
             {
+                
+                float ang1 = CalcAngle(playerPos2D, vert1);
+                float ang2 = CalcAngle(playerPos2D, vert2);
+
                 Debug.Log("vert1 = " + vert1 + " | vert2 = " + vert2);
-
-                float ang1 = Vector2.Angle(playerPos2D, vert1);
-                float ang2 = Vector2.Angle(playerPos2D, vert2);
-
                 Debug.Log("ang1 = " + ang1 + " | ang2 = " + ang2);
 
-                if(ang1 < ang2)
-                {
-                    angle = UnityEngine.Random.Range(ang1, ang2);
-                }
-                else
-                {
-                    angle = UnityEngine.Random.Range(ang2, ang1);
-                }
+                angle = ang1;
+
+                //float R = CalcMaxRadius(angle, playerPos2D, min, max);
+
+                //Debug.Log("R = " + R);
+
+                //if(m_OffsetRadius > R)
+                //{
+                //    radius = UnityEngine.Random.Range(R, m_OffsetRadius);
+                //}
+                //else
+                //{
+                //    radius = UnityEngine.Random.Range(m_OffsetRadius, R);
+                //}
+
                 
-                radius = UnityEngine.Random.Range(m_OffsetRadius, CalcMaxRadius(angle, playerPos2D, vert1, vert2));
+                radius = m_OffsetRadius;
             }
 
             E_PLAYERS_VIEWPORT_POSITION res = GetPlayersViewPortPosition(playerPos2D, min, max);
@@ -261,9 +275,16 @@ namespace BattleReal.EnemyGenerator
                 CalcAngleAndRadius(new Vector2(min.x, min.y), new Vector2(max.x, max.y));
             }
 
-            Debug.Log("angle = " + angle + " | radius = " + radius);
+            
+            //angle = angle.MathAngleToUnityObjectAngle();
+            
+            //Debug.Log("angle = " + angle + " | radius = " + radius);
 
-            return new Vector3(radius * Mathf.Cos(angle * Mathf.Deg2Rad), 0, radius * Mathf.Sin(angle * Mathf.Deg2Rad));
+            Vector3 retVal = new Vector3(playerPos2D.x + radius * Mathf.Cos(angle * Mathf.Deg2Rad), 0, playerPos2D.y + radius * Mathf.Sin(angle * Mathf.Deg2Rad));
+
+            //Debug.Log("Position = " + retVal);
+
+            return retVal;
         }
 
         private float CalcMaxRadius(float angle, Vector2 playerPos2D, Vector2 min, Vector3 max) 
