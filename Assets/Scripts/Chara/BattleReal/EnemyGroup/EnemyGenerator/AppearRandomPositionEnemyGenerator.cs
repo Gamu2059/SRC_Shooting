@@ -82,9 +82,10 @@ namespace BattleReal.EnemyGenerator
 
         #region Field
 
-        private Vector2 m_GameFieldMin;
         private Vector2 m_GameFieldMax;
+        private Vector2 m_GameFieldMin;
         private Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> m_GameFieldVertices;
+        private Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> m_ViewPortVertices;
         private bool m_IsCountOffset;
         private float m_GenerateTimeCount;
         private int m_GeneratedEnemyCount;
@@ -98,8 +99,8 @@ namespace BattleReal.EnemyGenerator
         {
             base.OnStartGenerator();
 
-            m_GameFieldMin = new Vector2(1.0f, 1.0f);
-            m_GameFieldMax = new Vector2(-1.0f, -1.0f);
+            m_GameFieldMin = new Vector2(-1.0f, -1.0f);
+            m_GameFieldMax = new Vector2(1.0f, 1.0f);            
             m_GameFieldVertices = new Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> 
             {
                 { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, new Vector2(m_GameFieldMin.x, m_GameFieldMin.y)},
@@ -107,6 +108,14 @@ namespace BattleReal.EnemyGenerator
                 { E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMax.y)},
                 { E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMin.y)},
             };
+            m_ViewPortVertices = new Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2>
+            {
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, new Vector2(-m_GameFieldMin.x, -m_GameFieldMin.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, new Vector2(-m_GameFieldMin.x, -m_GameFieldMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, new Vector2(-m_GameFieldMax.x, -m_GameFieldMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, new Vector2(-m_GameFieldMax.x, -m_GameFieldMin.y)},
+            };
+
             m_IsCountOffset = true;
             m_GenerateTimeCount = 0;
             m_GeneratedEnemyCount = 0;
@@ -214,11 +223,9 @@ namespace BattleReal.EnemyGenerator
             var enemyT = enemy.transform;
             enemyT.SetParent(EnemyGroup.transform, false);
 
-
-            Debug.Log("MIN = " + m_GameFieldMin + "MAX = " + m_GameFieldMax);
-
             Vector3 playerPos = BattleRealPlayerManager.Instance.Player.transform.position;
             Vector2 playerPos2D = new Vector2(playerPos.x, playerPos.z);
+            Debug.Log(GetPlayersViewPortPosition(playerPos2D));
             enemyT.localPosition = GetEnemyPosition(playerPos2D);
             enemyT.LookAt(playerPos);
 
@@ -236,11 +243,7 @@ namespace BattleReal.EnemyGenerator
             //float angle;
 
 
-            //float CalcAngle(Vector2 self, Vector2 target)
-            //{
-            //    var diff = target - self;
-            //    return Vector2.Angle(self, diff) * Cross2D(self, diff) < 0 ? -1 : 1;
-            //}
+
 
             //void CalcAngleAndRadius(Vector2 vert1, Vector2 vert2)
             //{
@@ -268,11 +271,59 @@ namespace BattleReal.EnemyGenerator
 
 
             //    radius = m_OffsetRadius;
-            //}            
+            //}
 
-            var pos2D = m_GameFieldVertices[GetPlayersViewPortPosition(playerPos2D)];
+            //var pvp = GetPlayersViewPortPosition(playerPos2D);
+            //Vector2 v1, v2;
+            //float ang1, ang2;
 
-            return new Vector3(pos2D.x, 0, pos2D.y);
+            //if(pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT)
+            //{
+            //    v1 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT] - playerPos2D;
+            //    ang1 = Vector2.Angle(Vector2.up, v1);
+            //    v2 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT] - playerPos2D;
+            //    ang2 = Vector2.Angle(Vector2.up, v2);
+            //}
+            //else if(pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
+            //{
+            //    v1 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT] - playerPos2D;
+            //    ang1 = Vector2.Angle(Vector2.right, v1);
+            //    v2 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT] - playerPos2D;
+            //    ang2 = Vector2.Angle(Vector2.right, v2);
+            //}
+            //else if(pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT)
+            //{
+            //    v1 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT] - playerPos2D;
+            //    ang1 = Vector2.Angle(Vector2.down, v1);
+            //    v2 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT] - playerPos2D;
+            //    ang2 = Vector2.Angle(Vector2.down, v2);
+            //}
+            //else
+            //{
+            //    v1 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT] - playerPos2D;
+            //    ang1 = Vector2.Angle(Vector2.left, v1);
+            //    v2 = m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT] - playerPos2D;
+            //    ang2 = Vector2.Angle(Vector2.left, v2);
+            //}
+
+            //Debug.Log("playerPos2D = " + playerPos2D);
+
+            //Debug.Log("v1 = " + v1 + " | v2 = " + v2);
+            //Debug.Log("ang1 = " + ang1 + " | ang2 = " + ang2);
+
+            //ang1 = ang1.MathAngleToUnityObjectAngle();
+            //ang2 = ang2.MathAngleToUnityObjectAngle();
+
+            //Debug.Log("ang1 = " + ang1 + " | ang2 = " + ang2);
+
+            //Vector2 pos2DAng1 = new Vector2(playerPos2D.x + m_OffsetRadius * Mathf.Cos(ang1 * Mathf.Deg2Rad), playerPos2D.y + OffsetRadius * Mathf.Sin(ang1 * Mathf.Deg2Rad));
+            //Vector2 pos2DAng2 = new Vector2(playerPos2D.x + m_OffsetRadius * Mathf.Cos(ang2 * Mathf.Deg2Rad), playerPos2D.y + OffsetRadius * Mathf.Sin(ang2 * Mathf.Deg2Rad));
+
+            //Debug.Log("pos2DAng1 = " + pos2DAng1 + " | pos2DAng2 = " + pos2DAng2);
+
+            var ePos = m_ViewPortVertices[GetPlayersViewPortPosition(playerPos2D)];
+
+            return new Vector3(ePos.x, 0, ePos.y);
 
 
             ////angle = angle.MathAngleToUnityObjectAngle();
@@ -285,6 +336,12 @@ namespace BattleReal.EnemyGenerator
 
             //return retVal;
         }
+
+        //private float CalcAngleBetweenTwoVertices(Vector2 playerPos2D, Vector2 target)
+        //{
+        //    var diff = target - playerPos2D;
+        //    return Vector2.Angle(playerPos2D, diff) * Cross2D(playerPos2D, diff) < 0 ? -1 : 1;
+        //}
 
         private float CalcMaxRadius(float angle, Vector2 playerPos2D, Vector2 min, Vector3 max) 
         {
@@ -357,51 +414,33 @@ namespace BattleReal.EnemyGenerator
         }
 
         private E_PLAYERS_VIEWPORT_POSITION GetPlayersViewPortPosition(Vector2 playerPos2D)
-        {
-            Vector2 center = (m_GameFieldMax + m_GameFieldMin) / 2.0f;
-            int h = CalcPositionRelationship(center, center + Vector2.up, playerPos2D);
-            int v = CalcPositionRelationship(Rotation(center, 90.0f * Mathf.Deg2Rad),
-                                             Rotation(center + Vector2.up, 90.0f * Mathf.Deg2Rad),
-                                             playerPos2D);
-            
+        {           
+            float crossH = Cross2D(Vector2.down, playerPos2D);
+            float crossV = Cross2D(Vector2.right, playerPos2D);
 
-            if (h == -1 && v == 1)
+            Debug.Log("crossH = " + crossH + " | crossV = " + crossV);
+
+            if(crossH < 0)
             {
-                return E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT;
-            }
-            else if (h == 1 && v == 1)
-            {
-                return E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT;
-            }
-            else if (h == 1 && v == -1)
-            {
-                return E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT;
+                if(crossV < 0)
+                {
+                    return E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT;
+                }
+                else
+                {
+                    return E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT;
+                }
             }
             else
             {
-                return E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT;
-            }
-        }
-
-        private Vector2 Rotation(Vector2 v, float rad)
-        {
-            return new Vector2(v.x * Mathf.Cos(rad) - v.y * Mathf.Sin(rad),
-                               v.x * Mathf.Sin(rad) + v.y * Mathf.Cos(rad));
-        }
-
-        private int CalcPositionRelationship(Vector2 a, Vector2 b, Vector2 p)
-        {
-            Vector2 v = p - a;
-            Vector2 w = b - a;
-            float res = Cross2D(v,w);
-
-            if (res >= 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return -1;
+                if(crossV < 0)
+                {
+                    return E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT;
+                }
+                else
+                {
+                    return E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT;
+                }
             }
         }
 
