@@ -226,7 +226,7 @@ namespace BattleReal.EnemyGenerator
             m_GeneratedEnemies.Add(enemy);
         }
 
-        private Vector2 CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION pvp1, E_PLAYERS_VIEWPORT_POSITION pvp2, Vector2 direction, Vector2 playerPos2D) 
+        private float CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION pvp1, E_PLAYERS_VIEWPORT_POSITION pvp2, Vector2 direction, Vector2 playerPos2D) 
         {
             Vector2 v1 = m_GameFieldVertices[pvp1] - playerPos2D;
             Vector2 v2 = m_GameFieldVertices[pvp2] - playerPos2D;
@@ -238,45 +238,48 @@ namespace BattleReal.EnemyGenerator
             delta = v2 - direction;
             ang2 = Mathf.Atan2(delta.y, delta.x);
 
+            //Debug.Log("ang1 = " + ang1 * Mathf.Rad2Deg + " | ang2 = " + ang2 * Mathf.Rad2Deg);
+
             if (ang1 < ang2)
             {
-                finalAngle = UnityEngine.Random.Range(ang1, ang2);
+                finalAngle =  UnityEngine.Random.Range(ang1, ang2);
             }
             else
             {
-                finalAngle = UnityEngine.Random.Range(ang2, ang1);
+                finalAngle =  UnityEngine.Random.Range(ang2, ang1);
             }
 
-            finalAngle.MathAngleToUnityObjectAngle();
+            //Debug.Log("finalAngle = " + finalAngle * Mathf.Rad2Deg);
 
-            return new Vector2((playerPos2D.x + m_OffsetRadius) * Mathf.Cos(finalAngle), (playerPos2D.y + m_OffsetRadius) * Mathf.Sin(finalAngle));
+            return finalAngle;
         }
 
         private Vector3 GetEnemyPosition(Vector2 playerPos2D)
         {                       
             var pvp = GetPlayersViewPortPosition(playerPos2D);
             Vector2 pos2D;
+            float angle;
 
             if (pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT)
-            {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.up, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
+            {                
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.right, playerPos2D);
             }
             else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
             {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
             }
             else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT)
-            {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.down, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
+            {                
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.right, playerPos2D);
             }
             else
             {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
-            }                     
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
+            }            
+            
+            pos2D = playerPos2D +  new Vector2(m_OffsetRadius * Mathf.Cos(angle), m_OffsetRadius * Mathf.Sin(angle));
+
+            return new Vector3(pos2D.x, 0, pos2D.y);
         }
 
         private float CalcMaxRadius(float angle, Vector2 playerPos2D, Vector2 min, Vector3 max) 
