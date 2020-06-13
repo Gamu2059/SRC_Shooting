@@ -58,7 +58,7 @@ namespace BattleReal.EnemyGenerator
         private BattleRealEnemyParamSetBase m_ParamSet;
         protected BattleRealEnemyParamSetBase ParamSet => m_ParamSet;
 
-        [SerializeField, Tooltip("プレイヤー位置から生成位置の半径")]
+        [SerializeField, Tooltip("敵が出現する最小の半径")]
         private float m_OffsetRadius;
         protected float OffsetRadius => m_OffsetRadius;
 
@@ -100,8 +100,6 @@ namespace BattleReal.EnemyGenerator
         protected override void OnStartGenerator()
         {
             base.OnStartGenerator();
-
-            UnityEngine.Random.InitState((int)Time.time * 1000);
 
             m_GameFieldMin = new Vector2(-1.0f, -1.0f);
             m_GameFieldMax = new Vector2(1.0f, 1.0f);            
