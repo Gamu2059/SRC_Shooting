@@ -66,6 +66,15 @@ namespace BattleReal.EnemyGenerator
         private int m_GenerateNum;
         protected int GenerateNum => m_GenerateNum;
 
+        [SerializeField, Tooltip("一度に複数の敵を生成するか?")]
+        private bool m_EnableGeneratingMultipleEnemy;
+        protected bool EnableGeneratingMultipleEnemy => m_EnableGeneratingMultipleEnemy;
+
+        [SerializeField, Tooltip("一度に生成する数")]
+        private int m_GenerateNumParOnce;
+        protected int GenerateNumParOnce => m_GenerateNumParOnce;
+
+
         [Space()]
 
         [SerializeField, Tooltip("敵の生成タイミングの種類")]
@@ -183,10 +192,22 @@ namespace BattleReal.EnemyGenerator
             else
             {
                 if(m_GenerateTimeCount >= GenerateInterval)
-                {                    
-                    Generate();
-                    m_GeneratedEnemyCount++;
-                    m_GenerateTimeCount -= GenerateInterval;
+                {
+                    if (m_EnableGeneratingMultipleEnemy)
+                    {
+                        for(int i = 0; i < m_GenerateNumParOnce; i++)
+                        {
+                            Generate();                            
+                        }
+                        m_GeneratedEnemyCount += m_GenerateNumParOnce;
+                        m_GenerateTimeCount -= GenerateInterval;
+                    }
+                    else
+                    {
+                        Generate();
+                        m_GeneratedEnemyCount++;
+                        m_GenerateTimeCount -= GenerateInterval;
+                    }                                        
                 }
                 m_GenerateTimeCount += Time.fixedDeltaTime;
             }
