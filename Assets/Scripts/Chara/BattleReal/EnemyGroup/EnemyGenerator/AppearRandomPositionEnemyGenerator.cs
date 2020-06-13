@@ -18,6 +18,8 @@ namespace BattleReal.EnemyGenerator
     {
         #region Define
 
+        private const float RAY_LENGTH = 1000.0f;
+
         protected enum E_GENERATE_TIMING_TYPE
         {
             /// <summary>
@@ -85,6 +87,7 @@ namespace BattleReal.EnemyGenerator
         private Vector2 m_GameFieldMax;
         private Vector2 m_GameFieldMin;
         private Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> m_GameFieldVertices;
+        private List<Vector2> m_GameFieldLines;
         private bool m_IsCountOffset;
         private float m_GenerateTimeCount;
         private int m_GeneratedEnemyCount;
@@ -104,12 +107,18 @@ namespace BattleReal.EnemyGenerator
             m_GameFieldMax = new Vector2(1.0f, 1.0f);            
             m_GameFieldVertices = new Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> 
             {
-                { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, new Vector2(m_GameFieldMin.x, m_GameFieldMin.y)},
-                { E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, new Vector2(m_GameFieldMin.x, m_GameFieldMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT,  new Vector2(m_GameFieldMin.x, m_GameFieldMin.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT,  new Vector2(m_GameFieldMin.x, m_GameFieldMax.y)},
                 { E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMax.y)},
                 { E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMin.y)},
             };
-
+            m_GameFieldLines = new List<Vector2> 
+            {
+                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT],  m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT],  // up
+                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT], m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT],  // right
+                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT], m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT],   // bottom
+                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT],  m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT],   // left
+            };
             m_IsCountOffset = true;
             m_GenerateTimeCount = 0;
             m_GeneratedEnemyCount = 0;
@@ -226,7 +235,7 @@ namespace BattleReal.EnemyGenerator
             m_GeneratedEnemies.Add(enemy);
         }
 
-        private Vector2 CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION pvp1, E_PLAYERS_VIEWPORT_POSITION pvp2, Vector2 direction, Vector2 playerPos2D) 
+        private float CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION pvp1, E_PLAYERS_VIEWPORT_POSITION pvp2, Vector2 direction, Vector2 playerPos2D) 
         {
             Vector2 v1 = m_GameFieldVertices[pvp1] - playerPos2D;
             Vector2 v2 = m_GameFieldVertices[pvp2] - playerPos2D;
@@ -238,115 +247,117 @@ namespace BattleReal.EnemyGenerator
             delta = v2 - direction;
             ang2 = Mathf.Atan2(delta.y, delta.x);
 
+            //Debug.Log("ang1 = " + ang1 * Mathf.Rad2Deg + " | ang2 = " + ang2 * Mathf.Rad2Deg);
+
             if (ang1 < ang2)
             {
-                finalAngle = UnityEngine.Random.Range(ang1, ang2);
+                finalAngle =  UnityEngine.Random.Range(ang1, ang2);
             }
             else
             {
-                finalAngle = UnityEngine.Random.Range(ang2, ang1);
+                finalAngle =  UnityEngine.Random.Range(ang2, ang1);
             }
 
-            finalAngle.MathAngleToUnityObjectAngle();
+            //Debug.Log("finalAngle = " + finalAngle * Mathf.Rad2Deg);
 
-            return new Vector2((playerPos2D.x + m_OffsetRadius) * Mathf.Cos(finalAngle), (playerPos2D.y + m_OffsetRadius) * Mathf.Sin(finalAngle));
+            return finalAngle;
         }
 
         private Vector3 GetEnemyPosition(Vector2 playerPos2D)
         {                       
             var pvp = GetPlayersViewPortPosition(playerPos2D);
             Vector2 pos2D;
+            float angle, radius;
 
             if (pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT)
-            {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.up, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
+            {                
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.right, playerPos2D);
             }
             else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
             {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
             }
             else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT)
-            {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.down, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
+            {                
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.right, playerPos2D);
             }
             else
             {
-                pos2D = CalcAppearPosition(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
-                return new Vector3(pos2D.x, 0, pos2D.y);
-            }                     
+                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
+            }
+
+            var maxRadius = CalcMaxRadius(angle, playerPos2D);
+            radius = UnityEngine.Random.Range(m_OffsetRadius, maxRadius);
+
+            //Debug.Log("angle = " + angle * Mathf.Rad2Deg + " | radius = " + radius);
+
+            angle.MathAngleToUnityObjectAngle();
+
+            pos2D = playerPos2D +  new Vector2(radius * Mathf.Cos(angle), radius * Mathf.Sin(angle));
+
+            return new Vector3(pos2D.x, 0, pos2D.y);
         }
 
-        private float CalcMaxRadius(float angle, Vector2 playerPos2D, Vector2 min, Vector3 max) 
+        private Vector2? CalcIntersection(Vector2 from1, Vector2 to1, Vector2 from2, Vector2 to2) 
         {
-            //List<Vector2> viewport = new List<Vector2>
-            //{
-            //    new Vector2(max.x, max.y), new Vector2(min.x, max.y),  // up
-            //    new Vector2(max.x, min.y), new Vector2(max.x, max.y),  // right
-            //    new Vector2(min.x, min.y), new Vector2(max.x, min.y),  // bottom
-            //    new Vector2(min.x, max.y), new Vector2(min.x, min.y),  // left
-            //};
+            Vector2 v1 = new Vector2(to1.x - from1.x, to1.y - from1.y);
+            Vector2 v2 = new Vector2(to2.x - from2.x, to2.y - from2.y);
+            Vector2 v3 = new Vector2(from2.x - from1.x, from2.y - from1.y);
+            Vector2 v4 = new Vector2(to1.x - from2.x, to1.y - from2.y);
+            
+            float area1 = Cross2D(v2, v3);
+            float area2 = Cross2D(v2, v4);
+            float total = area1 + area2;
 
-            //float length = 1000.0f;
-            //Vector2 ray = new Vector2(playerPos2D.x + length * Mathf.Cos(angle * Mathf.Deg2Rad), playerPos2D.y + length * Mathf.Sin(angle * Mathf.Deg2Rad));            
+            if (Math.Abs(total) > 0)
+            {
+                var ratio = area1 / total;
 
-            //Vector2 intercept = new Vector2();
+                return new Vector2(from1.x + ratio * v1.x, from1.y + ratio * v1.y);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-            //Vector2? CalcIntercept(Vector2 from1, Vector2 to1, Vector2 from2, Vector2 to2)
-            //{
-            //    var v1 = new Vector2(to1.x - from1.x, to1.y - from1.y);
-            //    var v2 = new Vector2(to2.x - from2.x, to2.y - from2.y);
-            //    var v3 = new Vector2(from2.x - from1.x, from2.y - from1.y);
-            //    var v4 = new Vector2(to1.x - from2.x, to1.y - from2.y);
-            //    var area1 = Cross2D(v2, v3);
-            //    var area2 = Cross2D(v2, v4);
-            //    var total = area1 + area2;
-            //    if (Math.Abs(total) > 0)
-            //    {
-            //        var ratio = area1 / total;
+        private float CalcMaxRadius(float angle, Vector2 playerPos2D) 
+        {
+            Vector2 ray = playerPos2D + new Vector2(RAY_LENGTH * Mathf.Cos(angle), RAY_LENGTH * Mathf.Sin(angle));
+            Vector2 intersection = Vector2.zero;
+            float dist;
 
-            //        return new Vector2(from1.x + ratio * v1.x, from1.y + ratio * v1.y);
-            //    }
-            //    else
-            //    {
-            //        return null;
-            //    }
-            //}
+            for(int i = 0; i < m_GameFieldLines.Count - 1; i = i + 2)
+            {
+                Vector2? tmp = CalcIntersection(playerPos2D, ray, m_GameFieldLines[i], m_GameFieldLines[i + 1]);
 
-            //for(int i = 0; i < viewport.Count - 1; i = i + 2)
-            //{
-            //    Vector2? tmp = CalcIntercept(playerPos2D, ray, viewport[i], viewport[i + 1]);                                
+                if(tmp != null)
+                {
+                    Vector2 v = (Vector2)tmp - m_GameFieldLines[i];
+                    Vector2 w = m_GameFieldLines[i + 1] - m_GameFieldLines[i];
 
-            //    if(tmp != null)
-            //    {
-            //        Vector2 v = (Vector2)tmp - viewport[i];
-            //        Vector2 w = viewport[i + 1] - viewport[i];
+                    if(Vector2.Dot(v,w) == v.magnitude * w.magnitude && v.magnitude <= w.magnitude)
+                    {
 
-            //        if(Mathf.Pow(Vector2.Dot(v, w), 2) == v.sqrMagnitude * w.sqrMagnitude && v.sqrMagnitude <= w.sqrMagnitude)
-            //        {
+                    }
+                    else
+                    {
+                        tmp = null;
+                    }
+                }
 
-            //        }
-            //        else
-            //        {
-            //            tmp = null;
-            //        }
-            //    }
+                if(tmp != null)
+                {
+                    intersection = (Vector2)tmp;
+                    break;
+                }
+            }
 
-            //    if(tmp != null)
-            //    {
-            //        Debug.Log("viewport[i] = " + viewport[i] + " | viewport[i+1] = " + viewport[i + 1]);
-            //        intercept = (Vector2)tmp;
-            //        break;
-            //    }
-            //}
+            dist = Vector2.Distance(playerPos2D, intersection);
 
-            //Debug.Log("playerPos = " + playerPos2D + " | intercept = " + intercept);
+            //Debug.Log("intersection = " + intersection + " | distance = " + dist);
 
-            //return Vector2.Distance(playerPos2D, intercept);
-
-            return 0;
+            return dist;
         }
 
         private E_PLAYERS_VIEWPORT_POSITION GetPlayersViewPortPosition(Vector2 playerPos2D)
