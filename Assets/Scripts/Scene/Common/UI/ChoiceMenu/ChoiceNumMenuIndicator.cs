@@ -14,15 +14,9 @@ public class ChoiceNumMenuIndicator : ChoiceMenuIndicator
     [SerializeField]
     private int m_DefaultNum;
 
-    private ReactiveProperty<int> m_Num;
+    private ReactiveProperty<int> m_Num = new ReactiveProperty<int>();
 
     public int Num => m_Num.Value;
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        m_Num = new ReactiveProperty<int>();
-    }
 
     protected override void SubscribeChangeValue()
     {
