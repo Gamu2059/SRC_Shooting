@@ -248,9 +248,11 @@ namespace BattleReal.EnemyGenerator
             Vector3 playerPos = BattleRealPlayerManager.Instance.Player.transform.position;
             Vector2 playerPos2D = new Vector2(playerPos.x, playerPos.z);
             
-            enemyT.localPosition = GetEnemyPosition(playerPos2D);
+            var enemyPos = GetEnemyPosition(playerPos2D);
+            enemyT.localPosition = enemyPos;
+            //enemyT.position = enemyT.LocalPositionToWorldPosition(enemyPos);
             enemyT.LookAt(playerPos);
-
+           
             m_GeneratedEnemies.Add(enemy);
         }
 

@@ -58,7 +58,7 @@ public class SequenceUnitAnimation : SequenceUnit
         {
             Target.localPosition = m_CalcedInitPosition;
             Target.localEulerAngles = m_CalcedInitRotation;
-        }
+        }        
     }
 
     protected override void OnUpdate(float deltaTime)
@@ -87,7 +87,7 @@ public class SequenceUnitAnimation : SequenceUnit
         m_CalcedInitRotation = GetInitData(rot, m_InitializeEulerAngles);
         spaceType = m_SpaceType;
         position = GetInitData(target.position, m_InitializeWorldPosition);
-        rotate = GetInitData(target.eulerAngles, m_InitializeEulerAngles);
+        rotate = GetInitData(target.eulerAngles, m_InitializeEulerAngles);        
     }
 
     private Vector3 GetInitData(Vector3 origin, InitData initData)
