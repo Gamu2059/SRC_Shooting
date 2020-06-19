@@ -11,15 +11,9 @@ public class ChoiceDifficultyMenuIndicator : ChoiceMenuIndicator
     [SerializeField]
     private E_DIFFICULTY m_DefaultDifficulty;
 
-    private ReactiveProperty<E_DIFFICULTY> m_Difficulty;
+    private ReactiveProperty<E_DIFFICULTY> m_Difficulty = new ReactiveProperty<E_DIFFICULTY>();
 
     public E_DIFFICULTY Difficulty => m_Difficulty.Value;
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        m_Difficulty = new ReactiveProperty<E_DIFFICULTY>();
-    }
 
     protected override void SubscribeChangeValue()
     {
