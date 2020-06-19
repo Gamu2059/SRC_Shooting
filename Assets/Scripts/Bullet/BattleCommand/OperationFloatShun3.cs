@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 等加速度直線運動から等速直線運動に移るような値の動きを表すクラス。（作成途中）
+/// 等加速度直線運動から等速直線運動に移るような値の動きを表すクラス。
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/operation/float/shun3", fileName = "OperationFloatShun3", order = 0)]
 [System.Serializable]
@@ -51,21 +51,25 @@ public class OperationFloatShun3 : OperationFloatBase
         float x2 = m_X2.GetResultFloat();
         float t = m_T.GetResultFloat();
 
-        //// 運動が切り替わる時刻
-        //float t1 = 2 * x1 / (v0 + v1);
+        // 運動が切り替わる時刻
+        float t1 = x1 / v1;
+        float t2 = 2 * x2 / (v1 + v3);
+        float t12 = t1 + t2;
 
-        //if (t < t1)
-        //{
-        //    // 現在の速さ
-        //    float v = v0 + (v1 - v0) * t / t1;
+        if (t < t1)
+        {
+            return v1 * t;
+        }
+        else if(t < t12)
+        {
+            // 現在の速さ
+            float v = v1 + (v3 - v1) * (t - t1) / t2;
 
-        //    return (v0 + v) * t / 2;
-        //}
-        //else
-        //{
-        //    return x1 + v1 * (t - t1);
-        //}
-
-        return 0;
+            return x1 + (v1 + v) * (t - t1) / 2;
+        }
+        else
+        {
+            return x1 + x2 + v3 * (t - t12);
+        }
     }
 }
