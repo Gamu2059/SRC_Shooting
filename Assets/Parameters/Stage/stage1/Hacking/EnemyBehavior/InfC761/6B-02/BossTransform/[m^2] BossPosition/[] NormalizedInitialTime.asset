@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa2aa138c09a474b89eb4ad584a4629, type: 3}
+  m_Name: '[] NormalizedInitialTime'
+  m_EditorClassIdentifier: 
+  m_Multiple:
+  - {fileID: 11400000, guid: f1cbcd3c4811fbd41a6e085fe6c5fe25, type: 2}
+  m_Divide:
+  - {fileID: 11400000, guid: ef93b7e16f688ce4f96d0fb900cdb00e, type: 2}

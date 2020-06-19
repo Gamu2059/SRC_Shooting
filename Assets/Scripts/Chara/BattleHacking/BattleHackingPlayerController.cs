@@ -58,7 +58,7 @@ public class BattleHackingPlayerController : CommandCharaController
         m_ShotPosition1.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[0].position.x, 0);
         m_ShotPosition2.Value = new Vector2(0, transform.localPosition.z) + new Vector2(m_ShotPositions[1].position.x, 0);
 
-        m_BulletShotParams.OnUpdates(this, E_COMMON_SOUND.PLAYER_HACKING_SHOT);
+        m_BulletShotParams.OnUpdates(this);
 
         m_IsShotButtonPressed.Value = false;
     }

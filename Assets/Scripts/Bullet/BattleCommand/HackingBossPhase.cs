@@ -80,7 +80,7 @@ public class HackingBossPhase : ScriptableObject
             }
         }
 
-        m_DanmakuArray.OnUpdates(boss.GetEnemy(), E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+        m_DanmakuArray.OnUpdates(boss.GetEnemy());
 
         return transform;
     }

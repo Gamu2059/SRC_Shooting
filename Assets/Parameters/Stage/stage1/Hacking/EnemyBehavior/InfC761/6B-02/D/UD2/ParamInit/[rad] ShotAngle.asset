@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07ae3a83581ff2408ebcece4a68f0a4, type: 3}
+  m_Name: '[rad] ShotAngle'
+  m_EditorClassIdentifier: 
+  m_Plus:
+  - {fileID: 11400000, guid: a9475f7a233fc1c40b79ee929c372403, type: 2}
+  - {fileID: 11400000, guid: 5dd0a4a5b91858a49b993c1cca69b945, type: 2}
+  m_Minus: []

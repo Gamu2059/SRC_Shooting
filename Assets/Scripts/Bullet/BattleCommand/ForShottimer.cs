@@ -21,10 +21,16 @@ public class ForShottimer : ForBase
     protected float m_NowTime;
 
 
+    [SerializeField, Tooltip("親弾のオブジェクト")]
+    public BattleHackingFreeTrajectoryBulletController m_BulletController = null;
+
+
     public override void Setup()
     {
         // 発射回数を初期化する（フィールド宣言と同時に行えば、ここに書く必要はなさそう？いやでも、それだと同じハッキングに再挑戦した時に困るか。）
         m_RealShotNumVariable.Value = -1;
+
+        //m_BulletController = null;
     }
 
 
@@ -42,8 +48,23 @@ public class ForShottimer : ForBase
 
     public override bool IsTrue()
     {
+
         // 試しに発射回数を1増やす
-        m_RealShotNumVariable.Value++;
+
+        //m_RealShotNumVariable.Value++;
+
+        // 親弾がないなら
+        if (m_BulletController == null)
+        {
+            m_RealShotNumVariable.Value++;
+        }
+        // 親弾があるなら
+        else
+        {
+            m_BulletController.m_ShotNum++;
+            m_RealShotNumVariable.Value = m_BulletController.m_ShotNum;
+        }
+
 
         // この発射回数での発射時刻
         float launchTime = m_LaunchTimeOperation.GetResultFloat();
@@ -61,8 +82,23 @@ public class ForShottimer : ForBase
         }
         else
         {
+
             // 次の発射はまだなので、発射回数を現在のものに戻す
-            m_RealShotNumVariable.Value--;
+
+            //m_RealShotNumVariable.Value--;
+
+            // 親弾がないなら
+            if (m_BulletController == null)
+            {
+                m_RealShotNumVariable.Value--;
+            }
+            // 親弾があるなら
+            else
+            {
+                m_BulletController.m_ShotNum--;
+                m_RealShotNumVariable.Value = m_BulletController.m_ShotNum;
+            }
+
 
             return false;
         }

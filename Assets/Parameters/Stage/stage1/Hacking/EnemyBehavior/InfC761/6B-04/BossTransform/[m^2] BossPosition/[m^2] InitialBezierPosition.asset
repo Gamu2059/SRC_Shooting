@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b736fd535538041a09221ccde3844a, type: 3}
+  m_Name: '[m^2] InitialBezierPosition'
+  m_EditorClassIdentifier: 
+  m_BeginPoint: {fileID: 11400000, guid: ba5419542292aea45ba00f7256934384, type: 2}
+  m_ControllPoint1: {fileID: 11400000, guid: 6a64e022365a88d4cb3db5906e40b0be, type: 2}
+  m_ControllPoint2: {fileID: 11400000, guid: 6a64e022365a88d4cb3db5906e40b0be, type: 2}
+  m_EndPoint: {fileID: 11400000, guid: 6a64e022365a88d4cb3db5906e40b0be, type: 2}
+  m_T: {fileID: 11400000, guid: e8991627ba137ac4198ce57ec0298cb5, type: 2}
