@@ -46,31 +46,31 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_SpeedCurveScale: 1
+  m_SpeedCurveScale: 0.85
   m_AngleSpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -0.17964278
-      outSlope: -0.17964278
+      inSlope: 0.16863587
+      outSlope: 0.16863587
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.12079929
+      outWeight: 0.23796514
     - serializedVersion: 3
       time: 1.3499
       value: 0
-      inSlope: 0.14103346
-      outSlope: 0.14103346
+      inSlope: -0.024421468
+      outSlope: -0.024421468
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.5240697
       outWeight: 1
     - serializedVersion: 3
       time: 1.35
-      value: -1000
+      value: -1
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1.45
-      value: -1000
+      value: -1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -87,24 +87,24 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.451
-      value: -5
-      inSlope: -0.08621802
-      outSlope: -0.08621802
+      time: 1.4501
+      value: -0.07
+      inSlope: 0.00007672206
+      outSlope: 0.00007672206
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.0030378718
+      inWeight: 0
+      outWeight: 0.85788345
     - serializedVersion: 3
       time: 10
-      value: -5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      value: 0
+      inSlope: -0.25754416
+      outSlope: -0.25754416
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.047371954
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_AngleSpeedCurveScale: 1
+  m_AngleSpeedCurveScale: 830
