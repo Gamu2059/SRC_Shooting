@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d6a62cf8de16ca4087295ead86d3902, type: 3}
+  m_Name: stage6_g026.behavior_unit
+  m_EditorClassIdentifier: 
+  m_ApplyInterruptEnd: 0
+  m_InterruptEndFunc: {fileID: 0}
+  m_DefaultEndValue: 0
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_OnStopOptions: []
+  m_ReferenceDifficultyForBulletGenerator: 0
+  m_BulletGeneratorDatas: []
+  m_DifficultyBulletGeneratorDatas: []
+  m_DestroyBulletGeneratorOnBehaviorEnd: 0
+  m_SpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_SpeedCurveScale: 0.85
+  m_AngleSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.16863587
+      outSlope: 0.16863587
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.23796514
+    - serializedVersion: 3
+      time: 1.3499
+      value: 0
+      inSlope: -0.024421468
+      outSlope: -0.024421468
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5240697
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.35
+      value: -1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.45
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.4501
+      value: -0.07
+      inSlope: 0.00007672206
+      outSlope: 0.00007672206
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.85788345
+    - serializedVersion: 3
+      time: 10
+      value: 0
+      inSlope: -0.25754416
+      outSlope: -0.25754416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.047371954
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_AngleSpeedCurveScale: -830
