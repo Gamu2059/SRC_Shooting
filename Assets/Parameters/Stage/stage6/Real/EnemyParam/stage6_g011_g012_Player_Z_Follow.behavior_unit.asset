@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c47a5e7429a79c49acd1976831af42b, type: 3}
+  m_Name: stage6_g011_g012_Player_Z_Follow.behavior_unit
+  m_EditorClassIdentifier: 
+  m_ApplyInterruptEnd: 0
+  m_InterruptEndFunc: {fileID: 0}
+  m_DefaultEndValue: 0
+  m_OnStartOptions: []
+  m_OnEndOptions: []
+  m_OnStopOptions: []
+  m_ReferenceDifficultyForBulletGenerator: 0
+  m_BulletGeneratorDatas: []
+  m_DifficultyBulletGeneratorDatas: []
+  m_DestroyBulletGeneratorOnBehaviorEnd: 0
+  m_ZMoveSpeed: 0.8
+  m_Offset: 0.4

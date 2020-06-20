@@ -13,7 +13,7 @@ public class MultiForLoop : ForBase
 {
 
     [SerializeField]
-    private ForBase[] m_ForArray;
+    public ForBase[] m_ForArray;
 
     private int m_Index;
 

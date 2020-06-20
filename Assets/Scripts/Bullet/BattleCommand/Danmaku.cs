@@ -25,11 +25,11 @@ public class Danmaku : BulletShotParamBase
     }
 
 
-    public override void OnUpdates(CommandCharaController owner, E_COMMON_SOUND shotSE)
+    public override void OnUpdates(CommandCharaController owner)
     {
         foreach (BulletShotParams bulletShotParams in m_BulletShotParamsArray)
         {
-            bulletShotParams.OnUpdates(owner, shotSE);
+            bulletShotParams.OnUpdates(owner);
         }
     }
 }

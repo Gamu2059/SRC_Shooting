@@ -38,6 +38,7 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         BulletParamFreeOperation bulletParamFreeOperationChangeableUpdate,
         TransformOperation transformOperation,
         BulletShotParams bulletShotParams,
+        E_COMMON_SOUND shotSE,
         bool isCheck = true
         )
     {
@@ -92,7 +93,31 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         bullet.m_BulletShotParams = bulletShotParams;
 
+
+        bullet.m_ShotNum = -1;
+
+        // もしこの弾が弾を発射するなら、発射するときのForShottimerオブジェクトをフィールドに代入する
+        if (bullet.m_BulletShotParams == null)
+        {
+            bullet.m_ForShottimer = null;
+        }
+        else
+        {
+            foreach (ForBase forBase in bullet.m_BulletShotParams.m_MultiForLoop.m_ForArray)
+            {
+                if (forBase is ForShottimer)
+                {
+                    bullet.m_ForShottimer = (ForShottimer)forBase;
+                    break;
+                }
+            }
+        }
+
+
         bullet.spriteRenderer = (SpriteRenderer)bullet.gameObject.GetComponentInChildren(typeof(SpriteRenderer));
+
+
+        bullet.m_ShotSE = shotSE;
 
 
         // この弾の親がプレイヤーなら
@@ -100,6 +125,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
         {
             // すぐに動き始める
             bullet.m_IsMoving = true;
+
+            // 弾の発射音を鳴らす
+            AudioManager.Instance.Play(bullet.m_ShotSE);
+            //AudioManager.Instance.Play(E_COMMON_SOUND.PLAYER_HACKING_SHOT);
         }
         // この弾の親がプレイヤー以外なら
         else
@@ -165,6 +194,18 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// </summary>
     private BulletShotParams m_BulletShotParams;
 
+
+    /// <summary>
+    /// この弾が今までに弾を発射した回数
+    /// </summary>
+    public int m_ShotNum;
+
+    /// <summary>
+    /// この弾が弾を発射するときのForShottimerオブジェクト
+    /// </summary>
+    private ForShottimer m_ForShottimer;
+
+
     /// <summary>
     /// 衝突判定があるかどうか
     /// </summary>
@@ -195,6 +236,12 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
     /// ブラーの最初の時点での弾の大きさの倍率（アセットを使ってやった時は4だった）
     /// </summary>
     private static readonly float InitialScaleMag = 3F;
+
+
+    /// <summary>
+    /// 発射音
+    /// </summary>
+    private E_COMMON_SOUND m_ShotSE;
 
 
     public override void OnInitialize()
@@ -241,6 +288,10 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
             {
                 m_IsMoving = true;
                 m_Time -= BlurTimeLength;
+
+                // 弾の発射音を鳴らす
+                AudioManager.Instance.Play(m_ShotSE);
+                //AudioManager.Instance.Play(E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
             }
         }
 
@@ -298,10 +349,13 @@ public class BattleHackingFreeTrajectoryBulletController : BattleHackingBulletCo
 
         m_IsAlive = transformSimple.IsAlive;
 
-        // もしこの弾が弾を発射するなら、発射の処理を行う
         if (m_BulletShotParams != null)
         {
-            m_BulletShotParams.OnUpdates(m_Boss, E_COMMON_SOUND.ENEMY_SHOT_MEDIUM_02);
+            // もしこの弾が弾を発射するなら、発射するときのForShottimerオブジェクトの親弾フィールドに、この弾オブジェクトを代入する
+            m_ForShottimer.m_BulletController = this;
+
+            // もしこの弾が弾を発射するなら、発射の処理を行う
+            m_BulletShotParams.OnUpdates(m_Boss);
         }
     }
 
