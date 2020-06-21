@@ -16,7 +16,7 @@ public class OperationFloatWay : OperationFloatBase
     /// 値
     /// </summary>
     [SerializeField]
-    private OperationIntVariable m_Index;
+    private OperationIntBase m_Index;
 
     /// <summary>
     /// 中心の値
