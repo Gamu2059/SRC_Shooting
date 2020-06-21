@@ -13,6 +13,9 @@ public class DifficultyInitializer : DifficultyInitializerBase
 {
 
     [SerializeField, Tooltip("難易度によって変わるfloat型の演算オブジェクトの配列")]
+    private E_DIFFICULTY m_Difficulty;
+
+    [SerializeField, Tooltip("難易度によって変わるfloat型の演算オブジェクトの配列")]
     private OperationFloatDifficultyBase[] m_Float;
 
     [SerializeField, Tooltip("難易度によって変わるint型の演算オブジェクトの配列")]
@@ -31,7 +34,8 @@ public class DifficultyInitializer : DifficultyInitializerBase
         {
             foreach (OperationFloatDifficultyBase operation in m_Float)
             {
-                operation.Setup();
+                //operation.Setup(m_Difficulty);
+                operation.Setup(null);
             }
         }
 
@@ -39,7 +43,8 @@ public class DifficultyInitializer : DifficultyInitializerBase
         {
             foreach (OperationIntDifficultyBase operation in m_Int)
             {
-                operation.Setup();
+                //operation.Setup(m_Difficulty);
+                operation.Setup(null);
             }
         }
 
@@ -47,7 +52,8 @@ public class DifficultyInitializer : DifficultyInitializerBase
         {
             foreach (OperationVector2DifficultyBase operation in m_Vector2)
             {
-                operation.Setup();
+                //operation.Setup(m_Difficulty);
+                operation.Setup(null);
             }
         }
     }
