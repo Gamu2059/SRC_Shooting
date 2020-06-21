@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9e4b8dc684c00345b377bc238b23c5c, type: 3}
-  m_Name: enemy_allow_position_charge_orange.effect
+  m_Name: enemy_charge_blue_allow_position.effect
   m_EditorClassIdentifier: 
-  m_Effect: {fileID: 3007492986554732069, guid: 7a69430747783074f9979d0c69c517c6,
+  m_Effect: {fileID: 3007492986554732069, guid: 55e6614efc926694b8e852b9800c1c13,
     type: 3}
   m_FirePositionRelative: 0
   m_FirePosition:
@@ -36,4 +36,5 @@ MonoBehaviour:
   m_IsAllowOwnerRotation: 0
   m_IsAutoDestroyDuration: 1
   m_Duration: 1.2
-  m_PlaySoundParams: []
+  m_PlaySoundParams:
+  - {fileID: 11400000, guid: 760a73742e93d224e9446a5976b373ac, type: 2}

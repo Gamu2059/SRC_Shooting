@@ -11,15 +11,9 @@ public class ChoiceChapterMenuIndicator : ChoiceMenuIndicator
     [SerializeField]
     private E_CHAPTER m_DefaultChapter;
 
-    private ReactiveProperty<E_CHAPTER> m_Chapter;
+    private ReactiveProperty<E_CHAPTER> m_Chapter = new ReactiveProperty<E_CHAPTER>();
 
     public E_CHAPTER Chapter => m_Chapter.Value;
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        m_Chapter = new ReactiveProperty<E_CHAPTER>();
-    }
 
     protected override void SubscribeChangeValue()
     {

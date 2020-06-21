@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Params:
   - Difficulty: 1
     Param:
-      m_Hp: 1000
+      m_Hp: 5000
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: dafb7966db844da49bee2a0edd96cb0d,
         type: 2}
@@ -37,8 +37,8 @@ MonoBehaviour:
           type: 2}
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 0}
-        m_DownHp: 60
-        m_DownHealTime: 6
+        m_DownHp: 800
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0.6
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -59,8 +59,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 80
-        m_DownHealTime: 6
+        m_DownHp: 1200
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0.3
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -81,8 +81,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 100
-        m_DownHealTime: 6
+        m_DownHp: 2000
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -103,7 +103,7 @@ MonoBehaviour:
         type: 2}
       m_HackingSuccessEffectParam: {fileID: 11400000, guid: bfc56091884e80244bed6c6f9ce54765,
         type: 2}
-      m_HackingFailureRecoverDownHpRate: 0
+      m_HackingFailureRecoverDownHpRate: 0.5
       m_DefeatScore: 10000
       m_DefeatItemParam:
         ItemSpreadParams:
@@ -252,7 +252,7 @@ MonoBehaviour:
       m_RetireHideTime: 0
   - Difficulty: 2
     Param:
-      m_Hp: 1000
+      m_Hp: 5000
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: dafb7966db844da49bee2a0edd96cb0d,
         type: 2}
@@ -272,8 +272,8 @@ MonoBehaviour:
           type: 2}
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 0}
-        m_DownHp: 60
-        m_DownHealTime: 6
+        m_DownHp: 800
+        m_DownHealTime: 5
         m_HpRateThresholdNextBehavior: 0.6
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -294,8 +294,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 80
-        m_DownHealTime: 6
+        m_DownHp: 1200
+        m_DownHealTime: 5
         m_HpRateThresholdNextBehavior: 0.3
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -316,8 +316,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 100
-        m_DownHealTime: 6
+        m_DownHp: 2000
+        m_DownHealTime: 5
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -338,7 +338,7 @@ MonoBehaviour:
         type: 2}
       m_HackingSuccessEffectParam: {fileID: 11400000, guid: bfc56091884e80244bed6c6f9ce54765,
         type: 2}
-      m_HackingFailureRecoverDownHpRate: 0
+      m_HackingFailureRecoverDownHpRate: 0.75
       m_DefeatScore: 10000
       m_DefeatItemParam:
         ItemSpreadParams:
@@ -487,7 +487,7 @@ MonoBehaviour:
       m_RetireHideTime: 0
   - Difficulty: 0
     Param:
-      m_Hp: 1000
+      m_Hp: 5000
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: dafb7966db844da49bee2a0edd96cb0d,
         type: 2}
@@ -507,8 +507,8 @@ MonoBehaviour:
           type: 2}
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 0}
-        m_DownHp: 60
-        m_DownHealTime: 6
+        m_DownHp: 800
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0.6
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -529,8 +529,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 80
-        m_DownHealTime: 6
+        m_DownHp: 1200
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0.3
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -551,8 +551,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 100
-        m_DownHealTime: 6
+        m_DownHp: 2000
+        m_DownHealTime: 10
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -573,7 +573,7 @@ MonoBehaviour:
         type: 2}
       m_HackingSuccessEffectParam: {fileID: 11400000, guid: bfc56091884e80244bed6c6f9ce54765,
         type: 2}
-      m_HackingFailureRecoverDownHpRate: 0
+      m_HackingFailureRecoverDownHpRate: 0.25
       m_DefeatScore: 10000
       m_DefeatItemParam:
         ItemSpreadParams:
@@ -722,7 +722,7 @@ MonoBehaviour:
       m_RetireHideTime: 0
   - Difficulty: 3
     Param:
-      m_Hp: 1000
+      m_Hp: 5000
       m_BulletSetParam: {fileID: 0}
       m_EnemyLookParamSet: {fileID: 11400000, guid: dafb7966db844da49bee2a0edd96cb0d,
         type: 2}
@@ -742,8 +742,8 @@ MonoBehaviour:
           type: 2}
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 0}
-        m_DownHp: 60
-        m_DownHealTime: 6
+        m_DownHp: 800
+        m_DownHealTime: 3
         m_HpRateThresholdNextBehavior: 0.6
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -764,8 +764,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 80
-        m_DownHealTime: 6
+        m_DownHp: 1200
+        m_DownHealTime: 2.5
         m_HpRateThresholdNextBehavior: 0.3
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -786,8 +786,8 @@ MonoBehaviour:
         m_OnChangeBehaviorEvents: []
         m_SequenceGroupOnChangeBehavior: {fileID: 11400000, guid: 348a1cbe80d050b47ad0105f63726e77,
           type: 2}
-        m_DownHp: 100
-        m_DownHealTime: 6
+        m_DownHp: 2000
+        m_DownHealTime: 2
         m_HpRateThresholdNextBehavior: 0
         m_HackingSuccessItemParam:
           ItemSpreadParams:
@@ -808,7 +808,7 @@ MonoBehaviour:
         type: 2}
       m_HackingSuccessEffectParam: {fileID: 11400000, guid: bfc56091884e80244bed6c6f9ce54765,
         type: 2}
-      m_HackingFailureRecoverDownHpRate: 0
+      m_HackingFailureRecoverDownHpRate: 1
       m_DefeatScore: 10000
       m_DefeatItemParam:
         ItemSpreadParams:

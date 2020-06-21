@@ -1,4 +1,6 @@
-﻿partial class BattleRealManager
+﻿using UnityEngine;
+
+partial class BattleRealManager
 {
     private class GameState : StateCycle
     {
@@ -75,6 +77,8 @@
             BattleRealItemManager.Instance.ProcessCollision();
 
             CheckDeadPlayer();
+
+            DebugInput();
         }
 
         private void CheckDeadPlayer()
@@ -101,6 +105,59 @@
             BattleRealSequenceObjectManager.Instance.OnFixedUpdate();
             BattleRealCameraManager.Instance.OnFixedUpdate();
             BattleRealUiManager.Instance.OnFixedUpdate();
+        }
+
+        private void DebugInput()
+        {
+            if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.LeftControl))
+            {
+                DataManager.Instance.BattleData.AddPlayerLife(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.W) && Input.GetKey(KeyCode.LeftControl))
+            {
+                DataManager.Instance.BattleData.LevelInChapter.Value++;
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && Input.GetKey(KeyCode.LeftControl))
+            {
+                DataManager.Instance.BattleData.IncreaseEnergyStock();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 2;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 3;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 4;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 5;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 6;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 7;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 8;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 9;
+            }
         }
     }
 }

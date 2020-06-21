@@ -44,7 +44,7 @@ public class StoryStartMenu : MonoBehaviour
         AudioManager.Instance.Play(E_COMMON_SOUND.SYSTEM_START);
     }
 
-    private void Start()
+    private void Awake()
     {
         m_LifeMenu.SetNum(DataManager.Instance.LifeOption);
         m_EnergyMenu.SetNum(DataManager.Instance.EnergyOption);
