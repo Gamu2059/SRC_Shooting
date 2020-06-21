@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a51da7b124d5e7479a76a3a57499b40, type: 3}
-  m_Name: test.generator
+  m_Name: stage6_hds_g01X.generator
   m_EditorClassIdentifier: 
   m_Contents:
   - m_Commnet: 
@@ -31,7 +31,7 @@ MonoBehaviour:
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
-    m_Param: {fileID: 11400000, guid: dde33a255733aff48b71713971c1328b, type: 2}
+    m_Param: {fileID: 11400000, guid: 3352a439e43654f429be050103f14bad, type: 2}
   - m_Commnet: 
     m_Condition:
       IsReverse: 0
@@ -46,11 +46,11 @@ MonoBehaviour:
         VariableName: 
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 111
+        CompareValue: 5
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
-    m_Param: {fileID: 11400000, guid: a708b58782050fe41a3f4babe7c6f953, type: 2}
+    m_Param: {fileID: 11400000, guid: 3352a439e43654f429be050103f14bad, type: 2}
   - m_Commnet: 
     m_Condition:
       IsReverse: 0
@@ -65,11 +65,11 @@ MonoBehaviour:
         VariableName: 
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 111
+        CompareValue: 7
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
-    m_Param: {fileID: 11400000, guid: dde33a255733aff48b71713971c1328b, type: 2}
+    m_Param: {fileID: 11400000, guid: 3352a439e43654f429be050103f14bad, type: 2}
   - m_Commnet: 
     m_Condition:
       IsReverse: 0
@@ -84,8 +84,27 @@ MonoBehaviour:
         VariableName: 
         CompareType: 5
         BoolCompareType: 0
-        CompareValue: 111
+        CompareValue: 9
         BoolCompareValue: 0
       MultiConditionType: 0
       MultiConditions: []
-    m_Param: {fileID: 11400000, guid: a708b58782050fe41a3f4babe7c6f953, type: 2}
+    m_Param: {fileID: 11400000, guid: 3352a439e43654f429be050103f14bad, type: 2}
+  - m_Commnet: 
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 11
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 3352a439e43654f429be050103f14bad, type: 2}
