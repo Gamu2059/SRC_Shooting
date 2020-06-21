@@ -24,7 +24,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: 956eb592-25f6-4497-93cc-d819714a2739
-  m_lastModified: 132346932926425626
+  m_lastModified: 132372224595791310
 --- !u!114 &114165030194631812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +212,7 @@ MonoBehaviour:
     m_id: 84a282e7-764f-46e5-bfc1-e869538932cc
     m_nodeId: b8245d78-6d94-446a-a89b-8165125ca51f
     m_socketName: OutputSocket_0
-    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"Back","TimeDelay":3.0,"Trigger":3}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_nodeType: 4
@@ -236,19 +236,19 @@ MonoBehaviour:
   m_onEnterShowViews:
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraCredit
+    Name: ExtraContentBack
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraContentBack
+    Name: ExtraCredit
   m_onEnterHideViews: []
   m_onExitShowViews: []
   m_onExitHideViews:
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraCredit
+    Name: ExtraContentBack
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraContentBack
+    Name: ExtraCredit
 --- !u!114 &114414063836284426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -509,7 +509,7 @@ MonoBehaviour:
     m_id: 5c81c158-d2d6-4b37-89ca-b9b409d1ad07
     m_nodeId: ffb55e76-f5e6-4e4a-8e47-2c75aee51304
     m_socketName: OutputSocket_0
-    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"Back","TimeDelay":3.0,"Trigger":3}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_nodeType: 4
@@ -533,19 +533,19 @@ MonoBehaviour:
   m_onEnterShowViews:
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraCopyright
+    Name: ExtraContentBack
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraContentBack
+    Name: ExtraCopyright
   m_onEnterHideViews: []
   m_onExitShowViews: []
   m_onExitHideViews:
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraCopyright
+    Name: ExtraContentBack
   - Category: ExtraMenu
     InstantAction: 0
-    Name: ExtraContentBack
+    Name: ExtraCopyright
 --- !u!114 &114654460528696980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -611,7 +611,7 @@ MonoBehaviour:
     m_id: 4b20e7a1-d68f-4f39-aa01-23e03797099e
     m_nodeId: 64508485-faf8-47a7-9ea4-47b3a9787dbc
     m_socketName: OutputSocket_0
-    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"Back","TimeDelay":3.0,"Trigger":3}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_nodeType: 4
