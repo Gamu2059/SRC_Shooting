@@ -58,7 +58,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_SpeedCurveScale: 1.1
+  m_SpeedCurveScale: 0.9
   m_AngleSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -100,7 +100,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1.4501
-      value: -0.07
+      value: 0
       inSlope: 0.00007672206
       outSlope: 0.00007672206
       tangentMode: 0
@@ -110,13 +110,13 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 10
       value: 0
-      inSlope: -0.25754416
-      outSlope: -0.25754416
+      inSlope: Infinity
+      outSlope: Infinity
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.047371954
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_AngleSpeedCurveScale: 800
+  m_AngleSpeedCurveScale: 900
