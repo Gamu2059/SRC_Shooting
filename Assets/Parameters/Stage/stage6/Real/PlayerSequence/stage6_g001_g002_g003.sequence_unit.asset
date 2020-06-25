@@ -19,7 +19,7 @@ MonoBehaviour:
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_InitializeWorldPosition:
-    Data: {x: 0, y: -0.3, z: 0}
+    Data: {x: 0, y: 0, z: 0}
     IsPassX: 1
     IsPassY: 1
     IsPassZ: 1
@@ -87,7 +87,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         EndValue: 0
-        Scale: 1
+        Scale: 0.3
       ZParam:
         Use: 0
         AnimationValue:
