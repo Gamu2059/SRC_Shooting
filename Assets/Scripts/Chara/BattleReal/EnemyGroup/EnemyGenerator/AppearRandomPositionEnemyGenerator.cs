@@ -54,6 +54,12 @@ namespace BattleReal.EnemyGenerator
 
         [Header("Appear Random Position Parameter")]
 
+        [SerializeField, Tooltip("生成範囲の左上")]
+        private Vector2 m_AppearAreaMin;
+
+        [SerializeField, Tooltip("生成範囲の右下")]
+        private Vector2 m_AppearAreaMax;
+
         [SerializeField, Tooltip("生成したい敵のパラメータ")]
         private BattleRealEnemyParamSetBase m_ParamSet;
         protected BattleRealEnemyParamSetBase ParamSet => m_ParamSet;
@@ -93,10 +99,8 @@ namespace BattleReal.EnemyGenerator
 
         #region Field
 
-        private Vector2 m_GameFieldMax;
-        private Vector2 m_GameFieldMin;
-        private Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> m_GameFieldVertices;
-        private List<Vector2> m_GameFieldLines;
+        private Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> m_AppearAreaVertices;
+        private List<Vector2> m_AppearAreaLines;
         private bool m_IsCountOffset;
         private float m_GenerateTimeCount;
         private int m_GeneratedEnemyCount;
@@ -109,22 +113,20 @@ namespace BattleReal.EnemyGenerator
         protected override void OnStartGenerator()
         {
             base.OnStartGenerator();
-
-            m_GameFieldMin = new Vector2(-1.0f, -1.0f);
-            m_GameFieldMax = new Vector2(1.0f, 1.0f);            
-            m_GameFieldVertices = new Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> 
+          
+            m_AppearAreaVertices = new Dictionary<E_PLAYERS_VIEWPORT_POSITION, Vector2> 
             {
-                { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT,  new Vector2(m_GameFieldMin.x, m_GameFieldMin.y)},
-                { E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT,  new Vector2(m_GameFieldMin.x, m_GameFieldMax.y)},
-                { E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMax.y)},
-                { E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, new Vector2(m_GameFieldMax.x, m_GameFieldMin.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT,  new Vector2(m_AppearAreaMin.x, m_AppearAreaMin.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT,  new Vector2(m_AppearAreaMin.x, m_AppearAreaMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, new Vector2(m_AppearAreaMax.x, m_AppearAreaMax.y)},
+                { E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, new Vector2(m_AppearAreaMax.x, m_AppearAreaMin.y)},
             };
-            m_GameFieldLines = new List<Vector2> 
+            m_AppearAreaLines = new List<Vector2> 
             {
-                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT],  m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT],  // up
-                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT], m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT],  // right
-                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT], m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT],   // bottom
-                m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT],  m_GameFieldVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT],   // left
+                m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT],  m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT],  // up
+                m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT], m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT],  // right
+                m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT], m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT],   // bottom
+                m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT],  m_AppearAreaVertices[E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT],   // left
             };
             m_IsCountOffset = true;
             m_GenerateTimeCount = 0;
@@ -258,8 +260,8 @@ namespace BattleReal.EnemyGenerator
 
         private float CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION pvp1, E_PLAYERS_VIEWPORT_POSITION pvp2, Vector2 direction, Vector2 playerPos2D) 
         {
-            Vector2 v1 = m_GameFieldVertices[pvp1] - playerPos2D;
-            Vector2 v2 = m_GameFieldVertices[pvp2] - playerPos2D;
+            Vector2 v1 = m_AppearAreaVertices[pvp1] - playerPos2D;
+            Vector2 v2 = m_AppearAreaVertices[pvp2] - playerPos2D;
             float ang1, ang2, finalAngle;            
 
             var delta = v1 - direction;
@@ -308,7 +310,9 @@ namespace BattleReal.EnemyGenerator
             }
 
             var maxRadius = CalcMaxRadius(angle, playerPos2D);
-            radius = UnityEngine.Random.Range(m_OffsetRadius, maxRadius);
+            Debug.Log("maxR = " + maxRadius + " | angle = " + angle * Mathf.Rad2Deg);
+            //radius = UnityEngine.Random.Range(m_OffsetRadius, maxRadius);
+            radius = maxRadius / 2.0f;
 
             //Debug.Log("angle = " + angle * Mathf.Rad2Deg + " | radius = " + radius);
 
@@ -348,18 +352,19 @@ namespace BattleReal.EnemyGenerator
             Vector2 intersection = Vector2.zero;
             float dist;
 
-            for(int i = 0; i < m_GameFieldLines.Count - 1; i = i + 2)
+            for(int i = 0; i < m_AppearAreaLines.Count - 1; i += 2)
             {
-                Vector2? tmp = CalcIntersection(playerPos2D, ray, m_GameFieldLines[i], m_GameFieldLines[i + 1]);
+                Vector2? tmp = CalcIntersection(playerPos2D, ray, m_AppearAreaLines[i], m_AppearAreaLines[i + 1]);
+                Debug.Log("tmp = " + tmp);
 
                 if(tmp != null)
                 {
-                    Vector2 v = (Vector2)tmp - m_GameFieldLines[i];
-                    Vector2 w = m_GameFieldLines[i + 1] - m_GameFieldLines[i];
+                    Vector2 v = (Vector2)tmp - m_AppearAreaLines[i];
+                    Vector2 w = m_AppearAreaLines[i + 1] - m_AppearAreaLines[i];
 
                     if(Vector2.Dot(v,w) == v.magnitude * w.magnitude && v.magnitude <= w.magnitude)
                     {
-
+                        Debug.Log("clear!");
                     }
                     else
                     {
@@ -376,7 +381,7 @@ namespace BattleReal.EnemyGenerator
 
             dist = Vector2.Distance(playerPos2D, intersection);
 
-            //Debug.Log("intersection = " + intersection + " | distance = " + dist);
+            Debug.Log("intersection = " + intersection + " | distance = " + dist);
 
             return dist;
         }

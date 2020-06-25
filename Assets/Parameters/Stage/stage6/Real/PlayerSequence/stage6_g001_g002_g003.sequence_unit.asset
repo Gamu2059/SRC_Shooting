@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0ea5f6bf510a4385178209d523e82, type: 3}
   m_Name: stage6_g001_g002_g003.sequence_unit
   m_EditorClassIdentifier: 
-  m_SpaceType: 1
+  m_SpaceType: 0
   m_ApplyInterruptEnd: 0
   m_InterruptEndFunc: {fileID: 0}
   m_DefaultEndValue: 0
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_InitializeWorldPosition:
-    Data: {x: 0, y: -1, z: 0}
+    Data: {x: 0, y: -0.3, z: 0}
     IsPassX: 1
-    IsPassY: 0
+    IsPassY: 1
     IsPassZ: 1
   m_InitializeEulerAngles:
     Data: {x: 0, y: 0, z: 0}
-    IsPassX: 0
+    IsPassX: 1
     IsPassY: 1
-    IsPassZ: 0
+    IsPassZ: 1
   m_Duration: 1
   m_AnimationParam:
     UsePosition: 1
@@ -68,20 +68,20 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 0
             value: -1
-            inSlope: 0.9029467
-            outSlope: 0.9029467
+            inSlope: 1.2031754
+            outSlope: 1.2031754
             tangentMode: 0
             weightedMode: 0
             inWeight: 0.33333334
-            outWeight: 0.13268156
+            outWeight: 0.093706295
           - serializedVersion: 3
             time: 1
             value: 0
-            inSlope: 1.4931692
-            outSlope: 1.4931692
+            inSlope: 2.503501
+            outSlope: 2.503501
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.047486007
+            inWeight: 0.039160848
             outWeight: 0.33333334
           m_PreInfinity: 2
           m_PostInfinity: 2
