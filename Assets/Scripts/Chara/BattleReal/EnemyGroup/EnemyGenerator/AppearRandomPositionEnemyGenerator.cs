@@ -64,9 +64,9 @@ namespace BattleReal.EnemyGenerator
         private BattleRealEnemyParamSetBase m_ParamSet;
         protected BattleRealEnemyParamSetBase ParamSet => m_ParamSet;
 
-        [SerializeField, Tooltip("敵が出現する最小の半径")]
-        private float m_OffsetRadius;
-        protected float OffsetRadius => m_OffsetRadius;
+        [SerializeField, Range(0f, 1f), Tooltip("0に近いほどプレイヤー寄りに、1に近いほどフィールド端に出現する")]
+        private float m_AppearPosFactor;
+        protected float AppearPosFactor => m_AppearPosFactor;
 
         [SerializeField, Tooltip("敵の生成数")]
         private int m_GenerateNum;
@@ -251,98 +251,78 @@ namespace BattleReal.EnemyGenerator
             Vector2 playerPos2D = new Vector2(playerPos.x, playerPos.z);
             
             var enemyPos = GetEnemyPosition(playerPos2D);
-            enemyT.localPosition = enemyPos;
-            //enemyT.position = enemyT.LocalPositionToWorldPosition(enemyPos);
+            enemyT.position = enemyPos;
             enemyT.LookAt(playerPos);
-           
+
             m_GeneratedEnemies.Add(enemy);
         }
 
-        private float CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION pvp1, E_PLAYERS_VIEWPORT_POSITION pvp2, Vector2 direction, Vector2 playerPos2D) 
+        private float CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION pvp)
         {
-            Vector2 v1 = m_AppearAreaVertices[pvp1] - playerPos2D;
-            Vector2 v2 = m_AppearAreaVertices[pvp2] - playerPos2D;
-            float ang1, ang2, finalAngle;            
+            float ang1, ang2;
 
-            var delta = v1 - direction;
-            ang1 = Mathf.Atan2(delta.y, delta.x);
-
-            delta = v2 - direction;
-            ang2 = Mathf.Atan2(delta.y, delta.x);
-
-            //Debug.Log("ang1 = " + ang1 * Mathf.Rad2Deg + " | ang2 = " + ang2 * Mathf.Rad2Deg);
-
-            if (ang1 < ang2)
+            if(pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT)
             {
-                finalAngle =  UnityEngine.Random.Range(ang1, ang2);
+                ang1 = 0f;
+                ang2 = 90.0f;
+            }
+            else if(pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT)
+            {
+                ang1 = 90.0f;
+                ang2 = 180.0f;
+            }
+            else if(pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
+            {
+                ang1 = 270.0f;
+                ang2 = 360.0f;
             }
             else
             {
-                finalAngle =  UnityEngine.Random.Range(ang2, ang1);
+                ang1 = 180.0f;
+                ang2 = 270.0f;
             }
 
-            //Debug.Log("finalAngle = " + finalAngle * Mathf.Rad2Deg);
-
-            return finalAngle;
+            return UnityEngine.Random.Range(ang1, ang2) * Mathf.Deg2Rad;
         }
 
         private Vector3 GetEnemyPosition(Vector2 playerPos2D)
         {                       
             var pvp = GetPlayersViewPortPosition(playerPos2D);
-            Vector2 pos2D;
-            float angle, radius;
 
-            if (pvp == E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT)
-            {                
-                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.right, playerPos2D);
-            }
-            else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT)
-            {
-                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
-            }
-            else if (pvp == E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT)
-            {                
-                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_LEFT, E_PLAYERS_VIEWPORT_POSITION.LOWER_RIGHT, Vector2.right, playerPos2D);
-            }
-            else
-            {
-                angle = CalcAppearMathAngle(E_PLAYERS_VIEWPORT_POSITION.UPPER_RIGHT, E_PLAYERS_VIEWPORT_POSITION.LOWER_LEFT, Vector2.right, playerPos2D);
-            }
+            float angle = CalcAppearMathAngle(pvp);
 
-            var maxRadius = CalcMaxRadius(angle, playerPos2D);
-            Debug.Log("maxR = " + maxRadius + " | angle = " + angle * Mathf.Rad2Deg);
-            //radius = UnityEngine.Random.Range(m_OffsetRadius, maxRadius);
-            radius = maxRadius / 2.0f;
-
-            //Debug.Log("angle = " + angle * Mathf.Rad2Deg + " | radius = " + radius);
+            float radius = CalcMaxRadius(angle, playerPos2D) * m_AppearPosFactor;
 
             angle.MathAngleToUnityObjectAngle();
 
-            pos2D = playerPos2D +  new Vector2(radius * Mathf.Cos(angle), radius * Mathf.Sin(angle));
+            Vector2 pos2D = playerPos2D +  new Vector2(radius * Mathf.Cos(angle), radius * Mathf.Sin(angle));
 
             return new Vector3(pos2D.x, 0, pos2D.y);
         }
 
         private Vector2? CalcIntersection(Vector2 from1, Vector2 to1, Vector2 from2, Vector2 to2) 
         {
-            Vector2 v1 = new Vector2(to1.x - from1.x, to1.y - from1.y);
-            Vector2 v2 = new Vector2(to2.x - from2.x, to2.y - from2.y);
-            Vector2 v3 = new Vector2(from2.x - from1.x, from2.y - from1.y);
-            Vector2 v4 = new Vector2(to1.x - from2.x, to1.y - from2.y);
-            
-            float area1 = Cross2D(v2, v3);
-            float area2 = Cross2D(v2, v4);
-            float total = area1 + area2;
+            Vector2 v = from2 - from1;
+            float crossV1V2 = Cross2D(to1 - from1, to2 - from2);
 
-            if (Math.Abs(total) > 0)
+            if (crossV1V2 == 0)
             {
-                var ratio = area1 / total;
+                return null;
+            }
 
-                return new Vector2(from1.x + ratio * v1.x, from1.y + ratio * v1.y);
+            float crossVV1 = Cross2D(v, to1 - from1);
+            float crossVV2 = Cross2D(v, to2 - from2);
+
+            float t1 = crossVV2 / crossV1V2;
+            float t2 = crossVV1 / crossV1V2;
+
+            if (t1 < 0 || t1 > 1 || t2 < 0 || t2 > 1)
+            {
+                return null;
             }
             else
             {
-                return null;
+                return from1 + (to1 - from1) * t1;
             }
         }
 
@@ -355,24 +335,8 @@ namespace BattleReal.EnemyGenerator
             for(int i = 0; i < m_AppearAreaLines.Count - 1; i += 2)
             {
                 Vector2? tmp = CalcIntersection(playerPos2D, ray, m_AppearAreaLines[i], m_AppearAreaLines[i + 1]);
-                Debug.Log("tmp = " + tmp);
 
-                if(tmp != null)
-                {
-                    Vector2 v = (Vector2)tmp - m_AppearAreaLines[i];
-                    Vector2 w = m_AppearAreaLines[i + 1] - m_AppearAreaLines[i];
-
-                    if(Vector2.Dot(v,w) == v.magnitude * w.magnitude && v.magnitude <= w.magnitude)
-                    {
-                        Debug.Log("clear!");
-                    }
-                    else
-                    {
-                        tmp = null;
-                    }
-                }
-
-                if(tmp != null)
+                if (tmp != null)
                 {
                     intersection = (Vector2)tmp;
                     break;
@@ -380,8 +344,6 @@ namespace BattleReal.EnemyGenerator
             }
 
             dist = Vector2.Distance(playerPos2D, intersection);
-
-            Debug.Log("intersection = " + intersection + " | distance = " + dist);
 
             return dist;
         }
