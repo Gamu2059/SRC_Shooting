@@ -30,12 +30,13 @@ public class DifficultyInitializer : DifficultyInitializerBase
     /// </summary>
     public override void Setup()
     {
+        E_DIFFICULTY? difficulty = null;
+
         if (m_Float != null)
         {
             foreach (OperationFloatDifficultyBase operation in m_Float)
             {
-                //operation.Setup(m_Difficulty);
-                operation.Setup(null);
+                operation.Setup(difficulty);
             }
         }
 
@@ -43,8 +44,7 @@ public class DifficultyInitializer : DifficultyInitializerBase
         {
             foreach (OperationIntDifficultyBase operation in m_Int)
             {
-                //operation.Setup(m_Difficulty);
-                operation.Setup(null);
+                operation.Setup(difficulty);
             }
         }
 
@@ -52,8 +52,7 @@ public class DifficultyInitializer : DifficultyInitializerBase
         {
             foreach (OperationVector2DifficultyBase operation in m_Vector2)
             {
-                //operation.Setup(m_Difficulty);
-                operation.Setup(null);
+                operation.Setup(difficulty);
             }
         }
     }
