@@ -9,11 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6efba7f22361ba4191c9dc2f9d3c1ac, type: 3}
-  m_Name: "stage6_hds_g001_\u30D7\u30EC\u30A4\u30E4\u30FC\u7A81\u6483.enemy_generator"
+  m_Script: {fileID: 11500000, guid: 91201f4ed5c7adb42a51159df391dd9f, type: 3}
+  m_Name: "stage6_hds_g004_\u30D7\u30EC\u30A4\u30E4\u30FC\u7A81\u6483.enemy_group"
   m_EditorClassIdentifier: 
-  m_UseStopCondition: 0
-  m_StopCondition:
+  m_ViewPortPos: {x: 0.5, y: 0.5}
+  m_OffsetPosFromViewPort: {x: 0, y: -0.3, z: 0}
+  m_GenerateAngle: 180
+  m_EnemyGenerator: {fileID: 11400000, guid: 5acdfaf54fd24b141b55adefefc1d4ec, type: 2}
+  m_Behavior: {fileID: 11400000, guid: 243c192b8a07bca4880f4d2b3699bad2, type: 2}
+  m_OnGenerateGroupEvents: []
+  m_UseDestroyCondition: 0
+  m_DestroyCondition:
     IsReverse: 0
     IsMultiCondition: 0
     SingleCondition:
@@ -30,13 +36,3 @@ MonoBehaviour:
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
-  m_AppearAreaMin: {x: -0.9, y: -0.9}
-  m_AppearAreaMax: {x: 0.9, y: 0.9}
-  m_ParamSet: {fileID: 11400000, guid: 2276b137831a8a1448458c9caa5e4fa9, type: 2}
-  m_AppearPosFactor: 0.8
-  m_GenerateNum: 20
-  m_EnableGeneratingMultipleEnemy: 0
-  m_GenerateNumParOnce: 0
-  m_GenerateTimingType: 0
-  m_GenerateOffsetTime: 0
-  m_GenerateInterval: 0.5
