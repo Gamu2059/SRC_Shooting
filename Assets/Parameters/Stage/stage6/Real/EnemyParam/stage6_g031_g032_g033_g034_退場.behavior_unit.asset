@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ebe547ee8b2ece4785d6c90260ee84b, type: 3}
+  m_Script: {fileID: 11500000, guid: 07b5fce618e3a214b811be53b818da0b, type: 3}
   m_Name: "stage6_g031_g032_g033_g034_\u9000\u5834.behavior_unit"
   m_EditorClassIdentifier: 
   m_ApplyInterruptEnd: 0
@@ -22,7 +22,8 @@ MonoBehaviour:
   m_BulletGeneratorDatas: []
   m_DifficultyBulletGeneratorDatas: []
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
-  m_IsLookPlayerOnStart: 0
+  m_TargetWorldPos: {x: 0, y: 0, z: 0}
+  m_IsLookTargetOnStart: 1
   m_SpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -47,7 +48,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_LerpPlayerCurve:
+  m_LerpTargetCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
