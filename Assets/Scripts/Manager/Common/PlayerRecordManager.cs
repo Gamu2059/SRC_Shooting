@@ -1,12 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// スコア・ステージ進度などの記録を管理するマネージャ
 /// </summary>
 public class PlayerRecordManager : SingletonMonoBehavior<PlayerRecordManager>
 {
+    public const int MAX_RECORD_NUM = 10;
+
+    private readonly E_DIFFICULTY[] Difficulties = new E_DIFFICULTY[]
+    {
+        E_DIFFICULTY.EASY,
+        E_DIFFICULTY.NORMAL,
+        E_DIFFICULTY.HARD,
+        E_DIFFICULTY.HADES,
+    };
+
+    private readonly E_CHAPTER[] Chapters = new E_CHAPTER[]
+    {
+        E_CHAPTER.CHAPTER_1,
+        E_CHAPTER.CHAPTER_2,
+        E_CHAPTER.CHAPTER_3,
+        E_CHAPTER.CHAPTER_4,
+        E_CHAPTER.CHAPTER_5,
+        E_CHAPTER.CHAPTER_6,
+    };
+
     #region Field Inspector
 
     [SerializeField]
@@ -14,95 +35,108 @@ public class PlayerRecordManager : SingletonMonoBehavior<PlayerRecordManager>
 
     #endregion
 
-    private Dictionary<E_DIFFICULTY, List<PlayerRecord>> m_StoryModePlayerRecords;
-    private Dictionary<E_CHAPTER, List<PlayerRecord>> m_ChapterModePlayerRecords;
+    //private Dictionary<E_DIFFICULTY, List<PlayerRecord>> m_StoryModePlayerRecords;
+    private Dictionary<(E_CHAPTER, E_DIFFICULTY), List<PlayerRecord>> m_ChapterModePlayerRecords;
 
-    private int m_MaxRecordNum;
+    public override void OnInitialize()
+    {
+        m_ChapterModePlayerRecords = new Dictionary<(E_CHAPTER, E_DIFFICULTY), List<PlayerRecord>>();
 
-    public override void OnInitialize(){
-        m_StoryModePlayerRecords = new Dictionary<E_DIFFICULTY, List<PlayerRecord>> 
-        {
-            {E_DIFFICULTY.EASY, new List<PlayerRecord>() },
-            {E_DIFFICULTY.NORMAL, new List<PlayerRecord>() },
-            {E_DIFFICULTY.HARD, new List<PlayerRecord>() },
-            {E_DIFFICULTY.HADES, new List<PlayerRecord>() }
-        };
-        m_ChapterModePlayerRecords = new Dictionary<E_CHAPTER, List<PlayerRecord>>
-        {
-            { E_CHAPTER.CHAPTER_0, new List<PlayerRecord>() },
-            { E_CHAPTER.CHAPTER_1, new List<PlayerRecord>() },
-            { E_CHAPTER.CHAPTER_2, new List<PlayerRecord>() },
-            { E_CHAPTER.CHAPTER_3, new List<PlayerRecord>() },
-            { E_CHAPTER.CHAPTER_4, new List<PlayerRecord>() },
-            { E_CHAPTER.CHAPTER_5, new List<PlayerRecord>() },
-            { E_CHAPTER.CHAPTER_6, new List<PlayerRecord>() },
-        };
-        
-        m_MaxRecordNum = 1000;
+        LoadRecords();
+    }
 
+    private void LoadRecords()
+    {
         SaveDataManager.Load();
-        var maxScore = (ulong)SaveDataManager.GetInt("BestScore", 0);
-        m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL].Add(new PlayerRecord("Nanashi", maxScore, E_CHAPTER.CHAPTER_1, new System.DateTime()));
+
+        // チャプターデータの読み込み
+        foreach (var difficulty in Difficulties)
+        {
+            foreach (var chapter in Chapters)
+            {
+                var key = string.Format("Chapter_{0}_{1}", chapter, difficulty);
+                var list = SaveDataManager.GetList(key, new List<PlayerRecord>());
+                m_ChapterModePlayerRecords.Add((chapter, difficulty), list);
+            }
+        }
+    }
+
+    private void SaveRecords(E_CHAPTER chapter, E_DIFFICULTY difficulty)
+    {
+        var list = GetRecordList(chapter, difficulty);
+        var key = string.Format("Chapter_{0}_{1}", chapter, difficulty);
+        SaveDataManager.SetList(key, list);
+        SaveDataManager.Save();
+    }
+
+    private List<PlayerRecord> GetRecordList(E_CHAPTER chapter, E_DIFFICULTY difficulty)
+    {
+        if (!m_ChapterModePlayerRecords.TryGetValue((chapter, difficulty), out var list))
+        {
+            list = new List<PlayerRecord>();
+            m_ChapterModePlayerRecords.Add((chapter, difficulty), list);
+        }
+
+        return list;
     }
 
     public void AddStoryModeRecord(PlayerRecord record)
     {
-        void f(E_DIFFICULTY d) {
-            var recs = m_StoryModePlayerRecords[d];
+        //void f(E_DIFFICULTY d) {
+        //    var recs = m_StoryModePlayerRecords[d];
 
-            var maxScore = GetTopRecord(recs).m_FinalScore;
-            if(record.m_FinalScore > maxScore)
-            {
-                SaveDataManager.SetInt("BestScore", (int)record.m_FinalScore);
-                SaveDataManager.Save();
-            }
+        //    var maxScore = GetTopRecord(recs).m_FinalScore;
+        //    if(record.m_FinalScore > maxScore)
+        //    {
+        //        SaveDataManager.SetInt("BestScore", (int)record.m_FinalScore);
+        //        SaveDataManager.Save();
+        //    }
 
-            if(recs.Count + 1 > m_MaxRecordNum)
-            {
-                recs.RemoveAt(recs.Count - 1);
-                recs.Add(record);
-                SortRecord(recs);
-            }
-            else
-            {
-                recs.Add(record);
-                SortRecord(recs);
-            }
-        }
+        //    if(recs.Count + 1 > m_MaxRecordNum)
+        //    {
+        //        recs.RemoveAt(recs.Count - 1);
+        //        recs.Add(record);
+        //        SortRecord(recs);
+        //    }
+        //    else
+        //    {
+        //        recs.Add(record);
+        //        SortRecord(recs);
+        //    }
+        //}
 
-        f(record.StageDifficulty());
+        //f(record.StageDifficulty());
     }
 
-    public void AddChapterModeRecord(PlayerRecord record)
+    public void AddChapterModeRecord(E_CHAPTER chapter, E_DIFFICULTY difficulty, PlayerRecord record)
     {
-        void f(E_CHAPTER s)
+        if (record == null)
         {
-            var recs = m_ChapterModePlayerRecords[s];
-            if (recs.Count + 1 > m_MaxRecordNum)
-            {
-                recs.RemoveAt(recs.Count - 1);
-                recs.Add(record);
-                SortRecord(recs);
-            }
-            else
-            {
-                recs.Add(record);
-                SortRecord(recs);
-            }
+            return;
         }
 
-        f(record.m_FinalReachedStage);
+        Debug.LogFormat("AddChapterModeRecord  score : {0}", record.FinalScore);
+        var list = GetRecordList(chapter, difficulty);
+        list.Add(record);
+        SortRecord(list);
+        if (list.Count > MAX_RECORD_NUM)
+        {
+            list.RemoveAt(MAX_RECORD_NUM);
+        }
+
+        SaveRecords(chapter, difficulty);
     }
 
     private void SortRecord(List<PlayerRecord> records)
     {
-        records.Sort((a, b) => {
-            if (b.m_FinalScore > a.m_FinalScore)
+        records.Sort((a, b) =>
+        {
+            if (b.FinalScore > a.FinalScore)
             {
                 return 1;
             }
 
-            if (b.m_FinalScore < a.m_FinalScore)
+            if (b.FinalScore < a.FinalScore)
             {
                 return -1;
             }
@@ -111,69 +145,64 @@ public class PlayerRecordManager : SingletonMonoBehavior<PlayerRecordManager>
         });
     }
 
-    public PlayerRecord GetDummyRecord(string name = "Nanashi", ulong score = 1, E_CHAPTER stage = E_CHAPTER.CHAPTER_1, System.DateTime date = new System.DateTime())
-    {
-        return new PlayerRecord(name, score, stage, date);
-    }
+    //public PlayerRecord GetDummyRecord(string name = "Nanashi", ulong score = 1, E_CHAPTER stage = E_CHAPTER.CHAPTER_1, System.DateTime date = new System.DateTime())
+    //{
+    //    return new PlayerRecord(name, score, stage, date);
+    //}
 
-    public PlayerRecord GetTopRecord(List<PlayerRecord> recs)
-    {
-        SortRecord(recs);
-        return recs[0];
-    }
+    //public PlayerRecord GetTopRecord(List<PlayerRecord> recs)
+    //{
+    //    SortRecord(recs);
+    //    return recs[0];
+    //}
 
-    public PlayerRecord GetTopRecord()
-    {
-        SortRecord(m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL]);
-        return m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL][0];
-    }
+    //public PlayerRecord GetTopRecord()
+    //{
+    //    SortRecord(m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL]);
+    //    return m_StoryModePlayerRecords[E_DIFFICULTY.NORMAL][0];
+    //}
 
 
     public List<PlayerRecord> GetStoryModeRecordsInRange(E_DIFFICULTY difficulty, int range)
     {
-        var recs = m_StoryModePlayerRecords[difficulty];
-        SortRecord(recs);
+        //var recs = m_StoryModePlayerRecords[difficulty];
+        //SortRecord(recs);
 
-        var len = recs.Count;
+        //var len = recs.Count;
 
-        if(len < range)
-        {
-            var res = recs.GetRange(0, len);
-            var rem = range - len;
-            while (rem != 0)
-            {
-                res.Add(GetDummyRecord("Nanashi", 1, E_CHAPTER.CHAPTER_1, new System.DateTime(2019, 5, 1)));
-                rem--;
-            }
-            return res;
-        }
-        else
-        {
-            return recs.GetRange(0, range);
-        }
+        //if(len < range)
+        //{
+        //    var res = recs.GetRange(0, len);
+        //    var rem = range - len;
+        //    while (rem != 0)
+        //    {
+        //        res.Add(GetDummyRecord("Nanashi", 1, E_CHAPTER.CHAPTER_1, new System.DateTime(2019, 5, 1)));
+        //        rem--;
+        //    }
+        //    return res;
+        //}
+        //else
+        //{
+        //    return recs.GetRange(0, range);
+        //}
+        return null;
     }
 
-    public List<PlayerRecord> GetChapterModeRecordsInRange(E_CHAPTER stage, int range)
+    public List<PlayerRecord> GetChapterModeRecords(E_CHAPTER chapter, E_DIFFICULTY difficulty)
     {
-        var recs = m_ChapterModePlayerRecords[stage];
-        SortRecord(recs);
+        var list = GetRecordList(chapter, difficulty);
+        SortRecord(list);
+        return list;
+    }
 
-        var len = recs.Count;
+    public ulong GetChapterModeBestScore(E_CHAPTER chapter, E_DIFFICULTY difficulty)
+    {
+        var list = GetChapterModeRecords(chapter, difficulty);
+        if (list == null || list.Count < 1)
+        {
+            return 0;
+        }
 
-        if (len < range)
-        {
-            var res = recs.GetRange(0, len);
-            var rem = range - len;
-            while (rem != 0)
-            {
-                res.Add(GetDummyRecord("Nanashi", 1, stage, new System.DateTime(2019, 5, 1)));
-                rem--;
-            }
-            return res;
-        }
-        else
-        {
-            return recs.GetRange(0, range);
-        }
+        return list[0].FinalScore;
     }
 }

@@ -76,6 +76,7 @@ public class BattleResultData
             Rank = rankParam.GetRank(totalBonus),
         };
 
+        Debug.LogFormat("Chapter result {0}", totalBonus);
         ChapterResultDict.Add(chapter, data);
     }
 
@@ -106,7 +107,7 @@ public class BattleResultData
         ulong value = 0;
         foreach (var i in scores)
         {
-            value = Math.Max(value + i, ulong.MaxValue);
+            value = Math.Min(value + i, ulong.MaxValue);
         }
 
         return value;
@@ -128,5 +129,21 @@ public class BattleResultData
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 指定したチャプターのリザルトをローカルストレージに保存する
+    /// </summary>
+    public void SaveChapterResult(E_CHAPTER chapter)
+    {
+        var data = GetChapterResult(chapter);
+        if (data == null)
+        {
+            return;
+        }
+
+        Debug.Log("SaveChapterResult Total Score : " + data.TotalScore);
+        var record = new PlayerRecord("", data.TotalScore, data.Chapter, DateTime.Now);
+        PlayerRecordManager.Instance.AddChapterModeRecord(data.Chapter, data.Difficulty, record);
     }
 }
