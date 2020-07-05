@@ -539,10 +539,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 2270999834447437186}
   m_SelectedDuration: 0.5
-  m_SelectedLocalScale: {x: 3, y: 0.01, z: 1}
+  m_SelectedLocalScale: {x: 3, y: 0.02, z: 1}
   m_SelectedEase: 6
   m_DeselectedDuration: 0.25
-  m_DeselectedLocalScale: {x: 0, y: 0.01, z: 1}
+  m_DeselectedLocalScale: {x: 0, y: 0.02, z: 1}
   m_DeselectedEase: 6
 --- !u!114 &5733819433431884995
 MonoBehaviour:
@@ -556,10 +556,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07f71a63aee9c240a96c696c56bf406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
   m_UseSelectSound: 1
   m_SelectSound: 1
   m_UseSubmitSound: 0
   m_SubmitSound: 0
+  m_DisableSound: 0
 --- !u!114 &5694953534172142259
 MonoBehaviour:
   m_ObjectHideFlags: 0
