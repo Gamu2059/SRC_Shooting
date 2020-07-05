@@ -18,9 +18,25 @@ MonoBehaviour:
   m_OnStartOptions: []
   m_OnEndOptions: []
   m_OnStopOptions: []
-  m_ReferenceDifficultyForBulletGenerator: 0
+  m_ReferenceDifficultyForBulletGenerator: 1
   m_BulletGeneratorDatas: []
-  m_DifficultyBulletGeneratorDatas: []
+  m_DifficultyBulletGeneratorDatas:
+  - m_Difficulty: 0
+    m_BulletGeneratorDatas: []
+  - m_Difficulty: 1
+    m_BulletGeneratorDatas: []
+  - m_Difficulty: 2
+    m_BulletGeneratorDatas: []
+  - m_Difficulty: 3
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 03f652e0ac6f3a445ba5e87edadd1704, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 12
+      ActivateInterval: 0.12
+    - ParamSet: {fileID: 11400000, guid: f6cfd4d6f006d8a4487b63d995d721cb, type: 2}
+      StartTimeOnFirstActivate: 1
+      StopTimeFromFirstActivate: 12
+      ActivateInterval: 2.4
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_CenterPosition: {x: 0, y: 0, z: 0}
   m_CenterPositionSpaceType: 0
