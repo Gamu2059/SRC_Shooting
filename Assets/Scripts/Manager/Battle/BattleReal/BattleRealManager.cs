@@ -135,6 +135,19 @@ public partial class BattleRealManager : ControllableObject, IStateCallback<E_BA
     {
         base.OnUpdate();
         m_StateMachine.OnUpdate();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DataManager.Instance.BattleData.IncreaseLevel();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DataManager.Instance.BattleData.AddPlayerLife(1);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DataManager.Instance.BattleData.IncreaseEnergyStock();
+        }
     }
 
     public override void OnLateUpdate()
