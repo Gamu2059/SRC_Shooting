@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf0ea5f6bf510a4385178209d523e82, type: 3}
   m_Name: "stage6_g032_\u767B\u5834.sequence_unit"
   m_EditorClassIdentifier: 
-  m_SpaceType: 1
+  m_SpaceType: 0
   m_ApplyInterruptEnd: 0
   m_InterruptEndFunc: {fileID: 0}
   m_DefaultEndValue: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     IsPassX: 1
     IsPassY: 1
     IsPassZ: 1
-  m_Duration: 1
+  m_Duration: 2
   m_AnimationParam:
     UsePosition: 1
     Position:
@@ -39,27 +39,36 @@ MonoBehaviour:
           m_Curve:
           - serializedVersion: 3
             time: 0
-            value: 0
-            inSlope: 1
-            outSlope: 1
-            tangentMode: 34
+            value: -0.81
+            inSlope: 1.1807668
+            outSlope: 1.1807668
+            tangentMode: 0
             weightedMode: 0
             inWeight: 0
-            outWeight: 0.33333334
+            outWeight: 0.5405405
           - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 1
-            outSlope: 1
-            tangentMode: 34
+            time: 0.3
+            value: -0.6
+            inSlope: 0.42386678
+            outSlope: 0.42386678
+            tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
+            inWeight: 0.19919926
+            outWeight: 0.030795475
+          - serializedVersion: 3
+            time: 2
+            value: -0.6
+            inSlope: Infinity
+            outSlope: Infinity
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        EndValue: 0.36
-        Scale: 0.36
+        EndValue: -0.6
+        Scale: 1
       YParam:
         Use: 0
         AnimationValue:
