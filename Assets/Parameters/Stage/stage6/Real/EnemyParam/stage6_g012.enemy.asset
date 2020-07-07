@@ -19,17 +19,19 @@ MonoBehaviour:
     Param:
       m_Hp: 50
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 80c0b1f1409a6df4581faed5b1bb6eda,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 7ac48f589c4adeb46ac691fe999c923c,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 0}
+      m_OnInitializeSequence: {fileID: 11400000, guid: 2aaae0edb4b1a694ba1a88d0a1e342b7,
+        type: 2}
       m_OnStartBehaviorEvents: []
-      m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: cee255ceafc5c794abe23f92d90e700f, type: 2}
-      m_BehaviorGroup: {fileID: 0}
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 52c1cc20da467d6488b84dc828b5fe71,
+        type: 2}
       m_DefeatScore: 200
       m_DefeatItemParam:
         ItemSpreadParams: []
@@ -48,17 +50,19 @@ MonoBehaviour:
     Param:
       m_Hp: 50
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 80c0b1f1409a6df4581faed5b1bb6eda,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 7ac48f589c4adeb46ac691fe999c923c,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 0}
+      m_OnInitializeSequence: {fileID: 11400000, guid: 2aaae0edb4b1a694ba1a88d0a1e342b7,
+        type: 2}
       m_OnStartBehaviorEvents: []
-      m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: cee255ceafc5c794abe23f92d90e700f, type: 2}
-      m_BehaviorGroup: {fileID: 0}
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 52c1cc20da467d6488b84dc828b5fe71,
+        type: 2}
       m_DefeatScore: 200
       m_DefeatItemParam:
         ItemSpreadParams: []
@@ -77,17 +81,19 @@ MonoBehaviour:
     Param:
       m_Hp: 50
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 80c0b1f1409a6df4581faed5b1bb6eda,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 7ac48f589c4adeb46ac691fe999c923c,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 0}
+      m_OnInitializeSequence: {fileID: 11400000, guid: 2aaae0edb4b1a694ba1a88d0a1e342b7,
+        type: 2}
       m_OnStartBehaviorEvents: []
-      m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: cee255ceafc5c794abe23f92d90e700f, type: 2}
-      m_BehaviorGroup: {fileID: 0}
+      m_BehaviorType: 1
+      m_Behavior: {fileID: 0}
+      m_BehaviorGroup: {fileID: 11400000, guid: 52c1cc20da467d6488b84dc828b5fe71,
+        type: 2}
       m_DefeatScore: 200
       m_DefeatItemParam:
         ItemSpreadParams: []
