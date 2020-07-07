@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6efba7f22361ba4191c9dc2f9d3c1ac, type: 3}
+  m_Name: "stage6_h_g004_\u30D7\u30EC\u30A4\u30E4\u30FC\u7A81\u6483.enemy_generator"
+  m_EditorClassIdentifier: 
+  m_UseStopCondition: 0
+  m_StopCondition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 0
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
+  m_AppearAreaMin: {x: -0.9, y: -0.9}
+  m_AppearAreaMax: {x: 0.9, y: 0.9}
+  m_ParamSet: {fileID: 11400000, guid: 24c4868c899eb684e964cf03c82e7e65, type: 2}
+  m_AppearPosFactor: 0.6
+  m_GenerateNum: 8
+  m_EnableGeneratingMultipleEnemy: 0
+  m_GenerateNumParOnce: 0
+  m_GenerateTimingType: 0
+  m_GenerateOffsetTime: 0.2
+  m_GenerateInterval: 0.8

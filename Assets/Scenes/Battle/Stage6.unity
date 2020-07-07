@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -195,6 +195,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d4572bdfce7b66a42af400d68e78b7a4,
         type: 2}
+    - target: {fileID: 8755888155118185902, guid: 553394418d74bbe4fa1738f6545e21e6,
+        type: 3}
+      propertyPath: m_Difficulty
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8755888155118185899, guid: 553394418d74bbe4fa1738f6545e21e6,
         type: 3}
       propertyPath: m_IsDrawColliderArea
@@ -2998,6 +3003,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1760411067}
+    - target: {fileID: 1497524815659436874, guid: a5f7c9221cc7d784f9c20f9ecc6a3795,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5f7c9221cc7d784f9c20f9ecc6a3795, type: 3}
 --- !u!4 &1798393358 stripped

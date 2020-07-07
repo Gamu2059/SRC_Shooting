@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b60bf9e1c478cb4db6ea6e70e89445b, type: 3}
+  m_Name: stage6_e_g031_g032_g033_g034.enemy_generator
+  m_EditorClassIdentifier: 
+  m_UseStopCondition: 0
+  m_StopCondition:
+    IsReverse: 0
+    IsMultiCondition: 0
+    SingleCondition:
+      IsReverse: 0
+      VariableType: 0
+      UseGeneralIntVariable: 0
+      GeneralIntVariable: 0
+      UseGeneralTimePeriod: 0
+      GeneralTimePeriod: 0
+      VariableName: 
+      CompareType: 0
+      BoolCompareType: 0
+      CompareValue: 0
+      BoolCompareValue: 0
+    MultiConditionType: 0
+    MultiConditions: []
+  m_DefaultParamSet: {fileID: 0}
+  m_IndividualParams:
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0, y: 1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 180
+    m_ParamSet: {fileID: 11400000, guid: 5af346ca0b388514b91000aa56766d68, type: 2}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: -0.81, y: 0}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 180
+    m_ParamSet: {fileID: 11400000, guid: 2e7bcb3a5a35f284baab1171e623ad52, type: 2}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0, y: -1}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 180
+    m_ParamSet: {fileID: 11400000, guid: e6487c1b918c0ed4bbdfc447fa3f8a4c, type: 2}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.81, y: 0}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 180
+    m_ParamSet: {fileID: 11400000, guid: f702bbd6fec7e7a4c83b8e50aad49ea3, type: 2}
