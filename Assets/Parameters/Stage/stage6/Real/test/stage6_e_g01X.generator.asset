@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a51da7b124d5e7479a76a3a57499b40, type: 3}
+  m_Name: stage6_e_g01X.generator
+  m_EditorClassIdentifier: 
+  m_Contents:
+  - m_Commnet: 
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 3
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: fed1d8123340a8040ae3965b6edde4ce, type: 2}
+  - m_Commnet: 
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 5
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: fed1d8123340a8040ae3965b6edde4ce, type: 2}
+  - m_Commnet: 
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 7
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: fed1d8123340a8040ae3965b6edde4ce, type: 2}
+  - m_Commnet: 
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 9
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: fed1d8123340a8040ae3965b6edde4ce, type: 2}
+  - m_Commnet: 
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 11
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 3352a439e43654f429be050103f14bad, type: 2}
