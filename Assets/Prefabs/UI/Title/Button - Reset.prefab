@@ -180,6 +180,7 @@ MonoBehaviour:
   m_OutlineColor: {r: 0.759434, g: 0.9764151, b: 1, a: 1}
   m_OutlineWidth: 10
   m_FaceDilate: 10
+  m_SeqVerticalEffectTime: 0
 --- !u!1 &8220233688569910961
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,10 +278,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 8220233689766870979}
   m_SelectedDuration: 0.5
-  m_SelectedLocalScale: {x: 1.1, y: 0.01, z: 1}
+  m_SelectedLocalScale: {x: 1.1, y: 0.02, z: 1}
   m_SelectedEase: 6
   m_DeselectedDuration: 0.25
-  m_DeselectedLocalScale: {x: 0, y: 0.01, z: 1}
+  m_DeselectedLocalScale: {x: 0, y: 0.02, z: 1}
   m_DeselectedEase: 6
 --- !u!114 &8220233688569910965
 MonoBehaviour:
@@ -294,10 +295,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07f71a63aee9c240a96c696c56bf406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
   m_UseSelectSound: 1
   m_SelectSound: 1
   m_UseSubmitSound: 1
   m_SubmitSound: 0
+  m_DisableSound: 0
 --- !u!114 &8220233688569910970
 MonoBehaviour:
   m_ObjectHideFlags: 0

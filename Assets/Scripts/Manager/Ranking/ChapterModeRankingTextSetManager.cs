@@ -3,45 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class ChapterModeRankingTextSet
-{
-    [SerializeField]
-    private Text m_NameText;
-    [SerializeField]
-    private Text m_ScoreText;
-    [SerializeField]
-    private Text m_DateText;
-
-    public void SetTextFromPlayerRecord(PlayerRecord rec)
-    {
-        m_NameText.text = rec.m_PlayerName;
-        m_ScoreText.text = rec.FinalScoreToString();
-        m_DateText.text = rec.PlayedDateToString();
-    }
-}
-
 public class ChapterModeRankingTextSetManager : MonoBehaviour
 {
     [SerializeField]
-    private ChapterModeRankingTextSet[] m_ChapterModeRankingTextSets;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Transform m_ElementRoot;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    private ChapterRankingElement m_ElementPrefab;
 
-    public void SetChapterModeRankingText(List<PlayerRecord> recs)
+    private List<ChapterRankingElement> m_Elements;
+
+    private void Awake()
     {
-        for(int i=0; i<m_ChapterModeRankingTextSets.Length; i++)
+        m_Elements = new List<ChapterRankingElement>();
+        for (var i = 0; i < PlayerRecordManager.MAX_RECORD_NUM; i++)
         {
-            m_ChapterModeRankingTextSets[i].SetTextFromPlayerRecord(recs[i]);
+            var element = Instantiate(m_ElementPrefab, m_ElementRoot);
+            m_Elements.Add(element);
+        }
+    }
+
+    public void ShowRanking(E_CHAPTER chapter, E_DIFFICULTY difficulty)
+    {
+        var list = PlayerRecordManager.Instance.GetChapterModeRecords(chapter, difficulty);
+        if (list == null || list.Count < 1)
+        {
+            m_Elements.ForEach(e => e.gameObject.SetActive(false));
+        }
+
+        for (var i = 0; i < PlayerRecordManager.MAX_RECORD_NUM; i++)
+        {
+            var e = m_Elements[i];
+            if (i >= list.Count)
+            {
+                e.gameObject.SetActive(false);
+                continue;
+            }
+
+            e.gameObject.SetActive(true);
+            e.SetRanking(i + 1, list[i]);
         }
     }
 }

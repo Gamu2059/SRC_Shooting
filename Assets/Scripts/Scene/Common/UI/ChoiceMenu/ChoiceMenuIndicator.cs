@@ -16,6 +16,7 @@ public abstract class ChoiceMenuIndicator : MonoBehaviour
     {
         OnAwake();
         ResetDefault();
+        SubscribeChangeValue();
     }
 
     protected virtual void OnAwake() { }

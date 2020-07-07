@@ -91,12 +91,18 @@ public class DataManager : SingletonMonoBehavior<DataManager>
     /// </summary>
     public void OnShootingStart()
     {
+        ulong bestScore = 0;
+        if (GameMode == E_GAME_MODE.CHAPTER)
+        {
+            bestScore = PlayerRecordManager.Instance.GetChapterModeBestScore(Chapter, Difficulty);
+        }
+
         var data = new BattleData.DataOnConstructor
         {
             ConstParam = m_ParamSet.BattleConstantParam,
             LifeOption = LifeOption,
             EnergyOption = EnergyOption,
-            BestScore = PlayerRecordManager.Instance.GetTopRecord().m_FinalScore,
+            BestScore = bestScore,
         };
 
         BattleData = new BattleData(data);
@@ -108,6 +114,12 @@ public class DataManager : SingletonMonoBehavior<DataManager>
     /// </summary>
     public void OnShootingEnd()
     {
+        Debug.Log("OnShootingEnd");
+        if (GameMode == E_GAME_MODE.CHAPTER)
+        {
+            BattleResultData.SaveChapterResult(Chapter);
+        }
+
         BattleResultData?.OnFinalize();
         BattleData?.OnFinalize();
         BattleResultData = null;

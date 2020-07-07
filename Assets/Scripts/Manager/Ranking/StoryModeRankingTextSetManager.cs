@@ -17,10 +17,10 @@ public class StoryModeRankingTextSet
 
     public void SetTextFromPlayerRecord(PlayerRecord rec)
     {
-        m_NameText.text = rec.m_PlayerName;
+        m_NameText.text = rec.PlayerName;
         m_ScoreText.text = rec.FinalScoreToString();
-        m_ChapterText.text = rec.FinalReachedStageToString();
-        m_DateText.text = rec.PlayedDateToString();
+        //m_ChapterText.text = rec.FinalReachedStageToString();
+        m_DateText.text = rec.PlayedDate;
     }
 }
 
@@ -28,18 +28,6 @@ public class StoryModeRankingTextSetManager : MonoBehaviour
 {
     [SerializeField]
     private StoryModeRankingTextSet[] m_StoryModeRankingTextSets;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SetStoryModeRaningText(List<PlayerRecord> recs)
     {
