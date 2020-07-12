@@ -64,34 +64,25 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0.16863587
-      outSlope: 0.16863587
+      value: -100
+      inSlope: 39.74956
+      outSlope: 39.74956
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.23796514
+      outWeight: 0.13673358
     - serializedVersion: 3
-      time: 1.3499
-      value: 0
-      inSlope: -0.024421468
-      outSlope: -0.024421468
+      time: 1.4992166
+      value: -100
+      inSlope: -42.663475
+      outSlope: -42.663475
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.5240697
+      inWeight: 0.16106315
       outWeight: 1
     - serializedVersion: 3
-      time: 1.35
-      value: -1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1.45
-      value: -1
+      time: 1.5
+      value: -175
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -99,25 +90,16 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.4501
-      value: -0.07
-      inSlope: 0.00007672206
-      outSlope: 0.00007672206
+      time: 10
+      value: -175
+      inSlope: Infinity
+      outSlope: Infinity
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.85788345
-    - serializedVersion: 3
-      time: 10
-      value: 0
-      inSlope: -0.25754416
-      outSlope: -0.25754416
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.047371954
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_AngleSpeedCurveScale: -800
+  m_AngleSpeedCurveScale: -1
   m_IsNotAccumulationAngle: 1
