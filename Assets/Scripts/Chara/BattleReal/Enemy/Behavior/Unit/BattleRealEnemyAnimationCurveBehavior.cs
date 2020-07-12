@@ -31,6 +31,10 @@ public class BattleRealEnemyAnimationCurveBehavior : BattleRealEnemyBehaviorUnit
     private float m_AngleSpeedCurveScale = 1f;
     protected float AngleSpeedCurveScale => m_AngleSpeedCurveScale;
 
+    [SerializeField, Tooltip("回転に対してカーブの値の適用方法を累積ではなく、直接値を適用するようにする")]
+    private bool m_IsNotAccumulationAngle = false;
+    protected bool IsNotAccumulationAngle => m_IsNotAccumulationAngle;
+
     #endregion
 
     #region Field
@@ -80,7 +84,7 @@ public class BattleRealEnemyAnimationCurveBehavior : BattleRealEnemyBehaviorUnit
         var transform = Enemy.transform;
         transform.position = transform.forward * m_NowSpeed * Time.deltaTime + transform.position;
         var angle = transform.eulerAngles;
-        angle.y += m_NowAngleSpeed * Time.deltaTime;
+        angle.y = m_IsNotAccumulationAngle ? m_NowAngleSpeed : angle.y + m_NowAngleSpeed * Time.deltaTime;
         transform.eulerAngles = angle;
     }
 }
