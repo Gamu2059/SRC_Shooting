@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa2aa138c09a474b89eb4ad584a4629, type: 3}
+  m_Name: '[rad] WayAngle'
+  m_EditorClassIdentifier: 
+  m_Multiple:
+  - {fileID: 11400000, guid: 6f3a996737fcb5949a2eeacae4a40d71, type: 2}
+  - {fileID: 11400000, guid: b03ee16f60b12904da3a1a5e6e8abc92, type: 2}
+  m_Divide:
+  - {fileID: 11400000, guid: d5cb51f71819da74189a9185368ed0f5, type: 2}
