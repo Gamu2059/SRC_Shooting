@@ -31,8 +31,12 @@ MonoBehaviour:
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: 6dfaf0ed26e8a0c4a9d02bb1dcc6cc3b, type: 2}
       StartTimeOnFirstActivate: 0
-      StopTimeFromFirstActivate: 6
-      ActivateInterval: 0.3
+      StopTimeFromFirstActivate: 0.2
+      ActivateInterval: 0.1
+    - ParamSet: {fileID: 11400000, guid: 6dfaf0ed26e8a0c4a9d02bb1dcc6cc3b, type: 2}
+      StartTimeOnFirstActivate: 0.7
+      StopTimeFromFirstActivate: 0.2
+      ActivateInterval: 0.1
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpeedCurve:
     serializedVersion: 2
@@ -84,3 +88,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_AngleSpeedCurveScale: 0
+  m_IsNotAccumulationAngle: 0
