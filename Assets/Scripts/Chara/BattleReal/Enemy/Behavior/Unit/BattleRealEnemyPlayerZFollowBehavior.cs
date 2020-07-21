@@ -38,14 +38,7 @@ public class BattleRealEnemyPlayerZFollowBehavior : BattleRealEnemyBehaviorUnitB
 
         var player = BattleRealPlayerManager.Instance.Player;
 
-        if (player.IsDead)
-        {
-            m_TargetZ = Enemy.transform.position.z;
-        }
-        else
-        {
-            m_TargetZ = player.transform.position.z;
-        }
+        m_TargetZ = player.transform.position.z;
 
         var delta = m_TargetZ - Enemy.transform.position.z;        
         m_MoveSumDistance = Mathf.Abs(delta + m_Offset);
@@ -69,10 +62,6 @@ public class BattleRealEnemyPlayerZFollowBehavior : BattleRealEnemyBehaviorUnitB
     protected override void OnEnd()
     {
         base.OnEnd();
-
-        var pos = Enemy.transform.position;
-        pos.z = m_TargetZ + m_Offset;
-        Enemy.transform.position = pos;
     }
 
     #endregion
