@@ -317,3 +317,22 @@ MonoBehaviour:
       MultiConditionType: 0
       MultiConditions: []
     m_Param: {fileID: 11400000, guid: 26ea539d3e36abb4eaff80cdfa58cf5e, type: 2}
+  - m_Commnet: g03X
+    m_Condition:
+      IsReverse: 0
+      IsMultiCondition: 0
+      SingleCondition:
+        IsReverse: 0
+        VariableType: 3
+        UseGeneralIntVariable: 0
+        GeneralIntVariable: 0
+        UseGeneralTimePeriod: 1
+        GeneralTimePeriod: 0
+        VariableName: 
+        CompareType: 5
+        BoolCompareType: 0
+        CompareValue: 54
+        BoolCompareValue: 0
+      MultiConditionType: 0
+      MultiConditions: []
+    m_Param: {fileID: 11400000, guid: 4c36cb2661b484c4ca3f7b78f7050338, type: 2}
