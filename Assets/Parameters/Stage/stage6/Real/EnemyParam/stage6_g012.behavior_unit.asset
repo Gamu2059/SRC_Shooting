@@ -22,7 +22,11 @@ MonoBehaviour:
   m_BulletGeneratorDatas: []
   m_DifficultyBulletGeneratorDatas:
   - m_Difficulty: 0
-    m_BulletGeneratorDatas: []
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 396a2c977f0dba141ba23f13e085c909, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0
+      ActivateInterval: 0
   - m_Difficulty: 1
     m_BulletGeneratorDatas: []
   - m_Difficulty: 2

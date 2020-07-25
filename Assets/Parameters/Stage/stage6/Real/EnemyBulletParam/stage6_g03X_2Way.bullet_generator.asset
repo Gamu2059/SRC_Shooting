@@ -16,7 +16,8 @@ MonoBehaviour:
   m_Params:
   - Difficulty: 0
     Param:
-      m_Bullets: []
+      m_Bullets:
+      - {fileID: 0}
       m_BulletParams: []
       m_ShotTransformName: 
       m_ShotNum: 0
