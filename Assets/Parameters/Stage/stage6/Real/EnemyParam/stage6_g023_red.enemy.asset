@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6da0582c4515ada419261774b0b9e77a, type: 3}
-  m_Name: "stage6_g035_\u30D7\u30EC\u30A4\u30E4\u30FC\u7A81\u6483.enemy"
+  m_Name: stage6_g023_red.enemy
   m_EditorClassIdentifier: 
   m_ControllerType: 0
   m_ControllerClassName: 
@@ -19,25 +19,20 @@ MonoBehaviour:
     Param:
       m_Hp: 2
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 60a8b692025492d46bcf32d119ea52be,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 60c81c308f9aacc4192617ebd24a28ee,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 11400000, guid: 004e67cff11fb0243bc09847f88d768c,
-        type: 2}
+      m_OnInitializeSequence: {fileID: 0}
       m_OnStartBehaviorEvents: []
       m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: 5f4a0f11d66777e4ea5e2ffa0140298a, type: 2}
+      m_Behavior: {fileID: 11400000, guid: f740cf02922f66542a9f1d82e7e04833, type: 2}
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams:
-        - Type: 6
-          Num: 1
-          Point: 100
-          SpreadRadius: 0
+        ItemSpreadParams: []
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
@@ -53,25 +48,20 @@ MonoBehaviour:
     Param:
       m_Hp: 2
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 60a8b692025492d46bcf32d119ea52be,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 60c81c308f9aacc4192617ebd24a28ee,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 11400000, guid: 004e67cff11fb0243bc09847f88d768c,
-        type: 2}
+      m_OnInitializeSequence: {fileID: 0}
       m_OnStartBehaviorEvents: []
       m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: 5f4a0f11d66777e4ea5e2ffa0140298a, type: 2}
+      m_Behavior: {fileID: 11400000, guid: f740cf02922f66542a9f1d82e7e04833, type: 2}
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams:
-        - Type: 6
-          Num: 1
-          Point: 100
-          SpreadRadius: 0
+        ItemSpreadParams: []
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
@@ -87,17 +77,16 @@ MonoBehaviour:
     Param:
       m_Hp: 2
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 60a8b692025492d46bcf32d119ea52be,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 60c81c308f9aacc4192617ebd24a28ee,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 11400000, guid: 004e67cff11fb0243bc09847f88d768c,
-        type: 2}
+      m_OnInitializeSequence: {fileID: 0}
       m_OnStartBehaviorEvents: []
       m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: 5f4a0f11d66777e4ea5e2ffa0140298a, type: 2}
+      m_Behavior: {fileID: 11400000, guid: f740cf02922f66542a9f1d82e7e04833, type: 2}
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
@@ -117,25 +106,20 @@ MonoBehaviour:
     Param:
       m_Hp: 2
       m_BulletSetParam: {fileID: 0}
-      m_EnemyLookParamSet: {fileID: 11400000, guid: 60a8b692025492d46bcf32d119ea52be,
+      m_EnemyLookParamSet: {fileID: 11400000, guid: 60c81c308f9aacc4192617ebd24a28ee,
         type: 2}
       m_DamageEffectMaterial: {fileID: 2100000, guid: 05b63f7fbd595c44989969fa2e05b5dc,
         type: 2}
       m_DamageEffectDuration: 0.1
       m_OnInitializeEvents: []
-      m_OnInitializeSequence: {fileID: 11400000, guid: 004e67cff11fb0243bc09847f88d768c,
-        type: 2}
+      m_OnInitializeSequence: {fileID: 0}
       m_OnStartBehaviorEvents: []
       m_BehaviorType: 0
-      m_Behavior: {fileID: 11400000, guid: 5f4a0f11d66777e4ea5e2ffa0140298a, type: 2}
+      m_Behavior: {fileID: 11400000, guid: f740cf02922f66542a9f1d82e7e04833, type: 2}
       m_BehaviorGroup: {fileID: 0}
       m_DefeatScore: 100
       m_DefeatItemParam:
-        ItemSpreadParams:
-        - Type: 6
-          Num: 1
-          Point: 100
-          SpreadRadius: 0
+        ItemSpreadParams: []
         CenterCreateItemType: 0
       m_DefeatEvents: []
       m_DefeatSequentialEffect:
