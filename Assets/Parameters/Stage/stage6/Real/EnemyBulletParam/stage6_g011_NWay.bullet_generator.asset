@@ -20,19 +20,19 @@ MonoBehaviour:
       - {fileID: 6531663667767994548, guid: 9768d20721d94e04fbfc27f1a8fb89a5, type: 3}
       m_BulletParams:
       - {fileID: 11400000, guid: 43710888cbebcd04ba8a72a9b9ad3203, type: 2}
-      m_ShotTransformName: 
+      m_ShotTransformName: ShotTransform
       m_ShotNum: 4
-      m_AxisType: 1
-      m_AxisOffsetAngle: 90
+      m_AxisType: 0
+      m_AxisOffsetAngle: 0
       m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
-      m_ShotRadius: 0.05
-      m_ShotDeltaRadius: 0
+      m_ShotRadius: 0.1
+      m_ShotDeltaRadius: -0.1
       m_ShotDeltaDeltaRadius: 0
       m_ShotOffsetTime: 0
-      m_ShotInterval: 0.05
+      m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 0
+      m_ShotAngle: 15
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 1
