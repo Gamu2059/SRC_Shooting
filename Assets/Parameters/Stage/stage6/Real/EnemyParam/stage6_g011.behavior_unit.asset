@@ -34,7 +34,11 @@ MonoBehaviour:
       StopTimeFromFirstActivate: 0.1
       ActivateInterval: 0.1
   - m_Difficulty: 2
-    m_BulletGeneratorDatas: []
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 6dfaf0ed26e8a0c4a9d02bb1dcc6cc3b, type: 2}
+      StartTimeOnFirstActivate: 0.8
+      StopTimeFromFirstActivate: 0.2
+      ActivateInterval: 0.1
   - m_Difficulty: 3
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: 6dfaf0ed26e8a0c4a9d02bb1dcc6cc3b, type: 2}
