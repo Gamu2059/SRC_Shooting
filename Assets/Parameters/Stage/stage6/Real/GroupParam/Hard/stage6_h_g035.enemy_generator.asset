@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6efba7f22361ba4191c9dc2f9d3c1ac, type: 3}
-  m_Name: "stage6_h_g001_\u30D7\u30EC\u30A4\u30E4\u30FC\u7A81\u6483.enemy_generator"
+  m_Name: stage6_h_g035.enemy_generator
   m_EditorClassIdentifier: 
   m_UseStopCondition: 0
   m_StopCondition:
@@ -30,13 +30,13 @@ MonoBehaviour:
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
-  m_AppearAreaMin: {x: -0.9, y: -0.9}
-  m_AppearAreaMax: {x: 0.9, y: 0.9}
-  m_ParamSet: {fileID: 11400000, guid: 2276b137831a8a1448458c9caa5e4fa9, type: 2}
-  m_AppearPosFactor: 0.8
-  m_GenerateNum: 10
+  m_AppearAreaMin: {x: -0.5, y: -0.9}
+  m_AppearAreaMax: {x: 0.5, y: 0.9}
+  m_ParamSet: {fileID: 11400000, guid: 0d50972b0d807eb40b5dac90bf8b34b9, type: 2}
+  m_AppearPosFactor: 0.9
+  m_GenerateNum: 30
   m_EnableGeneratingMultipleEnemy: 0
-  m_GenerateNumParOnce: 0
+  m_GenerateNumParOnce: 1
   m_GenerateTimingType: 0
   m_GenerateOffsetTime: 0
-  m_GenerateInterval: 0.5
+  m_GenerateInterval: 0.3

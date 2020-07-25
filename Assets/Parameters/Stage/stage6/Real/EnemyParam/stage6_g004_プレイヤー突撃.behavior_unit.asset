@@ -27,13 +27,17 @@ MonoBehaviour:
   - m_Difficulty: 1
     m_BulletGeneratorDatas: []
   - m_Difficulty: 2
-    m_BulletGeneratorDatas: []
+    m_BulletGeneratorDatas:
+    - ParamSet: {fileID: 11400000, guid: 5a9e8b6aa961f624dbcc3c1236729978, type: 2}
+      StartTimeOnFirstActivate: 0
+      StopTimeFromFirstActivate: 0
+      ActivateInterval: 0
   - m_Difficulty: 3
     m_BulletGeneratorDatas:
     - ParamSet: {fileID: 11400000, guid: 5a9e8b6aa961f624dbcc3c1236729978, type: 2}
       StartTimeOnFirstActivate: 0
       StopTimeFromFirstActivate: 0
-      ActivateInterval: 1000
+      ActivateInterval: 0
   m_DestroyBulletGeneratorOnBehaviorEnd: 0
   m_SpeedCurve:
     serializedVersion: 2
@@ -85,3 +89,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_AngleSpeedCurveScale: 1
+  m_IsNotAccumulationAngle: 0

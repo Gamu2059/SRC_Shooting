@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6efba7f22361ba4191c9dc2f9d3c1ac, type: 3}
-  m_Name: "stage6_h_g001_\u30D7\u30EC\u30A4\u30E4\u30FC\u7A81\u6483.enemy_generator"
+  m_Script: {fileID: 11500000, guid: 4b60bf9e1c478cb4db6ea6e70e89445b, type: 3}
+  m_Name: stage6_h_g012_g011.enemy_generator
   m_EditorClassIdentifier: 
   m_UseStopCondition: 0
   m_StopCondition:
@@ -30,13 +30,17 @@ MonoBehaviour:
       BoolCompareValue: 0
     MultiConditionType: 0
     MultiConditions: []
-  m_AppearAreaMin: {x: -0.9, y: -0.9}
-  m_AppearAreaMax: {x: 0.9, y: 0.9}
-  m_ParamSet: {fileID: 11400000, guid: 2276b137831a8a1448458c9caa5e4fa9, type: 2}
-  m_AppearPosFactor: 0.8
-  m_GenerateNum: 10
-  m_EnableGeneratingMultipleEnemy: 0
-  m_GenerateNumParOnce: 0
-  m_GenerateTimingType: 0
-  m_GenerateOffsetTime: 0
-  m_GenerateInterval: 0.5
+  m_DefaultParamSet: {fileID: 0}
+  m_IndividualParams:
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.2, y: -2}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 180
+    m_ParamSet: {fileID: 11400000, guid: dfaef74288a72f8489aab36d4c90eda6, type: 2}
+  - m_GenerateTime: 0
+    m_Relative: 0
+    m_ViewPortPos: {x: 0.8, y: -2}
+    m_OffsetPosFromViewPort: {x: 0, y: 0}
+    m_GenerateAngle: 180
+    m_ParamSet: {fileID: 11400000, guid: 973d29ad2cdb91741ae469a7c1ccd6fb, type: 2}
