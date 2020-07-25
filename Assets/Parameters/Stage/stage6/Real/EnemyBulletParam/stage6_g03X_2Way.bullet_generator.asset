@@ -17,13 +17,14 @@ MonoBehaviour:
   - Difficulty: 0
     Param:
       m_Bullets:
-      - {fileID: 0}
-      m_BulletParams: []
-      m_ShotTransformName: 
-      m_ShotNum: 0
+      - {fileID: 6531663667767994548, guid: 2b2b57a1b91b8214bae1c0bd45f68b88, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 22379f12069a4354598f1a300ed81560, type: 2}
+      m_ShotTransformName: CannonBulletBase
+      m_ShotNum: 2
       m_AxisType: 0
       m_AxisOffsetAngle: 0
-      m_ShotEffect: {fileID: 0}
+      m_ShotEffect: {fileID: 11400000, guid: b6aa804c5615c864d98cc303a0622418, type: 2}
       m_ShotRadius: 0
       m_ShotDeltaRadius: 0
       m_ShotDeltaDeltaRadius: 0
@@ -31,7 +32,7 @@ MonoBehaviour:
       m_ShotInterval: 0
       m_ShotDeltaInterval: 0
       m_ShotDeltaDeltaInterval: 0
-      m_ShotAngle: 0
+      m_ShotAngle: 150
       m_ShotDeltaAngle: 0
       m_ShotDeltaDeltaAngle: 0
   - Difficulty: 1
