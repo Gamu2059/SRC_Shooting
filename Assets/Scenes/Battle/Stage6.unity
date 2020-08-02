@@ -1498,6 +1498,16 @@ PrefabInstance:
       propertyPath: m_EffectHolder
       value: 
       objectReference: {fileID: 831044084}
+    - target: {fileID: 5606520284875655777, guid: a5f7c9221cc7d784f9c20f9ecc6a3795,
+        type: 3}
+      propertyPath: m_MinLocalFieldPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5606520284875655777, guid: a5f7c9221cc7d784f9c20f9ecc6a3795,
+        type: 3}
+      propertyPath: m_MaxLocalFieldPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1013872296618629183, guid: a5f7c9221cc7d784f9c20f9ecc6a3795,
         type: 3}
       propertyPath: m_AnchorMin.y
