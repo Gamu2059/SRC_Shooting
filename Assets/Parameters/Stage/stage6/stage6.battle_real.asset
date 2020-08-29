@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e28ba1d5e92e54fad91b8cf4993aa8, type: 3}
+  m_Name: stage6.battle_real
+  m_EditorClassIdentifier: 
+  m_PlayerManagerParamSet: {fileID: 11400000, guid: 9cad8c59c89cf774faa49f062d90733a,
+    type: 2}
+  m_EnemyManagerParamSet: {fileID: 11400000, guid: da52b11b8bcfae947b38fdc4755fe0b9,
+    type: 2}
+  m_BulletManagerParamSet: {fileID: 11400000, guid: 0eb7c58effc165f4ea0f01adcd55a9ae,
+    type: 2}
+  m_ItemManagerParamSet: {fileID: 11400000, guid: ab30d5993a4622b48bc610f7a5b3a0e5,
+    type: 2}
+  m_EffectManagerParamSet: {fileID: 11400000, guid: 4be4224ffb5a9e045aaf4b94efc53c21,
+    type: 2}
+  m_EventTriggerParamSet: {fileID: 11400000, guid: 65546e322db26ca48910a19373710617,
+    type: 2}

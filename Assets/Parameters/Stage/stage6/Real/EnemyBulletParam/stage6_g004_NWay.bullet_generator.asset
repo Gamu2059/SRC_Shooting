@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768669efa4d51143a2edf0402706824, type: 3}
+  m_Name: stage6_g004_NWay.bullet_generator
+  m_EditorClassIdentifier: 
+  m_GeneratorClassName: BattleReal.BulletGenerator.NwayBulletGenerator
+  m_Params:
+  - Difficulty: 0
+    Param:
+      m_Bullets: []
+      m_BulletParams: []
+      m_ShotTransformName: 
+      m_ShotNum: 0
+      m_AxisType: 0
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 0}
+      m_ShotRadius: 0
+      m_ShotDeltaRadius: 0
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 0
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0
+  - Difficulty: 1
+    Param:
+      m_Bullets: []
+      m_BulletParams: []
+      m_ShotTransformName: 
+      m_ShotNum: 0
+      m_AxisType: 0
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 0}
+      m_ShotRadius: 0
+      m_ShotDeltaRadius: 0
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 0
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0
+  - Difficulty: 2
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: b4096a5b47e9fe64393cc9c6071b8041, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 7095623427962e44b9b1263b9d0feecc, type: 2}
+      m_ShotTransformName: Scaler
+      m_ShotNum: 8
+      m_AxisType: 1
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.1
+      m_ShotDeltaRadius: 0
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 45
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0
+  - Difficulty: 3
+    Param:
+      m_Bullets:
+      - {fileID: 6531663667767994548, guid: b4096a5b47e9fe64393cc9c6071b8041, type: 3}
+      m_BulletParams:
+      - {fileID: 11400000, guid: 7095623427962e44b9b1263b9d0feecc, type: 2}
+      m_ShotTransformName: Scaler
+      m_ShotNum: 8
+      m_AxisType: 1
+      m_AxisOffsetAngle: 0
+      m_ShotEffect: {fileID: 11400000, guid: 0e9b93be60531b74abe46c7fcbb48838, type: 2}
+      m_ShotRadius: 0.1
+      m_ShotDeltaRadius: 0
+      m_ShotDeltaDeltaRadius: 0
+      m_ShotOffsetTime: 0
+      m_ShotInterval: 0
+      m_ShotDeltaInterval: 0
+      m_ShotDeltaDeltaInterval: 0
+      m_ShotAngle: 45
+      m_ShotDeltaAngle: 0
+      m_ShotDeltaDeltaAngle: 0

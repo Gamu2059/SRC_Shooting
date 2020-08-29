@@ -46,6 +46,36 @@ MonoBehaviour:
           m_TargetBulletRemove: 150
           m_TargetSecretItem: 5
           m_TargetRescue: 1
+    - m_Chapter: 6
+      m_Params:
+      - m_Difficulty: 0
+        m_Param:
+          m_TargetLevel: 3
+          m_TargetMaxChain: 50
+          m_TargetBulletRemove: 50
+          m_TargetSecretItem: 2
+          m_TargetRescue: 1
+      - m_Difficulty: 1
+        m_Param:
+          m_TargetLevel: 4
+          m_TargetMaxChain: 80
+          m_TargetBulletRemove: 80
+          m_TargetSecretItem: 4
+          m_TargetRescue: 1
+      - m_Difficulty: 2
+        m_Param:
+          m_TargetLevel: 5
+          m_TargetMaxChain: 120
+          m_TargetBulletRemove: 120
+          m_TargetSecretItem: 5
+          m_TargetRescue: 1
+      - m_Difficulty: 3
+        m_Param:
+          m_TargetLevel: 5
+          m_TargetMaxChain: 200
+          m_TargetBulletRemove: 150
+          m_TargetSecretItem: 5
+          m_TargetRescue: 1
   m_BattleRankParamSet:
     m_Params:
     - m_Chapter: 0
@@ -124,6 +154,44 @@ MonoBehaviour:
           m_SRankScore: 0
           m_SSRankScore: 0
           m_AchievementBonusScore: 5000
+    - m_Chapter: 6
+      m_Params:
+      - m_Difficulty: 0
+        m_Param:
+          m_DRankScore: 0
+          m_CRankScore: 0
+          m_BRankScore: 0
+          m_ARankScore: 0
+          m_SRankScore: 0
+          m_SSRankScore: 0
+          m_AchievementBonusScore: 5000
+      - m_Difficulty: 1
+        m_Param:
+          m_DRankScore: 0
+          m_CRankScore: 0
+          m_BRankScore: 0
+          m_ARankScore: 0
+          m_SRankScore: 0
+          m_SSRankScore: 0
+          m_AchievementBonusScore: 5000
+      - m_Difficulty: 2
+        m_Param:
+          m_DRankScore: 0
+          m_CRankScore: 0
+          m_BRankScore: 0
+          m_ARankScore: 0
+          m_SRankScore: 0
+          m_SSRankScore: 0
+          m_AchievementBonusScore: 5000
+      - m_Difficulty: 3
+        m_Param:
+          m_DRankScore: 0
+          m_CRankScore: 0
+          m_BRankScore: 0
+          m_ARankScore: 0
+          m_SRankScore: 0
+          m_SSRankScore: 0
+          m_AchievementBonusScore: 5000
   m_BattleParamSetHolder:
     m_Params:
     - m_Chapter: 0
@@ -146,3 +214,13 @@ MonoBehaviour:
         m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
       - m_Difficulty: 3
         m_Param: {fileID: 11400000, guid: 24ec6a7e4e319474c91555cc78bac9d9, type: 2}
+    - m_Chapter: 6
+      m_Params:
+      - m_Difficulty: 0
+        m_Param: {fileID: 11400000, guid: d4572bdfce7b66a42af400d68e78b7a4, type: 2}
+      - m_Difficulty: 1
+        m_Param: {fileID: 11400000, guid: d4572bdfce7b66a42af400d68e78b7a4, type: 2}
+      - m_Difficulty: 2
+        m_Param: {fileID: 11400000, guid: d4572bdfce7b66a42af400d68e78b7a4, type: 2}
+      - m_Difficulty: 3
+        m_Param: {fileID: 11400000, guid: d4572bdfce7b66a42af400d68e78b7a4, type: 2}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9c27f2f93a620f4e9520a483749d134, type: 3}
+  m_Name: stage6.battle_real_enemy
+  m_EditorClassIdentifier: 
+  m_MinOffsetFieldPosition: {x: -0.3, y: -0.3}
+  m_MaxOffsetFieldPosition: {x: 0.3, y: 0.3}
+  m_ReferenceDifficultyForGenerator: 1
+  m_Generator: {fileID: 0}
+  m_DifficultyReferencedGenerators:
+  - Difficulty: 0
+    Generator: {fileID: 11400000, guid: 4e066c4890263314b91ea6f546b8b123, type: 2}
+  - Difficulty: 1
+    Generator: {fileID: 11400000, guid: 5affc0eaa9bdbd84ca3653f8d0489554, type: 2}
+  - Difficulty: 2
+    Generator: {fileID: 11400000, guid: 0b481a79d2bd62d4498bb38aa2403c76, type: 2}
+  - Difficulty: 3
+    Generator: {fileID: 11400000, guid: 5ab10dda9a7513545845033185f620e6, type: 2}
