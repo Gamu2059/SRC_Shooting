@@ -10,12 +10,6 @@ using UnityEngine;
 public class ConstantIntOne : OperationIntBase
 {
 
-    public override float GetResultFloat()
-    {
-        return GetResultInt();
-    }
-
-
     public override int GetResultInt()
     {
         return 1;

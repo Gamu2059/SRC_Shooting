@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 列挙したfloat値を代入していくfor文を表すクラス。（未使用）
+/// 列挙したfloat値を代入していくfor文を表すクラス。
 /// </summary>
 [CreateAssetMenu(menuName = "Param/Danmaku/for/enum/float", fileName = "ForEnumFloat", order = 0)]
 [System.Serializable]

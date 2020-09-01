@@ -12,5 +12,5 @@ public abstract class OperationFloatDifficultyBase : OperationFloatBase
     /// <summary>
     /// 実際の難易度をもとに代入する
     /// </summary>
-    public abstract void Setup();
+    public abstract void Setup(E_DIFFICULTY? difficulty);
 }

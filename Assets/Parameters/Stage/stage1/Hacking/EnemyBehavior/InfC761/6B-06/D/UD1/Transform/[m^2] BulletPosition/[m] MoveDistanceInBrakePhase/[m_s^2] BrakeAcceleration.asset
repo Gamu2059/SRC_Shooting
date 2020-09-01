@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa2aa138c09a474b89eb4ad584a4629, type: 3}
+  m_Name: '[m_s^2] BrakeAcceleration'
+  m_EditorClassIdentifier: 
+  m_Multiple:
+  - {fileID: 11400000, guid: 106d638e852b0bb4fbb6dda441cd310b, type: 2}
+  - {fileID: 11400000, guid: 1d25d503d0a0dbc478f5be1ceca18026, type: 2}
+  - {fileID: 11400000, guid: 1d25d503d0a0dbc478f5be1ceca18026, type: 2}
+  m_Divide:
+  - {fileID: 11400000, guid: e9292a7d6334681488fbd67d9fe146ea, type: 2}
+  - {fileID: 11400000, guid: 2a69135f5d60be44799b7be2354dca87, type: 2}

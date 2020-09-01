@@ -42,9 +42,11 @@ public class OperationIntDifficultyConstant : OperationIntDifficultyBase
     private int m_Hades;
 
 
-    public override void Setup()
+    public override void Setup(E_DIFFICULTY? difficulty)
     {
-        switch (DanmakuDifficulty.GetDifficulty())
+        E_DIFFICULTY trueDifficulty = difficulty == null ? DanmakuDifficulty.GetDifficulty() : (E_DIFFICULTY)difficulty;
+
+        switch (trueDifficulty)
         {
             case E_DIFFICULTY.EASY:
                 m_Value = m_Easy;

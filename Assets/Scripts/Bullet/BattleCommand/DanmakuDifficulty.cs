@@ -5,7 +5,9 @@ using UnityEngine;
 /// <summary>
 /// ハッキングの難易度を表すクラス。（一時的なもの）
 /// </summary>
-public class DanmakuDifficulty : object
+[CreateAssetMenu(menuName = "Param/Danmaku/difficulty", fileName = "DanmakuDifficulty", order = 0)]
+[System.Serializable]
+public class DanmakuDifficulty : ScriptableObject
 {
     /// <summary>
     /// 難易度を取得する
