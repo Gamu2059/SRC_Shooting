@@ -12,7 +12,7 @@ using UnityEngine;
 public class DifficultyInitializer : DifficultyInitializerBase
 {
 
-    [SerializeField, Tooltip("難易度によって変わるfloat型の演算オブジェクトの配列")]
+    [SerializeField, Tooltip("現在の難易度")]
     private E_DIFFICULTY m_Difficulty;
 
     [SerializeField, Tooltip("難易度によって変わるfloat型の演算オブジェクトの配列")]

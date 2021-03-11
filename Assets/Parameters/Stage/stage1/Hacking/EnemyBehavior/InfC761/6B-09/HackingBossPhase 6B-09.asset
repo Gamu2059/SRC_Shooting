@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70248ff9a48f69447847bd894c3c5604, type: 3}
+  m_Name: HackingBossPhase 6B-09
+  m_EditorClassIdentifier: 
+  m_DifficultyInitializer: {fileID: 11400000, guid: 4e2a032320fe1be44a318e05f2bc6ff8,
+    type: 2}
+  m_ForSetup: {fileID: 11400000, guid: a02b4794ea8c4a94894c72a720eb12e1, type: 2}
+  m_MultiForLoop: {fileID: 11400000, guid: ada09f4553e27474a956c23190b4924c, type: 2}
+  m_BossTransform: {fileID: 11400000, guid: 9cdb2adeb22a8454c9c7ed6334327414, type: 2}
+  m_DanmakuArray: {fileID: 11400000, guid: 1832928db23eb144299c0bab1028dbe6, type: 2}
+  m_PlaySoundParam: {fileID: 0}

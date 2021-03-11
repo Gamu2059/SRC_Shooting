@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4986c5dc230804db75660344e93281, type: 3}
+  m_Name: UD1DoubleCircle
+  m_EditorClassIdentifier: 
+  m_ForSetup: {fileID: 0}
+  m_MultiForLoop: {fileID: 11400000, guid: becee5027c6446e4a8128194683d8d34, type: 2}
+  m_ShotSE: 30
+  m_BulletParamFreeOperationChangeableInit: {fileID: 11400000, guid: 1d37a6994a43b92449e55ad7b61e43e9,
+    type: 2}
+  m_BulletParamFreeOperationChangeableUpdate: {fileID: 11400000, guid: 0309a6bc23ddac0458066f59016d4baa,
+    type: 2}
+  m_MultiForLoopForTransform: {fileID: 0}
+  m_BulletTransform: {fileID: 11400000, guid: fc07713114a0f2e448787b91b5669baa, type: 2}
+  m_BulletShotParams: {fileID: 0}

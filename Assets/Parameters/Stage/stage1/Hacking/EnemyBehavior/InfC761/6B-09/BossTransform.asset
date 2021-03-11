@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df75e2c60cd7b1644b56f9ff8c77afec, type: 3}
+  m_Name: BossTransform
+  m_EditorClassIdentifier: 
+  m_Position: {fileID: 11400000, guid: 34e3f9dd1bfc42646ab0d8783aa4cded, type: 2}
+  m_Angle: {fileID: 11400000, guid: c1c4195ca3b2121498b742ab4898b6ef, type: 2}
+  m_Scale: {fileID: 11400000, guid: da62197e96f08ca4ba0802138fa0d2ff, type: 2}
+  m_Opacity: {fileID: 11400000, guid: 790d085c3060dc04b96ea46f62d93a0b, type: 2}
+  m_CanCollide: {fileID: 11400000, guid: e7bd10f482764004692d3973e1a3b712, type: 2}
+  m_IsAlive: {fileID: 11400000, guid: 09c4c9afe134024488c07c389b9b6a12, type: 2}
