@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf9da22362b657548933dd95f49a455b, type: 3}
-  m_Name: "stage0_\u30DC\u30B9_lv1.phase"
+  m_Script: {fileID: 11500000, guid: 031adf76ea35d6c4799e0b522180e929, type: 3}
+  m_Name: DifficultyInitializer
   m_EditorClassIdentifier: 
-  m_BehaviorClass: InfC761HackingNormalBehavior
-  m_HackingBossPhase: {fileID: 11400000, guid: 45e769dadc501064ea1eab3d5bf6e62f, type: 2}
+  m_Array:
+  - {fileID: 11400000, guid: 4fd3b64daa663ec49958511ce617a64f, type: 2}

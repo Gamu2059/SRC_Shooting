@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf9da22362b657548933dd95f49a455b, type: 3}
-  m_Name: "stage0_\u30DC\u30B9_lv1.phase"
+  m_Script: {fileID: 11500000, guid: a07ae3a83581ff2408ebcece4a68f0a4, type: 3}
+  m_Name: '[m] RelativePlayerPositionX'
   m_EditorClassIdentifier: 
-  m_BehaviorClass: InfC761HackingNormalBehavior
-  m_HackingBossPhase: {fileID: 11400000, guid: 45e769dadc501064ea1eab3d5bf6e62f, type: 2}
+  m_Plus:
+  - {fileID: 11400000, guid: 28017ff2cb0027e4bb92fd6b17914d24, type: 2}
+  m_Minus:
+  - {fileID: 11400000, guid: a90158b180a499e4a952b3e35660f603, type: 2}

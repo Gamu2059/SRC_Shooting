@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed4985fa22b9ac743bc79e4b1be415dd, type: 3}
+  m_Name: '[m] BossPositionY'
+  m_EditorClassIdentifier: 
+  m_If:
+  - {fileID: 11400000, guid: 688c386eb2d11b541b1a2698cd1a4ad3, type: 2}
+  m_True:
+  - {fileID: 11400000, guid: 166623e7effc322498ff5977d36dac76, type: 2}
+  m_False: {fileID: 11400000, guid: 5c8b67f918fe31442ae60c529869e42f, type: 2}
